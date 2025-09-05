@@ -1,37 +1,44 @@
-import { Container, Typography, Stack, Paper, Box } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
+import { GraduationCap, BookOpen, Brain } from "lucide-react";
+
+const estudios = [
+  {
+    titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
+    institucion: "Universidad Internacional de La Rioja, España",
+    detalle: "Nota TFM: 9 | Promedio final: 8.68",
+    icon: <GraduationCap size={28} color="#1976d2" />,
+  },
+  {
+    titulo: "🎓 Ingeniero en Sistemas",
+    institucion: "Universidad Indoamérica, Ecuador",
+    detalle: "Nota Tesis: 9.50 | Promedio final: 9",
+    icon: <GraduationCap size={28} color="#9333ea" />,
+  },
+];
 
 export default function About() {
-  const estudios = [
-    {
-      titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
-      institucion: "Universidad Internacional de La Rioja, España",
-      detalle: "Nota TFM: 9 | Promedio final: 8.68",
-    },
-    {
-      titulo: "🎓 Ingeniero en Sistemas",
-      institucion: "Universidad Indoamérica, Ecuador",
-      detalle: "Nota Tesis: 9.50 | Promedio final: 9",
-    },
-  ];
-
   return (
-    <Container maxWidth="md" sx={{ py: 10 }}>
-      {/* Título principal */}
+    <Box
+      id="about"
+      sx={{
+        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        pt: 6,
+        pb: 6,
+      }}
+    >
+      {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "4rem" }}
+        style={{ textAlign: "center", marginBottom: "1rem" }}
       >
         <Typography
           variant="h4"
           align="center"
           sx={{
             fontWeight: 700,
-            letterSpacing: "0.02em",
-            mb: 6,
             color: "#1976d2",
             position: "relative",
             display: "inline-block",
@@ -54,54 +61,31 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Tarjetas de Educación con aparición secuencial */}
-      <Stack spacing={5}>
-        {estudios.map((est, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.3 }} // delay secuencial
-          >
-            <Paper
-              elevation={10}
-              sx={{
-                p: 4,
-                borderRadius: "20px",
-                textAlign: "center",
-                backdropFilter: "blur(10px)",
-                background: "rgba(255, 255, 255, 0.7)",
-                boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
-                cursor: "default",
-                transition: "all 0.3s ease-in-out",
-                "&:hover": {
-                  background: "rgba(255, 255, 255, 0.9)",
-                  boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
-                  transform: "translateY(-5px) scale(1.02)",
-                },
-              }}
+      {/* Grid limpio, nada de Paper ni fondo */}
+      <Grid container spacing={3} justifyContent="center">
+        {estudios.map((est, i) => (
+          <Grid item xs={12} sm={6} md={4} key={i}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.2 }}
             >
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{ fontWeight: "bold", color: "#1976d2" }}
-              >
-                {est.titulo}
-              </Typography>
-              <Typography variant="body1" sx={{ color: "#333", mb: 1 }}>
-                {est.institucion}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "#555", fontWeight: 500 }}
-              >
-                {est.detalle}
-              </Typography>
-            </Paper>
-          </motion.div>
+              <Box sx={{ textAlign: "center", px: 1 }}>
+                {est.icon}
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+                  {est.titulo}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {est.institucion}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {est.detalle}
+                </Typography>
+              </Box>
+            </motion.div>
+          </Grid>
         ))}
-      </Stack>
-    </Container>
+      </Grid>
+    </Box>
   );
 }
