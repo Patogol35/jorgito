@@ -40,15 +40,16 @@ export default function Skills() {
       }}
     >
       <Container>
-        {/* Título mejorado */}
+        {/* Título mejorado con animación igual que en Educación */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Typography
-            variant="h4" // más pequeño que h3
+            variant="h4"
             align="center"
             sx={{
               fontWeight: 700,
@@ -124,9 +125,10 @@ export default function Skills() {
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
                   whileHover={{ scale: 1.08 }}
                 >
                   <Paper
@@ -177,4 +179,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+      }
