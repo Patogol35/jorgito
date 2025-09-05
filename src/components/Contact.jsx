@@ -109,24 +109,23 @@ export default function Contact() {
                   whileTap={{ scale: 0.9 }}
                 >
                   <IconButton
-                    component={Link}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener"
-                    sx={{
-                      color: "white",
-                      backgroundColor: s.color,
-                      width: 60,
-                      height: 60,
-                      borderRadius: "50%",
-                      boxShadow: `0 6px 16px ${s.color}55`,
-                      "&:hover": {
-                        boxShadow: `0 8px 24px ${s.color}aa`,
-                      },
-                    }}
-                  >
-                    {s.icon}
-                  </IconButton>
+  component={Link}
+  href={s.href}
+  target="_blank"
+  rel="noopener"
+  sx={{
+    color: s.color,
+    "&:hover": {
+      backgroundColor: "transparent",
+      transform: "scale(1.2)",
+    },
+    "&:focus, &:active, &:visited": {
+      color: s.color,
+    },
+  }}
+>
+  {s.icon}
+</IconButton>
                 </motion.div>
               ))}
             </Stack>
