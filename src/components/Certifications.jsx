@@ -27,6 +27,11 @@ const certificaciones = [
     institucion: "Platzi",
     año: 2024,
   },
+  {
+    titulo: "Curso de Preparación para la Certificación AZ-900: Microsoft Azure Fundamentals",
+    institucion: "Universidad Internacional de La Rioja (UNIR)",
+    año: 2024,
+  },
 ];
 
 export default function Certifications() {
@@ -89,4 +94,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-}
+                }
