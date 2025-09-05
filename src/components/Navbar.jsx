@@ -31,16 +31,33 @@ export default function Navbar() {
     { label: "Contacto", href: "#contact" },
   ];
 
+  const menuVariants = {
+    hidden: { x: "100%" },
+    visible: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
+    exit: { x: "100%", transition: { type: "spring", stiffness: 300, damping: 30 } },
+  };
+
+  const itemVariants = {
+    hidden: { x: 20, opacity: 0 },
+    visible: (i) => ({
+      x: 0,
+      opacity: 1,
+      transition: { delay: i * 0.08, type: "spring", stiffness: 300 },
+    }),
+  };
+
   return (
     <>
+      {/* Navbar flotante */}
       <AppBar
-        position="sticky"
+        position="fixed"
         elevation={elev}
         sx={{
-          backdropFilter: "blur(15px)",
-          backgroundColor: "rgba(255,255,255,0.75)",
+          backdropFilter: "blur(20px)",
+          backgroundColor: "rgba(255,255,255,0.6)",
           transition: "0.3s",
           borderBottom: "1px solid rgba(0,0,0,0.1)",
+          zIndex: 1400,
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -61,14 +78,13 @@ export default function Navbar() {
             </Typography>
           </motion.div>
 
-          {/* Menú desktop */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          {/* Menú Desktop */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
             {menuItems.map((item) => (
               <motion.div
                 key={item.href}
-                whileHover={{ y: -2, scale: 1.05 }}
+                whileHover={{ y: -2, scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 200 }}
               >
                 <Button
                   href={item.href}
@@ -76,6 +92,7 @@ export default function Navbar() {
                     color: "#333",
                     fontWeight: 600,
                     textTransform: "none",
+                    fontSize: "1rem",
                     "&:hover": { color: "#1976d2", backgroundColor: "transparent" },
                   }}
                 >
@@ -85,17 +102,14 @@ export default function Navbar() {
             ))}
           </Box>
 
-          {/* Botón hamburguesa móvil */}
-          <IconButton
-            sx={{ display: { xs: "block", md: "none" } }}
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon sx={{ color: "#1976d2" }} />
+          {/* Botón móvil */}
+          <IconButton sx={{ display: { xs: "block", md: "none" } }} onClick={() => setOpen(true)}>
+            <MenuIcon sx={{ color: "#1976d2" }} fontSize="large" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Menú móvil moderno */}
+      {/* Menú móvil animado */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -105,24 +119,25 @@ export default function Navbar() {
             style={{
               position: "fixed",
               top: 0,
-              right: 0,
-              bottom: 0,
               left: 0,
-              background: "rgba(0,0,0,0.4)",
+              width: "100vw",
+              height: "100vh",
+              background: "rgba(0,0,0,0.5)",
               zIndex: 1300,
             }}
             onClick={() => setOpen(false)}
           >
             <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              variants={menuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
               style={{
-                width: "260px",
+                width: "280px",
                 height: "100%",
-                background: "#f5f5f5",
-                padding: "2rem 1rem",
+                background: "linear-gradient(180deg, #f5f5f5, #e8f0ff)",
+                borderRadius: "12px 0 0 12px",
+                padding: "2rem",
                 position: "absolute",
                 top: 0,
                 right: 0,
@@ -131,31 +146,36 @@ export default function Navbar() {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Stack direction="row" justifyContent="space-between" mb={4}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1976d2" }}>
                   Menú
                 </Typography>
                 <IconButton onClick={() => setOpen(false)}>
-                  <CloseIcon />
+                  <CloseIcon fontSize="large" />
                 </IconButton>
-              </Stack>
+              </Box>
 
-              <Stack spacing={2}>
-                {menuItems.map((item) => (
-                  <Button
+              <Stack spacing={3}>
+                {menuItems.map((item, i) => (
+                  <motion.a
                     key={item.href}
                     href={item.href}
+                    custom={i}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ scale: 1.05, color: "#1976d2" }}
                     onClick={() => setOpen(false)}
-                    sx={{
-                      justifyContent: "flex-start",
-                      textTransform: "none",
+                    style={{
+                      fontSize: "1.2rem",
                       fontWeight: 600,
+                      textDecoration: "none",
                       color: "#333",
-                      "&:hover": { color: "#1976d2", backgroundColor: "transparent" },
+                      cursor: "pointer",
                     }}
                   >
                     {item.label}
-                  </Button>
+                  </motion.a>
                 ))}
               </Stack>
             </motion.div>
@@ -164,4 +184,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                }
+      }
