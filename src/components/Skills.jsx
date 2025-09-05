@@ -45,7 +45,7 @@ export default function Skills() {
             gutterBottom
             sx={{ fontWeight: "bold", color: "#1976d2", mb: 5 }}
           >
-            🛠️ Tecnologías y habilidades que domino
+            🛠️ Tecnologías que domino
           </Typography>
 
           {/* Grid de tecnologías */}
