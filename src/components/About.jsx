@@ -1,5 +1,4 @@
-// components/About.jsx
-import { Container, Typography, Box, Paper } from "@mui/material";
+import { Container, Typography, Box, Paper, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function About() {
@@ -26,24 +25,34 @@ export default function About() {
             }}
           >
             <Typography variant="h4" gutterBottom>
-              Hola! Soy Jorge Patricio Santamaría Cherrez
+              Educación y Formación
             </Typography>
 
-            <Typography variant="h6" color="primary" gutterBottom>
-              💻 Máster en Ingeniería de Software y Sistemas Informáticos
-            </Typography>
+            <Stack spacing={2}>
+              <Box>
+                <Typography variant="h6" color="primary">
+                  💻 Máster en Ingeniería de Software y Sistemas Informáticos
+                </Typography>
+                <Typography variant="body1">
+                  Universidad Internacional de La Rioja, España
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Nota sobresaliente 9/10 en el Trabajo Fin de Máster
+                </Typography>
+              </Box>
 
-            <Typography variant="body1" paragraph>
-              📍 Apasionado por el desarrollo Full Stack, la gestión de entornos DevOps
-              y la Innovación Tecnológica.
-            </Typography>
-
-            <Typography variant="body1" paragraph>
-              Me destaco por integrar soluciones innovadoras, optimizar procesos y aportar
-              valor en cada proyecto mediante un enfoque estratégico y orientado a resultados.
-              Mi compromiso es transformar ideas en aplicaciones eficientes, seguras y escalables,
-              siempre buscando la excelencia y el crecimiento continuo.
-            </Typography>
+              <Box>
+                <Typography variant="h6" color="primary">
+                  🎓 Ingeniero en Sistemas
+                </Typography>
+                <Typography variant="body1">
+                  Universidad Indoamérica, Ecuador
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Promedio final: 8.68/10
+                </Typography>
+              </Box>
+            </Stack>
           </Paper>
         </motion.div>
       </Container>
