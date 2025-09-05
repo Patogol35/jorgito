@@ -24,20 +24,13 @@ export default function Certifications() {
         justifyContent: "center",
       }}
     >
-      <Container
-        sx={{
-          backdropFilter: "blur(12px)",
-          background: "rgba(255, 255, 255, 0.7)",
-          borderRadius: "20px",
-          p: { xs: 3, md: 5 },
-        }}
-      >
+      <Container sx={{ p: { xs: 3, md: 5 } }}> {/* Sin fondo extra */}
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }} // más cerca de los elementos
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Typography
             variant="h4"
