@@ -14,6 +14,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import CodeIcon from "@mui/icons-material/Code";
 
 export default function Navbar() {
   const [elev, setElev] = useState(0);
@@ -27,7 +28,7 @@ export default function Navbar() {
 
   const menuItems = [
     { label: "Sobre mí", href: "#hero" },
-    { label: "Educación y Formación", href: "#about" },
+    { label: "Educación", href: "#about" },
     { label: "Tecnologías", href: "#skills" },
     { label: "Certificaciones", href: "#certifications" },
     { label: "Contacto", href: "#contact" },
@@ -38,46 +39,47 @@ export default function Navbar() {
       <AppBar
         position="sticky"
         elevation={elev}
-        color="transparent"
         sx={{
           backdropFilter: "blur(15px)",
-          backgroundColor: "rgba(255,255,255,0.6)",
+          backgroundColor: "rgba(255,255,255,0.75)",
           transition: "0.3s",
-          borderBottom: "1px solid rgba(255,255,255,0.2)",
+          borderBottom: "1px solid rgba(0,0,0,0.1)",
         }}
       >
-        <Toolbar>
-          {/* Logo */}
-          <Typography
-            variant="h6"
-            sx={{
-              flexGrow: 1,
-              fontWeight: "bold",
-              color: "#1976d2",
-              letterSpacing: 1,
-            }}
-          >
-            Jorge Dev
-          </Typography>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/* Logo con icono */}
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Typography
+              variant="h6"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: "bold",
+                color: "#1976d2",
+                letterSpacing: 1,
+                cursor: "pointer",
+              }}
+            >
+              <CodeIcon sx={{ mr: 1 }} /> Jorge Dev
+            </Typography>
+          </motion.div>
 
           {/* Menú desktop */}
-          <Box sx={{ display: { xs: "none", md: "block" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
             {menuItems.map((item) => (
               <motion.div
                 key={item.href}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ y: -2, scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                style={{ display: "inline-block" }}
               >
                 <Button
-                  color="inherit"
                   href={item.href}
                   sx={{
-                    mx: 1,
-                    fontWeight: "600",
                     color: "#333",
-                    "&:hover": { color: "#1976d2" },
+                    fontWeight: 600,
+                    textTransform: "none",
+                    "&:hover": { color: "#1976d2", backgroundColor: "transparent" },
                   }}
                 >
                   {item.label}
@@ -86,22 +88,32 @@ export default function Navbar() {
             ))}
           </Box>
 
-          {/* Botón hamburguesa en móvil */}
+          {/* Botón hamburguesa móvil */}
           <IconButton
             sx={{ display: { xs: "block", md: "none" } }}
             onClick={() => setOpen(true)}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "#1976d2" }} />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Drawer para móvil */}
-      <Drawer anchor="right" open={open} onClose={() => setOpen(false)}>
-        <Box sx={{ width: 250, p: 2 }}>
+      {/* Drawer móvil */}
+      <Drawer
+        anchor="right"
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{
+          sx: {
+            background: "linear-gradient(180deg, #f5f5f5, #e8f0ff)",
+            width: 260,
+          },
+        }}
+      >
+        <Box sx={{ p: 3 }}>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", mb: 2, color: "#1976d2" }}
+            sx={{ fontWeight: "bold", mb: 3, color: "#1976d2" }}
           >
             Navegación
           </Typography>
@@ -112,8 +124,14 @@ export default function Navbar() {
                   component="a"
                   href={item.href}
                   onClick={() => setOpen(false)}
+                  sx={{
+                    "&:hover": { backgroundColor: "rgba(25,118,210,0.1)" },
+                  }}
                 >
-                  <ListItemText primary={item.label} />
+                  <ListItemText
+                    primary={item.label}
+                    primaryTypographyProps={{ fontWeight: 500 }}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}
