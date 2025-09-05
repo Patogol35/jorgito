@@ -2,79 +2,86 @@ import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Skills from "./components/Skills.jsx";
-//import Projects from "./components/Projects.jsx";
+// import Projects from "./components/Projects.jsx";
 import Certifications from "./components/Certifications.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import { Box } from "@mui/material";
+import { Box, Container, Paper } from "@mui/material";
 
 function App() {
-return (
-<>
-<Navbar />
+  return (
+    <>
+      <Navbar />
 
-{/* Hero */}  
-  <Box  
-    id="hero"  
-    sx={{  
-      py: 10,  
-      bgcolor: "#0d1117",  
-      mt: 0, // asegura separación uniforme arriba  
-    }}  
-  >  
-    <Hero />  
-  </Box>  
+      {/* Fondo general uniforme */}
+      <Box sx={{ bgcolor: "#f0f4f9", minHeight: "100vh", pt: 10, pb: 6 }}>
+        <Container maxWidth="lg">
+          {/* Hero (no lo meto en tarjeta porque ya suele ocupar toda la vista) */}
+          <Box id="hero" sx={{ mb: 8 }}>
+            <Hero />
+          </Box>
 
-  {/* About */}  
-  <Box  
-    id="about"  
-    sx={{  
-      py: 10,  
-      bgcolor: "#f5f5f5",  
-      mt: 0, // separación uniforme con Hero  
-    }}  
-  >  
-    <About />  
-  </Box>  
+          {/* About */}
+          <Paper
+            id="about"
+            elevation={3}
+            sx={{
+              p: 4,
+              mb: 8,
+              borderRadius: "16px",
+              bgcolor: "white",
+            }}
+          >
+            <About />
+          </Paper>
 
-  {/* Skills */}  
-  <Box  
-    id="skills"  
-    sx={{  
-      py: 10,  
-      bgcolor: "#1c1f2a",  
-      mt: 0, // separación uniforme con About  
-    }}  
-  >  
-    <Skills />  
-  </Box>  
+          {/* Skills */}
+          <Paper
+            id="skills"
+            elevation={3}
+            sx={{
+              p: 4,
+              mb: 8,
+              borderRadius: "16px",
+              bgcolor: "white",
+            }}
+          >
+            <Skills />
+          </Paper>
 
-  {/* Certifications */}  
-  <Box  
-    id="certifications"  
-    sx={{  
-      py: 10,  
-      bgcolor: "#e8f0ff",  
-    }}  
-  >  
-    <Certifications />  
-  </Box>  
+          {/* Certifications */}
+          <Paper
+            id="certifications"
+            elevation={3}
+            sx={{
+              p: 4,
+              mb: 8,
+              borderRadius: "16px",
+              bgcolor: "white",
+            }}
+          >
+            <Certifications />
+          </Paper>
 
-  {/* Contact */}  
-  <Box  
-    id="contact"  
-    sx={{  
-      py: 10,  
-      bgcolor: "#0d1117",  
-    }}  
-  >  
-    <Contact />  
-  </Box>  
+          {/* Contact */}
+          <Paper
+            id="contact"
+            elevation={3}
+            sx={{
+              p: 4,
+              mb: 8,
+              borderRadius: "16px",
+              bgcolor: "white",
+            }}
+          >
+            <Contact />
+          </Paper>
+        </Container>
+      </Box>
 
-  <Footer />  
-</>
-
-);
+      <Footer />
+    </>
+  );
 }
 
 export default App;
