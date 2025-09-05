@@ -59,24 +59,17 @@ export default function Certifications() {
           </Typography>
         </motion.div>
 
-        {/* Grid de certificaciones flotantes */}
+        {/* Grid flotante */}
         <Grid container spacing={4} justifyContent="center">
           {certificaciones.map((c, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
+                whileHover={{ y: -5, scale: 1.05 }}
               >
-                <Box
-                  sx={{
-                    textAlign: "center",
-                    p: 2,
-                    borderRadius: "12px",
-                    transition: "all 0.3s ease-in-out",
-                  }}
-                >
+                <Box sx={{ textAlign: "center" }}>
                   <Box sx={{ mb: 1 }}>{c.icon}</Box>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 0.5 }}>
                     {c.titulo}
