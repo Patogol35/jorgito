@@ -39,6 +39,9 @@ export default function About() {
                 <Typography variant="body1">
                   Universidad Internacional de La Rioja, España
                 </Typography>
+                <Typography variant="body2" sx={{ color: "#ffeb3b" }}>
+                  Nota TFM: 9 | Promedio final: 8.68
+                </Typography>
               </Box>
 
               {/* Ingeniería */}
