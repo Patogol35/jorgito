@@ -1,6 +1,6 @@
 import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
-import { GraduationCap, BookOpen, Brain } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 
 const estudios = [
   {
@@ -22,7 +22,7 @@ export default function About() {
     <Box
       id="about"
       sx={{
-        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        background: "transparent", // ✅ no repite el fondo
         pt: 6,
         pb: 6,
       }}
@@ -61,7 +61,7 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Grid limpio, nada de Paper ni fondo */}
+      {/* Grid limpio */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
