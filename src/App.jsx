@@ -13,7 +13,7 @@ function App() {
       sx={{
         minHeight: "100vh",
         background: "linear-gradient(160deg, #f5f7fa 0%, #e6ebf0 100%)", // fondo claro degradado
-        color: "#111",
+        color: "#111", // <-- ahora el texto es oscuro
       }}
     >
       <Navbar />
@@ -26,7 +26,8 @@ function App() {
             mb: 4,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "rgba(255,255,255,0.9)",
+            background: "#ffffff", // fondo blanco limpio
+            color: "#111", // texto oscuro
             boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
           }}
         >
@@ -40,4 +41,59 @@ function App() {
             mb: 4,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "rgba(255,
+            background: "#ffffff",
+            color: "#111",
+          }}
+        >
+          <About />
+        </Paper>
+
+        {/* Skills */}
+        <Paper
+          elevation={3}
+          sx={{
+            mb: 4,
+            p: { xs: 3, md: 6 },
+            borderRadius: 4,
+            background: "#ffffff",
+            color: "#111",
+          }}
+        >
+          <Skills />
+        </Paper>
+
+        {/* Certifications */}
+        <Paper
+          elevation={3}
+          sx={{
+            mb: 4,
+            p: { xs: 3, md: 6 },
+            borderRadius: 4,
+            background: "#ffffff",
+            color: "#111",
+          }}
+        >
+          <Certifications />
+        </Paper>
+
+        {/* Contact */}
+        <Paper
+          elevation={3}
+          sx={{
+            mb: 4,
+            p: { xs: 3, md: 6 },
+            borderRadius: 4,
+            background: "#ffffff",
+            color: "#111",
+          }}
+        >
+          <Contact />
+        </Paper>
+      </Container>
+
+      <Footer />
+    </Box>
+  );
+}
+
+export default App;
