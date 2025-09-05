@@ -17,7 +17,7 @@ export default function About() {
 
   return (
     <Container maxWidth="md" sx={{ py: 10 }}>
-      {/* Título uniforme */}
+      {/* Título con gradiente igual a Certificaciones */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -26,29 +26,35 @@ export default function About() {
         style={{ textAlign: "center", marginBottom: "4rem" }}
       >
         <Typography
-          variant="h4"
-          gutterBottom
+          variant="h3"
+          align="center"
           sx={{
             fontWeight: "bold",
-            color: "#1976d2",
+            mb: 6,
+            background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            position: "relative",
+            display: "inline-block",
           }}
         >
-          🎓 Educación y Formación
+          Educación y Formación
+          <Box
+            component="span"
+            sx={{
+              position: "absolute",
+              left: 0,
+              bottom: -6,
+              width: "100%",
+              height: "4px",
+              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+              borderRadius: "8px",
+            }}
+          />
         </Typography>
-
-        {/* Línea decorativa */}
-        <Box
-          sx={{
-            height: "4px",
-            width: "60px",
-            background: "linear-gradient(90deg, #1976d2, #42a5f5)",
-            borderRadius: "2px",
-            margin: "12px auto 0",
-          }}
-        />
       </motion.div>
 
-      {/* Tarjetas con degradado hover */}
+      {/* Tarjetas de Educación */}
       <Stack spacing={5}>
         {estudios.map((est, index) => (
           <motion.div
@@ -59,17 +65,20 @@ export default function About() {
             transition={{ duration: 0.6, delay: index * 0.2 }}
           >
             <Paper
-              elevation={3}
+              elevation={10}
               sx={{
                 p: 4,
-                borderRadius: "16px",
-                background: "#fff",
-                transition: "all 0.4s ease",
-                cursor: "pointer",
+                borderRadius: "20px",
+                textAlign: "center",
+                backdropFilter: "blur(10px)",
+                background: "rgba(255, 255, 255, 0.7)",
+                boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+                cursor: "default",
+                transition: "all 0.3s ease-in-out",
                 "&:hover": {
-                  transform: "translateY(-6px) scale(1.03)",
-                  boxShadow: "0 12px 28px rgba(0,0,0,0.18)",
-                  background: "linear-gradient(135deg, #e3f2fd, #bbdefb)",
+                  background: "rgba(255, 255, 255, 0.9)",
+                  boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
+                  transform: "translateY(-5px) scale(1.02)",
                 },
               }}
             >
@@ -80,12 +89,12 @@ export default function About() {
               >
                 {est.titulo}
               </Typography>
-              <Typography variant="body1" sx={{ color: "#333" }}>
+              <Typography variant="body1" sx={{ color: "#333", mb: 1 }}>
                 {est.institucion}
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ color: "#555", fontWeight: "500" }}
+                sx={{ color: "#555", fontWeight: 500 }}
               >
                 {est.detalle}
               </Typography>
