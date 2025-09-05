@@ -20,15 +20,24 @@ export default function Certifications() {
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         py: 12,
+        display: "flex",
+        justifyContent: "center",
       }}
     >
-      <Container>
+      <Container
+        sx={{
+          backdropFilter: "blur(12px)",
+          background: "rgba(255, 255, 255, 0.7)",
+          borderRadius: "20px",
+          p: { xs: 3, md: 5 },
+        }}
+      >
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "4rem" }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Typography
             variant="h4"
@@ -59,7 +68,7 @@ export default function Certifications() {
           </Typography>
         </motion.div>
 
-        {/* Grid flotante */}
+        {/* Grid con animación secuencial */}
         <Grid container spacing={4} justifyContent="center">
           {certificaciones.map((c, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
