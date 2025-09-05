@@ -1,4 +1,4 @@
-      // components/Hero.jsx
+
 import { Container, Typography, Box, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 
