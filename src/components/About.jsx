@@ -6,8 +6,9 @@ export default function About() {
     <Box
       id="about"
       sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e0e0e0)",
+        background: "linear-gradient(135deg, #0d1117, #1c1f2a)", // fondo oscuro premium
         py: 10,
+        color: "#fff",
       }}
     >
       <Container>
@@ -17,39 +18,39 @@ export default function About() {
           transition={{ duration: 0.8 }}
         >
           <Paper
-            elevation={6}
+            elevation={8}
             sx={{
-              p: 4,
-              borderRadius: "16px",
-              background: "rgba(255,255,255,0.9)",
+              p: 5,
+              borderRadius: "20px",
+              background: "rgba(25, 25, 35, 0.95)",
+              color: "#fff",
             }}
           >
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ color: "#ffeb3b" }}>
               Educación y Formación
             </Typography>
 
-            <Stack spacing={2}>
+            <Stack spacing={4}>
+              {/* Máster */}
               <Box>
-                <Typography variant="h6" color="primary">
+                <Typography variant="h6" color="#42a5f5">
                   💻 Máster en Ingeniería de Software y Sistemas Informáticos
                 </Typography>
                 <Typography variant="body1">
                   Universidad Internacional de La Rioja, España
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Nota sobresaliente 9/10 en el Trabajo Fin de Máster
-                </Typography>
               </Box>
 
+              {/* Ingeniería */}
               <Box>
-                <Typography variant="h6" color="primary">
+                <Typography variant="h6" color="#42a5f5">
                   🎓 Ingeniero en Sistemas
                 </Typography>
                 <Typography variant="body1">
                   Universidad Indoamérica, Ecuador
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Promedio final: 8.68/10
+                <Typography variant="body2" sx={{ color: "#ffeb3b" }}>
+                  Nota Tesis: 9.50 | Promedio final: 9
                 </Typography>
               </Box>
             </Stack>
