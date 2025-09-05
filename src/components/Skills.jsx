@@ -40,27 +40,39 @@ export default function Skills() {
       }}
     >
       <Container>
-        {/* Título */}
+        {/* Título mejorado */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Typography
-            variant="h3"
+            variant="h4" // más pequeño que h3
             align="center"
-            gutterBottom
             sx={{
-              fontWeight: "bold",
-              mb: 6,
-              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+              mb: 4,
+              color: "#1976d2",
               position: "relative",
               display: "inline-block",
             }}
           >
             Tecnologías que domino
+            <Box
+              component="span"
+              sx={{
+                position: "absolute",
+                left: "50%",
+                bottom: -6,
+                transform: "translateX(-50%)",
+                width: "65%",
+                height: "3px",
+                background: "#1976d2",
+                borderRadius: "6px",
+              }}
+            />
           </Typography>
         </motion.div>
 
@@ -85,7 +97,7 @@ export default function Skills() {
                   sx={{
                     textTransform: "none",
                     fontWeight: "bold",
-                    px: 1.5,  // más compactos
+                    px: 1.5,
                     py: 0.5,
                     fontSize: "0.85rem",
                     "&.Mui-selected": {
