@@ -13,13 +13,11 @@ export default function About() {
       titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
       institucion: "Universidad Internacional de La Rioja, España",
       detalle: "Nota TFM: 9 | Promedio final: 8.68",
-      color: "#42a5f5",
     },
     {
       titulo: "🎓 Ingeniero en Sistemas",
       institucion: "Universidad Indoamérica, Ecuador",
       detalle: "Nota Tesis: 9.50 | Promedio final: 9",
-      color: "#42a5f5",
     },
   ];
 
@@ -27,13 +25,12 @@ export default function About() {
     <Box
       id="about"
       sx={{
-        background: "linear-gradient(135deg, #0d1117, #1c1f2a)",
+        background: "#f5f5f5", // Fondo claro
         py: 10,
-        color: "#fff",
+        color: "#333",
       }}
     >
       <Container maxWidth="md">
-        {/* Contenedor principal animado */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -47,7 +44,7 @@ export default function About() {
               textAlign: "center",
               mb: 6,
               fontWeight: "bold",
-              color: "#ffeb3b",
+              color: "#1976d2",
             }}
           >
             Educación y Formación
@@ -63,29 +60,31 @@ export default function About() {
                 transition={{ duration: 0.6, delay: index * 0.2 }}
               >
                 <Paper
-                  elevation={6}
+                  elevation={3}
                   sx={{
                     p: 4,
-                    borderRadius: "20px",
-                    background: "rgba(25, 25, 35, 0.95)",
+                    borderRadius: "16px",
+                    background: "#fff",
                     transition: "transform 0.3s ease",
                     "&:hover": {
                       transform: "translateY(-5px)",
-                      boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
                     },
                   }}
                 >
                   <Typography
                     variant="h6"
                     gutterBottom
-                    sx={{ fontWeight: "bold", color: est.color }}
+                    sx={{ fontWeight: "bold", color: "#1976d2" }}
                   >
                     {est.titulo}
                   </Typography>
-                  <Typography variant="body1">{est.institucion}</Typography>
+                  <Typography variant="body1" sx={{ color: "#333" }}>
+                    {est.institucion}
+                  </Typography>
                   <Typography
                     variant="body2"
-                    sx={{ color: "#ffeb3b", fontWeight: "500" }}
+                    sx={{ color: "#555", fontWeight: "500" }}
                   >
                     {est.detalle}
                   </Typography>
