@@ -1,4 +1,5 @@
 import { AppBar, Toolbar, Button, Typography } from "@mui/material";
+
 export default function Navbar() {
   return (
     <AppBar position="sticky" color="primary" sx={{ mb: 4 }}>
