@@ -62,34 +62,42 @@ export default function Contact() {
               boxShadow: "0 12px 32px rgba(0,0,0,0.15)",
             }}
           >
-            {/* Título */}
-            <Typography
-              variant="h3"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-                mb: 5,
-                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                position: "relative",
-                display: "inline-block",
-              }}
+            {/* Título mejorado */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              style={{ textAlign: "center", marginBottom: "3rem" }}
             >
-              Contáctame
-              <Box
-                component="span"
+              <Typography
+                variant="h4"
+                align="center"
                 sx={{
-                  position: "absolute",
-                  left: 0,
-                  bottom: -8,
-                  width: "100%",
-                  height: "4px",
-                  background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                  borderRadius: "8px",
+                  fontWeight: 700,
+                  letterSpacing: "0.02em",
+                  mb: 4,
+                  color: "#1976d2",
+                  position: "relative",
+                  display: "inline-block",
                 }}
-              />
-            </Typography>
+              >
+                Contáctame
+                <Box
+                  component="span"
+                  sx={{
+                    position: "absolute",
+                    left: "50%",
+                    bottom: -6,
+                    transform: "translateX(-50%)",
+                    width: "60%",
+                    height: "3px",
+                    background: "#1976d2",
+                    borderRadius: "6px",
+                  }}
+                />
+              </Typography>
+            </motion.div>
 
             {/* Redes sociales */}
             <Stack
@@ -109,23 +117,23 @@ export default function Contact() {
                   whileTap={{ scale: 0.9 }}
                 >
                   <IconButton
-  component={Link}
-  href={s.href}
-  target="_blank"
-  rel="noopener"
-  sx={{
-    color: s.color,
-    "&:hover": {
-      backgroundColor: "transparent",
-      transform: "scale(1.2)",
-    },
-    "&:focus, &:active, &:visited": {
-      color: s.color,
-    },
-  }}
->
-  {s.icon}
-</IconButton>
+                    component={Link}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener"
+                    sx={{
+                      color: s.color,
+                      "&:hover": {
+                        backgroundColor: "transparent",
+                        transform: "scale(1.2)",
+                      },
+                      "&:focus, &:active, &:visited": {
+                        color: s.color,
+                      },
+                    }}
+                  >
+                    {s.icon}
+                  </IconButton>
                 </motion.div>
               ))}
             </Stack>
