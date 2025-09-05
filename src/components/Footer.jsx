@@ -12,7 +12,7 @@ export default function Footer() {
       }}
     >
       <Typography variant="body1" sx={{ mb: 2 }}>
-        © {new Date().getFullYear()} Jorge Dev. Todos los derechos reservados.
+        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
       </Typography>
 
       {/* Redes sociales */}
