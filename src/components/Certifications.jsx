@@ -2,22 +2,27 @@ import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 
-const certificaciones = [
-  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#1976d2" /> },
-  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, icon: <BookOpen size={28} color="#d97706" /> },
-  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#22c55e" /> },
-  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, icon: <Brain size={28} color="#9333ea" /> },
-  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, icon: <Brain size={28} color="#1e40af" /> },
-  { titulo: "IA y Universidad: Docencia, Investigación y Transferencia", institucion: "UNIR & ESPE", año: 2024, icon: <GraduationCap size={28} color="#e11d48" /> },
+const estudios = [
+  {
+    titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
+    institucion: "Universidad Internacional de La Rioja, España",
+    detalle: "Nota TFM: 9 | Promedio final: 8.68",
+    icon: <GraduationCap size={28} color="#1976d2" />,
+  },
+  {
+    titulo: "🎓 Ingeniero en Sistemas",
+    institucion: "Universidad Indoamérica, Ecuador",
+    detalle: "Nota Tesis: 9.50 | Promedio final: 9",
+    icon: <GraduationCap size={28} color="#9333ea" />,
+  },
 ];
 
-export default function Certifications() {
+export default function About() {
   return (
     <Box
-      id="certifications"
+      id="about"
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
-        color: "#333",
         pt: 6,
         pb: 6,
       }}
@@ -39,7 +44,7 @@ export default function Certifications() {
             display: "inline-block",
           }}
         >
-          Certificaciones
+          Formación Académica
           <Box
             component="span"
             sx={{
@@ -56,23 +61,25 @@ export default function Certifications() {
         </Typography>
       </motion.div>
 
-      {/* Grid sin Container ni padding extra */}
-      <Grid container spacing={2} justifyContent="center">
-        {certificaciones.map((c, i) => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+      {/* Grid limpio, nada de Paper ni fondo */}
+      <Grid container spacing={3} justifyContent="center">
+        {estudios.map((est, i) => (
+          <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
+              transition={{ duration: 0.5, delay: i * 0.2 }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
-                {c.icon}
+                {est.icon}
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                  {c.titulo}
+                  {est.titulo}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {c.institucion} | {c.año}
+                  {est.institucion}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {est.detalle}
                 </Typography>
               </Box>
             </motion.div>
