@@ -46,9 +46,9 @@ export default function Footer() {
         </IconButton>
       </Stack>
 
-      <Typography variant="body2" sx={{ opacity: 0.8 }}>
-        Hecho con ❤️ y código limpio
+      <Typography variant="body2" sx={{ opacity: 0.85 }}>
+        Transformando ideas en aplicaciones efectivas
       </Typography>
     </Box>
   );
-        }
+}
