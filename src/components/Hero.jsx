@@ -12,14 +12,14 @@ export default function Hero() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)", // Fondo claro
+        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
         color: "#333",
         py: { xs: 8, md: 12 },
         textAlign: "center",
       }}
     >
       <Container maxWidth="md">
-        {/* Imagen/Avatar con animación flotante */}
+        {/* Imagen/Avatar con animación flotante y borde neón */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -28,7 +28,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
-            style={{ display: "inline-block" }}
+            style={{ display: "inline-block", borderRadius: "50%" }}
           >
             <Avatar
               src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
@@ -38,7 +38,8 @@ export default function Hero() {
                 height: 180,
                 mx: "auto",
                 mb: 3,
-                border: "4px solid #1976d2",
+                border: "4px solid",
+                borderImage: "linear-gradient(45deg, #1976d2, #ffeb3b, #e91e63) 1",
                 boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
               }}
             />
@@ -65,7 +66,7 @@ export default function Hero() {
             gutterBottom
             sx={{ fontWeight: 500, color: "#1976d2", mb: 2 }}
           >
-            💻 Full Stack Developer | DevOps Enthusiast
+            🎓 Máster en Ingeniería de Software y Sistemas Informáticos
           </Typography>
 
           <Typography
