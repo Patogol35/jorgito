@@ -19,7 +19,8 @@ export default function Certifications() {
       id="certifications"
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
-        py: 12,
+        py: 6, // menor espacio arriba y abajo
+        color: "#333",
       }}
     >
       <Container>
@@ -28,15 +29,13 @@ export default function Certifications() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "1.5rem" }}
+          style={{ textAlign: "center", marginBottom: "1rem" }} // menos espacio abajo
         >
           <Typography
             variant="h4"
             align="center"
             sx={{
               fontWeight: 700,
-              letterSpacing: "0.02em",
-              mb: 1.5,
               color: "#1976d2",
               position: "relative",
               display: "inline-block",
@@ -59,7 +58,7 @@ export default function Certifications() {
           </Typography>
         </motion.div>
 
-        {/* Grid sin Paper, todo sobre el gradiente */}
+        {/* Grid limpio */}
         <Grid container spacing={4} justifyContent="center">
           {certificaciones.map((c, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
