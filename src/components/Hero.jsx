@@ -13,14 +13,14 @@ export default function Hero() {
       }}
     >
       <Container maxWidth="md">
-        {/* Imagen/Avatar con animación flotante y borde neón degradado */}
+        {/* Avatar con animación flotante y borde sutil */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8 }}
         >
           <motion.div
-            animate={{ y: [0, -12, 0] }}
+            animate={{ y: [0, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
             style={{ display: "inline-block", borderRadius: "50%" }}
           >
@@ -32,9 +32,8 @@ export default function Hero() {
                 height: { xs: 140, md: 180 },
                 mx: "auto",
                 mb: 3,
-                border: "4px solid",
-                borderImage: "linear-gradient(45deg, #1976d2, #ffeb3b, #e91e63) 1",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
+                border: "3px solid #1976d2", // Borde único y profesional
+                boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
               }}
             />
           </motion.div>
