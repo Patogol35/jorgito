@@ -16,7 +16,7 @@ export default function Contact() {
     },
     {
       icon: <GitHub fontSize="large" />,
-      color: "#000",
+      color: "#fff", // 👈 en fondo oscuro conviene blanco
       href: "https://github.com/Patogol35",
     },
     {
@@ -35,9 +35,9 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        background: "transparent", // ✅ usa el fondo oscuro de App.jsx
         py: 12,
-        color: "#333",
+        color: "#fff", // 👈 texto blanco para contraste
       }}
     >
       <Container maxWidth="sm">
@@ -110,9 +110,6 @@ export default function Contact() {
                     "&:hover": {
                       backgroundColor: "transparent",
                       transform: "scale(1.2)",
-                    },
-                    "&:focus, &:active, &:visited": {
-                      color: s.color,
                     },
                   }}
                 >
