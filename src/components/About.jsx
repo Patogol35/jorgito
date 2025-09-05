@@ -16,45 +16,61 @@ export default function About() {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ py: 8 }}>
-      {/* Título mejorado con gradient + underline animado */}
+    <Container maxWidth="md" sx={{ py: 10 }}>
+      {/* Título impactante */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
+        initial={{ opacity: 0, y: -50 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ textAlign: "center", marginBottom: "3rem" }}
+        style={{ textAlign: "center", marginBottom: "4rem", position: "relative" }}
       >
-        <Typography
-          variant="h3"
+        {/* Decoración geométrica */}
+        <Box
           sx={{
-            fontWeight: "bold",
+            position: "absolute",
+            top: "-20px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "80px",
+            height: "6px",
+            borderRadius: "3px",
+            background: "linear-gradient(90deg, #42a5f5, #1976d2)",
+          }}
+        />
+
+        <Typography
+          variant="h2"
+          sx={{
+            fontWeight: 900,
+            letterSpacing: 3,
             textTransform: "uppercase",
-            letterSpacing: 2,
-            background: "linear-gradient(90deg, #1976d2, #42a5f5)",
+            fontSize: { xs: "2rem", md: "3.5rem" },
+            background: "linear-gradient(90deg, #1976d2, #42a5f5, #00e5ff)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
+            textShadow: "0px 2px 6px rgba(25,118,210,0.4)",
           }}
         >
           Educación y Formación
         </Typography>
 
-        {/* Subrayado animado */}
+        {/* Línea animada debajo */}
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: "120px" }}
+          whileInView={{ width: "200px" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
           style={{
-            height: "4px",
-            margin: "8px auto 0",
-            borderRadius: "2px",
-            background: "linear-gradient(90deg, #1976d2, #42a5f5)",
+            height: "5px",
+            margin: "14px auto 0",
+            borderRadius: "3px",
+            background: "linear-gradient(90deg, #1976d2, #42a5f5, #00e5ff)",
           }}
         />
       </motion.div>
 
-      {/* Aquí siguen tus tarjetas de estudios */}
+      {/* Tarjetas */}
       <Stack spacing={5}>
         {estudios.map((est, index) => (
           <motion.div
@@ -69,8 +85,8 @@ export default function About() {
               sx={{
                 p: 4,
                 borderRadius: "20px",
-                background: "rgba(255, 255, 255, 0.65)",
-                backdropFilter: "blur(10px)",
+                background: "rgba(255, 255, 255, 0.75)",
+                backdropFilter: "blur(12px)",
                 border: "2px solid transparent",
                 backgroundImage:
                   "linear-gradient(white, white), linear-gradient(135deg, #1976d2, #42a5f5)",
@@ -79,7 +95,7 @@ export default function About() {
                 transition: "all 0.4s ease",
                 "&:hover": {
                   transform: "translateY(-8px) scale(1.02)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
                 },
               }}
             >
