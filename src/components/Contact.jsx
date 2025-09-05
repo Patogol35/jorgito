@@ -1,12 +1,4 @@
-import {
-  Container,
-  Typography,
-  Paper,
-  Stack,
-  Box,
-  Link,
-  IconButton,
-} from "@mui/material";
+import { Container, Typography, Box, Link, IconButton, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 import { GitHub, LinkedIn, Facebook, Instagram, MailOutline } from "@mui/icons-material";
 
@@ -55,92 +47,80 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <Paper
-            elevation={6}
-            sx={{
-              p: 6,
-              borderRadius: "20px",
-              backdropFilter: "blur(12px)",
-              background: "rgba(255,255,255,0.9)",
-              textAlign: "center",
-              boxShadow: "0 12px 32px rgba(0,0,0,0.15)",
-            }}
+          {/* Título */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            style={{ textAlign: "center", marginBottom: "1.5rem" }}
           >
-            {/* Título */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              style={{ textAlign: "center", marginBottom: "1.5rem" }}
+            <Typography
+              variant="h4"
+              align="center"
+              sx={{
+                fontWeight: 700,
+                letterSpacing: "0.02em",
+                mb: 1.5,
+                color: "#1976d2",
+                position: "relative",
+                display: "inline-block",
+              }}
             >
-              <Typography
-                variant="h4"
-                align="center"
+              Contáctame
+              <Box
+                component="span"
                 sx={{
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  mb: 1.5,
-                  color: "#1976d2",
-                  position: "relative",
-                  display: "inline-block",
+                  position: "absolute",
+                  left: "50%",
+                  bottom: -6,
+                  transform: "translateX(-50%)",
+                  width: "60%",
+                  height: "3px",
+                  background: "#1976d2",
+                  borderRadius: "6px",
                 }}
-              >
-                Contáctame
-                <Box
-                  component="span"
-                  sx={{
-                    position: "absolute",
-                    left: "50%",
-                    bottom: -6,
-                    transform: "translateX(-50%)",
-                    width: "60%",
-                    height: "3px",
-                    background: "#1976d2",
-                    borderRadius: "6px",
-                  }}
-                />
-              </Typography>
-            </motion.div>
+              />
+            </Typography>
+          </motion.div>
 
-            {/* Redes sociales + correo */}
-            <Stack
-              direction="row"
-              spacing={3}
-              justifyContent="center"
-              alignItems="center"
-            >
-              {socialLinks.map((s, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: i * 0.2 }}
-                  whileHover={{ scale: 1.2, rotate: 8 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <IconButton
-                    component={Link}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener"
-                    sx={{
+          {/* Redes sociales + correo */}
+          <Stack
+            direction="row"
+            spacing={3}
+            justifyContent="center"
+            alignItems="center"
+          >
+            {socialLinks.map((s, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: i * 0.2 }}
+                whileHover={{ scale: 1.2, rotate: 8 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <IconButton
+                  component={Link}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener"
+                  sx={{
+                    color: s.color,
+                    "&:hover": {
+                      backgroundColor: "transparent",
+                      transform: "scale(1.2)",
+                    },
+                    "&:focus, &:active, &:visited": {
                       color: s.color,
-                      "&:hover": {
-                        backgroundColor: "transparent",
-                        transform: "scale(1.2)",
-                      },
-                      "&:focus, &:active, &:visited": {
-                        color: s.color,
-                      },
-                    }}
-                  >
-                    {s.icon}
-                  </IconButton>
-                </motion.div>
-              ))}
-            </Stack>
-          </Paper>
+                    },
+                  }}
+                >
+                  {s.icon}
+                </IconButton>
+              </motion.div>
+            ))}
+          </Stack>
         </motion.div>
       </Container>
     </Box>
