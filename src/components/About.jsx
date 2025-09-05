@@ -1,14 +1,12 @@
-import { Container, Typography, Paper, Stack } from "@mui/material";
+import { Container, Typography, Paper, Stack, Box } from "@mui/material";
 import { motion } from "framer-motion";
 
-// Variantes para animaciones en cascada
+// Variantes para animación en cascada
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.25, // efecto cascada
-    },
+    transition: { staggerChildren: 0.3 },
   },
 };
 
@@ -17,7 +15,7 @@ const itemVariants = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+    transition: { duration: 0.7, ease: "easeOut" },
   },
 };
 
@@ -36,8 +34,8 @@ export default function About() {
   ];
 
   return (
-    <Container maxWidth="md">
-      {/* Título con fade elegante */}
+    <Container maxWidth="md" sx={{ py: 8 }}>
+      {/* Título animado */}
       <motion.div
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -49,55 +47,75 @@ export default function About() {
           gutterBottom
           sx={{
             textAlign: "center",
-            mb: 6,
+            mb: 8,
             fontWeight: "bold",
-            color: "#1976d2",
+            color: "#0d47a1",
             letterSpacing: 1,
+            textTransform: "uppercase",
           }}
         >
           Educación y Formación
         </Typography>
       </motion.div>
 
-      {/* Contenedor con efecto cascada */}
+      {/* Cards con efecto Glassmorphism */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
       >
-        <Stack spacing={4}>
+        <Stack spacing={5}>
           {estudios.map((est, index) => (
             <motion.div key={index} variants={itemVariants}>
               <Paper
-                elevation={3}
+                elevation={0}
                 sx={{
                   p: 4,
-                  borderRadius: "16px",
-                  background: "linear-gradient(135deg, #ffffff, #f7f9fc)",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  borderRadius: "20px",
+                  background: "rgba(255, 255, 255, 0.65)",
+                  backdropFilter: "blur(10px)",
+                  border: "2px solid transparent",
+                  backgroundImage:
+                    "linear-gradient(white, white), linear-gradient(135deg, #1976d2, #42a5f5)",
+                  backgroundOrigin: "border-box",
+                  backgroundClip: "padding-box, border-box",
+                  transition: "all 0.4s ease",
                   "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: "0 12px 28px rgba(0,0,0,0.12)",
+                    transform: "translateY(-8px) scale(1.02)",
+                    boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
                   },
                 }}
               >
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ fontWeight: "bold", color: "#1976d2" }}
-                >
-                  {est.titulo}
-                </Typography>
-                <Typography variant="body1" sx={{ color: "#333" }}>
-                  {est.institucion}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: "#555", fontWeight: "500" }}
-                >
-                  {est.detalle}
-                </Typography>
+                <Box>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{
+                      fontWeight: "bold",
+                      color: "#1976d2",
+                      fontSize: "1.25rem",
+                    }}
+                  >
+                    {est.titulo}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{ color: "#222", fontSize: "1rem", mb: 1 }}
+                  >
+                    {est.institucion}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#555",
+                      fontWeight: "600",
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    {est.detalle}
+                  </Typography>
+                </Box>
               </Paper>
             </motion.div>
           ))}
@@ -105,4 +123,4 @@ export default function About() {
       </motion.div>
     </Container>
   );
-                  }
+}
