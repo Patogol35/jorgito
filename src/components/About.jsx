@@ -17,7 +17,7 @@ export default function About() {
 
   return (
     <Container maxWidth="md" sx={{ py: 10 }}>
-      {/* Título principal con tamaño más pequeño */}
+      {/* Título principal */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ export default function About() {
         style={{ textAlign: "center", marginBottom: "4rem" }}
       >
         <Typography
-          variant="h4" // más pequeño que h3
+          variant="h4"
           align="center"
           sx={{
             fontWeight: 700,
@@ -54,7 +54,7 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Tarjetas de Educación */}
+      {/* Tarjetas de Educación con aparición secuencial */}
       <Stack spacing={5}>
         {estudios.map((est, index) => (
           <motion.div
@@ -62,7 +62,7 @@ export default function About() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            transition={{ duration: 0.6, delay: index * 0.3 }} // delay secuencial
           >
             <Paper
               elevation={10}
