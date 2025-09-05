@@ -26,7 +26,8 @@ export default function Navbar() {
   }, []);
 
   const menuItems = [
-    { label: "Sobre mí", href: "#about" },
+    { label: "Sobre mí", href: "#hero" },
+    { label: "Educación y Formación", href: "#about" },
     { label: "Tecnologías", href: "#skills" },
     { label: "Certificaciones", href: "#certifications" },
     { label: "Contacto", href: "#contact" },
