@@ -1,3 +1,4 @@
+// components/Contact.jsx
 import {
   Container,
   Typography,
@@ -5,6 +6,7 @@ import {
   Button,
   Paper,
   Stack,
+  Box,
 } from "@mui/material";
 import { Email, Person } from "@mui/icons-material";
 import { motion } from "framer-motion";
@@ -33,8 +35,16 @@ export default function Contact() {
             </Typography>
             <form>
               <Stack spacing={2}>
-                <TextField fullWidth label="Nombre" InputProps={{ startAdornment: <Person sx={{ mr: 1 }} /> }} />
-                <TextField fullWidth label="Email" InputProps={{ startAdornment: <Email sx={{ mr: 1 }} /> }} />
+                <TextField
+                  fullWidth
+                  label="Nombre"
+                  InputProps={{ startAdornment: <Person sx={{ mr: 1 }} /> }}
+                />
+                <TextField
+                  fullWidth
+                  label="Email"
+                  InputProps={{ startAdornment: <Email sx={{ mr: 1 }} /> }}
+                />
                 <TextField fullWidth label="Mensaje" multiline rows={4} />
                 <Button variant="contained" size="large">
                   Enviar
