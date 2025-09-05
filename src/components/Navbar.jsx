@@ -30,6 +30,7 @@ export default function Navbar() {
           Jorge Dev
         </Typography>
         <Button color="inherit" href="#about">Sobre mí</Button>
+        <Button color="inherit" href="#skills">Tecnologías</Button>
         <Button color="inherit" href="#projects">Proyectos</Button>
         <Button color="inherit" href="#contact">Contacto</Button>
       </Toolbar>
