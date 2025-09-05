@@ -1,12 +1,11 @@
-
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
-    <footer style={{ textAlign: "center", padding: "20px", background: "#f5f5f5" }}>
+    <Box sx={{ py: 3, textAlign: "center", bgcolor: "#1976d2", color: "#fff" }}>
       <Typography variant="body2">
-        © {new Date().getFullYear()} Andres | Todos los derechos reservados
+        © {new Date().getFullYear()} Jorge Dev. Todos los derechos reservados.
       </Typography>
-    </footer>
+    </Box>
   );
 }
