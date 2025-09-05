@@ -7,6 +7,15 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import { Box, Paper } from "@mui/material";
 
+const paperStyles = {
+  m: 2,
+  p: { xs: 3, md: 6 },
+  borderRadius: 3,
+  backdropFilter: "blur(12px)",
+  background: "rgba(25,25,30,0.85)", // más contraste para que el texto se vea
+  color: "#fff", // asegurar texto blanco
+};
+
 function App() {
   return (
     <Box
@@ -19,72 +28,27 @@ function App() {
       <Navbar />
 
       {/* Hero */}
-      <Paper
-        elevation={4}
-        sx={{
-          m: 2,
-          p: { xs: 3, md: 6 },
-          borderRadius: 3,
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.05)",
-        }}
-      >
+      <Paper elevation={4} sx={paperStyles}>
         <Hero />
       </Paper>
 
       {/* About */}
-      <Paper
-        elevation={4}
-        sx={{
-          m: 2,
-          p: { xs: 3, md: 6 },
-          borderRadius: 3,
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.05)",
-        }}
-      >
+      <Paper elevation={4} sx={paperStyles}>
         <About />
       </Paper>
 
       {/* Skills */}
-      <Paper
-        elevation={4}
-        sx={{
-          m: 2,
-          p: { xs: 3, md: 6 },
-          borderRadius: 3,
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.05)",
-        }}
-      >
+      <Paper elevation={4} sx={paperStyles}>
         <Skills />
       </Paper>
 
       {/* Certifications */}
-      <Paper
-        elevation={4}
-        sx={{
-          m: 2,
-          p: { xs: 3, md: 6 },
-          borderRadius: 3,
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.05)",
-        }}
-      >
+      <Paper elevation={4} sx={paperStyles}>
         <Certifications />
       </Paper>
 
       {/* Contact */}
-      <Paper
-        elevation={4}
-        sx={{
-          m: 2,
-          p: { xs: 3, md: 6 },
-          borderRadius: 3,
-          backdropFilter: "blur(12px)",
-          background: "rgba(255,255,255,0.05)",
-        }}
-      >
+      <Paper elevation={4} sx={paperStyles}>
         <Contact />
       </Paper>
 
