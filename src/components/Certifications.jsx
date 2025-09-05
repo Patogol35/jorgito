@@ -2,29 +2,24 @@ import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 
-const estudios = [
-  {
-    titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
-    institucion: "Universidad Internacional de La Rioja, España",
-    detalle: "Nota TFM: 9 | Promedio final: 8.68",
-    icon: <GraduationCap size={28} color="#1976d2" />,
-  },
-  {
-    titulo: "🎓 Ingeniero en Sistemas",
-    institucion: "Universidad Indoamérica, Ecuador",
-    detalle: "Nota Tesis: 9.50 | Promedio final: 9",
-    icon: <GraduationCap size={28} color="#9333ea" />,
-  },
+const certificaciones = [
+  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#1976d2" /> },
+  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, icon: <BookOpen size={28} color="#d97706" /> },
+  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#22c55e" /> },
+  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, icon: <Brain size={28} color="#9333ea" /> },
+  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, icon: <Brain size={28} color="#1e40af" /> },
+  { titulo: "IA y Universidad: Docencia, Investigación y Transferencia", institucion: "UNIR & ESPE", año: 2024, icon: <GraduationCap size={28} color="#e11d48" /> },
 ];
 
-export default function About() {
+export default function Certifications() {
   return (
     <Box
-      id="about"
+      id="certifications"
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         pt: 6,
         pb: 6,
+        color: "#333",
       }}
     >
       {/* Título */}
@@ -44,7 +39,7 @@ export default function About() {
             display: "inline-block",
           }}
         >
-          Formación Académica
+          Certificaciones
           <Box
             component="span"
             sx={{
@@ -61,25 +56,23 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Grid limpio, nada de Paper ni fondo */}
+      {/* Grid limpio */}
       <Grid container spacing={3} justifyContent="center">
-        {estudios.map((est, i) => (
+        {certificaciones.map((c, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -5, scale: 1.05 }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
-                {est.icon}
+                {c.icon}
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                  {est.titulo}
+                  {c.titulo}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {est.institucion}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {est.detalle}
+                  {c.institucion} | {c.año}
                 </Typography>
               </Box>
             </motion.div>
