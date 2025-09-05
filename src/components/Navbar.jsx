@@ -5,15 +5,12 @@ import {
   Typography,
   Box,
   IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
+  Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 
 export default function Navbar() {
@@ -47,7 +44,7 @@ export default function Navbar() {
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Logo con icono */}
+          {/* Logo */}
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Typography
               variant="h6"
@@ -98,46 +95,73 @@ export default function Navbar() {
         </Toolbar>
       </AppBar>
 
-      {/* Drawer móvil */}
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={() => setOpen(false)}
-        PaperProps={{
-          sx: {
-            background: "linear-gradient(180deg, #f5f5f5, #e8f0ff)",
-            width: 260,
-          },
-        }}
-      >
-        <Box sx={{ p: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", mb: 3, color: "#1976d2" }}
+      {/* Menú móvil moderno */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
+              background: "rgba(0,0,0,0.4)",
+              zIndex: 1300,
+            }}
+            onClick={() => setOpen(false)}
           >
-            Navegación
-          </Typography>
-          <List>
-            {menuItems.map((item) => (
-              <ListItem key={item.href} disablePadding>
-                <ListItemButton
-                  component="a"
-                  href={item.href}
-                  onClick={() => setOpen(false)}
-                  sx={{
-                    "&:hover": { backgroundColor: "rgba(25,118,210,0.1)" },
-                  }}
-                >
-                  <ListItemText
-                    primary={item.label}
-                    primaryTypographyProps={{ fontWeight: 500 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              style={{
+                width: "260px",
+                height: "100%",
+                background: "#f5f5f5",
+                padding: "2rem 1rem",
+                position: "absolute",
+                top: 0,
+                right: 0,
+                display: "flex",
+                flexDirection: "column",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Stack direction="row" justifyContent="space-between" mb={4}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1976d2" }}>
+                  Menú
+                </Typography>
+                <IconButton onClick={() => setOpen(false)}>
+                  <CloseIcon />
+                </IconButton>
+              </Stack>
+
+              <Stack spacing={2}>
+                {menuItems.map((item) => (
+                  <Button
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setOpen(false)}
+                    sx={{
+                      justifyContent: "flex-start",
+                      textTransform: "none",
+                      fontWeight: 600,
+                      color: "#333",
+                      "&:hover": { color: "#1976d2", backgroundColor: "transparent" },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </Stack>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
-}
+                }
