@@ -54,10 +54,10 @@ export default function Certifications() {
             🎓 Certificaciones
           </Typography>
 
-          {/* Grid de certificaciones */}
-          <Grid container spacing={4}>
+          {/* Grid centrado */}
+          <Grid container spacing={4} justifyContent="center">
             {certificaciones.map((c, i) => (
-              <Grid item xs={12} sm={6} md={4} key={i}>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
                 <motion.div whileHover={{ scale: 1.05 }}>
                   <Paper
                     elevation={6}
@@ -71,7 +71,10 @@ export default function Certifications() {
                       "&:hover": { background: "#e3f2fd" },
                     }}
                   >
-                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: "bold", mb: 1 }}
+                    >
                       {c.titulo}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -86,4 +89,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-        }
+}
