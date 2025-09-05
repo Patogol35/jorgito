@@ -1,43 +1,66 @@
 // components/About.jsx
-import { Container, Typography, Grid, Box } from "@mui/material";
+import { Container, Typography, Box, Paper, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <Container>
-      <Typography variant="h4" fontWeight="bold" textAlign="center" gutterBottom>
-        Sobre mí
-      </Typography>
-      <Grid container spacing={4} alignItems="center">
-        <Grid item xs={12} md={6}>
-          <motion.div
-            initial={{ x: -50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
+    <Box
+      id="about"
+      sx={{
+        background: "linear-gradient(135deg, #0d1117, #1c1f2a)", // fondo oscuro premium
+        py: 10,
+        color: "#fff",
+      }}
+    >
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Paper
+            elevation={8}
+            sx={{
+              p: 5,
+              borderRadius: "20px",
+              background: "rgba(25, 25, 35, 0.95)",
+              color: "#fff",
+            }}
           >
-            <Box
-              component="img"
-              src="/assets/about.jpg"
-              alt="Sobre mí"
-              sx={{ width: "100%", borderRadius: "16px", boxShadow: 4 }}
-            />
-          </motion.div>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <Typography variant="body1" paragraph>
-              Soy un desarrollador Full Stack con experiencia en tecnologías modernas, apasionado por crear aplicaciones escalables y seguras.
+            <Typography variant="h4" gutterBottom sx={{ color: "#ffeb3b" }}>
+              Educación y Formación
             </Typography>
-            <Typography variant="body1" paragraph>
-              Mi objetivo es aportar valor en cada proyecto integrando innovación, eficiencia y una visión estratégica.
-            </Typography>
-          </motion.div>
-        </Grid>
-      </Grid>
-    </Container>
+
+            <Stack spacing={4}>
+              {/* Máster */}
+              <Box>
+                <Typography variant="h6" color="#42a5f5">
+                  💻 Máster en Ingeniería de Software y Sistemas Informáticos
+                </Typography>
+                <Typography variant="body1">
+                  Universidad Internacional de La Rioja, España
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#ffeb3b" }}>
+                  Nota TFM: 9 | Promedio final: 8.68
+                </Typography>
+              </Box>
+
+              {/* Ingeniería */}
+              <Box>
+                <Typography variant="h6" color="#42a5f5">
+                  🎓 Ingeniero en Sistemas
+                </Typography>
+                <Typography variant="body1">
+                  Universidad Indoamérica, Ecuador
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#ffeb3b" }}>
+                  Nota Tesis: 9.50 | Promedio final: 9
+                </Typography>
+              </Box>
+            </Stack>
+          </Paper>
+        </motion.div>
+      </Container>
+    </Box>
   );
-}
+              }
