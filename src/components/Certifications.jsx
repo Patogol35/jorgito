@@ -28,7 +28,7 @@ export default function Certifications() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
           <Typography
             variant="h4"
@@ -36,7 +36,7 @@ export default function Certifications() {
             sx={{
               fontWeight: 700,
               letterSpacing: "0.02em",
-              mb: 4,
+              mb: 1.5,
               color: "#1976d2",
               position: "relative",
               display: "inline-block",
@@ -59,7 +59,7 @@ export default function Certifications() {
           </Typography>
         </motion.div>
 
-        {/* Grid limpio sin Paper ni fondo */}
+        {/* Grid sin Paper, todo sobre el gradiente */}
         <Grid container spacing={4} justifyContent="center">
           {certificaciones.map((c, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
@@ -69,7 +69,7 @@ export default function Certifications() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: -5, scale: 1.05 }}
               >
-                <Box sx={{ textAlign: "center" }}> 
+                <Box sx={{ textAlign: "center" }}>
                   <Box sx={{ mb: 1 }}>{c.icon}</Box>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 0.5 }}>
                     {c.titulo}
@@ -85,4 +85,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-              }
+}
