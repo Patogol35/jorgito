@@ -81,7 +81,7 @@ export default function Hero() {
             <Button
               variant="contained"
               size="large"
-              href="#projects"
+              href="#skills"
               sx={{
                 background: "#1976d2",
                 fontWeight: "bold",
@@ -89,7 +89,7 @@ export default function Hero() {
                 "&:hover": { background: "#125aa0" },
               }}
             >
-              🚀 Ver Proyectos
+              ⚡ Tecnologías
             </Button>
             <Button
               variant="outlined"
@@ -110,4 +110,4 @@ export default function Hero() {
       </Container>
     </Box>
   );
-                        }
+              }
