@@ -14,7 +14,13 @@ function App() {
       <Navbar />
       
       {/* Hero */}
-      <Box id="hero">
+      <Box
+        id="hero"
+        sx={{
+          py: 10,
+          bgcolor: "#0d1117", // opcional, si quieres fondo homogéneo
+        }}
+      >
         <Hero />
       </Box>
 
@@ -50,14 +56,6 @@ function App() {
       >
         <Projects />
       </Box>
-
-      {/* Separador suave */}
-      <Box
-        sx={{
-          height: 20,
-          background: "linear-gradient(to right, #f5f5f5, #e8f0ff)",
-        }}
-      />
 
       {/* Certifications */}
       <Box
