@@ -19,14 +19,7 @@ const estudios = [
 
 export default function About() {
   return (
-    <Box
-      id="about"
-      sx={{
-        background: "transparent", // ✅ sin fondo propio
-        pt: 6,
-        pb: 6,
-      }}
-    >
+    <Box id="about" sx={{ py: 4 }}>
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -61,7 +54,7 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Grid limpio */}
+      {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
