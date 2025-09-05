@@ -16,7 +16,7 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        background: "linear-gradient(135deg, #0d1117, #1c1f2a)", // fondo oscuro premium
+        background: "linear-gradient(135deg, #0d1117, #1c1f2a)",
         py: 10,
         color: "#fff",
       }}
@@ -97,28 +97,6 @@ export default function Contact() {
                   patogol3535@gmail.com
                 </Link>
               </Typography>
-
-              <Divider sx={{ width: "60%", borderColor: "#555", my: 3 }} />
-
-              {/* Tech Stack / Herramientas */}
-              <Typography variant="h5" gutterBottom sx={{ color: "#42a5f5" }}>
-                🧰 Tech Stack & Herramientas
-              </Typography>
-
-              <Stack spacing={1} alignItems="center">
-                <Typography variant="body1">
-                  💻 React | Spring Boot | Python
-                </Typography>
-                <Typography variant="body1">
-                  🗄️ MySQL | PostgreSQL | Elasticsearch
-                </Typography>
-                <Typography variant="body1">
-                  🛠️ Postman | AWS | Microsoft Office | Máquinas Virtuales
-                </Typography>
-                <Typography variant="body1">
-                  🚀 Despliegue: Vercel | Render
-                </Typography>
-              </Stack>
             </Stack>
           </Paper>
         </motion.div>
