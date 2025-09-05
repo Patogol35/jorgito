@@ -1,3 +1,4 @@
+// components/Footer.jsx
 import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
