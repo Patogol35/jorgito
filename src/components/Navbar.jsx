@@ -15,6 +15,7 @@ import CodeIcon from "@mui/icons-material/Code";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const menuItems = [
     { label: "Sobre mí", href: "#hero" },
@@ -23,6 +24,12 @@ export default function Navbar() {
     { label: "Certificaciones", href: "#certifications" },
     { label: "Contacto", href: "#contact" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const menuVariants = {
     hidden: { x: "100%" },
@@ -41,18 +48,22 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar sólido */}
+      {/* Navbar flotante */}
       <AppBar
         position="fixed"
+        elevation={scrolled ? 6 : 2}
         sx={{
-          backgroundColor: "#1976d2",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+          backgroundColor: scrolled ? "#125aa0" : "#1976d2",
+          boxShadow: scrolled
+            ? "0 6px 20px rgba(0,0,0,0.25)"
+            : "0 4px 12px rgba(0,0,0,0.2)",
+          transition: "0.3s",
           zIndex: 1400,
         }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Logo */}
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          {/* Logo con animación */}
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
             <Typography
               variant="h6"
               sx={{
@@ -64,7 +75,10 @@ export default function Navbar() {
                 cursor: "pointer",
               }}
             >
-              <CodeIcon sx={{ mr: 1 }} /> Jorge Dev
+              <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
+                <CodeIcon sx={{ mr: 1 }} />
+              </motion.div>
+              Jorge Dev
             </Typography>
           </motion.div>
 
@@ -83,7 +97,20 @@ export default function Navbar() {
                     fontWeight: 600,
                     textTransform: "none",
                     fontSize: "1rem",
-                    "&:hover": { backgroundColor: "rgba(255,255,255,0.15)" },
+                    position: "relative",
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      width: 0,
+                      height: 2,
+                      bottom: 0,
+                      left: 0,
+                      backgroundColor: "#ffeb3b",
+                      transition: "0.3s",
+                    },
+                    "&:hover::after": {
+                      width: "100%",
+                    },
                   }}
                 >
                   {item.label}
@@ -93,13 +120,16 @@ export default function Navbar() {
           </Box>
 
           {/* Botón móvil */}
-          <IconButton sx={{ display: { xs: "block", md: "none" } }} onClick={() => setOpen(true)}>
+          <IconButton
+            sx={{ display: { xs: "block", md: "none" } }}
+            onClick={() => setOpen(true)}
+          >
             <MenuIcon sx={{ color: "#fff" }} fontSize="large" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Menú móvil moderno */}
+      {/* Menú móvil ultra épico */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -125,7 +155,7 @@ export default function Navbar() {
               style={{
                 width: "280px",
                 height: "100%",
-                background: "linear-gradient(180deg, #1565c0, #1976d2)",
+                background: "linear-gradient(180deg, #0d47a1, #1976d2)",
                 borderRadius: "12px 0 0 12px",
                 padding: "2rem",
                 position: "absolute",
@@ -133,7 +163,7 @@ export default function Navbar() {
                 right: 0,
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
+                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -155,10 +185,10 @@ export default function Navbar() {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover={{ scale: 1.05, color: "#ffeb3b" }}
+                    whileHover={{ scale: 1.07, color: "#ffeb3b" }}
                     onClick={() => setOpen(false)}
                     style={{
-                      fontSize: "1.2rem",
+                      fontSize: "1.25rem",
                       fontWeight: 600,
                       textDecoration: "none",
                       color: "#fff",
@@ -175,4 +205,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                }
+            }
