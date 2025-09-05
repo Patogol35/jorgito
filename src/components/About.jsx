@@ -1,3 +1,4 @@
+// components/About.jsx
 import { Container, Typography, Paper, Grid } from "@mui/material";
 import { motion } from "framer-motion";
 
