@@ -1,4 +1,4 @@
-import { Container, Typography, Grid, Paper, Box } from "@mui/material";
+                    import { Container, Typography, Grid, Paper, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 
@@ -23,21 +23,22 @@ export default function Certifications() {
       }}
     >
       <Container>
-        {/* Título */}
+        {/* Título mejorado con animación */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Typography
-            variant="h3"
+            variant="h4" // tamaño compacto como los otros títulos
             align="center"
             sx={{
-              fontWeight: "bold",
-              mb: 6,
-              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+              mb: 4,
+              color: "#1976d2",
               position: "relative",
               display: "inline-block",
             }}
@@ -47,56 +48,58 @@ export default function Certifications() {
               component="span"
               sx={{
                 position: "absolute",
-                left: 0,
+                left: "50%",
                 bottom: -6,
-                width: "100%",
-                height: "4px",
-                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                borderRadius: "8px",
+                transform: "translateX(-50%)",
+                width: "60%",
+                height: "3px",
+                background: "#1976d2",
+                borderRadius: "6px",
               }}
             />
           </Typography>
-
-          {/* Grid de Certificaciones */}
-          <Grid container spacing={4} justifyContent="center">
-            {certificaciones.map((c, i) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                >
-                  <Paper
-                    elevation={10}
-                    sx={{
-                      p: 3,
-                      borderRadius: "20px",
-                      textAlign: "center",
-                      backdropFilter: "blur(10px)",
-                      background: "rgba(255, 255, 255, 0.7)",
-                      boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
-                      cursor: "default",
-                      transition: "all 0.3s ease-in-out",
-                      "&:hover": {
-                        background: "rgba(255, 255, 255, 0.9)",
-                        boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
-                      },
-                    }}
-                  >
-                    <Box sx={{ mb: 2 }}>{c.icon}</Box>
-                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-                      {c.titulo}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {c.institucion} | {c.año}
-                    </Typography>
-                  </Paper>
-                </motion.div>
-              </Grid>
-            ))}
-          </Grid>
         </motion.div>
+
+        {/* Grid de Certificaciones */}
+        <Grid container spacing={4} justifyContent="center">
+          {certificaciones.map((c, i) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                <Paper
+                  elevation={10}
+                  sx={{
+                    p: 3,
+                    borderRadius: "20px",
+                    textAlign: "center",
+                    backdropFilter: "blur(10px)",
+                    background: "rgba(255, 255, 255, 0.7)",
+                    boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
+                    cursor: "default",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      background: "rgba(255, 255, 255, 0.9)",
+                      boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
+                    },
+                  }}
+                >
+                  <Box sx={{ mb: 2 }}>{c.icon}</Box>
+                  <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                    {c.titulo}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {c.institucion} | {c.año}
+                  </Typography>
+                </Paper>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </Box>
   );
