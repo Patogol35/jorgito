@@ -1,18 +1,24 @@
-
-import { Container, Typography, Box, Avatar } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  Avatar,
+  Button,
+  Stack,
+} from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #1976d2, #42a5f5)",
-        color: "#fff",
-        py: 10,
+        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)", // Fondo claro
+        color: "#333",
+        py: { xs: 8, md: 12 },
         textAlign: "center",
       }}
     >
-      <Container>
+      <Container maxWidth="md">
         {/* Imagen/Avatar */}
         <motion.div
           initial={{ scale: 0 }}
@@ -23,12 +29,12 @@ export default function Hero() {
             src="/assets/profile.png"
             alt="Jorge"
             sx={{
-              width: 150,
-              height: 150,
+              width: 180,
+              height: 180,
               mx: "auto",
               mb: 3,
               border: "4px solid white",
-              boxShadow: 3,
+              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
             }}
           />
         </motion.div>
@@ -39,25 +45,69 @@ export default function Hero() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <Typography variant="h3" fontWeight="bold" gutterBottom>
-            Hola! Soy Jorge Patricio Santamaría Cherrez
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            gutterBottom
+            sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
+          >
+            Hola, soy <span style={{ color: "#1976d2" }}>Jorge Santamaría</span>
           </Typography>
 
-          <Typography variant="h5" color="secondary" gutterBottom>
-            💻 Máster en Ingeniería de Software y Sistemas Informáticos
+          <Typography
+            variant="h5"
+            gutterBottom
+            sx={{ fontWeight: 500, color: "#1976d2", mb: 2 }}
+          >
+            💻 Full Stack Developer | DevOps Enthusiast
           </Typography>
 
-          <Typography variant="body1" paragraph sx={{ maxWidth: 700, mx: "auto", opacity: 0.9 }}>
-            📍 Apasionado por el desarrollo Full Stack, la gestión de entornos DevOps
-            y la Innovación Tecnológica.
+          <Typography
+            variant="body1"
+            paragraph
+            sx={{ maxWidth: 700, mx: "auto", opacity: 0.8, mb: 3 }}
+          >
+            Transformo ideas en soluciones digitales eficientes, seguras y
+            escalables. Apasionado por la innovación tecnológica, siempre
+            buscando aportar valor y optimizar procesos en cada proyecto.
           </Typography>
 
-          <Typography variant="body1" paragraph sx={{ maxWidth: 700, mx: "auto", opacity: 0.9 }}>
-            Me destaco por integrar soluciones innovadoras, optimizar procesos y aportar valor en cada proyecto mediante un enfoque estratégico y orientado a resultados. 
-            Mi compromiso es transformar ideas en aplicaciones eficientes, seguras y escalables, siempre buscando la excelencia y el crecimiento continuo.
-          </Typography>
+          {/* CTA Buttons */}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            justifyContent="center"
+            spacing={2}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              href="#projects"
+              sx={{
+                background: "#1976d2",
+                fontWeight: "bold",
+                px: 4,
+                "&:hover": { background: "#125aa0" },
+              }}
+            >
+              🚀 Ver Proyectos
+            </Button>
+            <Button
+              variant="outlined"
+              size="large"
+              href="#contact"
+              sx={{
+                borderColor: "#1976d2",
+                color: "#1976d2",
+                fontWeight: "bold",
+                px: 4,
+                "&:hover": { background: "#1976d2", color: "#fff" },
+              }}
+            >
+              📩 Contacto
+            </Button>
+          </Stack>
         </motion.div>
       </Container>
     </Box>
   );
-}
+                        }
