@@ -1,5 +1,5 @@
-import { Container, Typography, Button, Box, Avatar, Stack } from "@mui/material";
-import { Github, Linkedin, Mail } from "lucide-react";
+      // components/Hero.jsx
+import { Container, Typography, Box, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function Hero() {
@@ -57,39 +57,6 @@ export default function Hero() {
             Mi compromiso es transformar ideas en aplicaciones eficientes, seguras y escalables, siempre buscando la excelencia y el crecimiento continuo.
           </Typography>
         </motion.div>
-
-        {/* Botones de contacto y redes */}
-        <Stack direction="row" justifyContent="center" spacing={2} sx={{ mt: 4 }}>
-          <Button
-            variant="contained"
-            size="large"
-            startIcon={<Mail size={20} />}
-            href="mailto:patogol3535@gmail.com"
-            sx={{ borderRadius: "50px", bgcolor: "#ffeb3b", color: "#000" }}
-          >
-            Contáctame
-          </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<Github size={20} />}
-            href="https://github.com/Patogol35"
-            target="_blank"
-            sx={{ borderRadius: "50px", color: "#fff", borderColor: "#fff" }}
-          >
-            GitHub
-          </Button>
-          <Button
-            variant="outlined"
-            size="large"
-            startIcon={<Linkedin size={20} />}
-            href="https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2"
-            target="_blank"
-            sx={{ borderRadius: "50px", color: "#fff", borderColor: "#fff" }}
-          >
-            LinkedIn
-          </Button>
-        </Stack>
       </Container>
     </Box>
   );
