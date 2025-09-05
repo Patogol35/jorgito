@@ -16,26 +16,25 @@ export default function About() {
   ];
 
   return (
-    <Container maxWidth="md" sx={{ py: 10 }}>
+    <Container maxWidth="md" sx={{ py: 12 }}>
       {/* Título impactante */}
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
+        initial={{ opacity: 0, y: -60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        style={{ textAlign: "center", marginBottom: "4rem", position: "relative" }}
+        style={{ textAlign: "center", marginBottom: "5rem", position: "relative" }}
       >
-        {/* Decoración geométrica */}
         <Box
           sx={{
             position: "absolute",
-            top: "-20px",
+            top: "-25px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "80px",
+            width: "100px",
             height: "6px",
             borderRadius: "3px",
-            background: "linear-gradient(90deg, #42a5f5, #1976d2)",
+            background: "linear-gradient(90deg, #42a5f5, #1976d2, #6d28d9)",
           }}
         />
 
@@ -49,69 +48,72 @@ export default function About() {
             background: "linear-gradient(90deg, #1976d2, #42a5f5, #00e5ff)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            textShadow: "0px 2px 6px rgba(25,118,210,0.4)",
+            textShadow: "0px 3px 8px rgba(25,118,210,0.3)",
           }}
         >
           Educación y Formación
         </Typography>
 
-        {/* Línea animada debajo */}
+        {/* Línea animada */}
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: "200px" }}
+          whileInView={{ width: "220px" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
           style={{
-            height: "5px",
-            margin: "14px auto 0",
+            height: "6px",
+            margin: "16px auto 0",
             borderRadius: "3px",
             background: "linear-gradient(90deg, #1976d2, #42a5f5, #00e5ff)",
           }}
         />
       </motion.div>
 
-      {/* Tarjetas */}
-      <Stack spacing={5}>
+      {/* Tarjetas con efecto premium */}
+      <Stack spacing={6}>
         {estudios.map((est, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            transition={{ duration: 0.7, delay: index * 0.2 }}
           >
             <Paper
               elevation={0}
               sx={{
-                p: 4,
+                p: 5,
                 borderRadius: "20px",
-                background: "rgba(255, 255, 255, 0.75)",
-                backdropFilter: "blur(12px)",
+                background: "rgba(255,255,255,0.8)",
+                backdropFilter: "blur(14px)",
                 border: "2px solid transparent",
                 backgroundImage:
-                  "linear-gradient(white, white), linear-gradient(135deg, #1976d2, #42a5f5)",
+                  "linear-gradient(white, white), linear-gradient(135deg, #1976d2, #42a5f5, #6d28d9)",
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
-                transition: "all 0.4s ease",
+                transition: "all 0.5s ease",
                 "&:hover": {
-                  transform: "translateY(-8px) scale(1.02)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.2)",
+                  transform: "translateY(-10px) scale(1.03)",
+                  boxShadow: "0 14px 36px rgba(0,0,0,0.25)",
                 },
               }}
             >
               <Typography
                 variant="h6"
                 gutterBottom
-                sx={{ fontWeight: "bold", color: "#1976d2" }}
+                sx={{ fontWeight: "bold", color: "#1976d2", mb: 1 }}
               >
                 {est.titulo}
               </Typography>
-              <Typography variant="body1" sx={{ color: "#222" }}>
+              <Typography
+                variant="body1"
+                sx={{ color: "#222", mb: 1 }}
+              >
                 {est.institucion}
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ color: "#555", fontWeight: "600" }}
+                sx={{ color: "#555", fontWeight: 600 }}
               >
                 {est.detalle}
               </Typography>
