@@ -1,4 +1,4 @@
-
+// components/Projects.jsx
 import {
   Container,
   Typography,
@@ -77,4 +77,4 @@ export default function Projects() {
       </Grid>
     </Container>
   );
-                    }
+}
