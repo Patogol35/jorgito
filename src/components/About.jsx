@@ -22,7 +22,7 @@ export default function About() {
     <Box
       id="about"
       sx={{
-        background: "transparent", // ✅ no repite el fondo
+        background: "transparent", // ✅ sin fondo propio
         pt: 6,
         pb: 6,
       }}
