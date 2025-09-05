@@ -1,63 +1,91 @@
-// components/Skills.jsx
-import { Container, Typography, Paper, Stack, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Paper,
+  Grid,
+  Box,
+} from "@mui/material";
 import { motion } from "framer-motion";
 
-export default function Skills() {
-  const techItems = [
-    "💻 React | Spring Boot | Python",
-    "🗄️ MySQL | PostgreSQL | Elasticsearch",
-    "🛠️ Postman | AWS | Microsoft Office | Máquinas Virtuales",
-    "🚀 Despliegue: Vercel | Render",
-  ];
+const skills = [
+  { name: "React", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "Spring Boot", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+  { name: "Python", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "MySQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "PostgreSQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  { name: "Elasticsearch", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
+  { name: "Postman", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
+  { name: "AWS", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" },
+  { name: "Vercel", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
+  { name: "Render", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
+];
 
+export default function Skills() {
   return (
     <Box
       id="skills"
       sx={{
-        background: "linear-gradient(135deg, #0d1117, #1c1f2a)",
+        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)", // Fondo suave
         py: 10,
-        color: "#fff",
+        color: "#333",
       }}
     >
       <Container>
+        {/* Título animado */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Paper
-            elevation={8}
-            sx={{
-              p: 5,
-              borderRadius: "20px",
-              background: "rgba(25, 25, 35, 0.95)",
-              textAlign: "center",
-            }}
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ fontWeight: "bold", color: "#1976d2", mb: 5 }}
           >
-            {/* Título */}
-            <Typography variant="h4" gutterBottom sx={{ color: "#ffeb3b" }}>
-              🧰 Tecnologías & Herramientas
-            </Typography>
+            🧰 Tecnologías & Herramientas
+          </Typography>
 
-            <Stack spacing={3} alignItems="center" sx={{ mt: 3 }}>
-              {techItems.map((item, index) => (
+          {/* Grid de tecnologías */}
+          <Grid container spacing={4} justifyContent="center">
+            {skills.map((skill, index) => (
+              <Grid item xs={6} sm={4} md={3} key={index}>
                 <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05, color: "#42a5f5" }}
+                  whileHover={{ scale: 1.1 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Typography
-                    variant="body1"
-                    sx={{ color: "#ffeb3b", fontWeight: "bold", cursor: "pointer" }}
+                  <Paper
+                    elevation={6}
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      borderRadius: "16px",
+                      background: "#fff",
+                      cursor: "pointer",
+                      "&:hover": { background: "#e3f2fd" },
+                    }}
                   >
-                    {item}
-                  </Typography>
+                    <Box
+                      component="img"
+                      src={skill.img}
+                      alt={skill.name}
+                      sx={{
+                        width: 60,
+                        height: 60,
+                        objectFit: "contain",
+                        mb: 2,
+                      }}
+                    />
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {skill.name}
+                    </Typography>
+                  </Paper>
                 </motion.div>
-              ))}
-            </Stack>
-          </Paper>
+              </Grid>
+            ))}
+          </Grid>
         </motion.div>
       </Container>
     </Box>
   );
-}
+        }
