@@ -12,15 +12,9 @@ const sectionStyles = {
   m: { xs: 3, md: 6 },
   p: { xs: 4, md: 8 },
   borderRadius: 4,
-  backdropFilter: "blur(12px)",
-  background: "rgba(40,40,50,0.95)", // fondo más opaco y contraste
-  border: "1px solid rgba(255,255,255,0.1)",
-  boxShadow: "0 8px 24px rgba(0,0,0,0.5)", // sombra para separar del fondo
-  color: "#fff",
-  "& *": {
-    color: "#fff",
-    textShadow: "0 0 6px rgba(0,0,0,0.7)", // mejora la legibilidad del texto
-  },
+  background: "#f5f5f5", // fondo claro
+  boxShadow: "0 8px 24px rgba(0,0,0,0.2)", // sombra para separar secciones
+  color: "#000", // texto oscuro
 };
 
 function App() {
@@ -28,34 +22,33 @@ function App() {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(160deg, #0d1117 0%, #1a1c23 100%)",
-        color: "#fff",
+        background: "#eaeaea", // fondo general claro
       }}
     >
       <Navbar />
 
       {/* Hero */}
-      <Paper elevation={6} sx={sectionStyles}>
+      <Paper elevation={4} sx={sectionStyles}>
         <Hero />
       </Paper>
 
       {/* About */}
-      <Paper elevation={6} sx={sectionStyles}>
+      <Paper elevation={4} sx={sectionStyles}>
         <About />
       </Paper>
 
       {/* Skills */}
-      <Paper elevation={6} sx={sectionStyles}>
+      <Paper elevation={4} sx={sectionStyles}>
         <Skills />
       </Paper>
 
       {/* Certifications */}
-      <Paper elevation={6} sx={sectionStyles}>
+      <Paper elevation={4} sx={sectionStyles}>
         <Certifications />
       </Paper>
 
       {/* Contact */}
-      <Paper elevation={6} sx={sectionStyles}>
+      <Paper elevation={4} sx={sectionStyles}>
         <Contact />
       </Paper>
 
