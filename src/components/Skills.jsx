@@ -32,15 +32,9 @@ export default function Skills() {
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   return (
-    <Box
-      id="skills"
-      sx={{
-        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
-        py: 12,
-      }}
-    >
+    <Box id="skills" sx={{ py: 4 }}>
       <Container>
-        {/* Título mejorado con animación igual que en Educación */}
+        {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -77,7 +71,7 @@ export default function Skills() {
           </Typography>
         </motion.div>
 
-        {/* Filtros compactos */}
+        {/* Filtros */}
         <Box display="flex" justifyContent="center" mb={6}>
           <ToggleButtonGroup
             value={filter}
@@ -118,7 +112,7 @@ export default function Skills() {
           </ToggleButtonGroup>
         </Box>
 
-        {/* Grid con animaciones */}
+        {/* Grid */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
@@ -179,4 +173,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-      }
+}
