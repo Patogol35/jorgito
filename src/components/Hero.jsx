@@ -1,32 +1,26 @@
-import {
-  Container,
-  Typography,
-  Box,
-  Avatar,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Container, Typography, Box, Avatar, Button, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
+        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         color: "#333",
-        py: { xs: 8, md: 12 },
+        py: { xs: 8, md: 14 },
         textAlign: "center",
+        overflow: "hidden",
       }}
     >
       <Container maxWidth="md">
-        {/* Imagen/Avatar con animación flotante y borde neón */}
+        {/* Imagen/Avatar con animación flotante y borde neón degradado */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8 }}
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -12, 0] }}
             transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
             style={{ display: "inline-block", borderRadius: "50%" }}
           >
@@ -34,31 +28,44 @@ export default function Hero() {
               src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
               alt="Jorge"
               sx={{
-                width: 180,
-                height: 180,
+                width: { xs: 140, md: 180 },
+                height: { xs: 140, md: 180 },
                 mx: "auto",
                 mb: 3,
                 border: "4px solid",
                 borderImage: "linear-gradient(45deg, #1976d2, #ffeb3b, #e91e63) 1",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
               }}
             />
           </motion.div>
         </motion.div>
 
-        {/* Texto de presentación */}
+        {/* Texto de presentación con gradiente en nombre */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Typography
             variant="h3"
             fontWeight="bold"
             gutterBottom
-            sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
+            sx={{
+              fontSize: { xs: "2rem", md: "3rem" },
+              lineHeight: 1.2,
+            }}
           >
-            Hola, soy <span style={{ color: "#1976d2" }}>Jorge Patricio Santamaría Cherrez</span>
+            Hola, soy{" "}
+            <Box
+              component="span"
+              sx={{
+                background: "linear-gradient(90deg, #1976d2, #6d28d9, #ff5722)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Jorge Patricio Santamaría Cherrez
+            </Box>
           </Typography>
 
           <Typography
@@ -72,14 +79,20 @@ export default function Hero() {
           <Typography
             variant="body1"
             paragraph
-            sx={{ maxWidth: 700, mx: "auto", opacity: 0.8, mb: 3 }}
+            sx={{
+              maxWidth: 700,
+              mx: "auto",
+              opacity: 0.85,
+              mb: 4,
+              fontSize: { xs: "0.95rem", md: "1.1rem" },
+            }}
           >
             Transformo ideas en soluciones digitales eficientes, seguras y
             escalables. Apasionado por la innovación tecnológica, siempre
             buscando aportar valor y optimizar procesos en cada proyecto.
           </Typography>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons con gradiente */}
           <Stack
             direction={{ xs: "column", sm: "row" }}
             justifyContent="center"
@@ -90,10 +103,10 @@ export default function Hero() {
               size="large"
               href="#skills"
               sx={{
-                background: "#1976d2",
+                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
                 fontWeight: "bold",
-                px: 4,
-                "&:hover": { background: "#125aa0" },
+                px: 5,
+                "&:hover": { background: "linear-gradient(90deg, #125aa0, #4f46e5)" },
               }}
             >
               ⚡ Tecnologías
@@ -103,11 +116,16 @@ export default function Hero() {
               size="large"
               href="#contact"
               sx={{
+                border: "2px solid",
                 borderColor: "#1976d2",
                 color: "#1976d2",
                 fontWeight: "bold",
-                px: 4,
-                "&:hover": { background: "#1976d2", color: "#fff" },
+                px: 5,
+                "&:hover": {
+                  background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+                  color: "#fff",
+                  borderColor: "#1976d2",
+                },
               }}
             >
               📩 Contacto
