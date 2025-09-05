@@ -48,7 +48,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar flotante */}
+      {/* Navbar flotante y sólido */}
       <AppBar
         position="fixed"
         elevation={scrolled ? 6 : 2}
@@ -154,7 +154,6 @@ export default function Navbar() {
               exit="exit"
               style={{
                 width: "280px",
-                height: "100%",
                 background: "linear-gradient(180deg, #0d47a1, #1976d2)",
                 borderRadius: "12px 0 0 12px",
                 padding: "2rem",
@@ -164,10 +163,12 @@ export default function Navbar() {
                 display: "flex",
                 flexDirection: "column",
                 boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
+                justifyContent: "flex-start", // items arriba
+                height: "auto", // ajusta a contenido
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
+              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
                   Menú
                 </Typography>
@@ -176,7 +177,7 @@ export default function Navbar() {
                 </IconButton>
               </Box>
 
-              <Stack spacing={3}>
+              <Stack spacing={2} sx={{ flexGrow: 0 }}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
