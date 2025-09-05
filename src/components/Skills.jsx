@@ -15,9 +15,10 @@ const skills = [
   { name: "PostgreSQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Elasticsearch", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
   { name: "Postman", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-  { name: "AWS", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" },
+  { name: "AWS", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
   { name: "Vercel", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
   { name: "Render", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
+  { name: "npm", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
 
 export default function Skills() {
@@ -88,4 +89,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-        }
+                  }
