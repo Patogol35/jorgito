@@ -19,24 +19,30 @@ export default function Hero() {
       }}
     >
       <Container maxWidth="md">
-        {/* Imagen/Avatar */}
+        {/* Imagen/Avatar con animación flotante */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <Avatar
-            src="/assets/profile.png"
-            alt="Jorge"
-            sx={{
-              width: 180,
-              height: 180,
-              mx: "auto",
-              mb: 3,
-              border: "4px solid white",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-            }}
-          />
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
+            style={{ display: "inline-block" }}
+          >
+            <Avatar
+              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+              alt="Jorge"
+              sx={{
+                width: 180,
+                height: 180,
+                mx: "auto",
+                mb: 3,
+                border: "4px solid #1976d2",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
+              }}
+            />
+          </motion.div>
         </motion.div>
 
         {/* Texto de presentación */}
@@ -110,4 +116,4 @@ export default function Hero() {
       </Container>
     </Box>
   );
-              }
+}
