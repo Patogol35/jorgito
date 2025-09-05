@@ -6,10 +6,9 @@ import {
   Box,
   Link,
   IconButton,
-  Button,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import { GitHub, LinkedIn, Facebook, Instagram } from "@mui/icons-material";
+import { GitHub, LinkedIn, Facebook, Instagram, MailOutline } from "@mui/icons-material";
 
 export default function Contact() {
   const socialLinks = [
@@ -32,6 +31,11 @@ export default function Contact() {
       icon: <LinkedIn fontSize="large" />,
       color: "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
+    },
+    {
+      icon: <MailOutline fontSize="large" />,
+      color: "#1976d2",
+      href: "mailto:patogol3535@gmail.com",
     },
   ];
 
@@ -62,13 +66,13 @@ export default function Contact() {
               boxShadow: "0 12px 32px rgba(0,0,0,0.15)",
             }}
           >
-            {/* Título mejorado y más cercano a los iconos */}
+            {/* Título */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              style={{ textAlign: "center", marginBottom: "1.5rem" }} // ajustado
+              style={{ textAlign: "center", marginBottom: "1.5rem" }}
             >
               <Typography
                 variant="h4"
@@ -76,7 +80,7 @@ export default function Contact() {
                 sx={{
                   fontWeight: 700,
                   letterSpacing: "0.02em",
-                  mb: 1.5, // menor espacio
+                  mb: 1.5,
                   color: "#1976d2",
                   position: "relative",
                   display: "inline-block",
@@ -99,13 +103,12 @@ export default function Contact() {
               </Typography>
             </motion.div>
 
-            {/* Redes sociales */}
+            {/* Redes sociales + correo */}
             <Stack
               direction="row"
               spacing={3}
               justifyContent="center"
               alignItems="center"
-              mb={4}
             >
               {socialLinks.map((s, i) => (
                 <motion.div
@@ -137,27 +140,6 @@ export default function Contact() {
                 </motion.div>
               ))}
             </Stack>
-
-            {/* Correo */}
-            <motion.div whileHover={{ scale: 1.05 }}>
-              <Button
-                variant="contained"
-                href="mailto:patogol3535@gmail.com"
-                sx={{
-                  fontWeight: "bold",
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: "12px",
-                  background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                  boxShadow: "0 6px 18px rgba(0,0,0,0.2)",
-                  "&:hover": {
-                    background: "linear-gradient(90deg, #1565c0, #5b21b6)",
-                  },
-                }}
-              >
-                📧 patogol3535@gmail.com
-              </Button>
-            </motion.div>
           </Paper>
         </motion.div>
       </Container>
