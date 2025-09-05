@@ -37,6 +37,7 @@ export default function Skills() {
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         py: 12,
+        minHeight: "100vh", // Fuerza a que ocupe toda la pantalla vertical
       }}
     >
       <Container>
@@ -56,8 +57,6 @@ export default function Skills() {
               background: "linear-gradient(90deg, #1976d2, #6d28d9)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              position: "relative",
-              display: "inline-block",
             }}
           >
             Tecnologías que domino
@@ -100,16 +99,29 @@ export default function Skills() {
         </Box>
 
         {/* Grid con animaciones */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid
+          container
+          spacing={4}
+          justifyContent="center"
+          alignItems="stretch" // Hace que todos los items tengan la misma altura
+        >
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={3} key={skill.name}>
+              <Grid
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                key={skill.name}
+                sx={{ display: "flex" }} // Esto permite que Paper se estire verticalmente
+              >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   whileHover={{ scale: 1.08 }}
+                  style={{ width: "100%" }}
                 >
                   <Paper
                     elevation={8}
@@ -121,6 +133,10 @@ export default function Skills() {
                       background: "rgba(255, 255, 255, 0.8)",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
                       transition: "all 0.3s ease-in-out",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
                       "&:hover": {
                         background: "rgba(255, 255, 255, 0.95)",
                         boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
@@ -159,4 +175,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+          }
