@@ -37,7 +37,7 @@ export default function Certifications() {
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }} // más cerca de los elementos
         >
           <Typography
             variant="h4"
@@ -45,7 +45,7 @@ export default function Certifications() {
             sx={{
               fontWeight: 700,
               letterSpacing: "0.02em",
-              mb: 6,
+              mb: 4,
               color: "#1976d2",
               position: "relative",
               display: "inline-block",
