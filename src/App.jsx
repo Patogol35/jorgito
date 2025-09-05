@@ -51,6 +51,14 @@ function App() {
         <Projects />
       </Box>
 
+      {/* Separador suave */}
+      <Box
+        sx={{
+          height: 20,
+          background: "linear-gradient(to right, #f5f5f5, #e8f0ff)",
+        }}
+      />
+
       {/* Certifications */}
       <Box
         id="certifications"
