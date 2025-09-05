@@ -7,6 +7,12 @@ const certificaciones = [
     institucion: "Udemy",
     año: 2024,
   },
+
+  {
+    titulo: "Curso de Python",
+    institucion: "Platzi",
+    año: 2025,
+  },
   {
     titulo: "Data Analysis with Python",
     institucion: "freeCodeCamp",
