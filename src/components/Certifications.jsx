@@ -24,7 +24,7 @@ export default function Certifications() {
         justifyContent: "center",
       }}
     >
-      <Container sx={{ p: { xs: 3, md: 5 } }}> {/* Sin fondo extra */}
+      <Container sx={{ p: { xs: 3, md: 5 } }}> {/* solo padding, sin fondo ni blur */}
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -87,4 +87,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-}
+        }
