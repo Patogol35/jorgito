@@ -16,7 +16,7 @@ export default function Certifications() {
     <Box
       id="certifications"
       sx={{
-        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        background: "transparent", // ✅ sin fondo propio
         pt: 6,
         pb: 6,
         color: "#333",
@@ -81,4 +81,4 @@ export default function Certifications() {
       </Grid>
     </Box>
   );
-}
+        }
