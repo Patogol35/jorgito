@@ -62,13 +62,13 @@ export default function Contact() {
               boxShadow: "0 12px 32px rgba(0,0,0,0.15)",
             }}
           >
-            {/* Título mejorado */}
+            {/* Título mejorado y más cercano a los iconos */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              style={{ textAlign: "center", marginBottom: "3rem" }}
+              style={{ textAlign: "center", marginBottom: "1.5rem" }} // ajustado
             >
               <Typography
                 variant="h4"
@@ -76,7 +76,7 @@ export default function Contact() {
                 sx={{
                   fontWeight: 700,
                   letterSpacing: "0.02em",
-                  mb: 4,
+                  mb: 1.5, // menor espacio
                   color: "#1976d2",
                   position: "relative",
                   display: "inline-block",
