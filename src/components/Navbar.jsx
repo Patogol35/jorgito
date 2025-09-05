@@ -28,7 +28,7 @@ export default function Navbar() {
   const menuItems = [
     { label: "Sobre mí", href: "#about" },
     { label: "Tecnologías", href: "#skills" },
-    { label: "Proyectos", href: "#projects" },
+    { label: "Certificaciones", href: "#certifications" },
     { label: "Contacto", href: "#contact" },
   ];
 
