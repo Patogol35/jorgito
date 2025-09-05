@@ -2,88 +2,95 @@ import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Skills from "./components/Skills.jsx";
-// import Projects from "./components/Projects.jsx";
 import Certifications from "./components/Certifications.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import { Box, Container, Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 
 function App() {
   return (
-    <>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: "linear-gradient(160deg, #0d1117 0%, #1a1c23 100%)", // fondo global oscuro degradado
+        color: "#fff",
+      }}
+    >
       <Navbar />
 
-      {/* Fondo general uniforme */}
-      <Box sx={{ bgcolor: "#f0f4f9", minHeight: "100vh", pt: 10, pb: 6 }}>
-        <Container maxWidth="lg">
-          {/* Hero (no lo meto en tarjeta porque ya suele ocupar toda la vista) */}
-          <Box id="hero" sx={{ mb: 8 }}>
-            <Hero />
-          </Box>
+      {/* Hero */}
+      <Paper
+        elevation={4}
+        sx={{
+          m: 2,
+          p: { xs: 3, md: 6 },
+          borderRadius: 3,
+          backdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.05)",
+        }}
+      >
+        <Hero />
+      </Paper>
 
-          {/* About */}
-          <Paper
-            id="about"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 8,
-              borderRadius: "16px",
-              bgcolor: "white",
-            }}
-          >
-            <About />
-          </Paper>
+      {/* About */}
+      <Paper
+        elevation={4}
+        sx={{
+          m: 2,
+          p: { xs: 3, md: 6 },
+          borderRadius: 3,
+          backdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.05)",
+        }}
+      >
+        <About />
+      </Paper>
 
-          {/* Skills */}
-          <Paper
-            id="skills"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 8,
-              borderRadius: "16px",
-              bgcolor: "white",
-            }}
-          >
-            <Skills />
-          </Paper>
+      {/* Skills */}
+      <Paper
+        elevation={4}
+        sx={{
+          m: 2,
+          p: { xs: 3, md: 6 },
+          borderRadius: 3,
+          backdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.05)",
+        }}
+      >
+        <Skills />
+      </Paper>
 
-          {/* Certifications */}
-          <Paper
-            id="certifications"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 8,
-              borderRadius: "16px",
-              bgcolor: "white",
-            }}
-          >
-            <Certifications />
-          </Paper>
+      {/* Certifications */}
+      <Paper
+        elevation={4}
+        sx={{
+          m: 2,
+          p: { xs: 3, md: 6 },
+          borderRadius: 3,
+          backdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.05)",
+        }}
+      >
+        <Certifications />
+      </Paper>
 
-          {/* Contact */}
-          <Paper
-            id="contact"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 8,
-              borderRadius: "16px",
-              bgcolor: "white",
-            }}
-          >
-            <Contact />
-          </Paper>
-        </Container>
-      </Box>
+      {/* Contact */}
+      <Paper
+        elevation={4}
+        sx={{
+          m: 2,
+          p: { xs: 3, md: 6 },
+          borderRadius: 3,
+          backdropFilter: "blur(12px)",
+          background: "rgba(255,255,255,0.05)",
+        }}
+      >
+        <Contact />
+      </Paper>
 
       <Footer />
-    </>
+    </Box>
   );
 }
 
 export default App;
-
-      
