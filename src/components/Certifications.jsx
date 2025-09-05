@@ -27,11 +27,11 @@ const certificaciones = [
   {
     titulo: "Fundamentos de la Inteligencia Artificial",
     institucion: "IBM",
-    año: 2024,
+    año: 2025,
   },
   {
-    titulo: "Aprendizaje automático y aprendizaje profundo con Python",
-    institucion: "Cursa",
+    titulo: "Intelitencia Artificial y Universidad: Docencia, Investigación y Transferencia",
+    institucion: "UNIR & ESPE",
     año: 2024,
   },
   {
@@ -42,7 +42,7 @@ const certificaciones = [
   {
     titulo: "Curso de Preparación para la Certificación AZ-900: Microsoft Azure Fundamentals",
     institucion: "Universidad Internacional de La Rioja (UNIR)",
-    año: 2024,
+    año: 2023,
   },
 ];
 
