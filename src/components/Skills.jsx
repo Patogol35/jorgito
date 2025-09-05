@@ -37,7 +37,6 @@ export default function Skills() {
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         py: 12,
-        minHeight: "100vh", // Fuerza a que ocupe toda la pantalla vertical
       }}
     >
       <Container>
@@ -57,23 +56,33 @@ export default function Skills() {
               background: "linear-gradient(90deg, #1976d2, #6d28d9)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              position: "relative",
+              display: "inline-block",
             }}
           >
             Tecnologías que domino
           </Typography>
         </motion.div>
 
-        {/* Filtros */}
-        <Box display="flex" justifyContent="center" mb={6}>
+        {/* Filtros con scroll horizontal */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          mb={6}
+          sx={{ overflowX: "auto", scrollbarWidth: "thin", scrollbarColor: "#1976d2 #ccc" }}
+        >
           <ToggleButtonGroup
             value={filter}
             exclusive
             onChange={(e, newFilter) => newFilter && setFilter(newFilter)}
             aria-label="Filtros de Skills"
             sx={{
-              background: "rgba(255,255,255,0.6)",
+              minWidth: "max-content", // Permite que los botones no se corten
+              gap: 1,
+              px: 1,
+              background: "#1976d2",
               borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             }}
           >
             {["All", "Frontend", "Backend", "Database", "Cloud", "Tools"].map(
@@ -84,9 +93,14 @@ export default function Skills() {
                   sx={{
                     textTransform: "none",
                     fontWeight: "bold",
-                    px: 2,
+                    color: "white",
+                    px: 3,
                     "&.Mui-selected": {
-                      background: "linear-gradient(90deg,#1976d2,#6d28d9)",
+                      background: "linear-gradient(90deg, #6d28d9, #1976d2)",
+                      color: "white",
+                    },
+                    "&:hover": {
+                      background: "linear-gradient(90deg, #2563eb, #4f46e5)",
                       color: "white",
                     },
                   }}
@@ -99,22 +113,10 @@ export default function Skills() {
         </Box>
 
         {/* Grid con animaciones */}
-        <Grid
-          container
-          spacing={4}
-          justifyContent="center"
-          alignItems="stretch" // Hace que todos los items tengan la misma altura
-        >
+        <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid
-                item
-                xs={6}
-                sm={4}
-                md={3}
-                key={skill.name}
-                sx={{ display: "flex" }} // Esto permite que Paper se estire verticalmente
-              >
+              <Grid item xs={6} sm={4} md={3} key={skill.name} sx={{ display: "flex" }}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -137,6 +139,7 @@ export default function Skills() {
                       flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
+                      height: "100%",
                       "&:hover": {
                         background: "rgba(255, 255, 255, 0.95)",
                         boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
@@ -175,4 +178,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-          }
+}
