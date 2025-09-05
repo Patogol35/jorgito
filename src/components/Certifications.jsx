@@ -1,49 +1,16 @@
 import { Container, Typography, Grid, Paper, Box } from "@mui/material";
 import { motion } from "framer-motion";
+import { GraduationCap, BookOpen, Brain } from "lucide-react";
 
 const certificaciones = [
-
-  {
-    titulo: "Curso de React.js",
-    institucion: "Platzi",
-    año: 2025,
-  },
-  {
-    titulo: "React & TypeScript - The Practical Guide",
-    institucion: "Udemy",
-    año: 2024,
-  },
-
-  {
-    titulo: "Curso de Python",
-    institucion: "Platzi",
-    año: 2025,
-  },
-  {
-    titulo: "Data Analysis with Python",
-    institucion: "freeCodeCamp",
-    año: 2024,
-  },
-  {
-    titulo: "Fundamentos de la Inteligencia Artificial",
-    institucion: "IBM",
-    año: 2025,
-  },
-  {
-    titulo: "Intelitencia Artificial y Universidad: Docencia, Investigación y Transferencia",
-    institucion: "UNIR & ESPE",
-    año: 2024,
-  },
-  {
-    titulo: "Curso de Programación Básica",
-    institucion: "Platzi",
-    año: 2024,
-  },
-  {
-    titulo: "Curso de Preparación para la Certificación AZ-900: Microsoft Azure Fundamentals",
-    institucion: "Universidad Internacional de La Rioja (UNIR)",
-    año: 2023,
-  },
+  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#1976d2" /> },
+  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, icon: <BookOpen size={28} color="#d97706" /> },
+  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#22c55e" /> },
+  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, icon: <Brain size={28} color="#9333ea" /> },
+  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, icon: <Brain size={28} color="#1e40af" /> },
+  { titulo: "Inteligencia Artificial y Universidad: Docencia, Investigación y Transferencia", institucion: "UNIR & ESPE", año: 2024, icon: <GraduationCap size={28} color="#e11d48" /> },
+  { titulo: "Curso de Programación Básica", institucion: "Platzi", año: 2024, icon: <BookOpen size={28} color="#14b8a6" /> },
+  { titulo: "Curso de Preparación para la Certificación AZ-900: Microsoft Azure Fundamentals", institucion: "UNIR", año: 2023, icon: <GraduationCap size={28} color="#2563eb" /> },
 ];
 
 export default function Certifications() {
@@ -51,8 +18,8 @@ export default function Certifications() {
     <Box
       id="certifications"
       sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
-        py: 10,
+        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        py: 12,
       }}
     >
       <Container>
@@ -63,35 +30,62 @@ export default function Certifications() {
           transition={{ duration: 0.8 }}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             align="center"
-            gutterBottom
-            sx={{ fontWeight: "bold", color: "#1976d2", mb: 5 }}
+            sx={{
+              fontWeight: "bold",
+              mb: 6,
+              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              position: "relative",
+              display: "inline-block",
+            }}
           >
-            🎓 Certificaciones
+            Certificaciones
+            <Box
+              component="span"
+              sx={{
+                position: "absolute",
+                left: 0,
+                bottom: -6,
+                width: "100%",
+                height: "4px",
+                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+                borderRadius: "8px",
+              }}
+            />
           </Typography>
 
-          {/* Grid centrado */}
+          {/* Grid de Certificaciones */}
           <Grid container spacing={4} justifyContent="center">
             {certificaciones.map((c, i) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
-                <motion.div whileHover={{ scale: 1.05 }}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                >
                   <Paper
-                    elevation={6}
+                    elevation={10}
                     sx={{
                       p: 3,
-                      borderRadius: "16px",
+                      borderRadius: "20px",
                       textAlign: "center",
-                      background: "#fff",
+                      backdropFilter: "blur(10px)",
+                      background: "rgba(255, 255, 255, 0.7)",
+                      boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
                       cursor: "default",
-                      transition: "0.3s",
-                      "&:hover": { background: "#e3f2fd" },
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        background: "rgba(255, 255, 255, 0.9)",
+                        boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
+                      },
                     }}
                   >
-                    <Typography
-                      variant="h6"
-                      sx={{ fontWeight: "bold", mb: 1 }}
-                    >
+                    <Box sx={{ mb: 2 }}>{c.icon}</Box>
+                    <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
                       {c.titulo}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -106,4 +100,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-                }
+}
