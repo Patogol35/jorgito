@@ -19,7 +19,7 @@ function App() {
         sx={{
           py: 10,
           bgcolor: "#0d1117",
-          mt: 0, // elimina margen extra arriba
+          mt: 0, // asegura separación uniforme arriba
         }}
       >
         <Hero />
@@ -30,8 +30,8 @@ function App() {
         id="about"
         sx={{
           py: 10,
-          bgcolor: "#0d1117",
-          mt: 0, // asegura separación uniforme con Hero
+          bgcolor: "#f5f5f5",
+          mt: 0, // separación uniforme con Hero
         }}
       >
         <About />
@@ -43,7 +43,7 @@ function App() {
         sx={{
           py: 10,
           bgcolor: "#1c1f2a",
-          mt: 0, // asegura separación uniforme con About
+          mt: 0, // separación uniforme con About
         }}
       >
         <Skills />
