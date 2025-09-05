@@ -20,11 +20,9 @@ export default function Certifications() {
       sx={{
         background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
         py: 12,
-        display: "flex",
-        justifyContent: "center",
       }}
     >
-      <Container sx={{ p: { xs: 3, md: 5 } }}> {/* solo padding, sin fondo ni blur */}
+      <Container>
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -61,7 +59,7 @@ export default function Certifications() {
           </Typography>
         </motion.div>
 
-        {/* Grid con animación secuencial */}
+        {/* Grid de certificaciones sin ningún fondo */}
         <Grid container spacing={4} justifyContent="center">
           {certificaciones.map((c, i) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
@@ -87,4 +85,4 @@ export default function Certifications() {
       </Container>
     </Box>
   );
-        }
+}
