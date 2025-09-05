@@ -11,6 +11,7 @@ const skills = [
   { name: "React", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
   { name: "Spring Boot", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
   { name: "Python", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "JavaScript", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
   { name: "MySQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "PostgreSQL", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Elasticsearch", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
@@ -26,7 +27,7 @@ export default function Skills() {
     <Box
       id="skills"
       sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)", // Fondo suave
+        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
         py: 10,
         color: "#333",
       }}
@@ -44,7 +45,7 @@ export default function Skills() {
             gutterBottom
             sx={{ fontWeight: "bold", color: "#1976d2", mb: 5 }}
           >
-            🧰 Tecnologías & Herramientas
+            🛠️ Tecnologías y habilidades que domino
           </Typography>
 
           {/* Grid de tecnologías */}
@@ -89,4 +90,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-                  }
+}
