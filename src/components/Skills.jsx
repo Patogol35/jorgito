@@ -64,25 +64,17 @@ export default function Skills() {
           </Typography>
         </motion.div>
 
-        {/* Filtros con scroll horizontal */}
-        <Box
-          display="flex"
-          justifyContent="center"
-          mb={6}
-          sx={{ overflowX: "auto", scrollbarWidth: "thin", scrollbarColor: "#1976d2 #ccc" }}
-        >
+        {/* Filtros compactos */}
+        <Box display="flex" justifyContent="center" mb={6}>
           <ToggleButtonGroup
             value={filter}
             exclusive
             onChange={(e, newFilter) => newFilter && setFilter(newFilter)}
             aria-label="Filtros de Skills"
             sx={{
-              minWidth: "max-content", // Permite que los botones no se corten
-              gap: 1,
-              px: 1,
-              background: "#1976d2",
+              background: "rgba(255,255,255,0.7)",
               borderRadius: "12px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             }}
           >
             {["All", "Frontend", "Backend", "Database", "Cloud", "Tools"].map(
@@ -93,14 +85,15 @@ export default function Skills() {
                   sx={{
                     textTransform: "none",
                     fontWeight: "bold",
-                    color: "white",
-                    px: 3,
+                    px: 1.5,  // más compactos
+                    py: 0.5,
+                    fontSize: "0.85rem",
                     "&.Mui-selected": {
-                      background: "linear-gradient(90deg, #6d28d9, #1976d2)",
+                      background: "linear-gradient(90deg,#1976d2,#6d28d9)",
                       color: "white",
                     },
                     "&:hover": {
-                      background: "linear-gradient(90deg, #2563eb, #4f46e5)",
+                      background: "linear-gradient(90deg,#2563eb,#4f46e5)",
                       color: "white",
                     },
                   }}
@@ -116,14 +109,13 @@ export default function Skills() {
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={3} key={skill.name} sx={{ display: "flex" }}>
+              <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   whileHover={{ scale: 1.08 }}
-                  style={{ width: "100%" }}
                 >
                   <Paper
                     elevation={8}
@@ -135,11 +127,6 @@ export default function Skills() {
                       background: "rgba(255, 255, 255, 0.8)",
                       boxShadow: "0 8px 20px rgba(0,0,0,0.1)",
                       transition: "all 0.3s ease-in-out",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
                       "&:hover": {
                         background: "rgba(255, 255, 255, 0.95)",
                         boxShadow: "0 12px 24px rgba(0,0,0,0.2)",
