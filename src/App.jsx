@@ -12,25 +12,64 @@ function App() {
   return (
     <>
       <Navbar />
-      <Hero />
+      
+      {/* Hero */}
+      <Box id="hero">
+        <Hero />
+      </Box>
 
-      <Box id="about" sx={{ py: 10 }}>
+      {/* About */}
+      <Box
+        id="about"
+        sx={{
+          bgcolor: "#0d1117",
+          py: 10,
+        }}
+      >
         <About />
       </Box>
 
-      <Box id="skills" sx={{ py: 10 }}>
+      {/* Skills */}
+      <Box
+        id="skills"
+        sx={{
+          bgcolor: "#1c1f2a",
+          py: 10,
+        }}
+      >
         <Skills />
       </Box>
 
-      <Box id="projects" sx={{ py: 10 }}>
+      {/* Projects */}
+      <Box
+        id="projects"
+        sx={{
+          bgcolor: "#f5f5f5",
+          py: 10,
+        }}
+      >
         <Projects />
       </Box>
 
-      <Box id="certifications" sx={{ py: 10 }}>
+      {/* Certifications */}
+      <Box
+        id="certifications"
+        sx={{
+          bgcolor: "#e8f0ff",
+          py: 10,
+        }}
+      >
         <Certifications />
       </Box>
 
-      <Box id="contact" sx={{ py: 10 }}>
+      {/* Contact */}
+      <Box
+        id="contact"
+        sx={{
+          bgcolor: "#0d1117",
+          py: 10,
+        }}
+      >
         <Contact />
       </Box>
 
