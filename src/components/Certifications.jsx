@@ -2,6 +2,12 @@ import { Container, Typography, Grid, Paper, Box } from "@mui/material";
 import { motion } from "framer-motion";
 
 const certificaciones = [
+
+  {
+    titulo: "Curso de React.js",
+    institucion: "Platzi",
+    año: 2025,
+  },
   {
     titulo: "React & TypeScript - The Practical Guide",
     institucion: "Udemy",
