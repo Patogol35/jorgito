@@ -17,7 +17,7 @@ export default function About() {
 
   return (
     <Container maxWidth="md" sx={{ py: 10 }}>
-      {/* Título con gradiente igual a Certificaciones */}
+      {/* Título con gradiente mejorado */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -29,8 +29,10 @@ export default function About() {
           variant="h3"
           align="center"
           sx={{
-            fontWeight: "bold",
+            fontWeight: 800,
+            letterSpacing: "0.05em",
             mb: 6,
+            textTransform: "uppercase",
             background: "linear-gradient(90deg, #1976d2, #6d28d9)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
@@ -38,17 +40,19 @@ export default function About() {
             display: "inline-block",
           }}
         >
-          Educación y Formación
+          Formación Académica
           <Box
             component="span"
             sx={{
               position: "absolute",
-              left: 0,
-              bottom: -6,
-              width: "100%",
-              height: "4px",
+              left: "50%",
+              bottom: -8,
+              transform: "translateX(-50%)",
+              width: "60%",
+              height: "5px",
               background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-              borderRadius: "8px",
+              borderRadius: "12px",
+              boxShadow: "0 0 12px rgba(25,118,210,0.6)",
             }}
           />
         </Typography>
