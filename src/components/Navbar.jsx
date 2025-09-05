@@ -83,7 +83,7 @@ export default function Navbar() {
                 <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
                   <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
-                Jorge Dev
+                Jorge Patricio 
               </Typography>
             </motion.div>
 
