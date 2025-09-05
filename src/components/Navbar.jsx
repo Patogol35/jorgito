@@ -48,88 +48,94 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar flotante y sólido */}
-      <AppBar
-        position="fixed"
-        elevation={scrolled ? 6 : 2}
-        sx={{
-          backgroundColor: scrolled ? "#125aa0" : "#1976d2",
-          boxShadow: scrolled
-            ? "0 6px 20px rgba(0,0,0,0.25)"
-            : "0 4px 12px rgba(0,0,0,0.2)",
-          transition: "0.3s",
-          zIndex: 1400,
-        }}
+      {/* Navbar flotante y sólido con animación de entrada */}
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-          {/* Logo con animación */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-            <Typography
-              variant="h6"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                fontWeight: "bold",
-                color: "#fff",
-                letterSpacing: 1,
-                cursor: "pointer",
-              }}
-            >
-              <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
-                <CodeIcon sx={{ mr: 1 }} />
-              </motion.div>
-              Jorge Dev
-            </Typography>
-          </motion.div>
-
-          {/* Menú Desktop */}
-          <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-            {menuItems.map((item) => (
-              <motion.div
-                key={item.href}
-                whileHover={{ y: -2, scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+        <AppBar
+          position="fixed"
+          elevation={scrolled ? 6 : 2}
+          sx={{
+            backgroundColor: scrolled ? "#125aa0" : "#1976d2",
+            boxShadow: scrolled
+              ? "0 6px 20px rgba(0,0,0,0.25)"
+              : "0 4px 12px rgba(0,0,0,0.2)",
+            transition: "0.3s",
+            zIndex: 1400,
+          }}
+        >
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* Logo con animación */}
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  color: "#fff",
+                  letterSpacing: 1,
+                  cursor: "pointer",
+                }}
               >
-                <Button
-                  href={item.href}
-                  sx={{
-                    color: "#fff",
-                    fontWeight: 600,
-                    textTransform: "none",
-                    fontSize: "1rem",
-                    position: "relative",
-                    "&::after": {
-                      content: '""',
-                      position: "absolute",
-                      width: 0,
-                      height: 2,
-                      bottom: 0,
-                      left: 0,
-                      backgroundColor: "#ffeb3b",
-                      transition: "0.3s",
-                    },
-                    "&:hover::after": {
-                      width: "100%",
-                    },
-                  }}
+                <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
+                  <CodeIcon sx={{ mr: 1 }} />
+                </motion.div>
+                Jorge Dev
+              </Typography>
+            </motion.div>
+
+            {/* Menú Desktop */}
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
+              {menuItems.map((item) => (
+                <motion.div
+                  key={item.href}
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {item.label}
-                </Button>
-              </motion.div>
-            ))}
-          </Box>
+                  <Button
+                    href={item.href}
+                    sx={{
+                      color: "#fff",
+                      fontWeight: 600,
+                      textTransform: "none",
+                      fontSize: "1rem",
+                      position: "relative",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        width: 0,
+                        height: 2,
+                        bottom: 0,
+                        left: 0,
+                        backgroundColor: "#ffeb3b",
+                        transition: "0.3s",
+                      },
+                      "&:hover::after": {
+                        width: "100%",
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
+            </Box>
 
-          {/* Botón móvil */}
-          <IconButton
-            sx={{ display: { xs: "block", md: "none" } }}
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon sx={{ color: "#fff" }} fontSize="large" />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
+            {/* Botón móvil */}
+            <IconButton
+              sx={{ display: { xs: "block", md: "none" } }}
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon sx={{ color: "#fff" }} fontSize="large" />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+      </motion.div>
 
-      {/* Menú móvil ultra épico */}
+      {/* Menú móvil ultra épico y compacto */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -163,8 +169,8 @@ export default function Navbar() {
                 display: "flex",
                 flexDirection: "column",
                 boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
-                justifyContent: "flex-start", // items arriba
-                height: "auto", // ajusta a contenido
+                justifyContent: "flex-start",
+                height: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -206,4 +212,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-            }
+}
