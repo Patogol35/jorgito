@@ -32,37 +32,45 @@ export default function Hero() {
                 height: { xs: 140, md: 180 },
                 mx: "auto",
                 mb: 3,
-                border: "3px solid #1976d2", // Borde único y profesional
+                border: "3px solid #1976d2",
                 boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
               }}
             />
           </motion.div>
         </motion.div>
 
-        {/* Texto de presentación */}
+        {/* Texto de presentación con título mejorado */}
         <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
           <Typography
-            variant="h3"
+            variant="h4"
             fontWeight="bold"
             gutterBottom
             sx={{
-              fontSize: { xs: "2rem", md: "3rem" },
-              lineHeight: 1.2,
+              color: "#1976d2",
+              position: "relative",
+              display: "inline-block",
+              mb: 2,
             }}
           >
-            Hola, soy{" "}
+            Hola, soy Jorge Patricio Santamaría Cherrez
             <Box
               component="span"
               sx={{
-                color: "#1976d2", // Azul profesional
+                position: "absolute",
+                left: "50%",
+                bottom: -6,
+                transform: "translateX(-50%)",
+                width: "60%",
+                height: "3px",
+                background: "#1976d2",
+                borderRadius: "6px",
               }}
-            >
-              Jorge Patricio Santamaría Cherrez
-            </Box>
+            />
           </Typography>
 
           <Typography
@@ -132,4 +140,4 @@ export default function Hero() {
       </Container>
     </Box>
   );
-}
+          }
