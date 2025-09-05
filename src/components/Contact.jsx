@@ -1,6 +1,7 @@
 import { Container, Typography, Box, Link, IconButton, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 import { GitHub, LinkedIn, Facebook, Instagram, MailOutline } from "@mui/icons-material";
+import React from "react";
 
 export default function Contact() {
   const socialLinks = [
@@ -16,7 +17,7 @@ export default function Contact() {
     },
     {
       icon: <GitHub fontSize="large" />,
-      color: "#fff", // 👈 en fondo oscuro conviene blanco
+      color: "#fff", // 👈 blanco para fondo oscuro
       href: "https://github.com/Patogol35",
     },
     {
@@ -35,9 +36,9 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        background: "transparent", // ✅ usa el fondo oscuro de App.jsx
+        background: "transparent", // el Paper del App.jsx manda el fondo
         py: 12,
-        color: "#fff", // 👈 texto blanco para contraste
+        color: "#fff",
       }}
     >
       <Container maxWidth="sm">
@@ -106,14 +107,13 @@ export default function Contact() {
                   target="_blank"
                   rel="noopener"
                   sx={{
-                    color: s.color,
                     "&:hover": {
                       backgroundColor: "transparent",
                       transform: "scale(1.2)",
                     },
                   }}
                 >
-                  {s.icon}
+                  {React.cloneElement(s.icon, { sx: { color: s.color } })}
                 </IconButton>
               </motion.div>
             ))}
