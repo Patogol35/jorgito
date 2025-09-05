@@ -17,7 +17,7 @@ export default function About() {
 
   return (
     <Container maxWidth="md" sx={{ py: 10 }}>
-      {/* Título con gradiente mejorado */}
+      {/* Título principal con tamaño más pequeño */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -26,16 +26,13 @@ export default function About() {
         style={{ textAlign: "center", marginBottom: "4rem" }}
       >
         <Typography
-          variant="h3"
+          variant="h4" // más pequeño que h3
           align="center"
           sx={{
-            fontWeight: 800,
-            letterSpacing: "0.05em",
+            fontWeight: 700,
+            letterSpacing: "0.02em",
             mb: 6,
-            textTransform: "uppercase",
-            background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1976d2",
             position: "relative",
             display: "inline-block",
           }}
@@ -46,13 +43,12 @@ export default function About() {
             sx={{
               position: "absolute",
               left: "50%",
-              bottom: -8,
+              bottom: -6,
               transform: "translateX(-50%)",
               width: "60%",
-              height: "5px",
-              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-              borderRadius: "12px",
-              boxShadow: "0 0 12px rgba(25,118,210,0.6)",
+              height: "3px",
+              background: "#1976d2",
+              borderRadius: "6px",
             }}
           />
         </Typography>
