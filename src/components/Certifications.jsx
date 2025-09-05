@@ -69,7 +69,7 @@ export default function Certifications() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: -5, scale: 1.05 }}
               >
-                <Box sx={{ textAlign: "center" }}>
+                <Box sx={{ textAlign: "center", p: 1 }}> {/* padding solo para separación */}
                   <Box sx={{ mb: 1 }}>{c.icon}</Box>
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 0.5 }}>
                     {c.titulo}
