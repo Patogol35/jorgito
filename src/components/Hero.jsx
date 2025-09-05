@@ -51,7 +51,7 @@ export default function Hero() {
             gutterBottom
             sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
           >
-            Hola, soy <span style={{ color: "#1976d2" }}>Jorge Santamaría</span>
+            Hola, soy <span style={{ color: "#1976d2" }}>Jorge Patricio Santamaría Cherrez</span>
           </Typography>
 
           <Typography
