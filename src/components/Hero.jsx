@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #eef2ff, #f0f9ff)",
+        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
         color: "#333",
         py: { xs: 8, md: 14 },
         textAlign: "center",
@@ -40,7 +40,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Texto de presentación con gradiente en nombre */}
+        {/* Texto de presentación */}
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -59,9 +59,7 @@ export default function Hero() {
             <Box
               component="span"
               sx={{
-                background: "linear-gradient(90deg, #1976d2, #6d28d9, #ff5722)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                color: "#1976d2", // Azul profesional
               }}
             >
               Jorge Patricio Santamaría Cherrez
@@ -92,7 +90,7 @@ export default function Hero() {
             buscando aportar valor y optimizar procesos en cada proyecto.
           </Typography>
 
-          {/* CTA Buttons con gradiente */}
+          {/* CTA Buttons */}
           <Stack
             direction={{ xs: "column", sm: "row" }}
             justifyContent="center"
