@@ -7,13 +7,20 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import { Box, Paper } from "@mui/material";
 
-const paperStyles = {
-  m: 2,
-  p: { xs: 3, md: 6 },
-  borderRadius: 3,
+// Estilos comunes para cada sección Paper
+const sectionStyles = {
+  m: { xs: 3, md: 6 },
+  p: { xs: 4, md: 8 },
+  borderRadius: 4,
   backdropFilter: "blur(12px)",
-  background: "rgba(25,25,30,0.85)", // más contraste para que el texto se vea
-  color: "#fff", // asegurar texto blanco
+  background: "rgba(40,40,50,0.95)", // fondo más opaco y contraste
+  border: "1px solid rgba(255,255,255,0.1)",
+  boxShadow: "0 8px 24px rgba(0,0,0,0.5)", // sombra para separar del fondo
+  color: "#fff",
+  "& *": {
+    color: "#fff",
+    textShadow: "0 0 6px rgba(0,0,0,0.7)", // mejora la legibilidad del texto
+  },
 };
 
 function App() {
@@ -21,34 +28,34 @@ function App() {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(160deg, #0d1117 0%, #1a1c23 100%)", // fondo global oscuro degradado
+        background: "linear-gradient(160deg, #0d1117 0%, #1a1c23 100%)",
         color: "#fff",
       }}
     >
       <Navbar />
 
       {/* Hero */}
-      <Paper elevation={4} sx={paperStyles}>
+      <Paper elevation={6} sx={sectionStyles}>
         <Hero />
       </Paper>
 
       {/* About */}
-      <Paper elevation={4} sx={paperStyles}>
+      <Paper elevation={6} sx={sectionStyles}>
         <About />
       </Paper>
 
       {/* Skills */}
-      <Paper elevation={4} sx={paperStyles}>
+      <Paper elevation={6} sx={sectionStyles}>
         <Skills />
       </Paper>
 
       {/* Certifications */}
-      <Paper elevation={4} sx={paperStyles}>
+      <Paper elevation={6} sx={sectionStyles}>
         <Certifications />
       </Paper>
 
       {/* Contact */}
-      <Paper elevation={4} sx={paperStyles}>
+      <Paper elevation={6} sx={sectionStyles}>
         <Contact />
       </Paper>
 
