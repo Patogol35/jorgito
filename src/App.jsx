@@ -12,13 +12,13 @@ function App() {
   return (
     <>
       <Navbar />
-      
+
       {/* Hero */}
       <Box
         id="hero"
         sx={{
           py: 10,
-          bgcolor: "#0d1117", // opcional, si quieres fondo homogéneo
+          bgcolor: "#0d1117",
         }}
       >
         <Hero />
@@ -28,8 +28,8 @@ function App() {
       <Box
         id="about"
         sx={{
-          bgcolor: "#0d1117",
           py: 10,
+          bgcolor: "#0d1117",
         }}
       >
         <About />
@@ -39,8 +39,8 @@ function App() {
       <Box
         id="skills"
         sx={{
-          bgcolor: "#1c1f2a",
           py: 10,
+          bgcolor: "#1c1f2a",
         }}
       >
         <Skills />
@@ -50,8 +50,8 @@ function App() {
       <Box
         id="projects"
         sx={{
-          bgcolor: "#f5f5f5",
           py: 10,
+          bgcolor: "#f5f5f5",
         }}
       >
         <Projects />
@@ -61,8 +61,8 @@ function App() {
       <Box
         id="certifications"
         sx={{
-          bgcolor: "#e8f0ff",
           py: 10,
+          bgcolor: "#e8f0ff",
         }}
       >
         <Certifications />
@@ -72,8 +72,8 @@ function App() {
       <Box
         id="contact"
         sx={{
-          bgcolor: "#0d1117",
           py: 10,
+          bgcolor: "#0d1117",
         }}
       >
         <Contact />
