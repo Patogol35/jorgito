@@ -24,6 +24,14 @@ function App() {
         <Hero />
       </Box>
 
+      {/* Transición suave Hero → About */}
+      <Box
+        sx={{
+          height: 40,
+          background: "linear-gradient(#0d1117, #0d1117)", // mismo color para que no corte
+        }}
+      />
+
       {/* About */}
       <Box
         id="about"
@@ -34,6 +42,14 @@ function App() {
       >
         <About />
       </Box>
+
+      {/* Transición About → Skills */}
+      <Box
+        sx={{
+          height: 40,
+          background: "linear-gradient(#0d1117, #1c1f2a)",
+        }}
+      />
 
       {/* Skills */}
       <Box
@@ -46,6 +62,14 @@ function App() {
         <Skills />
       </Box>
 
+      {/* Transición Skills → Projects */}
+      <Box
+        sx={{
+          height: 40,
+          background: "linear-gradient(#1c1f2a, #f5f5f5)",
+        }}
+      />
+
       {/* Projects */}
       <Box
         id="projects"
@@ -57,6 +81,14 @@ function App() {
         <Projects />
       </Box>
 
+      {/* Transición Projects → Certifications */}
+      <Box
+        sx={{
+          height: 40,
+          background: "linear-gradient(#f5f5f5, #e8f0ff)",
+        }}
+      />
+
       {/* Certifications */}
       <Box
         id="certifications"
@@ -67,6 +99,14 @@ function App() {
       >
         <Certifications />
       </Box>
+
+      {/* Transición Certifications → Contact */}
+      <Box
+        sx={{
+          height: 40,
+          background: "linear-gradient(#e8f0ff, #0d1117)",
+        }}
+      />
 
       {/* Contact */}
       <Box
