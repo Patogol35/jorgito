@@ -13,15 +13,7 @@ const certificaciones = [
 
 export default function Certifications() {
   return (
-    <Box
-      id="certifications"
-      sx={{
-        background: "transparent", // ✅ sin fondo propio
-        pt: 6,
-        pb: 6,
-        color: "#333",
-      }}
-    >
+    <Box id="certifications" sx={{ py: 4 }}>
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -56,7 +48,7 @@ export default function Certifications() {
         </Typography>
       </motion.div>
 
-      {/* Grid limpio */}
+      {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
         {certificaciones.map((c, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
@@ -81,4 +73,4 @@ export default function Certifications() {
       </Grid>
     </Box>
   );
-        }
+}
