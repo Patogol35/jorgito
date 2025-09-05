@@ -1,113 +1,82 @@
-import {
-  Container,
-  Typography,
-  Box,
-  Avatar,
-  Button,
-  Stack,
-} from "@mui/material";
-import { motion } from "framer-motion";
+import Navbar from "./components/Navbar.jsx";
+import Hero from "./components/Hero.jsx";
+import About from "./components/About.jsx";
+import Skills from "./components/Skills.jsx";
+//import Projects from "./components/Projects.jsx";
+import Certifications from "./components/Certifications.jsx";
+import Contact from "./components/Contact.jsx";
+import Footer from "./components/Footer.jsx";
+import { Box } from "@mui/material";
 
-export default function Hero() {
-  return (
-    <Box
-      sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)", // Fondo claro
-        color: "#333",
-        py: { xs: 8, md: 12 },
-        textAlign: "center",
-      }}
-    >
-      <Container maxWidth="md">
-        {/* Imagen/Avatar */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Avatar
-            src="/assets/profile.png"
-            alt="Jorge"
-            sx={{
-              width: 180,
-              height: 180,
-              mx: "auto",
-              mb: 3,
-              border: "4px solid white",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
-            }}
-          />
-        </motion.div>
+function App() {
+return (
+<>
+<Navbar />
 
-        {/* Texto de presentación */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Typography
-            variant="h3"
-            fontWeight="bold"
-            gutterBottom
-            sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
-          >
-            Hola, soy <span style={{ color: "#1976d2" }}>Jorge Santamaría</span>
-          </Typography>
+{/* Hero */}  
+  <Box  
+    id="hero"  
+    sx={{  
+      py: 10,  
+      bgcolor: "#0d1117",  
+      mt: 0, // asegura separación uniforme arriba  
+    }}  
+  >  
+    <Hero />  
+  </Box>  
 
-          <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ fontWeight: 500, color: "#1976d2", mb: 2 }}
-          >
-            💻 Full Stack Developer | DevOps Enthusiast
-          </Typography>
+  {/* About */}  
+  <Box  
+    id="about"  
+    sx={{  
+      py: 10,  
+      bgcolor: "#f5f5f5",  
+      mt: 0, // separación uniforme con Hero  
+    }}  
+  >  
+    <About />  
+  </Box>  
 
-          <Typography
-            variant="body1"
-            paragraph
-            sx={{ maxWidth: 700, mx: "auto", opacity: 0.8, mb: 3 }}
-          >
-            Transformo ideas en soluciones digitales eficientes, seguras y
-            escalables. Apasionado por la innovación tecnológica, siempre
-            buscando aportar valor y optimizar procesos en cada proyecto.
-          </Typography>
+  {/* Skills */}  
+  <Box  
+    id="skills"  
+    sx={{  
+      py: 10,  
+      bgcolor: "#1c1f2a",  
+      mt: 0, // separación uniforme con About  
+    }}  
+  >  
+    <Skills />  
+  </Box>  
 
-          {/* CTA Buttons */}
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            justifyContent="center"
-            spacing={2}
-          >
-            <Button
-              variant="contained"
-              size="large"
-              href="#skills"
-              sx={{
-                background: "#1976d2",
-                fontWeight: "bold",
-                px: 4,
-                "&:hover": { background: "#125aa0" },
-              }}
-            >
-              ⚡ Tecnologías
-            </Button>
-            <Button
-              variant="outlined"
-              size="large"
-              href="#contact"
-              sx={{
-                borderColor: "#1976d2",
-                color: "#1976d2",
-                fontWeight: "bold",
-                px: 4,
-                "&:hover": { background: "#1976d2", color: "#fff" },
-              }}
-            >
-              📩 Contacto
-            </Button>
-          </Stack>
-        </motion.div>
-      </Container>
-    </Box>
-  );
+  {/* Certifications */}  
+  <Box  
+    id="certifications"  
+    sx={{  
+      py: 10,  
+      bgcolor: "#e8f0ff",  
+    }}  
+  >  
+    <Certifications />  
+  </Box>  
+
+  {/* Contact */}  
+  <Box  
+    id="contact"  
+    sx={{  
+      py: 10,  
+      bgcolor: "#0d1117",  
+    }}  
+  >  
+    <Contact />  
+  </Box>  
+
+  <Footer />  
+</>
+
+);
 }
+
+export default App;
+
+      
