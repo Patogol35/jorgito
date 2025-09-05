@@ -14,14 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 
 export default function Navbar() {
-  const [elev, setElev] = useState(0);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setElev(window.scrollY > 50 ? 4 : 0);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const menuItems = [
     { label: "Sobre mí", href: "#hero" },
@@ -48,15 +41,12 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar flotante */}
+      {/* Navbar sólido */}
       <AppBar
         position="fixed"
-        elevation={elev}
         sx={{
-          backdropFilter: "blur(20px)",
-          backgroundColor: "rgba(255,255,255,0.6)",
-          transition: "0.3s",
-          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          backgroundColor: "#1976d2",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
           zIndex: 1400,
         }}
       >
@@ -69,7 +59,7 @@ export default function Navbar() {
                 display: "flex",
                 alignItems: "center",
                 fontWeight: "bold",
-                color: "#1976d2",
+                color: "#fff",
                 letterSpacing: 1,
                 cursor: "pointer",
               }}
@@ -89,11 +79,11 @@ export default function Navbar() {
                 <Button
                   href={item.href}
                   sx={{
-                    color: "#333",
+                    color: "#fff",
                     fontWeight: 600,
                     textTransform: "none",
                     fontSize: "1rem",
-                    "&:hover": { color: "#1976d2", backgroundColor: "transparent" },
+                    "&:hover": { backgroundColor: "rgba(255,255,255,0.15)" },
                   }}
                 >
                   {item.label}
@@ -104,12 +94,12 @@ export default function Navbar() {
 
           {/* Botón móvil */}
           <IconButton sx={{ display: { xs: "block", md: "none" } }} onClick={() => setOpen(true)}>
-            <MenuIcon sx={{ color: "#1976d2" }} fontSize="large" />
+            <MenuIcon sx={{ color: "#fff" }} fontSize="large" />
           </IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* Menú móvil animado */}
+      {/* Menú móvil moderno */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -135,7 +125,7 @@ export default function Navbar() {
               style={{
                 width: "280px",
                 height: "100%",
-                background: "linear-gradient(180deg, #f5f5f5, #e8f0ff)",
+                background: "linear-gradient(180deg, #1565c0, #1976d2)",
                 borderRadius: "12px 0 0 12px",
                 padding: "2rem",
                 position: "absolute",
@@ -143,15 +133,16 @@ export default function Navbar() {
                 right: 0,
                 display: "flex",
                 flexDirection: "column",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
               }}
               onClick={(e) => e.stopPropagation()}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 4 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1976d2" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
                   Menú
                 </Typography>
                 <IconButton onClick={() => setOpen(false)}>
-                  <CloseIcon fontSize="large" />
+                  <CloseIcon sx={{ color: "#fff" }} fontSize="large" />
                 </IconButton>
               </Box>
 
@@ -164,13 +155,13 @@ export default function Navbar() {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover={{ scale: 1.05, color: "#1976d2" }}
+                    whileHover={{ scale: 1.05, color: "#ffeb3b" }}
                     onClick={() => setOpen(false)}
                     style={{
                       fontSize: "1.2rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: "#333",
+                      color: "#fff",
                       cursor: "pointer",
                     }}
                   >
@@ -184,4 +175,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-      }
+                }
