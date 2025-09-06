@@ -62,7 +62,6 @@ export default function Hero() {
               component="span"
               sx={{
                 position: "absolute",
-                id: "hero",
                 left: "50%",
                 bottom: -6,
                 transform: "translateX(-50%)",
