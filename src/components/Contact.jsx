@@ -57,31 +57,31 @@ scrollMarginTop:"80px",
         transition={{ duration: 0.8 }}  
         style={{ textAlign: "center", marginBottom: "1.5rem" }}  
       >  
-        <Typography  
-          variant="h4"  
-          align="center"  
-          sx={{  
-            fontWeight: 700,  
-            color: "#1976d2",  
-            position: "relative",  
-            display: "inline-block",  
-          }}  
-        >  
-          Contáctame   
-          <Box  
-            component="span"  
-            sx={{  
-              position: "absolute",  
-              left: "50%",  
-              bottom: -6,  
-              transform: "translateX(-50%)",  
-              width: "60%",  
-              height: "3px",  
-              background: "#1976d2",  
-              borderRadius: "6px",  
-            }}  
-          />  
-        </Typography>  
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            fontWeight: 700,
+            color: "#1976d2",
+            position: "relative",
+            display: "inline-block",
+          }}
+        >
+          Mis Redes Sociales
+          <Box
+            component="span"
+            sx={{
+              position: "absolute",
+              left: "50%",
+              bottom: -6,
+              transform: "translateX(-50%)",
+              width: "60%",
+              height: "3px",
+              background: "#1976d2",
+              borderRadius: "6px",
+            }}
+          />
+        </Typography>
       </motion.div>  
 
       {/* Redes sociales + correo */}  
