@@ -108,7 +108,7 @@ export default function Navbar() {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: item.color, // 🔹 cada sección con su color profesional
+                      color: "#fff", // Blanco por defecto
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -120,11 +120,14 @@ export default function Navbar() {
                         height: 2,
                         bottom: -2,
                         left: 0,
-                        backgroundColor: "#fff",
+                        backgroundColor: item.color, // color de la sección al hover
                         transition: "0.3s",
                       },
                       "&:hover::after": {
                         width: "100%",
+                      },
+                      "&:hover": {
+                        color: item.color, // cambia el texto al color de la sección
                       },
                     }}
                   >
@@ -226,4 +229,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                               }
+                  }
