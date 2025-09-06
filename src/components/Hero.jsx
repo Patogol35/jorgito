@@ -11,11 +11,8 @@ export default function Hero() {
     }
   };
 
-  const downloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/Jorge.CV.pdf"; // archivo en public
-    link.download = "Jorge.CV.pdf";
-    link.click();
+  const viewCV = () => {
+    window.open("/Jorge.CV.pdf", "_blank"); // abre en nueva pestaña
   };
 
   return (
@@ -124,7 +121,7 @@ export default function Hero() {
             <Button
               variant="outlined"
               size="large"
-              onClick={downloadCV}
+              onClick={viewCV} // abre el CV en nueva pestaña
               sx={{
                 border: "2px solid",
                 borderColor: "#1976d2",
@@ -141,7 +138,7 @@ export default function Hero() {
                 transition: "all 0.3s ease",
               }}
             >
-              📄 Descargar CV
+              📄 Ver CV
             </Button>
           </Stack>
         </motion.div>
