@@ -27,46 +27,11 @@ export default function Hero() {
           justifyContent="center"
         >
           {/* Columna Avatar */}
-          <Grid item xs={12} md={5} sx={{ position: "relative" }}>
-            {/* Fondo decorativo */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                width: { xs: 260, md: 340 },
-                height: { xs: 260, md: 340 },
-                borderRadius: "50%",
-                background: "radial-gradient(circle at 30% 30%, #93c5fd 0%, transparent 70%)",
-                filter: "blur(40px)",
-                zIndex: 0,
-              }}
-            />
-            <Box
-              sx={{
-                position: "absolute",
-                top: "20%",
-                left: "60%",
-                width: 120,
-                height: 120,
-                borderRadius: "50%",
-                background: "radial-gradient(circle, #c4b5fd 0%, transparent 70%)",
-                filter: "blur(30px)",
-                zIndex: 0,
-              }}
-            />
-
-            {/* Avatar animado */}
+          <Grid item xs={12} md={5}>
             <motion.div
               animate={{ y: [0, -15, 0] }}
               transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
-              style={{
-                display: "inline-block",
-                borderRadius: "50%",
-                position: "relative",
-                zIndex: 1,
-              }}
+              style={{ display: "inline-block", borderRadius: "50%" }}
             >
               <Avatar
                 src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
@@ -76,7 +41,7 @@ export default function Hero() {
                   height: { xs: 160, md: 220 },
                   mx: { xs: "auto", md: 0 },
                   border: "4px solid #1976d2",
-                  boxShadow: "0 12px 24px rgba(0,0,0,0.3)",
+                  boxShadow: "0 12px 24px rgba(0,0,0,0.25)",
                 }}
               />
             </motion.div>
