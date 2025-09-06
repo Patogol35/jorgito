@@ -2,6 +2,22 @@ import { Container, Typography, Box, Avatar, Button, Stack } from "@mui/material
 import { motion } from "framer-motion";
 
 export default function Hero() {
+  const scrollTo = (id) => {
+    const element = document.querySelector(id);
+    if (element) {
+      const yOffset = -70; // compensar navbar fijo
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
+  const downloadCV = () => {
+    const link = document.createElement("a");
+    link.href = "/JorgePatricio_CV.pdf"; // Ruta a tu CV
+    link.download = "JorgePatricio_CV.pdf";
+    link.click();
+  };
+
   return (
     <Box
       id="hero"
@@ -14,7 +30,7 @@ export default function Hero() {
       }}
     >
       <Container maxWidth="md">
-        {/* Avatar con animación flotante y borde sutil */}
+        {/* Avatar flotante */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -40,7 +56,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Texto de presentación con título mejorado */}
+        {/* Texto de presentación */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -107,7 +123,7 @@ export default function Hero() {
             <Button
               variant="contained"
               size="large"
-              href="#skills"
+              onClick={() => scrollTo("#skills")}
               sx={{
                 background: "linear-gradient(90deg, #1976d2, #6d28d9)",
                 fontWeight: "bold",
@@ -120,7 +136,7 @@ export default function Hero() {
             <Button
               variant="outlined"
               size="large"
-              href="#contact"
+              onClick={downloadCV}
               sx={{
                 border: "2px solid",
                 borderColor: "#1976d2",
@@ -134,11 +150,11 @@ export default function Hero() {
                 },
               }}
             >
-              📩 Contacto
+              📄 Descargar CV
             </Button>
           </Stack>
         </motion.div>
       </Container>
     </Box>
   );
-          }
+}
