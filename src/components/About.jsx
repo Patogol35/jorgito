@@ -62,7 +62,7 @@ export default function About() {
               initial={{ opacity: 0, y: 50 }}          // Efecto “flotante” desde abajo
               whileInView={{ opacity: 1, y: 0 }}      // Estado final
               transition={{ duration: 0.8, delay: i * 0.3 }}  // Cascada
-              viewport={{ once: true }}               // Para que no se repita al hacer scroll
+              viewport={{ once: false }}               // Para que no se repita al hacer scroll
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
                 {est.icon}
