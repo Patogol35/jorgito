@@ -1,138 +1,97 @@
-import {
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Button,
-  Chip,
-  Stack,
-  Box,
-} from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
 import { motion } from "framer-motion";
+import { FolderCode } from "lucide-react"; // Ícono para proyectos
 
 const proyectos = [
   {
-    titulo: "E-commerce con Django + React",
-    descripcion: "Plataforma completa con carrito, pagos y autenticación JWT.",
-    imagen: "/assets/ecommerce.png",
-    link: "#",
-    tags: ["Django", "React", "JWT"],
+    titulo: "🌤 App para ver el clima",
+    link: "https://jorgepatriciosantamariacherrezweath.vercel.app/", // 👉 coloca aquí el enlace real
+    color: "#1976d2",
   },
   {
-    titulo: "API con Django REST",
-    descripcion: "API escalable con JWT y documentación con Swagger.",
-    imagen: "/assets/api.png",
-    link: "#",
-    tags: ["Django REST", "Swagger", "JWT"],
+    titulo: "🛒 Tienda Full Stack (React + Django)",
+    link: "https://patriciosantamariaapp.vercel.app/", // 👉 coloca aquí el enlace real
+    color: "#9333ea",
   },
   {
-    titulo: "Frontend en React",
-    descripcion: "UI moderna con Context API y Tailwind.",
-    imagen: "/assets/frontend.png",
-    link: "#",
-    tags: ["React", "Tailwind", "Context API"],
+    titulo: "🎬 Buscador de películas",
+    link: "jorgepatriciosantamariacherrezmovie.vercel.app/", // 👉 coloca aquí el enlace real
+    color: "#16a34a",
   },
 ];
 
 export default function Projects() {
   return (
-    <Box
-      id="projects"
-      sx={{
-        background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
-        py: 10,
-      }}
-    >
-      <Container>
-        {/* Título animado */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+    <Box id="projects" sx={{ py: 4, scrollMarginTop: "80px" }}>
+      {/* Título */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        style={{ textAlign: "center", marginBottom: "1rem" }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{
+            fontWeight: 700,
+            color: "#1976d2",
+            position: "relative",
+            display: "inline-block",
+          }}
         >
-          <Typography
-            variant="h4"
-            align="center"
-            gutterBottom
-            sx={{ fontWeight: "bold", color: "#1976d2", mb: 5 }}
-          >
-            🚀 Proyectos destacados
-          </Typography>
+          Proyectos
+          <Box
+            component="span"
+            sx={{
+              position: "absolute",
+              left: "50%",
+              bottom: -6,
+              transform: "translateX(-50%)",
+              width: "60%",
+              height: "3px",
+              background: "#1976d2",
+              borderRadius: "6px",
+            }}
+          />
+        </Typography>
+      </motion.div>
 
-          <Grid container spacing={4}>
-            {proyectos.map((p, i) => (
-              <Grid item xs={12} sm={6} md={4} key={i}>
-                <motion.div whileHover={{ scale: 1.05 }}>
-                  <Card
+      {/* Grid de proyectos */}
+      <Grid container spacing={3} justifyContent="center">
+        {proyectos.map((p, i) => (
+          <Grid item xs={12} sm={6} md={4} key={i}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: i * 0.3 }}
+              viewport={{ once: false }}
+            >
+              <Box sx={{ textAlign: "center", px: 1 }}>
+                <FolderCode size={28} color={p.color} />
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", mt: 1 }}
+                >
+                  <Link
+                    href={p.link}
+                    underline="hover"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{
-                      borderRadius: "16px",
-                      boxShadow: 3,
-                      height: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      transition: "0.3s",
-                      "&:hover": {
-                        boxShadow: 6,
-                      },
+                      color: p.color,
+                      fontWeight: "bold",
+                      "&:hover": { textDecoration: "underline" },
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      height="180"
-                      image={p.imagen}
-                      alt={p.titulo}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
-                        {p.titulo}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ mb: 2 }}
-                      >
-                        {p.descripcion}
-                      </Typography>
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{ mb: 2, flexWrap: "wrap" }}
-                      >
-                        {p.tags.map((tag, idx) => (
-                          <Chip
-                            key={idx}
-                            label={tag}
-                            size="small"
-                            sx={{
-                              backgroundColor: "#e3f2fd",
-                              fontWeight: "bold",
-                              "&:hover": { backgroundColor: "#bbdefb" },
-                            }}
-                          />
-                        ))}
-                      </Stack>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        href={p.link}
-                        sx={{
-                          textTransform: "none",
-                          fontWeight: "bold",
-                          "&:hover": { backgroundColor: "#1565c0" },
-                        }}
-                      >
-                        Ver más
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              </Grid>
-            ))}
+                    {p.titulo}
+                  </Link>
+                </Typography>
+              </Box>
+            </motion.div>
           </Grid>
-        </motion.div>
-      </Container>
+        ))}
+      </Grid>
     </Box>
   );
 }
