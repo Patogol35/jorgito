@@ -68,7 +68,7 @@ export default function Contact() {
                 display: "inline-block",
               }}
             >
-              Contáctanos
+              Contáctame 
               <Box
                 component="span"
                 sx={{
