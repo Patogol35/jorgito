@@ -16,6 +16,7 @@ import CodeIcon from "@mui/icons-material/Code";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("#hero");
 
   const menuItems = [
     { label: "Sobre mí", href: "#hero", color: "#1565c0" },
@@ -26,10 +27,27 @@ export default function Navbar() {
     { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
+  // Scroll y sección activa
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-70px 0px -70% 0px", threshold: 0 }
+    );
+
+    const sections = menuItems.map((item) => document.querySelector(item.href));
+    sections.forEach((section) => section && observer.observe(section));
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      sections.forEach((section) => section && observer.unobserve(section));
+    };
   }, []);
 
   const menuVariants = {
@@ -99,42 +117,47 @@ export default function Navbar() {
 
             {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-              {menuItems.map((item) => (
-                <motion.div
-                  key={item.href}
-                  whileHover={{ y: -2, scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    onClick={() => handleScrollTo(item.href)}
-                    sx={{
-                      color: "#fff", // Blanco por defecto
-                      fontWeight: 600,
-                      textTransform: "none",
-                      fontSize: "1rem",
-                      position: "relative",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        width: 0,
-                        height: 2,
-                        bottom: -2,
-                        left: 0,
-                        backgroundColor: item.color, // color de la sección al hover
-                        transition: "0.3s",
-                      },
-                      "&:hover::after": {
-                        width: "100%",
-                      },
-                      "&:hover": {
-                        color: item.color, // cambia el texto al color de la sección
-                      },
-                    }}
+              {menuItems.map((item) => {
+                const isActive = activeSection === item.href;
+                return (
+                  <motion.div
+                    key={item.href}
+                    whileHover={{ y: -2, scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
+                    <Button
+                      onClick={() => handleScrollTo(item.href)}
+                      sx={{
+                        color: "#fff",
+                        fontWeight: 600,
+                        textTransform: "none",
+                        fontSize: "1rem",
+                        position: "relative",
+                        "&::after": {
+                          content: '""',
+                          position: "absolute",
+                          width: isActive ? "100%" : 0,
+                          height: 3,
+                          bottom: -2,
+                          left: 0,
+                          backgroundColor: item.color,
+                          transition: "0.3s",
+                        },
+                        "&:hover::after": {
+                          width: "100%",
+                        },
+                        "&:hover": {
+                          color: "#fff",
+                          textShadow: `0 0 4px ${item.color}`,
+                        },
+                        textShadow: isActive ? `0 0 4px ${item.color}` : "none",
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  </motion.div>
+                );
+              })}
             </Box>
 
             {/* Botón móvil */}
@@ -229,4 +252,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                  }
+  }
