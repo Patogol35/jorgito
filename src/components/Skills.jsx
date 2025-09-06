@@ -18,6 +18,7 @@ const skills = [
   { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "PostgreSQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
+  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-icon.svg" },
   { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
   { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
@@ -32,7 +33,7 @@ export default function Skills() {
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop:"80px" }}>
+    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
         {/* Título */}
         <motion.div
@@ -170,4 +171,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+          }
