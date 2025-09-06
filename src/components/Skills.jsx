@@ -32,7 +32,7 @@ export default function Skills() {
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   return (
-    <Box id="skills" sx={{ py: 4 }}>
+    <Box id="skills" sx={{ py: 4, scrollMarginTop:"80px" }}>
       <Container>
         {/* Título */}
         <motion.div
