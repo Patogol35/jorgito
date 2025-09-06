@@ -18,12 +18,12 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const menuItems = [
-  { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-  { label: "Educación", href: "#about", color: "#2e7d32" },
-  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-  { label: "Proyectos", href: "#projects", color: "#0288d1" }, // 🔹 profesional y destacado
-  { label: "Contacto", href: "#contact", color: "#c62828" },
+    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+    { label: "Educación", href: "#about", color: "#2e7d32" },
+    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+    { label: "Proyectos", href: "#projects", color: "#0288d1" },
+    { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
   useEffect(() => {
@@ -47,11 +47,10 @@ export default function Navbar() {
     }),
   };
 
-  // Smooth scroll
   const handleScrollTo = (id) => {
     const element = document.querySelector(id);
     if (element) {
-      const yOffset = -70; // altura navbar
+      const yOffset = -70;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -103,13 +102,13 @@ export default function Navbar() {
               {menuItems.map((item) => (
                 <motion.div
                   key={item.href}
-                  whileHover={{ y: -2, scale: 1.1 }}
+                  whileHover={{ y: -2, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: "#fff",
+                      color: item.color, // 🔹 cada sección con su color profesional
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -119,9 +118,9 @@ export default function Navbar() {
                         position: "absolute",
                         width: 0,
                         height: 2,
-                        bottom: 0,
+                        bottom: -2,
                         left: 0,
-                        backgroundColor: "#ffeb3b",
+                        backgroundColor: "#fff",
                         transition: "0.3s",
                       },
                       "&:hover::after": {
@@ -213,7 +212,7 @@ export default function Navbar() {
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: item.color, // 🔹 color único por sección
+                      backgroundColor: item.color,
                       transition: "0.3s",
                     }}
                   >
@@ -227,4 +226,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-              }
+                               }
