@@ -52,7 +52,6 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             style={{ textAlign: "center", marginBottom: "1.5rem" }}
           >
@@ -61,14 +60,12 @@ export default function Contact() {
               align="center"
               sx={{
                 fontWeight: 700,
-                letterSpacing: "0.02em",
-                mb: 1.5,
                 color: "#1976d2",
                 position: "relative",
                 display: "inline-block",
               }}
             >
-              Contáctame
+              Contáctanos
               <Box
                 component="span"
                 sx={{
@@ -122,4 +119,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-}
+                  }
