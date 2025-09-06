@@ -17,7 +17,7 @@ export default function Contact() {
     },
     {
       icon: <GitHub fontSize="large" />,
-      color: "#EDEDED", // 👈 gris claro, visible en fondo oscuro
+      color: "#181717", // 👈 negro oficial de GitHub
       href: "https://github.com/Patogol35",
     },
     {
@@ -36,9 +36,9 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        background: "transparent",
-        pt: 6, // padding-top reducido
-        pb: 4, // padding-bottom reducido
+        background: "transparent", // el Paper del App.jsx manda el fondo
+        pt: 6,
+        pb: 4,
         color: "#fff",
         scrollMarginTop: "80px",
       }}
@@ -84,7 +84,7 @@ export default function Contact() {
             </Typography>
           </motion.div>
 
-          {/* Redes sociales */}
+          {/* Redes sociales + correo */}
           <Stack
             direction="row"
             spacing={3}
