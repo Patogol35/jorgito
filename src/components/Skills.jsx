@@ -171,5 +171,5 @@ borderRadius: "6px",
 </Box>
 
 );
-} El código déjalo exactamente igual solo añade una silla más supabase
+} 
 
