@@ -22,6 +22,7 @@ export default function Navbar() {
     { label: "Educación", href: "#about", color: "#2e7d32" },
     { label: "Tecnologías", href: "#skills", color: "#f57c00" },
     { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+    { label: "Proyectos", href: "#projects", color: "#6a1b9a" },
     { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
