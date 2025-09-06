@@ -1,4 +1,4 @@
-import { Box, Typography, Stack } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SocialLinks from "./SocialLinks";
 import { GitHub, LinkedIn, Instagram, MailOutline } from "@mui/icons-material";
 
@@ -28,9 +28,7 @@ export default function Footer() {
         Transformando ideas en aplicaciones efectivas 🚀
       </Typography>
 
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <SocialLinks socialLinks={socialLinks} size="28px" />
-      </Stack>
+      <SocialLinks socialLinks={socialLinks} size="28px" animated={false} spacing={2} />
     </Box>
   );
 }
