@@ -13,7 +13,7 @@ export default function Hero() {
         justifyContent: "center",
         gap: { xs: 4, md: 8 },
         py: { xs: 6, sm: 8, md: 10 },
-        pt: { xs: 10, sm: 8, md: 10 }, // 👈 más espacio arriba en móvil
+        pt: { xs: 10, sm: 8, md: 10 }, // espacio arriba en móvil
       }}
     >
       {/* Avatar con animación */}
@@ -83,16 +83,16 @@ export default function Hero() {
             lineHeight: 1.6,
           }}
         >
-
-     Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar impacto positivo.
-          
+          Me apasiona crear tecnología que transforme ideas en realidades digitales. 
+          Mi enfoque está en aportar valor constante, desarrollando soluciones digitales 
+          seguras, innovadoras y orientadas a generar impacto positivo.
         </Typography>
 
         {/* Botón con hover animado */}
         <Button
           variant="outlined"
           startIcon={<DescriptionIcon />}
-          href="/CV.pdf"
+          href="/Jorge.CV.pdf"   // 👈 ahora apunta al archivo correcto
           target="_blank"
           rel="noopener noreferrer"
           sx={{
@@ -117,4 +117,4 @@ export default function Hero() {
       </Box>
     </Box>
   );
-}
+                }
