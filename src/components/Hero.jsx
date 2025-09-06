@@ -25,10 +25,11 @@ export default function Hero() {
           alt="Jorge Patricio Santamaría Cherrez"
           src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
           sx={{
-            width: { xs: 140, sm: 180, md: 200 },
-            height: { xs: 140, sm: 180, md: 200 },
+            width: { xs: 130, sm: 170, md: 200 },
+            height: { xs: 130, sm: 170, md: 200 },
             border: "4px solid #1976d2",
             boxShadow: "0 12px 24px rgba(0,0,0,0.25)",
+            mb: { xs: 2, sm: 0 }, // margen extra en móvil para que no tape el texto
           }}
         />
       </motion.div>
@@ -43,6 +44,7 @@ export default function Hero() {
             color: "#1976d2",
             display: "inline-block",
             position: "relative",
+            fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" }, // 👈 más chico en móviles
           }}
         >
           Hola, soy Jorge Patricio Santamaría Cherrez
@@ -64,12 +66,22 @@ export default function Hero() {
           variant="h6"
           color="text.secondary"
           gutterBottom
-          sx={{ fontStyle: "italic" }}
+          sx={{
+            fontStyle: "italic",
+            fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.25rem" }, // 👈 más pequeño en cel
+          }}
         >
           🎓 Máster en Ingeniería de Software y Sistemas Informáticos
         </Typography>
 
-        <Typography variant="body1" paragraph>
+        <Typography
+          variant="body1"
+          paragraph
+          sx={{
+            fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+            lineHeight: 1.6,
+          }}
+        >
           Transformo ideas en soluciones digitales eficientes, seguras y escalables.
           Apasionado por la innovación tecnológica, siempre buscando aportar valor y
           optimizar procesos en cada proyecto.
@@ -104,4 +116,4 @@ export default function Hero() {
       </Box>
     </Box>
   );
-            }
+}
