@@ -18,12 +18,12 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-    { label: "Educación", href: "#about", color: "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: "#6a1b9a" },
-    { label: "Contacto", href: "#contact", color: "#c62828" },
+  { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+  { label: "Educación", href: "#about", color: "#2e7d32" },
+  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+  { label: "Proyectos", href: "#projects", color: "#0288d1" }, // 🔹 profesional y destacado
+  { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
   useEffect(() => {
