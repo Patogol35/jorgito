@@ -19,7 +19,7 @@ const estudios = [
 
 export default function About() {
   return (
-    <Box id="about" sx={{ py: 4, scrollMarginTop:"80px" }}>
+    <Box id="about" sx={{ py: 4, scrollMarginTop: "80px" }}>
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -61,7 +61,8 @@ export default function About() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -5, scale: 1.05 }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
                 {est.icon}
