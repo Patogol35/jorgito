@@ -10,7 +10,7 @@ const estudios = [
     icon: <GraduationCap size={28} color="#1976d2" />,
   },
   {
-    titulo: "🎓 Ingeniero en Sistemas",
+    titulo: "💻 Ingeniero en Sistemas",
     institucion: "Universidad Indoamérica, Ecuador",
     detalle: "Nota Tesis: 9.50 | Promedio final: 9",
     icon: <GraduationCap size={28} color="#9333ea" />,
