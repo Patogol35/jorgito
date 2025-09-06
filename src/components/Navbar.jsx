@@ -16,38 +16,20 @@ import CodeIcon from "@mui/icons-material/Code";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("#hero");
 
   const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-    { label: "Educación", href: "#about", color: "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: "#0288d1" },
-    { label: "Contacto", href: "#contact", color: "#c62828" },
+  { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+  { label: "Educación", href: "#about", color: "#2e7d32" },
+  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+  { label: "Proyectos", href: "#projects", color: "#0288d1" }, // 🔹 profesional y destacado
+  { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
-  // Scroll y sección activa
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(`#${entry.target.id}`);
-        });
-      },
-      { rootMargin: "-70px 0px -70% 0px", threshold: 0 }
-    );
-
-    const sections = menuItems.map((item) => document.querySelector(item.href));
-    sections.forEach((section) => section && observer.observe(section));
-
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      sections.forEach((section) => section && observer.unobserve(section));
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const menuVariants = {
@@ -65,10 +47,11 @@ export default function Navbar() {
     }),
   };
 
+  // Smooth scroll
   const handleScrollTo = (id) => {
     const element = document.querySelector(id);
     if (element) {
-      const yOffset = -70;
+      const yOffset = -70; // altura navbar
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -117,47 +100,39 @@ export default function Navbar() {
 
             {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
-              {menuItems.map((item) => {
-                const isActive = activeSection === item.href;
-                return (
-                  <motion.div
-                    key={item.href}
-                    whileHover={{ y: -2, scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+              {menuItems.map((item) => (
+                <motion.div
+                  key={item.href}
+                  whileHover={{ y: -2, scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    onClick={() => handleScrollTo(item.href)}
+                    sx={{
+                      color: "#fff",
+                      fontWeight: 600,
+                      textTransform: "none",
+                      fontSize: "1rem",
+                      position: "relative",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        width: 0,
+                        height: 2,
+                        bottom: 0,
+                        left: 0,
+                        backgroundColor: "#ffeb3b",
+                        transition: "0.3s",
+                      },
+                      "&:hover::after": {
+                        width: "100%",
+                      },
+                    }}
                   >
-                    <Button
-                      onClick={() => handleScrollTo(item.href)}
-                      sx={{
-                        color: "#fff",
-                        fontWeight: 600,
-                        textTransform: "none",
-                        fontSize: "1rem",
-                        position: "relative",
-                        "&::after": {
-                          content: '""',
-                          position: "absolute",
-                          width: isActive ? "100%" : 0,
-                          height: 3,
-                          bottom: -2,
-                          left: 0,
-                          backgroundColor: item.color,
-                          transition: "0.3s",
-                        },
-                        "&:hover::after": {
-                          width: "100%",
-                        },
-                        "&:hover": {
-                          color: "#fff",
-                          textShadow: `0 0 4px ${item.color}`,
-                        },
-                        textShadow: isActive ? `0 0 4px ${item.color}` : "none",
-                      }}
-                    >
-                      {item.label}
-                    </Button>
-                  </motion.div>
-                );
-              })}
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
             </Box>
 
             {/* Botón móvil */}
@@ -238,7 +213,7 @@ export default function Navbar() {
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: item.color,
+                      backgroundColor: item.color, // 🔹 color único por sección
                       transition: "0.3s",
                     }}
                   >
@@ -252,4 +227,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-  }
+}
