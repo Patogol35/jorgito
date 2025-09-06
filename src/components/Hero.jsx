@@ -13,6 +13,7 @@ export default function Hero() {
         justifyContent: "center",
         gap: { xs: 4, md: 8 },
         py: { xs: 6, sm: 8, md: 10 },
+        pt: { xs: 10, sm: 8, md: 10 }, // 👈 más espacio arriba en móvil
       }}
     >
       {/* Avatar con animación */}
@@ -29,7 +30,7 @@ export default function Hero() {
             height: { xs: 130, sm: 170, md: 200 },
             border: "4px solid #1976d2",
             boxShadow: "0 12px 24px rgba(0,0,0,0.25)",
-            mb: { xs: 2, sm: 0 }, // margen extra en móvil para que no tape el texto
+            mb: { xs: 2, sm: 0 },
           }}
         />
       </motion.div>
@@ -44,7 +45,7 @@ export default function Hero() {
             color: "#1976d2",
             display: "inline-block",
             position: "relative",
-            fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" }, // 👈 más chico en móviles
+            fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
           }}
         >
           Hola, soy Jorge Patricio Santamaría Cherrez
@@ -68,7 +69,7 @@ export default function Hero() {
           gutterBottom
           sx={{
             fontStyle: "italic",
-            fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.25rem" }, // 👈 más pequeño en cel
+            fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.25rem" },
           }}
         >
           🎓 Máster en Ingeniería de Software y Sistemas Informáticos
