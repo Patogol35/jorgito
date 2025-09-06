@@ -38,7 +38,10 @@ export default function Contact() {
       sx={{
         background: "transparent", // el Paper del App.jsx manda el fondo
         py: 12,
-        color: "#fff",
+        color: "#fff", 
+        scrollMarginTop:"80px",
+
+        
       }}
     >
       <Container maxWidth="sm">
