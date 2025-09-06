@@ -53,13 +53,6 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-#hero,
-#about,
-#skills,
-#certifications,
-#contact {
-  scroll-margin-top: 80px; /* ajusta según el alto de tu Navbar */
-}
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
