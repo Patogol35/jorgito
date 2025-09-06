@@ -16,36 +16,43 @@ export default function Contact() {
   return (
     <Box id="contact" sx={{ pt: 6, pb: 4, color: "#fff", scrollMarginTop: "80px" }}>
       <Container maxWidth="sm">
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-          <Typography
-          variant="h4"
-          align="center"
-          sx={{
-            fontWeight: 700,
-            color: "#1976d2",
-            position: "relative",
-            display: "inline-block",
-          }}
+        {/* Título con mismo estilo que Formación Académica */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
-          Mis Redes Sociales
-          <Box
-            component="span"
+          <Typography
+            variant="h4"
+            align="center"
             sx={{
-              position: "absolute",
-              left: "50%",
-              bottom: -6,
-              transform: "translateX(-50%)",
-              width: "60%",
-              height: "3px",
-              background: "#1976d2",
-              borderRadius: "6px",
+              fontWeight: 700,
+              color: "#1976d2",
+              position: "relative",
+              display: "inline-block",
             }}
-          />
-        </Typography>
-
-          <SocialLinks socialLinks={socialLinks} size="40px" animated={true} spacing={3} />
+          >
+            Mis Redes Sociales
+            <Box
+              component="span"
+              sx={{
+                position: "absolute",
+                left: "50%",
+                bottom: -6,
+                transform: "translateX(-50%)",
+                width: "60%",
+                height: "3px",
+                background: "#1976d2",
+                borderRadius: "6px",
+              }}
+            />
+          </Typography>
         </motion.div>
+
+        {/* Redes sociales */}
+        <SocialLinks socialLinks={socialLinks} size="40px" animated={true} spacing={3} />
       </Container>
     </Box>
   );
-            }
+}
