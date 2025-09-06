@@ -2,15 +2,6 @@ import { Container, Typography, Box, Avatar, Button, Stack } from "@mui/material
 import { motion } from "framer-motion";
 
 export default function Hero() {
-  const scrollTo = (id) => {
-    const element = document.querySelector(id);
-    if (element) {
-      const yOffset = -70; // compensar navbar fijo
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-  };
-
   const viewCV = () => {
     window.open("/Jorge.CV.pdf", "_blank"); // abre en nueva pestaña
   };
@@ -56,7 +47,7 @@ export default function Hero() {
 
           {/* Nombre y título */}
           <Typography
-            variant="h3"
+            variant="h4" // 👈 reducido de h3 a h4
             fontWeight="bold"
             gutterBottom
             sx={{ color: "#1976d2", position: "relative", display: "inline-block" }}
@@ -78,7 +69,7 @@ export default function Hero() {
           </Typography>
 
           <Typography
-            variant="h5"
+            variant="h6" // 👈 también lo bajé un nivel (antes h5) para mejor balance
             gutterBottom
             sx={{ fontWeight: 500, color: "#1976d2", mb: 2 }}
           >
@@ -101,27 +92,12 @@ export default function Hero() {
             y optimizar procesos en cada proyecto.
           </Typography>
 
-          {/* Botones CTA */}
-          <Stack direction={{ xs: "column", sm: "row" }} justifyContent="center" spacing={2}>
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => scrollTo("#skills")}
-              sx={{
-                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                fontWeight: "bold",
-                px: 5,
-                py: 1.5,
-                "&:hover": { background: "linear-gradient(90deg, #125aa0, #4f46e5)", transform: "scale(1.05)" },
-                transition: "all 0.3s ease",
-              }}
-            >
-              ⚡ Tecnologías
-            </Button>
+          {/* Botón CV */}
+          <Stack direction="row" justifyContent="center">
             <Button
               variant="outlined"
               size="large"
-              onClick={viewCV} // abre el CV en nueva pestaña
+              onClick={viewCV}
               sx={{
                 border: "2px solid",
                 borderColor: "#1976d2",
