@@ -18,11 +18,11 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   const menuItems = [
-    { label: "Sobre mí", href: "#hero" },
-    { label: "Educación", href: "#about" },
-    { label: "Tecnologías", href: "#skills" },
-    { label: "Certificaciones", href: "#certifications" },
-    { label: "Contacto", href: "#contact" },
+    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+    { label: "Educación", href: "#about", color: "#2e7d32" },
+    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+    { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Navbar() {
     }),
   };
 
-  // Smooth scroll function
+  // Smooth scroll
   const handleScrollTo = (id) => {
     const element = document.querySelector(id);
     if (element) {
@@ -54,7 +54,7 @@ export default function Navbar() {
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
-    setOpen(false); // cierra menú móvil si está abierto
+    setOpen(false);
   };
 
   return (
@@ -160,6 +160,9 @@ export default function Navbar() {
               height: "100vh",
               background: "rgba(0,0,0,0.5)",
               zIndex: 1300,
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
             }}
             onClick={() => setOpen(false)}
           >
@@ -171,21 +174,19 @@ export default function Navbar() {
               style={{
                 width: "280px",
                 background: "linear-gradient(180deg, #0d47a1, #1976d2)",
-                borderRadius: "12px 0 0 12px",
+                borderRadius: "16px 0 0 16px",
                 padding: "2rem",
-                position: "absolute",
-                top: 0,
-                right: 0,
+                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
-                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
-                justifyContent: "flex-start",
-                height: "100%",
+                height: "auto",
+                maxHeight: "80vh",
+                overflowY: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#ffeb3b" }}>
                   Menú
                 </Typography>
                 <IconButton onClick={() => setOpen(false)}>
@@ -193,7 +194,7 @@ export default function Navbar() {
                 </IconButton>
               </Box>
 
-              <Stack spacing={2} sx={{ flexGrow: 0 }}>
+              <Stack spacing={2}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
@@ -202,13 +203,17 @@ export default function Navbar() {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover={{ scale: 1.07, color: "#ffeb3b" }}
+                    whileHover={{ scale: 1.05 }}
                     style={{
-                      fontSize: "1.25rem",
+                      fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
                       color: "#fff",
                       cursor: "pointer",
+                      padding: "0.8rem 1rem",
+                      borderRadius: "8px",
+                      backgroundColor: item.color, // 🔹 color único por sección
+                      transition: "0.3s",
                     }}
                   >
                     {item.label}
@@ -221,4 +226,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-                  }
+              }
