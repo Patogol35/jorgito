@@ -3,7 +3,7 @@ import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Skills from "./components/Skills.jsx";
 import Certifications from "./components/Certifications.jsx";
-import Proyectos from "./components/Proyectos.js";   // 👈 Importación aquí
+import Projects from "./components/Projects.js";   // 👈 Importación aquí
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import { Box, Paper, Container } from "@mui/material";
