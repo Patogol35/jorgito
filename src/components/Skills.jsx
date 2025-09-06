@@ -21,7 +21,7 @@ const skills = [
   { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },  
   { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },  
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },  
-  { name: "Supabase", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },  
+  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },  
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },  
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },  
 ];  
@@ -171,4 +171,4 @@ export default function Skills() {
       </Container>  
     </Box>  
   );  
-                      }
+}
