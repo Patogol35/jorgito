@@ -17,6 +17,23 @@ const estudios = [
   },
 ];
 
+// Variants para el contenedor (grid)
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3, // tiempo entre cada tarjeta
+    },
+  },
+};
+
+// Variants para cada item
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 export default function About() {
   return (
     <Box id="about" sx={{ py: 4, scrollMarginTop: "80px" }}>
@@ -54,29 +71,39 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Grid */}
-      <Grid container spacing={3} justifyContent="center">
+      {/* Grid con animación en cascada */}
+      <Grid
+        container
+        spacing={3}
+        justifyContent="center"
+        component={motion.div}
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+      >
         {estudios.map((est, i) => (
-          <Grid item xs={12} sm={6} md={4} key={i}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
-            >
-              <Box sx={{ textAlign: "center", px: 1 }}>
-                {est.icon}
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                  {est.titulo}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {est.institucion}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {est.detalle}
-                </Typography>
-              </Box>
-            </motion.div>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            key={i}
+            component={motion.div}
+            variants={item}
+            whileHover={{ y: -5, scale: 1.05 }}
+          >
+            <Box sx={{ textAlign: "center", px: 1 }}>
+              {est.icon}
+              <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+                {est.titulo}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {est.institucion}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {est.detalle}
+              </Typography>
+            </Box>
           </Grid>
         ))}
       </Grid>
