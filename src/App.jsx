@@ -20,10 +20,24 @@ function App() {
     >
       <Navbar />
 
-      {/* Hero sin Paper */}
-      <Hero />
-
       <Container maxWidth="lg" sx={{ py: 4 }}>
+        {/* Hero */}
+        <Paper
+          id="hero"
+          elevation={6}
+          sx={{
+            mb: 4,
+            p: { xs: 3, md: 6 },
+            borderRadius: 4,
+            background: "#ffffff",
+            color: "#111",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+            scrollMarginTop: scrollOffset,
+          }}
+        >
+          <Hero />
+        </Paper>
+
         {/* About */}
         <Paper
           id="about"
@@ -33,6 +47,7 @@ function App() {
             p: { xs: 3, md: 6 },
             borderRadius: 4,
             background: "#ffffff",
+            color: "#111",
             scrollMarginTop: scrollOffset,
           }}
         >
@@ -48,6 +63,7 @@ function App() {
             p: { xs: 3, md: 6 },
             borderRadius: 4,
             background: "#ffffff",
+            color: "#111",
             scrollMarginTop: scrollOffset,
           }}
         >
@@ -63,15 +79,29 @@ function App() {
             p: { xs: 3, md: 6 },
             borderRadius: 4,
             background: "#ffffff",
+            color: "#111",
             scrollMarginTop: scrollOffset,
           }}
         >
           <Certifications />
         </Paper>
-      </Container>
 
-      {/* Contact sin Paper */}
-      <Contact />
+        {/* Contact */}
+        <Paper
+          id="contact"
+          elevation={3}
+          sx={{
+            mb: 4,
+            p: { xs: 3, md: 6 },
+            borderRadius: 4,
+            background: "#ffffff",
+            color: "#111",
+            scrollMarginTop: scrollOffset,
+          }}
+        >
+          <Contact />
+        </Paper>
+      </Container>
 
       <Footer />
     </Box>
