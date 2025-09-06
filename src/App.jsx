@@ -3,7 +3,7 @@ import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Skills from "./components/Skills.jsx";
 import Certifications from "./components/Certifications.jsx";
-import Projects from "./components/Projects.jsx";   // 👈 Importación aquí
+import Projects from "./components/Projects.jsx";   // ✅ Importación correcta
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import { Box, Paper, Container } from "@mui/material";
@@ -82,7 +82,7 @@ function App() {
             scrollMarginTop: scrollOffset,
           }}
         >
-          <Proyectos />
+          <Projects /> {/* ✅ Ahora coincide con el import */}
         </Paper>
 
         {/* Contact */}
