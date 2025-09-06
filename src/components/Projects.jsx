@@ -5,17 +5,17 @@ import { FolderCode } from "lucide-react"; // Ícono para proyectos
 const proyectos = [
   {
     titulo: "🌤 App para ver el clima",
-    link: "https://jorgepatriciosantamariacherrezweath.vercel.app/", // 👉 coloca aquí el enlace real
+    link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     color: "#1976d2",
   },
   {
     titulo: "🛒 Tienda Full Stack (React + Django)",
-    link: "https://patriciosantamariaapp.vercel.app/", // 👉 coloca aquí el enlace real
+    link: "https://patriciosantamariaapp.vercel.app/",
     color: "#9333ea",
   },
   {
     titulo: "🎬 Buscador de películas",
-    link: "jorgepatriciosantamariacherrezmovie.vercel.app/", // 👉 coloca aquí el enlace real
+    link: "https://jorgepatriciosantamariacherrezmovie.vercel.app/",
     color: "#16a34a",
   },
 ];
