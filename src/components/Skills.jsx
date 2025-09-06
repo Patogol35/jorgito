@@ -1,73 +1,73 @@
-import {
-  Container,
-  Typography,
-  Paper,
-  Grid,
-  Box,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { 
+  Container, 
+  Typography, 
+  Paper, 
+  Grid, 
+  Box, 
+  ToggleButton, 
+  ToggleButtonGroup 
+} from "@mui/material";  
+import { motion, AnimatePresence } from "framer-motion";  
+import { useState } from "react";  
 
-const skills = [
-  { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "Spring Boot", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
-  { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "PostgreSQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
-  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/supabase/supabase/master/packages/common/assets/images/supabase-logo-icon.svg" },
-  { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
-  { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
-  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
-  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-  { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-];
+const skills = [  
+  { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },  
+  { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },  
+  { name: "Spring Boot", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },  
+  { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },  
+  { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },  
+  { name: "PostgreSQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },  
+  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },  
+  { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },  
+  { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },  
+  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },  
+  { name: "Supabase", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },  
+  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },  
+  { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },  
+];  
 
-export default function Skills() {
-  const [filter, setFilter] = useState("All");
+export default function Skills() {  
+  const [filter, setFilter] = useState("All");  
 
-  const filteredSkills =
-    filter === "All" ? skills : skills.filter((s) => s.category === filter);
+  const filteredSkills =  
+    filter === "All" ? skills : skills.filter((s) => s.category === filter);  
 
-  return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop:"80px" }}>
-      <Container>
-        {/* Título */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
-        >
-          <Typography
-            variant="h4"
-            align="center"
-            sx={{
-              fontWeight: 700,
-              color: "#1976d2",
-              position: "relative",
-              display: "inline-block",
-            }}
-          >
-            Tecnologías que domino
-            <Box
-              component="span"
-              sx={{
-                position: "absolute",
-                left: "50%",
-                bottom: -6,
-                transform: "translateX(-50%)",
-                width: "60%",
-                height: "3px",
-                background: "#1976d2",
-                borderRadius: "6px",
-              }}
-            />
-          </Typography>
-        </motion.div>
+  return (  
+    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>  
+      <Container>  
+        {/* Título */}  
+        <motion.div  
+          initial={{ opacity: 0, y: 50 }}  
+          whileInView={{ opacity: 1, y: 0 }}  
+          transition={{ duration: 0.8 }}  
+          style={{ textAlign: "center", marginBottom: "3rem" }}  
+        >  
+          <Typography  
+            variant="h4"  
+            align="center"  
+            sx={{  
+              fontWeight: 700,  
+              color: "#1976d2",  
+              position: "relative",  
+              display: "inline-block",  
+            }}  
+          >  
+            Tecnologías que domino  
+            <Box  
+              component="span"  
+              sx={{  
+                position: "absolute",  
+                left: "50%",  
+                bottom: -6,  
+                transform: "translateX(-50%)",  
+                width: "60%",  
+                height: "3px",  
+                background: "#1976d2",  
+                borderRadius: "6px",  
+              }}  
+            />  
+          </Typography>  
+        </motion.div>  
 
         {/* Filtros */}  
         <Box display="flex" justifyContent="center" mb={6}>  
@@ -169,6 +169,6 @@ export default function Skills() {
           </AnimatePresence>  
         </Grid>  
       </Container>  
-    </Box>
-  );
-}
+    </Box>  
+  );  
+                      }
