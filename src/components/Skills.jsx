@@ -38,7 +38,6 @@ export default function Skills() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
@@ -47,8 +46,6 @@ export default function Skills() {
             align="center"
             sx={{
               fontWeight: 700,
-              letterSpacing: "0.02em",
-              mb: 4,
               color: "#1976d2",
               position: "relative",
               display: "inline-block",
@@ -62,7 +59,7 @@ export default function Skills() {
                 left: "50%",
                 bottom: -6,
                 transform: "translateX(-50%)",
-                width: "65%",
+                width: "60%",
                 height: "3px",
                 background: "#1976d2",
                 borderRadius: "6px",
