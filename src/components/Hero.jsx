@@ -13,8 +13,8 @@ export default function Hero() {
 
   const downloadCV = () => {
     const link = document.createElement("a");
-    link.href = "/JorgePatricio_CV.pdf"; // Ruta a tu CV
-    link.download = "JorgePatricio_CV.pdf";
+    link.href = "/Jorge.CV.pdf"; // nombre exacto del archivo en public
+    link.download = "Jorge.CV.pdf";
     link.click();
   };
 
