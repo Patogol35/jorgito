@@ -13,7 +13,7 @@ const certificaciones = [
 
 export default function Certifications() {
   return (
-    <Box id="certifications" sx={{ py: 4 }}>
+    <Box id="certifications" sx={{ py: 4, scrollMarginTop:"80px" }}>
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
