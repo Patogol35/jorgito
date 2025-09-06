@@ -1,8 +1,36 @@
-import { Box, Typography, Button, Avatar } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box, Button, Avatar } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { motion } from "framer-motion";
 
-export default function Hero() {
+// ---------------- NAVBAR ----------------
+function Navbar() {
+  return (
+    <AppBar
+      position="fixed"
+      sx={{
+        background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+      }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography
+          variant="h6"
+          sx={{ fontWeight: "bold", letterSpacing: 1 }}
+        >
+          Jorge Patricio
+        </Typography>
+        <Box>
+          <Button color="inherit" href="#hero">Inicio</Button>
+          <Button color="inherit" href="#proyectos">Proyectos</Button>
+          <Button color="inherit" href="#contacto">Contacto</Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+// ---------------- HERO ----------------
+function Hero() {
   return (
     <Box
       id="hero"
@@ -41,11 +69,7 @@ export default function Hero() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-        >
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px" mx="auto">
           <Typography
             variant="h3"
             fontWeight="bold"
@@ -114,5 +138,17 @@ export default function Hero() {
         </Box>
       </motion.div>
     </Box>
+  );
+}
+
+// ---------------- APP ----------------
+export default function App() {
+  return (
+    <>
+      <Navbar />
+      {/* Esto empuja el contenido y evita que el Navbar tape al Hero */}
+      <Toolbar />
+      <Hero />
+    </>
   );
 }
