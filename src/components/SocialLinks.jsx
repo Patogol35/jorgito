@@ -1,10 +1,18 @@
-import { IconButton, Link, Stack } from "@mui/material";
+import { IconButton, Link, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
 export default function SocialLinks({ socialLinks, size = "30px", animated = true, spacing = 2 }) {
   return (
-    <Stack direction="row" spacing={spacing} justifyContent="center">
+    <Box
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",          // 🔹 Permite que los iconos bajen a otra fila
+        justifyContent: "center",  // 🔹 Centrado horizontal
+        gap: spacing * 8,          // 🔹 Espacio entre iconos (MUI usa múltiplos de 8px)
+        mt: 2,
+      }}
+    >
       {socialLinks.map((s, i) => {
         const iconButton = (
           <IconButton
@@ -23,23 +31,21 @@ export default function SocialLinks({ socialLinks, size = "30px", animated = tru
           </IconButton>
         );
 
-        if (animated) {
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
-              whileHover={{ scale: 1.2, rotate: 8 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {iconButton}
-            </motion.div>
-          );
-        } else {
-          return <div key={i}>{iconButton}</div>;
-        }
+        return animated ? (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: i * 0.2 }}
+            whileHover={{ scale: 1.2, rotate: 8 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            {iconButton}
+          </motion.div>
+        ) : (
+          <div key={i}>{iconButton}</div>
+        );
       })}
-    </Stack>
+    </Box>
   );
 }
