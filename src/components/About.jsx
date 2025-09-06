@@ -17,6 +17,20 @@ const estudios = [
   },
 ];
 
+// Variants para cascada
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2 }, // animación escalonada
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
 export default function About() {
   return (
     <Box id="about" sx={{ py: 4, scrollMarginTop: "80px" }}>
@@ -25,6 +39,7 @@ export default function About() {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
         style={{ textAlign: "center", marginBottom: "1rem" }}
       >
         <Typography
@@ -54,17 +69,25 @@ export default function About() {
         </Typography>
       </motion.div>
 
-      {/* Grid */}
-      <Grid container spacing={3} justifyContent="center">
-        {estudios.map((est, i) => (
-          <Grid item xs={12} sm={6} md={4} key={i}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
-            >
-              <Box sx={{ textAlign: "center", px: 1 }}>
+      {/* Grid con animación en cascada */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <Grid container spacing={3} justifyContent="center">
+          {estudios.map((est, i) => (
+            <Grid item xs={12} sm={6} md={4} key={i}>
+              <motion.div
+                variants={itemVariants}
+                whileHover={{ y: -5, scale: 1.05 }}
+                style={{
+                  textAlign: "center",
+                  padding: "1rem",
+                  borderRadius: "12px",
+                }}
+              >
                 {est.icon}
                 <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
                   {est.titulo}
@@ -75,11 +98,11 @@ export default function About() {
                 <Typography variant="body2" color="text.secondary">
                   {est.detalle}
                 </Typography>
-              </Box>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </motion.div>
     </Box>
   );
 }
