@@ -18,16 +18,30 @@ export default function Contact() {
       <Container maxWidth="sm">
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <Typography
-            variant="h4"
-            align="center"
+          variant="h4"
+          align="center"
+          sx={{
+            fontWeight: 700,
+            color: "#1976d2",
+            position: "relative",
+            display: "inline-block",
+          }}
+        >
+          Mis Redes Sociales
+          <Box
+            component="span"
             sx={{
-              fontWeight: 700,
-              color: "#1976d2",
-              mb: 3,
+              position: "absolute",
+              left: "50%",
+              bottom: -6,
+              transform: "translateX(-50%)",
+              width: "60%",
+              height: "3px",
+              background: "#1976d2",
+              borderRadius: "6px",
             }}
-          >
-            Mis Redes Sociales
-          </Typography>
+          />
+        </Typography>
 
           <SocialLinks socialLinks={socialLinks} size="40px" animated={true} spacing={3} />
         </motion.div>
