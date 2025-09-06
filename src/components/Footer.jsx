@@ -25,7 +25,7 @@ export default function Footer() {
       </Typography>
 
       <Typography variant="body2" sx={{ mb: 2, opacity: 0.85 }}>
-        Transformando ideas en aplicaciones efectivas 🚀
+        Transformando ideas en aplicaciones efectivas 
       </Typography>
 
       <SocialLinks socialLinks={socialLinks} size="28px" animated={false} spacing={2} />
