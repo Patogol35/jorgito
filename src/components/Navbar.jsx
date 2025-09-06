@@ -46,9 +46,19 @@ export default function Navbar() {
     }),
   };
 
+  // Smooth scroll function
+  const handleScrollTo = (id) => {
+    const element = document.querySelector(id);
+    if (element) {
+      const yOffset = -70; // altura navbar
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+    setOpen(false); // cierra menú móvil si está abierto
+  };
+
   return (
     <>
-      {/* Navbar flotante y sólido con animación de entrada */}
       <motion.div
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -67,7 +77,6 @@ export default function Navbar() {
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            {/* Logo con animación */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
@@ -79,11 +88,12 @@ export default function Navbar() {
                   letterSpacing: 1,
                   cursor: "pointer",
                 }}
+                onClick={() => handleScrollTo("#hero")}
               >
                 <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
                   <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
-                Jorge Patricio 
+                Jorge Patricio
               </Typography>
             </motion.div>
 
@@ -96,7 +106,7 @@ export default function Navbar() {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button
-                    href={item.href}
+                    onClick={() => handleScrollTo(item.href)}
                     sx={{
                       color: "#fff",
                       fontWeight: 600,
@@ -135,7 +145,7 @@ export default function Navbar() {
         </AppBar>
       </motion.div>
 
-      {/* Menú móvil ultra épico y compacto */}
+      {/* Menú móvil */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -170,7 +180,7 @@ export default function Navbar() {
                 flexDirection: "column",
                 boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
                 justifyContent: "flex-start",
-                height: "auto",
+                height: "100%",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -187,13 +197,12 @@ export default function Navbar() {
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
-                    href={item.href}
+                    onClick={() => handleScrollTo(item.href)}
                     custom={i}
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
                     whileHover={{ scale: 1.07, color: "#ffeb3b" }}
-                    onClick={() => setOpen(false)}
                     style={{
                       fontSize: "1.25rem",
                       fontWeight: 600,
@@ -212,4 +221,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+                  }
