@@ -12,8 +12,8 @@ export default function Hero() {
         alignItems: "center",
         justifyContent: "center",
         gap: { xs: 4, md: 8 },
-        py: { xs: 6, sm: 8, md: 10 },
-        pt: { xs: 10, sm: 8, md: 10 }, // espacio arriba en móvil
+        py: { xs: 6, sm: 8, md: 12 },
+        px: { xs: 2, sm: 4, md: 8 },
       }}
     >
       {/* Avatar con animación */}
@@ -29,92 +29,90 @@ export default function Hero() {
             width: { xs: 130, sm: 170, md: 200 },
             height: { xs: 130, sm: 170, md: 200 },
             border: "4px solid #1976d2",
-            boxShadow: "0 12px 24px rgba(0,0,0,0.25)",
+            boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
             mb: { xs: 2, sm: 0 },
           }}
         />
       </motion.div>
 
-      {/* Texto */}
-      <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
-        <Typography
-          variant="h3"
-          fontWeight="bold"
-          gutterBottom
-          sx={{
-            color: "#1976d2",
-            display: "inline-block",
-            position: "relative",
-            fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
-          }}
+      {/* Texto con animación */}
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <Box
+          textAlign={{ xs: "center", sm: "left" }}
+          maxWidth="600px"
+          mx="auto"
         >
-          Hola, soy Jorge Patricio Santamaría Cherrez
-          <Box
-            component="span"
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            gutterBottom
             sx={{
-              position: "absolute",
-              left: 0,
-              bottom: -6,
-              width: "100%",
-              height: 4,
-              backgroundColor: "#1976d2",
-              borderRadius: 2,
-            }}
-          />
-        </Typography>
-
-        <Typography
-          variant="h6"
-          color="text.secondary"
-          gutterBottom
-          sx={{
-            fontStyle: "italic",
-            fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.25rem" },
-          }}
-        >
-          🎓 Máster en Ingeniería de Software y Sistemas Informáticos
-        </Typography>
-
-        <Typography
-          variant="body1"
-          paragraph
-          sx={{
-            fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
-            lineHeight: 1.6,
-          }}
-        >
-          Me apasiona crear tecnología que transforme ideas en realidades digitales. 
-          Mi enfoque está en aportar valor constante, desarrollando soluciones digitales 
-          seguras, innovadoras y orientadas a generar impacto positivo.
-        </Typography>
-
-        {/* Botón con hover animado */}
-        <Button
-          variant="outlined"
-          startIcon={<DescriptionIcon />}
-          href="/Jorge.CV.pdf"   // 👈 ahora apunta al archivo correcto
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{
-            mt: 2,
-            borderRadius: "20px",
-            textTransform: "none",
-            fontWeight: "bold",
-            border: "2px solid #1976d2",
-            color: "#1976d2",
-            px: { xs: 3, md: 4 },
-            py: 1.2,
-            transition: "all 0.3s ease",
-            "&:hover": {
               background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-              color: "#fff",
-              transform: "scale(1.05)",
-            },
-          }}
-        >
-          Ver CV
-        </Button>
-      </Box>
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+            }}
+          >
+            Hola, soy Jorge Patricio Santamaría Cherrez
+          </Typography>
+
+          <Typography
+            variant="h6"
+            color="text.secondary"
+            gutterBottom
+            sx={{
+              fontStyle: "italic",
+              fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" },
+            }}
+          >
+            🎓 Máster en Ingeniería de Software y Sistemas Informáticos
+          </Typography>
+
+          <Typography
+            variant="body1"
+            paragraph
+            sx={{
+              fontSize: { xs: "0.95rem", sm: "1rem", md: "1.1rem" },
+              lineHeight: 1.7,
+              color: "#444",
+            }}
+          >
+            Me apasiona crear tecnología que transforme ideas en realidades digitales. 
+            Mi enfoque está en aportar valor constante, desarrollando soluciones digitales 
+            seguras, innovadoras y orientadas a generar impacto positivo.
+          </Typography>
+
+          {/* Botón con efecto glow */}
+          <Button
+            variant="contained"
+            startIcon={<DescriptionIcon />}
+            href="/Jorge.CV.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              mt: 3,
+              borderRadius: "25px",
+              textTransform: "none",
+              fontWeight: "bold",
+              px: { xs: 3.5, md: 5 },
+              py: 1.4,
+              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+              boxShadow: "0 6px 18px rgba(25, 118, 210, 0.4)",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                boxShadow: "0 8px 22px rgba(109, 40, 217, 0.5)",
+                transform: "translateY(-2px) scale(1.03)",
+              },
+            }}
+          >
+            Ver CV
+          </Button>
+        </Box>
+      </motion.div>
     </Box>
   );
-                }
+}
