@@ -83,9 +83,9 @@ export default function Hero() {
             lineHeight: 1.6,
           }}
         >
-          Transformo ideas en soluciones digitales eficientes, seguras y escalables.
-          Apasionado por la innovación tecnológica, siempre buscando aportar valor y
-          optimizar procesos en cada proyecto.
+
+     Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar impacto positivo.
+          
         </Typography>
 
         {/* Botón con hover animado */}
