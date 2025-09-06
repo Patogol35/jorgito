@@ -19,7 +19,7 @@ const estudios = [
 
 export default function About() {
   return (
-    <Box id="about" sx={{ py: 4 }}>
+    <Box id="about" sx={{ py: 4, scrollMarginTop:"80px" }}>
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
