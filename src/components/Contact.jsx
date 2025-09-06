@@ -1,4 +1,4 @@
-Este digo import { Container, Typography, Box, Link, IconButton, Stack } from "@mui/material";
+import { Container, Typography, Box, Link, IconButton, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 import { GitHub, LinkedIn, Facebook, Instagram, MailOutline } from "@mui/icons-material";
 import React from "react";
