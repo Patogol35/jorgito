@@ -8,7 +8,7 @@ const certificaciones = [
   { titulo: "Curso de Python", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#22c55e" /> },
   { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, icon: <Brain size={28} color="#9333ea" /> },
   { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, icon: <Brain size={28} color="#1e40af" /> },
-  { titulo: "Curso de Preparación para la Certicación AZ900: Microsoft Azure Fundamentals", institucion: "Universidad Internacional de la Rioja", año: 2023, icon: <GraduationCap size={28} color="#e11d48" /> },
+  { titulo: "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals", institucion: "Universidad Internacional de la Rioja", año: 2023, icon: <GraduationCap size={28} color="#e11d48" /> },
 ];
 
 export default function Certifications() {
