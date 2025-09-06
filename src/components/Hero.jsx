@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <Box
+      id="hero"
       sx={{
         background: "linear-gradient(135deg, #f5f5f5, #e8f0ff)",
         color: "#333",
