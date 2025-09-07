@@ -51,8 +51,8 @@ export default function Contact() {
         </motion.div>
 
         {/* Redes sociales */}
-        <SocialLinks socialLinks={socialLinks} size="40px" animated={true} spacing={3} />
+        <SocialLinks socialLinks={socialLinks} size="40px" animated={true} spacing={2} />
       </Container>
     </Box>
   );
-}
+        }
