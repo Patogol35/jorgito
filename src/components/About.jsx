@@ -47,7 +47,10 @@ export default function About() {
               transform: "translateX(-50%)",
               width: "60%",
               height: "3px",
-              background: "#1976d2",
+              background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+WebkitBackgroundClip: "text",
+WebkitTextFillColor: "transparent",
+fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
               borderRadius: "6px",
             }}
           />
