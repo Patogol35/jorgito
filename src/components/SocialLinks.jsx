@@ -7,9 +7,9 @@ export default function SocialLinks({ socialLinks, size = "30px", animated = tru
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",          // 🔹 Permite que los iconos bajen a otra fila
-        justifyContent: "center",  // 🔹 Centrado horizontal
-        gap: spacing * 8,          // 🔹 Espacio entre iconos (MUI usa múltiplos de 8px)
+        flexWrap: "wrap",          // 🔹 permite que los iconos bajen a otra fila
+        justifyContent: "center",  // 🔹 centrado horizontal
+        gap: spacing,              // 🔹 espacio moderado entre iconos
         mt: 2,
       }}
     >
