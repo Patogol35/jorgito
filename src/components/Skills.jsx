@@ -11,26 +11,30 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
 const skills = [
+  // Frontend
   { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
   { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+
+  // Backend
   { name: "Spring Boot", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
   { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
 
-  // Bases de datos
+  // Databases
   { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "PostgreSQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
-  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },
+  { name: "Supabase", category: "Database", img: "https://vectorwiki.com/images/supabase-icon.svg" }, // versión en color
 
   // Cloud
   { name: "AWS", category: "Cloud", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" },
-  { name: "Vercel", category: "Cloud", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" },
-  { name: "Render", category: "Cloud", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/render/render-original.svg" },
+  { name: "Vercel", category: "Cloud", img: "https://assets.vercel.com/image/upload/v1662130559/front/favicon/vercel/180x180.png" }, // logo oficial
+  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/RenderCommunity/support-docs/main/static/img/logo.png" }, // logo oficial PNG
 
   // Tools
-  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
+  { name: "Postman", category: "Tools", img: "https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
+
 
 export default function Skills() {
 const [filter, setFilter] = useState("All");
