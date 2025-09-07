@@ -6,7 +6,7 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import { Box, Paper, Container, Typography } from "@mui/material";
+import { Box, Paper, Container } from "@mui/material";
 
 function App() {
   const scrollOffset = "80px";
@@ -22,7 +22,7 @@ function App() {
     >
       <Navbar />
 
-      {/* Hero con más protagonismo */}
+      {/* Hero protagonista */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -52,9 +52,6 @@ function App() {
             "&:hover": { transform: "translateY(-6px)" },
           }}
         >
-          <Typography variant="h4" gutterBottom fontWeight="bold" color="primary">
-            Sobre mí
-          </Typography>
           <About />
         </Paper>
 
@@ -73,9 +70,6 @@ function App() {
             "&:hover": { transform: "translateY(-6px)" },
           }}
         >
-          <Typography variant="h4" gutterBottom fontWeight="bold" color="success.main">
-            Habilidades
-          </Typography>
           <Skills />
         </Paper>
 
@@ -94,9 +88,6 @@ function App() {
             "&:hover": { transform: "translateY(-6px)" },
           }}
         >
-          <Typography variant="h4" gutterBottom fontWeight="bold" color="warning.main">
-            Certificaciones
-          </Typography>
           <Certifications />
         </Paper>
 
@@ -115,9 +106,6 @@ function App() {
             "&:hover": { transform: "translateY(-6px)" },
           }}
         >
-          <Typography variant="h4" gutterBottom fontWeight="bold" color="secondary">
-            Proyectos
-          </Typography>
           <Projects />
         </Paper>
 
@@ -136,9 +124,6 @@ function App() {
             "&:hover": { transform: "translateY(-6px)" },
           }}
         >
-          <Typography variant="h4" gutterBottom fontWeight="bold" color="error">
-            Contacto
-          </Typography>
           <Contact />
         </Paper>
       </Container>
