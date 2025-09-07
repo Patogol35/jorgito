@@ -51,7 +51,7 @@ position: "relative",
 display: "inline-block",
 }}
 >
-Tecnologías que domino
+Mi Stack Tecnológico 
 <Box
 component="span"
 sx={{
