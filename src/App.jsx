@@ -16,13 +16,12 @@ function App() {
       sx={{
         minHeight: "100vh",
         background: "linear-gradient(135deg, #eef2f7 0%, #dfe6ed 100%)",
-        color: "#111",
         fontFamily: "'Poppins', sans-serif",
       }}
     >
       <Navbar />
 
-      {/* Hero protagonista */}
+      {/* Hero */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -37,16 +36,16 @@ function App() {
       </Box>
 
       <Container maxWidth="lg" sx={{ py: 6 }}>
-        {/* About */}
+        {/* About (Educación) */}
         <Paper
           id="about"
-          elevation={3}
+          elevation={4}
           sx={{
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "#fff",
-            borderLeft: "6px solid #1976d2",
+            backgroundColor: "#2e7d32", // Verde
+            color: "#fff",
             scrollMarginTop: scrollOffset,
             transition: "all 0.3s",
             "&:hover": { transform: "translateY(-6px)" },
@@ -55,16 +54,16 @@ function App() {
           <About />
         </Paper>
 
-        {/* Skills */}
+        {/* Skills (Tecnologías) */}
         <Paper
           id="skills"
-          elevation={3}
+          elevation={4}
           sx={{
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "#fafafa",
-            borderLeft: "6px solid #43a047",
+            backgroundColor: "#fb8c00", // Naranja
+            color: "#fff",
             scrollMarginTop: scrollOffset,
             transition: "all 0.3s",
             "&:hover": { transform: "translateY(-6px)" },
@@ -76,13 +75,13 @@ function App() {
         {/* Certifications */}
         <Paper
           id="certifications"
-          elevation={3}
+          elevation={4}
           sx={{
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "#fff",
-            borderLeft: "6px solid #ff9800",
+            backgroundColor: "#8e24aa", // Morado
+            color: "#fff",
             scrollMarginTop: scrollOffset,
             transition: "all 0.3s",
             "&:hover": { transform: "translateY(-6px)" },
@@ -94,13 +93,13 @@ function App() {
         {/* Projects */}
         <Paper
           id="projects"
-          elevation={3}
+          elevation={4}
           sx={{
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "#fafafa",
-            borderLeft: "6px solid #9c27b0",
+            backgroundColor: "#1976d2", // Azul
+            color: "#fff",
             scrollMarginTop: scrollOffset,
             transition: "all 0.3s",
             "&:hover": { transform: "translateY(-6px)" },
@@ -112,13 +111,13 @@ function App() {
         {/* Contact */}
         <Paper
           id="contact"
-          elevation={3}
+          elevation={4}
           sx={{
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 4,
-            background: "#fff",
-            borderLeft: "6px solid #e91e63",
+            backgroundColor: "#d32f2f", // Rojo
+            color: "#fff",
             scrollMarginTop: scrollOffset,
             transition: "all 0.3s",
             "&:hover": { transform: "translateY(-6px)" },
