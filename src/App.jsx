@@ -15,28 +15,17 @@ function App() {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #eef2f7 0%, #dfe6ed 100%)",
-        fontFamily: "'Poppins', sans-serif",
+        background: "linear-gradient(160deg, #f5f7fa 0%, #e6ebf0 100%)",
+        color: "#111",
       }}
     >
       <Navbar />
 
-      {/* Hero */}
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          px: 2,
-        }}
-      >
-        <Hero />
-      </Box>
+      {/* Hero fuera de Paper */}
+      <Hero />
 
       <Container maxWidth="lg" sx={{ py: 6 }}>
-        {/* About (Educación) */}
+        {/* About */}
         <Paper
           id="about"
           elevation={3}
@@ -44,17 +33,17 @@ function App() {
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 3,
-            backgroundColor: "#fff",
+            background: "#ffffff",
             borderLeft: "10px solid #2e7d32", // Verde
             scrollMarginTop: scrollOffset,
-            transition: "all 0.3s",
+            transition: "all 0.3s ease",
             "&:hover": { transform: "translateY(-4px)" },
           }}
         >
           <About />
         </Paper>
 
-        {/* Skills (Tecnologías) */}
+        {/* Skills */}
         <Paper
           id="skills"
           elevation={3}
@@ -62,10 +51,10 @@ function App() {
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 3,
-            backgroundColor: "#fff",
+            background: "#ffffff",
             borderLeft: "10px solid #fb8c00", // Naranja
             scrollMarginTop: scrollOffset,
-            transition: "all 0.3s",
+            transition: "all 0.3s ease",
             "&:hover": { transform: "translateY(-4px)" },
           }}
         >
@@ -80,10 +69,10 @@ function App() {
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 3,
-            backgroundColor: "#fff",
+            background: "#ffffff",
             borderLeft: "10px solid #8e24aa", // Morado
             scrollMarginTop: scrollOffset,
-            transition: "all 0.3s",
+            transition: "all 0.3s ease",
             "&:hover": { transform: "translateY(-4px)" },
           }}
         >
@@ -98,10 +87,10 @@ function App() {
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 3,
-            backgroundColor: "#fff",
+            background: "#ffffff",
             borderLeft: "10px solid #1976d2", // Azul
             scrollMarginTop: scrollOffset,
-            transition: "all 0.3s",
+            transition: "all 0.3s ease",
             "&:hover": { transform: "translateY(-4px)" },
           }}
         >
@@ -116,10 +105,10 @@ function App() {
             mb: 6,
             p: { xs: 3, md: 6 },
             borderRadius: 3,
-            backgroundColor: "#fff",
+            background: "#ffffff",
             borderLeft: "10px solid #d32f2f", // Rojo
             scrollMarginTop: scrollOffset,
-            transition: "all 0.3s",
+            transition: "all 0.3s ease",
             "&:hover": { transform: "translateY(-4px)" },
           }}
         >
