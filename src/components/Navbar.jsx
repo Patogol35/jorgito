@@ -19,13 +19,14 @@ export default function Navbar({ mode, setMode }) {
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
 
+  // Colores de menú adaptados según el modo
   const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-    { label: "Educación", href: "#about", color: "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: "#0288d1" },
-    { label: "Contacto", href: "#contact", color: "#c62828" },
+    { label: "Sobre mí", href: "#hero", color: mode === "dark" ? "#42a5f5" : "#1565c0" },
+    { label: "Educación", href: "#about", color: mode === "dark" ? "#66bb6a" : "#2e7d32" },
+    { label: "Tecnologías", href: "#skills", color: mode === "dark" ? "#ffb74d" : "#f57c00" },
+    { label: "Certificaciones", href: "#certifications", color: mode === "dark" ? "#ab47bc" : "#6a1b9a" },
+    { label: "Proyectos", href: "#projects", color: mode === "dark" ? "#29b6f6" : "#0288d1" },
+    { label: "Contacto", href: "#contact", color: mode === "dark" ? "#ef5350" : "#c62828" },
   ];
 
   useEffect(() => {
@@ -110,7 +111,7 @@ export default function Navbar({ mode, setMode }) {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: mode === "light" ? "#111" : theme.palette.common.white,
+                      color: item.color,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -187,9 +188,11 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Encabezado menú móvil */}
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.text.primary }}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", color: theme.palette.text.primary }}
+                >
                   Menú
                 </Typography>
                 <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
@@ -212,11 +215,14 @@ export default function Navbar({ mode, setMode }) {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: mode === "light" ? "#111" : theme.palette.common.white,
+                      color: item.color,
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: item.color,
+                      backgroundColor:
+                        mode === "dark"
+                          ? "rgba(255,255,255,0.05)"
+                          : "rgba(0,0,0,0.05)",
                       transition: "0.3s",
                     }}
                   >
@@ -230,4 +236,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-              }
+}
