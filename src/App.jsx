@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -20,8 +20,15 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
 function App() {
-  const [mode, setMode] = useState("light");
+  // Leer modo guardado en localStorage (si existe)
+  const storedMode = localStorage.getItem("themeMode") || "light";
+  const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
+
+  // Guardar cambios en localStorage
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+  }, [mode]);
 
   const theme = useMemo(
     () =>
