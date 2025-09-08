@@ -41,7 +41,7 @@ export default function Skills() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        background: isDark ? "#1e1e2a" : "transparent", // fondo suave en oscuro
+        background: isDark ? "#1e1e2a" : "transparent",
         color: theme.palette.text.primary,
       }}
     >
@@ -170,7 +170,10 @@ export default function Skills() {
                         height: 65,
                         objectFit: "contain",
                         mb: 2,
-                        transition: "transform 0.3s ease",
+                        transition: "transform 0.3s ease, filter 0.3s ease",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none", // 🔥 Hace visibles los íconos oscuros
                         "&:hover": { transform: "rotate(8deg) scale(1.1)" },
                       }}
                     />
@@ -194,4 +197,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+                      }
