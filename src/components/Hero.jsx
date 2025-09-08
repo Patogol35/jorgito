@@ -116,7 +116,7 @@ export default function Hero({ mode, setMode }) {
                   transition: "all 0.3s ease",
                 }}
               >
-                {mode === "light" ? "Modo Oscuro" : "Modo Claro"}
+                {mode === "light" ? "Modo Noche" : "Modo Día"}
               </Button>
             </Box>
           </Box>
