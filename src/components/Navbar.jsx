@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 
-export default function Navbar({ mode }) {
+export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
@@ -110,7 +110,7 @@ export default function Navbar({ mode }) {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: mode === "light" ? "#111" : "#fff",
+                      color: mode === "light" ? "#111" : theme.palette.common.white,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -212,11 +212,11 @@ export default function Navbar({ mode }) {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: mode === "light" ? "#111" : "#fff",
+                      color: mode === "light" ? "#111" : theme.palette.common.white,
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: mode === "light" ? item.color + "22" : "rgba(255,255,255,0.1)",
+                      backgroundColor: item.color,
                       transition: "0.3s",
                     }}
                   >
@@ -230,4 +230,4 @@ export default function Navbar({ mode }) {
       </AnimatePresence>
     </>
   );
-}
+              }
