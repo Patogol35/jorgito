@@ -6,24 +6,27 @@ import {
   Box,
   IconButton,
   Stack,
+  useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 
-export default function Navbar() {
+export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const theme = useTheme();
 
   const menuItems = [
-  { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-  { label: "Educación", href: "#about", color: "#2e7d32" },
-  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-  { label: "Proyectos", href: "#projects", color: "#0288d1" }, // 🔹 profesional y destacado
-  { label: "Contacto", href: "#contact", color: "#c62828" },
+    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+    { label: "Educación", href: "#about", color: "#2e7d32" },
+    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+    { label: "Proyectos", href: "#projects", color: "#0288d1" },
+    { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
   useEffect(() => {
@@ -47,11 +50,10 @@ export default function Navbar() {
     }),
   };
 
-  // Smooth scroll
   const handleScrollTo = (id) => {
     const element = document.querySelector(id);
     if (element) {
-      const yOffset = -70; // altura navbar
+      const yOffset = -70;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
@@ -69,10 +71,9 @@ export default function Navbar() {
           position="fixed"
           elevation={scrolled ? 6 : 2}
           sx={{
-            backgroundColor: scrolled ? "#125aa0" : "#1976d2",
-            boxShadow: scrolled
-              ? "0 6px 20px rgba(0,0,0,0.25)"
-              : "0 4px 12px rgba(0,0,0,0.2)",
+            backgroundColor: scrolled
+              ? theme.palette.primary.dark
+              : theme.palette.primary.main,
             transition: "0.3s",
             zIndex: 1400,
           }}
@@ -85,7 +86,7 @@ export default function Navbar() {
                   display: "flex",
                   alignItems: "center",
                   fontWeight: "bold",
-                  color: "#fff",
+                  color: theme.palette.common.white,
                   letterSpacing: 1,
                   cursor: "pointer",
                 }}
@@ -99,7 +100,7 @@ export default function Navbar() {
             </motion.div>
 
             {/* Menú Desktop */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3 }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <motion.div
                   key={item.href}
@@ -109,7 +110,7 @@ export default function Navbar() {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: "#fff",
+                      color: theme.palette.common.white,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -121,7 +122,7 @@ export default function Navbar() {
                         height: 2,
                         bottom: 0,
                         left: 0,
-                        backgroundColor: "#ffeb3b",
+                        backgroundColor: theme.palette.secondary.main,
                         transition: "0.3s",
                       },
                       "&:hover::after": {
@@ -133,14 +134,22 @@ export default function Navbar() {
                   </Button>
                 </motion.div>
               ))}
+
+              {/* Botón Dark/Light */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{ color: theme.palette.common.white }}
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </Box>
 
             {/* Botón móvil */}
             <IconButton
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
               onClick={() => setOpen(true)}
             >
-              <MenuIcon sx={{ color: "#fff" }} fontSize="large" />
+              <MenuIcon fontSize="large" />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -174,7 +183,7 @@ export default function Navbar() {
               exit="exit"
               style={{
                 width: "280px",
-                background: "linear-gradient(180deg, #0d47a1, #1976d2)",
+                background: theme.palette.background.paper,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
                 boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
@@ -187,11 +196,11 @@ export default function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#ffeb3b" }}>
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.text.primary }}>
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)}>
-                  <CloseIcon sx={{ color: "#fff" }} fontSize="large" />
+                <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
+                  <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
 
@@ -209,11 +218,11 @@ export default function Navbar() {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: "#fff",
+                      color: theme.palette.common.white,
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: item.color, // 🔹 color único por sección
+                      backgroundColor: item.color,
                       transition: "0.3s",
                     }}
                   >
@@ -227,4 +236,4 @@ export default function Navbar() {
       </AnimatePresence>
     </>
   );
-}
+                     }
