@@ -1,6 +1,7 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { motion } from "framer-motion";
 import { FolderCode } from "lucide-react"; // Ícono para proyectos
+import { useTheme } from "@mui/material/styles";
 
 const proyectos = [
   {
@@ -21,8 +22,17 @@ const proyectos = [
 ];
 
 export default function Projects() {
+  const theme = useTheme();
+
   return (
-    <Box id="projects" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="projects"
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+        color: theme.palette.text.primary, // se adapta al modo
+      }}
+    >
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -35,7 +45,7 @@ export default function Projects() {
           align="center"
           sx={{
             fontWeight: 700,
-            color: "#1976d2",
+            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             position: "relative",
             display: "inline-block",
           }}
@@ -50,7 +60,7 @@ export default function Projects() {
               transform: "translateX(-50%)",
               width: "60%",
               height: "3px",
-              background: "#1976d2",
+              background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
               borderRadius: "6px",
             }}
           />
