@@ -1,19 +1,29 @@
 import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
+import { useTheme } from "@mui/material/styles";
 
 const certificaciones = [
-  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#1976d2" /> },
-  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, icon: <BookOpen size={28} color="#d97706" /> },
-  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, icon: <BookOpen size={28} color="#22c55e" /> },
-  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, icon: <Brain size={28} color="#9333ea" /> },
-  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, icon: <Brain size={28} color="#1e40af" /> },
-  { titulo: "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals", institucion: "Universidad Internacional de la Rioja", año: 2023, icon: <GraduationCap size={28} color="#e11d48" /> },
+  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, iconColor: "#1976d2", iconType: BookOpen },
+  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, iconColor: "#d97706", iconType: BookOpen },
+  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, iconColor: "#22c55e", iconType: BookOpen },
+  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, iconColor: "#9333ea", iconType: Brain },
+  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, iconColor: "#1e40af", iconType: Brain },
+  { titulo: "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals", institucion: "Universidad Internacional de la Rioja", año: 2023, iconColor: "#e11d48", iconType: GraduationCap },
 ];
 
 export default function Certifications() {
+  const theme = useTheme();
+
   return (
-    <Box id="certifications" sx={{ py: 4, scrollMarginTop:"80px" }}>
+    <Box
+      id="certifications"
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+        color: theme.palette.text.primary, // se adapta al modo
+      }}
+    >
       {/* Título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -26,7 +36,7 @@ export default function Certifications() {
           align="center"
           sx={{
             fontWeight: 700,
-            color: "#1976d2",
+            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             position: "relative",
             display: "inline-block",
           }}
@@ -41,7 +51,7 @@ export default function Certifications() {
               transform: "translateX(-50%)",
               width: "60%",
               height: "3px",
-              background: "#1976d2",
+              background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
               borderRadius: "6px",
             }}
           />
@@ -50,26 +60,29 @@ export default function Certifications() {
 
       {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
-        {certificaciones.map((c, i) => (
-          <Grid item xs={12} sm={6} md={4} key={i}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
-            >
-              <Box sx={{ textAlign: "center", px: 1 }}>
-                {c.icon}
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                  {c.titulo}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {c.institucion} | {c.año}
-                </Typography>
-              </Box>
-            </motion.div>
-          </Grid>
-        ))}
+        {certificaciones.map((c, i) => {
+          const IconComponent = c.iconType;
+          return (
+            <Grid item xs={12} sm={6} md={4} key={i}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ y: -5, scale: 1.05 }}
+              >
+                <Box sx={{ textAlign: "center", px: 1 }}>
+                  <IconComponent size={28} color={c.iconColor} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+                    {c.titulo}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {c.institucion} | {c.año}
+                  </Typography>
+                </Box>
+              </motion.div>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );
