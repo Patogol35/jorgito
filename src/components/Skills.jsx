@@ -41,7 +41,7 @@ export default function Skills() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        background: isDark ? "#1e1e2a" : "transparent",
+        
         color: theme.palette.text.primary,
       }}
     >
