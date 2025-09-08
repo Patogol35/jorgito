@@ -60,6 +60,7 @@ export default function Skills() {
               fontWeight: 700,
               color: theme.palette.primary.main,
               position: "relative",
+              mb: 4,
               display: "inline-block",
             }}
           >
