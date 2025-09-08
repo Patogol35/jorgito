@@ -1,6 +1,6 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { motion } from "framer-motion";
-import { FolderCode } from "lucide-react"; // Ícono para proyectos
+import { FolderCode } from "lucide-react";
 import { useTheme } from "@mui/material/styles";
 
 const proyectos = [
@@ -30,7 +30,11 @@ export default function Projects() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary, // se adapta al modo
+        color: theme.palette.text.primary,
+        background:
+          theme.palette.mode === "dark"
+            ? theme.palette.background.default
+            : "transparent",
       }}
     >
       {/* Título */}
@@ -61,7 +65,8 @@ export default function Projects() {
               transform: "translateX(-50%)",
               width: "60%",
               height: "3px",
-              background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+              background:
+                theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
               borderRadius: "6px",
             }}
           />
@@ -90,7 +95,7 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      color: p.color,
+                      color: p.color, // mantiene color exacto
                       fontWeight: "bold",
                       "&:hover": { textDecoration: "underline" },
                     }}
