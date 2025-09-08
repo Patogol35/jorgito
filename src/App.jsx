@@ -1,4 +1,4 @@
-    import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -21,7 +21,7 @@ import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
-// Animación de vibración
+// Animación vibración
 const vibrate = keyframes`
   0% { transform: scale(1); }
   20% { transform: scale(1.1) rotate(-5deg); }
@@ -33,9 +33,31 @@ const vibrate = keyframes`
 
 function App() {
   const [mode, setMode] = useState("light");
+  const [isIdle, setIsIdle] = useState(true); // Estado de inactividad
   const scrollOffset = "80px";
   const isMobile = useMediaQuery("(max-width:600px)");
 
+  // Detectar inactividad (sin mover mouse/scroll)
+  useEffect(() => {
+    let timeout;
+    const resetTimer = () => {
+      setIsIdle(false);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setIsIdle(true), 5000); // 5s sin interacción = idle
+    };
+
+    window.addEventListener("mousemove", resetTimer);
+    window.addEventListener("scroll", resetTimer);
+    resetTimer();
+
+    return () => {
+      window.removeEventListener("mousemove", resetTimer);
+      window.removeEventListener("scroll", resetTimer);
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  // Tema
   const theme = useMemo(
     () =>
       createTheme({
@@ -58,7 +80,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh" }}>
+      <Box>
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
@@ -153,17 +175,18 @@ function App() {
             aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: isMobile ? 20 : 16,
-              right: isMobile ? 20 : 16,
-              zIndex: 1000,
+              bottom: isMobile ? 20 : 24,
+              right: isMobile ? 20 : 24,
+              zIndex: 2000,
               bgcolor: "#25D366",
               width: isMobile ? 60 : 56,
               height: isMobile ? 60 : 56,
-              animation: `${vibrate} 1.5s ease-in-out infinite`,
-              animationDelay: "3s", // vibra cada 3s
+              boxShadow: "0 0 15px rgba(37,211,102,0.5)", // Glow verde
+              animation: isIdle ? `${vibrate} 1.5s ease-in-out infinite` : "none",
               "&:hover": {
                 bgcolor: "#1ebe5c",
                 transform: "scale(1.1)",
+                boxShadow: "0 0 20px rgba(37,211,102,0.7)",
               },
             }}
             onClick={() =>
