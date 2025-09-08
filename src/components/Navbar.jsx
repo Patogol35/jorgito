@@ -79,6 +79,7 @@ export default function Navbar({ mode, setMode }) {
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* Logo */}
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
@@ -135,7 +136,7 @@ export default function Navbar({ mode, setMode }) {
                 </motion.div>
               ))}
 
-              {/* Botón Dark/Light */}
+              {/* Botón Dark/Light Desktop */}
               <IconButton
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 sx={{ color: theme.palette.common.white }}
@@ -144,7 +145,7 @@ export default function Navbar({ mode, setMode }) {
               </IconButton>
             </Box>
 
-            {/* Botón móvil */}
+            {/* Botón móvil abrir menú */}
             <IconButton
               sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
               onClick={() => setOpen(true)}
@@ -195,15 +196,27 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Encabezado menú móvil */}
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.text.primary }}>
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
-                  <CloseIcon fontSize="large" />
-                </IconButton>
+                <Box>
+                  {/* Botón Dark/Light móvil */}
+                  <IconButton
+                    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                    sx={{ color: theme.palette.text.primary, mr: 1 }}
+                  >
+                    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  </IconButton>
+
+                  <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
+                    <CloseIcon fontSize="large" />
+                  </IconButton>
+                </Box>
               </Box>
 
+              {/* Links menú móvil */}
               <Stack spacing={2}>
                 {menuItems.map((item, i) => (
                   <motion.a
@@ -236,4 +249,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-                     }
+                  }
