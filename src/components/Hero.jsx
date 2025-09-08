@@ -1,12 +1,13 @@
 import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { motion } from "framer-motion";
+import { useTheme } from "@mui/material/styles";
 
 export default function Hero() {
+  const theme = useTheme();
+
   return (
     <>
-      {/* Esto empuja el Hero hacia abajo 
-          según la altura de tu AppBar */}
       <Toolbar />
 
       <Box
@@ -19,6 +20,7 @@ export default function Hero() {
           gap: { xs: 4, md: 8 },
           py: { xs: 6, sm: 8, md: 12 },
           px: { xs: 2, sm: 4, md: 8 },
+          color: theme.palette.text.primary, // texto se adapta
         }}
       >
         {/* Avatar con animación */}
@@ -33,14 +35,14 @@ export default function Hero() {
             sx={{
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
-              border: "4px solid #1976d2",
+              border: `4px solid ${theme.palette.primary.main}`,
               boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
               mb: { xs: 2, sm: 0 },
             }}
           />
         </motion.div>
 
-        {/* Texto con animación */}
+        {/* Texto */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -52,7 +54,7 @@ export default function Hero() {
               fontWeight="bold"
               gutterBottom
               sx={{
-                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #6d28d9)`,
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
@@ -79,7 +81,7 @@ export default function Hero() {
               sx={{
                 fontSize: { xs: "0.95rem", sm: "1rem", md: "1.1rem" },
                 lineHeight: 1.7,
-                color: "#444",
+                color: theme.palette.text.primary, // cambia dinámicamente
               }}
             >
               Me apasiona crear tecnología que transforme ideas en realidades digitales. 
@@ -87,7 +89,6 @@ export default function Hero() {
               seguras, innovadoras y orientadas a generar impacto positivo.
             </Typography>
 
-            {/* Botón con efecto glow */}
             <Button
               variant="contained"
               startIcon={<DescriptionIcon />}
@@ -101,11 +102,11 @@ export default function Hero() {
                 fontWeight: "bold",
                 px: { xs: 3.5, md: 5 },
                 py: 1.4,
-                background: "linear-gradient(90deg, #1976d2, #6d28d9)",
-                boxShadow: "0 6px 18px rgba(25, 118, 210, 0.4)",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #6d28d9)`,
+                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                 transition: "all 0.3s ease",
                 "&:hover": {
-                  boxShadow: "0 8px 22px rgba(109, 40, 217, 0.5)",
+                  boxShadow: `0 8px 22px ${theme.palette.secondary.main}88`,
                   transform: "translateY(-2px) scale(1.03)",
                 },
               }}
@@ -117,4 +118,4 @@ export default function Hero() {
       </Box>
     </>
   );
-}
+            }
