@@ -1,20 +1,15 @@
-import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
+import { Toolbar, Box, Typography, Button, Avatar, IconButton } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Brightness4, Brightness7 } from "@mui/icons-material"; // Iconos de sol/luna
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  const toggleMode = () => {
-    setMode(mode === "light" ? "dark" : "light");
-  };
-
   return (
     <>
       <Toolbar />
-
       <Box
         id="hero"
         sx={{
@@ -28,14 +23,14 @@ export default function Hero({ mode, setMode }) {
           color: theme.palette.text.primary,
         }}
       >
-        {/* Avatar con animación */}
+        {/* Avatar animado */}
         <motion.div
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
           style={{ display: "inline-block", borderRadius: "50%" }}
         >
           <Avatar
-            alt="Jorge Patricio Santamaría Cherrez"
+            alt="Jorge Patricio"
             src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
             sx={{
               width: { xs: 130, sm: 170, md: 200 },
@@ -47,7 +42,7 @@ export default function Hero({ mode, setMode }) {
           />
         </motion.div>
 
-        {/* Texto y botones */}
+        {/* Texto */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -72,22 +67,17 @@ export default function Hero({ mode, setMode }) {
               variant="h6"
               color="text.secondary"
               gutterBottom
-              sx={{ fontStyle: "italic", fontSize: { xs: "1rem", sm: "1.15rem", md: "1.25rem" } }}
+              sx={{ fontStyle: "italic" }}
             >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
-            <Typography
-              variant="body1"
-              paragraph
-              sx={{ fontSize: { xs: "0.95rem", sm: "1rem", md: "1.1rem" }, lineHeight: 1.7 }}
-            >
-              Me apasiona crear tecnología que transforme ideas en realidades digitales. 
-              Mi enfoque está en aportar valor constante, desarrollando soluciones digitales 
-              seguras, innovadoras y orientadas a generar impacto positivo.
+            <Typography variant="body1" paragraph sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}>
+              Me apasiona crear tecnología que transforme ideas en realidades digitales.
             </Typography>
 
-            <Box display="flex" gap={2} flexWrap="wrap" justifyContent={{ xs: "center", sm: "flex-start" }}>
+            <Box sx={{ display: "flex", gap: 2, justifyContent: { xs: "center", sm: "flex-start" }, flexWrap: "wrap" }}>
+              {/* Botón para CV */}
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
@@ -95,7 +85,6 @@ export default function Hero({ mode, setMode }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 sx={{
-                  mt: 3,
                   borderRadius: "25px",
                   textTransform: "none",
                   fontWeight: "bold",
@@ -104,18 +93,18 @@ export default function Hero({ mode, setMode }) {
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #6d28d9)`,
                   boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                   transition: "all 0.3s ease",
-                  "&:hover": { boxShadow: `0 8px 22px ${theme.palette.secondary.main}88`, transform: "translateY(-2px) scale(1.03)" },
+                  "&:hover": { boxShadow: `0 8px 22px ${theme.palette.secondary.main}88` },
                 }}
               >
                 Ver CV
               </Button>
 
+              {/* Botón Dark/Light */}
               <Button
                 variant="outlined"
-                onClick={toggleMode}
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 sx={{
-                  mt: 3,
                   borderRadius: "25px",
                   textTransform: "none",
                   fontWeight: "bold",
@@ -123,7 +112,7 @@ export default function Hero({ mode, setMode }) {
                   py: 1.4,
                   borderColor: theme.palette.primary.main,
                   color: theme.palette.primary.main,
-                  "&:hover": { background: theme.palette.primary.main, color: "#fff", borderColor: theme.palette.primary.main },
+                  "&:hover": { background: theme.palette.primary.main, color: "#fff" },
                   transition: "all 0.3s ease",
                 }}
               >
