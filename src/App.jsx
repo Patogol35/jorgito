@@ -125,7 +125,7 @@ function App() {
             id="contact"
             elevation={3}
             sx={{
-              mb: 6,
+              mb: 4,
               p: { xs: 3, md: 6 },
               borderRadius: 3,
               borderLeft: "10px solid #d32f2f",
