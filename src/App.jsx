@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
+import { ThemeProvider, createTheme, CssBaseline, Box, Paper, Container } from "@mui/material";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -8,7 +8,6 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import { Box, Paper, Container } from "@mui/material";
 
 function App() {
   const [mode, setMode] = useState("light"); // estado para controlar el modo
@@ -22,22 +21,12 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
+                text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: {
-                  primary: "#ffffff",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
@@ -46,16 +35,15 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Aplica el fondo y textos del tema automáticamente */}
+      <CssBaseline />
       <Box sx={{ minHeight: "100vh" }}>
-        {/* Pasamos el switch de modo oscuro al Navbar */}
+        {/* Navbar con control de modo */}
         <Navbar mode={mode} setMode={setMode} />
 
-        {/* Hero */}
-        <Hero />
+        {/* Hero con control de modo */}
+        <Hero mode={mode} setMode={setMode} />
 
         <Container maxWidth="lg" sx={{ py: 6 }}>
-          {/* About */}
           <Paper
             id="about"
             elevation={3}
@@ -72,7 +60,6 @@ function App() {
             <About />
           </Paper>
 
-          {/* Skills */}
           <Paper
             id="skills"
             elevation={3}
@@ -89,7 +76,6 @@ function App() {
             <Skills />
           </Paper>
 
-          {/* Certifications */}
           <Paper
             id="certifications"
             elevation={3}
@@ -106,7 +92,6 @@ function App() {
             <Certifications />
           </Paper>
 
-          {/* Projects */}
           <Paper
             id="projects"
             elevation={3}
@@ -123,7 +108,6 @@ function App() {
             <Projects />
           </Paper>
 
-          {/* Contact */}
           <Paper
             id="contact"
             elevation={3}
