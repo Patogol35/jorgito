@@ -1,4 +1,3 @@
-
 import {
   AppBar,
   Toolbar,
@@ -14,20 +13,20 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
 
-  // Colores de menú adaptados según el modo
   const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: mode === "dark" ? "#42a5f5" : "#1565c0" },
-    { label: "Educación", href: "#about", color: mode === "dark" ? "#66bb6a" : "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: mode === "dark" ? "#ffb74d" : "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: mode === "dark" ? "#ab47bc" : "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: mode === "dark" ? "#29b6f6" : "#0288d1" },
-    { label: "Contacto", href: "#contact", color: mode === "dark" ? "#ef5350" : "#c62828" },
+    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+    { label: "Educación", href: "#about", color: "#2e7d32" },
+    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+    { label: "Proyectos", href: "#projects", color: "#0288d1" },
+    { label: "Contacto", href: "#contact", color: "#c62828" },
   ];
 
   useEffect(() => {
@@ -72,9 +71,12 @@ export default function Navbar({ mode, setMode }) {
           position="fixed"
           elevation={scrolled ? 6 : 2}
           sx={{
-            backgroundColor: scrolled
-              ? theme.palette.primary.dark
-              : theme.palette.primary.main,
+            backgroundColor:
+              mode === "dark"
+                ? "#121212"
+                : scrolled
+                ? theme.palette.primary.dark
+                : theme.palette.primary.main,
             transition: "0.3s",
             zIndex: 1400,
           }}
@@ -94,7 +96,10 @@ export default function Navbar({ mode, setMode }) {
                 }}
                 onClick={() => handleScrollTo("#hero")}
               >
-                <motion.div whileHover={{ rotate: 15 }} transition={{ type: "spring", stiffness: 200 }}>
+                <motion.div
+                  whileHover={{ rotate: 15 }}
+                  transition={{ type: "spring", stiffness: 200 }}
+                >
                   <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
                 Jorge Patricio
@@ -112,7 +117,7 @@ export default function Navbar({ mode, setMode }) {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: item.color,
+                      color: mode === "dark" ? "#ffffff" : theme.palette.common.white,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -177,7 +182,7 @@ export default function Navbar({ mode, setMode }) {
               exit="exit"
               style={{
                 width: "280px",
-                background: theme.palette.background.paper,
+                background: mode === "dark" ? "#1e1e1e" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
                 boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
@@ -189,14 +194,18 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Encabezado menú móvil */}
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
                 <Typography
                   variant="h6"
-                  sx={{ fontWeight: "bold", color: theme.palette.text.primary }}
+                  sx={{
+                    fontWeight: "bold",
+                    color: mode === "dark" ? "#fff" : "#fff",
+                  }}
                 >
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
+                <IconButton onClick={() => setOpen(false)} sx={{ color: mode === "dark" ? "#fff" : "#fff" }}>
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
@@ -216,14 +225,11 @@ export default function Navbar({ mode, setMode }) {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: item.color,
+                      color: "#fff",
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor:
-                        mode === "dark"
-                          ? "rgba(255,255,255,0.05)"
-                          : "rgba(0,0,0,0.05)",
+                      backgroundColor: item.color,
                       transition: "0.3s",
                     }}
                   >
