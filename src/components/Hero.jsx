@@ -73,7 +73,7 @@ export default function Hero({ mode, setMode }) {
             </Typography>
 
             <Typography variant="body1" paragraph sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}>
-              Me apasiona crear tecnología que transforme ideas en realidades digitales.
+             Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar impacto positivo
             </Typography>
 
             <Box sx={{ display: "flex", gap: 2, justifyContent: { xs: "center", sm: "flex-start" }, flexWrap: "wrap" }}>
