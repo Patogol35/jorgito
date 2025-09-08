@@ -7,6 +7,7 @@ import {
   Paper,
   Container,
   Fab,
+  Tooltip,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import Navbar from "./components/Navbar.jsx";
@@ -133,23 +134,25 @@ function App() {
         <Footer />
 
         {/* BOTÓN FLOTANTE DE WHATSAPP */}
-        <Fab
-          color="success"
-          aria-label="whatsapp"
-          sx={{
-            position: "fixed",
-            bottom: 16,
-            right: 16,
-            zIndex: 1000,
-            bgcolor: "#25D366",
-            "&:hover": { bgcolor: "#1ebe5c" },
-          }}
-          onClick={() =>
-            window.open("https://wa.me/593XXXXXXXXX", "_blank") // <-- Cambia tu número
-          }
-        >
-          <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
-        </Fab>
+        <Tooltip title="Chatea por WhatsApp" placement="left">
+          <Fab
+            color="success"
+            aria-label="whatsapp"
+            sx={{
+              position: "fixed",
+              bottom: 16,
+              right: 16,
+              zIndex: 1000,
+              bgcolor: "#25D366",
+              "&:hover": { bgcolor: "#1ebe5c" },
+            }}
+            onClick={() =>
+              window.open("https://wa.me/593997979099", "_blank")
+            }
+          >
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+          </Fab>
+        </Tooltip>
       </Box>
     </ThemeProvider>
   );
