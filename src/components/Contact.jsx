@@ -7,13 +7,14 @@ import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const socialLinks = [
-    { icon: <GitHub />, color: "#181717", href: "https://github.com/Patogol35" },
-    { icon: <LinkedIn />, color: "#0A66C2", href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2" },
-    { icon: <Facebook />, color: "#1877F2", href: "https://www.facebook.com/share/1C9RgHAPvL/" },
-    { icon: <Instagram />, color: "#E4405F", href: "https://www.instagram.com/jorge_patricio_26" },
-    { icon: <MailOutline />, color: "#1976d2", href: "mailto:patogol3535@gmail.com" },
+    { icon: <GitHub />, color: isDark ? "#fff" : "#181717", href: "https://github.com/Patogol35" },
+    { icon: <LinkedIn />, color: isDark ? "#90caf9" : "#0A66C2", href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2" },
+    { icon: <Facebook />, color: isDark ? "#90caf9" : "#1877F2", href: "https://www.facebook.com/share/1C9RgHAPvL/" },
+    { icon: <Instagram />, color: isDark ? "#f48fb1" : "#E4405F", href: "https://www.instagram.com/jorge_patricio_26" },
+    { icon: <MailOutline />, color: isDark ? "#fff" : "#1976d2", href: "mailto:patogol3535@gmail.com" },
   ];
 
   return (
@@ -22,7 +23,7 @@ export default function Contact() {
       sx={{
         pt: 6,
         pb: 4,
-        color: theme.palette.text.primary, // texto adaptativo
+        color: theme.palette.text.primary,
         scrollMarginTop: "80px",
       }}
     >
@@ -39,7 +40,7 @@ export default function Contact() {
             align="center"
             sx={{
               fontWeight: 700,
-              color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+              color: isDark ? "#90caf9" : "#1976d2",
               position: "relative",
               display: "inline-block",
             }}
@@ -54,7 +55,7 @@ export default function Contact() {
                 transform: "translateX(-50%)",
                 width: "60%",
                 height: "3px",
-                background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+                background: isDark ? "#90caf9" : "#1976d2",
                 borderRadius: "6px",
               }}
             />
