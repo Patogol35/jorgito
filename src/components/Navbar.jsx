@@ -1,265 +1,145 @@
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
-  Button,
-  Typography,
-  Box,
   IconButton,
-  Stack,
-  useTheme,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { useTheme } from "@mui/material/styles";
 
 export default function Navbar({ mode, setMode }) {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
-  const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-    { label: "Educación", href: "#about", color: "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: "#0288d1" },
-    { label: "Contacto", href: "#contact", color: "#c62828" },
+  const toggleDrawer = (open) => () => {
+    setOpen(open);
+  };
+
+  const sections = [
+    { text: "Sobre mí", id: "about" },
+    { text: "Educación", id: "education" },
+    { text: "Proyectos", id: "projects" },
+    { text: "Certificaciones", id: "certifications" },
+    { text: "Contacto", id: "contact" },
   ];
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const menuVariants = {
-    hidden: { x: "100%" },
-    visible: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
-    exit: { x: "100%", transition: { type: "spring", stiffness: 300, damping: 30 } },
-  };
-
-  const itemVariants = {
-    hidden: { x: 20, opacity: 0 },
-    visible: (i) => ({
-      x: 0,
-      opacity: 1,
-      transition: { delay: i * 0.08, type: "spring", stiffness: 300 },
-    }),
-  };
-
-  const handleScrollTo = (id) => {
-    const element = document.querySelector(id);
-    if (element) {
-      const yOffset = -70;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+      setOpen(false);
     }
-    setOpen(false);
   };
 
   return (
     <>
-      <motion.div
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      {/* Barra superior */}
+      <AppBar
+        position="fixed"
+        sx={{
+          background: theme.palette.background.paper,
+          boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        }}
       >
-        <AppBar
-          position="fixed"
-          elevation={scrolled ? 6 : 2}
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            Mi Portafolio
+          </Typography>
+
+          <Box sx={{ display: "flex", gap: 1 }}>
+            {/* Botón cambio tema (icono solo) */}
+            <IconButton
+              onClick={() => setMode(mode === "light" ? "dark" : "light")}
+              color="inherit"
+            >
+              {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+            </IconButton>
+
+            {/* Botón menú */}
+            <IconButton edge="end" color="inherit" onClick={toggleDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+
+      {/* Menú lateral */}
+      <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
+        <Box
           sx={{
-            backgroundColor:
-              mode === "dark"
-                ? "#121212"
-                : scrolled
-                ? theme.palette.primary.dark
-                : theme.palette.primary.main,
-            transition: "0.3s",
-            zIndex: 1400,
+            width: 250,
+            background: theme.palette.background.default,
+            color: theme.palette.text.primary,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            p: 2,
           }}
         >
-          <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            {/* Logo */}
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-              <Typography
-                variant="h6"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  color: theme.palette.common.white,
-                  letterSpacing: 1,
-                  cursor: "pointer",
-                }}
-                onClick={() => handleScrollTo("#hero")}
-              >
-                <motion.div
-                  whileHover={{ rotate: 15 }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                >
-                  <CodeIcon sx={{ mr: 1 }} />
-                </motion.div>
-                Jorge Patricio
-              </Typography>
-            </motion.div>
-
-            {/* Menú Desktop */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
-              {menuItems.map((item) => (
-                <motion.div
-                  key={item.href}
-                  whileHover={{ y: -2, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    onClick={() => handleScrollTo(item.href)}
-                    sx={{
-                      color: mode === "dark" ? "#ffffff" : theme.palette.common.white,
-                      fontWeight: 600,
-                      textTransform: "none",
-                      fontSize: "1rem",
-                      position: "relative",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        width: 0,
-                        height: 2,
-                        bottom: 0,
-                        left: 0,
-                        backgroundColor: theme.palette.secondary.main,
-                        transition: "0.3s",
-                      },
-                      "&:hover::after": {
-                        width: "100%",
-                      },
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
-
-              {/* Botón modo oscuro/claro */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ color: theme.palette.common.white }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Box>
-
-            {/* Botón móvil abrir menú */}
-            <IconButton
-              sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
-              onClick={() => setOpen(true)}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </motion.div>
-
-      {/* Menú móvil */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
-              background: "rgba(0,0,0,0.5)",
-              zIndex: 1300,
+          {/* Encabezado menú */}
+          <Box
+            sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               alignItems: "center",
+              mb: 3,
             }}
-            onClick={() => setOpen(false)}
           >
-            <motion.div
-              variants={menuVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              style={{
-                width: "280px",
-                background: mode === "dark" ? "#1e1e1e" : theme.palette.primary.main,
-                borderRadius: "16px 0 0 16px",
-                padding: "2rem",
-                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
-                display: "flex",
-                flexDirection: "column",
-                height: "auto",
-                maxHeight: "80vh",
-                overflowY: "auto",
+            <Typography variant="h6">Menú</Typography>
+            <IconButton onClick={toggleDrawer(false)}>
+              <CloseIcon />
+            </IconButton>
+          </Box>
+
+          {/* Botón cambio tema con texto */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+              mb: 3,
+            }}
+          >
+            <Button
+              onClick={() => setMode(mode === "light" ? "dark" : "light")}
+              variant="outlined"
+              startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              sx={{
+                borderColor: theme.palette.text.primary,
+                color: theme.palette.text.primary,
+                textTransform: "none",
+                fontWeight: "bold",
+                "&:hover": { background: theme.palette.action.hover },
               }}
-              onClick={(e) => e.stopPropagation()}
             >
-              {/* Encabezado menú móvil */}
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: mode === "dark" ? "#fff" : "#fff",
-                  }}
-                >
-                  Menú
-                </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
-                  <CloseIcon fontSize="large" />
-                </IconButton>
-              </Box>
+              {mode === "light" ? "Modo Oscuro" : "Modo Claro"}
+            </Button>
+          </Box>
 
-              {/* Links menú móvil */}
-              <Stack spacing={2} mb={3}>
-                {menuItems.map((item, i) => (
-                  <motion.a
-                    key={item.href}
-                    onClick={() => handleScrollTo(item.href)}
-                    custom={i}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ scale: 1.05 }}
-                    style={{
-                      fontSize: "1.1rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: "0.8rem 1rem",
-                      borderRadius: "8px",
-                      backgroundColor: item.color,
-                      transition: "0.3s",
-                    }}
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-              </Stack>
-
-              {/* Botón modo oscuro/claro en menú móvil */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{
-                  color: "#fff",
-                  alignSelf: "center",
-                }}
+          {/* Lista de secciones */}
+          <List>
+            {sections.map((section) => (
+              <ListItem
+                button
+                key={section.id}
+                onClick={() => scrollToSection(section.id)}
               >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <ListItemText primary={section.text} />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
     </>
   );
-                }
+}
