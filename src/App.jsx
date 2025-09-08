@@ -52,11 +52,18 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column", // 👈 Para mantener footer abajo
+        }}
+      >
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container maxWidth="lg" sx={{ py: 6 }}>
+        {/* CONTENIDO CENTRAL FLEXIBLE */}
+        <Container maxWidth="lg" sx={{ py: 6, flex: 1 }}>
           <Paper
             id="about"
             elevation={3}
@@ -138,6 +145,7 @@ function App() {
           </Paper>
         </Container>
 
+        {/* FOOTER SIEMPRE ABAJO */}
         <Footer />
 
         {/* BOTÓN FLOTANTE DE WHATSAPP */}
