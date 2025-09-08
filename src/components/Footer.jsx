@@ -1,4 +1,4 @@
-Se puede adaptar mi footer al modo oscuro import { Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import SocialLinks from "./SocialLinks";
 import { GitHub, LinkedIn, Instagram, MailOutline } from "@mui/icons-material";
 
