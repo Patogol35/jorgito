@@ -42,6 +42,7 @@ export default function Contact() {
               fontWeight: 700,
               color: isDark ? "#90caf9" : "#1976d2",
               position: "relative",
+              mb: 4,
               display: "inline-block",
             }}
           >
