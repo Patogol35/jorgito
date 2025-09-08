@@ -25,18 +25,6 @@ export default function Footer() {
         boxSizing: "border-box",
       }}
     >
-      {/* Texto legal más discreto */}
-      <Typography
-        variant="body2"
-        sx={{
-          mb: 1,
-          opacity: isDark ? 0.7 : 0.85,
-          color: "#fff",
-        }}
-      >
-        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
-      </Typography>
-
       {/* Eslogan destacado */}
       <Typography
         variant="body2"
@@ -52,6 +40,18 @@ export default function Footer() {
 
       {/* Íconos sociales */}
       <SocialLinks socialLinks={socialLinks} size="28px" animated={false} spacing={2} />
+
+      {/* Texto legal más discreto (ahora al final) */}
+      <Typography
+        variant="body2"
+        sx={{
+          mt: 2, // margen arriba para separar de los iconos
+          opacity: isDark ? 0.7 : 0.85,
+          color: "#fff",
+        }}
+      >
+        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
+      </Typography>
     </Box>
   );
 }
