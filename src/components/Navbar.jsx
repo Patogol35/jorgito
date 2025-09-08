@@ -141,6 +141,14 @@ export default function Navbar({ mode, setMode }) {
                   </Button>
                 </motion.div>
               ))}
+
+              {/* Botón modo oscuro/claro */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{ color: theme.palette.common.white }}
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </Box>
 
             {/* Botón móvil abrir menú */}
@@ -205,13 +213,13 @@ export default function Navbar({ mode, setMode }) {
                 >
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: mode === "dark" ? "#fff" : "#fff" }}>
+                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
 
               {/* Links menú móvil */}
-              <Stack spacing={2}>
+              <Stack spacing={2} mb={3}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
@@ -237,10 +245,21 @@ export default function Navbar({ mode, setMode }) {
                   </motion.a>
                 ))}
               </Stack>
+
+              {/* Botón modo oscuro/claro en menú móvil */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{
+                  color: "#fff",
+                  alignSelf: "center",
+                }}
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-}
+                }
