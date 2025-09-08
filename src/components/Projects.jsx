@@ -47,6 +47,7 @@ export default function Projects() {
             fontWeight: 700,
             color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             position: "relative",
+            mb: 4,
             display: "inline-block",
           }}
         >
