@@ -17,13 +17,15 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
+        width: "100%",          // ocupa todo el ancho
+        boxSizing: "border-box",// evita overflow por padding
         py: 4,
         textAlign: "center",
         background: isDark
-          ? "#000" // negro sólido en modo oscuro
-          : "linear-gradient(135deg, #1976d2, #42a5f5)", // gradiente original en modo claro
-        color: "#fff", // mantenemos texto blanco como antes
-        transition: "all 0.3s ease",
+          ? "#000"               // negro en modo oscuro
+          : "linear-gradient(135deg, #1976d2, #42a5f5)", // gradiente en claro
+        color: "#fff",
+        overflowX: "hidden",    // evita huecos a los lados
       }}
     >
       <Typography variant="body2" sx={{ mb: 1 }}>
@@ -31,7 +33,7 @@ export default function Footer() {
       </Typography>
 
       <Typography variant="body2" sx={{ mb: 2, opacity: 0.85 }}>
-        Transformando ideas en aplicaciones efectivas 
+        Transformando ideas en aplicaciones efectivas
       </Typography>
 
       <SocialLinks socialLinks={socialLinks} size="28px" animated={false} spacing={2} />
