@@ -23,6 +23,7 @@ const proyectos = [
 
 export default function Projects() {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   return (
     <Box
@@ -30,11 +31,8 @@ export default function Projects() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
-        background:
-          theme.palette.mode === "dark"
-            ? theme.palette.background.default
-            : "transparent",
+        color: theme.palette.text.primary, // mantiene el color del texto general
+        background: "transparent", // mantiene exactamente el fondo que tenías
       }}
     >
       {/* Título */}
@@ -49,7 +47,7 @@ export default function Projects() {
           align="center"
           sx={{
             fontWeight: 700,
-            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+            color: isDark ? "#ffffff" : "#1976d2", // más claro en modo oscuro
             position: "relative",
             mb: 4,
             display: "inline-block",
@@ -65,8 +63,7 @@ export default function Projects() {
               transform: "translateX(-50%)",
               width: "60%",
               height: "3px",
-              background:
-                theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+              background: isDark ? "#ffffff" : "#1976d2",
               borderRadius: "6px",
             }}
           />
@@ -87,7 +84,11 @@ export default function Projects() {
                 <FolderCode size={28} color={p.color} />
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontWeight: "bold", mt: 1 }}
+                  sx={{
+                    fontWeight: "bold",
+                    mt: 1,
+                    color: isDark ? "#ffffff" : theme.palette.text.primary,
+                  }}
                 >
                   <Link
                     href={p.link}
@@ -95,7 +96,7 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      color: p.color, // mantiene color exacto
+                      color: p.color, // mantiene color exacto de los enlaces
                       fontWeight: "bold",
                       "&:hover": { textDecoration: "underline" },
                     }}
