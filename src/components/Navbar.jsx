@@ -13,7 +13,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
 
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
@@ -126,23 +125,13 @@ export default function Navbar({ mode, setMode }) {
                         backgroundColor: theme.palette.secondary.main,
                         transition: "0.3s",
                       },
-                      "&:hover::after": {
-                        width: "100%",
-                      },
+                      "&:hover::after": { width: "100%" },
                     }}
                   >
                     {item.label}
                   </Button>
                 </motion.div>
               ))}
-
-              {/* Botón Dark/Light Desktop */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ color: theme.palette.common.white }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
             </Box>
 
             {/* Botón móvil abrir menú */}
@@ -201,19 +190,9 @@ export default function Navbar({ mode, setMode }) {
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: theme.palette.text.primary }}>
                   Menú
                 </Typography>
-                <Box>
-                  {/* Botón Dark/Light móvil */}
-                  <IconButton
-                    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                    sx={{ color: theme.palette.text.primary, mr: 1 }}
-                  >
-                    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                  </IconButton>
-
-                  <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
-                    <CloseIcon fontSize="large" />
-                  </IconButton>
-                </Box>
+                <IconButton onClick={() => setOpen(false)} sx={{ color: theme.palette.text.primary }}>
+                  <CloseIcon fontSize="large" />
+                </IconButton>
               </Box>
 
               {/* Links menú móvil */}
@@ -231,11 +210,11 @@ export default function Navbar({ mode, setMode }) {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: theme.palette.common.white,
+                      color: theme.palette.text.primary,
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: item.color,
+                      backgroundColor: mode === "light" ? item.color : "rgba(255,255,255,0.1)",
                       transition: "0.3s",
                     }}
                   >
@@ -249,4 +228,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-                  }
+            }
