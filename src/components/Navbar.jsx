@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 
-export default function Navbar({ mode, setMode }) {
+export default function Navbar({ mode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
@@ -110,7 +110,7 @@ export default function Navbar({ mode, setMode }) {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: theme.palette.common.white,
+                      color: mode === "light" ? "#111" : "#fff",
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -125,7 +125,9 @@ export default function Navbar({ mode, setMode }) {
                         backgroundColor: theme.palette.secondary.main,
                         transition: "0.3s",
                       },
-                      "&:hover::after": { width: "100%" },
+                      "&:hover::after": {
+                        width: "100%",
+                      },
                     }}
                   >
                     {item.label}
@@ -210,11 +212,11 @@ export default function Navbar({ mode, setMode }) {
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
-                      color: theme.palette.text.primary,
+                      color: mode === "light" ? "#111" : "#fff",
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
                       borderRadius: "8px",
-                      backgroundColor: mode === "light" ? item.color : "rgba(255,255,255,0.1)",
+                      backgroundColor: mode === "light" ? item.color + "22" : "rgba(255,255,255,0.1)",
                       transition: "0.3s",
                     }}
                   >
@@ -228,4 +230,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-            }
+}
