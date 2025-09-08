@@ -231,7 +231,7 @@ export default function Navbar({ mode, setMode }) {
                   fontWeight: "bold",
                 }}
               >
-                {mode === "light" ? "Modo noche" : "Modo día"}
+                {mode === "light" ? "Modo Noche" : "Modo Día"}
               </Button>
 
               {/* Links menú móvil */}
