@@ -119,18 +119,12 @@ export default function Navbar({ mode, setMode }) {
                       fontSize: "1rem",
                       position: "relative",
                       transition: "all 0.25s ease",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        width: 0,
-                        height: 2,
-                        bottom: -2,
-                        left: 0,
-                        backgroundColor: theme.palette.secondary.main,
-                        transition: "width 0.3s ease",
+                      borderRadius: "8px",
+                      "&:hover": {
+                        backgroundColor: item.color,   // 👈 color propio del item
+                        color: "#fff",
+                        boxShadow: `0 4px 12px ${item.color}55`, // 👈 glow sutil
                       },
-                      "&:hover::after": { width: "100%" },
-                      "&:hover": { textShadow: "0 0 6px rgba(255,255,255,0.6)" },
                     }}
                   >
                     {item.label}
@@ -267,4 +261,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+            }
