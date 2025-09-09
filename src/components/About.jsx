@@ -27,10 +27,10 @@ export default function About() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary, // texto se adapta al modo
+        color: theme.palette.text.primary,
       }}
     >
-      {/* Título */}
+      {/* Título con degradado */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,11 +38,13 @@ export default function About() {
         style={{ textAlign: "center", marginBottom: "1rem" }}
       >
         <Typography
-          variant="h4"
+          variant="h3"
           align="center"
           sx={{
-            fontWeight: 700,
-            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+            fontWeight: 800,
+            background: "linear-gradient(90deg, #1976d2, #9333ea)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
             position: "relative",
             mb: 4,
             display: "inline-block",
@@ -56,10 +58,9 @@ export default function About() {
               left: "50%",
               bottom: -6,
               transform: "translateX(-50%)",
-              width: "60%",
-              height: "3px",
-              background:
-                theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+              width: "70%",
+              height: "4px",
+              background: "linear-gradient(90deg, #1976d2, #9333ea)",
               borderRadius: "6px",
             }}
           />
@@ -77,10 +78,7 @@ export default function About() {
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
-                <GraduationCap
-                  size={28}
-                  color={est.iconColor}
-                />
+                <GraduationCap size={28} color={est.iconColor} />
                 <Typography
                   variant="subtitle1"
                   sx={{ fontWeight: "bold", mt: 1 }}
@@ -106,4 +104,4 @@ export default function About() {
       </Grid>
     </Box>
   );
-                           }
+}
