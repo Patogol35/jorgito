@@ -30,10 +30,10 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado tipo badge con GraduationCap */}
+      {/* Encabezado tipo badge con texto */}
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
         style={{ textAlign: "center", marginBottom: "1rem" }}
       >
@@ -42,20 +42,24 @@ export default function About() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            px: 3,
-            py: 1,
+            px: 4,
+            py: 1.2,
             borderRadius: "999px",
             background:
               theme.palette.mode === "dark"
                 ? "rgba(144,202,249,0.1)"
                 : "rgba(25,118,210,0.1)",
-            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
           }}
         >
-          <GraduationCap
-            size={28}
-            color={theme.palette.mode === "dark" ? "#90caf9" : "#1976d2"}
-          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+            }}
+          >
+            Formación Académica
+          </Typography>
         </Box>
       </motion.div>
 
