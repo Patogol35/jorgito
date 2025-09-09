@@ -24,12 +24,14 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "#c62828" },
 ];
 
+// Variantes para menú móvil
 const menuVariants = {
   hidden: { x: "100%" },
   visible: { x: 0, transition: { type: "spring", stiffness: 220, damping: 28 } },
   exit: { x: "100%", transition: { type: "spring", stiffness: 220, damping: 28 } },
 };
 
+// Variantes para ítems móviles
 const itemVariants = {
   hidden: { x: 20, opacity: 0 },
   visible: (i) => ({
@@ -37,6 +39,21 @@ const itemVariants = {
     opacity: 1,
     transition: { delay: i * 0.07, type: "spring", stiffness: 260 },
   }),
+};
+
+// Variantes para menú desktop
+const desktopMenuVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+// Variantes para ítems desktop
+const desktopItemVariants = {
+  hidden: { y: -10, opacity: 0 },
+  visible: { y: 0, opacity: 1 },
 };
 
 function useSmoothScroll(offset = -70) {
@@ -107,9 +124,19 @@ export default function Navbar({ mode, setMode }) {
             </motion.div>
 
             {/* Menú Desktop */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
+            <motion.div
+              variants={desktopMenuVariants}
+              initial="hidden"
+              animate="visible"
+              style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}
+            >
               {menuItems.map((item) => (
-                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  key={item.href}
+                  variants={desktopItemVariants}
+                  whileHover={{ y: -2, scale: 1.04 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
@@ -121,10 +148,11 @@ export default function Navbar({ mode, setMode }) {
                       transition: "all 0.25s ease",
                       borderRadius: "8px",
                       "&:hover": {
-                        // 👇 todos sólidos en hover
                         backgroundColor: item.label === "Sobre mí" ? "#0288d1" : item.color,
                         color: "#fff",
-                        boxShadow: `0 4px 12px ${item.label === "Sobre mí" ? "#0288d1" : item.color}55`,
+                        boxShadow: `0 4px 12px ${
+                          item.label === "Sobre mí" ? "#0288d1" : item.color
+                        }55`,
                       },
                     }}
                   >
@@ -134,25 +162,29 @@ export default function Navbar({ mode, setMode }) {
               ))}
 
               {/* Botón modo oscuro/claro */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{
-                  color: theme.palette.common.white,
-                  transition: "all 0.25s ease",
-                  "&:hover": { transform: "scale(1.15)" },
-                }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Box>
+              <motion.div variants={desktopItemVariants}>
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{
+                    color: theme.palette.common.white,
+                    transition: "all 0.25s ease",
+                    "&:hover": { transform: "scale(1.15)" },
+                  }}
+                >
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </IconButton>
+              </motion.div>
+            </motion.div>
 
             {/* Botón móvil abrir menú */}
-            <IconButton
-              sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
-              onClick={() => setOpen(true)}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
+            <Box sx={{ display: { xs: "block", md: "none" } }}>
+              <IconButton
+                sx={{ color: theme.palette.common.white }}
+                onClick={() => setOpen(true)}
+              >
+                <MenuIcon fontSize="large" />
+              </IconButton>
+            </Box>
           </Toolbar>
         </AppBar>
       </motion.div>
