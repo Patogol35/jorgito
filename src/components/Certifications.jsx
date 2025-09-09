@@ -1,4 +1,4 @@
-import { Typography, Grid, Box, Paper } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import { useTheme } from "@mui/material/styles";
@@ -24,38 +24,40 @@ export default function Certifications() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Badge del título */}
+      {/* Encabezado tipo badge con texto */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "3rem" }}
+        style={{ textAlign: "center", marginBottom: "1rem" }}
       >
-        <Paper
-          elevation={6}
+        <Box
           sx={{
-            display: "inline-block",
-            px: 3,
-            py: 1,
-            borderRadius: "30px",
-            background: "linear-gradient(90deg, #2563eb, #9333ea)", // igual a los otros
-            color: "white",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: 4,
+            py: 1.2,
+            borderRadius: "999px",
+            background:
+              theme.palette.mode === "dark"
+                ? "rgba(144,202,249,0.1)"
+                : "rgba(25,118,210,0.1)",
           }}
         >
           <Typography
-            variant="h5"
+            variant="h6"
             sx={{
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: 1,
+              fontWeight: "bold",
+              color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             }}
           >
             Certificaciones
           </Typography>
-        </Paper>
+        </Box>
       </motion.div>
 
-      {/* Grid de certificaciones */}
+      {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
         {certificaciones.map((c, i) => {
           const IconComponent = c.iconType;
@@ -83,4 +85,4 @@ export default function Certifications() {
       </Grid>
     </Box>
   );
-}
+                    }
