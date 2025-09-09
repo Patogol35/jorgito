@@ -29,7 +29,7 @@ export default function Certifications() {
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "1rem" }}
+        style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
           sx={{
