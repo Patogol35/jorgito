@@ -51,7 +51,7 @@ export default function Contact() {
               variant="h6"
               sx={{
                 fontWeight: "bold",
-                color: isDark ? "#90caf9" : "#1976d2",
+                color: isDark ? "#bbdefb" : "#1976d2",
               }}
             >
               Mis Redes Sociales
