@@ -121,9 +121,9 @@ export default function Navbar({ mode, setMode }) {
                       transition: "all 0.25s ease",
                       borderRadius: "8px",
                       "&:hover": {
-                        backgroundColor: item.color,   // 👈 color propio del item
+                        backgroundColor: `${item.color}aa`, // 👈 semi-transparente para contraste
                         color: "#fff",
-                        boxShadow: `0 4px 12px ${item.color}55`, // 👈 glow sutil
+                        boxShadow: `0 4px 12px ${item.color}55`,
                       },
                     }}
                   >
@@ -261,4 +261,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-            }
+}
