@@ -1,4 +1,4 @@
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import { useTheme } from "@mui/material/styles";
@@ -21,45 +21,41 @@ export default function Certifications() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary, // se adapta al modo
+        color: theme.palette.text.primary,
       }}
     >
-      {/* Título */}
+      {/* Badge del título */}
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "1rem" }}
+        style={{ textAlign: "center", marginBottom: "3rem" }}
       >
-        <Typography
-          variant="h4"
-          align="center"
+        <Paper
+          elevation={6}
           sx={{
-            fontWeight: 700,
-            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
-            position: "relative",
-            mb: 4,
             display: "inline-block",
+            px: 3,
+            py: 1,
+            borderRadius: "30px",
+            background: "linear-gradient(90deg, #2563eb, #9333ea)", // igual a los otros
+            color: "white",
           }}
         >
-          Certificaciones
-          <Box
-            component="span"
+          <Typography
+            variant="h5"
             sx={{
-              position: "absolute",
-              left: "50%",
-              bottom: -6,
-              transform: "translateX(-50%)",
-              width: "60%",
-              height: "3px",
-              background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
-              borderRadius: "6px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 1,
             }}
-          />
-        </Typography>
+          >
+            Certificaciones
+          </Typography>
+        </Paper>
       </motion.div>
 
-      {/* Grid */}
+      {/* Grid de certificaciones */}
       <Grid container spacing={3} justifyContent="center">
         {certificaciones.map((c, i) => {
           const IconComponent = c.iconType;
