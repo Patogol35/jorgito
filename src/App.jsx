@@ -73,7 +73,7 @@ function App() {
               id={id}
               elevation={3}
               sx={{
-                mb: 6,
+                mb: 3,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `10px solid ${color}`,
