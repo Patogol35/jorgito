@@ -20,12 +20,10 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 
 function App() {
-  // Leer modo guardado en localStorage (si existe)
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
 
-  // Guardar cambios en localStorage
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -52,12 +50,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* Forzamos que nunca haya scroll horizontal */}
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container maxWidth="lg" disableGutters sx={{ py: 6 }}>
+        {/* Container con padding lateral manual para mantener espacio */}
+        <Container
+          maxWidth="lg"
+          disableGutters
+          sx={{ py: 6, px: { xs: 2, sm: 3, md: 6 } }}
+        >
           <Paper
             id="about"
             elevation={3}
@@ -150,7 +152,6 @@ function App() {
               position: "fixed",
               bottom: 16,
               right: 16,
-              mr: 0, // aseguramos que no empuje hacia afuera
               zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
