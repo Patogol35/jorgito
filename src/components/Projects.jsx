@@ -82,19 +82,21 @@ export default function Projects() {
                   variant="subtitle1"
                   sx={{ fontWeight: "bold", mt: 1 }}
                 >
-                  <Link
-                    href={p.link}
-                    underline="hover"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: p.color,
-                      fontWeight: "bold",
-                      "&:hover": { textDecoration: "underline" },
-                    }}
-                  >
-                    {p.titulo}
-                  </Link>
+                <Link
+  href={p.link}
+  underline="hover"
+  target="_blank"
+  rel="noopener noreferrer"
+  sx={{
+    color: theme.palette.mode === "dark" 
+      ? `${p.color}ee` // añade un poco de transparencia para que se vea más brillante
+      : p.color,
+    fontWeight: "bold",
+    "&:hover": { textDecoration: "underline" },
+  }}
+>
+  {p.titulo}
+</Link>
                 </Typography>
               </Box>
             </motion.div>
