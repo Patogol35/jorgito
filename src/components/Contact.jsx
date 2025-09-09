@@ -21,7 +21,7 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        pt: 6,
+        py: 4,
         pb: 4,
         color: theme.palette.text.primary,
         scrollMarginTop: "80px",
