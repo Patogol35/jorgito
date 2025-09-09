@@ -121,9 +121,10 @@ export default function Navbar({ mode, setMode }) {
                       transition: "all 0.25s ease",
                       borderRadius: "8px",
                       "&:hover": {
-                        backgroundColor: `${item.color}aa`, // 👈 semi-transparente para contraste
+                        // 👇 todos sólidos en hover
+                        backgroundColor: item.label === "Sobre mí" ? "#0288d1" : item.color,
                         color: "#fff",
-                        boxShadow: `0 4px 12px ${item.color}55`,
+                        boxShadow: `0 4px 12px ${item.label === "Sobre mí" ? "#0288d1" : item.color}55`,
                       },
                     }}
                   >
