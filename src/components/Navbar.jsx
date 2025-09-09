@@ -15,7 +15,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
-// ================== Configuración ==================
 const menuItems = [
   { label: "Sobre mí", href: "#hero", color: "#1565c0" },
   { label: "Educación", href: "#about", color: "#2e7d32" },
@@ -27,8 +26,8 @@ const menuItems = [
 
 const menuVariants = {
   hidden: { x: "100%" },
-  visible: { x: 0, transition: { type: "spring", stiffness: 200, damping: 25 } },
-  exit: { x: "100%", transition: { type: "spring", stiffness: 200, damping: 25 } },
+  visible: { x: 0, transition: { type: "spring", stiffness: 220, damping: 28 } },
+  exit: { x: "100%", transition: { type: "spring", stiffness: 220, damping: 28 } },
 };
 
 const itemVariants = {
@@ -36,11 +35,10 @@ const itemVariants = {
   visible: (i) => ({
     x: 0,
     opacity: 1,
-    transition: { delay: i * 0.07, type: "spring", stiffness: 250 },
+    transition: { delay: i * 0.07, type: "spring", stiffness: 260 },
   }),
 };
 
-// ================== Hook scroll suave ==================
 function useSmoothScroll(offset = -70) {
   return (id) => {
     const element = document.querySelector(id);
@@ -51,7 +49,6 @@ function useSmoothScroll(offset = -70) {
   };
 }
 
-// ================== Navbar ==================
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -74,25 +71,22 @@ export default function Navbar({ mode, setMode }) {
       >
         <AppBar
           position="fixed"
-          elevation={scrolled ? 8 : 0}
+          elevation={scrolled ? 6 : 2}
           sx={{
             backgroundColor:
               mode === "dark"
-                ? scrolled
-                  ? "rgba(18,18,18,0.85)"
-                  : "transparent"
+                ? "#121212"
                 : scrolled
-                ? "rgba(25,118,210,0.9)"
+                ? theme.palette.primary.dark
                 : theme.palette.primary.main,
-            backdropFilter: scrolled ? "blur(12px)" : "none",
-            transition: "all 0.4s ease",
-            boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,0.2)" : "none",
+            transition: "all 0.3s ease",
+            boxShadow: scrolled ? "0 4px 16px rgba(0,0,0,0.25)" : "none",
             zIndex: 1400,
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* Logo */}
-            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
                 sx={{
@@ -105,7 +99,7 @@ export default function Navbar({ mode, setMode }) {
                 }}
                 onClick={() => handleScrollTo("#hero")}
               >
-                <motion.div whileHover={{ rotate: 12 }} transition={{ type: "spring", stiffness: 200 }}>
+                <motion.div whileHover={{ rotate: 10 }} transition={{ type: "spring", stiffness: 200 }}>
                   <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
                 Jorge Patricio
@@ -124,6 +118,7 @@ export default function Navbar({ mode, setMode }) {
                       textTransform: "none",
                       fontSize: "1rem",
                       position: "relative",
+                      transition: "all 0.25s ease",
                       "&::after": {
                         content: '""',
                         position: "absolute",
@@ -135,6 +130,7 @@ export default function Navbar({ mode, setMode }) {
                         transition: "width 0.3s ease",
                       },
                       "&:hover::after": { width: "100%" },
+                      "&:hover": { textShadow: "0 0 6px rgba(255,255,255,0.6)" },
                     }}
                   >
                     {item.label}
@@ -147,8 +143,8 @@ export default function Navbar({ mode, setMode }) {
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 sx={{
                   color: theme.palette.common.white,
-                  "&:hover": { transform: "scale(1.1)" },
-                  transition: "0.2s",
+                  transition: "all 0.25s ease",
+                  "&:hover": { transform: "scale(1.15)" },
                 }}
               >
                 {mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -195,13 +191,14 @@ export default function Navbar({ mode, setMode }) {
               style={{
                 width: "280px",
                 background: mode === "dark" ? "#1e1e1e" : theme.palette.primary.main,
-                borderRadius: "20px 0 0 20px",
+                borderRadius: "16px 0 0 16px",
                 padding: "2rem",
-                boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
+                boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
-                maxHeight: "85vh",
+                maxHeight: "80vh",
                 overflowY: "auto",
+                transition: "all 0.3s ease",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -210,7 +207,7 @@ export default function Navbar({ mode, setMode }) {
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
+                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff", "&:hover": { scale: "1.1" } }}>
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
@@ -226,7 +223,8 @@ export default function Navbar({ mode, setMode }) {
                   mb: 3,
                   fontWeight: "bold",
                   borderRadius: "10px",
-                  "&:hover": { background: "rgba(255,255,255,0.1)" },
+                  transition: "all 0.3s ease",
+                  "&:hover": { background: "rgba(255,255,255,0.12)", transform: "scale(1.03)" },
                 }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
@@ -255,8 +253,8 @@ export default function Navbar({ mode, setMode }) {
                       padding: "0.8rem 1rem",
                       borderRadius: "10px",
                       backgroundColor: item.color,
-                      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
                       transition: "all 0.3s ease",
+                      boxShadow: "0 3px 10px rgba(0,0,0,0.3)",
                     }}
                   >
                     {item.label}
