@@ -15,19 +15,48 @@ import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
+// ================== Configuración ==================
+const menuItems = [
+  { label: "Sobre mí", href: "#hero", color: "#1565c0" },
+  { label: "Educación", href: "#about", color: "#2e7d32" },
+  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
+  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
+  { label: "Proyectos", href: "#projects", color: "#0288d1" },
+  { label: "Contacto", href: "#contact", color: "#c62828" },
+];
+
+const menuVariants = {
+  hidden: { x: "100%" },
+  visible: { x: 0, transition: { type: "spring", stiffness: 200, damping: 25 } },
+  exit: { x: "100%", transition: { type: "spring", stiffness: 200, damping: 25 } },
+};
+
+const itemVariants = {
+  hidden: { x: 20, opacity: 0 },
+  visible: (i) => ({
+    x: 0,
+    opacity: 1,
+    transition: { delay: i * 0.07, type: "spring", stiffness: 250 },
+  }),
+};
+
+// ================== Hook scroll suave ==================
+function useSmoothScroll(offset = -70) {
+  return (id) => {
+    const element = document.querySelector(id);
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset + offset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+}
+
+// ================== Navbar ==================
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
-
-  const menuItems = [
-    { label: "Sobre mí", href: "#hero", color: "#1565c0" },
-    { label: "Educación", href: "#about", color: "#2e7d32" },
-    { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-    { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-    { label: "Proyectos", href: "#projects", color: "#0288d1" },
-    { label: "Contacto", href: "#contact", color: "#c62828" },
-  ];
+  const handleScrollTo = useSmoothScroll(-70);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -35,56 +64,35 @@ export default function Navbar({ mode, setMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuVariants = {
-    hidden: { x: "100%" },
-    visible: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
-    exit: { x: "100%", transition: { type: "spring", stiffness: 300, damping: 30 } },
-  };
-
-  const itemVariants = {
-    hidden: { x: 20, opacity: 0 },
-    visible: (i) => ({
-      x: 0,
-      opacity: 1,
-      transition: { delay: i * 0.08, type: "spring", stiffness: 300 },
-    }),
-  };
-
-  const handleScrollTo = (id) => {
-    const element = document.querySelector(id);
-    if (element) {
-      const yOffset = -70;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: "smooth" });
-    }
-    setOpen(false);
-  };
-
   return (
     <>
       {/* Barra de navegación */}
       <motion.div
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <AppBar
           position="fixed"
-          elevation={scrolled ? 6 : 2}
+          elevation={scrolled ? 8 : 0}
           sx={{
             backgroundColor:
               mode === "dark"
-                ? "#121212"
+                ? scrolled
+                  ? "rgba(18,18,18,0.85)"
+                  : "transparent"
                 : scrolled
-                ? theme.palette.primary.dark
+                ? "rgba(25,118,210,0.9)"
                 : theme.palette.primary.main,
-            transition: "0.3s",
+            backdropFilter: scrolled ? "blur(12px)" : "none",
+            transition: "all 0.4s ease",
+            boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,0.2)" : "none",
             zIndex: 1400,
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* Logo */}
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
                 sx={{
@@ -97,10 +105,7 @@ export default function Navbar({ mode, setMode }) {
                 }}
                 onClick={() => handleScrollTo("#hero")}
               >
-                <motion.div
-                  whileHover={{ rotate: 15 }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                >
+                <motion.div whileHover={{ rotate: 12 }} transition={{ type: "spring", stiffness: 200 }}>
                   <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
                 Jorge Patricio
@@ -110,15 +115,11 @@ export default function Navbar({ mode, setMode }) {
             {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
-                <motion.div
-                  key={item.href}
-                  whileHover={{ y: -2, scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     sx={{
-                      color: mode === "dark" ? "#ffffff" : theme.palette.common.white,
+                      color: mode === "dark" ? "#fff" : theme.palette.common.white,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -128,14 +129,12 @@ export default function Navbar({ mode, setMode }) {
                         position: "absolute",
                         width: 0,
                         height: 2,
-                        bottom: 0,
+                        bottom: -2,
                         left: 0,
                         backgroundColor: theme.palette.secondary.main,
-                        transition: "0.3s",
+                        transition: "width 0.3s ease",
                       },
-                      "&:hover::after": {
-                        width: "100%",
-                      },
+                      "&:hover::after": { width: "100%" },
                     }}
                   >
                     {item.label}
@@ -146,7 +145,11 @@ export default function Navbar({ mode, setMode }) {
               {/* Botón modo oscuro/claro */}
               <IconButton
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ color: theme.palette.common.white }}
+                sx={{
+                  color: theme.palette.common.white,
+                  "&:hover": { transform: "scale(1.1)" },
+                  transition: "0.2s",
+                }}
               >
                 {mode === "light" ? <Brightness4 /> : <Brightness7 />}
               </IconButton>
@@ -192,26 +195,19 @@ export default function Navbar({ mode, setMode }) {
               style={{
                 width: "280px",
                 background: mode === "dark" ? "#1e1e1e" : theme.palette.primary.main,
-                borderRadius: "16px 0 0 16px",
+                borderRadius: "20px 0 0 20px",
                 padding: "2rem",
-                boxShadow: "0 8px 28px rgba(0,0,0,0.35)",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
                 display: "flex",
                 flexDirection: "column",
-                height: "auto",
-                maxHeight: "80vh",
+                maxHeight: "85vh",
                 overflowY: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Encabezado menú móvil */}
+              {/* Encabezado */}
               <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#fff",
-                  }}
-                >
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
                   Menú
                 </Typography>
                 <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
@@ -219,7 +215,7 @@ export default function Navbar({ mode, setMode }) {
                 </IconButton>
               </Box>
 
-              {/* Botón modo oscuro/claro CON TEXTO */}
+              {/* Botón modo oscuro/claro */}
               <Button
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -229,6 +225,8 @@ export default function Navbar({ mode, setMode }) {
                   textTransform: "none",
                   mb: 3,
                   fontWeight: "bold",
+                  borderRadius: "10px",
+                  "&:hover": { background: "rgba(255,255,255,0.1)" },
                 }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
@@ -239,7 +237,10 @@ export default function Navbar({ mode, setMode }) {
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
-                    onClick={() => handleScrollTo(item.href)}
+                    onClick={() => {
+                      handleScrollTo(item.href);
+                      setOpen(false);
+                    }}
                     custom={i}
                     variants={itemVariants}
                     initial="hidden"
@@ -252,9 +253,10 @@ export default function Navbar({ mode, setMode }) {
                       color: "#fff",
                       cursor: "pointer",
                       padding: "0.8rem 1rem",
-                      borderRadius: "8px",
+                      borderRadius: "10px",
                       backgroundColor: item.color,
-                      transition: "0.3s",
+                      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                      transition: "all 0.3s ease",
                     }}
                   >
                     {item.label}
