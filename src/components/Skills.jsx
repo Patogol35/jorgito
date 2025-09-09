@@ -41,44 +41,40 @@ export default function Skills() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        
         color: theme.palette.text.primary,
       }}
     >
       <Container>
-        {/* Título */}
+        {/* Encabezado tipo badge */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
-          <Typography
-            variant="h4"
-            align="center"
+          <Box
             sx={{
-              fontWeight: 700,
-              color: theme.palette.primary.main,
-              position: "relative",
-            
-              display: "inline-block",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              px: 4,
+              py: 1.2,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.1)"
+                : "rgba(25,118,210,0.1)",
             }}
           >
-            Mi Stack Tecnológico
-            <Box
-              component="span"
+            <Typography
+              variant="h6"
               sx={{
-                position: "absolute",
-                left: "50%",
-                bottom: -6,
-                transform: "translateX(-50%)",
-                width: "60%",
-                height: "3px",
-                background: theme.palette.primary.main,
-                borderRadius: "6px",
+                fontWeight: "bold",
+                color: isDark ? "#90caf9" : "#1976d2",
               }}
-            />
-          </Typography>
+            >
+              Mi Stack Tecnológico
+            </Typography>
+          </Box>
         </motion.div>
 
         {/* Filtros */}
@@ -89,7 +85,9 @@ export default function Skills() {
             onChange={(e, newFilter) => newFilter && setFilter(newFilter)}
             aria-label="Filtros de Skills"
             sx={{
-              background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.7)",
+              background: isDark
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(255,255,255,0.7)",
               borderRadius: "12px",
               boxShadow: isDark
                 ? "0 4px 12px rgba(0,0,0,0.3)"
@@ -174,7 +172,7 @@ export default function Skills() {
                         transition: "transform 0.3s ease, filter 0.3s ease",
                         filter: isDark
                           ? "invert(1) brightness(1.2)"
-                          : "none", // 🔥 Hace visibles los íconos oscuros
+                          : "none",
                         "&:hover": { transform: "rotate(8deg) scale(1.1)" },
                       }}
                     />
@@ -198,4 +196,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-                      }
+          }
