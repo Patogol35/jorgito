@@ -54,91 +54,37 @@ function App() {
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        {/* Container con padding lateral manual para mantener espacio */}
+        {/* Container con margen lateral proporcional */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{ py: 6, px: { xs: 2, sm: 3, md: 6 } }}
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
         >
-          <Paper
-            id="about"
-            elevation={3}
-            sx={{
-              mb: 6,
-              p: { xs: 3, md: 6 },
-              borderRadius: 3,
-              borderLeft: "10px solid #2e7d32",
-              scrollMarginTop: scrollOffset,
-              transition: "all 0.3s ease",
-              "&:hover": { transform: "translateY(-4px)" },
-            }}
-          >
-            <About />
-          </Paper>
-
-          <Paper
-            id="skills"
-            elevation={3}
-            sx={{
-              mb: 6,
-              p: { xs: 3, md: 6 },
-              borderRadius: 3,
-              borderLeft: "10px solid #fb8c00",
-              scrollMarginTop: scrollOffset,
-              transition: "all 0.3s ease",
-              "&:hover": { transform: "translateY(-4px)" },
-            }}
-          >
-            <Skills />
-          </Paper>
-
-          <Paper
-            id="certifications"
-            elevation={3}
-            sx={{
-              mb: 6,
-              p: { xs: 3, md: 6 },
-              borderRadius: 3,
-              borderLeft: "10px solid #8e24aa",
-              scrollMarginTop: scrollOffset,
-              transition: "all 0.3s ease",
-              "&:hover": { transform: "translateY(-4px)" },
-            }}
-          >
-            <Certifications />
-          </Paper>
-
-          <Paper
-            id="projects"
-            elevation={3}
-            sx={{
-              mb: 6,
-              p: { xs: 3, md: 6 },
-              borderRadius: 3,
-              borderLeft: "10px solid #1976d2",
-              scrollMarginTop: scrollOffset,
-              transition: "all 0.3s ease",
-              "&:hover": { transform: "translateY(-4px)" },
-            }}
-          >
-            <Projects />
-          </Paper>
-
-          <Paper
-            id="contact"
-            elevation={3}
-            sx={{
-              mb: 6,
-              p: { xs: 3, md: 6 },
-              borderRadius: 3,
-              borderLeft: "10px solid #d32f2f",
-              scrollMarginTop: scrollOffset,
-              transition: "all 0.3s ease",
-              "&:hover": { transform: "translateY(-4px)" },
-            }}
-          >
-            <Contact />
-          </Paper>
+          {[{ id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact }].map(({ id, color, Component }) => (
+            <Paper
+              key={id}
+              id={id}
+              elevation={3}
+              sx={{
+                mb: 6,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+                borderLeft: `10px solid ${color}`,
+                scrollMarginTop: scrollOffset,
+                transition: "all 0.3s ease",
+                "&:hover": { transform: "translateY(-4px)" },
+              }}
+            >
+              <Component />
+            </Paper>
+          ))}
         </Container>
 
         <Footer />
