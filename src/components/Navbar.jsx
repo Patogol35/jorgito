@@ -24,14 +24,14 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "#c62828" },
 ];
 
-// Variantes para menú móvil
+// Variantes para menú móvil (IGUAL AL ORIGINAL)
 const menuVariants = {
   hidden: { x: "100%" },
   visible: { x: 0, transition: { type: "spring", stiffness: 220, damping: 28 } },
   exit: { x: "100%", transition: { type: "spring", stiffness: 220, damping: 28 } },
 };
 
-// Variantes para ítems móviles
+// Variantes para ítems móviles (IGUAL AL ORIGINAL)
 const itemVariants = {
   hidden: { x: 20, opacity: 0 },
   visible: (i) => ({
@@ -189,7 +189,7 @@ export default function Navbar({ mode, setMode }) {
         </AppBar>
       </motion.div>
 
-      {/* Menú móvil */}
+      {/* Menú móvil (IGUAL AL ORIGINAL) */}
       <AnimatePresence>
         {open && (
           <motion.div
