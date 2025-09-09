@@ -1,23 +1,29 @@
 import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
-import { GraduationCap, BookOpen, Brain } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import { useTheme } from "@mui/material/styles";
 
-const certificaciones = [
-  { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, iconColor: "#1976d2", iconType: BookOpen },
-  { titulo: "React & TypeScript - The Practical Guide", institucion: "Udemy", año: 2024, iconColor: "#d97706", iconType: BookOpen },
-  { titulo: "Curso de Python", institucion: "Platzi", año: 2025, iconColor: "#22c55e", iconType: BookOpen },
-  { titulo: "Data Analysis with Python", institucion: "freeCodeCamp", año: 2024, iconColor: "#9333ea", iconType: Brain },
-  { titulo: "Fundamentos de la Inteligencia Artificial", institucion: "IBM", año: 2025, iconColor: "#1e40af", iconType: Brain },
-  { titulo: "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals", institucion: "Universidad Internacional de la Rioja", año: 2023, iconColor: "#e11d48", iconType: GraduationCap },
+const estudios = [
+  {
+    titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
+    institucion: "Universidad Internacional de La Rioja, España",
+    detalle: "Nota TFM: 9 | Promedio final: 8.68",
+    iconColor: "#1976d2",
+  },
+  {
+    titulo: "💻 Ingeniero en Sistemas",
+    institucion: "Universidad Indoamérica, Ecuador",
+    detalle: "Nota Tesis: 9.50 | Promedio final: 9",
+    iconColor: "#9333ea",
+  },
 ];
 
-export default function Certifications() {
+export default function About() {
   const theme = useTheme();
 
   return (
     <Box
-      id="certifications"
+      id="about"
       sx={{
         py: 4,
         scrollMarginTop: "80px",
@@ -52,37 +58,46 @@ export default function Certifications() {
               color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             }}
           >
-            Certificaciones
+            Formación Académica
           </Typography>
         </Box>
       </motion.div>
 
       {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
-        {certificaciones.map((c, i) => {
-          const IconComponent = c.iconType;
-          return (
-            <Grid item xs={12} sm={6} md={4} key={i}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -5, scale: 1.05 }}
-              >
-                <Box sx={{ textAlign: "center", px: 1 }}>
-                  <IconComponent size={28} color={c.iconColor} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                    {c.titulo}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {c.institucion} | {c.año}
-                  </Typography>
-                </Box>
-              </motion.div>
-            </Grid>
-          );
-        })}
+        {estudios.map((est, i) => (
+          <Grid item xs={12} sm={6} md={4} key={i}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: i * 0.3 }}
+              viewport={{ once: false }}
+            >
+              <Box sx={{ textAlign: "center", px: 1 }}>
+                <GraduationCap size={28} color={est.iconColor} />
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontWeight: "bold", mt: 1 }}
+                >
+                  {est.titulo}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color={theme.palette.text.secondary}
+                >
+                  {est.institucion}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color={theme.palette.text.secondary}
+                >
+                  {est.detalle}
+                </Typography>
+              </Box>
+            </motion.div>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );
-                  }
+}
