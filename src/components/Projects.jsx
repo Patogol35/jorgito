@@ -58,7 +58,7 @@ export default function Projects() {
             variant="h6"
             sx={{
               fontWeight: "bold",
-              color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
+              color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
             }}
           >
             Proyectos
