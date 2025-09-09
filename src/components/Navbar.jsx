@@ -119,13 +119,18 @@ Jorge Patricio
                   fontSize: "1rem",  
                   position: "relative",  
                   transition: "all 0.25s ease",  
-                  borderRadius: "8px",  
-                  "&:hover": {  
-                    // 👇 todos sólidos en hover  
-                    backgroundColor: item.label === "Sobre mí" ? "#0288d1" : item.color,  
-                    color: "#fff",  
-                    boxShadow: `0 4px 12px ${item.label === "Sobre mí" ? "#0288d1" : item.color}55`,  
+                  "&::after": {  
+                    content: '""',  
+                    position: "absolute",  
+                    width: 0,  
+                    height: 2,  
+                    bottom: -2,  
+                    left: 0,  
+                    backgroundColor: theme.palette.secondary.main,  
+                    transition: "width 0.3s ease",  
                   },  
+                  "&:hover::after": { width: "100%" },  
+                  "&:hover": { textShadow: "0 0 6px rgba(255,255,255,0.6)" },  
                 }}  
               >  
                 {item.label}  
@@ -263,5 +268,6 @@ Jorge Patricio
 </>
 
 );
-}
+} 
 
+        
