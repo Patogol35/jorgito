@@ -30,42 +30,40 @@ export default function Projects() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary, // se adapta al modo
+        color: theme.palette.text.primary,
       }}
     >
-      {/* Título */}
+      {/* Encabezado tipo badge con texto */}
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
         style={{ textAlign: "center", marginBottom: "1rem" }}
       >
-        <Typography
-          variant="h4"
-          align="center"
+        <Box
           sx={{
-            fontWeight: 700,
-            color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
-            position: "relative",
-            mb: 4,
-            display: "inline-block",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: 4,
+            py: 1.2,
+            borderRadius: "999px",
+            background:
+              theme.palette.mode === "dark"
+                ? "rgba(144,202,249,0.1)"
+                : "rgba(25,118,210,0.1)",
           }}
         >
-          Proyectos
-          <Box
-            component="span"
+          <Typography
+            variant="h6"
             sx={{
-              position: "absolute",
-              left: "50%",
-              bottom: -6,
-              transform: "translateX(-50%)",
-              width: "60%",
-              height: "3px",
-              background: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
-              borderRadius: "6px",
+              fontWeight: "bold",
+              color: theme.palette.mode === "dark" ? "#90caf9" : "#1976d2",
             }}
-          />
-        </Typography>
+          >
+            Proyectos
+          </Typography>
+        </Box>
       </motion.div>
 
       {/* Grid de proyectos */}
@@ -105,4 +103,4 @@ export default function Projects() {
       </Grid>
     </Box>
   );
-}
+          }
