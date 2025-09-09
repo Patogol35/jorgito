@@ -88,9 +88,7 @@ export default function Projects() {
   target="_blank"
   rel="noopener noreferrer"
   sx={{
-    color: theme.palette.mode === "dark" 
-      ? `${p.color}ee` // añade un poco de transparencia para que se vea más brillante
-      : p.color,
+    color: theme.palette.mode === "dark" ? "#e0e0e0" : p.color, // texto claro en dark mode
     fontWeight: "bold",
     "&:hover": { textDecoration: "underline" },
   }}
