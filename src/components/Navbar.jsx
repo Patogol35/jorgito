@@ -10,32 +10,32 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
 const menuItems = [
-  { label: "Sobre mí", href: "#hero", color: "#0288d1" },
-  { label: "Educación", href: "#about", color: "#2e7d32" },
-  { label: "Tecnologías", href: "#skills", color: "#f57c00" },
-  { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
-  { label: "Proyectos", href: "#projects", color: "#0288d1" },
-  { label: "Contacto", href: "#contact", color: "#c62828" },
+  { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)" },
+  { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)" },
+  { label: "Tecnologías", href: "#skills", color: "linear-gradient(135deg, #f57c00, #ffb74d)" },
+  { label: "Certificaciones", href: "#certifications", color: "linear-gradient(135deg, #6a1b9a, #ab47bc)" },
+  { label: "Proyectos", href: "#projects", color: "linear-gradient(135deg, #0288d1, #03a9f4)" },
+  { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
 const menuVariants = {
   hidden: { x: "100%" },
-  visible: { x: 0, transition: { type: "spring", stiffness: 220, damping: 28 } },
-  exit: { x: "100%", transition: { type: "spring", stiffness: 220, damping: 28 } },
+  visible: { x: 0, transition: { type: "spring", stiffness: 200, damping: 25 } },
+  exit: { x: "100%", transition: { type: "spring", stiffness: 200, damping: 25 } },
 };
 
 const itemVariants = {
-  hidden: { x: 20, opacity: 0 },
+  hidden: { x: 40, opacity: 0 },
   visible: (i) => ({
     x: 0,
     opacity: 1,
-    transition: { delay: i * 0.07, type: "spring", stiffness: 260 },
+    transition: { delay: i * 0.1, type: "spring", stiffness: 250, damping: 18 },
   }),
 };
 
@@ -54,12 +54,27 @@ export default function Navbar({ mode, setMode }) {
   const [scrolled, setScrolled] = useState(false);
   const theme = useTheme();
   const handleScrollTo = useSmoothScroll(-70);
+  const menuRef = useRef(null);
 
+  // Cambia estado scrolled en scroll
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      if (open) setOpen(false); // cerrar menú al hacer scroll
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [open]);
+
+  // Bloquear scroll del body cuando menú esté abierto
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+      menuRef.current?.focus();
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [open]);
 
   return (
     <>
@@ -126,7 +141,7 @@ export default function Navbar({ mode, setMode }) {
                         position: "absolute",
                         inset: 0,
                         borderRadius: "8px",
-                        background: mode === "dark" ? "#03a9f4" : "#26c6da", // Hover colors
+                        background: mode === "dark" ? "#03a9f4" : "#26c6da",
                         opacity: 0,
                         transform: "scaleX(0.6)",
                         transformOrigin: "center",
@@ -186,7 +201,8 @@ export default function Navbar({ mode, setMode }) {
               left: 0,
               width: "100vw",
               height: "100vh",
-              background: "rgba(0,0,0,0.5)",
+              background: "rgba(0,0,0,0.45)",
+              backdropFilter: "blur(6px)",
               zIndex: 1300,
               display: "flex",
               justifyContent: "flex-end",
@@ -199,9 +215,11 @@ export default function Navbar({ mode, setMode }) {
               initial="hidden"
               animate="visible"
               exit="exit"
+              ref={menuRef}
+              tabIndex={-1}
               style={{
                 width: "280px",
-                background: mode === "dark" ? "#1e1e1e" : theme.palette.primary.main,
+                background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
@@ -254,16 +272,17 @@ export default function Navbar({ mode, setMode }) {
                     variants={itemVariants}
                     initial="hidden"
                     animate="visible"
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.96 }}
                     style={{
                       fontSize: "1.1rem",
                       fontWeight: 600,
                       textDecoration: "none",
                       color: "#fff",
                       cursor: "pointer",
-                      padding: "0.8rem 1rem",
+                      padding: "0.9rem 1rem",
                       borderRadius: "10px",
-                      backgroundColor: item.color,
+                      background: item.color,
                       transition: "all 0.3s ease",
                       boxShadow: "0 3px 10px rgba(0,0,0,0.3)",
                     }}
@@ -278,4 +297,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-  }
+}
