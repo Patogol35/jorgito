@@ -282,41 +282,45 @@ export default function Navbar({ mode, setMode }) {
                 </Button>
               </Box>
 
-              {/* Links menú móvil */}
-              <Stack spacing={2} flexGrow={1}>
-                {menuItems.map((item, i) => (
-                  <motion.a
-                    key={item.href}
-                    onClick={() => {
-                      handleScrollTo(item.href);
-                      setOpen(false);
-                    }}
-                    custom={i}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.96 }}
-                    aria-current={active === item.href ? "page" : undefined}
-                    style={{
-                      fontSize: "1.1rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: "0.9rem 1rem",
-                      borderRadius: "10px",
-                      background: item.color,
-                      boxShadow:
-                        active === item.href
-                          ? "0 0 12px rgba(255,255,255,0.7)"
-                          : "0 3px 10px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-              </Stack>
+      {/* Links menú móvil */}
+<Stack spacing={2} flexGrow={1} mt={2}>
+  {menuItems.map((item, i) => (
+    <motion.a
+      key={item.href}
+      onClick={() => {
+        handleScrollTo(item.href);
+        setOpen(false);
+      }}
+      custom={i}
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
+      aria-current={active === item.href ? "page" : undefined}
+      style={{
+        fontSize: "1.1rem",
+        fontWeight: 600,
+        textDecoration: "none",
+        color: "#fff",
+        cursor: "pointer",
+        padding: "0.9rem 1rem",
+        borderRadius: "10px",
+        background: item.color,
+        boxShadow:
+          active === item.href
+            ? "0 0 12px rgba(255,255,255,0.7)"
+            : "0 3px 10px rgba(0,0,0,0.3)",
+      }}
+    >
+      {item.label}
+    </motion.a>
+  ))}
+</Stack>
+
+
+
+              
             </motion.div>
           </motion.div>
         )}
