@@ -90,7 +90,6 @@ export default function Navbar({ mode, setMode }) {
         }
       });
 
-      // ✅ Forzar "contact" si estamos al final de la página
       if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
         current = "#contact";
       }
@@ -119,8 +118,6 @@ export default function Navbar({ mode, setMode }) {
         <AppBar
           position="fixed"
           elevation={scrolled ? 6 : 2}
-          role="navigation"
-          aria-label="Barra de navegación principal"
           sx={{
             backgroundColor:
               mode === "dark"
@@ -158,11 +155,7 @@ export default function Navbar({ mode, setMode }) {
             {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
-                <motion.div
-                  key={item.href}
-                  whileHover={{ y: -2, scale: 1.08 }}
-                  whileTap={{ scale: 0.95 }}
-                >
+                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     aria-current={active === item.href ? "page" : undefined}
@@ -240,7 +233,6 @@ export default function Navbar({ mode, setMode }) {
               ref={menuRef}
               tabIndex={-1}
               style={{
-                position: "relative", // ✅ importante para la ❌ flotante
                 width: "280px",
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
@@ -250,31 +242,18 @@ export default function Navbar({ mode, setMode }) {
                 flexDirection: "column",
                 maxHeight: "100vh",
                 overflowY: "auto",
+                position: "relative",
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Botón cerrar flotante */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  top: 16,
-                  right: 16,
-                }}
-              >
+              {/* ❌ arriba */}
+              <Box sx={{ position: "absolute", top: 12, right: 12 }}>
                 <IconButton
                   onClick={() => setOpen(false)}
-                  sx={{
-                    color: "#fff",
-                    width: 48,
-                    height: 48,
-                    p: 0,
-                    "&:hover": {
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                    },
-                  }}
+                  sx={{ color: "#fff" }}
                   aria-label="Cerrar menú"
                 >
-                  <CloseIcon sx={{ fontSize: 32 }} />
+                  <CloseIcon sx={{ fontSize: 30 }} />
                 </IconButton>
               </Box>
 
@@ -283,11 +262,11 @@ export default function Navbar({ mode, setMode }) {
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 sx={{
-                  mt: 6, // espacio debajo de la X
                   color: "#fff",
                   border: "1px solid #fff",
                   textTransform: "none",
                   mb: 3,
+                  mt: 5, // espacio para que no choque con la ❌
                   fontWeight: "bold",
                   borderRadius: "10px",
                   "&:hover": { background: "rgba(255,255,255,0.12)" },
@@ -297,7 +276,7 @@ export default function Navbar({ mode, setMode }) {
               </Button>
 
               {/* Links menú móvil */}
-              <Stack spacing={2}>
+              <Stack spacing={2} flexGrow={1}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
@@ -331,10 +310,29 @@ export default function Navbar({ mode, setMode }) {
                   </motion.a>
                 ))}
               </Stack>
+
+              {/* Botón cerrar al final */}
+              <Box sx={{ mt: 4 }}>
+                <Button
+                  onClick={() => setOpen(false)}
+                  startIcon={<CloseIcon />}
+                  fullWidth
+                  sx={{
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  Cerrar menú
+                </Button>
+              </Box>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-        }
+}
