@@ -24,7 +24,7 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes del menú (slide + rebote)
+// Variantes del menú (abre y cierra con rebote)
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: {
@@ -35,7 +35,7 @@ const menuVariants = {
   exit: {
     x: "100%",
     opacity: 0,
-    transition: { duration: 0.25, ease: "easeIn" },
+    transition: { type: "spring", stiffness: 120, damping: 18 },
   },
 };
 
@@ -305,4 +305,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-           }
+                }
