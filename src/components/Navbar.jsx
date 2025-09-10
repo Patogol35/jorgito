@@ -242,21 +242,9 @@ export default function Navbar({ mode, setMode }) {
                 flexDirection: "column",
                 maxHeight: "100vh",
                 overflowY: "auto",
-                position: "relative",
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* ❌ arriba */}
-              <Box sx={{ position: "absolute", top: 12, right: 12 }}>
-                <IconButton
-                  onClick={() => setOpen(false)}
-                  sx={{ color: "#fff" }}
-                  aria-label="Cerrar menú"
-                >
-                  <CloseIcon sx={{ fontSize: 30 }} />
-                </IconButton>
-              </Box>
-
               {/* Botón modo oscuro/claro */}
               <Button
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -265,14 +253,30 @@ export default function Navbar({ mode, setMode }) {
                   color: "#fff",
                   border: "1px solid #fff",
                   textTransform: "none",
-                  mb: 3,
-                  mt: 5, // espacio para que no choque con la ❌
+                  mb: 2,
                   fontWeight: "bold",
                   borderRadius: "10px",
                   "&:hover": { background: "rgba(255,255,255,0.12)" },
                 }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
+              </Button>
+
+              {/* Botón cerrar menú */}
+              <Button
+                onClick={() => setOpen(false)}
+                startIcon={<CloseIcon />}
+                sx={{
+                  color: "#fff",
+                  border: "1px solid #fff",
+                  textTransform: "none",
+                  mb: 3,
+                  fontWeight: "bold",
+                  borderRadius: "10px",
+                  "&:hover": { background: "rgba(255,255,255,0.12)" },
+                }}
+              >
+                Cerrar menú
               </Button>
 
               {/* Links menú móvil */}
@@ -310,25 +314,6 @@ export default function Navbar({ mode, setMode }) {
                   </motion.a>
                 ))}
               </Stack>
-
-              {/* Botón cerrar al final */}
-              <Box sx={{ mt: 4 }}>
-                <Button
-                  onClick={() => setOpen(false)}
-                  startIcon={<CloseIcon />}
-                  fullWidth
-                  sx={{
-                    color: "#fff",
-                    border: "1px solid #fff",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "10px",
-                    "&:hover": { background: "rgba(255,255,255,0.12)" },
-                  }}
-                >
-                  Cerrar menú
-                </Button>
-              </Box>
             </motion.div>
           </motion.div>
         )}
