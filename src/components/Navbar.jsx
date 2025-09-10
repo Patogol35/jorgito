@@ -15,7 +15,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
-// Secciones con gradientes
 const menuItems = [
   { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)" },
   { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)" },
@@ -25,7 +24,7 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes
+// Variantes animaciones
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -52,7 +51,7 @@ function useSmoothScroll(offset = -70) {
   };
 }
 
-// Throttle para scroll
+// Throttle
 function throttle(fn, wait) {
   let lastTime = 0;
   return (...args) => {
@@ -78,16 +77,24 @@ export default function Navbar({ mode, setMode }) {
       setScrolled(window.scrollY > 50);
 
       let current = "#hero";
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
       menuItems.forEach((item) => {
         const section = document.querySelector(item.href);
         if (section) {
           const top = section.offsetTop - 80;
           const bottom = top + section.offsetHeight;
-          if (window.scrollY >= top && window.scrollY < bottom) {
+          if (scrollPosition >= top && scrollPosition < bottom) {
             current = item.href;
           }
         }
       });
+
+      // ✅ Forzar "contact" si estamos al final de la página
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
+        current = "#contact";
+      }
+
       setActive(current);
     }, 100);
 
@@ -95,7 +102,7 @@ export default function Navbar({ mode, setMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Bloqueo scroll en móvil
+  // Bloquear scroll en móvil
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -309,4 +316,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-    }
+  }
