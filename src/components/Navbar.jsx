@@ -126,7 +126,10 @@ export default function Navbar({ mode, setMode }) {
                         position: "absolute",
                         inset: 0,
                         borderRadius: "8px",
-                        background: `linear-gradient(90deg, ${item.color}aa, ${item.color})`,
+                        background:
+                          mode === "dark"
+                            ? `${item.color}cc` // más suave en oscuro
+                            : `${item.color}e6`, // más fuerte en claro
                         opacity: 0,
                         transform: "scaleX(0.6)",
                         transformOrigin: "center",
@@ -139,8 +142,11 @@ export default function Navbar({ mode, setMode }) {
                       },
                       "&:hover": {
                         color: "#fff",
-                        textShadow: "0 0 8px rgba(0,0,0,0.4)",
-                        boxShadow: `0 0 12px ${item.color}88`, // glow suave
+                        textShadow: "0 0 10px rgba(0,0,0,0.6)",
+                        boxShadow:
+                          mode === "dark"
+                            ? `0 0 12px ${item.color}` // glow más suave
+                            : `0 0 18px ${item.color}`, // glow más fuerte
                       },
                     }}
                   >
@@ -278,4 +284,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-          }
+}
