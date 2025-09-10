@@ -86,7 +86,8 @@ export default function Navbar({ mode, setMode }) {
         }
       });
 
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
+      // 👇 Ajuste para que no “salte” al llegar al final
+      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 1) {
         current = "#contact";
       }
 
@@ -99,10 +100,14 @@ export default function Navbar({ mode, setMode }) {
 
   useEffect(() => {
     if (open) {
+      // 👉 FIX: evita que el menú “salte” por el scrollbar
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
       menuRef.current?.focus();
     } else {
       document.body.style.overflow = "auto";
+      document.body.style.paddingRight = "0px";
     }
   }, [open]);
 
@@ -145,6 +150,7 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
+            {/* Desktop */}
             <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
@@ -184,6 +190,7 @@ export default function Navbar({ mode, setMode }) {
               </motion.div>
             </Box>
 
+            {/* Mobile */}
             <IconButton
               sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
               onClick={() => setOpen(true)}
@@ -195,6 +202,7 @@ export default function Navbar({ mode, setMode }) {
         </AppBar>
       </motion.div>
 
+      {/* Drawer móvil */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -226,7 +234,7 @@ export default function Navbar({ mode, setMode }) {
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
-                paddingTop: "5rem", // 👈 evita que se tape "Sobre mí"
+                paddingTop: "5rem", // evita que se tape "Sobre mí"
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
@@ -235,85 +243,82 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Links menú móvil */}
+              <Stack spacing={2}>
+                {menuItems.map((item, i) => (
+                  <motion.a
+                    key={item.href}
+                    onClick={() => {
+                      handleScrollTo(item.href);
+                      setOpen(false);
+                    }}
+                    custom={i}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.96 }}
+                    aria-current={active === item.href ? "page" : undefined}
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      color: "#fff",
+                      cursor: "pointer",
+                      padding: "0.9rem 1rem",
+                      borderRadius: "10px",
+                      background: item.color,
+                      boxShadow:
+                        active === item.href
+                          ? "0 0 12px rgba(255,255,255,0.7)"
+                          : "0 3px 10px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </Stack>
 
-{/* Links menú móvil */}
-<Stack spacing={2}>
-  {menuItems.map((item, i) => (
-    <motion.a
-      key={item.href}
-      onClick={() => {
-        handleScrollTo(item.href);
-        setOpen(false);
-      }}
-      custom={i}
-      variants={itemVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.96 }}
-      aria-current={active === item.href ? "page" : undefined}
-      style={{
-        fontSize: "1.1rem",
-        fontWeight: 600,
-        textDecoration: "none",
-        color: "#fff",
-        cursor: "pointer",
-        padding: "0.9rem 1rem",
-        borderRadius: "10px",
-        background: item.color,
-        boxShadow:
-          active === item.href
-            ? "0 0 12px rgba(255,255,255,0.7)"
-            : "0 3px 10px rgba(0,0,0,0.3)",
-      }}
-    >
-      {item.label}
-    </motion.a>
-  ))}
-</Stack>
+              {/* Botones abajo */}
+              <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
+                <Button
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  sx={{
+                    flex: 1,
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    minHeight: "48px",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  {mode === "light" ? "Noche" : "Día"}
+                </Button>
 
-{/* Botones abajo */}
-<Box sx={{ display: "flex", gap: 1, mt: 3 }}>
-  <Button
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
-    sx={{
-      flex: 1,
-      color: "#fff",
-      border: "1px solid #fff",
-      textTransform: "none",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      minHeight: "48px",
-      "&:hover": { background: "rgba(255,255,255,0.12)" },
-    }}
-  >
-    {mode === "light" ? "Noche" : "Día"}
-  </Button>
-
-  <Button
-    onClick={() => setOpen(false)}
-    startIcon={<CloseIcon />}
-    sx={{
-      flex: 1,
-      color: "#fff",
-      border: "1px solid #fff",
-      textTransform: "none",
-      fontWeight: "bold",
-      borderRadius: "10px",
-      minHeight: "48px",
-      "&:hover": { background: "rgba(255,255,255,0.12)" },
-    }}
-  >
-    Cerrar
-  </Button>
-</Box>
-
-              
+                <Button
+                  onClick={() => setOpen(false)}
+                  startIcon={<CloseIcon />}
+                  sx={{
+                    flex: 1,
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    minHeight: "48px",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  Cerrar
+                </Button>
+              </Box>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-                }
+}
