@@ -24,7 +24,6 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes animaciones
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -40,7 +39,6 @@ const itemVariants = {
   }),
 };
 
-// Smooth scroll con offset
 function useSmoothScroll(offset = -70) {
   return (id) => {
     const element = document.querySelector(id);
@@ -51,7 +49,6 @@ function useSmoothScroll(offset = -70) {
   };
 }
 
-// Throttle
 function throttle(fn, wait) {
   let lastTime = 0;
   return (...args) => {
@@ -71,7 +68,6 @@ export default function Navbar({ mode, setMode }) {
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
-  // Detectar scroll + sección activa
   useEffect(() => {
     const handleScroll = throttle(() => {
       setScrolled(window.scrollY > 50);
@@ -101,7 +97,6 @@ export default function Navbar({ mode, setMode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Bloquear scroll en móvil
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -113,7 +108,6 @@ export default function Navbar({ mode, setMode }) {
 
   return (
     <>
-      {/* Barra de navegación */}
       <motion.div initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
         <AppBar
           position="fixed"
@@ -131,7 +125,6 @@ export default function Navbar({ mode, setMode }) {
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-            {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
@@ -152,7 +145,6 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
@@ -181,7 +173,6 @@ export default function Navbar({ mode, setMode }) {
                 </motion.div>
               ))}
 
-              {/* Botón modo oscuro/claro */}
               <motion.div whileTap={{ rotate: 180 }}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -193,7 +184,6 @@ export default function Navbar({ mode, setMode }) {
               </motion.div>
             </Box>
 
-            {/* Botón móvil abrir menú */}
             <IconButton
               sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
               onClick={() => setOpen(true)}
@@ -205,7 +195,6 @@ export default function Navbar({ mode, setMode }) {
         </AppBar>
       </motion.div>
 
-      {/* Menú móvil */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -237,11 +226,12 @@ export default function Navbar({ mode, setMode }) {
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
-                paddingTop: "5rem", // 👈 espacio extra arriba
+                paddingTop: "5rem", // 👈 evita que se tape "Sobre mí"
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
                 maxHeight: "100vh",
+                overflowY: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -282,7 +272,7 @@ export default function Navbar({ mode, setMode }) {
               </Stack>
 
               {/* Botones abajo */}
-              <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
+              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
                 <Button
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -323,4 +313,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+                }
