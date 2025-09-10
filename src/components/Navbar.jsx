@@ -241,12 +241,47 @@ export default function Navbar({ mode, setMode }) {
                 display: "flex",
                 flexDirection: "column",
                 maxHeight: "100vh",
-                overflowY: "auto",
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Botones arriba en fila */}
-              <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+              {/* Links menú móvil */}
+              <Stack spacing={2} mt={2} flex={1}>
+                {menuItems.map((item, i) => (
+                  <motion.a
+                    key={item.href}
+                    onClick={() => {
+                      handleScrollTo(item.href);
+                      setOpen(false);
+                    }}
+                    custom={i}
+                    variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.96 }}
+                    aria-current={active === item.href ? "page" : undefined}
+                    style={{
+                      fontSize: "1.1rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      color: "#fff",
+                      cursor: "pointer",
+                      padding: "0.9rem 1rem",
+                      borderRadius: "10px",
+                      background: item.color,
+                      boxShadow:
+                        active === item.href
+                          ? "0 0 12px rgba(255,255,255,0.7)"
+                          : "0 3px 10px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </Stack>
+
+              {/* Botones abajo */}
+              <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
                 <Button
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -257,7 +292,7 @@ export default function Navbar({ mode, setMode }) {
                     textTransform: "none",
                     fontWeight: "bold",
                     borderRadius: "10px",
-                    minHeight: "48px", // 👈 alto fijo
+                    minHeight: "48px",
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
@@ -274,57 +309,17 @@ export default function Navbar({ mode, setMode }) {
                     textTransform: "none",
                     fontWeight: "bold",
                     borderRadius: "10px",
-                    minHeight: "48px", // 👈 mismo alto fijo
+                    minHeight: "48px",
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
                   Cerrar
                 </Button>
               </Box>
-
-      {/* Links menú móvil */}
-<Stack spacing={2} mt={4}>
-  {menuItems.map((item, i) => (
-    <motion.a
-      key={item.href}
-      onClick={() => {
-        handleScrollTo(item.href);
-        setOpen(false);
-      }}
-      custom={i}
-      variants={itemVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.96 }}
-      aria-current={active === item.href ? "page" : undefined}
-      style={{
-        fontSize: "1.1rem",
-        fontWeight: 600,
-        textDecoration: "none",
-        color: "#fff",
-        cursor: "pointer",
-        padding: "0.9rem 1rem",
-        borderRadius: "10px",
-        background: item.color,
-        boxShadow:
-          active === item.href
-            ? "0 0 12px rgba(255,255,255,0.7)"
-            : "0 3px 10px rgba(0,0,0,0.3)",
-      }}
-    >
-      {item.label}
-    </motion.a>
-  ))}
-</Stack>
-
-
-
-              
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-                  }
+}
