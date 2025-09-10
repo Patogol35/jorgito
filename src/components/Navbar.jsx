@@ -237,6 +237,7 @@ export default function Navbar({ mode, setMode }) {
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
+                paddingTop: "5rem", // 👈 espacio extra arriba
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
@@ -245,7 +246,7 @@ export default function Navbar({ mode, setMode }) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Links menú móvil */}
-              <Stack spacing={2} mt={2} flex={1}>
+              <Stack spacing={2} flex={1}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
