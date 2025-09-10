@@ -24,18 +24,18 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes del menú (abre y cierra con rebote)
+// Variantes del menú (abre y cierra con rebote rápido)
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 120, damping: 18 },
+    transition: { type: "spring", stiffness: 250, damping: 25 }, // más rápido
   },
   exit: {
     x: "100%",
     opacity: 0,
-    transition: { type: "spring", stiffness: 120, damping: 18 },
+    transition: { type: "spring", stiffness: 250, damping: 25 }, // más rápido
   },
 };
 
@@ -45,7 +45,7 @@ const itemVariants = {
   visible: (i) => ({
     y: 0,
     opacity: 1,
-    transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" },
+    transition: { delay: i * 0.03, duration: 0.2, ease: "easeOut" }, // más rápido
   }),
 };
 
@@ -203,7 +203,7 @@ export default function Navbar({ mode, setMode }) {
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(6px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             style={{
               position: "fixed",
               top: 0,
@@ -305,4 +305,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-                }
+}
