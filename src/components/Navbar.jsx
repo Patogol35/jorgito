@@ -10,11 +10,12 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
+// 📌 Configuración del menú
 const menuItems = [
   { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)" },
   { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)" },
@@ -24,6 +25,7 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
+// 🎬 Variantes animaciones
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -39,14 +41,46 @@ const itemVariants = {
   }),
 };
 
+// 📌 Hook: scroll suave
 function useSmoothScroll(offset = -70) {
   return (id) => {
-    const element = document.querySelector(id);
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.pageYOffset + offset;
+    const el = document.querySelector(id);
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY + offset;
       window.scrollTo({ top: y, behavior: "smooth" });
     }
   };
+}
+
+// 📌 Hook: detectar sección activa
+function useActiveSection(setActive) {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => entry.isIntersecting && setActive(`#${entry.target.id}`)),
+      { rootMargin: "-50% 0px -50% 0px" }
+    );
+
+    const sections = menuItems.map((i) => document.querySelector(i.href)).filter(Boolean);
+    sections.forEach((s) => observer.observe(s));
+
+    return () => sections.forEach((s) => observer.unobserve(s));
+  }, [setActive]);
+}
+
+// 📌 Hook: bloquear scroll al abrir menú
+function useLockBodyScroll(isLocked, menuRef) {
+  useEffect(() => {
+    if (isLocked) {
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+      menuRef.current?.focus();
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+  }, [isLocked, menuRef]);
 }
 
 export default function Navbar({ mode, setMode }) {
@@ -57,57 +91,19 @@ export default function Navbar({ mode, setMode }) {
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
-  // 🔎 IntersectionObserver para detectar la sección activa
+  useActiveSection(setActive);
+  useLockBodyScroll(open, menuRef);
+
+  // 🎯 Navbar cambia con scroll
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "-50% 0px -50% 0px", // activa cuando la sección está en el centro
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActive(`#${entry.target.id}`);
-        }
-      });
-    }, options);
-
-    const sections = menuItems.map((item) =>
-      document.querySelector(item.href)
-    ).filter(Boolean);
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // 🎯 Navbar cambia de estilo al hacer scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // 🛑 Evitar salto por el scrollbar
-  useEffect(() => {
-    if (open) {
-      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = "hidden";
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
-      menuRef.current?.focus();
-    } else {
-      document.body.style.overflow = "auto";
-      document.body.style.paddingRight = "0px";
-    }
-  }, [open]);
 
   return (
     <>
+      {/* Topbar */}
       <motion.div initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
         <AppBar
           position="fixed"
@@ -125,17 +121,11 @@ export default function Navbar({ mode, setMode }) {
           }}
         >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Typography
                 variant="h6"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  color: theme.palette.common.white,
-                  letterSpacing: 1,
-                  cursor: "pointer",
-                }}
+                sx={{ display: "flex", alignItems: "center", fontWeight: "bold", color: "#fff", cursor: "pointer" }}
                 onClick={() => handleScrollTo("#hero")}
               >
                 <motion.div whileHover={{ rotate: 10 }} transition={{ type: "spring", stiffness: 200 }}>
@@ -145,7 +135,7 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* Desktop */}
+            {/* Desktop menu */}
             <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
@@ -158,15 +148,12 @@ export default function Navbar({ mode, setMode }) {
                       textTransform: "none",
                       fontSize: "1rem",
                       borderRadius: "10px",
-                      padding: "0.5rem 1rem",
+                      px: 2,
+                      py: 1,
                       transition: "all 0.3s ease",
                       background: active === item.href ? item.color : "transparent",
                       boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
-                      "&:hover": {
-                        background: item.color,
-                        color: "#fff",
-                        boxShadow: "0 0 15px rgba(0,0,0,0.4)",
-                      },
+                      "&:hover": { background: item.color, boxShadow: "0 0 15px rgba(0,0,0,0.4)" },
                     }}
                   >
                     {item.label}
@@ -174,20 +161,19 @@ export default function Navbar({ mode, setMode }) {
                 </motion.div>
               ))}
 
-              <motion.div whileTap={{ rotate: 180 }}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{ color: theme.palette.common.white }}
-                  aria-label="Cambiar tema"
-                >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                </IconButton>
-              </motion.div>
+              {/* Botón tema */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{ color: "#fff" }}
+                aria-label="Cambiar tema"
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </Box>
 
-            {/* Mobile */}
+            {/* Botón menú móvil */}
             <IconButton
-              sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
+              sx={{ display: { xs: "block", lg: "none" }, color: "#fff" }}
               onClick={() => setOpen(true)}
               aria-label="Abrir menú"
             >
@@ -238,7 +224,6 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Links menú móvil */}
               <Stack spacing={2}>
                 {menuItems.map((item, i) => (
                   <motion.a
@@ -263,10 +248,7 @@ export default function Navbar({ mode, setMode }) {
                       padding: "0.9rem 1rem",
                       borderRadius: "10px",
                       background: item.color,
-                      boxShadow:
-                        active === item.href
-                          ? "0 0 12px rgba(255,255,255,0.7)"
-                          : "0 3px 10px rgba(0,0,0,0.3)",
+                      boxShadow: active === item.href ? "0 0 12px rgba(255,255,255,0.7)" : "0 3px 10px rgba(0,0,0,0.3)",
                     }}
                   >
                     {item.label}
