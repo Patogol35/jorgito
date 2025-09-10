@@ -135,41 +135,58 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* Desktop menu */}
-            <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
-              {menuItems.map((item) => (
-                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => handleScrollTo(item.href)}
-                    aria-current={active === item.href ? "page" : undefined}
-                    sx={{
-                      color: "#fff",
-                      fontWeight: 600,
-                      textTransform: "none",
-                      fontSize: "1rem",
-                      borderRadius: "10px",
-                      px: 2,
-                      py: 1,
-                      transition: "all 0.3s ease",
-                      background: active === item.href ? item.color : "transparent",
-                      boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
-                      "&:hover": { background: item.color, boxShadow: "0 0 15px rgba(0,0,0,0.4)" },
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
 
-              {/* Botón tema */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ color: "#fff" }}
-                aria-label="Cambiar tema"
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Box>
+{/* Desktop menu */}
+<Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
+  {menuItems.map((item) => (
+    <motion.div
+      key={item.href}
+      whileHover={{ y: -2, scale: 1.08 }} // 🔹 Animación se mantiene SIEMPRE
+      whileTap={{ scale: 0.95 }}
+    >
+      <Button
+        onClick={() => handleScrollTo(item.href)}
+        aria-current={active === item.href ? "page" : undefined}
+        sx={{
+          color: "#fff",
+          fontWeight: 600,
+          textTransform: "none",
+          fontSize: "1rem",
+          borderRadius: "10px",
+          px: 2,
+          py: 1,
+          transition: "all 0.3s ease",
+          background: active === item.href ? item.color : "transparent",
+          boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
+
+          // 👇 Solo quitamos estilos hover en "Sobre mí"
+          ...(item.label === "Sobre mí"
+            ? {} // sin hover extra
+            : {
+                "&:hover": {
+                  background: item.color,
+                  boxShadow: "0 0 15px rgba(0,0,0,0.4)",
+                },
+              }),
+        }}
+      >
+        {item.label}
+      </Button>
+    </motion.div>
+  ))}
+
+  {/* Botón tema */}
+  <IconButton
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    sx={{ color: "#fff" }}
+    aria-label="Cambiar tema"
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </IconButton>
+</Box>
+
+
+            
 
             {/* Botón menú móvil */}
             <IconButton
