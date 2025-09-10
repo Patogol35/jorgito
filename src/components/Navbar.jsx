@@ -167,7 +167,7 @@ export default function Navbar({ mode, setMode }) {
                     onClick={() => handleScrollTo(item.href)}
                     aria-current={active === item.href ? "page" : undefined}
                     sx={{
-                      color: "#fff", // siempre blanco
+                      color: "#fff",
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
@@ -240,6 +240,7 @@ export default function Navbar({ mode, setMode }) {
               ref={menuRef}
               tabIndex={-1}
               style={{
+                position: "relative", // ✅ importante para la ❌ flotante
                 width: "280px",
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
@@ -252,18 +253,28 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Encabezado */}
-              <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
+              {/* Botón cerrar flotante */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 16,
+                  right: 16,
+                }}
+              >
                 <IconButton
                   onClick={() => setOpen(false)}
                   sx={{
                     color: "#fff",
-                    p: 0.5,
-                    width: 40,
-                    height: 40,
+                    width: 48,
+                    height: 48,
+                    p: 0,
+                    "&:hover": {
+                      backgroundColor: "rgba(255,255,255,0.1)",
+                    },
                   }}
+                  aria-label="Cerrar menú"
                 >
-                  <CloseIcon fontSize="large" />
+                  <CloseIcon sx={{ fontSize: 32 }} />
                 </IconButton>
               </Box>
 
@@ -272,6 +283,7 @@ export default function Navbar({ mode, setMode }) {
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 sx={{
+                  mt: 6, // espacio debajo de la X
                   color: "#fff",
                   border: "1px solid #fff",
                   textTransform: "none",
@@ -309,7 +321,10 @@ export default function Navbar({ mode, setMode }) {
                       padding: "0.9rem 1rem",
                       borderRadius: "10px",
                       background: item.color,
-                      boxShadow: active === item.href ? "0 0 12px rgba(255,255,255,0.7)" : "0 3px 10px rgba(0,0,0,0.3)",
+                      boxShadow:
+                        active === item.href
+                          ? "0 0 12px rgba(255,255,255,0.7)"
+                          : "0 3px 10px rgba(0,0,0,0.3)",
                     }}
                   >
                     {item.label}
@@ -322,4 +337,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-    }
+        }
