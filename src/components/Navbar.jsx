@@ -121,69 +121,70 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* Menú Desktop */}
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
-              {menuItems.map((item) => (
-                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-                  <Button
-                    onClick={() => handleScrollTo(item.href)}
-                    sx={{
-                      color: mode === "dark" ? "#fff" : theme.palette.common.white,
-                      fontWeight: 600,
-                      textTransform: "none",
-                      fontSize: "1rem",
-                      position: "relative",
-                      transition: "all 0.25s ease",
-                      padding: "6px 12px",
-                      borderRadius: "8px",
-                      "&::before": {
-                        content: '""',
-                        position: "absolute",
-                        inset: 0,
-                        borderRadius: "8px",
-                        background: mode === "dark" ? "#03a9f4" : "#26c6da",
-                        opacity: 0,
-                        transform: "scaleX(0.6)",
-                        transformOrigin: "center",
-                        transition: "all 0.35s ease",
-                        zIndex: -1,
-                      },
-                      "&:hover::before": {
-                        opacity: 1,
-                        transform: "scaleX(1)",
-                      },
-                      "&:hover": {
-                        color: "#fff",
-                        textShadow: "0 0 8px rgba(0,0,0,0.5)",
-                        boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
-                      },
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                </motion.div>
-              ))}
+{/* Menú Desktop */}
+<Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
+  {menuItems.map((item) => (
+    <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+      <Button
+        onClick={() => handleScrollTo(item.href)}
+        sx={{
+          color: mode === "dark" ? "#fff" : theme.palette.common.white,
+          fontWeight: 600,
+          textTransform: "none",
+          fontSize: "1rem",
+          position: "relative",
+          transition: "all 0.25s ease",
+          padding: "6px 12px",
+          borderRadius: "8px",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            borderRadius: "8px",
+            background: mode === "dark" ? "#03a9f4" : "#26c6da",
+            opacity: 0,
+            transform: "scaleX(0.6)",
+            transformOrigin: "center",
+            transition: "all 0.35s ease",
+            zIndex: -1,
+          },
+          "&:hover::before": {
+            opacity: 1,
+            transform: "scaleX(1)",
+          },
+          "&:hover": {
+            color: "#fff",
+            textShadow: "0 0 8px rgba(0,0,0,0.5)",
+            boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
+          },
+        }}
+      >
+        {item.label}
+      </Button>
+    </motion.div>
+  ))}
 
-              {/* Botón modo oscuro/claro */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{
-                  color: theme.palette.common.white,
-                  transition: "all 0.25s ease",
-                  "&:hover": { transform: "scale(1.15)" },
-                }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
-            </Box>
+  {/* Botón modo oscuro/claro */}
+  <IconButton
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    sx={{
+      color: theme.palette.common.white,
+      transition: "all 0.25s ease",
+      "&:hover": { transform: "scale(1.15)" },
+    }}
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </IconButton>
+</Box>
 
-            {/* Botón móvil abrir menú */}
-            <IconButton
-              sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
-              onClick={() => setOpen(true)}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
+{/* Botón móvil abrir menú */}
+<IconButton
+  sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
+  onClick={() => setOpen(true)}
+>
+  <MenuIcon fontSize="large" />
+</IconButton>
+
           </Toolbar>
         </AppBar>
       </motion.div>
