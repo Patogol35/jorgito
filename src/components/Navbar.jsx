@@ -181,7 +181,7 @@ export default function Navbar({ mode, setMode }) {
                 </motion.div>
               ))}
 
-              {/* Botón modo oscuro/claro */}
+              {/* Botón modo oscuro/claro (desktop) */}
               <motion.div whileTap={{ rotate: 180 }}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -236,7 +236,7 @@ export default function Navbar({ mode, setMode }) {
                 width: "280px",
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
-                padding: "2rem",
+                padding: "1.5rem", // menos top margin para que no se esconda nada
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
@@ -245,39 +245,43 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Botón modo oscuro/claro */}
-              <Button
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                sx={{
-                  color: "#fff",
-                  border: "1px solid #fff",
-                  textTransform: "none",
-                  mb: 2,
-                  fontWeight: "bold",
-                  borderRadius: "10px",
-                  "&:hover": { background: "rgba(255,255,255,0.12)" },
-                }}
-              >
-                {mode === "light" ? "Modo Noche" : "Modo Día"}
-              </Button>
+              {/* Botón modo oscuro/claro (móvil) */}
+              <Box sx={{ mb: 1 }}>
+                <Button
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  fullWidth
+                  sx={{
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  {mode === "light" ? "Modo Noche" : "Modo Día"}
+                </Button>
+              </Box>
 
-              {/* Botón cerrar menú */}
-              <Button
-                onClick={() => setOpen(false)}
-                startIcon={<CloseIcon />}
-                sx={{
-                  color: "#fff",
-                  border: "1px solid #fff",
-                  textTransform: "none",
-                  mb: 3,
-                  fontWeight: "bold",
-                  borderRadius: "10px",
-                  "&:hover": { background: "rgba(255,255,255,0.12)" },
-                }}
-              >
-                Cerrar menú
-              </Button>
+              {/* Botón cerrar (debajo del modo) */}
+              <Box sx={{ mb: 2 }}>
+                <Button
+                  onClick={() => setOpen(false)}
+                  startIcon={<CloseIcon />}
+                  fullWidth
+                  sx={{
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  Cerrar menú
+                </Button>
+              </Box>
 
               {/* Links menú móvil */}
               <Stack spacing={2} flexGrow={1}>
