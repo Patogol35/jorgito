@@ -283,7 +283,7 @@ export default function Navbar({ mode, setMode }) {
               </Box>
 
       {/* Links menú móvil */}
-<Stack spacing={2} flexGrow={1} mt={2}>
+<Stack spacing={2} mt={4}>
   {menuItems.map((item, i) => (
     <motion.a
       key={item.href}
