@@ -24,28 +24,28 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes del menú (abre y cierra con rebote rápido)
+// Variantes del menú (rápido)
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: {
     x: 0,
     opacity: 1,
-    transition: { type: "spring", stiffness: 250, damping: 25 }, // más rápido
+    transition: { duration: 0.25, ease: "easeOut" }, // abre rápido
   },
   exit: {
     x: "100%",
     opacity: 0,
-    transition: { type: "spring", stiffness: 250, damping: 25 }, // más rápido
+    transition: { duration: 0.2, ease: "easeIn" }, // cierra rápido
   },
 };
 
-// Variantes de los ítems (cascada rápida)
+// Variantes de los ítems (ligero delay, pero más corto)
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
   visible: (i) => ({
     y: 0,
     opacity: 1,
-    transition: { delay: i * 0.03, duration: 0.2, ease: "easeOut" }, // más rápido
+    transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" }, // más rápido
   }),
 };
 
@@ -203,7 +203,7 @@ export default function Navbar({ mode, setMode }) {
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(6px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.25 }} // rápido
             style={{
               position: "fixed",
               top: 0,
@@ -305,4 +305,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+            }
