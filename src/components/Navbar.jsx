@@ -245,9 +245,8 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Botones modo/close en fila */}
+              {/* Botones arriba en fila */}
               <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
-                {/* Botón modo oscuro/claro */}
                 <Button
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -258,14 +257,13 @@ export default function Navbar({ mode, setMode }) {
                     textTransform: "none",
                     fontWeight: "bold",
                     borderRadius: "10px",
-                    justifyContent: "flex-start",
+                    minHeight: "48px", // 👈 alto fijo
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
-                  {mode === "light" ? "Modo Noche" : "Modo Día"}
+                  {mode === "light" ? "Noche" : "Día"}
                 </Button>
 
-                {/* Botón cerrar menú */}
                 <Button
                   onClick={() => setOpen(false)}
                   startIcon={<CloseIcon />}
@@ -276,7 +274,7 @@ export default function Navbar({ mode, setMode }) {
                     textTransform: "none",
                     fontWeight: "bold",
                     borderRadius: "10px",
-                    justifyContent: "flex-start",
+                    minHeight: "48px", // 👈 mismo alto fijo
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
@@ -325,4 +323,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+                  }
