@@ -253,11 +253,16 @@ export default function Navbar({ mode, setMode }) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Encabezado */}
-              <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
-                  Menú
-                </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
+              <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 3 }}>
+                <IconButton
+                  onClick={() => setOpen(false)}
+                  sx={{
+                    color: "#fff",
+                    p: 0.5,
+                    width: 40,
+                    height: 40,
+                  }}
+                >
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
@@ -317,4 +322,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-          }
+    }
