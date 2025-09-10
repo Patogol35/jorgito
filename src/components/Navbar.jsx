@@ -236,7 +236,7 @@ export default function Navbar({ mode, setMode }) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Links menú móvil */}
-              <Stack spacing={2} flex={1}>
+              <Stack spacing={2}>
                 {menuItems.map((item, i) => (
                   <motion.a
                     key={item.href}
