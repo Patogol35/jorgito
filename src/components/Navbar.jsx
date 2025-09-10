@@ -235,78 +235,81 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Links menú móvil */}
-              <Stack spacing={2}>
-                {menuItems.map((item, i) => (
-                  <motion.a
-                    key={item.href}
-                    onClick={() => {
-                      handleScrollTo(item.href);
-                      setOpen(false);
-                    }}
-                    custom={i}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.96 }}
-                    aria-current={active === item.href ? "page" : undefined}
-                    style={{
-                      fontSize: "1.1rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: "0.9rem 1rem",
-                      borderRadius: "10px",
-                      background: item.color,
-                      boxShadow:
-                        active === item.href
-                          ? "0 0 12px rgba(255,255,255,0.7)"
-                          : "0 3px 10px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    {item.label}
-                  </motion.a>
-                ))}
-              </Stack>
 
-              {/* Botones abajo */}
-              <Box sx={{ display: "flex", gap: 1, mt: 1 }}>
-                <Button
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                  sx={{
-                    flex: 1,
-                    color: "#fff",
-                    border: "1px solid #fff",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "10px",
-                    minHeight: "48px",
-                    "&:hover": { background: "rgba(255,255,255,0.12)" },
-                  }}
-                >
-                  {mode === "light" ? "Noche" : "Día"}
-                </Button>
+{/* Links menú móvil */}
+<Stack spacing={2}>
+  {menuItems.map((item, i) => (
+    <motion.a
+      key={item.href}
+      onClick={() => {
+        handleScrollTo(item.href);
+        setOpen(false);
+      }}
+      custom={i}
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
+      aria-current={active === item.href ? "page" : undefined}
+      style={{
+        fontSize: "1.1rem",
+        fontWeight: 600,
+        textDecoration: "none",
+        color: "#fff",
+        cursor: "pointer",
+        padding: "0.9rem 1rem",
+        borderRadius: "10px",
+        background: item.color,
+        boxShadow:
+          active === item.href
+            ? "0 0 12px rgba(255,255,255,0.7)"
+            : "0 3px 10px rgba(0,0,0,0.3)",
+      }}
+    >
+      {item.label}
+    </motion.a>
+  ))}
+</Stack>
 
-                <Button
-                  onClick={() => setOpen(false)}
-                  startIcon={<CloseIcon />}
-                  sx={{
-                    flex: 1,
-                    color: "#fff",
-                    border: "1px solid #fff",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "10px",
-                    minHeight: "48px",
-                    "&:hover": { background: "rgba(255,255,255,0.12)" },
-                  }}
-                >
-                  Cerrar
-                </Button>
-              </Box>
+{/* Botones abajo */}
+<Box sx={{ display: "flex", gap: 1, mt: 3 }}>
+  <Button
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+    sx={{
+      flex: 1,
+      color: "#fff",
+      border: "1px solid #fff",
+      textTransform: "none",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      minHeight: "48px",
+      "&:hover": { background: "rgba(255,255,255,0.12)" },
+    }}
+  >
+    {mode === "light" ? "Noche" : "Día"}
+  </Button>
+
+  <Button
+    onClick={() => setOpen(false)}
+    startIcon={<CloseIcon />}
+    sx={{
+      flex: 1,
+      color: "#fff",
+      border: "1px solid #fff",
+      textTransform: "none",
+      fontWeight: "bold",
+      borderRadius: "10px",
+      minHeight: "48px",
+      "&:hover": { background: "rgba(255,255,255,0.12)" },
+    }}
+  >
+    Cerrar
+  </Button>
+</Box>
+
+              
             </motion.div>
           </motion.div>
         )}
