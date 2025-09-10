@@ -16,7 +16,7 @@ import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
 const menuItems = [
-  { label: "Sobre mí", href: "#hero", color: "#0288d1" }, // mismo que Proyectos
+  { label: "Sobre mí", href: "#hero", color: "#0288d1" },
   { label: "Educación", href: "#about", color: "#2e7d32" },
   { label: "Tecnologías", href: "#skills", color: "#f57c00" },
   { label: "Certificaciones", href: "#certifications", color: "#6a1b9a" },
@@ -126,12 +126,7 @@ export default function Navbar({ mode, setMode }) {
                         position: "absolute",
                         inset: 0,
                         borderRadius: "8px",
-                        background:
-                          mode === "dark"
-                            ? `${item.color}99` // más suave en dark
-                            : item.color === "#0288d1"
-                            ? `${item.color}ff` // hover azul más intenso en light
-                            : `${item.color}e6`,
+                        background: mode === "dark" ? "#03a9f4" : "#26c6da", // Hover colors
                         opacity: 0,
                         transform: "scaleX(0.6)",
                         transformOrigin: "center",
@@ -144,13 +139,8 @@ export default function Navbar({ mode, setMode }) {
                       },
                       "&:hover": {
                         color: "#fff",
-                        textShadow: mode === "dark" ? "0 0 6px rgba(0,0,0,0.6)" : "0 0 10px rgba(0,0,0,0.6)",
-                        boxShadow:
-                          mode === "dark"
-                            ? `0 0 8px ${item.color}`
-                            : item.color === "#0288d1"
-                            ? `0 0 20px ${item.color}ff`
-                            : `0 0 18px ${item.color}`,
+                        textShadow: "0 0 8px rgba(0,0,0,0.5)",
+                        boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
                       },
                     }}
                   >
@@ -288,4 +278,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+                }
