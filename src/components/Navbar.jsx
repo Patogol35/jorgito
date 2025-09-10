@@ -158,27 +158,28 @@ export default function Navbar({ mode, setMode }) {
             {/* Menú Desktop */}
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
-                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  key={item.href}
+                  whileHover={{ y: -2, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     aria-current={active === item.href ? "page" : undefined}
                     sx={{
-                      color: mode === "dark" ? "#fff" : theme.palette.common.white,
+                      color: "#fff", // siempre blanco
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
-                      position: "relative",
-                      "&::after": {
-                        content: '""',
-                        position: "absolute",
-                        left: "50%",
-                        bottom: -4,
-                        width: active === item.href ? "100%" : "0%",
-                        height: "2px",
-                        background: "#fff",
-                        borderRadius: "2px",
-                        transform: "translateX(-50%)",
-                        transition: "all 0.3s ease",
+                      borderRadius: "10px",
+                      padding: "0.5rem 1rem",
+                      transition: "all 0.3s ease",
+                      background: active === item.href ? item.color : "transparent",
+                      boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
+                      "&:hover": {
+                        background: item.color,
+                        color: "#fff",
+                        boxShadow: "0 0 15px rgba(0,0,0,0.4)",
                       },
                     }}
                   >
@@ -316,4 +317,5 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-  }
+}
+       
