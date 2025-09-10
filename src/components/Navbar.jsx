@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
+// Secciones con gradientes
 const menuItems = [
   { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)" },
   { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)" },
@@ -24,31 +25,23 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
-// Variantes del menú (rápido)
+// Variantes
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: { duration: 0.25, ease: "easeOut" }, // abre rápido
-  },
-  exit: {
-    x: "100%",
-    opacity: 0,
-    transition: { duration: 0.2, ease: "easeIn" }, // cierra rápido
-  },
+  visible: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
+  exit: { x: "100%", opacity: 0, transition: { duration: 0.2, ease: "easeIn" } },
 };
 
-// Variantes de los ítems (ligero delay, pero más corto)
 const itemVariants = {
   hidden: { y: 20, opacity: 0 },
   visible: (i) => ({
     y: 0,
     opacity: 1,
-    transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" }, // más rápido
+    transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" },
   }),
 };
 
+// Smooth scroll con offset
 function useSmoothScroll(offset = -70) {
   return (id) => {
     const element = document.querySelector(id);
@@ -59,22 +52,50 @@ function useSmoothScroll(offset = -70) {
   };
 }
 
+// Throttle para scroll
+function throttle(fn, wait) {
+  let lastTime = 0;
+  return (...args) => {
+    const now = Date.now();
+    if (now - lastTime >= wait) {
+      fn(...args);
+      lastTime = now;
+    }
+  };
+}
+
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("#hero");
   const theme = useTheme();
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
+  // Detectar scroll + sección activa
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = throttle(() => {
       setScrolled(window.scrollY > 50);
-      if (open) setOpen(false);
-    };
+
+      let current = "#hero";
+      menuItems.forEach((item) => {
+        const section = document.querySelector(item.href);
+        if (section) {
+          const top = section.offsetTop - 80;
+          const bottom = top + section.offsetHeight;
+          if (window.scrollY >= top && window.scrollY < bottom) {
+            current = item.href;
+          }
+        }
+      });
+      setActive(current);
+    }, 100);
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [open]);
+  }, []);
 
+  // Bloqueo scroll en móvil
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -87,14 +108,12 @@ export default function Navbar({ mode, setMode }) {
   return (
     <>
       {/* Barra de navegación */}
-      <motion.div
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+      <motion.div initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
         <AppBar
           position="fixed"
           elevation={scrolled ? 6 : 2}
+          role="navigation"
+          aria-label="Barra de navegación principal"
           sx={{
             backgroundColor:
               mode === "dark"
@@ -130,40 +149,29 @@ export default function Navbar({ mode, setMode }) {
             </motion.div>
 
             {/* Menú Desktop */}
-            <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 3, alignItems: "center" }}>
               {menuItems.map((item) => (
                 <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => handleScrollTo(item.href)}
+                    aria-current={active === item.href ? "page" : undefined}
                     sx={{
                       color: mode === "dark" ? "#fff" : theme.palette.common.white,
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
                       position: "relative",
-                      transition: "all 0.25s ease",
-                      padding: "6px 12px",
-                      borderRadius: "8px",
-                      "&::before": {
+                      "&::after": {
                         content: '""',
                         position: "absolute",
-                        inset: 0,
-                        borderRadius: "8px",
-                        background: mode === "dark" ? "#03a9f4" : "#26c6da",
-                        opacity: 0,
-                        transform: "scaleX(0.6)",
-                        transformOrigin: "center",
-                        transition: "all 0.35s ease",
-                        zIndex: -1,
-                      },
-                      "&:hover::before": {
-                        opacity: 1,
-                        transform: "scaleX(1)",
-                      },
-                      "&:hover": {
-                        color: "#fff",
-                        textShadow: "0 0 8px rgba(0,0,0,0.5)",
-                        boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
+                        left: "50%",
+                        bottom: -4,
+                        width: active === item.href ? "100%" : "0%",
+                        height: "2px",
+                        background: "#fff",
+                        borderRadius: "2px",
+                        transform: "translateX(-50%)",
+                        transition: "all 0.3s ease",
                       },
                     }}
                   >
@@ -173,22 +181,22 @@ export default function Navbar({ mode, setMode }) {
               ))}
 
               {/* Botón modo oscuro/claro */}
-              <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{
-                  color: theme.palette.common.white,
-                  transition: "all 0.25s ease",
-                  "&:hover": { transform: "scale(1.15)" },
-                }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
+              <motion.div whileTap={{ rotate: 180 }}>
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{ color: theme.palette.common.white }}
+                  aria-label="Cambiar tema"
+                >
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </IconButton>
+              </motion.div>
             </Box>
 
             {/* Botón móvil abrir menú */}
             <IconButton
-              sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
+              sx={{ display: { xs: "block", md: "none" }, color: theme.palette.common.white }}
               onClick={() => setOpen(true)}
+              aria-label="Abrir menú"
             >
               <MenuIcon fontSize="large" />
             </IconButton>
@@ -203,20 +211,18 @@ export default function Navbar({ mode, setMode }) {
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
             animate={{ opacity: 1, backdropFilter: "blur(6px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.25 }} // rápido
+            transition={{ duration: 0.25 }}
             style={{
               position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100vw",
-              height: "100vh",
+              inset: 0,
               background: "rgba(0,0,0,0.45)",
               zIndex: 1300,
               display: "flex",
               justifyContent: "flex-end",
-              alignItems: "center",
             }}
             onClick={() => setOpen(false)}
+            role="dialog"
+            aria-modal="true"
           >
             <motion.div
               variants={menuVariants}
@@ -233,9 +239,8 @@ export default function Navbar({ mode, setMode }) {
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
-                maxHeight: "80vh",
+                maxHeight: "100vh",
                 overflowY: "auto",
-                transition: "all 0.3s ease",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -244,7 +249,7 @@ export default function Navbar({ mode, setMode }) {
                 <Typography variant="h6" sx={{ fontWeight: "bold", color: "#fff" }}>
                   Menú
                 </Typography>
-                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff", "&:hover": { scale: "1.1" } }}>
+                <IconButton onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
                   <CloseIcon fontSize="large" />
                 </IconButton>
               </Box>
@@ -260,8 +265,7 @@ export default function Navbar({ mode, setMode }) {
                   mb: 3,
                   fontWeight: "bold",
                   borderRadius: "10px",
-                  transition: "all 0.3s ease",
-                  "&:hover": { background: "rgba(255,255,255,0.12)", transform: "scale(1.03)" },
+                  "&:hover": { background: "rgba(255,255,255,0.12)" },
                 }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
@@ -282,6 +286,7 @@ export default function Navbar({ mode, setMode }) {
                     animate="visible"
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.96 }}
+                    aria-current={active === item.href ? "page" : undefined}
                     style={{
                       fontSize: "1.1rem",
                       fontWeight: 600,
@@ -291,8 +296,7 @@ export default function Navbar({ mode, setMode }) {
                       padding: "0.9rem 1rem",
                       borderRadius: "10px",
                       background: item.color,
-                      transition: "all 0.3s ease",
-                      boxShadow: "0 3px 10px rgba(0,0,0,0.3)",
+                      boxShadow: active === item.href ? "0 0 12px rgba(255,255,255,0.7)" : "0 3px 10px rgba(0,0,0,0.3)",
                     }}
                   >
                     {item.label}
@@ -305,4 +309,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-            }
+    }
