@@ -24,18 +24,28 @@ const menuItems = [
   { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
 ];
 
+// Variantes del menú (rápido)
 const menuVariants = {
-  hidden: { x: "100%" },
-  visible: { x: 0, transition: { type: "spring", stiffness: 200, damping: 25 } },
-  exit: { x: "100%", transition: { type: "spring", stiffness: 200, damping: 25 } },
-};
-
-const itemVariants = {
-  hidden: { x: 40, opacity: 0 },
-  visible: (i) => ({
+  hidden: { x: "100%", opacity: 0 },
+  visible: {
     x: 0,
     opacity: 1,
-    transition: { delay: i * 0.1, type: "spring", stiffness: 250, damping: 18 },
+    transition: { duration: 0.25, ease: "easeOut" }, // abre rápido
+  },
+  exit: {
+    x: "100%",
+    opacity: 0,
+    transition: { duration: 0.2, ease: "easeIn" }, // cierra rápido
+  },
+};
+
+// Variantes de los ítems (ligero delay, pero más corto)
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: (i) => ({
+    y: 0,
+    opacity: 1,
+    transition: { delay: i * 0.05, duration: 0.25, ease: "easeOut" }, // más rápido
   }),
 };
 
@@ -56,17 +66,15 @@ export default function Navbar({ mode, setMode }) {
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
-  // Cambia estado scrolled en scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      if (open) setOpen(false); // cerrar menú al hacer scroll
+      if (open) setOpen(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [open]);
 
-  // Bloquear scroll del body cuando menú esté abierto
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -121,70 +129,69 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-{/* Menú Desktop */}
-<Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
-  {menuItems.map((item) => (
-    <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
-      <Button
-        onClick={() => handleScrollTo(item.href)}
-        sx={{
-          color: mode === "dark" ? "#fff" : theme.palette.common.white,
-          fontWeight: 600,
-          textTransform: "none",
-          fontSize: "1rem",
-          position: "relative",
-          transition: "all 0.25s ease",
-          padding: "6px 12px",
-          borderRadius: "8px",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            borderRadius: "8px",
-            background: mode === "dark" ? "#03a9f4" : "#26c6da",
-            opacity: 0,
-            transform: "scaleX(0.6)",
-            transformOrigin: "center",
-            transition: "all 0.35s ease",
-            zIndex: -1,
-          },
-          "&:hover::before": {
-            opacity: 1,
-            transform: "scaleX(1)",
-          },
-          "&:hover": {
-            color: "#fff",
-            textShadow: "0 0 8px rgba(0,0,0,0.5)",
-            boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
-          },
-        }}
-      >
-        {item.label}
-      </Button>
-    </motion.div>
-  ))}
+            {/* Menú Desktop */}
+            <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
+              {menuItems.map((item) => (
+                <motion.div key={item.href} whileHover={{ y: -2, scale: 1.08 }} whileTap={{ scale: 0.95 }}>
+                  <Button
+                    onClick={() => handleScrollTo(item.href)}
+                    sx={{
+                      color: mode === "dark" ? "#fff" : theme.palette.common.white,
+                      fontWeight: 600,
+                      textTransform: "none",
+                      fontSize: "1rem",
+                      position: "relative",
+                      transition: "all 0.25s ease",
+                      padding: "6px 12px",
+                      borderRadius: "8px",
+                      "&::before": {
+                        content: '""',
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: "8px",
+                        background: mode === "dark" ? "#03a9f4" : "#26c6da",
+                        opacity: 0,
+                        transform: "scaleX(0.6)",
+                        transformOrigin: "center",
+                        transition: "all 0.35s ease",
+                        zIndex: -1,
+                      },
+                      "&:hover::before": {
+                        opacity: 1,
+                        transform: "scaleX(1)",
+                      },
+                      "&:hover": {
+                        color: "#fff",
+                        textShadow: "0 0 8px rgba(0,0,0,0.5)",
+                        boxShadow: mode === "dark" ? "0 0 10px #03a9f4" : "0 0 12px #26c6da",
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
 
-  {/* Botón modo oscuro/claro */}
-  <IconButton
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    sx={{
-      color: theme.palette.common.white,
-      transition: "all 0.25s ease",
-      "&:hover": { transform: "scale(1.15)" },
-    }}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </IconButton>
-</Box>
+              {/* Botón modo oscuro/claro */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{
+                  color: theme.palette.common.white,
+                  transition: "all 0.25s ease",
+                  "&:hover": { transform: "scale(1.15)" },
+                }}
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
+            </Box>
 
-{/* Botón móvil abrir menú */}
-<IconButton
-  sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
-  onClick={() => setOpen(true)}
->
-  <MenuIcon fontSize="large" />
-</IconButton>
-
+            {/* Botón móvil abrir menú */}
+            <IconButton
+              sx={{ display: { xs: "block", lg: "none" }, color: theme.palette.common.white }}
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon fontSize="large" />
+            </IconButton>
           </Toolbar>
         </AppBar>
       </motion.div>
@@ -193,9 +200,10 @@ export default function Navbar({ mode, setMode }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(6px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.25 }} // rápido
             style={{
               position: "fixed",
               top: 0,
@@ -203,7 +211,6 @@ export default function Navbar({ mode, setMode }) {
               width: "100vw",
               height: "100vh",
               background: "rgba(0,0,0,0.45)",
-              backdropFilter: "blur(6px)",
               zIndex: 1300,
               display: "flex",
               justifyContent: "flex-end",
@@ -298,4 +305,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+            }
