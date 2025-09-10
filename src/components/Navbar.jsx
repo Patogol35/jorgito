@@ -245,39 +245,44 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Botón modo oscuro/claro */}
-              <Button
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                sx={{
-                  color: "#fff",
-                  border: "1px solid #fff",
-                  textTransform: "none",
-                  mb: 2,
-                  fontWeight: "bold",
-                  borderRadius: "10px",
-                  "&:hover": { background: "rgba(255,255,255,0.12)" },
-                }}
-              >
-                {mode === "light" ? "Modo Noche" : "Modo Día"}
-              </Button>
+              {/* Botones modo/close en fila */}
+              <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+                {/* Botón modo oscuro/claro */}
+                <Button
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  sx={{
+                    flex: 1,
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    justifyContent: "flex-start",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  {mode === "light" ? "Modo Noche" : "Modo Día"}
+                </Button>
 
-              {/* Botón cerrar menú */}
-              <Button
-                onClick={() => setOpen(false)}
-                startIcon={<CloseIcon />}
-                sx={{
-                  color: "#fff",
-                  border: "1px solid #fff",
-                  textTransform: "none",
-                  mb: 3,
-                  fontWeight: "bold",
-                  borderRadius: "10px",
-                  "&:hover": { background: "rgba(255,255,255,0.12)" },
-                }}
-              >
-                Cerrar menú
-              </Button>
+                {/* Botón cerrar menú */}
+                <Button
+                  onClick={() => setOpen(false)}
+                  startIcon={<CloseIcon />}
+                  sx={{
+                    flex: 1,
+                    color: "#fff",
+                    border: "1px solid #fff",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    borderRadius: "10px",
+                    justifyContent: "flex-start",
+                    "&:hover": { background: "rgba(255,255,255,0.12)" },
+                  }}
+                >
+                  Cerrar
+                </Button>
+              </Box>
 
               {/* Links menú móvil */}
               <Stack spacing={2} flexGrow={1}>
@@ -320,4 +325,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-                }
+}
