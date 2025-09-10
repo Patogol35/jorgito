@@ -49,17 +49,6 @@ function useSmoothScroll(offset = -70) {
   };
 }
 
-function throttle(fn, wait) {
-  let lastTime = 0;
-  return (...args) => {
-    const now = Date.now();
-    if (now - lastTime >= wait) {
-      fn(...args);
-      lastTime = now;
-    }
-  };
-}
-
 export default function Navbar({ mode, setMode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -68,39 +57,45 @@ export default function Navbar({ mode, setMode }) {
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
+  // 🔎 IntersectionObserver para detectar la sección activa
   useEffect(() => {
-    const handleScroll = throttle(() => {
-      setScrolled(window.scrollY > 50);
+    const options = {
+      root: null,
+      rootMargin: "-50% 0px -50% 0px", // activa cuando la sección está en el centro
+      threshold: 0,
+    };
 
-      let current = "#hero";
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      menuItems.forEach((item) => {
-        const section = document.querySelector(item.href);
-        if (section) {
-          const top = section.offsetTop - 80;
-          const bottom = top + section.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < bottom) {
-            current = item.href;
-          }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(`#${entry.target.id}`);
         }
       });
+    }, options);
 
-      // 👇 Ajuste para que no “salte” al llegar al final
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 1) {
-        current = "#contact";
-      }
+    const sections = menuItems.map((item) =>
+      document.querySelector(item.href)
+    ).filter(Boolean);
 
-      setActive(current);
-    }, 100);
+    sections.forEach((section) => observer.observe(section));
 
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
+  // 🎯 Navbar cambia de estilo al hacer scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // 🛑 Evitar salto por el scrollbar
   useEffect(() => {
     if (open) {
-      // 👉 FIX: evita que el menú “salte” por el scrollbar
       const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = "hidden";
       document.body.style.paddingRight = `${scrollBarWidth}px`;
@@ -234,7 +229,7 @@ export default function Navbar({ mode, setMode }) {
                 background: mode === "dark" ? "rgba(30,30,30,0.95)" : theme.palette.primary.main,
                 borderRadius: "16px 0 0 16px",
                 padding: "2rem",
-                paddingTop: "5rem", // evita que se tape "Sobre mí"
+                paddingTop: "5rem",
                 boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
                 display: "flex",
                 flexDirection: "column",
@@ -295,7 +290,7 @@ export default function Navbar({ mode, setMode }) {
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
-                  {mode === "light" ? "Noche" : "Día"}
+                  {mode === "light" ? "Modo Noche" : "Modo Día"}
                 </Button>
 
                 <Button
