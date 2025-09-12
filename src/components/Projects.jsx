@@ -19,6 +19,11 @@ const proyectos = [
     link: "https://jorgepatriciosantamariacherrezmovie.vercel.app/",
     color: "#16a34a",
   },
+  {
+    titulo: "📚 Quiz educativo de Ambato y Ecuador",
+    link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+    color: "#e11d48", // rojo educativo llamativo
+  },
 ];
 
 export default function Projects() {
@@ -82,19 +87,22 @@ export default function Projects() {
                   variant="subtitle1"
                   sx={{ fontWeight: "bold", mt: 1 }}
                 >
-                <Link
-  href={p.link}
-  underline="hover"
-  target="_blank"
-  rel="noopener noreferrer"
-  sx={{
-    color: theme.palette.mode === "dark" ? "#e0e0e0" : p.color, // texto claro en dark mode
-    fontWeight: "bold",
-    "&:hover": { textDecoration: "underline" },
-  }}
->
-  {p.titulo}
-</Link>
+                  <Link
+                    href={p.link}
+                    underline="hover"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      color:
+                        theme.palette.mode === "dark"
+                          ? "#e0e0e0"
+                          : p.color, // texto claro en dark mode
+                      fontWeight: "bold",
+                      "&:hover": { textDecoration: "underline" },
+                    }}
+                  >
+                    {p.titulo}
+                  </Link>
                 </Typography>
               </Box>
             </motion.div>
@@ -103,4 +111,4 @@ export default function Projects() {
       </Grid>
     </Box>
   );
-          }
+}
