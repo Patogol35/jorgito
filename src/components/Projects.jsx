@@ -24,6 +24,11 @@ const proyectos = [
     link: "https://quiz-educativo-jorgepatricio.vercel.app/",
     color: "#e11d48", // rojo educativo llamativo
   },
+  {
+    titulo: "🧮 Calculadora Científica",
+    link: "https://calculadorajorgepatricio.vercel.app/",
+    color: "#f59e0b", // amarillo llamativo
+  },
 ];
 
 export default function Projects() {
