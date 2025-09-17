@@ -95,18 +95,12 @@ export default function Projects() {
                 >
                   <Link
                     href={p.link}
-                    underline="hover"
                     target="_blank"
                     rel="noopener noreferrer"
+                    underline="none" // 🚀 sin subrayado siempre
                     sx={{
                       color: theme.palette.text.primary, // ✅ siempre usa el color del tema
                       fontWeight: "bold",
-                      "&:hover": {
-                        textDecoration: "underline",
-                        ...(theme.palette.mode === "light" && {
-                          color: p.color, // solo cambia en modo claro
-                        }),
-                      },
                     }}
                   >
                     {p.titulo}
