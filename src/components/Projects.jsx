@@ -94,7 +94,7 @@ export default function Projects() {
                 >
                   <Link
                     href={p.link}
-                    underline="hover"
+                    underline="none"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
@@ -103,13 +103,6 @@ export default function Projects() {
                           ? theme.palette.primary.light // en dark se ve más claro
                           : p.color, // en light mantiene color propio
                       fontWeight: "bold",
-                      "&:hover": {
-                        textDecoration: "underline",
-                        color:
-                          theme.palette.mode === "dark"
-                            ? theme.palette.primary.main // hover en dark más intenso
-                            : p.color,
-                      },
                     }}
                   >
                     {p.titulo}
