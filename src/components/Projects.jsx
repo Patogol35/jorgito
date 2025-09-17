@@ -16,7 +16,7 @@ const proyectos = [
   },
   {
     titulo: "🎬 Buscador de películas",
-    link: "https://jorgepatriciosantamariacherrezmovie.vercel.app/",
+    link: "https://movie-explorer-jorge-patricio.vercel.app/",
     color: "#16a34a",
   },
   {
