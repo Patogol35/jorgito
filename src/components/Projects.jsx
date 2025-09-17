@@ -22,12 +22,12 @@ const proyectos = [
   {
     titulo: "📚 Quiz educativo de Ambato y Ecuador",
     link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-    color: "#e11d48", // rojo educativo llamativo
+    color: "#e11d48",
   },
   {
     titulo: "🧮 Calculadora Científica",
     link: "https://calculadorajorgepatricio.vercel.app/",
-    color: "#f59e0b", // amarillo llamativo
+    color: "#f59e0b",
   },
 ];
 
@@ -68,7 +68,7 @@ export default function Projects() {
             variant="h6"
             sx={{
               fontWeight: "bold",
-              // 🔵 igual al original
+              // 👇 encabezado igual al original
               color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
             }}
           >
@@ -99,12 +99,13 @@ export default function Projects() {
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      // ✅ ahora los links usan el color del tema
-                      color: theme.palette.text.primary,
+                      color: theme.palette.text.primary, // ✅ siempre usa el color del tema
                       fontWeight: "bold",
                       "&:hover": {
                         textDecoration: "underline",
-                        color: p.color, // se resalta con el color del proyecto
+                        ...(theme.palette.mode === "light" && {
+                          color: p.color, // solo cambia en modo claro
+                        }),
                       },
                     }}
                   >
