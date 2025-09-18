@@ -1,6 +1,6 @@
 import { Toolbar, Box, Typography, Button, Avatar, IconButton } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { Brightness4, Brightness7, GitHub, LinkedIn, Email } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
@@ -72,11 +72,25 @@ export default function Hero({ mode, setMode }) {
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
-            <Typography variant="body1" paragraph sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}>
-             Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar impacto positivo
+            <Typography
+              variant="body1"
+              paragraph
+              sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}
+            >
+              Me apasiona crear tecnología que transforme ideas en realidades digitales.
+              Mi enfoque está en aportar valor constante, desarrollando soluciones digitales
+              seguras, innovadoras y orientadas a generar impacto positivo.
             </Typography>
 
-            <Box sx={{ display: "flex", gap: 2, justifyContent: { xs: "center", sm: "flex-start" }, flexWrap: "wrap" }}>
+            {/* Botones */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: { xs: "center", sm: "flex-start" },
+                flexWrap: "wrap",
+              }}
+            >
               {/* Botón para CV */}
               <Button
                 variant="contained"
@@ -119,9 +133,51 @@ export default function Hero({ mode, setMode }) {
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
               </Button>
             </Box>
+
+            {/* Iconos sociales */}
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1.5,
+                mt: 3,
+                justifyContent: { xs: "center", sm: "flex-start" },
+              }}
+            >
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <IconButton
+                  component="a"
+                  href="https://github.com/Patogol35"
+                  target="_blank"
+                  sx={{ color: theme.palette.text.primary }}
+                >
+                  <GitHub fontSize="large" />
+                </IconButton>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <IconButton
+                  component="a"
+                  href="https://www.linkedin.com/in/jorge-patricio"
+                  target="_blank"
+                  sx={{ color: "#0a66c2" }}
+                >
+                  <LinkedIn fontSize="large" />
+                </IconButton>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.2 }}>
+                <IconButton
+                  component="a"
+                  href="mailto:jorge@example.com"
+                  sx={{ color: theme.palette.error.main }}
+                >
+                  <Email fontSize="large" />
+                </IconButton>
+              </motion.div>
+            </Box>
           </Box>
         </motion.div>
       </Box>
     </>
   );
-}
+              }
