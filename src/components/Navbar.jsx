@@ -12,17 +12,23 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import CodeIcon from "@mui/icons-material/Code";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+import PersonIcon from "@mui/icons-material/Person";
+import SchoolIcon from "@mui/icons-material/School";
+import BuildIcon from "@mui/icons-material/Build";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import WorkIcon from "@mui/icons-material/Work";
+import EmailIcon from "@mui/icons-material/Email";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// 📌 Configuración del menú
+// 📌 Configuración del menú con iconos
 const menuItems = [
-  { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)" },
-  { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)" },
-  { label: "Tecnologías", href: "#skills", color: "linear-gradient(135deg, #f57c00, #ffb74d)" },
-  { label: "Certificaciones", href: "#certifications", color: "linear-gradient(135deg, #6a1b9a, #ab47bc)" },
-  { label: "Proyectos", href: "#projects", color: "linear-gradient(135deg, #0288d1, #03a9f4)" },
-  { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)" },
+  { label: "Sobre mí", href: "#hero", color: "linear-gradient(135deg, #0288d1, #26c6da)", icon: <PersonIcon sx={{ color: "#fff" }} /> },
+  { label: "Educación", href: "#about", color: "linear-gradient(135deg, #2e7d32, #66bb6a)", icon: <SchoolIcon sx={{ color: "#fff" }} /> },
+  { label: "Tecnologías", href: "#skills", color: "linear-gradient(135deg, #f57c00, #ffb74d)", icon: <BuildIcon sx={{ color: "#fff" }} /> },
+  { label: "Certificaciones", href: "#certifications", color: "linear-gradient(135deg, #6a1b9a, #ab47bc)", icon: <VerifiedIcon sx={{ color: "#fff" }} /> },
+  { label: "Proyectos", href: "#projects", color: "linear-gradient(135deg, #0288d1, #03a9f4)", icon: <WorkIcon sx={{ color: "#fff" }} /> },
+  { label: "Contacto", href: "#contact", color: "linear-gradient(135deg, #c62828, #ef5350)", icon: <EmailIcon sx={{ color: "#fff" }} /> },
 ];
 
 // 🎬 Variantes animaciones
@@ -135,58 +141,53 @@ export default function Navbar({ mode, setMode }) {
               </Typography>
             </motion.div>
 
+            {/* Desktop menu */}
+            <Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
+              {menuItems.map((item) => (
+                <motion.div
+                  key={item.href}
+                  whileHover={{ y: -2, scale: 1.08 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button
+                    onClick={() => handleScrollTo(item.href)}
+                    aria-current={active === item.href ? "page" : undefined}
+                    startIcon={item.icon} // ✅ Icono aquí
+                    sx={{
+                      color: "#fff",
+                      fontWeight: 600,
+                      textTransform: "none",
+                      fontSize: "1rem",
+                      borderRadius: "10px",
+                      px: 2,
+                      py: 1,
+                      transition: "all 0.3s ease",
+                      background: active === item.href ? item.color : "transparent",
+                      boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
+                      ...(item.label === "Sobre mí"
+                        ? {}
+                        : {
+                            "&:hover": {
+                              background: item.color,
+                              boxShadow: "0 0 15px rgba(0,0,0,0.4)",
+                            },
+                          }),
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                </motion.div>
+              ))}
 
-{/* Desktop menu */}
-<Box sx={{ display: { xs: "none", lg: "flex" }, gap: 3, alignItems: "center" }}>
-  {menuItems.map((item) => (
-    <motion.div
-      key={item.href}
-      whileHover={{ y: -2, scale: 1.08 }} // 🔹 Animación se mantiene SIEMPRE
-      whileTap={{ scale: 0.95 }}
-    >
-      <Button
-        onClick={() => handleScrollTo(item.href)}
-        aria-current={active === item.href ? "page" : undefined}
-        sx={{
-          color: "#fff",
-          fontWeight: 600,
-          textTransform: "none",
-          fontSize: "1rem",
-          borderRadius: "10px",
-          px: 2,
-          py: 1,
-          transition: "all 0.3s ease",
-          background: active === item.href ? item.color : "transparent",
-          boxShadow: active === item.href ? "0 0 12px rgba(0,0,0,0.35)" : "none",
-
-          // 👇 Solo quitamos estilos hover en "Sobre mí"
-          ...(item.label === "Sobre mí"
-            ? {} // sin hover extra
-            : {
-                "&:hover": {
-                  background: item.color,
-                  boxShadow: "0 0 15px rgba(0,0,0,0.4)",
-                },
-              }),
-        }}
-      >
-        {item.label}
-      </Button>
-    </motion.div>
-  ))}
-
-  {/* Botón tema */}
-  <IconButton
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    sx={{ color: "#fff" }}
-    aria-label="Cambiar tema"
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </IconButton>
-</Box>
-
-
-            
+              {/* Botón tema */}
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{ color: "#fff" }}
+                aria-label="Cambiar tema"
+              >
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
+            </Box>
 
             {/* Botón menú móvil */}
             <IconButton
@@ -264,11 +265,14 @@ export default function Navbar({ mode, setMode }) {
                       cursor: "pointer",
                       padding: "0.9rem 1rem",
                       borderRadius: "10px",
+                      display: "flex", // ✅ icono + texto
+                      alignItems: "center",
+                      gap: "0.5rem",
                       background: item.color,
                       boxShadow: active === item.href ? "0 0 12px rgba(255,255,255,0.7)" : "0 3px 10px rgba(0,0,0,0.3)",
                     }}
                   >
-                    {item.label}
+                    {item.icon} {item.label}
                   </motion.a>
                 ))}
               </Stack>
