@@ -72,7 +72,7 @@ export default function Projects() {
               color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
             }}
           >
-            Proyectos
+           Algunos Proyectos
           </Typography>
         </Box>
       </motion.div>
