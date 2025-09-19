@@ -152,7 +152,7 @@ export default function Navbar({ mode, setMode }) {
                   <Button
                     onClick={() => handleScrollTo(item.href)}
                     aria-current={active === item.href ? "page" : undefined}
-                    startIcon={item.icon} // ✅ Icono aquí
+                    startIcon={item.icon}
                     sx={{
                       color: "#fff",
                       fontWeight: 600,
@@ -265,7 +265,7 @@ export default function Navbar({ mode, setMode }) {
                       cursor: "pointer",
                       padding: "0.9rem 1rem",
                       borderRadius: "10px",
-                      display: "flex", // ✅ icono + texto
+                      display: "flex",
                       alignItems: "center",
                       gap: "0.5rem",
                       background: item.color,
@@ -277,41 +277,35 @@ export default function Navbar({ mode, setMode }) {
                 ))}
               </Stack>
 
-              {/* Botones abajo */}
-              <Box sx={{ display: "flex", gap: 1, mt: 3 }}>
-                <Button
+              {/* Botones abajo redondos */}
+              <Box sx={{ display: "flex", gap: 2, mt: 3, justifyContent: "center" }}>
+                <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
                   sx={{
-                    flex: 1,
                     color: "#fff",
                     border: "1px solid #fff",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "10px",
-                    minHeight: "48px",
+                    borderRadius: "50%",
+                    width: 56,
+                    height: 56,
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
-                  {mode === "light" ? "Modo Noche" : "Modo Día"}
-                </Button>
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </IconButton>
 
-                <Button
+                <IconButton
                   onClick={() => setOpen(false)}
-                  startIcon={<CloseIcon />}
                   sx={{
-                    flex: 1,
                     color: "#fff",
                     border: "1px solid #fff",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    borderRadius: "10px",
-                    minHeight: "48px",
+                    borderRadius: "50%",
+                    width: 56,
+                    height: 56,
                     "&:hover": { background: "rgba(255,255,255,0.12)" },
                   }}
                 >
-                  Cerrar
-                </Button>
+                  <CloseIcon />
+                </IconButton>
               </Box>
             </motion.div>
           </motion.div>
@@ -319,4 +313,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-}
+                        }
