@@ -10,7 +10,7 @@ const proyectos = [
     color: "#1976d2",
   },
   {
-    titulo: "🛒 Tienda Full Stack (React + Django)",
+    titulo: "🛒 E-commerce Full Stack (React + Django)",
     link: "https://ecommerce-jorge-patricio.vercel.app/",
     color: "#9333ea",
   },
