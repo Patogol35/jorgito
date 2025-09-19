@@ -11,7 +11,7 @@ const proyectos = [
   },
   {
     titulo: "🛒 Tienda Full Stack (React + Django)",
-    link: "https://patriciosantamariaapp.vercel.app/",
+    link: "https://ecommerce-jorge-patricio.vercel.app/",
     color: "#9333ea",
   },
   {
