@@ -11,31 +11,31 @@ import FunctionsIcon from "@mui/icons-material/Functions"; // calculadora
 
 const proyectos = [
   {
-    titulo: "🌤 App para ver el clima",
+    titulo: "App para ver el clima",
     link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     color: "#1976d2",
     icon: WbSunnyIcon,
   },
   {
-    titulo: "🛒 E-commerce Full Stack (React + Django)",
+    titulo: "E-commerce Full Stack (React + Django)",
     link: "https://ecommerce-jorge-patricio.vercel.app/",
     color: "#9333ea",
     icon: ShoppingCartIcon,
   },
   {
-    titulo: "🎬 Buscador de películas",
+    titulo: "Buscador de películas",
     link: "https://movie-explorer-jorge-patricio.vercel.app/",
     color: "#16a34a",
     icon: MovieIcon,
   },
   {
-    titulo: "📚 Quiz educativo de Ambato y Ecuador",
+    titulo: "Quiz educativo de Ambato y Ecuador",
     link: "https://quiz-educativo-jorgepatricio.vercel.app/",
     color: "#e11d48",
     icon: QuizIcon,
   },
   {
-    titulo: "🧮 Calculadora Científica",
+    titulo: "Calculadora Científica",
     link: "https://calculadorajorgepatricio.vercel.app/",
     color: "#f59e0b",
     icon: FunctionsIcon,
