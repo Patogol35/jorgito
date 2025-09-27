@@ -8,16 +8,19 @@ import {
   Stack,
   useTheme,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import CodeIcon from "@mui/icons-material/Code";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
-import PersonIcon from "@mui/icons-material/Person";
-import SchoolIcon from "@mui/icons-material/School";
-import BuildIcon from "@mui/icons-material/Build";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import WorkIcon from "@mui/icons-material/Work";
-import EmailIcon from "@mui/icons-material/Email";
+import {
+  Menu as MenuIcon,
+  Close as CloseIcon,
+  Code as CodeIcon,
+  Brightness4,
+  Brightness7,
+  Person as PersonIcon,
+  School as SchoolIcon,
+  Build as BuildIcon,
+  Verified as VerifiedIcon,
+  Work as WorkIcon,
+  Email as EmailIcon,
+} from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -105,7 +108,6 @@ function useActiveSection(setActive) {
       .filter(Boolean);
 
     sections.forEach((s) => observer.observe(s));
-
     return () => sections.forEach((s) => observer.unobserve(s));
   }, [setActive]);
 }
@@ -143,6 +145,8 @@ export default function Navbar({ mode, setMode }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const toggleTheme = () => setMode(mode === "light" ? "dark" : "light");
 
   return (
     <>
@@ -237,7 +241,7 @@ export default function Navbar({ mode, setMode }) {
 
               {/* Botón tema */}
               <IconButton
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                onClick={toggleTheme}
                 sx={{ color: "#fff" }}
                 aria-label="Cambiar tema"
               >
@@ -343,33 +347,25 @@ export default function Navbar({ mode, setMode }) {
               <Box
                 sx={{ display: "flex", gap: 2, mt: 3, justifyContent: "center" }}
               >
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: "#fff",
-                    border: "1px solid #fff",
-                    borderRadius: "50%",
-                    width: 56,
-                    height: 56,
-                    "&:hover": { background: "rgba(255,255,255,0.12)" },
-                  }}
-                >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                </IconButton>
-
-                <IconButton
-                  onClick={() => setOpen(false)}
-                  sx={{
-                    color: "#fff",
-                    border: "1px solid #fff",
-                    borderRadius: "50%",
-                    width: 56,
-                    height: 56,
-                    "&:hover": { background: "rgba(255,255,255,0.12)" },
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
+                {[ 
+                  { onClick: toggleTheme, icon: mode === "light" ? <Brightness4 /> : <Brightness7 /> },
+                  { onClick: () => setOpen(false), icon: <CloseIcon /> }
+                ].map((btn, idx) => (
+                  <IconButton
+                    key={idx}
+                    onClick={btn.onClick}
+                    sx={{
+                      color: "#fff",
+                      border: "1px solid #fff",
+                      borderRadius: "50%",
+                      width: 56,
+                      height: 56,
+                      "&:hover": { background: "rgba(255,255,255,0.12)" },
+                    }}
+                  >
+                    {btn.icon}
+                  </IconButton>
+                ))}
               </Box>
             </motion.div>
           </motion.div>
@@ -377,4 +373,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-                  }
+    }
