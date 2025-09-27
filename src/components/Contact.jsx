@@ -62,7 +62,7 @@ export default function Contact() {
                 color: isDark ? "#bbdefb" : "#1976d2",
               }}
             >
-              Mis Redes Sociales
+              Redes Sociales
             </Typography>
           </Box>
         </motion.div>
