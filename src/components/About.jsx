@@ -21,6 +21,7 @@ const estudios = [
 
 export default function About() {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark"; // ✅ agregado
 
   return (
     <Box
@@ -39,35 +40,35 @@ export default function About() {
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    px: 4,
-    py: 1.2,
-    borderRadius: "999px",
-    background: isDark
-      ? "rgba(144,202,249,0.1)"
-      : "rgba(25,118,210,0.1)",
-  }}
->
-  <SchoolIcon
-    sx={{
-      fontSize: 26,
-      mr: 1.2, // espacio a la derecha del icono
-      color: isDark ? "#bbdefb" : "#1976d2",
-    }}
-  />
-  <Typography
-    variant="h6"
-    sx={{
-      fontWeight: "bold",
-      color: isDark ? "#bbdefb" : "#1976d2",
-    }}
-  >
-    Formación Académica 
-  </Typography>
-</Box>
+          sx={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: 4,
+            py: 1.2,
+            borderRadius: "999px",
+            background: isDark
+              ? "rgba(144,202,249,0.1)"
+              : "rgba(25,118,210,0.1)",
+          }}
+        >
+          <SchoolIcon
+            sx={{
+              fontSize: 26,
+              mr: 1.2,
+              color: isDark ? "#bbdefb" : "#1976d2",
+            }}
+          />
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: "bold",
+              color: isDark ? "#bbdefb" : "#1976d2",
+            }}
+          >
+            Formación Académica
+          </Typography>
+        </Box>
       </motion.div>
 
       {/* Grid */}
