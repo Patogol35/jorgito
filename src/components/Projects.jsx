@@ -2,44 +2,20 @@ import { Typography, Grid, Box, Link } from "@mui/material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
-// ✅ Importar íconos de Material Icons
-import WbSunnyIcon from "@mui/icons-material/WbSunny"; // clima
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"; // e-commerce
-import MovieIcon from "@mui/icons-material/Movie"; // películas
-import QuizIcon from "@mui/icons-material/Quiz"; // quiz educativo
-import FunctionsIcon from "@mui/icons-material/Functions"; // calculadora
+// ✅ Importar íconos de proyectos
+import WbSunnyIcon from "@mui/icons-material/WbSunny"; 
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import MovieIcon from "@mui/icons-material/Movie";
+import QuizIcon from "@mui/icons-material/Quiz";
+import FunctionsIcon from "@mui/icons-material/Functions";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline"; // título
 
 const proyectos = [
-  {
-    titulo: "App para ver el clima",
-    link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
-    color: "#1976d2",
-    icon: WbSunnyIcon,
-  },
-  {
-    titulo: "E-commerce Full Stack (React + Django)",
-    link: "https://ecommerce-jorge-patricio.vercel.app/",
-    color: "#9333ea",
-    icon: ShoppingCartIcon,
-  },
-  {
-    titulo: "Buscador de películas",
-    link: "https://movie-explorer-jorge-patricio.vercel.app/",
-    color: "#16a34a",
-    icon: MovieIcon,
-  },
-  {
-    titulo: "Quiz educativo de Ambato y Ecuador",
-    link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-    color: "#e11d48",
-    icon: QuizIcon,
-  },
-  {
-    titulo: "Calculadora Científica",
-    link: "https://calculadorajorgepatricio.vercel.app/",
-    color: "#f59e0b",
-    icon: FunctionsIcon,
-  },
+  { titulo: "App para ver el clima", link: "https://jorgepatriciosantamariacherrezweath.vercel.app/", color: "#1976d2", icon: WbSunnyIcon },
+  { titulo: "E-commerce Full Stack (React + Django)", link: "https://ecommerce-jorge-patricio.vercel.app/", color: "#9333ea", icon: ShoppingCartIcon },
+  { titulo: "Buscador de películas", link: "https://movie-explorer-jorge-patricio.vercel.app/", color: "#16a34a", icon: MovieIcon },
+  { titulo: "Quiz educativo de Ambato y Ecuador", link: "https://quiz-educativo-jorgepatricio.vercel.app/", color: "#e11d48", icon: QuizIcon },
+  { titulo: "Calculadora Científica", link: "https://calculadorajorgepatricio.vercel.app/", color: "#f59e0b", icon: FunctionsIcon },
 ];
 
 export default function Projects() {
@@ -54,7 +30,7 @@ export default function Projects() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado tipo badge con texto */}
+      {/* Encabezado tipo badge con ícono + texto */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -75,6 +51,13 @@ export default function Projects() {
                 : "rgba(25,118,210,0.1)",
           }}
         >
+          <WorkOutlineIcon
+            sx={{
+              fontSize: 26,
+              mr: 1.2,
+              color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
+            }}
+          />
           <Typography
             variant="h6"
             sx={{
