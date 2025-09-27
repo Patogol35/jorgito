@@ -64,7 +64,7 @@ const menuItems = [
   },
 ];
 
-// 🎬 Variantes animaciones
+// Variantes animaciones
 const menuVariants = {
   hidden: { x: "100%", opacity: 0 },
   visible: { x: 0, opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -189,7 +189,7 @@ export default function Navbar({ mode, setMode }) {
                   whileHover={{ rotate: 10 }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <CodeIcon sx={{ mr: 1 }} />
+                  <PersonIcon sx={{ mr: 1 }} />
                 </motion.div>
                 Jorge Patricio
               </Typography>
