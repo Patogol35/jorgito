@@ -1,6 +1,7 @@
 import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium"; // 👈 Importamos el ícono
 import { useTheme } from "@mui/material/styles";
 
 const certificaciones = [
@@ -14,6 +15,7 @@ const certificaciones = [
 
 export default function Certifications() {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   return (
     <Box
@@ -24,7 +26,7 @@ export default function Certifications() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado tipo badge con texto */}
+      {/* Encabezado tipo badge con icono + texto */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -39,17 +41,23 @@ export default function Certifications() {
             px: 4,
             py: 1.2,
             borderRadius: "999px",
-            background:
-              theme.palette.mode === "dark"
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
+            background: isDark
+              ? "rgba(144,202,249,0.1)"
+              : "rgba(25,118,210,0.1)",
           }}
         >
+          <WorkspacePremiumIcon
+            sx={{
+              fontSize: 26,
+              mr: 1.2,
+              color: isDark ? "#bbdefb" : "#1976d2",
+            }}
+          />
           <Typography
             variant="h6"
             sx={{
               fontWeight: "bold",
-              color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
+              color: isDark ? "#bbdefb" : "#1976d2",
             }}
           >
             Certificaciones
@@ -85,4 +93,4 @@ export default function Certifications() {
       </Grid>
     </Box>
   );
-                    }
+}
