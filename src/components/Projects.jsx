@@ -1,6 +1,6 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
-import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
+import { motion } from "framer-motion";
 
 // ✅ Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -49,15 +49,15 @@ const proyectos = [
 // =====================
 // Tarjeta individual
 // =====================
-function ProjectCard({ p, i, theme }) {
+function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.3 }} // ⬅️ mismo delay original
-        viewport={{ once: false }} // ⬅️ se reanima cada vez que entra al viewport
+        transition={{ duration: 0.8, delay: i * 0.3 }}
+        viewport={{ once: false }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
@@ -67,7 +67,7 @@ function ProjectCard({ p, i, theme }) {
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
-              sx={{ color: theme.palette.text.primary, fontWeight: "bold" }}
+              sx={{ color: palette.text.primary, fontWeight: "bold" }}
             >
               {p.titulo}
             </Link>
@@ -82,7 +82,10 @@ function ProjectCard({ p, i, theme }) {
 // Componente principal
 // =====================
 export default function Projects() {
-  const theme = useTheme();
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const badgeBg = isDark ? "rgba(144,202,249,0.1)" : "rgba(25,118,210,0.1)";
 
   return (
     <Box
@@ -90,10 +93,10 @@ export default function Projects() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
+        color: palette.text.primary,
       }}
     >
-      {/* Encabezado con badge */}
+      {/* Encabezado */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -109,26 +112,11 @@ export default function Projects() {
             px: 4,
             py: 1.2,
             borderRadius: "999px",
-            background:
-              theme.palette.mode === "dark"
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
+            background: badgeBg,
           }}
         >
-          <WorkOutlineIcon
-            sx={{
-              fontSize: 26,
-              mr: 1.2,
-              color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
-            }}
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: theme.palette.mode === "dark" ? "#bbdefb" : "#1976d2",
-            }}
-          >
+          <WorkOutlineIcon sx={{ fontSize: 26, mr: 1.2, color: primaryColor }} />
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: primaryColor }}>
             Algunos Proyectos
           </Typography>
         </Box>
@@ -137,7 +125,7 @@ export default function Projects() {
       {/* Grid de proyectos */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard key={i} p={p} i={i} theme={theme} />
+          <ProjectCard key={p.titulo} p={p} i={i} palette={palette} />
         ))}
       </Grid>
     </Box>
