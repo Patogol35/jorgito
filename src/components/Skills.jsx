@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DevicesIcon from "@mui/icons-material/Devices"; 
+import BuildIcon from "@mui/icons-material/Build";
 import {
   Container,
   Typography,
@@ -66,7 +66,7 @@ export default function Skills() {
       : "rgba(25,118,210,0.1)",
   }}
 >
-  <DevicesIcon
+  <BuildIcon
     sx={{
       fontSize: 26,
       mr: 1.2, // espacio a la derecha del icono
