@@ -373,4 +373,4 @@ export default function Navbar({ mode, setMode }) {
       </AnimatePresence>
     </>
   );
-    }
+}
