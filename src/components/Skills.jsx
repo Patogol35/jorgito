@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DevicesIcon from "@mui/icons-material/Devices"; 
 import {
   Container,
   Typography,
@@ -53,28 +54,35 @@ export default function Skills() {
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              px: 4,
-              py: 1.2,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: "bold",
-                color: isDark ? "#bbdefb" : "#1976d2",
-              }}
-            >
-              Mi Stack Tecnológico
-            </Typography>
-          </Box>
+  sx={{
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    px: 4,
+    py: 1.2,
+    borderRadius: "999px",
+    background: isDark
+      ? "rgba(144,202,249,0.1)"
+      : "rgba(25,118,210,0.1)",
+  }}
+>
+  <DevicesIcon
+    sx={{
+      fontSize: 26,
+      mr: 1.2, // espacio a la derecha del icono
+      color: isDark ? "#bbdefb" : "#1976d2",
+    }}
+  />
+  <Typography
+    variant="h6"
+    sx={{
+      fontWeight: "bold",
+      color: isDark ? "#bbdefb" : "#1976d2",
+    }}
+  >
+    Mi Stack Tecnológico
+  </Typography>
+</Box>
         </motion.div>
 
         {/* Filtros */}
