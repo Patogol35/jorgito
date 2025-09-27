@@ -80,7 +80,7 @@ export default function Skills() {
       color: isDark ? "#bbdefb" : "#1976d2",
     }}
   >
-    Mi Stack Tecnológico
+    Stack Tecnológico
   </Typography>
 </Box>
         </motion.div>
