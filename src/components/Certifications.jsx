@@ -1,8 +1,8 @@
 import { Typography, Grid, Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium"; // 👈 Importamos el ícono
-import { useTheme } from "@mui/material/styles";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 
 const certificaciones = [
   { titulo: "Curso de React.js", institucion: "Platzi", año: 2025, iconColor: "#1976d2", iconType: BookOpen },
@@ -14,8 +14,10 @@ const certificaciones = [
 ];
 
 export default function Certifications() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const badgeBg = isDark ? "rgba(144,202,249,0.1)" : "rgba(25,118,210,0.1)";
 
   return (
     <Box
@@ -23,10 +25,10 @@ export default function Certifications() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
+        color: palette.text.primary,
       }}
     >
-      {/* Encabezado tipo badge con icono + texto */}
+      {/* Encabezado */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -41,56 +43,39 @@ export default function Certifications() {
             px: 4,
             py: 1.2,
             borderRadius: "999px",
-            background: isDark
-              ? "rgba(144,202,249,0.1)"
-              : "rgba(25,118,210,0.1)",
+            background: badgeBg,
           }}
         >
-          <WorkspacePremiumIcon
-            sx={{
-              fontSize: 26,
-              mr: 1.2,
-              color: isDark ? "#bbdefb" : "#1976d2",
-            }}
-          />
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: isDark ? "#bbdefb" : "#1976d2",
-            }}
-          >
+          <WorkspacePremiumIcon sx={{ fontSize: 26, mr: 1.2, color: primaryColor }} />
+          <Typography variant="h6" sx={{ fontWeight: "bold", color: primaryColor }}>
             Certificaciones
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid */}
+      {/* Grid de certificaciones */}
       <Grid container spacing={3} justifyContent="center">
-        {certificaciones.map((c, i) => {
-          const IconComponent = c.iconType;
-          return (
-            <Grid item xs={12} sm={6} md={4} key={i}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                whileHover={{ y: -5, scale: 1.05 }}
-              >
-                <Box sx={{ textAlign: "center", px: 1 }}>
-                  <IconComponent size={28} color={c.iconColor} />
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-                    {c.titulo}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {c.institucion} | {c.año}
-                  </Typography>
-                </Box>
-              </motion.div>
-            </Grid>
-          );
-        })}
+        {certificaciones.map(({ titulo, institucion, año, iconColor, iconType: Icon }, i) => (
+          <Grid item xs={12} sm={6} md={4} key={titulo}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -5, scale: 1.05 }}
+            >
+              <Box sx={{ textAlign: "center", px: 1 }}>
+                <Icon size={28} color={iconColor} />
+                <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+                  {titulo}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {institucion} | {año}
+                </Typography>
+              </Box>
+            </motion.div>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );
-}
+              }
