@@ -66,7 +66,7 @@ export default function About() {
               color: isDark ? "#bbdefb" : "#1976d2",
             }}
           >
-            Formación Académica
+            Formación 
           </Typography>
         </Box>
       </motion.div>
