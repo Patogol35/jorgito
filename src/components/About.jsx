@@ -6,13 +6,13 @@ import { useTheme } from "@mui/material/styles";
 
 const estudios = [
   {
-    titulo: "💻 Máster en Ingeniería de Software y Sistemas Informáticos",
+    titulo: "Máster en Ingeniería de Software y Sistemas Informáticos",
     institucion: "Universidad Internacional de La Rioja, España",
     detalle: "Nota TFM: 9 | Promedio final: 8.68",
     iconColor: "#1976d2",
   },
   {
-    titulo: "💻 Ingeniero en Sistemas",
+    titulo: "Ingeniero en Sistemas",
     institucion: "Universidad Indoamérica, Ecuador",
     detalle: "Nota Tesis: 9.50 | Promedio final: 9",
     iconColor: "#9333ea",
