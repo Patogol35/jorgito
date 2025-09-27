@@ -1,7 +1,6 @@
 import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
-import { GraduationCap } from "lucide-react";
-import SchoolIcon from "@mui/icons-material/School";
+import { GraduationCap } from "lucide-react"; // ✅ solo una librería
 import { useTheme } from "@mui/material/styles";
 
 const estudios = [
@@ -21,7 +20,11 @@ const estudios = [
 
 export default function About() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark"; // ✅ agregado
+  const isDark = theme.palette.mode === "dark";
+
+  // 🎯 Estilos reutilizables
+  const secondary = theme.palette.text.secondary;
+  const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
   return (
     <Box
@@ -32,11 +35,12 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado tipo badge con texto */}
+      {/* Encabezado con badge */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
+        viewport={{ once: false }} // 🔑 mantiene reanimación cada vez
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
@@ -52,10 +56,10 @@ export default function About() {
               : "rgba(25,118,210,0.1)",
           }}
         >
-          <SchoolIcon
-            sx={{
-              fontSize: 26,
-              mr: 1.2,
+          <GraduationCap
+            size={26}
+            style={{
+              marginRight: "0.8rem",
               color: isDark ? "#bbdefb" : "#1976d2",
             }}
           />
@@ -66,39 +70,30 @@ export default function About() {
               color: isDark ? "#bbdefb" : "#1976d2",
             }}
           >
-            Formación 
+            Formación
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid */}
+      {/* Grid de estudios */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.3 }}
+              transition={{ duration: 0.8, delay: i * 0.3 }} // 🔑 misma secuencia
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
                 <GraduationCap size={28} color={est.iconColor} />
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontWeight: "bold", mt: 1 }}
-                >
+                <Typography variant="subtitle1" sx={subtitleStyle}>
                   {est.titulo}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color={theme.palette.text.secondary}
-                >
+                <Typography variant="body2" color={secondary}>
                   {est.institucion}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color={theme.palette.text.secondary}
-                >
+                <Typography variant="body2" color={secondary}>
                   {est.detalle}
                 </Typography>
               </Box>
