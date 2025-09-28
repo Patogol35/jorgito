@@ -151,7 +151,7 @@ export default function Hero({ mode, setMode }) {
         sx={{
           display: "flex",
           justifyContent: "center",
-          mt: { xs: 2, sm: 3 },
+          mt: { xs: 1, sm: 2 },
           px: 2,
         }}
       >
@@ -162,7 +162,7 @@ export default function Hero({ mode, setMode }) {
             width: "100%",
             maxWidth: "650px",
             borderRadius: "16px",
-            border: `4px solid ${theme.palette.primary.main}`,
+            border: `1px solid ${theme.palette.primary.main}`,
             boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
           }}
           initial={{ opacity: 0, y: 50 }}
