@@ -35,7 +35,7 @@ export default function Hero({ mode, setMode }) {
             sx={{
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
-              border: `4px solid ${theme.palette.primary.main}`, // ✅ corregido
+              border: `4px solid ${theme.palette.primary.main}`,
               boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
               mb: { xs: 2, sm: 0 },
             }}
@@ -144,6 +144,32 @@ export default function Hero({ mode, setMode }) {
             </Box>
           </Box>
         </motion.div>
+      </Box>
+
+      {/* Imagen del Diploma debajo */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: { xs: 4, sm: 6 },
+          px: 2,
+        }}
+      >
+        <motion.img
+          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1727386620/diploma_ejemplo.png" // 🔁 pon aquí tu diploma
+          alt="Diploma Máster"
+          style={{
+            width: "100%",
+            maxWidth: "600px",
+            borderRadius: "16px",
+            border: `4px solid ${theme.palette.primary.main}`,
+            boxShadow: "0 12px 30px rgba(0,0,0,0.25)",
+          }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          whileHover={{ scale: 1.03 }}
+        />
       </Box>
     </>
   );
