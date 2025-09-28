@@ -156,7 +156,7 @@ export default function Hero({ mode, setMode }) {
         }}
       >
         <motion.img
-          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1727386620/diploma_ejemplo.png" // 🔁 pon aquí tu diploma
+          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg" // 🔁 pon aquí tu diploma
           alt="Diploma Máster"
           style={{
             width: "100%",
