@@ -1,6 +1,7 @@
 import { Container, Typography, Box } from "@mui/material";
 import { GitHub, LinkedIn, Facebook, Instagram, MailOutline, Share as ShareIcon } from "@mui/icons-material"; 
 import { motion } from "framer-motion";
+import GroupsIcon from "@mui/icons-material/Groups";
 import EmailIcon from "@mui/icons-material/Email";
 import SocialLinks from "./SocialLinks";
 import React from "react";
@@ -48,7 +49,7 @@ export default function Contact() {
                 isDark ? "rgba(144,202,249,0.1)" : "rgba(25,118,210,0.1)",
             }}
           >
-            <EmailIcon
+            <GroupsIcon
               sx={{
                 fontSize: 26,
                 mr: 1.2,
