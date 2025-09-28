@@ -151,7 +151,7 @@ export default function Hero({ mode, setMode }) {
         sx={{
           display: "flex",
           justifyContent: "center",
-          mt: { xs: 4, sm: 6 },
+          mt: { xs: 4, sm: 3 },
           px: 2,
         }}
       >
