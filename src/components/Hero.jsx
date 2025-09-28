@@ -156,21 +156,21 @@ export default function Hero({ mode, setMode }) {
         }}
       >
         <motion.img
-          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg" // 🔁 pon aquí tu diploma
+          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
           alt="Diploma Máster"
           style={{
             width: "100%",
-            maxWidth: "600px",
+            maxWidth: "650px",
             borderRadius: "16px",
             border: `4px solid ${theme.palette.primary.main}`,
-            boxShadow: "0 12px 30px rgba(0,0,0,0.25)",
+            boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
           }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          whileHover={{ scale: 1.03 }}
+          whileHover={{ scale: 1.04 }}
         />
       </Box>
     </>
   );
-}
+            }
