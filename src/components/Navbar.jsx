@@ -189,7 +189,7 @@ export default function Navbar({ mode, setMode }) {
                   whileHover={{ rotate: 10 }}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <PersonIcon sx={{ mr: 1 }} />
+                  <CodeIcon sx={{ mr: 1 }} />
                 </motion.div>
                 Jorge Patricio
               </Typography>
