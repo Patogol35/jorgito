@@ -249,13 +249,24 @@ export default function Navbar({ mode, setMode }) {
               </IconButton>
             </Box>
 
-            {/* Botón menú móvil */}
+            {/* Botón menú móvil con animación */}
 <IconButton
   sx={{ display: { xs: "block", lg: "none" }, color: "#fff" }}
   onClick={() => setOpen(!open)}
   aria-label={open ? "Cerrar menú" : "Abrir menú"}
 >
-  {open ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+  <AnimatePresence mode="wait" initial={false}>
+    <motion.div
+      key={open ? "close" : "menu"}
+      initial={{ rotate: -90, opacity: 0, scale: 0.8 }}
+      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+      exit={{ rotate: 90, opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+      style={{ display: "flex" }}
+    >
+      {open ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+    </motion.div>
+  </AnimatePresence>
 </IconButton>
           </Toolbar>
         </AppBar>
