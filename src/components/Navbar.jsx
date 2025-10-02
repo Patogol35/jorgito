@@ -355,29 +355,23 @@ export default function Navbar({ mode, setMode }) {
               </Stack>
 
               {/* Botones abajo redondos */}
-              <Box
-                sx={{ display: "flex", gap: 2, mt: 3, justifyContent: "center" }}
-              >
-                {[ 
-                  { onClick: toggleTheme, icon: mode === "light" ? <Brightness4 /> : <Brightness7 /> },
-                  { onClick: () => setOpen(false), icon: <CloseIcon /> }
-                ].map((btn, idx) => (
-                  <IconButton
-                    key={idx}
-                    onClick={btn.onClick}
-                    sx={{
-                      color: "#fff",
-                      border: "1px solid #fff",
-                      borderRadius: "50%",
-                      width: 56,
-                      height: 56,
-                      "&:hover": { background: "rgba(255,255,255,0.12)" },
-                    }}
-                  >
-                    {btn.icon}
-                  </IconButton>
-                ))}
-              </Box>
+<Box
+  sx={{ display: "flex", gap: 2, mt: 3, justifyContent: "center" }}
+>
+  <IconButton
+    onClick={toggleTheme}
+    sx={{
+      color: "#fff",
+      border: "1px solid #fff",
+      borderRadius: "50%",
+      width: 56,
+      height: 56,
+      "&:hover": { background: "rgba(255,255,255,0.12)" },
+    }}
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </IconButton>
+</Box>
             </motion.div>
           </motion.div>
         )}
