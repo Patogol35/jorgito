@@ -250,13 +250,13 @@ export default function Navbar({ mode, setMode }) {
             </Box>
 
             {/* Botón menú móvil */}
-            <IconButton
-              sx={{ display: { xs: "block", lg: "none" }, color: "#fff" }}
-              onClick={() => setOpen(true)}
-              aria-label="Abrir menú"
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
+<IconButton
+  sx={{ display: { xs: "block", lg: "none" }, color: "#fff" }}
+  onClick={() => setOpen(!open)}
+  aria-label={open ? "Cerrar menú" : "Abrir menú"}
+>
+  {open ? <CloseIcon fontSize="large" /> : <MenuIcon fontSize="large" />}
+</IconButton>
           </Toolbar>
         </AppBar>
       </motion.div>
