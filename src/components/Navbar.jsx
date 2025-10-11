@@ -328,43 +328,51 @@ export default function Navbar({ mode, setMode }) {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <Stack spacing={2}>
-                {menuItems.map((item, i) => (
-                  <motion.a
-                    key={item.href}
-                    onClick={() => {
-                      handleScrollTo(item.href);
-                      setOpen(false);
-                    }}
-                    custom={i}
-                    variants={itemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.96 }}
-                    aria-current={active === item.href ? "page" : undefined}
-                    style={{
-                      fontSize: "1.1rem",
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      color: "#fff",
-                      cursor: "pointer",
-                      padding: "0.9rem 1rem",
-                      borderRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      background: item.color,
-                      boxShadow:
-                        active === item.href
-                          ? "0 0 12px rgba(255,255,255,0.7)"
-                          : "0 3px 10px rgba(0,0,0,0.3)",
-                    }}
-                  >
-                    {item.icon} {item.label}
-                  </motion.a>
-                ))}
-              </Stack>
+              <Stack
+  spacing={2}
+  alignItems="center" // ✅ centra horizontalmente todo
+  sx={{ width: "100%" }}
+>
+  {menuItems.map((item, i) => (
+    <motion.a
+      key={item.href}
+      onClick={() => {
+        handleScrollTo(item.href);
+        setOpen(false);
+      }}
+      custom={i}
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.96 }}
+      aria-current={active === item.href ? "page" : undefined}
+      style={{
+        fontSize: "1.1rem",
+        fontWeight: 600,
+        textDecoration: "none",
+        color: "#fff",
+        cursor: "pointer",
+        padding: "0.9rem 1rem",
+        borderRadius: "10px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center", // ✅ centra texto + ícono
+        textAlign: "center", // ✅ centra texto si se parte
+        gap: "0.5rem",
+        width: "90%", // ✅ ocupa casi todo el ancho, centrado
+        background: item.color,
+        boxShadow:
+          active === item.href
+            ? "0 0 12px rgba(255,255,255,0.7)"
+            : "0 3px 10px rgba(0,0,0,0.3)",
+        transition: "all 0.25s ease",
+      }}
+    >
+      {item.icon} {item.label}
+    </motion.a>
+  ))}
+</Stack>
 
               {/* Botones abajo redondos */}
 <Box
