@@ -142,7 +142,7 @@ export default function Hero({ mode, setMode }) {
                   },
                 }}
               >
-                Ver Diploma
+                Ver Título de Máster 
               </Button>
 
               {/* Botón Dark/Light */}
