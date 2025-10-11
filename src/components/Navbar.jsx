@@ -174,25 +174,35 @@ export default function Navbar({ mode, setMode }) {
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Typography
-                variant="h6"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontWeight: "bold",
-                  color: "#fff",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleScrollTo("#hero")}
-              >
-                <motion.div
-                  whileHover={{ rotate: 10 }}
-                  transition={{ type: "spring", stiffness: 200 }}
-                >
-                  <CodeIcon sx={{ mr: 1 }} />
-                </motion.div>
-                Jorge Patricio
-              </Typography>
+
+
+<Typography
+  variant="h6"
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    fontWeight: "bold",
+    color: "#fff",
+    cursor: "pointer",
+    lineHeight: 1, // 👈 ayuda a mantener alineación exacta
+  }}
+  onClick={() => handleScrollTo("#hero")}
+>
+  <motion.div
+    whileHover={{ rotate: 10 }}
+    transition={{ type: "spring", stiffness: 200 }}
+    style={{
+      display: "flex",
+      alignItems: "center", // 👈 asegura que el ícono esté centrado verticalmente
+    }}
+  >
+    <CodeIcon sx={{ mr: 1, fontSize: 28, verticalAlign: "middle" }} /> {/* 👈 ajusta tamaño y alineación */}
+  </motion.div>
+  Jorge Patricio
+</Typography>
+
+
+              
             </motion.div>
 
             {/* Desktop menu */}
