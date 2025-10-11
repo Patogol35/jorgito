@@ -19,6 +19,7 @@ import {
   Build as BuildIcon,
   Verified as VerifiedIcon,
   Work as WorkIcon,
+  Computer as ComputerIcon,
   Email as EmailIcon,
 } from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
@@ -196,7 +197,7 @@ export default function Navbar({ mode, setMode }) {
       alignItems: "center", // 👈 asegura que el ícono esté centrado verticalmente
     }}
   >
-    <CodeIcon sx={{ mr: 1, fontSize: 28, verticalAlign: "middle" }} /> {/* 👈 ajusta tamaño y alineación */}
+    <ComputerIcon sx={{ mr: 1, fontSize: 28, verticalAlign: "middle" }} /> {/* 👈 ajusta tamaño y alineación */}
   </motion.div>
   Jorge Patricio
 </Typography>
