@@ -229,7 +229,7 @@ export default function Navbar({ mode, setMode }) {
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
-                      justifyContent: "center !important",
+                      display: "flex", alignItems: "center", justifyContent: "center", "& .MuiButton-startIcon": { margin: 0 },
                       borderRadius: "10px",
                       px: 2,
                       py: 1,
