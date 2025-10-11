@@ -229,6 +229,7 @@ export default function Navbar({ mode, setMode }) {
                       fontWeight: 600,
                       textTransform: "none",
                       fontSize: "1rem",
+                      justifyContent: "center",
                       borderRadius: "10px",
                       px: 2,
                       py: 1,
