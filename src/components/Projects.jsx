@@ -9,6 +9,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+import AccessTimeIcon from "@mui/icons-material/AccessTime"; // ⏰ NUEVO ÍCONO
 
 // =====================
 // Datos de proyectos
@@ -43,6 +44,14 @@ const proyectos = [
     link: "https://calculadorajorgepatricio.vercel.app/",
     color: "#f59e0b",
     icon: FunctionsIcon,
+  },
+
+  // ⭐ NUEVO PROYECTO AGREGADO ⭐
+  {
+    titulo: "Reloj Global",
+    link: "https://reloj-jorgepatricio.vercel.app/",
+    color: "#0ea5e9",
+    icon: AccessTimeIcon,
   },
 ];
 
