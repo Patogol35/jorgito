@@ -2,14 +2,15 @@ import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 
-// ✅ Íconos
+// Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MovieIcon from "@mui/icons-material/Movie";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import AccessTimeIcon from "@mui/icons-material/AccessTime"; // ⏰ NUEVO ÍCONO
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import QrCode2Icon from "@mui/icons-material/QrCode2"; // 🔥 Nuevo ícono
 
 // =====================
 // Datos de proyectos
@@ -45,13 +46,17 @@ const proyectos = [
     color: "#f59e0b",
     icon: FunctionsIcon,
   },
-
-  // ⭐ NUEVO PROYECTO AGREGADO ⭐
   {
     titulo: "Reloj Global",
     link: "https://reloj-jorgepatricio.vercel.app/",
     color: "#0ea5e9",
     icon: AccessTimeIcon,
+  },
+  {
+    titulo: "App QR: escanear y generar códigos QR",
+    link: "https://jorgepatricio-codigo-qr.vercel.app/",
+    color: "#10b981",
+    icon: QrCode2Icon,
   },
 ];
 
@@ -131,7 +136,7 @@ export default function Projects() {
         </Box>
       </motion.div>
 
-      {/* Grid de proyectos */}
+      {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={p.titulo} p={p} i={i} palette={palette} />
