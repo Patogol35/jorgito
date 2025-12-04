@@ -29,7 +29,7 @@ const proyectos = [
     icon: ShoppingCartIcon,
   },
   {
-    titulo: "Buscador de películas",
+    titulo: "Explorador de películas",
     link: "https://movie-explorer-jorge-patricio.vercel.app/",
     color: "#16a34a",
     icon: MovieIcon,
@@ -53,7 +53,7 @@ const proyectos = [
     icon: AccessTimeIcon,
   },
   {
-    titulo: "App QR: escanear y generar códigos QR",
+    titulo: "App para Crear y Escanear QR",
     link: "https://jorgepatricio-codigo-qr.vercel.app/",
     color: "#10b981",
     icon: QrCode2Icon,
