@@ -53,7 +53,7 @@ const proyectos = [
     icon: AccessTimeIcon,
   },
   {
-    titulo: "App para Crear y Escanear QR",
+    titulo: "App para Crear y Escanear Códigos QR",
     link: "https://jorgepatricio-codigo-qr.vercel.app/",
     color: "#10b981",
     icon: QrCode2Icon,
