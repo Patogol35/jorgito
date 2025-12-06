@@ -49,19 +49,13 @@ export default function Hero({ mode, setMode }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Box
-            textAlign={{ xs: "center", sm: "left" }}
-            maxWidth="600px"
-            mx="auto"
-          >
+          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px" mx="auto">
             <Typography
               variant="h3"
               fontWeight="bold"
               gutterBottom
               sx={{
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #6d28d9)`,
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                color: "#3b82f6", // Azul vibrante sugerido
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
               }}
             >
@@ -82,10 +76,9 @@ export default function Hero({ mode, setMode }) {
               paragraph
               sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}
             >
-              Me apasiona crear tecnología que transforme ideas en realidades
-              digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones digitales seguras, innovadoras y
-              orientadas a generar impacto positivo.
+              Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi
+              enfoque está en aportar valor constante, desarrollando soluciones digitales
+              seguras, innovadoras y orientadas a generar impacto positivo.
             </Typography>
 
             {/* Botones */}
@@ -110,7 +103,7 @@ export default function Hero({ mode, setMode }) {
                   fontWeight: "bold",
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #6d28d9)`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                   transition: "all 0.3s ease",
                   "&:hover": {
@@ -121,7 +114,7 @@ export default function Hero({ mode, setMode }) {
                 Ver CV
               </Button>
 
-              {/* ✅ Nuevo botón para Diploma */}
+              {/* Botón para Diploma */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
@@ -134,7 +127,7 @@ export default function Hero({ mode, setMode }) {
                   fontWeight: "bold",
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
-                  background: `linear-gradient(90deg, #6d28d9, ${theme.palette.primary.main})`,
+                  background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                   transition: "all 0.3s ease",
                   "&:hover": {
@@ -142,18 +135,14 @@ export default function Hero({ mode, setMode }) {
                   },
                 }}
               >
-                Ver Título  
+                Ver Título
               </Button>
 
               {/* Botón Dark/Light */}
               <Button
                 variant="outlined"
-                startIcon={
-                  mode === "light" ? <Brightness4 /> : <Brightness7 />
-                }
-                onClick={() =>
-                  setMode(mode === "light" ? "dark" : "light")
-                }
+                startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
                 sx={{
                   borderRadius: "25px",
                   textTransform: "none",
@@ -177,4 +166,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-                    }
+}
