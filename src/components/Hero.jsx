@@ -37,7 +37,6 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
-              boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
               mb: { xs: 2, sm: 0 },
             }}
           />
@@ -55,7 +54,7 @@ export default function Hero({ mode, setMode }) {
               fontWeight="bold"
               gutterBottom
               sx={{
-                color: "#3b82f6", // Azul vibrante sugerido
+                color: "#3b82f6",
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
               }}
             >
@@ -104,10 +103,10 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+                  boxShadow: "none",
                   transition: "all 0.3s ease",
                   "&:hover": {
-                    boxShadow: `0 8px 22px ${theme.palette.secondary.main}88`,
+                    boxShadow: "none",
                   },
                 }}
               >
@@ -128,10 +127,10 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                  boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+                  boxShadow: "none",
                   transition: "all 0.3s ease",
                   "&:hover": {
-                    boxShadow: `0 8px 22px ${theme.palette.secondary.main}88`,
+                    boxShadow: "none",
                   },
                 }}
               >
