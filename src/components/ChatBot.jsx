@@ -23,16 +23,25 @@ const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const delay = () => Math.floor(Math.random() * 500) + 400;
 
 /* =========================
-   DATA PERFIL
+   PERFIL DE JORGE
 ========================= */
 const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
-  role: "Desarrollador Full Stack",
+  role: "Ingeniero de Software y Desarrollador Full Stack",
+  description:
+    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, " +
+    "con enfoque en buenas prácticas, arquitectura limpia y experiencia de usuario.",
   education: "Máster en Ingeniería de Software y Sistemas Informáticos",
+  experience: [
+    "Desarrollador de aulas virtuales",
+    "Desarrollo de aplicaciones web Full Stack",
+    "Creación de APIs REST seguras y escalables",
+  ],
   stack: [
     "React",
     "Vite",
     "JavaScript",
+    "Spring Boot",
     "Django REST Framework",
     "Python",
     "MySQL",
@@ -42,17 +51,16 @@ const PROFILE = {
   ],
   softSkills: [
     "Pensamiento analítico",
+    "Resolución de problemas",
     "Aprendizaje continuo",
-    "Buenas prácticas",
     "Trabajo en equipo",
   ],
   projects: [
+    "Aulas virtuales",
     "Tiendas online Full Stack",
     "Dashboards administrativos",
     "Aplicaciones React conectadas a APIs REST",
-    "Backends seguros y escalables",
   ],
-  hobbies: ["Tecnología", "Aprender nuevas herramientas", "Resolver problemas"],
 };
 
 /* =========================
@@ -61,11 +69,10 @@ const PROFILE = {
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué estudios tiene?",
-  "¿Qué tecnologías domina?",
+  "¿Qué experiencia tiene?",
+  "¿En qué tecnologías trabaja?",
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
-  "¿Cuáles son sus habilidades blandas?",
-  "¿Qué le gusta aprender?",
   "¿Por qué contratarlo?",
 ];
 
@@ -74,14 +81,14 @@ const SUGGESTIONS = [
 ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey", "qué tal"],
-  PROFILE: ["jorge", "perfil", "quién", "eres"],
+  PROFILE: ["jorge", "quién es jorge", "perfil", "háblame"],
   EDUCATION: ["estudios", "formación", "máster", "título"],
+  EXPERIENCE: ["experiencia", "ha trabajado", "trabajo"],
   SKILLS: ["skills", "habilidades", "tecnologías", "stack"],
   SOFT_SKILLS: ["habilidades blandas", "soft", "equipo"],
-  STACK: ["full stack", "frontend", "backend"],
-  PROJECTS: ["proyectos", "portfolio", "apps", "trabajos"],
+  STACK: ["full stack", "frontend", "backend", "rol"],
+  PROJECTS: ["proyectos", "portfolio", "apps"],
   MOTIVATION: ["por qué contratar", "por qué elegir", "ventajas"],
-  HOBBIES: ["gusta", "intereses", "aprende"],
 };
 
 /* =========================
@@ -111,7 +118,7 @@ function detectIntent(message) {
 ========================= */
 function getSmartResponse(message, context) {
   if (message.trim().length < 4) {
-    return { text: "¿Puedes darme un poco más de detalle? 😊" };
+    return { text: "¿Podrías darme un poco más de detalle? 😊" };
   }
 
   const intent = detectIntent(message);
@@ -119,22 +126,26 @@ function getSmartResponse(message, context) {
 
   switch (intent) {
     case "GREETING":
-      text = pick([
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
-        "¡Hola! 😊 Estoy aquí para ayudarte.",
-      ]);
+      text = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
       break;
 
     case "PROFILE":
-      text = `${PROFILE.name} es ${PROFILE.role}.`;
+      text = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
 
     case "EDUCATION":
       text = `Cuenta con ${PROFILE.education}.`;
       break;
 
+    case "EXPERIENCE":
+      text = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
+      break;
+
     case "SKILLS":
-      text = `Domina tecnologías como ${PROFILE.stack.join(", ")}.`;
+      text =
+        "Trabaja con tecnologías como " +
+        PROFILE.stack.join(", ") +
+        ", aplicando buenas prácticas de desarrollo.";
       break;
 
     case "SOFT_SKILLS":
@@ -145,29 +156,23 @@ function getSmartResponse(message, context) {
 
     case "STACK":
       text =
-        "Sí, es desarrollador Full Stack, capaz de trabajar tanto en frontend como backend.";
+        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
       break;
 
     case "PROJECTS":
-      text = `Ha desarrollado ${PROFILE.projects.join(", ")}.`;
-      break;
-
-    case "HOBBIES":
-      text = `Le interesa ${PROFILE.hobbies.join(
-        ", "
-      )}, siempre buscando mejorar como desarrollador.`;
+      text = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
 
     case "MOTIVATION":
       text =
-        "Porque combina buena formación técnica, código limpio y enfoque en soluciones reales.";
+        "Porque combina sólida formación, experiencia práctica y enfoque en soluciones reales.";
       break;
 
     default:
       text =
         context.lastIntent !== null
-          ? "¿Quieres que te cuente más sobre sus proyectos o tecnologías?"
-          : "Puedo hablarte sobre su perfil, habilidades y experiencia 😊";
+          ? "¿Quieres que te cuente más sobre su experiencia o tecnologías?"
+          : "Puedo hablarte sobre el perfil profesional de Jorge 😊";
   }
 
   return { text, intent };
@@ -178,9 +183,10 @@ function getSmartResponse(message, context) {
 ========================= */
 function followUp(intent) {
   const map = {
-    PROFILE: "¿Quieres conocer sus tecnologías?",
-    SKILLS: "¿Te muestro sus proyectos?",
-    PROJECTS: "¿Quieres saber por qué contratarlo?",
+    PROFILE: "¿Quieres conocer su experiencia profesional?",
+    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
+    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
+    PROJECTS: "¿Deseas saber por qué contratarlo?",
   };
   return map[intent];
 }
@@ -201,7 +207,7 @@ export default function ChatBot() {
     from: "bot",
     text:
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, habilidades, proyectos o motivación.",
+      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
   };
 
   const [messages, setMessages] = useState(() => {
@@ -247,7 +253,7 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* BOTÓN FLOAT */}
+      {/* BOTÓN */}
       <Fab
         color="primary"
         onClick={() => setOpen(!open)}
@@ -263,8 +269,8 @@ export default function ChatBot() {
             position: "fixed",
             bottom: 90,
             left: 16,
-            width: 350,
-            height: 500,
+            width: 360,
+            height: 520,
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
@@ -364,4 +370,4 @@ export default function ChatBot() {
       )}
     </>
   );
-    }
+            }
