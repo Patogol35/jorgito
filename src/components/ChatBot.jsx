@@ -14,54 +14,92 @@ import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 
+/* =========================
+   SUGERENCIAS INTELIGENTES
+========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
+  "¿Qué perfil profesional tiene?",
   "¿Qué tecnologías domina?",
-  "¿Es Full Stack?",
-  "Muéstrame sus proyectos",
+  "¿Es desarrollador Full Stack?",
+  "Cuéntame sobre sus proyectos",
   "¿Cómo puedo contactarlo?",
 ];
 
-const knowledgeBase = [
-  {
-    keywords: ["quién", "jorge", "eres"],
-    answer:
-      "Soy Jorge Patricio Santamaría Cherrez, Máster en Ingeniería de Software y Sistemas Informáticos. Me especializo en crear soluciones digitales modernas, seguras y escalables.",
-  },
-  {
-    keywords: ["full stack", "backend", "frontend"],
-    answer:
-      "Sí, soy desarrollador Full Stack. Trabajo con React y Vite en frontend, y Django REST con MySQL y JWT en backend.",
-  },
-  {
-    keywords: ["tecnologías", "skills", "habilidades"],
-    answer:
-      "Domino React, JavaScript, Python, Django, MySQL, Git, Linux y JWT. También tengo experiencia en IA y ciberseguridad.",
-  },
-  {
-    keywords: ["proyectos", "portfolio"],
-    answer:
-      "He desarrollado tiendas online full stack, aplicaciones en React, APIs con Django REST e integración de inteligencia artificial.",
-  },
-  {
-    keywords: ["contacto", "whatsapp", "email"],
-    answer:
-      "Puedes contactarlo fácilmente desde el botón de WhatsApp o en la sección de contacto de este portafolio.",
-  },
-];
-
-function getBotResponse(message) {
+/* =========================
+   DETECCIÓN DE INTENCIÓN
+========================= */
+function detectIntent(message) {
   const text = message.toLowerCase();
-  const match = knowledgeBase.find((item) =>
-    item.keywords.some((k) => text.includes(k))
-  );
 
-  return (
-    match?.answer ||
-    "Buena pregunta 🙂 Puedes preguntarme sobre su perfil, habilidades, proyectos o cómo contactarlo."
-  );
+  if (text.match(/quién|eres|jorge|perfil/)) return "PROFILE";
+  if (text.match(/estudios|formación|título|máster/)) return "EDUCATION";
+  if (text.match(/tecnologías|skills|habilidades|stack/)) return "SKILLS";
+  if (text.match(/full\s?stack|frontend|backend/)) return "STACK";
+  if (text.match(/proyectos|portfolio|trabajos|apps/)) return "PROJECTS";
+  if (text.match(/contacto|email|whatsapp|hablar/)) return "CONTACT";
+
+  return "UNKNOWN";
 }
 
+/* =========================
+   RESPUESTAS AVANZADAS
+========================= */
+function getSmartResponse(message) {
+  const intent = detectIntent(message);
+
+  switch (intent) {
+    case "PROFILE":
+      return (
+        "Jorge Patricio Santamaría Cherrez es Máster en Ingeniería de Software y Sistemas Informáticos. " +
+        "Se especializa en el desarrollo de soluciones digitales modernas, seguras y escalables, " +
+        "con un enfoque claro en aportar valor real a usuarios y organizaciones."
+      );
+
+    case "EDUCATION":
+      return (
+        "Jorge cuenta con un Máster en Ingeniería de Software y Sistemas Informáticos. " +
+        "Complementa su formación con aprendizaje continuo en desarrollo web, inteligencia artificial y ciberseguridad, " +
+        "manteniéndose actualizado con las mejores prácticas del sector."
+      );
+
+    case "SKILLS":
+      return (
+        "Su stack tecnológico incluye React, Vite y JavaScript para frontend; " +
+        "Python, Django REST Framework, MySQL y autenticación JWT para backend. " +
+        "Además, trabaja con Git, Linux y tiene conocimientos en inteligencia artificial y ciberseguridad."
+      );
+
+    case "STACK":
+      return (
+        "Sí, Jorge es desarrollador Full Stack. Diseña interfaces modernas y accesibles en frontend, " +
+        "y construye APIs robustas y seguras en backend, aplicando buenas prácticas de arquitectura y seguridad."
+      );
+
+    case "PROJECTS":
+      return (
+        "Ha desarrollado proyectos Full Stack como tiendas online completas, " +
+        "aplicaciones en React conectadas a APIs con Django REST, " +
+        "y soluciones que integran inteligencia artificial para mejorar la experiencia del usuario."
+      );
+
+    case "CONTACT":
+      return (
+        "Puedes contactar a Jorge fácilmente mediante el botón de WhatsApp disponible en este portafolio " +
+        "o desde la sección de contacto. Estará encantado de conversar sobre oportunidades o proyectos."
+      );
+
+    default:
+      return (
+        "Puedo ayudarte a conocer mejor el perfil profesional de Jorge 😊 " +
+        "Pregúntame sobre su experiencia, estudios, tecnologías, proyectos o cómo contactarlo."
+      );
+  }
+}
+
+/* =========================
+   COMPONENTE
+========================= */
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -76,7 +114,9 @@ export default function ChatBot() {
       : [
           {
             from: "bot",
-            text: "Hola 👋 Soy Daniela IA, la asistente virtual de Jorge. ¿Qué deseas saber?",
+            text:
+              "Hola 👋 Soy Daniela IA, la asistente virtual de Jorge. " +
+              "Puedo contarte sobre su perfil profesional, habilidades, proyectos o cómo contactarlo.",
           },
         ];
   });
@@ -88,10 +128,12 @@ export default function ChatBot() {
   const sendMessage = (text) => {
     if (!text.trim()) return;
 
-    const userMsg = { from: "user", text };
-    const botMsg = { from: "bot", text: getBotResponse(text) };
+    setMessages((prev) => [
+      ...prev,
+      { from: "user", text },
+      { from: "bot", text: getSmartResponse(text) },
+    ]);
 
-    setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
   };
 
@@ -101,12 +143,7 @@ export default function ChatBot() {
       <Fab
         color="primary"
         onClick={() => setOpen(!open)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          zIndex: 1200,
-        }}
+        sx={{ position: "fixed", bottom: 16, left: 16, zIndex: 1200 }}
       >
         <SmartToyIcon />
       </Fab>
@@ -118,8 +155,8 @@ export default function ChatBot() {
             position: "fixed",
             bottom: 90,
             left: 16,
-            width: 340,
-            height: 460,
+            width: 350,
+            height: 480,
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
@@ -180,7 +217,7 @@ export default function ChatBot() {
                         ? theme.palette.primary.main
                         : isDark
                         ? "#2c2c2c"
-                        : "#f0f0f0",
+                        : "#f1f1f1",
                     color:
                       msg.from === "user"
                         ? "#fff"
@@ -212,4 +249,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+          }
