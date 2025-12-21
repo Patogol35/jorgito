@@ -38,13 +38,15 @@ const PROFILE = {
   ],
   stack: [
     "React",
+    "Vercel"
+    "Postman"
     "Vite",
     "JavaScript",
     "Spring Boot",
     "Django REST Framework",
     "Python",
     "MySQL",
-    "JWT",
+    "AWS",
     "Git",
     "Linux",
   ],
@@ -57,7 +59,7 @@ const PROFILE = {
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
-    "Dashboards administrativos",
+    "Aplicacines Frontend",
     "Aplicaciones React conectadas a APIs REST",
   ],
 };
