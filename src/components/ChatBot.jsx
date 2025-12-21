@@ -32,7 +32,7 @@ const SUGGESTIONS = [
 ];
 
 /* =========================
-   INTENCIÓN
+   INTENCIÓN (FIX CONTACTO)
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
@@ -43,7 +43,7 @@ function detectIntent(message) {
   if (/tecnologías|skills|habilidades|stack/.test(text)) return "SKILLS";
   if (/full\s?stack|frontend|backend/.test(text)) return "STACK";
   if (/proyectos|portfolio|apps|trabajos/.test(text)) return "PROJECTS";
-  if (/contacto|email|whatsapp|hablar/.test(text)) return "CONTACT";
+  if (/contact/.test(text)) return "CONTACT"; // ✅ FIX
 
   return "UNKNOWN";
 }
@@ -74,14 +74,14 @@ function getSmartResponse(message, context) {
     case "EDUCATION":
       return (
         "Cuenta con un Máster en Ingeniería de Software y Sistemas Informáticos. " +
-        "Complementa su formación con aprendizaje continuo en desarrollo web y buenas prácticas de ingeniería."
+        "Complementa su formación con aprendizaje continuo en desarrollo web y buenas prácticas."
       );
 
     case "SKILLS":
       if (context.askedProfile) {
         return (
           "Además de su perfil profesional, Jorge domina React, Vite y JavaScript en frontend; " +
-          "y Python, Django REST Framework, MySQL y autenticación JWT en backend."
+          "Python, Django REST Framework, MySQL, JWT, Git y Linux en backend."
         );
       }
 
@@ -93,25 +93,25 @@ function getSmartResponse(message, context) {
     case "STACK":
       return (
         "Sí, Jorge es desarrollador Full Stack. Diseña interfaces modernas y accesibles " +
-        "y desarrolla APIs seguras aplicando buenas prácticas de arquitectura."
+        "y desarrolla APIs seguras siguiendo buenas prácticas de arquitectura."
       );
 
     case "PROJECTS":
       return (
         "Ha desarrollado tiendas online Full Stack, aplicaciones en React conectadas a APIs REST " +
-        "y sistemas backend bien estructurados para distintos casos de uso."
+        "y sistemas backend bien estructurados para distintos proyectos."
       );
 
     case "CONTACT":
       return (
-        "Puedes contactar a Jorge desde el botón de WhatsApp del portafolio o en la sección de contacto. " +
-        "Estará encantado de conversar sobre oportunidades profesionales o proyectos."
+        "Puedes contactar a Jorge desde el botón de WhatsApp disponible en este portafolio " +
+        "o desde la sección de contacto. Estará encantado de conversar contigo."
       );
 
     default:
       return (
         "Puedo ayudarte a conocer mejor el perfil profesional de Jorge 😊 " +
-        "Pregúntame sobre su experiencia, tecnologías, proyectos o cómo contactarlo."
+        "Pregúntame sobre su experiencia, tecnologías, proyectos o contacto."
       );
   }
 }
@@ -218,7 +218,7 @@ export default function ChatBot() {
             </IconButton>
           </Box>
 
-          {/* SUGERENCIAS */}
+          {/* SUGERENCIAS (FIX DARK MODE) */}
           <Box sx={{ p: 1 }}>
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {SUGGESTIONS.map((q) => (
@@ -228,6 +228,13 @@ export default function ChatBot() {
                   size="small"
                   clickable
                   onClick={() => sendMessage(q)}
+                  sx={{
+                    bgcolor: isDark ? "#2c2c2c" : "#f1f1f1",
+                    color: isDark ? "#fff" : "#000",
+                    "&:hover": {
+                      bgcolor: isDark ? "#3a3a3a" : "#e0e0e0",
+                    },
+                  }}
                 />
               ))}
             </Stack>
