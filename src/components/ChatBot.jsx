@@ -15,7 +15,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
 
 /* =========================
-   SUGERENCIAS INTELIGENTES
+   UTILIDADES
+========================= */
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+/* =========================
+   SUGERENCIAS
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
@@ -27,72 +32,86 @@ const SUGGESTIONS = [
 ];
 
 /* =========================
-   DETECCIÓN DE INTENCIÓN
+   INTENCIÓN (MEJORADA)
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
 
-  if (text.match(/quién|eres|jorge|perfil/)) return "PROFILE";
-  if (text.match(/estudios|formación|título|máster/)) return "EDUCATION";
-  if (text.match(/tecnologías|skills|habilidades|stack/)) return "SKILLS";
-  if (text.match(/full\s?stack|frontend|backend/)) return "STACK";
-  if (text.match(/proyectos|portfolio|trabajos|apps/)) return "PROJECTS";
-  if (text.match(/contacto|email|whatsapp|hablar/)) return "CONTACT";
+  if (/hola|buenas|hey/.test(text)) return "GREETING";
+  if (/jorge|quién|perfil|eres/.test(text)) return "PROFILE";
+  if (/estudios|formación|máster|titulo/.test(text)) return "EDUCATION";
+  if (/tecnologías|skills|habilidades|stack/.test(text)) return "SKILLS";
+  if (/full\s?stack|frontend|backend/.test(text)) return "STACK";
+  if (/proyectos|portfolio|apps|trabajos/.test(text)) return "PROJECTS";
+  if (/contacto|email|whatsapp|hablar/.test(text)) return "CONTACT";
 
   return "UNKNOWN";
 }
 
 /* =========================
-   RESPUESTAS AVANZADAS
+   RESPUESTAS INTELIGENTES
 ========================= */
-function getSmartResponse(message) {
+function getSmartResponse(message, context) {
+  if (message.trim().length < 4) {
+    return "¿Podrías darme un poco más de detalle? 😊";
+  }
+
   const intent = detectIntent(message);
 
   switch (intent) {
+    case "GREETING":
+      return pick([
+        "Hola 👋 Soy Daniela IA. ¿Te gustaría conocer el perfil profesional de Jorge?",
+        "¡Hola! Estoy aquí para contarte sobre Jorge, sus proyectos y tecnologías.",
+      ]);
+
     case "PROFILE":
-      return (
-        "Jorge Patricio Santamaría Cherrez es Máster en Ingeniería de Software y Sistemas Informáticos. " +
-        "Se especializa en el desarrollo de soluciones digitales modernas, seguras y escalables, " +
-        "con un enfoque claro en aportar valor real a usuarios y organizaciones."
-      );
+      return pick([
+        "Jorge Patricio Santamaría Cherrez es Máster en Ingeniería de Software y Sistemas Informáticos, enfocado en crear soluciones modernas y escalables.",
+        "Jorge es un desarrollador con formación de Máster en Ingeniería de Software, apasionado por construir productos digitales bien diseñados y seguros.",
+      ]);
 
     case "EDUCATION":
       return (
-        "Jorge cuenta con un Máster en Ingeniería de Software y Sistemas Informáticos. " +
-        "Complementa su formación con aprendizaje continuo en desarrollo web, inteligencia artificial y ciberseguridad, " +
-        "manteniéndose actualizado con las mejores prácticas del sector."
+        "Cuenta con un Máster en Ingeniería de Software y Sistemas Informáticos. " +
+        "Además, se mantiene en constante aprendizaje en desarrollo web, IA y ciberseguridad."
       );
 
     case "SKILLS":
+      if (context.askedProfile) {
+        return (
+          "Además de su perfil profesional, Jorge domina React, Vite y JavaScript en frontend; " +
+          "y Python, Django REST, MySQL y JWT en backend. ¿Quieres saber cómo aplica estas tecnologías?"
+        );
+      }
+
       return (
-        "Su stack tecnológico incluye React, Vite y JavaScript para frontend; " +
-        "Python, Django REST Framework, MySQL y autenticación JWT para backend. " +
-        "Además, trabaja con Git, Linux y tiene conocimientos en inteligencia artificial y ciberseguridad."
+        "Su stack incluye React, Vite y JavaScript para frontend; " +
+        "Python y Django REST Framework para backend, junto a MySQL, JWT, Git y Linux."
       );
 
     case "STACK":
       return (
-        "Sí, Jorge es desarrollador Full Stack. Diseña interfaces modernas y accesibles en frontend, " +
-        "y construye APIs robustas y seguras en backend, aplicando buenas prácticas de arquitectura y seguridad."
+        "Sí, Jorge es desarrollador Full Stack. Diseña interfaces modernas y accesibles " +
+        "y desarrolla APIs seguras siguiendo buenas prácticas de arquitectura."
       );
 
     case "PROJECTS":
       return (
-        "Ha desarrollado proyectos Full Stack como tiendas online completas, " +
-        "aplicaciones en React conectadas a APIs con Django REST, " +
-        "y soluciones que integran inteligencia artificial para mejorar la experiencia del usuario."
+        "Ha desarrollado tiendas online Full Stack, aplicaciones en React conectadas a Django REST " +
+        "y proyectos que integran inteligencia artificial para mejorar la experiencia del usuario."
       );
 
     case "CONTACT":
       return (
-        "Puedes contactar a Jorge fácilmente mediante el botón de WhatsApp disponible en este portafolio " +
-        "o desde la sección de contacto. Estará encantado de conversar sobre oportunidades o proyectos."
+        "Puedes contactar a Jorge desde el botón de WhatsApp del portafolio o en la sección de contacto. " +
+        "Siempre está abierto a nuevas oportunidades y colaboraciones."
       );
 
     default:
       return (
-        "Puedo ayudarte a conocer mejor el perfil profesional de Jorge 😊 " +
-        "Pregúntame sobre su experiencia, estudios, tecnologías, proyectos o cómo contactarlo."
+        "Puedo ayudarte a conocer mejor a Jorge 😊 " +
+        "Pregúntame sobre su perfil, estudios, tecnologías, proyectos o contacto."
       );
   }
 }
@@ -106,6 +125,12 @@ export default function ChatBot() {
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+
+  const [context, setContext] = useState({
+    askedProfile: false,
+    askedSkills: false,
+  });
 
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("daniela-chat");
@@ -116,7 +141,7 @@ export default function ChatBot() {
             from: "bot",
             text:
               "Hola 👋 Soy Daniela IA, la asistente virtual de Jorge. " +
-              "Puedo contarte sobre su perfil profesional, habilidades, proyectos o cómo contactarlo.",
+              "Puedo contarte sobre su perfil profesional, tecnologías, proyectos o cómo contactarlo.",
           },
         ];
   });
@@ -128,18 +153,30 @@ export default function ChatBot() {
   const sendMessage = (text) => {
     if (!text.trim()) return;
 
-    setMessages((prev) => [
-      ...prev,
-      { from: "user", text },
-      { from: "bot", text: getSmartResponse(text) },
-    ]);
+    const intent = detectIntent(text);
 
+    setContext((prev) => ({
+      ...prev,
+      askedProfile: intent === "PROFILE" || prev.askedProfile,
+      askedSkills: intent === "SKILLS" || prev.askedSkills,
+    }));
+
+    setMessages((prev) => [...prev, { from: "user", text }]);
     setInput("");
+    setTyping(true);
+
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", text: getSmartResponse(text, context) },
+      ]);
+      setTyping(false);
+    }, 600);
   };
 
   return (
     <>
-      {/* BOTÓN FLOTANTE */}
+      {/* BOTÓN */}
       <Fab
         color="primary"
         onClick={() => setOpen(!open)}
@@ -185,13 +222,7 @@ export default function ChatBot() {
           <Box sx={{ p: 1 }}>
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {SUGGESTIONS.map((q) => (
-                <Chip
-                  key={q}
-                  label={q}
-                  size="small"
-                  clickable
-                  onClick={() => sendMessage(q)}
-                />
+                <Chip key={q} label={q} size="small" clickable onClick={() => sendMessage(q)} />
               ))}
             </Stack>
           </Box>
@@ -199,13 +230,7 @@ export default function ChatBot() {
           {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Box
-                key={i}
-                sx={{
-                  textAlign: msg.from === "user" ? "right" : "left",
-                  mb: 1,
-                }}
-              >
+              <Box key={i} sx={{ textAlign: msg.from === "user" ? "right" : "left", mb: 1 }}>
                 <Typography
                   sx={{
                     display: "inline-block",
@@ -218,10 +243,7 @@ export default function ChatBot() {
                         : isDark
                         ? "#2c2c2c"
                         : "#f1f1f1",
-                    color:
-                      msg.from === "user"
-                        ? "#fff"
-                        : theme.palette.text.primary,
+                    color: msg.from === "user" ? "#fff" : theme.palette.text.primary,
                     maxWidth: "85%",
                   }}
                 >
@@ -229,6 +251,11 @@ export default function ChatBot() {
                 </Typography>
               </Box>
             ))}
+            {typing && (
+              <Typography variant="caption" sx={{ ml: 1 }}>
+                Daniela está escribiendo…
+              </Typography>
+            )}
           </Box>
 
           {/* INPUT */}
