@@ -8,10 +8,12 @@ import {
   IconButton,
   Chip,
   Stack,
+  Tooltip,
 } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material/styles";
 
 /* =========================
@@ -38,13 +40,19 @@ const PROFILE = {
     "Git",
     "Linux",
   ],
+  softSkills: [
+    "Pensamiento analítico",
+    "Aprendizaje continuo",
+    "Buenas prácticas",
+    "Trabajo en equipo",
+  ],
   projects: [
     "Tiendas online Full Stack",
+    "Dashboards administrativos",
     "Aplicaciones React conectadas a APIs REST",
-    "Backends seguros y bien estructurados",
+    "Backends seguros y escalables",
   ],
-  contact:
-    "Puedes contactarlo desde el botón de WhatsApp o desde la sección de contacto del portafolio.",
+  hobbies: ["Tecnología", "Aprender nuevas herramientas", "Resolver problemas"],
 };
 
 /* =========================
@@ -56,7 +64,9 @@ const SUGGESTIONS = [
   "¿Qué tecnologías domina?",
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
-  "¿Cómo puedo contactarlo?",
+  "¿Cuáles son sus habilidades blandas?",
+  "¿Qué le gusta aprender?",
+  "¿Por qué contratarlo?",
 ];
 
 /* =========================
@@ -67,9 +77,11 @@ const INTENTS = {
   PROFILE: ["jorge", "perfil", "quién", "eres"],
   EDUCATION: ["estudios", "formación", "máster", "título"],
   SKILLS: ["skills", "habilidades", "tecnologías", "stack"],
+  SOFT_SKILLS: ["habilidades blandas", "soft", "equipo"],
   STACK: ["full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio", "apps", "trabajos"],
-  CONTACT: ["contacto", "whatsapp", "correo", "email"],
+  MOTIVATION: ["por qué contratar", "por qué elegir", "ventajas"],
+  HOBBIES: ["gusta", "intereses", "aprende"],
 };
 
 /* =========================
@@ -99,20 +111,17 @@ function detectIntent(message) {
 ========================= */
 function getSmartResponse(message, context) {
   if (message.trim().length < 4) {
-    return {
-      text: "¿Podrías darme un poco más de detalle? 😊",
-    };
+    return { text: "¿Puedes darme un poco más de detalle? 😊" };
   }
 
   const intent = detectIntent(message);
-
   let text = "";
 
   switch (intent) {
     case "GREETING":
       text = pick([
         "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
-        "¡Hola! 😊 Puedo contarte sobre el perfil profesional de Jorge.",
+        "¡Hola! 😊 Estoy aquí para ayudarte.",
       ]);
       break;
 
@@ -128,27 +137,37 @@ function getSmartResponse(message, context) {
       text = `Domina tecnologías como ${PROFILE.stack.join(", ")}.`;
       break;
 
+    case "SOFT_SKILLS":
+      text = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
+        ", "
+      )}.`;
+      break;
+
     case "STACK":
       text =
-        "Sí, Jorge es desarrollador Full Stack, creando interfaces modernas y APIs seguras.";
+        "Sí, es desarrollador Full Stack, capaz de trabajar tanto en frontend como backend.";
       break;
 
     case "PROJECTS":
       text = `Ha desarrollado ${PROFILE.projects.join(", ")}.`;
       break;
 
-    case "CONTACT":
-      text = PROFILE.contact;
+    case "HOBBIES":
+      text = `Le interesa ${PROFILE.hobbies.join(
+        ", "
+      )}, siempre buscando mejorar como desarrollador.`;
+      break;
+
+    case "MOTIVATION":
+      text =
+        "Porque combina buena formación técnica, código limpio y enfoque en soluciones reales.";
       break;
 
     default:
-      if (context.lastIntent) {
-        text =
-          "¿Deseas saber más sobre su formación, tecnologías o proyectos?";
-      } else {
-        text =
-          "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
-      }
+      text =
+        context.lastIntent !== null
+          ? "¿Quieres que te cuente más sobre sus proyectos o tecnologías?"
+          : "Puedo hablarte sobre su perfil, habilidades y experiencia 😊";
   }
 
   return { text, intent };
@@ -160,8 +179,8 @@ function getSmartResponse(message, context) {
 function followUp(intent) {
   const map = {
     PROFILE: "¿Quieres conocer sus tecnologías?",
-    SKILLS: "¿Te muestro los proyectos donde las utiliza?",
-    PROJECTS: "¿Quieres contactarlo?",
+    SKILLS: "¿Te muestro sus proyectos?",
+    PROJECTS: "¿Quieres saber por qué contratarlo?",
   };
   return map[intent];
 }
@@ -171,7 +190,6 @@ function followUp(intent) {
 ========================= */
 export default function ChatBot() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
   const bottomRef = useRef(null);
 
   const [open, setOpen] = useState(false);
@@ -179,24 +197,30 @@ export default function ChatBot() {
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({ lastIntent: null });
 
+  const initialMessage = {
+    from: "bot",
+    text:
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+      "Puedes preguntarme sobre su perfil, habilidades, proyectos o motivación.",
+  };
+
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("sasha-chat");
-    return saved
-      ? JSON.parse(saved)
-      : [
-          {
-            from: "bot",
-            text:
-              "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-              "Pregúntame sobre su perfil, tecnologías, proyectos o contacto.",
-          },
-        ];
+    return saved ? JSON.parse(saved) : [initialMessage];
   });
 
   useEffect(() => {
     localStorage.setItem("sasha-chat", JSON.stringify(messages));
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  const clearChat = () => {
+    if (window.confirm("¿Deseas borrar toda la conversación?")) {
+      localStorage.removeItem("sasha-chat");
+      setMessages([initialMessage]);
+      setContext({ lastIntent: null });
+    }
+  };
 
   const sendMessage = (text) => {
     if (!text.trim()) return;
@@ -223,7 +247,7 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* BOTÓN */}
+      {/* BOTÓN FLOAT */}
       <Fab
         color="primary"
         onClick={() => setOpen(!open)}
@@ -240,7 +264,7 @@ export default function ChatBot() {
             bottom: 90,
             left: 16,
             width: 350,
-            height: 480,
+            height: 500,
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
@@ -259,9 +283,16 @@ export default function ChatBot() {
             }}
           >
             <Typography fontWeight="bold">Sasha 🤖</Typography>
-            <IconButton size="small" onClick={() => setOpen(false)}>
-              <CloseIcon sx={{ color: "#fff" }} />
-            </IconButton>
+            <Box>
+              <Tooltip title="Borrar conversación">
+                <IconButton size="small" onClick={clearChat}>
+                  <DeleteIcon sx={{ color: "#fff" }} />
+                </IconButton>
+              </Tooltip>
+              <IconButton size="small" onClick={() => setOpen(false)}>
+                <CloseIcon sx={{ color: "#fff" }} />
+              </IconButton>
+            </Box>
           </Box>
 
           {/* SUGERENCIAS */}
@@ -333,4 +364,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+    }
