@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Fab,
@@ -32,7 +32,7 @@ const SUGGESTIONS = [
 ];
 
 /* =========================
-   INTENCIÓN (FIX CONTACTO)
+   DETECCIÓN DE INTENCIÓN
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
@@ -43,7 +43,7 @@ function detectIntent(message) {
   if (/tecnologías|skills|habilidades|stack/.test(text)) return "SKILLS";
   if (/full\s?stack|frontend|backend/.test(text)) return "STACK";
   if (/proyectos|portfolio|apps|trabajos/.test(text)) return "PROJECTS";
-  if (/contact/.test(text)) return "CONTACT"; // ✅ FIX
+  if (/contact/.test(text)) return "CONTACT";
 
   return "UNKNOWN";
 }
@@ -78,13 +78,6 @@ function getSmartResponse(message, context) {
       );
 
     case "SKILLS":
-      if (context.askedProfile) {
-        return (
-          "Además de su perfil profesional, Jorge domina React, Vite y JavaScript en frontend; " +
-          "Python, Django REST Framework, MySQL, JWT, Git y Linux en backend."
-        );
-      }
-
       return (
         "Su stack tecnológico incluye React, Vite y JavaScript; " +
         "Python con Django REST Framework; MySQL; JWT; Git y Linux."
@@ -99,13 +92,13 @@ function getSmartResponse(message, context) {
     case "PROJECTS":
       return (
         "Ha desarrollado tiendas online Full Stack, aplicaciones en React conectadas a APIs REST " +
-        "y sistemas backend bien estructurados para distintos proyectos."
+        "y sistemas backend bien estructurados."
       );
 
     case "CONTACT":
       return (
         "Puedes contactar a Jorge desde el botón de WhatsApp disponible en este portafolio " +
-        "o desde la sección de contacto. Estará encantado de conversar contigo."
+        "o desde la sección de contacto."
       );
 
     default:
@@ -122,15 +115,11 @@ function getSmartResponse(message, context) {
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const bottomRef = useRef(null);
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-
-  const [context, setContext] = useState({
-    askedProfile: false,
-    askedSkills: false,
-  });
 
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("sasha-chat");
@@ -148,18 +137,11 @@ export default function ChatBot() {
 
   useEffect(() => {
     localStorage.setItem("sasha-chat", JSON.stringify(messages));
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const sendMessage = (text) => {
     if (!text.trim()) return;
-
-    const intent = detectIntent(text);
-
-    setContext((prev) => ({
-      ...prev,
-      askedProfile: intent === "PROFILE" || prev.askedProfile,
-      askedSkills: intent === "SKILLS" || prev.askedSkills,
-    }));
 
     setMessages((prev) => [...prev, { from: "user", text }]);
     setInput("");
@@ -168,7 +150,7 @@ export default function ChatBot() {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: getSmartResponse(text, context) },
+        { from: "bot", text: getSmartResponse(text) },
       ]);
       setTyping(false);
     }, 600);
@@ -187,7 +169,7 @@ export default function ChatBot() {
 
       {open && (
         <Paper
-          elevation={8}
+          elevation={10}
           sx={{
             position: "fixed",
             bottom: 90,
@@ -197,7 +179,7 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
-            bgcolor: isDark ? "#1e1e1e" : "#fff",
+            bgcolor: isDark ? "#121212" : "#fff",
             zIndex: 1200,
           }}
         >
@@ -205,7 +187,7 @@ export default function ChatBot() {
           <Box
             sx={{
               p: 1.5,
-              bgcolor: theme.palette.primary.main,
+              bgcolor: isDark ? "#1f1f1f" : theme.palette.primary.main,
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
@@ -218,7 +200,7 @@ export default function ChatBot() {
             </IconButton>
           </Box>
 
-          {/* SUGERENCIAS (FIX DARK MODE) */}
+          {/* SUGERENCIAS */}
           <Box sx={{ p: 1 }}>
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {SUGGESTIONS.map((q) => (
@@ -229,10 +211,11 @@ export default function ChatBot() {
                   clickable
                   onClick={() => sendMessage(q)}
                   sx={{
-                    bgcolor: isDark ? "#2c2c2c" : "#f1f1f1",
-                    color: isDark ? "#fff" : "#000",
+                    bgcolor: isDark ? "#2a2a2a" : "#f1f1f1",
+                    color: isDark ? "#eaeaea" : "#000",
+                    border: isDark ? "1px solid #3a3a3a" : "none",
                     "&:hover": {
-                      bgcolor: isDark ? "#3a3a3a" : "#e0e0e0",
+                      bgcolor: isDark ? "#333" : "#e0e0e0",
                     },
                   }}
                 />
@@ -258,13 +241,17 @@ export default function ChatBot() {
                     borderRadius: 2,
                     bgcolor:
                       msg.from === "user"
-                        ? theme.palette.primary.main
+                        ? isDark
+                          ? "#3a3a3a"
+                          : theme.palette.primary.main
                         : isDark
                         ? "#2c2c2c"
                         : "#f1f1f1",
                     color:
                       msg.from === "user"
                         ? "#fff"
+                        : isDark
+                        ? "#eaeaea"
                         : theme.palette.text.primary,
                     maxWidth: "85%",
                   }}
@@ -274,10 +261,11 @@ export default function ChatBot() {
               </Box>
             ))}
             {typing && (
-              <Typography variant="caption" sx={{ ml: 1 }}>
+              <Typography variant="caption" sx={{ ml: 1, color: "#aaa" }}>
                 Sasha está escribiendo…
               </Typography>
             )}
+            <div ref={bottomRef} />
           </Box>
 
           {/* INPUT */}
@@ -289,6 +277,12 @@ export default function ChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+              sx={{
+                input: { color: isDark ? "#fff" : "#000" },
+                "& .MuiOutlinedInput-root": {
+                  bgcolor: isDark ? "#1f1f1f" : "#fff",
+                },
+              }}
             />
             <IconButton color="primary" onClick={() => sendMessage(input)}>
               <SendIcon />
