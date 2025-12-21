@@ -18,95 +18,152 @@ import { useTheme } from "@mui/material/styles";
    UTILIDADES
 ========================= */
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const delay = () => Math.floor(Math.random() * 500) + 400;
+
+/* =========================
+   DATA PERFIL
+========================= */
+const PROFILE = {
+  name: "Jorge Patricio Santamaría Cherrez",
+  role: "Desarrollador Full Stack",
+  education: "Máster en Ingeniería de Software y Sistemas Informáticos",
+  stack: [
+    "React",
+    "Vite",
+    "JavaScript",
+    "Django REST Framework",
+    "Python",
+    "MySQL",
+    "JWT",
+    "Git",
+    "Linux",
+  ],
+  projects: [
+    "Tiendas online Full Stack",
+    "Aplicaciones React conectadas a APIs REST",
+    "Backends seguros y bien estructurados",
+  ],
+  contact:
+    "Puedes contactarlo desde el botón de WhatsApp o desde la sección de contacto del portafolio.",
+};
 
 /* =========================
    SUGERENCIAS
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
-  "¿Qué perfil profesional tiene?",
+  "¿Qué estudios tiene?",
   "¿Qué tecnologías domina?",
-  "¿Es desarrollador Full Stack?",
+  "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
   "¿Cómo puedo contactarlo?",
 ];
 
 /* =========================
-   DETECCIÓN DE INTENCIÓN
+   INTENCIONES
+========================= */
+const INTENTS = {
+  GREETING: ["hola", "buenas", "hey", "qué tal"],
+  PROFILE: ["jorge", "perfil", "quién", "eres"],
+  EDUCATION: ["estudios", "formación", "máster", "título"],
+  SKILLS: ["skills", "habilidades", "tecnologías", "stack"],
+  STACK: ["full stack", "frontend", "backend"],
+  PROJECTS: ["proyectos", "portfolio", "apps", "trabajos"],
+  CONTACT: ["contacto", "whatsapp", "correo", "email"],
+};
+
+/* =========================
+   DETECTAR INTENCIÓN
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
+  let bestIntent = "UNKNOWN";
+  let maxScore = 0;
 
-  if (/hola|buenas|hey/.test(text)) return "GREETING";
-  if (/jorge|quién|perfil|eres/.test(text)) return "PROFILE";
-  if (/estudios|formación|máster|titulo/.test(text)) return "EDUCATION";
-  if (/tecnologías|skills|habilidades|stack/.test(text)) return "SKILLS";
-  if (/full\s?stack|frontend|backend/.test(text)) return "STACK";
-  if (/proyectos|portfolio|apps|trabajos/.test(text)) return "PROJECTS";
-  if (/contact/.test(text)) return "CONTACT";
+  for (const intent in INTENTS) {
+    const score = INTENTS[intent].filter((word) =>
+      text.includes(word)
+    ).length;
 
-  return "UNKNOWN";
+    if (score > maxScore) {
+      maxScore = score;
+      bestIntent = intent;
+    }
+  }
+
+  return maxScore > 0 ? bestIntent : "UNKNOWN";
 }
 
 /* =========================
-   RESPUESTAS
+   RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
   if (message.trim().length < 4) {
-    return "¿Podrías darme un poco más de detalle? 😊";
+    return {
+      text: "¿Podrías darme un poco más de detalle? 😊",
+    };
   }
 
   const intent = detectIntent(message);
 
+  let text = "";
+
   switch (intent) {
     case "GREETING":
-      return pick([
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. ¿En qué puedo ayudarte?",
-        "¡Hola! Soy Sasha. Puedo contarte sobre el perfil profesional de Jorge.",
+      text = pick([
+        "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
+        "¡Hola! 😊 Puedo contarte sobre el perfil profesional de Jorge.",
       ]);
+      break;
 
     case "PROFILE":
-      return pick([
-        "Jorge Patricio Santamaría Cherrez es Máster en Ingeniería de Software y Sistemas Informáticos, enfocado en el desarrollo de soluciones web modernas y escalables.",
-        "Jorge es desarrollador Full Stack con formación de Máster en Ingeniería de Software, orientado a crear aplicaciones robustas y bien estructuradas.",
-      ]);
+      text = `${PROFILE.name} es ${PROFILE.role}.`;
+      break;
 
     case "EDUCATION":
-      return (
-        "Cuenta con un Máster en Ingeniería de Software y Sistemas Informáticos. " +
-        "Complementa su formación con aprendizaje continuo en desarrollo web y buenas prácticas."
-      );
+      text = `Cuenta con ${PROFILE.education}.`;
+      break;
 
     case "SKILLS":
-      return (
-        "Su stack tecnológico incluye React, Vite y JavaScript; " +
-        "Python con Django REST Framework; MySQL; JWT; Git y Linux."
-      );
+      text = `Domina tecnologías como ${PROFILE.stack.join(", ")}.`;
+      break;
 
     case "STACK":
-      return (
-        "Sí, Jorge es desarrollador Full Stack. Diseña interfaces modernas y accesibles " +
-        "y desarrolla APIs seguras siguiendo buenas prácticas de arquitectura."
-      );
+      text =
+        "Sí, Jorge es desarrollador Full Stack, creando interfaces modernas y APIs seguras.";
+      break;
 
     case "PROJECTS":
-      return (
-        "Ha desarrollado tiendas online Full Stack, aplicaciones en React conectadas a APIs REST " +
-        "y sistemas backend bien estructurados."
-      );
+      text = `Ha desarrollado ${PROFILE.projects.join(", ")}.`;
+      break;
 
     case "CONTACT":
-      return (
-        "Puedes contactar a Jorge desde el botón de WhatsApp disponible en este portafolio " +
-        "o desde la sección de contacto."
-      );
+      text = PROFILE.contact;
+      break;
 
     default:
-      return (
-        "Puedo ayudarte a conocer mejor el perfil profesional de Jorge 😊 " +
-        "Pregúntame sobre su experiencia, tecnologías, proyectos o contacto."
-      );
+      if (context.lastIntent) {
+        text =
+          "¿Deseas saber más sobre su formación, tecnologías o proyectos?";
+      } else {
+        text =
+          "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+      }
   }
+
+  return { text, intent };
+}
+
+/* =========================
+   FOLLOW UP
+========================= */
+function followUp(intent) {
+  const map = {
+    PROFILE: "¿Quieres conocer sus tecnologías?",
+    SKILLS: "¿Te muestro los proyectos donde las utiliza?",
+    PROJECTS: "¿Quieres contactarlo?",
+  };
+  return map[intent];
 }
 
 /* =========================
@@ -120,6 +177,7 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+  const [context, setContext] = useState({ lastIntent: null });
 
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("sasha-chat");
@@ -130,7 +188,7 @@ export default function ChatBot() {
             from: "bot",
             text:
               "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-              "Puedo contarte sobre su perfil profesional, tecnologías, proyectos o cómo contactarlo.",
+              "Pregúntame sobre su perfil, tecnologías, proyectos o contacto.",
           },
         ];
   });
@@ -148,12 +206,19 @@ export default function ChatBot() {
     setTyping(true);
 
     setTimeout(() => {
+      const res = getSmartResponse(text, context);
+      setContext({ lastIntent: res.intent });
+
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: getSmartResponse(text) },
+        { from: "bot", text: res.text },
+        ...(followUp(res.intent)
+          ? [{ from: "bot", text: followUp(res.intent) }]
+          : []),
       ]);
+
       setTyping(false);
-    }, 600);
+    }, delay());
   };
 
   return (
@@ -179,7 +244,6 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
-            bgcolor: isDark ? "#121212" : "#fff",
             zIndex: 1200,
           }}
         >
@@ -187,7 +251,7 @@ export default function ChatBot() {
           <Box
             sx={{
               p: 1.5,
-              bgcolor: isDark ? "#1f1f1f" : theme.palette.primary.main,
+              bgcolor: theme.palette.primary.main,
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
@@ -210,14 +274,6 @@ export default function ChatBot() {
                   size="small"
                   clickable
                   onClick={() => sendMessage(q)}
-                  sx={{
-                    bgcolor: isDark ? "#2a2a2a" : "#f1f1f1",
-                    color: isDark ? "#eaeaea" : "#000",
-                    border: isDark ? "1px solid #3a3a3a" : "none",
-                    "&:hover": {
-                      bgcolor: isDark ? "#333" : "#e0e0e0",
-                    },
-                  }}
                 />
               ))}
             </Stack>
@@ -241,18 +297,9 @@ export default function ChatBot() {
                     borderRadius: 2,
                     bgcolor:
                       msg.from === "user"
-                        ? isDark
-                          ? "#3a3a3a"
-                          : theme.palette.primary.main
-                        : isDark
-                        ? "#2c2c2c"
+                        ? theme.palette.primary.main
                         : "#f1f1f1",
-                    color:
-                      msg.from === "user"
-                        ? "#fff"
-                        : isDark
-                        ? "#eaeaea"
-                        : theme.palette.text.primary,
+                    color: msg.from === "user" ? "#fff" : "#000",
                     maxWidth: "85%",
                   }}
                 >
@@ -277,12 +324,6 @@ export default function ChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              sx={{
-                input: { color: isDark ? "#fff" : "#000" },
-                "& .MuiOutlinedInput-root": {
-                  bgcolor: isDark ? "#1f1f1f" : "#fff",
-                },
-              }}
             />
             <IconButton color="primary" onClick={() => sendMessage(input)}>
               <SendIcon />
