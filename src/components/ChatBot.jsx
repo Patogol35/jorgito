@@ -30,7 +30,7 @@ const PROFILE = {
   role: "Ingeniero de Software y Desarrollador Full Stack",
   description:
     "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, " +
-    "con enfoque en buenas prácticas, arquitectura limpia y experiencia de usuario.",
+    "aplicando buenas prácticas y arquitectura limpia.",
   education: "Máster en Ingeniería de Software y Sistemas Informáticos",
   experience: [
     "Desarrollador de aulas virtuales",
@@ -68,8 +68,8 @@ const PROFILE = {
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
-  "¿Qué estudios tiene?",
   "¿Qué experiencia tiene?",
+  "¿Qué estudios tiene?",
   "¿En qué tecnologías trabaja?",
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
@@ -100,8 +100,8 @@ function detectIntent(message) {
   let maxScore = 0;
 
   for (const intent in INTENTS) {
-    const score = INTENTS[intent].filter((word) =>
-      text.includes(word)
+    const score = INTENTS[intent].filter((w) =>
+      text.includes(w)
     ).length;
 
     if (score > maxScore) {
@@ -172,7 +172,7 @@ function getSmartResponse(message, context) {
       text =
         context.lastIntent !== null
           ? "¿Quieres que te cuente más sobre su experiencia o tecnologías?"
-          : "Puedo hablarte sobre el perfil profesional de Jorge 😊";
+          : "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
 
   return { text, intent };
@@ -196,6 +196,11 @@ function followUp(intent) {
 ========================= */
 export default function ChatBot() {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const primaryBg = isDark
+    ? theme.palette.primary.light
+    : theme.palette.primary.main;
+
   const bottomRef = useRef(null);
 
   const [open, setOpen] = useState(false);
@@ -274,6 +279,8 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
+            bgcolor: isDark ? "#121212" : "#fff",
+            color: isDark ? "#eaeaea" : "#000",
             zIndex: 1200,
           }}
         >
@@ -281,8 +288,8 @@ export default function ChatBot() {
           <Box
             sx={{
               p: 1.5,
-              bgcolor: theme.palette.primary.main,
-              color: "#fff",
+              bgcolor: primaryBg,
+              color: isDark ? "#000" : "#fff",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -292,11 +299,11 @@ export default function ChatBot() {
             <Box>
               <Tooltip title="Borrar conversación">
                 <IconButton size="small" onClick={clearChat}>
-                  <DeleteIcon sx={{ color: "#fff" }} />
+                  <DeleteIcon sx={{ color: isDark ? "#000" : "#fff" }} />
                 </IconButton>
               </Tooltip>
               <IconButton size="small" onClick={() => setOpen(false)}>
-                <CloseIcon sx={{ color: "#fff" }} />
+                <CloseIcon sx={{ color: isDark ? "#000" : "#fff" }} />
               </IconButton>
             </Box>
           </Box>
@@ -311,6 +318,14 @@ export default function ChatBot() {
                   size="small"
                   clickable
                   onClick={() => sendMessage(q)}
+                  sx={{
+                    bgcolor: isDark ? "#2a2a2a" : "#f1f1f1",
+                    color: isDark ? "#eaeaea" : "#000",
+                    border: isDark ? "1px solid #3a3a3a" : "none",
+                    "&:hover": {
+                      bgcolor: isDark ? "#333" : "#e0e0e0",
+                    },
+                  }}
                 />
               ))}
             </Stack>
@@ -333,10 +348,15 @@ export default function ChatBot() {
                     py: 1,
                     borderRadius: 2,
                     bgcolor:
+                      msg.from === "user" ? primaryBg : isDark ? "#2c2c2c" : "#f1f1f1",
+                    color:
                       msg.from === "user"
-                        ? theme.palette.primary.main
-                        : "#f1f1f1",
-                    color: msg.from === "user" ? "#fff" : "#000",
+                        ? isDark
+                          ? "#000"
+                          : "#fff"
+                        : isDark
+                        ? "#eaeaea"
+                        : "#000",
                     maxWidth: "85%",
                   }}
                 >
@@ -361,6 +381,12 @@ export default function ChatBot() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+              sx={{
+                input: { color: isDark ? "#fff" : "#000" },
+                "& .MuiOutlinedInput-root": {
+                  bgcolor: isDark ? "#1f1f1f" : "#fff",
+                },
+              }}
             />
             <IconButton color="primary" onClick={() => sendMessage(input)}>
               <SendIcon />
@@ -370,4 +396,4 @@ export default function ChatBot() {
       )}
     </>
   );
-            }
+  }
