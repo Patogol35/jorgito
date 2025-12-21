@@ -9,7 +9,9 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -18,6 +20,7 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
+import ChatBot from "./components/ChatBot.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -35,12 +38,22 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: { default: "#f5f7fa", paper: "#ffffff" },
-                text: { primary: "#111" },
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
-                background: { default: "#121212", paper: "#1e1e1e" },
-                text: { primary: "#ffffff" },
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
         },
       }),
@@ -50,11 +63,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* Container con margen lateral proporcional */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -63,11 +80,13 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {[{ id: "about", color: "#2e7d32", Component: About },
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
-            { id: "contact", color: "#d32f2f", Component: Contact }].map(({ id, color, Component }) => (
+            { id: "contact", color: "#d32f2f", Component: Contact },
+          ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
@@ -79,7 +98,9 @@ function App() {
                 borderLeft: `10px solid ${color}`,
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
-                "&:hover": { transform: "translateY(-4px)" },
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                },
               }}
             >
               <Component />
@@ -87,12 +108,12 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE DE WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            color="success"
             aria-label="whatsapp"
             sx={{
               position: "fixed",
@@ -109,6 +130,9 @@ function App() {
             <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
+
+        {/* CHATBOT IA PERSONAL */}
+        <ChatBot />
       </Box>
     </ThemeProvider>
   );
