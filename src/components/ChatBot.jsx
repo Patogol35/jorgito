@@ -38,8 +38,8 @@ const PROFILE = {
   ],
   stack: [
     "React",
-    "Vercel"
-    "Postman"
+    "Vercel",
+    "Postman",
     "Vite",
     "JavaScript",
     "Spring Boot",
