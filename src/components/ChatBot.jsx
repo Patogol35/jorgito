@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   Fab,
@@ -6,36 +6,47 @@ import {
   TextField,
   Typography,
   IconButton,
+  Chip,
+  Stack,
 } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "@mui/material/styles";
+
+const SUGGESTIONS = [
+  "¿Quién es Jorge?",
+  "¿Qué tecnologías domina?",
+  "¿Es Full Stack?",
+  "Muéstrame sus proyectos",
+  "¿Cómo puedo contactarlo?",
+];
 
 const knowledgeBase = [
   {
-    keywords: ["quién", "eres", "jorge"],
+    keywords: ["quién", "jorge", "eres"],
     answer:
-      "Soy Jorge Patricio Santamaría Cherrez, Máster en Ingeniería de Software y Sistemas Informáticos, apasionado por crear soluciones digitales seguras e innovadoras.",
+      "Soy Jorge Patricio Santamaría Cherrez, Máster en Ingeniería de Software y Sistemas Informáticos. Me especializo en crear soluciones digitales modernas, seguras y escalables.",
   },
   {
-    keywords: ["estudios", "formación", "título"],
+    keywords: ["full stack", "backend", "frontend"],
     answer:
-      "Tengo un Máster en Ingeniería de Software y Sistemas Informáticos y formación continua en desarrollo web, IA y ciberseguridad.",
+      "Sí, soy desarrollador Full Stack. Trabajo con React y Vite en frontend, y Django REST con MySQL y JWT en backend.",
   },
   {
     keywords: ["tecnologías", "skills", "habilidades"],
     answer:
-      "Trabajo con React, Vite, JavaScript, Python, Django, MySQL, JWT, Git y Linux. También tengo conocimientos en IA y ciberseguridad.",
+      "Domino React, JavaScript, Python, Django, MySQL, Git, Linux y JWT. También tengo experiencia en IA y ciberseguridad.",
   },
   {
     keywords: ["proyectos", "portfolio"],
     answer:
-      "He desarrollado tiendas online full stack, apps en React, proyectos con Django REST y aplicaciones con integración de IA.",
+      "He desarrollado tiendas online full stack, aplicaciones en React, APIs con Django REST e integración de inteligencia artificial.",
   },
   {
-    keywords: ["contacto", "email", "whatsapp"],
+    keywords: ["contacto", "whatsapp", "email"],
     answer:
-      "Puedes contactarme directamente por WhatsApp usando el botón flotante o desde la sección de contacto del portafolio.",
+      "Puedes contactarlo fácilmente desde el botón de WhatsApp o en la sección de contacto de este portafolio.",
   },
 ];
 
@@ -44,76 +55,111 @@ function getBotResponse(message) {
   const match = knowledgeBase.find((item) =>
     item.keywords.some((k) => text.includes(k))
   );
+
   return (
     match?.answer ||
-    "Buena pregunta 🙂 Puedes preguntarme sobre mi perfil, estudios, habilidades, proyectos o cómo contactarme."
+    "Buena pregunta 🙂 Puedes preguntarme sobre su perfil, habilidades, proyectos o cómo contactarlo."
   );
 }
 
 export default function ChatBot() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { from: "bot", text: "Hola 👋 Soy el asistente virtual de Jorge. ¿Qué deseas saber?" },
-  ]);
   const [input, setInput] = useState("");
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("daniela-chat");
+    return saved
+      ? JSON.parse(saved)
+      : [
+          {
+            from: "bot",
+            text: "Hola 👋 Soy Daniela IA, la asistente virtual de Jorge. ¿Qué deseas saber?",
+          },
+        ];
+  });
 
-    const userMessage = { from: "user", text: input };
-    const botMessage = {
-      from: "bot",
-      text: getBotResponse(input),
-    };
+  useEffect(() => {
+    localStorage.setItem("daniela-chat", JSON.stringify(messages));
+  }, [messages]);
 
-    setMessages((prev) => [...prev, userMessage, botMessage]);
+  const sendMessage = (text) => {
+    if (!text.trim()) return;
+
+    const userMsg = { from: "user", text };
+    const botMsg = { from: "bot", text: getBotResponse(text) };
+
+    setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
   };
 
   return (
     <>
-      {/* Botón flotante */}
+      {/* BOTÓN FLOTANTE */}
       <Fab
         color="primary"
         onClick={() => setOpen(!open)}
-        sx={{ position: "fixed", bottom: 16, left: 16, zIndex: 1000 }}
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          left: 16,
+          zIndex: 1200,
+        }}
       >
         <SmartToyIcon />
       </Fab>
 
       {open && (
         <Paper
-          elevation={6}
+          elevation={8}
           sx={{
             position: "fixed",
             bottom: 90,
             left: 16,
-            width: 320,
-            height: 420,
+            width: 340,
+            height: 460,
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
-            zIndex: 1000,
+            bgcolor: isDark ? "#1e1e1e" : "#fff",
+            zIndex: 1200,
           }}
         >
-          {/* Header */}
+          {/* HEADER */}
           <Box
             sx={{
               p: 1.5,
-              bgcolor: "primary.main",
+              bgcolor: theme.palette.primary.main,
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
             }}
           >
-            <Typography fontWeight="bold">JorgeBot 🤖</Typography>
+            <Typography fontWeight="bold">Daniela IA 🤖</Typography>
             <IconButton size="small" onClick={() => setOpen(false)}>
               <CloseIcon sx={{ color: "#fff" }} />
             </IconButton>
           </Box>
 
-          {/* Mensajes */}
+          {/* SUGERENCIAS */}
+          <Box sx={{ p: 1 }}>
+            <Stack direction="row" spacing={1} flexWrap="wrap">
+              {SUGGESTIONS.map((q) => (
+                <Chip
+                  key={q}
+                  label={q}
+                  size="small"
+                  clickable
+                  onClick={() => sendMessage(q)}
+                />
+              ))}
+            </Stack>
+          </Box>
+
+          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
               <Box
@@ -129,8 +175,16 @@ export default function ChatBot() {
                     px: 1.5,
                     py: 1,
                     borderRadius: 2,
-                    bgcolor: msg.from === "user" ? "primary.main" : "grey.300",
-                    color: msg.from === "user" ? "#fff" : "#000",
+                    bgcolor:
+                      msg.from === "user"
+                        ? theme.palette.primary.main
+                        : isDark
+                        ? "#2c2c2c"
+                        : "#f0f0f0",
+                    color:
+                      msg.from === "user"
+                        ? "#fff"
+                        : theme.palette.text.primary,
                     maxWidth: "85%",
                   }}
                 >
@@ -140,17 +194,17 @@ export default function ChatBot() {
             ))}
           </Box>
 
-          {/* Input */}
+          {/* INPUT */}
           <Box sx={{ display: "flex", p: 1, gap: 1 }}>
             <TextField
               size="small"
               fullWidth
-              placeholder="Escribe tu pregunta..."
+              placeholder="Escribe tu pregunta…"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
-            <IconButton color="primary" onClick={sendMessage}>
+            <IconButton color="primary" onClick={() => sendMessage(input)}>
               <SendIcon />
             </IconButton>
           </Box>
@@ -158,4 +212,4 @@ export default function ChatBot() {
       )}
     </>
   );
-      }
+}
