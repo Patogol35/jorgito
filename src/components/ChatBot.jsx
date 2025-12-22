@@ -337,7 +337,7 @@ color: "#fff",
           left: 0,
           right: 0,
           bottom: 0,
-          height: "60vh",
+          height: "80vh",
           borderRadius: "16px 16px 0 0",
         }
       : {
