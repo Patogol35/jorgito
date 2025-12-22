@@ -134,12 +134,7 @@ const INTENTS = {
 /* =========================
 DETECTAR INTENCIÓN
 ========================= */
-/* =========================
-UTILIDADES
-========================= */
-const delay = () => Math.floor(Math.random() * 500) + 400;
-const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
-const NO_WORDS = ["no", "ahora no", "luego"];
+/* ========================
 
 /* 👇 AQUÍ VA */
 function normalizeText(text) {
