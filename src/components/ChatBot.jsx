@@ -20,7 +20,7 @@ import { useTheme } from "@mui/material/styles";
    CONFIG
 ========================= */
 const WHATSAPP_URL =
-  "https://wa.me/593XXXXXXXXX?text=Hola%20Jorge,%20vi%20tu%20portafolio";
+  "https://wa.me/593997979099?text=Hola%20Jorge,%20vi%20tu%20portafolio";
 
 /* =========================
    UTILIDADES
@@ -128,7 +128,7 @@ function detectIntent(message) {
 function getSmartResponse(message, context) {
   const text = message.toLowerCase().trim();
 
-  /* 👉 RESPONDER FOLLOW-UP */
+  // 👉 RESPONDER FOLLOW-UP
   if (context.awaitingFollowUp) {
     if (YES_WORDS.includes(text)) {
       switch (context.awaitingFollowUp) {
@@ -166,7 +166,7 @@ function getSmartResponse(message, context) {
     }
   }
 
-  /* 👉 CONFIRMACIÓN WHATSAPP */
+  // 👉 CONFIRMACIÓN WHATSAPP
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.includes(text)) {
       window.open(WHATSAPP_URL, "_blank");
@@ -276,7 +276,6 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  /* 👉 TACHO FUNCIONAL */
   const clearChat = () => {
     if (window.confirm("¿Deseas borrar toda la conversación?")) {
       localStorage.removeItem("sasha-chat");
@@ -357,10 +356,17 @@ export default function ChatBot() {
             </Box>
           </Box>
 
+          {/* 🔥 CHIPS SEPARADAS */}
           <Box sx={{ p: 1 }}>
-            <Stack direction="row" spacing={1} flexWrap="wrap">
+            <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
-                <Chip key={q} label={q} size="small" clickable onClick={() => sendMessage(q)} />
+                <Chip
+                  key={q}
+                  label={q}
+                  size="small"
+                  clickable
+                  onClick={() => sendMessage(q)}
+                />
               ))}
             </Stack>
           </Box>
@@ -417,4 +423,4 @@ export default function ChatBot() {
       )}
     </>
   );
-          }
+  }
