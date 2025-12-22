@@ -16,38 +16,30 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material/styles";
 
-/* =========================
-CONFIG
-========================= */
+/* ========================= CONFIG ========================= */
 const WHATSAPP_URL =
   "https://wa.me/593997979099?text=Hola%20Jorge,%20vi%20tu%20portafolio";
 
-/* =========================
-UTILIDADES
-========================= */
+/* ========================= UTILIDADES ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
 const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
-/* =========================
-PERFIL
-========================= */
+/* ========================= PERFIL ========================= */
 const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
   role: "Ingeniero de Software y Desarrollador Full Stack",
   description:
-    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, aplicando buenas prácticas y arquitectura limpia.",
+    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables.",
   education:
-    "Máster en Ingeniería de Software y Sistemas Informáticos – Universidad Internacional de La Rioja (UNIR), España",
+    "Máster en Ingeniería de Software y Sistemas Informáticos – UNIR (España)",
   experience: [
     "Desarrollador de aulas virtuales",
     "Desarrollo de aplicaciones web Full Stack",
-    "Creación de APIs REST seguras y escalables",
+    "Creación de APIs REST seguras",
   ],
   stack: [
     "React",
-    "Vercel",
-    "Postman",
     "Vite",
     "JavaScript",
     "Spring Boot",
@@ -61,14 +53,11 @@ const PROFILE = {
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
-    "Aplicaciones Frontend",
-    "Aplicaciones React conectadas a APIs REST",
+    "Aplicaciones React con APIs REST",
   ],
 };
 
-/* =========================
-SUGERENCIAS
-========================= */
+/* ========================= SUGERENCIAS ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué experiencia tiene?",
@@ -78,11 +67,10 @@ const SUGGESTIONS = [
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
+  "¿Quién te creó?",
 ];
 
-/* =========================
-INTENCIONES
-========================= */
+/* ========================= INTENCIONES ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey"],
   PROFILE: ["jorge", "quién es", "perfil"],
@@ -92,17 +80,14 @@ const INTENTS = {
   STACK: ["full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio"],
   MOTIVATION: ["por qué contratar", "ventajas"],
-  CONTACT: ["contactar", "whatsapp", "correo", "email"],
+  CONTACT: ["contactar", "whatsapp", "correo"],
 
-  // 👇 NUEVAS (SASHA)
-  ASSISTANT: ["quién eres", "quien eres", "eres sasha"],
+  ASSISTANT: ["quién eres", "eres sasha", "qué eres"],
   CREATOR: ["quién te creó", "quien te creo", "te programó"],
   STATUS: ["cómo estás", "como estas", "qué tal"],
 };
 
-/* =========================
-DETECTAR INTENCIÓN
-========================= */
+/* ========================= DETECTAR INTENCIÓN ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
   let best = "UNKNOWN";
@@ -112,19 +97,15 @@ function detectIntent(message) {
     const score = INTENTS[intent].filter((w) =>
       text.includes(w)
     ).length;
-
     if (score > scoreMax) {
       scoreMax = score;
       best = intent;
     }
   }
-
   return scoreMax ? best : "UNKNOWN";
 }
 
-/* =========================
-RESPUESTA INTELIGENTE
-========================= */
+/* ========================= RESPUESTA ========================= */
 function getSmartResponse(message, context) {
   const text = message.toLowerCase().trim();
 
@@ -138,54 +119,12 @@ function getSmartResponse(message, context) {
     }
   }
 
-  if (context.awaitingFollowUp) {
-    if (YES_WORDS.includes(text)) {
-      switch (context.awaitingFollowUp) {
-        case "PROFILE":
-          return {
-            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-            intent: "EXPERIENCE",
-          };
-        case "EXPERIENCE":
-          return {
-            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-            intent: "SKILLS",
-          };
-        case "SKILLS":
-          return {
-            text: `Aplica estas tecnologías en proyectos como ${PROFILE.projects.join(", ")}.`,
-            intent: "PROJECTS",
-          };
-      }
-    }
-
-    if (NO_WORDS.includes(text)) {
-      return { text: "De acuerdo 😊 ¿En qué más puedo ayudarte?" };
-    }
-  }
-
   const intent = detectIntent(message);
   let reply = "";
 
   switch (intent) {
     case "GREETING":
       reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
-      break;
-
-    case "ASSISTANT":
-      reply =
-        "Soy Sasha 🤖, la asistente virtual de Jorge. " +
-        "Estoy aquí para ayudarte a conocer su perfil profesional.";
-      break;
-
-    case "CREATOR":
-      reply =
-        "Fui creada para el portafolio de Jorge 😊 " +
-        "con el objetivo de responder preguntas sobre su experiencia y tecnologías.";
-      break;
-
-    case "STATUS":
-      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
       break;
 
     case "PROFILE":
@@ -206,7 +145,7 @@ function getSmartResponse(message, context) {
 
     case "STACK":
       reply =
-        "Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.";
+        "Sí, es Full Stack. Frontend con React y backend con Spring Boot y Django REST Framework.";
       break;
 
     case "PROJECTS":
@@ -215,17 +154,29 @@ function getSmartResponse(message, context) {
 
     case "MOTIVATION":
       reply =
-        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
+        "Porque combina formación sólida, experiencia real y enfoque práctico.";
       break;
 
     case "CONTACT":
       return {
         text:
-          "Puedes contactar a Jorge fácilmente 😊\n\n" +
-          "📱 WhatsApp: desde el portafolio.\n\n" +
-          "¿Quieres que abra WhatsApp ahora?",
+          "Puedes contactar a Jorge fácilmente 😊\n\n📱 WhatsApp desde el portafolio.\n📩 Correo y redes en Contacto.\n\n¿Quieres que abra WhatsApp ahora?",
         action: "CONTACT_CONFIRM",
       };
+
+    case "ASSISTANT":
+      reply =
+        "Soy Sasha 🤖, la asistente virtual de Jorge. Estoy aquí para ayudarte.";
+      break;
+
+    case "CREATOR":
+      reply =
+        "Fui creada para el portafolio de Jorge, con el objetivo de mostrar su perfil profesional.";
+      break;
+
+    case "STATUS":
+      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
+      break;
 
     default:
       reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
@@ -234,20 +185,7 @@ function getSmartResponse(message, context) {
   return { text: reply, intent };
 }
 
-/* =========================
-FOLLOW UP
-========================= */
-function followUp(intent) {
-  return {
-    PROFILE: "¿Quieres conocer su experiencia profesional?",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
-  }[intent];
-}
-
-/* =========================
-COMPONENTE
-========================= */
+/* ========================= COMPONENTE ========================= */
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -257,16 +195,13 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({
-    awaiting: null,
-    awaitingFollowUp: null,
-  });
+  const [context, setContext] = useState({ awaiting: null });
 
   const initialMessage = {
     from: "bot",
     text:
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
+      "Puedes preguntarme sobre su perfil, experiencia o tecnologías.",
   };
 
   const [messages, setMessages] = useState([initialMessage]);
@@ -284,20 +219,10 @@ export default function ChatBot() {
 
     setTimeout(() => {
       const res = getSmartResponse(text, context);
-
       setContext({
         awaiting: res.action === "CONTACT_CONFIRM" ? "CONTACT_CONFIRM" : null,
-        awaitingFollowUp: followUp(res.intent) ? res.intent : null,
       });
-
-      setMessages((prev) => [
-        ...prev,
-        { from: "bot", text: res.text },
-        ...(followUp(res.intent)
-          ? [{ from: "bot", text: followUp(res.intent) }]
-          : []),
-      ]);
-
+      setMessages((prev) => [...prev, { from: "bot", text: res.text }]);
       setTyping(false);
     }, delay());
   };
@@ -306,7 +231,7 @@ export default function ChatBot() {
     <>
       <Fab
         onClick={() => setOpen(!open)}
-        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg, color: "#fff" }}
+        sx={{ position: "fixed", bottom: 16, left: 16 }}
       >
         <SmartToyIcon />
       </Fab>
@@ -315,38 +240,78 @@ export default function ChatBot() {
         <Paper
           sx={{
             position: "fixed",
-            bottom: 90,
+            bottom: 80,
             left: 16,
-            width: 360,
-            height: 520,
+            width: 320,
+            height: 420,
             display: "flex",
             flexDirection: "column",
           }}
         >
-          <Box sx={{ p: 1, bgcolor: primaryBg, color: "#fff" }}>
+          <Box sx={{ p: 1, display: "flex", justifyContent: "space-between" }}>
             <Typography>Sasha 🤖</Typography>
+            <IconButton onClick={() => setOpen(false)}>
+              <CloseIcon />
+            </IconButton>
           </Box>
 
-          <Box sx={{ p: 1 }}>
-            <Stack direction="row" flexWrap="wrap" gap={1}>
-              {SUGGESTIONS.map((q) => (
-                <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
-              ))}
-            </Stack>
-          </Box>
+          <Stack direction="row" spacing={1} sx={{ p: 1, flexWrap: "wrap" }}>
+            {SUGGESTIONS.map((q) => (
+              <Chip key={q} label={q} onClick={() => sendMessage(q)} />
+            ))}
+          </Stack>
 
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Typography key={i}>{msg.text}</Typography>
+              <Box
+                key={i}
+                sx={{
+                  textAlign: msg.from === "user" ? "right" : "left",
+                  mb: 1,
+                }}
+              >
+                <Typography
+                  sx={{
+                    display: "inline-block",
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    bgcolor:
+                      msg.from === "user"
+                        ? primaryBg
+                        : isDark
+                        ? "#1f1f1f"
+                        : "#f4f4f4",
+                    color:
+                      msg.from === "user"
+                        ? "#fff"
+                        : isDark
+                        ? "#eaeaea"
+                        : "#000",
+                    fontWeight: msg.from === "user" ? 500 : 400,
+                    boxShadow:
+                      msg.from === "user"
+                        ? "0 2px 6px rgba(0,0,0,0.25)"
+                        : "none",
+                  }}
+                >
+                  {msg.text}
+                </Typography>
+              </Box>
             ))}
-            {typing && <Typography variant="caption">Sasha está escribiendo…</Typography>}
+            {typing && (
+              <Typography variant="caption">
+                Sasha está escribiendo…
+              </Typography>
+            )}
             <div ref={bottomRef} />
           </Box>
 
-          <Box sx={{ display: "flex", p: 1 }}>
+          <Box sx={{ display: "flex", p: 1, gap: 1 }}>
             <TextField
-              fullWidth
               size="small"
+              fullWidth
+              placeholder="Escribe tu pregunta…"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
@@ -359,4 +324,4 @@ export default function ChatBot() {
       )}
     </>
   );
-  }
+}
