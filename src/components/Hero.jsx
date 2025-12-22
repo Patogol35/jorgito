@@ -172,7 +172,7 @@ export default function Hero({ mode, setMode }) {
     },
   }}
 >
-  Habla con Sasha
+  Sasha
 </Button>
 
               {/* Modo */}
