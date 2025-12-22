@@ -143,26 +143,37 @@ export default function Hero({ mode, setMode }) {
                 Ver Título
               </Button>
 
-              {/* Sasha – MISMO DISEÑO */}
               <Button
-                variant="contained"
-                startIcon={<SmartToyIcon />}
-                onClick={() => {
-                  if (window.openSashaChat) window.openSashaChat();
-                }}
-                sx={{
-                  borderRadius: "25px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: { xs: 3.5, md: 5 },
-                  py: 1.4,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "none",
-                  "&:hover": { boxShadow: "none" },
-                }}
-              >
-                Habla con Sasha
-              </Button>
+  variant="contained"
+  startIcon={<SmartToyIcon />}
+  onClick={() => {
+    if (window.openSashaChat) window.openSashaChat();
+  }}
+  sx={{
+    borderRadius: "25px",
+    textTransform: "none",
+    fontWeight: "bold",
+
+    /* 🔒 Tamaño fijo */
+    minHeight: 48,
+    lineHeight: 1.2,
+    px: { xs: 3.5, md: 5 },
+    py: 1.4,
+
+    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+    boxShadow: "none",
+
+    /* ❌ Evita crecimiento visual */
+    "&:hover": {
+      boxShadow: "none",
+    },
+    "&:active": {
+      transform: "none",
+    },
+  }}
+>
+  Habla con Sasha
+</Button>
 
               {/* Modo */}
               <Button
