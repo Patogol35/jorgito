@@ -315,25 +315,39 @@ export default function ChatBot() {
       </Fab>
 
       {open && (
+
+
+const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+
       <Paper
   sx={{
     position: "fixed",
-    bottom: 90,
-    left: 16,
-    width: 360,
+    zIndex: 1300,
 
-    height: "70vh",        // 🔥 se adapta en horizontal
-    maxHeight: "520px",    // límite en vertical
-    minHeight: "320px",    // evita que sea muy pequeño
+    // 📱 PORTRAIT (vertical)
+    ...( !isLandscape && {
+      bottom: 90,
+      left: 16,
+      width: 360,
+      height: "70vh",
+      maxHeight: 520,
+    }),
+
+    // 📱 LANDSCAPE (horizontal)
+    ...( isLandscape && {
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+
+      width: "92vw",
+      height: "92vh",
+
+      maxWidth: 600,
+      maxHeight: 420,
+    }),
 
     display: "flex",
     flexDirection: "column",
-
-    "@media (max-width: 600px)": {
-      width: "calc(100vw - 32px)", // móvil
-      left: 16,
-      right: 16,
-    },
   }}
 >
           <Box
