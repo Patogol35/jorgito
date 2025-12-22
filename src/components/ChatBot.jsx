@@ -151,7 +151,7 @@ function getSmartResponse(message, context) {
       reply = "Fui creada por Jorge 😊.";
       break;
     case "STATUS":
-      reply = "¡Muy bien! 😊 Lista para ayudarte.";
+      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
       break;
     case "PROFILE":
       reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
@@ -167,7 +167,7 @@ function getSmartResponse(message, context) {
       break;
     case "STACK":
       reply =
-        "Sí, es Full Stack. Frontend con React/Vite y Backend con Spring Boot y Django REST.";
+        "Sí, es desarrollador Full Stack. Frontend con React/Vite y Backend con Spring Boot y Django REST.";
       break;
     case "PROJECTS":
       reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
@@ -234,6 +234,7 @@ export default function ChatBot() {
 
   return (
     <>
+      {/* BOTÓN */}
       <Fab
         onClick={() => setOpen(!open)}
         sx={{
@@ -282,38 +283,82 @@ export default function ChatBot() {
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
+              flexShrink: 0,
             }}
           >
             <Typography>Sasha</Typography>
-            <IconButton size="small" onClick={() => setOpen(false)} sx={{ color: "#fff" }}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
+            <Box>
+              <Tooltip title="Borrar conversación">
+                <IconButton
+                  size="small"
+                  sx={{ color: "#fff" }}
+                  onClick={() => setMessages([initialMessage])}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+              <IconButton
+                size="small"
+                sx={{ color: "#fff" }}
+                onClick={() => setOpen(false)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
-          {!isLandscape && (
-            <Box sx={{ p: 1 }}>
-              <Stack direction="row" flexWrap="wrap" gap={1}>
-                {SUGGESTIONS.map((q) => (
-                  <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
-                ))}
-              </Stack>
-            </Box>
-          )}
+          {/* CHIPS (VISIBLE TAMBIÉN EN HORIZONTAL) */}
+          <Box
+            sx={{
+              p: 1,
+              overflowX: isLandscape ? "auto" : "visible",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+          >
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                flexWrap: isLandscape ? "nowrap" : "wrap",
+                width: "max-content",
+              }}
+            >
+              {SUGGESTIONS.map((q) => (
+                <Chip
+                  key={q}
+                  label={q}
+                  size="small"
+                  onClick={() => sendMessage(q)}
+                />
+              ))}
+            </Stack>
+          </Box>
 
           {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto", minHeight: 0 }}>
             {messages.map((msg, i) => (
-              <Typography key={i} sx={{ mb: 0.5 }}>
+              <Typography
+                key={i}
+                sx={{
+                  mb: 0.5,
+                  fontWeight: msg.from === "user" ? 600 : 400,
+                }}
+              >
                 {msg.text}
               </Typography>
             ))}
-            {typing && <Typography variant="caption">Sasha está escribiendo…</Typography>}
+            {typing && (
+              <Typography variant="caption">
+                Sasha está escribiendo…
+              </Typography>
+            )}
             <div ref={bottomRef} />
           </Box>
 
           {/* INPUT */}
-          <Box sx={{ display: "flex", p: 1 }}>
+          <Box sx={{ display: "flex", p: 1, flexShrink: 0 }}>
             <TextField
               fullWidth
               size="small"
@@ -322,11 +367,11 @@ export default function ChatBot() {
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
             <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon />
+              <SendIcon sx={{ color: "#03A9F4" }} />
             </IconButton>
           </Box>
         </Paper>
       )}
     </>
   );
-  }
+}
