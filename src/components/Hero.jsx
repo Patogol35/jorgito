@@ -11,6 +11,7 @@ export default function Hero({ mode, setMode }) {
   return (
     <>
       <Toolbar />
+
       <Box
         id="hero"
         sx={{
@@ -48,7 +49,11 @@ export default function Hero({ mode, setMode }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px" mx="auto">
+          <Box
+            textAlign={{ xs: "center", sm: "left" }}
+            maxWidth="600px"
+            mx="auto"
+          >
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -70,14 +75,43 @@ export default function Hero({ mode, setMode }) {
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
+            {/* TEXTO MEJORADO */}
             <Typography
-              variant="body1"
+              variant="subtitle1"
               paragraph
-              sx={{ lineHeight: 1.7, color: theme.palette.text.primary }}
+              sx={{
+                lineHeight: 1.9,
+                letterSpacing: "0.3px",
+                color: theme.palette.text.secondary,
+                maxWidth: "540px",
+              }}
             >
-              Me apasiona crear tecnología que transforme ideas en realidades digitales. Mi
-              enfoque está en aportar valor constante, desarrollando soluciones digitales
-              seguras, innovadoras y orientadas a generar impacto positivo.
+              Me apasiona crear{" "}
+              <Box
+                component="span"
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                }}
+              >
+                tecnología que transforma ideas
+              </Box>{" "}
+              en realidades digitales.
+              <br />
+              <br />
+              Mi enfoque está en{" "}
+              <Box component="span" sx={{ fontWeight: 600 }}>
+                aportar valor constante
+              </Box>
+              , desarrollando soluciones{" "}
+              <Box component="span" sx={{ fontWeight: 600 }}>
+                seguras, innovadoras
+              </Box>{" "}
+              y orientadas a generar{" "}
+              <Box component="span" sx={{ fontWeight: 600 }}>
+                impacto positivo
+              </Box>
+              .
             </Typography>
 
             {/* Botones */}
@@ -89,7 +123,7 @@ export default function Hero({ mode, setMode }) {
                 flexWrap: "wrap",
               }}
             >
-              {/* Botón para CV */}
+              {/* CV */}
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
@@ -104,16 +138,13 @@ export default function Hero({ mode, setMode }) {
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver CV
               </Button>
 
-              {/* Botón para Diploma */}
+              {/* Título */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
@@ -128,34 +159,30 @@ export default function Hero({ mode, setMode }) {
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: "none",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver Título
               </Button>
 
+              {/* Sasha */}
               <Button
-  variant="contained"
-  onClick={() => {
-    if (window.openSashaChat) {
-      window.openSashaChat();
-    }
-  }}
-  sx={{
-    borderRadius: "25px",
-    textTransform: "none",
-    fontWeight: "bold",
-    px: 4,
-    background: "linear-gradient(90deg, #6366f1, #3b82f6)",
-  }}
->
-  🤖 Habla con Sasha
-</Button>
+                variant="contained"
+                onClick={() => {
+                  if (window.openSashaChat) window.openSashaChat();
+                }}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 4,
+                  background: "linear-gradient(90deg, #6366f1, #3b82f6)",
+                }}
+              >
+                🤖 Habla con Sasha
+              </Button>
 
-              {/* Botón Dark/Light */}
+              {/* Modo */}
               <Button
                 variant="outlined"
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -172,7 +199,6 @@ export default function Hero({ mode, setMode }) {
                     background: theme.palette.primary.main,
                     color: "#fff",
                   },
-                  transition: "all 0.3s ease",
                 }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
@@ -183,4 +209,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-}
+                  }
