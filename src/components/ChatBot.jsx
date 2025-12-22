@@ -338,7 +338,7 @@ export default function ChatBot() {
 >
   <Typography>Sasha 🤖</Typography>
 
-  <Box>
+  <Box sx={{ display: "flex", gap: 0.5 }}>
     {/* Borrar conversación */}
     <Tooltip title="Borrar conversación">
       <IconButton
@@ -362,16 +362,6 @@ export default function ChatBot() {
     </Tooltip>
   </Box>
 </Box>
-            <Tooltip title="Borrar conversación">
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          </Box>
 
           <Box sx={{ p: 1 }}>
             <Stack direction="row" flexWrap="wrap" gap={1}>
