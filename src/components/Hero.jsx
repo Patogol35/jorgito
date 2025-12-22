@@ -21,7 +21,8 @@ export default function Hero({ mode, setMode }) {
           alignItems: "center",
           justifyContent: "center",
           gap: { xs: 4, md: 8 },
-          py: { xs: 6, sm: 8, md: 12 },
+          pt: { xs: 6, sm: 8, md: 10 }, // mantiene hero grande
+pb: { xs: 3, sm: 4, md: 5 },  // 🔥 reduce espacio hacia la siguiente sección
           px: { xs: 2, sm: 4, md: 8 },
           color: theme.palette.text.primary,
         }}
