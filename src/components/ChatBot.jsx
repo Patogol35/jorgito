@@ -82,15 +82,20 @@ const SUGGESTIONS = [
 ];
 
 /* =========================
-INTENCIONES
+INTENCIONES (CORREGIDAS)
 ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey"],
   PROFILE: ["jorge", "quién es", "perfil"],
   EDUCATION: ["estudios", "formación", "máster"],
   EXPERIENCE: ["experiencia", "trabajo"],
-  SKILLS: ["tecnologías", "stack"],
-  STACK: ["full stack", "frontend", "backend"],
+
+  // 👉 SOLO tecnologías
+  SKILLS: ["tecnologías", "herramientas", "lenguajes"],
+
+  // 👉 SOLO Full Stack
+  STACK: ["full stack", "es full stack", "frontend", "backend"],
+
   PROJECTS: ["proyectos", "portfolio"],
   MOTIVATION: ["por qué contratar", "ventajas"],
   CONTACT: ["contactar", "whatsapp", "correo", "email"],
@@ -173,51 +178,40 @@ function getSmartResponse(message, context) {
     case "GREETING":
       reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
       break;
-
     case "ASSISTANT":
       reply =
         "Soy Sasha 🤖, la asistente virtual de Jorge. Estoy aquí para ayudarte.";
       break;
-
     case "CREATOR":
       reply =
         "Fui creada para el portafolio de Jorge 😊 para responder preguntas sobre su perfil profesional.";
       break;
-
     case "STATUS":
       reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
       break;
-
     case "PROFILE":
       reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
-
     case "EDUCATION":
       reply = `Cuenta con un ${PROFILE.education}.`;
       break;
-
     case "EXPERIENCE":
       reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
       break;
-
     case "SKILLS":
       reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
       break;
-
     case "STACK":
       reply =
         "Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.";
       break;
-
     case "PROJECTS":
       reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
-
     case "MOTIVATION":
       reply =
         "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
       break;
-
     case "CONTACT":
       return {
         text:
@@ -226,7 +220,6 @@ function getSmartResponse(message, context) {
           "¿Quieres que abra WhatsApp ahora?",
         action: "CONTACT_CONFIRM",
       };
-
     default:
       reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
@@ -340,7 +333,6 @@ export default function ChatBot() {
             }}
           >
             <Typography>Sasha 🤖</Typography>
-
             <Tooltip title="Borrar conversación">
               <IconButton
                 size="small"
@@ -411,4 +403,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+  }
