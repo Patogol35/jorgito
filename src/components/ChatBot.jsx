@@ -13,6 +13,7 @@ import {
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { useMediaQuery } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import { Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material/styles";
@@ -320,35 +321,100 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
         <SmartToyIcon />
       </Fab>
 
-      {open && (
+{open &&
+  (isLandscape ? (
+    // 🔥 LANDSCAPE → DIALOG
+    <Dialog
+      open
+      fullScreen
+      onClose={() => setOpen(false)}
+      PaperProps={{
+        sx: {
+          display: "flex",
+          flexDirection: "column",
+        },
+      }}
+    >
+      {/* HEADER */}
+      <Box
+        sx={{
+          p: 1,
+          bgcolor: primaryBg,
+          color: "#fff",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexShrink: 0,
+        }}
+      >
+        <Typography>Sasha</Typography>
+        <IconButton sx={{ color: "#fff" }} onClick={() => setOpen(false)}>
+          <CloseIcon />
+        </IconButton>
+      </Box>
 
+      {/* MENSAJES */}
+      <Box
+        sx={{
+          flex: 1,
+          p: 1,
+          overflowY: "auto",
+          minHeight: 0,
+        }}
+      >
+        {messages.map((msg, i) => (
+          <Typography key={i} sx={{ mb: 0.5 }}>
+            {msg.text}
+          </Typography>
+        ))}
+        {typing && (
+          <Typography variant="caption">
+            Sasha está escribiendo…
+          </Typography>
+        )}
+        <div ref={bottomRef} />
+      </Box>
 
-<Paper
-  sx={{
-    position: "fixed",
-    zIndex: 1300,
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-
-    // 🔥 CLAVE
-    height: isLandscape ? "100dvh" : "70vh",
-
-    ...(!isLandscape && {
-      bottom: 90,
-      left: 16,
-      width: 360,
-      maxHeight: 520,
-    }),
-
-    ...(isLandscape && {
-      top: 0,
-      left: 0,
-      right: 0,
-      borderRadius: 0,
-    }),
-  }}
->
+      {/* INPUT */}
+      <Box
+        sx={{
+          display: "flex",
+          p: 1,
+          gap: 1,
+          borderTop: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        <TextField
+          fullWidth
+          size="small"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+        />
+        <IconButton onClick={() => sendMessage(input)}>
+          <SendIcon sx={{ color: "#03A9F4" }} />
+        </IconButton>
+      </Box>
+    </Dialog>
+  ) : (
+    // 📱 VERTICAL → PAPER FLOTANTE
+    <Paper
+      sx={{
+        position: "fixed",
+        bottom: 90,
+        left: 16,
+        width: 360,
+        height: "70vh",
+        maxHeight: 520,
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        zIndex: 1300,
+      }}
+    >
+      {/* TU MISMO CONTENIDO NORMAL */}
+    </Paper>
+  ))}
 
 
       
