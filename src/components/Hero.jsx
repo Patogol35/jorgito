@@ -75,21 +75,30 @@ export default function Hero({ mode, setMode }) {
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
-          <Typography
-  variant="body1"
+        <Typography
   sx={{
     fontFamily: "'Inter', 'Roboto', sans-serif",
-    fontSize: { xs: "0.98rem", sm: "1.05rem" },
-    lineHeight: 1.9,
-    letterSpacing: "0.4px",
+    fontSize: { xs: "1rem", sm: "1.08rem" },
+    lineHeight: 2,
+    letterSpacing: "0.45px",
     fontWeight: 400,
     color: theme.palette.text.secondary,
-    maxWidth: "540px",
+    maxWidth: "520px",
+    mb: { xs: 4, sm: 5 }, // 🔥 separación clara de los botones
   }}
 >
   Me apasiona crear tecnología que transforma ideas en realidades digitales.
-  Mi enfoque está en aportar valor constante, desarrollando soluciones
-  digitales seguras, innovadoras y orientadas a generar impacto positivo.
+  <br />
+  <span
+    style={{
+      opacity: 0.9,
+      display: "inline-block",
+      marginTop: "10px",
+    }}
+  >
+    Mi enfoque está en aportar valor constante, desarrollando soluciones
+    digitales seguras, innovadoras y orientadas a generar impacto positivo.
+  </span>
 </Typography>
 
             {/* Botones */}
@@ -143,7 +152,7 @@ export default function Hero({ mode, setMode }) {
                 Ver Título
               </Button>
 
-              <Button
+            <Button
   variant="contained"
   startIcon={<SmartToyIcon />}
   onClick={() => {
@@ -153,19 +162,25 @@ export default function Hero({ mode, setMode }) {
     borderRadius: "25px",
     textTransform: "none",
     fontWeight: "bold",
-
-    /* 🔒 Tamaño fijo */
-    minHeight: 48,
-    lineHeight: 1.2,
     px: { xs: 3.5, md: 5 },
     py: 1.4,
 
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-    boxShadow: "none",
+    background: `linear-gradient(
+      90deg,
+      ${theme.palette.primary.main},
+      #3b82f6
+    )`,
 
-    /* ❌ Evita crecimiento visual */
+    boxShadow: "none",
+    minHeight: 48,
+
     "&:hover": {
       boxShadow: "none",
+      background: `linear-gradient(
+        90deg,
+        ${theme.palette.primary.main},
+        #3b82f6
+      )`,
     },
     "&:active": {
       transform: "none",
