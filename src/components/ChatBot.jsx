@@ -134,24 +134,39 @@ const INTENTS = {
 /* =========================
 DETECTAR INTENCIÓN
 ========================= */
+/* =========================
+UTILIDADES
+========================= */
+const delay = () => Math.floor(Math.random() * 500) + 400;
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
+const NO_WORDS = ["no", "ahora no", "luego"];
+
+/* 👇 AQUÍ VA */
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .trim();
+}
 function detectIntent(message) {
-const text = message.toLowerCase();
-let best = "UNKNOWN";
-let scoreMax = 0;
+  const text = normalizeText(message);
+  let best = "UNKNOWN";
+  let scoreMax = 0;
 
-for (const intent in INTENTS) {
-const score = INTENTS[intent].filter((w) =>
-text.includes(w)
-).length;
+  for (const intent in INTENTS) {
+    const score = INTENTS[intent].filter((w) =>
+      text.includes(normalizeText(w))
+    ).length;
 
-if (score > scoreMax) {
-scoreMax = score;
-best = intent;
-}
+    if (score > scoreMax) {
+      scoreMax = score;
+      best = intent;
+    }
+  }
 
-}
-
-return scoreMax ? best : "UNKNOWN";
+  return scoreMax ? best : "UNKNOWN";
 }
 
 
