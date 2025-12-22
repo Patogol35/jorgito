@@ -415,8 +415,8 @@ export default function ChatBot() {
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
             <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon />
-            </IconButton>
+  <SendIcon sx={{ color: "#03A9F4" }} /> {/* celeste */}
+</IconButton>
           </Box>
         </Paper>
       )}
