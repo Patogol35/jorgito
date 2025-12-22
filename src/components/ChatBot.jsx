@@ -184,7 +184,7 @@ function getSmartResponse(message, context) {
       break;
     case "CREATOR":
       reply =
-        "Fui creada por Jorgel 😊 para responder preguntas sobre su perfil profesional.";
+        "Fui creada por Jorge 😊 para responder preguntas sobre su perfil profesional.";
       break;
     case "STATUS":
       reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
