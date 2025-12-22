@@ -336,7 +336,7 @@ export default function ChatBot() {
     alignItems: "center",
   }}
 >
-  <Typography>Sasha 🤖</Typography>
+  <Typography>Sasha </Typography>
 
   <Box sx={{ display: "flex", gap: 0.5 }}>
     {/* Borrar conversación */}
