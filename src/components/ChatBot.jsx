@@ -26,11 +26,11 @@ const WHATSAPP_URL =
    UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
-const YES_WORDS = ["sí", "si", "claro", "ok", "dale", "de acuerdo"];
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
-   PERFIL DE JORGE
+   PERFIL
 ========================= */
 const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
@@ -72,7 +72,7 @@ const PROFILE = {
 };
 
 /* =========================
-   SUGERENCIAS (IGUAL QUE ANTES)
+   SUGERENCIAS
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
@@ -90,25 +90,15 @@ const SUGGESTIONS = [
 ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey", "qué tal"],
-  PROFILE: ["jorge", "quién es jorge", "perfil", "háblame"],
-  EDUCATION: ["estudios", "formación", "máster", "título"],
-  EXPERIENCE: ["experiencia", "ha trabajado", "trabajo"],
-  SKILLS: ["skills", "habilidades", "tecnologías", "stack"],
-  SOFT_SKILLS: ["habilidades blandas", "soft", "equipo"],
-  STACK: ["full stack", "frontend", "backend", "rol"],
-  PROJECTS: ["proyectos", "portfolio", "apps"],
-  MOTIVATION: ["por qué contratar", "por qué elegir", "ventajas"],
-  CONTACT: [
-    "contactar",
-    "contacto",
-    "whatsapp",
-    "correo",
-    "email",
-    "redes",
-    "hablar",
-    "escribir",
-    "mensaje",
-  ],
+  PROFILE: ["jorge", "quién es", "perfil"],
+  EDUCATION: ["estudios", "formación", "máster"],
+  EXPERIENCE: ["experiencia", "trabajo"],
+  SKILLS: ["tecnologías", "stack"],
+  SOFT_SKILLS: ["habilidades blandas"],
+  STACK: ["full stack", "frontend", "backend"],
+  PROJECTS: ["proyectos", "portfolio"],
+  MOTIVATION: ["por qué contratar", "ventajas"],
+  CONTACT: ["contactar", "whatsapp", "correo", "email"],
 };
 
 /* =========================
@@ -116,124 +106,139 @@ const INTENTS = {
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
-  let bestIntent = "UNKNOWN";
-  let maxScore = 0;
+  let best = "UNKNOWN";
+  let scoreMax = 0;
 
   for (const intent in INTENTS) {
     const score = INTENTS[intent].filter((w) =>
       text.includes(w)
     ).length;
 
-    if (score > maxScore) {
-      maxScore = score;
-      bestIntent = intent;
+    if (score > scoreMax) {
+      scoreMax = score;
+      best = intent;
     }
   }
-
-  return maxScore > 0 ? bestIntent : "UNKNOWN";
+  return scoreMax ? best : "UNKNOWN";
 }
 
 /* =========================
-   RESPUESTA (MISMO COPY + MEJORAS)
+   RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
-  const textLower = message.toLowerCase().trim();
+  const text = message.toLowerCase().trim();
 
-  /* 👉 Confirmación sí / no */
-  if (
-    context.awaiting === "CONTACT_CONFIRM" &&
-    YES_WORDS.some((w) => textLower === w || textLower.includes(w))
-  ) {
-    window.open(WHATSAPP_URL, "_blank");
-    return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
+  /* 👉 RESPONDER FOLLOW-UP */
+  if (context.awaitingFollowUp) {
+    if (YES_WORDS.includes(text)) {
+      switch (context.awaitingFollowUp) {
+        case "PROFILE":
+          return {
+            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+            intent: "EXPERIENCE",
+          };
+        case "EXPERIENCE":
+          return {
+            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+            intent: "SKILLS",
+          };
+        case "SKILLS":
+          return {
+            text: `Ha participado en proyectos como ${PROFILE.projects.join(
+              ", "
+            )}.`,
+            intent: "PROJECTS",
+          };
+        case "PROJECTS":
+          return {
+            text:
+              "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.",
+            intent: "MOTIVATION",
+          };
+      }
+    }
+
+    if (NO_WORDS.includes(text)) {
+      return {
+        text: "De acuerdo 😊 ¿En qué más puedo ayudarte?",
+        intent: null,
+      };
+    }
   }
 
-  if (
-    context.awaiting === "CONTACT_CONFIRM" &&
-    NO_WORDS.some((w) => textLower.includes(w))
-  ) {
-    return { text: "De acuerdo 😊 Si necesitas algo más, aquí estaré." };
+  /* 👉 CONFIRMACIÓN WHATSAPP */
+  if (context.awaiting === "CONTACT_CONFIRM") {
+    if (YES_WORDS.includes(text)) {
+      window.open(WHATSAPP_URL, "_blank");
+      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
+    }
+    if (NO_WORDS.includes(text)) {
+      return { text: "Está bien 😊 Si necesitas algo más, aquí estaré." };
+    }
   }
 
   const intent = detectIntent(message);
-  let text = "";
+  let reply = "";
 
   switch (intent) {
     case "GREETING":
-      text = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
+      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
       break;
-
     case "PROFILE":
-      text = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
+      reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
-
     case "EDUCATION":
-      text = `Cuenta con un ${PROFILE.education}.`;
+      reply = `Cuenta con un ${PROFILE.education}.`;
       break;
-
     case "EXPERIENCE":
-      text = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
+      reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
       break;
-
     case "SKILLS":
-      text =
-        "Trabaja con tecnologías como " +
-        PROFILE.stack.join(", ") +
-        ".";
+      reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
       break;
-
     case "SOFT_SKILLS":
-      text = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
+      reply = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
         ", "
       )}.`;
       break;
-
     case "STACK":
-      text =
+      reply =
         "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
       break;
-
     case "PROJECTS":
-      text = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
+      reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
-
     case "MOTIVATION":
-      text =
+      reply =
         "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
       break;
-
     case "CONTACT":
       return {
         text:
           "Puedes contactar a Jorge fácilmente 😊\n\n" +
           "📱 WhatsApp: desde el icono del portafolio.\n" +
-          "📩 Correo y redes: disponibles en la sección de Contacto.\n\n" +
+          "📩 Correo y redes: en la sección de Contacto.\n\n" +
           "¿Quieres que abra WhatsApp ahora?",
         intent: "CONTACT",
         action: "CONTACT_CONFIRM",
       };
-
     default:
-      text =
-        context.lastIntent
-          ? "¿Quieres que te cuente algo más?"
-          : "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
 
-  return { text, intent };
+  return { text: reply, intent };
 }
 
 /* =========================
-   FOLLOW UP (IGUAL)
+   FOLLOW UP
 ========================= */
 function followUp(intent) {
-  const map = {
+  return {
     PROFILE: "¿Quieres conocer su experiencia profesional?",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
     SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
     PROJECTS: "¿Deseas saber por qué contratarlo?",
-  };
-  return map[intent];
+  }[intent];
 }
 
 /* =========================
@@ -251,6 +256,7 @@ export default function ChatBot() {
   const [context, setContext] = useState({
     lastIntent: null,
     awaiting: null,
+    awaitingFollowUp: null,
   });
 
   const initialMessage = {
@@ -270,6 +276,15 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  /* 👉 TACHO FUNCIONAL */
+  const clearChat = () => {
+    if (window.confirm("¿Deseas borrar toda la conversación?")) {
+      localStorage.removeItem("sasha-chat");
+      setMessages([initialMessage]);
+      setContext({ lastIntent: null, awaiting: null, awaitingFollowUp: null });
+    }
+  };
+
   const sendMessage = (text) => {
     if (!text.trim()) return;
 
@@ -283,6 +298,7 @@ export default function ChatBot() {
       setContext({
         lastIntent: res.intent ?? context.lastIntent,
         awaiting: res.action === "CONTACT_CONFIRM" ? "CONTACT_CONFIRM" : null,
+        awaitingFollowUp: followUp(res.intent) ? res.intent : null,
       });
 
       setMessages((prev) => [
@@ -301,13 +317,7 @@ export default function ChatBot() {
     <>
       <Fab
         onClick={() => setOpen(!open)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          bgcolor: primaryBg,
-          color: "#fff",
-        }}
+        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg, color: "#fff" }}
       >
         <SmartToyIcon />
       </Fab>
@@ -323,10 +333,8 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             borderRadius: 3,
-            bgcolor: isDark ? "#121212" : "#fff",
           }}
         >
-          {/* HEADER */}
           <Box
             sx={{
               p: 1.5,
@@ -339,7 +347,7 @@ export default function ChatBot() {
             <Typography fontWeight="bold">Sasha 🤖</Typography>
             <Box>
               <Tooltip title="Borrar conversación">
-                <IconButton size="small">
+                <IconButton size="small" onClick={clearChat}>
                   <DeleteIcon sx={{ color: "#fff" }} />
                 </IconButton>
               </Tooltip>
@@ -349,31 +357,17 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
           <Box sx={{ p: 1 }}>
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {SUGGESTIONS.map((q) => (
-                <Chip
-                  key={q}
-                  label={q}
-                  size="small"
-                  clickable
-                  onClick={() => sendMessage(q)}
-                />
+                <Chip key={q} label={q} size="small" clickable onClick={() => sendMessage(q)} />
               ))}
             </Stack>
           </Box>
 
-          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Box
-                key={i}
-                sx={{
-                  textAlign: msg.from === "user" ? "right" : "left",
-                  mb: 1,
-                }}
-              >
+              <Box key={i} sx={{ textAlign: msg.from === "user" ? "right" : "left", mb: 1 }}>
                 <Typography
                   sx={{
                     display: "inline-block",
@@ -392,7 +386,6 @@ export default function ChatBot() {
                         : isDark
                         ? "#eaeaea"
                         : "#000",
-                    maxWidth: "85%",
                   }}
                 >
                   {msg.text}
@@ -400,14 +393,13 @@ export default function ChatBot() {
               </Box>
             ))}
             {typing && (
-              <Typography variant="caption" sx={{ ml: 1, color: "#aaa" }}>
+              <Typography variant="caption" sx={{ ml: 1 }}>
                 Sasha está escribiendo…
               </Typography>
             )}
             <div ref={bottomRef} />
           </Box>
 
-          {/* INPUT */}
           <Box sx={{ display: "flex", p: 1, gap: 1 }}>
             <TextField
               size="small"
@@ -425,4 +417,4 @@ export default function ChatBot() {
       )}
     </>
   );
-    }
+          }
