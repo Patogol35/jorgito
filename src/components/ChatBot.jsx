@@ -389,7 +389,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
   </Box>
 </Box>
 
-          <Box sx={{ p: 1 }}>
+          <Box sx={{ p: 1, flexShrink: 0 }}>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
                 <Chip
@@ -402,7 +402,14 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
             </Stack>
           </Box>
 
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
+          <Box
+  sx={{
+    flex: 1,
+    minHeight: 0,        // 🔑 ESTA LÍNEA TE FALTA
+    p: 1,
+    overflowY: "auto",
+  }}
+>
             {messages.map((msg, i) => (
               <Typography
                 key={i}
@@ -432,7 +439,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
             <div ref={bottomRef} />
           </Box>
 
-          <Box sx={{ display: "flex", p: 1 }}>
+          <Box sx={{ display: "flex", p: 1, flexShrink: 0 }}>
             <TextField
               fullWidth
               size="small"
