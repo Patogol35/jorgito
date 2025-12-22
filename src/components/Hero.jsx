@@ -78,17 +78,16 @@ export default function Hero({ mode, setMode }) {
 
         <Typography
   sx={{
-    fontFamily: "'Inter', 'Roboto', sans-serif",
     fontSize: { xs: "1rem", sm: "1.08rem" },
     lineHeight: 1.9,
-    letterSpacing: "0.4px",
+    letterSpacing: "0.3px",
     fontWeight: 400,
 
-    // 🔑 clave para claro y oscuro
     color: theme.palette.text.primary,
     opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
 
     maxWidth: "520px",
+    mt: 1.2, // separación sutil
     mb: { xs: 4, sm: 5 },
   }}
 >
