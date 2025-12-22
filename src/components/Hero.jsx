@@ -87,13 +87,14 @@ export default function Hero({ mode, setMode }) {
     opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
 
     maxWidth: "520px",
-    mt: { xs: 3, sm: 3.5 }, // 👈 AHORA SÍ SE ALEJA
+    mt: { xs: 3, sm: 3.5 }, 
     mb: { xs: 4, sm: 5 },
   }}
 >
-  Me apasiona crear tecnología que transforma ideas en soluciones digitales.
-  Desarrollo productos seguros e innovadores, enfocados en aportar valor y
-  generar impacto positivo.
+  Me apasiona crear tecnología que transforma ideas en realidades digitales.
+  Mi enfoque está en aportar valor constante, desarrollando soluciones  
+digitales seguras, innovadoras y orientadas a generar impacto positivo.
+          
 </Typography>
             {/* Botones */}
             <Box
