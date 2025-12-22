@@ -17,10 +17,19 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useTheme } from "@mui/material/styles";
 
 /* =========================
-   CONFIG
+   LINKS
 ========================= */
 const WHATSAPP_URL =
   "https://wa.me/593997979099?text=Hola%20Jorge,%20vi%20tu%20portafolio";
+
+const SOCIAL_LINKS = {
+  github: "https://github.com/Patogol35",
+  linkedin:
+    "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
+  facebook: "https://www.facebook.com/share/1C9RgHAPvL/",
+  instagram: "https://www.instagram.com/jorge_patricio_26",
+  email: "mailto:patogol3535@gmail.com",
+};
 
 /* =========================
    UTILIDADES
@@ -98,7 +107,8 @@ const INTENTS = {
   STACK: ["full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio"],
   MOTIVATION: ["por qué contratar", "ventajas"],
-  CONTACT: ["contactar", "whatsapp", "correo", "email"],
+  CONTACT: ["contactar", "whatsapp", "correo", "email", "redes"],
+  SOCIAL: ["github", "linkedin", "facebook", "instagram", "correo", "email"],
 };
 
 /* =========================
@@ -113,7 +123,6 @@ function detectIntent(message) {
     const score = INTENTS[intent].filter((w) =>
       text.includes(w)
     ).length;
-
     if (score > scoreMax) {
       scoreMax = score;
       best = intent;
@@ -123,32 +132,21 @@ function detectIntent(message) {
 }
 
 /* =========================
-   RESPUESTA INTELIGENTE
+   RESPUESTA
 ========================= */
 function getSmartResponse(message, context) {
   const text = message.toLowerCase().trim();
 
-  // 👉 RESPONDER FOLLOW-UP
+  /* FOLLOW-UP */
   if (context.awaitingFollowUp) {
     if (YES_WORDS.includes(text)) {
       switch (context.awaitingFollowUp) {
         case "PROFILE":
-          return {
-            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-            intent: "EXPERIENCE",
-          };
+          return { text: PROFILE.experience.join(", "), intent: "EXPERIENCE" };
         case "EXPERIENCE":
-          return {
-            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-            intent: "SKILLS",
-          };
+          return { text: PROFILE.stack.join(", "), intent: "SKILLS" };
         case "SKILLS":
-          return {
-            text: `Ha participado en proyectos como ${PROFILE.projects.join(
-              ", "
-            )}.`,
-            intent: "PROJECTS",
-          };
+          return { text: PROFILE.projects.join(", "), intent: "PROJECTS" };
         case "PROJECTS":
           return {
             text:
@@ -157,76 +155,80 @@ function getSmartResponse(message, context) {
           };
       }
     }
-
     if (NO_WORDS.includes(text)) {
-      return {
-        text: "De acuerdo 😊 ¿En qué más puedo ayudarte?",
-        intent: null,
-      };
+      return { text: "Perfecto 😊 ¿En qué más puedo ayudarte?" };
     }
   }
 
-  // 👉 CONFIRMACIÓN WHATSAPP
+  /* WHATSAPP */
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.includes(text)) {
       window.open(WHATSAPP_URL, "_blank");
-      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
+      return { text: "Abriendo WhatsApp 😊" };
     }
     if (NO_WORDS.includes(text)) {
-      return { text: "Está bien 😊 Si necesitas algo más, aquí estaré." };
+      return { text: "Está bien 😊" };
     }
+  }
+
+  /* REDES */
+  if (context.awaiting === "SOCIAL_CHOICE") {
+    for (const key in SOCIAL_LINKS) {
+      if (text.includes(key)) {
+        window.open(SOCIAL_LINKS[key], "_blank");
+        return { text: `Abriendo ${key} 🚀` };
+      }
+    }
+    return {
+      text:
+        "¿Qué red deseas abrir?\nGitHub, LinkedIn, Facebook, Instagram o Correo",
+    };
   }
 
   const intent = detectIntent(message);
-  let reply = "";
 
   switch (intent) {
-    case "GREETING":
-      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
-      break;
-    case "PROFILE":
-      reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
-      break;
-    case "EDUCATION":
-      reply = `Cuenta con un ${PROFILE.education}.`;
-      break;
-    case "EXPERIENCE":
-      reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
-      break;
-    case "SKILLS":
-      reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
-      break;
-    case "SOFT_SKILLS":
-      reply = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
-        ", "
-      )}.`;
-      break;
-    case "STACK":
-      reply =
-        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
-      break;
-    case "PROJECTS":
-      reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
-      break;
-    case "MOTIVATION":
-      reply =
-        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
-      break;
     case "CONTACT":
       return {
         text:
-          "Puedes contactar a Jorge fácilmente 😊\n\n" +
-          "📱 WhatsApp: desde el icono del portafolio.\n" +
-          "📩 Correo y redes: en la sección de Contacto.\n\n" +
-          "¿Quieres que abra WhatsApp ahora?",
-        intent: "CONTACT",
-        action: "CONTACT_CONFIRM",
+          "Puedes contactar a Jorge por:\n\n" +
+          "📱 WhatsApp\n💻 Redes sociales\n✉️ Correo\n\n" +
+          "¿Qué deseas abrir?",
+        intent,
+        action: "SOCIAL_CHOICE",
+      };
+    case "SOCIAL":
+      return {
+        text:
+          "¿Qué red social deseas abrir?\nGitHub, LinkedIn, Facebook, Instagram o Correo",
+        intent,
+        action: "SOCIAL_CHOICE",
+      };
+    case "PROFILE":
+      return {
+        text: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+        intent,
+      };
+    case "EDUCATION":
+      return { text: PROFILE.education, intent };
+    case "EXPERIENCE":
+      return { text: PROFILE.experience.join(", "), intent };
+    case "SKILLS":
+      return { text: PROFILE.stack.join(", "), intent };
+    case "PROJECTS":
+      return { text: PROFILE.projects.join(", "), intent };
+    case "MOTIVATION":
+      return {
+        text:
+          "Porque combina formación sólida, experiencia real y enfoque práctico.",
+        intent,
       };
     default:
-      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+      return {
+        text:
+          "Puedo ayudarte a conocer el perfil profesional de Jorge 😊",
+      };
   }
-
-  return { text: reply, intent };
 }
 
 /* =========================
@@ -254,7 +256,6 @@ export default function ChatBot() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({
-    lastIntent: null,
     awaiting: null,
     awaitingFollowUp: null,
   });
@@ -263,51 +264,41 @@ export default function ChatBot() {
     from: "bot",
     text:
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
+      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o contacto.",
   };
 
-  const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem("sasha-chat");
-    return saved ? JSON.parse(saved) : [initialMessage];
-  });
+  const [messages, setMessages] = useState([initialMessage]);
 
   useEffect(() => {
-    localStorage.setItem("sasha-chat", JSON.stringify(messages));
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const clearChat = () => {
-    if (window.confirm("¿Deseas borrar toda la conversación?")) {
-      localStorage.removeItem("sasha-chat");
+    if (window.confirm("¿Borrar conversación?")) {
       setMessages([initialMessage]);
-      setContext({ lastIntent: null, awaiting: null, awaitingFollowUp: null });
+      setContext({});
     }
   };
 
   const sendMessage = (text) => {
     if (!text.trim()) return;
-
-    setMessages((prev) => [...prev, { from: "user", text }]);
+    setMessages((p) => [...p, { from: "user", text }]);
     setInput("");
     setTyping(true);
 
     setTimeout(() => {
       const res = getSmartResponse(text, context);
-
       setContext({
-        lastIntent: res.intent ?? context.lastIntent,
-        awaiting: res.action === "CONTACT_CONFIRM" ? "CONTACT_CONFIRM" : null,
+        awaiting: res.action ?? null,
         awaitingFollowUp: followUp(res.intent) ? res.intent : null,
       });
-
-      setMessages((prev) => [
-        ...prev,
+      setMessages((p) => [
+        ...p,
         { from: "bot", text: res.text },
         ...(followUp(res.intent)
           ? [{ from: "bot", text: followUp(res.intent) }]
           : []),
       ]);
-
       setTyping(false);
     }, delay());
   };
@@ -316,9 +307,9 @@ export default function ChatBot() {
     <>
       <Fab
         onClick={() => setOpen(!open)}
-        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg, color: "#fff" }}
+        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg }}
       >
-        <SmartToyIcon />
+        <SmartToyIcon sx={{ color: "#fff" }} />
       </Fab>
 
       {open && (
@@ -334,6 +325,7 @@ export default function ChatBot() {
             borderRadius: 3,
           }}
         >
+          {/* HEADER */}
           <Box
             sx={{
               p: 1.5,
@@ -356,66 +348,70 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* 🔥 CHIPS SEPARADAS */}
+          {/* CHIPS */}
           <Box sx={{ p: 1 }}>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
-                <Chip
-                  key={q}
-                  label={q}
-                  size="small"
-                  clickable
-                  onClick={() => sendMessage(q)}
-                />
+                <Chip key={q} label={q} clickable onClick={() => sendMessage(q)} />
               ))}
             </Stack>
           </Box>
 
+          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-            {messages.map((msg, i) => (
-              <Box key={i} sx={{ textAlign: msg.from === "user" ? "right" : "left", mb: 1 }}>
+            {messages.map((m, i) => (
+              <Box key={i} sx={{ textAlign: m.from === "user" ? "right" : "left" }}>
                 <Typography
                   sx={{
                     display: "inline-block",
                     px: 1.5,
                     py: 1,
+                    mb: 1,
                     borderRadius: 2,
                     bgcolor:
-                      msg.from === "user"
+                      m.from === "user"
                         ? primaryBg
                         : isDark
                         ? "#2c2c2c"
                         : "#f1f1f1",
                     color:
-                      msg.from === "user"
+                      m.from === "user"
                         ? "#fff"
                         : isDark
                         ? "#eaeaea"
                         : "#000",
                   }}
                 >
-                  {msg.text}
+                  {m.text}
                 </Typography>
               </Box>
             ))}
             {typing && (
-              <Typography variant="caption" sx={{ ml: 1 }}>
-                Sasha está escribiendo…
-              </Typography>
+              <Typography variant="caption">Sasha está escribiendo…</Typography>
             )}
             <div ref={bottomRef} />
           </Box>
 
+          {/* INPUT */}
           <Box sx={{ display: "flex", p: 1, gap: 1 }}>
             <TextField
-              size="small"
               fullWidth
+              size="small"
               placeholder="Escribe tu pregunta…"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
-            <IconButton onClick={() => sendMessage(input)}>
+            <IconButton
+              onClick={() => sendMessage(input)}
+              sx={{
+                bgcolor: isDark ? "#333" : "#1976d2",
+                color: "#fff",
+                "&:hover": {
+                  bgcolor: isDark ? "#444" : "#115293",
+                },
+              }}
+            >
               <SendIcon />
             </IconButton>
           </Box>
@@ -423,4 +419,4 @@ export default function ChatBot() {
       )}
     </>
   );
-  }
+}
