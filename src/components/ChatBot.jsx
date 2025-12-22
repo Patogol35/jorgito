@@ -384,21 +384,37 @@ size="small"
 sx={{ color: "#fff" }}      
 onClick={() => setOpen(false)}  >   <CloseIcon fontSize="small" />    </IconButton>  
 </Tooltip>    </Box>  
-</Box>  <Box  sx={{  
-p: 1,  
-flexShrink: 0,  
-display: isLandscape ? "none" : "block", // 🔑  
-}}  >  <Stack direction="row" flexWrap="wrap" gap={1}>          
-          {SUGGESTIONS.map((q) => (          
-            <Chip          
-              key={q}          
-              label={q}          
-              size="small"          
-              onClick={() => sendMessage(q)}          
-            />          
-          ))}          
-        </Stack>          
-      </Box>    <Box  sx={{    
+</Box>  
+    
+    
+<Box
+  sx={{
+    p: 1,
+    flexShrink: 0,
+    overflowX: isLandscape ? "auto" : "visible",
+  }}
+>
+  <Stack
+    direction="row"
+    spacing={1}
+    sx={{
+      flexWrap: isLandscape ? "nowrap" : "wrap",
+      width: "max-content",
+    }}
+  >
+    {SUGGESTIONS.map((q) => (
+      <Chip
+        key={q}
+        label={q}
+        size="small"
+        onClick={() => sendMessage(q)}
+      />
+    ))}
+  </Stack>
+</Box>
+    
+    
+    <Box  sx={{    
 flex: 1,    
 p: 1,    
 overflowY: "auto",    
