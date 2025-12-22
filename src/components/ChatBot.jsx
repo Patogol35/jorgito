@@ -80,6 +80,7 @@ const SUGGESTIONS = [
 "¿Por qué contratarlo?",
 "¿Cómo puedo contactarlo?",
 "¿Quién te creó?",
+  "Sus libros favoritos?",
 ];
 
 /* =========================
@@ -114,6 +115,7 @@ const INTENTS = {
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
   CREATOR: ["quién te creó", "quien te creo"],
+  BOOK: ["sus libros favoritos", "libros favoritos"],
 
   // 👇 FUNCIONAL
   HELP: ["qué puedes hacer", "que puedes hacer"],
@@ -227,6 +229,13 @@ function getSmartResponse(message, context) {
       break;
 
 
+case "BOOK":
+      reply =
+        "Jorge tiene muchos libros favoritos, pero en especial disfruta los de Dan Brown.";
+      break;
+
+
+      
 case "NAME":
   reply = "Me llamo Sasha 😊 Soy la asistente virtual de Jorge.";
   break;
