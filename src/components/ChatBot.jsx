@@ -68,7 +68,7 @@ const PROFILE = {
 };
 
 /* =========================
-SUGERENCIAS
+SUGERENCIAS (NO TOCAR)
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
@@ -91,13 +91,13 @@ const INTENTS = {
   EDUCATION: ["estudios", "formación", "máster"],
   EXPERIENCE: ["experiencia", "trabajo"],
   SKILLS: ["tecnologías", "herramientas", "lenguajes"],
-  STACK: ["full stack", "frontend", "backend"],
+  STACK: ["full stack", "es full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio"],
   MOTIVATION: ["por qué contratar", "ventajas"],
   CONTACT: ["contactar", "whatsapp", "correo", "email"],
-  ASSISTANT: ["quién eres", "eres sasha"],
-  CREATOR: ["quién te creó", "te programó"],
-  STATUS: ["cómo estás", "qué tal"],
+  ASSISTANT: ["quién eres", "quien eres", "eres sasha"],
+  CREATOR: ["quién te creó", "quien te creo", "te programó"],
+  STATUS: ["cómo estás", "como estas", "qué tal"],
 };
 
 /* =========================
@@ -122,7 +122,7 @@ function detectIntent(message) {
 }
 
 /* =========================
-RESPUESTA INTELIGENTE
+RESPUESTA
 ========================= */
 function getSmartResponse(message, context) {
   const text = message.toLowerCase().trim();
@@ -141,18 +141,6 @@ function getSmartResponse(message, context) {
   let reply = "";
 
   switch (intent) {
-    case "GREETING":
-      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
-      break;
-    case "ASSISTANT":
-      reply = "Soy Sasha 🤖, la asistente virtual de Jorge.";
-      break;
-    case "CREATOR":
-      reply = "Fui creada por Jorge 😊.";
-      break;
-    case "STATUS":
-      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
-      break;
     case "PROFILE":
       reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
@@ -167,26 +155,32 @@ function getSmartResponse(message, context) {
       break;
     case "STACK":
       reply =
-        "Sí, es desarrollador Full Stack. Frontend con React/Vite y Backend con Spring Boot y Django REST.";
+        "Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.";
       break;
     case "PROJECTS":
       reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
     case "MOTIVATION":
       reply =
-        "Porque combina formación sólida, experiencia real y enfoque práctico.";
+        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
       break;
     case "CONTACT":
       return {
         text:
-          "Puedes contactar a Jorge 😊\n\n📱 WhatsApp desde el portafolio.\n\n¿Quieres que lo abra ahora?",
+          "Puedes contactar a Jorge fácilmente 😊\n\n" +
+          "📱 WhatsApp: desde el portafolio.\n\n" +
+          "¿Quieres que abra WhatsApp ahora?",
         action: "CONTACT_CONFIRM",
       };
+    case "CREATOR":
+      reply =
+        "Fui creada por Jorge 😊 para responder preguntas sobre su perfil profesional.";
+      break;
     default:
       reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
 
-  return { text: reply, intent };
+  return { text: reply };
 }
 
 /* =========================
@@ -208,7 +202,8 @@ export default function ChatBot() {
   const initialMessage = {
     from: "bot",
     text:
-      "Hola 👋 Soy Sasha. Pregúntame sobre perfil, experiencia, tecnologías o proyectos.",
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
   };
 
   const [messages, setMessages] = useState([initialMessage]);
@@ -234,7 +229,6 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* BOTÓN */}
       <Fab
         onClick={() => setOpen(!open)}
         sx={{
@@ -264,7 +258,6 @@ export default function ChatBot() {
                   right: 0,
                   bottom: 0,
                   height: "60vh",
-                  maxHeight: 360,
                   borderRadius: "16px 16px 0 0",
                 }
               : {
@@ -283,21 +276,17 @@ export default function ChatBot() {
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
-              flexShrink: 0,
             }}
           >
             <Typography>Sasha</Typography>
             <Box>
-              <Tooltip title="Borrar conversación">
-                <IconButton
-                  size="small"
-                  sx={{ color: "#fff" }}
-                  onClick={() => setMessages([initialMessage])}
-                >
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
+              <IconButton
+                size="small"
+                sx={{ color: "#fff" }}
+                onClick={() => setMessages([initialMessage])}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
@@ -308,13 +297,11 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* CHIPS (VISIBLE TAMBIÉN EN HORIZONTAL) */}
+          {/* CHIPS — SIN QUITAR NINGUNA */}
           <Box
             sx={{
               p: 1,
               overflowX: isLandscape ? "auto" : "visible",
-              whiteSpace: "nowrap",
-              flexShrink: 0,
             }}
           >
             <Stack
@@ -337,15 +324,9 @@ export default function ChatBot() {
           </Box>
 
           {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto", minHeight: 0 }}>
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Typography
-                key={i}
-                sx={{
-                  mb: 0.5,
-                  fontWeight: msg.from === "user" ? 600 : 400,
-                }}
-              >
+              <Typography key={i} sx={{ mb: 0.5 }}>
                 {msg.text}
               </Typography>
             ))}
@@ -358,7 +339,7 @@ export default function ChatBot() {
           </Box>
 
           {/* INPUT */}
-          <Box sx={{ display: "flex", p: 1, flexShrink: 0 }}>
+          <Box sx={{ p: 1, display: "flex" }}>
             <TextField
               fullWidth
               size="small"
@@ -367,7 +348,7 @@ export default function ChatBot() {
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
             <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon sx={{ color: "#03A9F4" }} />
+              <SendIcon />
             </IconButton>
           </Box>
         </Paper>
