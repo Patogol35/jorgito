@@ -329,22 +329,23 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     zIndex: 1300,
     display: "flex",
     flexDirection: "column",
-    minHeight: 0,
     overflow: "hidden",
+
+    // 🔥 CLAVE
+    height: isLandscape ? "100dvh" : "70vh",
 
     ...(!isLandscape && {
       bottom: 90,
       left: 16,
       width: 360,
-      height: "70vh",
       maxHeight: 520,
     }),
 
     ...(isLandscape && {
-      top: 8,
-      bottom: 8,
-      left: 8,
-      right: 8,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderRadius: 0,
     }),
   }}
 >
