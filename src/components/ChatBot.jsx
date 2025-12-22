@@ -324,29 +324,32 @@ color: "#fff",
 </Fab>  {open && (
 
 <Paper
-  sx={{
-    position: "fixed",
-    zIndex: 1300,
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    minHeight: 0,
-    overflow: "hidden",
+sx={{
+position: "fixed",
+zIndex: 1300,
+display: "flex",
+flexDirection: "column",
+minHeight: 0,
+overflow: "hidden",
 
-    ...(!isLandscape && {
-      bottom: 90,
-      left: 16,
-      width: 360,
-      height: "70vh",
-      maxHeight: 520,
-    }),
+...(!isLandscape && {
+bottom: 90,
+left: 16,
+width: 360,
+height: "70vh",
+maxHeight: 520,
+}),
 
-    ...(isLandscape && {
-      inset: 8,
-      height: "calc(100dvh - 16px)",
-    }),
-  }}
->
+...(isLandscape && {
+top: 8,
+bottom: 8,
+left: 8,
+right: 8,
+}),
+
+}}
+
+> 
 
 <Box
 sx={{
@@ -463,4 +466,4 @@ Sasha está escribiendo…
 )}
 </>
 );
-  }
+          }
