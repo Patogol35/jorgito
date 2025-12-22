@@ -327,7 +327,8 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     zIndex: 1300,
     display: "flex",
     flexDirection: "column",
-    minHeight: 0, // 🔑 CLAVE
+    minHeight: 0,
+    overflow: "hidden", // 🔑 CLAVE QUE FALTA
 
     ...(!isLandscape && {
       bottom: 90,
@@ -342,8 +343,11 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: "92vw",
-      height: "92vh",
       maxWidth: 600,
+
+      // ❌ height: "92vh"
+      height: "100dvh", // ✅ USAR dvh
+      maxHeight: "100dvh",
     }),
   }}
 >
