@@ -105,7 +105,7 @@ const INTENTS = {
   NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
   HELP: ["qué puedes hacer", "que puedes hacer"],
-  FAREWELL: ["adiós", "adios", "bye", "hasta luego", "nos vemos"],
+  FAREWELL: ["adiós", "adios", "bye", "hasta luego", "nos vemos",  "chao"],
 };
 
 /* =========================
