@@ -87,7 +87,7 @@ export default function Hero({ mode, setMode }) {
     opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
 
     maxWidth: "520px",
-    mt: 1.8, // 👈 un poco más de aire, sigue elegante
+    mt: { xs: 3, sm: 3.5 }, // 👈 AHORA SÍ SE ALEJA
     mb: { xs: 4, sm: 5 },
   }}
 >
@@ -95,7 +95,6 @@ export default function Hero({ mode, setMode }) {
   Desarrollo productos seguros e innovadores, enfocados en aportar valor y
   generar impacto positivo.
 </Typography>
-
             {/* Botones */}
             <Box
               sx={{
