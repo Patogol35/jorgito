@@ -14,13 +14,20 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useTheme } from "@mui/material/styles";
+
+/* =========================
+   CONFIG
+========================= */
+const WHATSAPP_URL =
+  "https://wa.me/593997979099?text=Hola%20Jorge,%20vi%20tu%20portafolio";
 
 /* =========================
    UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
+const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
    PERFIL
@@ -29,38 +36,39 @@ const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
   role: "Ingeniero de Software y Desarrollador Full Stack",
   description:
-    "Ingeniero de Software especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, aplicando buenas prácticas y arquitectura limpia.",
-
-  education:
-    "Cuenta con un máster en Ingeniería de Software y Sistemas Informáticos por la Universidad Internacional de La Rioja (España).",
-
+    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, aplicando buenas prácticas y arquitectura limpia.",
+  education: "Máster en Ingeniería de Software y Sistemas Informáticos",
   experience: [
-    "Cuenta con experiencia en el desarrollo de aulas virtuales orientadas a la educación digital.",
-    "Ha desarrollado aplicaciones web Full Stack utilizando arquitecturas modernas.",
-    "Tiene experiencia en la creación de APIs REST seguras y escalables.",
+    "Desarrollador de aulas virtuales",
+    "Desarrollo de aplicaciones web Full Stack",
+    "Creación de APIs REST seguras y escalables",
   ],
-
-  stack:
-    "Trabaja con tecnologías como React, Vite y JavaScript en el frontend, y Django REST Framework y Spring Boot en el backend. Maneja MySQL, AWS, Git, Linux, Postman y Vercel.",
-
-  projects:
-    "Ha desarrollado aulas virtuales, tiendas online Full Stack, aplicaciones frontend en React y proyectos conectados a APIs REST.",
-
-  motivation:
-    "Porque combina una sólida formación académica, experiencia práctica y un enfoque profesional orientado a soluciones reales.",
-};
-
-/* =========================
-   CONTACTO
-========================= */
-const CONTACT = {
-  whatsapp: "https://wa.me/593997979099",
-  github: "https://github.com/Patogol35",
-  linkedin:
-    "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
-  instagram: "https://www.instagram.com/jorge_patricio_26",
-  facebook: "https://www.facebook.com/share/1C9RgHAPvL/",
-  email: "mailto:patogol3535@gmail.com",
+  stack: [
+    "React",
+    "Vercel",
+    "Postman",
+    "Vite",
+    "JavaScript",
+    "Spring Boot",
+    "Django REST Framework",
+    "Python",
+    "MySQL",
+    "AWS",
+    "Git",
+    "Linux",
+  ],
+  softSkills: [
+    "Pensamiento analítico",
+    "Resolución de problemas",
+    "Aprendizaje continuo",
+    "Trabajo en equipo",
+  ],
+  projects: [
+    "Aulas virtuales",
+    "Tiendas online Full Stack",
+    "Aplicacines Frontend",
+    "Aplicaciones React conectadas a APIs REST",
+  ],
 };
 
 /* =========================
@@ -68,9 +76,10 @@ const CONTACT = {
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
-  "¿Qué estudios tiene?",
   "¿Qué experiencia tiene?",
+  "¿Qué estudios tiene?",
   "¿En qué tecnologías trabaja?",
+  "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
@@ -80,16 +89,16 @@ const SUGGESTIONS = [
    INTENCIONES
 ========================= */
 const INTENTS = {
-  GREETING: ["hola", "buenas", "hey"],
-  PROFILE: ["quién es", "jorge", "perfil"],
-  EDUCATION: ["estudios", "máster", "formación"],
-  EXPERIENCE: ["experiencia", "trabajado"],
-  SKILLS: ["tecnologías", "stack", "habilidades"],
+  GREETING: ["hola", "buenas", "hey", "qué tal"],
+  PROFILE: ["jorge", "quién es", "perfil"],
+  EDUCATION: ["estudios", "formación", "máster"],
+  EXPERIENCE: ["experiencia", "trabajo"],
+  SKILLS: ["tecnologías", "stack"],
+  SOFT_SKILLS: ["habilidades blandas"],
+  STACK: ["full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio"],
-  MOTIVATION: ["por qué contratar", "por qué elegir"],
-  CONTACT: ["contactar", "contacto", "whatsapp", "correo", "redes"],
-  YES: ["sí", "si", "claro", "ok", "dale"],
-  NO: ["no", "gracias"],
+  MOTIVATION: ["por qué contratar", "ventajas"],
+  CONTACT: ["contactar", "whatsapp", "correo", "email"],
 };
 
 /* =========================
@@ -97,106 +106,139 @@ const INTENTS = {
 ========================= */
 function detectIntent(message) {
   const text = message.toLowerCase();
+  let best = "UNKNOWN";
+  let scoreMax = 0;
 
   for (const intent in INTENTS) {
-    if (INTENTS[intent].some((w) => text.includes(w))) {
-      return intent;
+    const score = INTENTS[intent].filter((w) =>
+      text.includes(w)
+    ).length;
+
+    if (score > scoreMax) {
+      scoreMax = score;
+      best = intent;
     }
   }
-  return "UNKNOWN";
+  return scoreMax ? best : "UNKNOWN";
 }
 
 /* =========================
-   RESPUESTAS
+   RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
+  const text = message.toLowerCase().trim();
+
+  // 👉 RESPONDER FOLLOW-UP
+  if (context.awaitingFollowUp) {
+    if (YES_WORDS.includes(text)) {
+      switch (context.awaitingFollowUp) {
+        case "PROFILE":
+          return {
+            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+            intent: "EXPERIENCE",
+          };
+        case "EXPERIENCE":
+          return {
+            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+            intent: "SKILLS",
+          };
+        case "SKILLS":
+          return {
+            text: `Ha participado en proyectos como ${PROFILE.projects.join(
+              ", "
+            )}.`,
+            intent: "PROJECTS",
+          };
+        case "PROJECTS":
+          return {
+            text:
+              "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.",
+            intent: "MOTIVATION",
+          };
+      }
+    }
+
+    if (NO_WORDS.includes(text)) {
+      return {
+        text: "De acuerdo 😊 ¿En qué más puedo ayudarte?",
+        intent: null,
+      };
+    }
+  }
+
+  // 👉 CONFIRMACIÓN WHATSAPP
+  if (context.awaiting === "CONTACT_CONFIRM") {
+    if (YES_WORDS.includes(text)) {
+      window.open(WHATSAPP_URL, "_blank");
+      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
+    }
+    if (NO_WORDS.includes(text)) {
+      return { text: "Está bien 😊 Si necesitas algo más, aquí estaré." };
+    }
+  }
+
   const intent = detectIntent(message);
-
-  // Responder SI / NO
-  if (intent === "YES" && context.lastQuestion) {
-    return {
-      text: context.lastQuestion,
-      intent: context.lastFollowIntent,
-    };
-  }
-
-  if (intent === "NO") {
-    return {
-      text: "Perfecto 😊 Si necesitas algo más, aquí estaré.",
-      intent: null,
-    };
-  }
+  let reply = "";
 
   switch (intent) {
     case "GREETING":
-      return {
-        text: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
-        intent,
-      };
-
+      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
+      break;
     case "PROFILE":
-      return {
-        text: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-        intent,
-        followUp: "¿Quieres conocer su experiencia profesional?",
-        followIntent: "EXPERIENCE",
-      };
-
+      reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
+      break;
     case "EDUCATION":
-      return {
-        text: PROFILE.education,
-        intent,
-        followUp: "¿Te gustaría conocer su experiencia profesional?",
-        followIntent: "EXPERIENCE",
-      };
-
+      reply = `Cuenta con un ${PROFILE.education}.`;
+      break;
     case "EXPERIENCE":
-      return {
-        text: PROFILE.experience.join(" "),
-        intent,
-        followUp: "¿Quieres saber en qué tecnologías trabaja?",
-        followIntent: "SKILLS",
-      };
-
+      reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
+      break;
     case "SKILLS":
-      return {
-        text: PROFILE.stack,
-        intent,
-        followUp: "¿Deseas conocer sus proyectos?",
-        followIntent: "PROJECTS",
-      };
-
+      reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
+      break;
+    case "SOFT_SKILLS":
+      reply = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
+        ", "
+      )}.`;
+      break;
+    case "STACK":
+      reply =
+        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
+      break;
     case "PROJECTS":
-      return {
-        text: PROFILE.projects,
-        intent,
-        followUp: "¿Te gustaría saber por qué contratarlo?",
-        followIntent: "MOTIVATION",
-      };
-
+      reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
+      break;
     case "MOTIVATION":
-      return {
-        text: PROFILE.motivation,
-        intent,
-        followUp: "¿Quieres saber cómo contactarlo?",
-        followIntent: "CONTACT",
-      };
-
+      reply =
+        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
+      break;
     case "CONTACT":
       return {
         text:
-          "Puedes contactarlo por WhatsApp, correo o redes sociales. Abriendo enlaces ahora 👇",
-        intent,
-        links: true,
+          "Puedes contactar a Jorge fácilmente 😊\n\n" +
+          "📱 WhatsApp: desde el icono del portafolio.\n" +
+          "📩 Correo y redes: en la sección de Contacto.\n\n" +
+          "¿Quieres que abra WhatsApp ahora?",
+        intent: "CONTACT",
+        action: "CONTACT_CONFIRM",
       };
-
     default:
-      return {
-        text:
-          "Puedo ayudarte a conocer el perfil profesional de Jorge. Usa las preguntas sugeridas 😊",
-        intent: null,
-      };
+      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
+
+  return { text: reply, intent };
+}
+
+/* =========================
+   FOLLOW UP
+========================= */
+function followUp(intent) {
+  return {
+    PROFILE: "¿Quieres conocer su experiencia profesional?",
+    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
+    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
+    PROJECTS: "¿Deseas saber por qué contratarlo?",
+  }[intent];
 }
 
 /* =========================
@@ -205,20 +247,23 @@ function getSmartResponse(message, context) {
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const primaryBg = isDark ? "#000" : theme.palette.primary.main;
 
   const bottomRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({
-    lastQuestion: null,
-    lastFollowIntent: null,
+    lastIntent: null,
+    awaiting: null,
+    awaitingFollowUp: null,
   });
 
   const initialMessage = {
     from: "bot",
     text:
-      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. Puedes preguntarme sobre su perfil, estudios, experiencia, tecnologías o contacto.",
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
   };
 
   const [messages, setMessages] = useState(() => {
@@ -232,9 +277,11 @@ export default function ChatBot() {
   }, [messages]);
 
   const clearChat = () => {
-    localStorage.removeItem("sasha-chat");
-    setMessages([initialMessage]);
-    setContext({ lastQuestion: null, lastFollowIntent: null });
+    if (window.confirm("¿Deseas borrar toda la conversación?")) {
+      localStorage.removeItem("sasha-chat");
+      setMessages([initialMessage]);
+      setContext({ lastIntent: null, awaiting: null, awaitingFollowUp: null });
+    }
   };
 
   const sendMessage = (text) => {
@@ -248,23 +295,19 @@ export default function ChatBot() {
       const res = getSmartResponse(text, context);
 
       setContext({
-        lastQuestion: res.followUp || null,
-        lastFollowIntent: res.followIntent || null,
+        lastIntent: res.intent ?? context.lastIntent,
+        awaiting: res.action === "CONTACT_CONFIRM" ? "CONTACT_CONFIRM" : null,
+        awaitingFollowUp: followUp(res.intent) ? res.intent : null,
       });
 
-      const newMessages = [{ from: "bot", text: res.text }];
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", text: res.text },
+        ...(followUp(res.intent)
+          ? [{ from: "bot", text: followUp(res.intent) }]
+          : []),
+      ]);
 
-      if (res.followUp) {
-        newMessages.push({ from: "bot", text: res.followUp });
-      }
-
-      if (res.links) {
-        window.open(CONTACT.whatsapp, "_blank");
-        window.open(CONTACT.linkedin, "_blank");
-        window.open(CONTACT.github, "_blank");
-      }
-
-      setMessages((prev) => [...prev, ...newMessages]);
       setTyping(false);
     }, delay());
   };
@@ -273,13 +316,7 @@ export default function ChatBot() {
     <>
       <Fab
         onClick={() => setOpen(!open)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          bgcolor: isDark ? "#000" : "#1976d2",
-          color: "#fff",
-        }}
+        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg, color: "#fff" }}
       >
         <SmartToyIcon />
       </Fab>
@@ -297,11 +334,10 @@ export default function ChatBot() {
             borderRadius: 3,
           }}
         >
-          {/* HEADER */}
           <Box
             sx={{
               p: 1.5,
-              bgcolor: isDark ? "#000" : "#1976d2",
+              bgcolor: primaryBg,
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
@@ -320,38 +356,42 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
+          {/* 🔥 CHIPS SEPARADAS */}
           <Box sx={{ p: 1 }}>
-            <Stack direction="row" spacing={1.2} flexWrap="wrap">
+            <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
                 <Chip
                   key={q}
                   label={q}
+                  size="small"
                   clickable
                   onClick={() => sendMessage(q)}
-                  sx={{ mb: 1 }}
                 />
               ))}
             </Stack>
           </Box>
 
-          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Box key={i} sx={{ mb: 1 }}>
+              <Box key={i} sx={{ textAlign: msg.from === "user" ? "right" : "left", mb: 1 }}>
                 <Typography
                   sx={{
+                    display: "inline-block",
                     px: 1.5,
                     py: 1,
                     borderRadius: 2,
                     bgcolor:
                       msg.from === "user"
-                        ? isDark
-                          ? "#000"
-                          : "#1976d2"
+                        ? primaryBg
+                        : isDark
+                        ? "#2c2c2c"
                         : "#f1f1f1",
-                    color: msg.from === "user" ? "#fff" : "#000",
-                    maxWidth: "85%",
+                    color:
+                      msg.from === "user"
+                        ? "#fff"
+                        : isDark
+                        ? "#eaeaea"
+                        : "#000",
                   }}
                 >
                   {msg.text}
@@ -359,25 +399,23 @@ export default function ChatBot() {
               </Box>
             ))}
             {typing && (
-              <Typography variant="caption">Sasha está escribiendo…</Typography>
+              <Typography variant="caption" sx={{ ml: 1 }}>
+                Sasha está escribiendo…
+              </Typography>
             )}
             <div ref={bottomRef} />
           </Box>
 
-          {/* INPUT */}
-          <Box sx={{ display: "flex", p: 1 }}>
+          <Box sx={{ display: "flex", p: 1, gap: 1 }}>
             <TextField
-              fullWidth
               size="small"
+              fullWidth
               placeholder="Escribe tu pregunta…"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
             />
-            <IconButton
-              onClick={() => sendMessage(input)}
-              sx={{ color: isDark ? "#fff" : "#1976d2" }}
-            >
+            <IconButton onClick={() => sendMessage(input)}>
               <SendIcon />
             </IconButton>
           </Box>
@@ -385,4 +423,4 @@ export default function ChatBot() {
       )}
     </>
   );
-           }
+    }
