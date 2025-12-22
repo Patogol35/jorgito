@@ -393,23 +393,24 @@ onClick={() => setOpen(false)}  >   <CloseIcon fontSize="small" />    </IconButt
     overflowX: isLandscape ? "auto" : "visible",
   }}
 >
-  <Stack
-    direction="row"
-    spacing={1}
-    sx={{
-      flexWrap: isLandscape ? "nowrap" : "wrap",
-      width: isLandscape ? "max-content" : "100%",
-    }}
-  >
-    {SUGGESTIONS.map((q) => (
-      <Chip
-        key={q}
-        label={q}
-        size="small"
-        onClick={() => sendMessage(q)}
-      />
-    ))}
-  </Stack>
+<Stack
+  direction="row"
+  sx={{
+    flexWrap: isLandscape ? "nowrap" : "wrap",
+    width: isLandscape ? "max-content" : "100%",
+    rowGap: 1,      // 👈 separación vertical entre filas
+    columnGap: 1,   // 👈 separación horizontal entre chips
+  }}
+>
+  {SUGGESTIONS.map((q) => (
+    <Chip
+      key={q}
+      label={q}
+      size="small"
+      onClick={() => sendMessage(q)}
+    />
+  ))}
+</Stack>
 </Box>
     
     
