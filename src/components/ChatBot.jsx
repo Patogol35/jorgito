@@ -338,17 +338,16 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       maxHeight: 520,
     }),
 
-    ...(isLandscape && {
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: "92vw",
-      maxWidth: 600,
+  ...(isLandscape && {
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "92vw",
+  maxWidth: 600,
 
-      // ❌ height: "92vh"
-      height: "100dvh", // ✅ USAR dvh
-      maxHeight: "100dvh",
-    }),
+  height: 420,        // 🔑 ALTURA FIJA
+  maxHeight: "90vh",  // respaldo
+}),
   }}
 >
 <Box
@@ -389,7 +388,13 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
   </Box>
 </Box>
 
-          <Box sx={{ p: 1, flexShrink: 0 }}>
+          <Box
+  sx={{
+    p: 1,
+    flexShrink: 0,
+    display: isLandscape ? "none" : "block", // 🔑
+  }}
+>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
                 <Chip
