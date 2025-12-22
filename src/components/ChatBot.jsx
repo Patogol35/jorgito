@@ -351,7 +351,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     minHeight: 0,
   }}
 >
-          <Box
+    <Box
   sx={{
     p: 1,
     bgcolor: primaryBg,
@@ -359,6 +359,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    flexShrink: 0, // 🔑 IMPORTANTE
   }}
 >
   <Typography>Sasha </Typography>
