@@ -19,11 +19,10 @@ import { useTheme } from "@mui/material/styles";
 /* =========================
    UTILIDADES
 ========================= */
-const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const delay = () => Math.floor(Math.random() * 500) + 400;
 
 /* =========================
-   PERFIL DE JORGE
+   PERFIL
 ========================= */
 const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
@@ -38,8 +37,6 @@ const PROFILE = {
   ],
   stack: [
     "React",
-    "Vercel",
-    "Postman",
     "Vite",
     "JavaScript",
     "Spring Boot",
@@ -59,13 +56,13 @@ const PROFILE = {
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
-    "Aplicacines Frontend",
-    "Aplicaciones React conectadas a APIs REST",
+    "Aplicaciones Frontend",
+    "Apps React conectadas a APIs REST",
   ],
 };
 
 /* =========================
-   SUGERENCIAS (SE QUEDAN)
+   SUGERENCIAS
 ========================= */
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
@@ -75,6 +72,7 @@ const SUGGESTIONS = [
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
+  "¿Cómo puedo contactarlo?",
 ];
 
 /* =========================
@@ -82,14 +80,25 @@ const SUGGESTIONS = [
 ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey", "qué tal"],
-  PROFILE: ["jorge", "quién es jorge", "perfil", "háblame"],
+  PROFILE: ["jorge", "perfil", "háblame"],
   EDUCATION: ["estudios", "formación", "máster", "título"],
-  EXPERIENCE: ["experiencia", "ha trabajado", "trabajo"],
+  EXPERIENCE: ["experiencia", "trabajo", "ha trabajado"],
   SKILLS: ["skills", "habilidades", "tecnologías", "stack"],
-  SOFT_SKILLS: ["habilidades blandas", "soft", "equipo"],
-  STACK: ["full stack", "frontend", "backend", "rol"],
+  SOFT_SKILLS: ["habilidades blandas", "soft"],
+  STACK: ["full stack", "frontend", "backend"],
   PROJECTS: ["proyectos", "portfolio", "apps"],
   MOTIVATION: ["por qué contratar", "por qué elegir", "ventajas"],
+  CONTACT: [
+    "contactar",
+    "contacto",
+    "whatsapp",
+    "correo",
+    "email",
+    "redes",
+    "hablar",
+    "escribir",
+    "mensaje",
+  ],
 };
 
 /* =========================
@@ -115,10 +124,10 @@ function detectIntent(message) {
 }
 
 /* =========================
-   RESPUESTA
+   RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
-  if (message.trim().length < 4) {
+  if (message.trim().length < 3) {
     return { text: "¿Podrías darme un poco más de detalle? 😊" };
   }
 
@@ -129,42 +138,55 @@ function getSmartResponse(message, context) {
     case "GREETING":
       text = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
       break;
+
     case "PROFILE":
       text = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
+
     case "EDUCATION":
       text = `Cuenta con un ${PROFILE.education}.`;
       break;
+
     case "EXPERIENCE":
-      text = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
+      text = `Tiene experiencia en ${PROFILE.experience.join(", ")}.`;
       break;
+
     case "SKILLS":
-      text =
-        "Trabaja con tecnologías como " +
-        PROFILE.stack.join(", ") +
-        ".";
+      text = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
       break;
+
     case "SOFT_SKILLS":
-      text = `Sus habilidades blandas incluyen: ${PROFILE.softSkills.join(
-        ", "
-      )}.`;
+      text = `Destaca por ${PROFILE.softSkills.join(", ")}.`;
       break;
+
     case "STACK":
       text =
-        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
+        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como en backend.";
       break;
+
     case "PROJECTS":
       text = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
+
     case "MOTIVATION":
       text =
         "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
       break;
+
+    case "CONTACT":
+      text =
+        "El contacto con Jorge es directo y sencillo 😊\n\n" +
+        "📱 WhatsApp: disponible desde el icono del portafolio para una respuesta rápida.\n" +
+        "📩 Correo electrónico: accesible en la sección de Contacto para mensajes formales.\n" +
+        "🌐 Redes sociales: también disponibles en la sección de Contacto.\n\n" +
+        "No utiliza formularios, el contacto es personal.";
+      break;
+
     default:
       text =
         context.lastIntent
-          ? "¿Quieres que te cuente algo más?"
-          : "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+          ? "¿Deseas saber algo más sobre Jorge?"
+          : "Puedo ayudarte con información sobre Jorge, sus proyectos, tecnologías o cómo contactarlo 😊";
   }
 
   return { text, intent };
@@ -179,6 +201,7 @@ function followUp(intent) {
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
     SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
     PROJECTS: "¿Deseas saber por qué contratarlo?",
+    CONTACT: "¿Prefieres escribir por WhatsApp o enviar un correo?",
   };
   return map[intent];
 }
@@ -189,8 +212,6 @@ function followUp(intent) {
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-
-  // 🔥 NEGRO EN DARK MODE
   const primaryBg = isDark ? "#000" : theme.palette.primary.main;
 
   const bottomRef = useRef(null);
@@ -203,7 +224,7 @@ export default function ChatBot() {
     from: "bot",
     text:
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
+      "Puedes preguntarme sobre su perfil, experiencia, tecnologías, proyectos o cómo contactarlo.",
   };
 
   const [messages, setMessages] = useState(() => {
@@ -309,10 +330,6 @@ export default function ChatBot() {
                   size="small"
                   clickable
                   onClick={() => sendMessage(q)}
-                  sx={{
-                    bgcolor: isDark ? "#2a2a2a" : "#f1f1f1",
-                    color: isDark ? "#eaeaea" : "#000",
-                  }}
                 />
               ))}
             </Stack>
@@ -321,15 +338,31 @@ export default function ChatBot() {
           {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((msg, i) => (
-              <Box key={i} sx={{ textAlign: msg.from === "user" ? "right" : "left", mb: 1 }}>
+              <Box
+                key={i}
+                sx={{
+                  textAlign: msg.from === "user" ? "right" : "left",
+                  mb: 1,
+                }}
+              >
                 <Typography
                   sx={{
                     display: "inline-block",
                     px: 1.5,
                     py: 1,
                     borderRadius: 2,
-                    bgcolor: msg.from === "user" ? primaryBg : isDark ? "#2c2c2c" : "#f1f1f1",
-                    color: msg.from === "user" ? "#fff" : isDark ? "#eaeaea" : "#000",
+                    bgcolor:
+                      msg.from === "user"
+                        ? primaryBg
+                        : isDark
+                        ? "#2c2c2c"
+                        : "#f1f1f1",
+                    color:
+                      msg.from === "user"
+                        ? "#fff"
+                        : isDark
+                        ? "#eaeaea"
+                        : "#000",
                     maxWidth: "85%",
                   }}
                 >
@@ -363,4 +396,4 @@ export default function ChatBot() {
       )}
     </>
   );
-                      }
+                  }
