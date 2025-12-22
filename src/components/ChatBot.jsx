@@ -129,107 +129,107 @@ best = intent;
 return scoreMax ? best : "UNKNOWN";
 }
 
+
+
 /* =========================
 RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
-const text = message.toLowerCase().trim();
+  const text = message.toLowerCase().trim();
 
-if (context.awaiting === "CONTACT_CONFIRM") {
-if (YES_WORDS.includes(text)) {
-window.open(WHATSAPP_URL, "_blank");
-return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
-}
-if (NO_WORDS.includes(text)) {
-return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
-}
-}
+  if (context.awaiting === "CONTACT_CONFIRM") {
+    if (YES_WORDS.includes(text)) {
+      window.open(WHATSAPP_URL, "_blank");
+      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
+    }
+    if (NO_WORDS.includes(text)) {
+      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
+    }
+  }
 
-if (context.awaitingFollowUp) {
-if (YES_WORDS.includes(text)) {
-switch (context.awaitingFollowUp) {
-case "PROFILE":
-return {
-text: Tiene experiencia como ${PROFILE.experience.join(", ")}.,
-intent: "EXPERIENCE",
-};
-case "EXPERIENCE":
-return {
-text: Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.,
-intent: "SKILLS",
-};
-case "SKILLS":
-return {
-text: Aplica estas tecnologías en proyectos como ${PROFILE.projects.join(", ")}.,
-intent: "PROJECTS",
-};
-default:
-break;
-}
-}
+  if (context.awaitingFollowUp) {
+    if (YES_WORDS.includes(text)) {
+      switch (context.awaitingFollowUp) {
+        case "PROFILE":
+          return {
+            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+            intent: "EXPERIENCE",
+          };
+        case "EXPERIENCE":
+          return {
+            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+            intent: "SKILLS",
+          };
+        case "SKILLS":
+          return {
+            text: `Aplica estas tecnologías en proyectos como ${PROFILE.projects.join(", ")}.`,
+            intent: "PROJECTS",
+          };
+        default:
+          break;
+      }
+    }
 
-if (NO_WORDS.includes(text)) {
-return { text: "De acuerdo 😊 ¿En qué más puedo ayudarte?" };
+    if (NO_WORDS.includes(text)) {
+      return { text: "De acuerdo 😊 ¿En qué más puedo ayudarte?" };
+    }
+  }
+
+  const intent = detectIntent(message);
+  let reply = "";
+
+  switch (intent) {
+    case "GREETING":
+      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
+      break;
+    case "ASSISTANT":
+      reply =
+        "Soy Sasha 🤖, la asistente virtual de Jorge. Estoy aquí para ayudarte.";
+      break;
+    case "CREATOR":
+      reply =
+        "Fui creada por Jorge 😊 para responder preguntas sobre su perfil profesional.";
+      break;
+    case "STATUS":
+      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
+      break;
+    case "PROFILE":
+      reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
+      break;
+    case "EDUCATION":
+      reply = `Cuenta con un ${PROFILE.education}.`;
+      break;
+    case "EXPERIENCE":
+      reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
+      break;
+    case "SKILLS":
+      reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
+      break;
+    case "STACK":
+      reply =
+        "Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.";
+      break;
+    case "PROJECTS":
+      reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
+      break;
+    case "MOTIVATION":
+      reply =
+        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
+      break;
+    case "CONTACT":
+      return {
+        text:
+          "Puedes contactar a Jorge fácilmente 😊\n\n" +
+          "📱 WhatsApp: desde el portafolio.\n\n" +
+          "¿Quieres que abra WhatsApp ahora?",
+        action: "CONTACT_CONFIRM",
+      };
+    default:
+      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+  }
+
+  return { text: reply, intent };
 }
-
-}
-
-const intent = detectIntent(message);
-let reply = "";
-
-switch (intent) {
-case "GREETING":
-reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
-break;
-case "ASSISTANT":
-reply =
-"Soy Sasha 🤖, la asistente virtual de Jorge. Estoy aquí para ayudarte.";
-break;
-case "CREATOR":
-reply =
-"Fui creada por Jorge 😊 para responder preguntas sobre su perfil profesional.";
-break;
-case "STATUS":
-reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
-break;
-case "PROFILE":
-reply = ${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description};
-break;
-case "EDUCATION":
-reply = Cuenta con un ${PROFILE.education}.;
-break;
-case "EXPERIENCE":
-reply = Tiene experiencia como ${PROFILE.experience.join(", ")}.;
-break;
-case "SKILLS":
-reply = Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.;
-break;
-case "STACK":
-reply =
-"Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.";
-break;
-case "PROJECTS":
-reply = Ha participado en proyectos como ${PROFILE.projects.join(", ")}.;
-break;
-case "MOTIVATION":
-reply =
-"Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
-break;
-case "CONTACT":
-return {
-text:
-"Puedes contactar a Jorge fácilmente 😊\n\n" +
-"📱 WhatsApp: desde el portafolio.\n\n" +
-"¿Quieres que abra WhatsApp ahora?",
-action: "CONTACT_CONFIRM",
-};
-default:
-reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
-}
-
-return { text: reply, intent };
-}
-
 /* =========================
 FOLLOW UP
 ========================= */
