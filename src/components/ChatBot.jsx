@@ -386,10 +386,11 @@ onClick={() => setOpen(false)}  >   <CloseIcon fontSize="small" />    </IconButt
 </Tooltip>    </Box>  
 </Box>  
     
-    <Box
+<Box
   sx={{
     p: 1,
     flexShrink: 0,
+    maxHeight: isLandscape ? 56 : "none", // 👈 reserva espacio para chips
     overflowX: isLandscape ? "auto" : "visible",
   }}
 >
