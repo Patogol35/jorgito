@@ -321,36 +321,36 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       </Fab>
 
       {open && (
+<Paper
+  sx={{
+    position: "fixed",
+    zIndex: 1300,
 
-  <Paper
-    sx={{
-      position: "fixed",
-      zIndex: 1300,
+    ...(!isLandscape && {
+      bottom: 90,
+      left: 16,
+      width: 360,
+      height: "70vh",
+      maxHeight: 520,
+    }),
 
-      // 📱 VERTICAL
-      ...(!isLandscape && {
-        bottom: 90,
-        left: 16,
-        width: 360,
-        height: "70vh",
-        maxHeight: 520,
-      }),
+    ...(isLandscape && {
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "92vw",
+      height: "92vh",
+      maxWidth: 600,
+      maxHeight: 420,
+    }),
 
-  // 📱 HORIZONTAL
-...(isLandscape && {
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "92vw",
-  height: "92vh",
-  maxWidth: 600,
-  maxHeight: 420,
-}),
+    display: "flex",
+    flexDirection: "column",
 
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
+    // 🔑 CLAVE PARA EL SCROLL
+    minHeight: 0,
+  }}
+>
           <Box
   sx={{
     p: 1,
