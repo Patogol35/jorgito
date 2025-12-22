@@ -1,6 +1,7 @@
 import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
@@ -28,8 +29,8 @@ export default function Hero({ mode, setMode }) {
         {/* Avatar animado */}
         <motion.div
           animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
-          style={{ display: "inline-block", borderRadius: "50%" }}
+          transition={{ duration: 3, repeat: Infinity }}
+          style={{ borderRadius: "50%" }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -38,7 +39,6 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
-              mb: { xs: 2, sm: 0 },
             }}
           />
         </motion.div>
@@ -59,7 +59,7 @@ export default function Hero({ mode, setMode }) {
               fontWeight="bold"
               gutterBottom
               sx={{
-                color: "#3b82f6",
+                color: theme.palette.primary.main,
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
               }}
             >
@@ -75,7 +75,7 @@ export default function Hero({ mode, setMode }) {
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
-            {/* TEXTO MEJORADO */}
+            {/* TEXTO ELEGANTE – UN SOLO COLOR */}
             <Typography
               variant="subtitle1"
               paragraph
@@ -86,32 +86,10 @@ export default function Hero({ mode, setMode }) {
                 maxWidth: "540px",
               }}
             >
-              Me apasiona crear{" "}
-              <Box
-                component="span"
-                sx={{
-                  color: theme.palette.primary.main,
-                  fontWeight: 600,
-                }}
-              >
-                tecnología que transforma ideas
-              </Box>{" "}
-              en realidades digitales.
-              <br />
-              <br />
-              Mi enfoque está en{" "}
-              <Box component="span" sx={{ fontWeight: 600 }}>
-                aportar valor constante
-              </Box>
-              , desarrollando soluciones{" "}
-              <Box component="span" sx={{ fontWeight: 600 }}>
-                seguras, innovadoras
-              </Box>{" "}
-              y orientadas a generar{" "}
-              <Box component="span" sx={{ fontWeight: 600 }}>
-                impacto positivo
-              </Box>
-              .
+              Me apasiona crear tecnología que transforma ideas en realidades
+              digitales. Mi enfoque está en aportar valor constante,
+              desarrollando soluciones digitales seguras, innovadoras y
+              orientadas a generar impacto positivo.
             </Typography>
 
             {/* Botones */}
@@ -165,9 +143,10 @@ export default function Hero({ mode, setMode }) {
                 Ver Título
               </Button>
 
-              {/* Sasha */}
+              {/* Sasha – MISMO DISEÑO */}
               <Button
                 variant="contained"
+                startIcon={<SmartToyIcon />}
                 onClick={() => {
                   if (window.openSashaChat) window.openSashaChat();
                 }}
@@ -175,11 +154,14 @@ export default function Hero({ mode, setMode }) {
                   borderRadius: "25px",
                   textTransform: "none",
                   fontWeight: "bold",
-                  px: 4,
-                  background: "linear-gradient(90deg, #6366f1, #3b82f6)",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
-                🤖 Habla con Sasha
+                Habla con Sasha
               </Button>
 
               {/* Modo */}
@@ -209,4 +191,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-                  }
+}
