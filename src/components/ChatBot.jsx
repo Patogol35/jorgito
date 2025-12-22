@@ -327,16 +327,41 @@ export default function ChatBot() {
           }}
         >
           <Box
-            sx={{
-              p: 1,
-              bgcolor: primaryBg,
-              color: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography>Sasha 🤖</Typography>
+  sx={{
+    p: 1,
+    bgcolor: primaryBg,
+    color: "#fff",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  }}
+>
+  <Typography>Sasha 🤖</Typography>
+
+  <Box>
+    {/* Borrar conversación */}
+    <Tooltip title="Borrar conversación">
+      <IconButton
+        size="small"
+        sx={{ color: "#fff" }}
+        onClick={() => setMessages([initialMessage])}
+      >
+        <DeleteIcon fontSize="small" />
+      </IconButton>
+    </Tooltip>
+
+    {/* Cerrar chat */}
+    <Tooltip title="Cerrar chat">
+      <IconButton
+        size="small"
+        sx={{ color: "#fff" }}
+        onClick={() => setOpen(false)}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Tooltip>
+  </Box>
+</Box>
             <Tooltip title="Borrar conversación">
               <IconButton
                 size="small"
