@@ -97,21 +97,10 @@ const INTENTS = {
     "eres sasha",
     "cómo estás",
     "como estas",
-    "estás bien",
-    "estas bien",
     "qué haces",
     "que haces",
-    "qué puedes hacer",
     "eres un bot",
     "eres real",
-    "eres humana",
-    "te cansas",
-    "duermes",
-    "te gusta programar",
-    "te gusta el código",
-    "tienes humor",
-    "quién te creó",
-    "quien te creo",
   ],
   PROFILE: ["jorge", "quién es", "perfil"],
   EDUCATION: ["estudios", "formación", "máster"],
@@ -182,7 +171,7 @@ function getSmartResponse(message, context) {
 
     case "PERSONAL":
       reply =
-        "Soy Sasha 🤖, una asistente virtual con buen humor y energía infinita 😄. No duermo, no tomo café ☕ y nunca me canso. Estoy aquí para ayudarte a conocer el perfil profesional de Jorge, sus tecnologías y proyectos. ¿Qué te gustaría saber?";
+        "Soy Sasha 🤖, una asistente virtual con buen humor y cero café ☕😄. Estoy aquí para ayudarte a conocer el perfil profesional de Jorge, sus tecnologías y proyectos. ¿Qué te gustaría saber?";
       break;
 
     case "PROFILE":
@@ -221,7 +210,7 @@ function getSmartResponse(message, context) {
 
     default:
       reply =
-        "Puedo ayudarte a conocer el perfil profesional de Jorge 😊 o también puedes preguntarme cosas sobre mí 😄";
+        "Puedo ayudarte a conocer el perfil profesional de Jorge 😊 (prometo no responder con memes… a menos que lo pidas 😄)";
   }
 
   return { text: reply, intent };
@@ -390,4 +379,4 @@ export default function ChatBot() {
       )}
     </>
   );
-    }
+            }
