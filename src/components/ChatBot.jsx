@@ -91,6 +91,17 @@ const SUGGESTIONS = [
 ========================= */
 const INTENTS = {
   GREETING: ["hola", "buenas", "hey", "qué tal"],
+  PERSONAL: [
+    "quién eres",
+    "quien eres",
+    "eres sasha",
+    "cómo estás",
+    "como estas",
+    "qué haces",
+    "que haces",
+    "eres un bot",
+    "eres real",
+  ],
   PROFILE: ["jorge", "quién es", "perfil"],
   EDUCATION: ["estudios", "formación", "máster"],
   EXPERIENCE: ["experiencia", "trabajo"],
@@ -146,41 +157,7 @@ function getSmartResponse(message, context) {
       return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
     }
     if (NO_WORDS.includes(text)) {
-      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
-    }
-  }
-
-  if (context.awaitingFollowUp) {
-    if (YES_WORDS.includes(text)) {
-      switch (context.awaitingFollowUp) {
-        case "PROFILE":
-          return {
-            text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-            intent: "EXPERIENCE",
-          };
-        case "EXPERIENCE":
-          return {
-            text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-            intent: "SKILLS",
-          };
-        case "SKILLS":
-          return {
-            text: `Aplica estas tecnologías en proyectos como ${PROFILE.projects.join(
-              ", "
-            )}.`,
-            intent: "PROJECTS",
-          };
-        case "PROJECTS":
-          return {
-            text:
-              "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.",
-            intent: "MOTIVATION",
-          };
-      }
-    }
-
-    if (NO_WORDS.includes(text)) {
-      return { text: "De acuerdo 😊 ¿En qué más puedo ayudarte?" };
+      return { text: "Está bien 😊 Aquí estaré cuando me necesites." };
     }
   }
 
@@ -189,57 +166,54 @@ function getSmartResponse(message, context) {
 
   switch (intent) {
     case "GREETING":
-      reply = "Hola 👋 Soy Sasha, la asistente virtual de Jorge.";
+      reply = "¡Hola! 👋 Soy Sasha 🤖 ¿En qué te ayudo hoy?";
       break;
+
+    case "PERSONAL":
+      reply =
+        "Soy Sasha 🤖, una asistente virtual con buen humor y cero café ☕😄. Estoy aquí para ayudarte a conocer el perfil profesional de Jorge, sus tecnologías y proyectos. ¿Qué te gustaría saber?";
+      break;
+
     case "PROFILE":
       reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
+
     case "EDUCATION":
       reply = `Cuenta con un ${PROFILE.education}.`;
       break;
+
     case "EXPERIENCE":
       reply = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
       break;
+
     case "SKILLS":
       reply = `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`;
       break;
+
     case "STACK":
       reply =
-        "Sí, es desarrollador Full Stack, trabajando tanto en frontend como backend.";
+        "Sí, es desarrollador Full Stack 😎. En frontend trabaja con React, Vite y JavaScript, y en backend con Spring Boot y Django REST Framework, creando APIs seguras y escalables.";
       break;
+
     case "PROJECTS":
       reply = `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`;
       break;
+
     case "MOTIVATION":
       reply =
-        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.";
+        "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas. Y no, no rompe producción los viernes 😄.";
       break;
+
     case "CONTACT":
-      return {
-        text:
-          "Puedes contactar a Jorge fácilmente 😊\n\n" +
-          "📱 WhatsApp: desde el portafolio.\n" +
-          "📩 Correo y redes: en la sección de Contacto.\n\n" +
-          "¿Quieres que abra WhatsApp ahora?",
-        action: "CONTACT_CONFIRM",
-      };
+      window.open(WHATSAPP_URL, "_blank");
+      return { text: "🚀 Te llevo directo a WhatsApp para contactar con Jorge." };
+
     default:
-      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+      reply =
+        "Puedo ayudarte a conocer el perfil profesional de Jorge 😊 (prometo no responder con memes… a menos que lo pidas 😄)";
   }
 
   return { text: reply, intent };
-}
-
-/* =========================
-   FOLLOW UP
-========================= */
-function followUp(intent) {
-  return {
-    PROFILE: "¿Quieres conocer su experiencia profesional?",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
-    PROJECTS: "¿Deseas saber por qué contratarlo?",
-  }[intent];
 }
 
 /* =========================
@@ -254,16 +228,11 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({
-    awaiting: null,
-    awaitingFollowUp: null,
-  });
 
   const initialMessage = {
     from: "bot",
     text:
-      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, experiencia, tecnologías o proyectos.",
+      "Hola 👋 Soy Sasha 🤖. Puedo ayudarte a conocer el perfil, experiencia, tecnologías y proyectos de Jorge.",
   };
 
   const [messages, setMessages] = useState(() => {
@@ -280,7 +249,6 @@ export default function ChatBot() {
     if (window.confirm("¿Deseas borrar toda la conversación?")) {
       localStorage.removeItem("sasha-chat");
       setMessages([initialMessage]);
-      setContext({ awaiting: null, awaitingFollowUp: null });
     }
   };
 
@@ -292,21 +260,8 @@ export default function ChatBot() {
     setTyping(true);
 
     setTimeout(() => {
-      const res = getSmartResponse(text, context);
-
-      setContext({
-        awaiting: res.action === "CONTACT_CONFIRM" ? "CONTACT_CONFIRM" : null,
-        awaitingFollowUp: followUp(res.intent) ? res.intent : null,
-      });
-
-      setMessages((prev) => [
-        ...prev,
-        { from: "bot", text: res.text },
-        ...(followUp(res.intent)
-          ? [{ from: "bot", text: followUp(res.intent) }]
-          : []),
-      ]);
-
+      const res = getSmartResponse(text, {});
+      setMessages((prev) => [...prev, { from: "bot", text: res.text }]);
       setTyping(false);
     }, delay());
   };
@@ -424,4 +379,4 @@ export default function ChatBot() {
       )}
     </>
   );
-                                       }
+}
