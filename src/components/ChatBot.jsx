@@ -252,7 +252,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
   const bottomRef = useRef(null);
   
   
-  const bottomRef = useRef(null);
+  
   const [open, setOpen] = useState(false);
   useEffect(() => {
   window.openSashaChat = () => setOpen(true);
