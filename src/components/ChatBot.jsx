@@ -248,6 +248,9 @@ export default function ChatBot() {
 
   const bottomRef = useRef(null);
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+  window.openSashaChat = () => setOpen(true);
+}, []);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({
