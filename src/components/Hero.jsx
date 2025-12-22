@@ -137,6 +137,24 @@ export default function Hero({ mode, setMode }) {
                 Ver Título
               </Button>
 
+              <Button
+  variant="contained"
+  onClick={() => {
+    document
+      .querySelector('[aria-label="sasha-chat"]')
+      ?.click();
+  }}
+  sx={{
+    borderRadius: "25px",
+    textTransform: "none",
+    fontWeight: "bold",
+    px: 4,
+    background: "linear-gradient(90deg, #6366f1, #3b82f6)",
+  }}
+>
+  🤖 Habla con Sasha
+</Button>
+
               {/* Botón Dark/Light */}
               <Button
                 variant="outlined"
