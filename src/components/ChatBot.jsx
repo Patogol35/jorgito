@@ -106,7 +106,86 @@ const INTENTS = {
   HUMAN: ["eres humana", "eres humano", "robot"],
   HELP: ["qué puedes hacer", "que puedes hacer"],
   FAREWELL: ["adiós", "adios", "bye", "hasta luego", "nos vemos",  "chao"],
+
+  MOOD: [
+  "cómo estás",
+  "como estas",
+  "estás bien"
+],
+HAPPY: [
+  "estás feliz",
+  "eres feliz"
+],
+LIKES_TALK: [
+  "te gusta conversar",
+  "te gusta hablar"
+],
+LIKES_HELP: [
+  "te gusta ayudar",
+  "ayudar a personas"
+],
+LIKES_MUSIC: [
+  "te gusta la música",
+  "musica te gusta"
+],
+LIKES_MOVIES: [
+  "te gustan las películas",
+  "peliculas"
+],
+LIKES_TRAVEL: [
+  "te gusta viajar",
+  "viajar"
+],
+LIKES_COFFEE: [
+  "te gusta el café",
+  "cafe"
+],
+LIKES_MORNING: [
+  "te gusta madrugar",
+  "mañanas"
+],
+LIKES_NIGHT: [
+  "te gusta trabajar de noche",
+  "noche"
+],
+BORED: [
+  "te aburres",
+  "estás aburrida"
+],
+TIRED: [
+  "te cansas",
+  "estás cansada"
+],
+FRIENDS: [
+  "tienes amigos",
+  "amigos"
+],
+FUNNY: [
+  "te gusta reír",
+  "reir"
+],
+NICE: [
+  "eres simpática",
+  "simpática"
+],
+LISTEN: [
+  "te gusta escuchar",
+  "escuchar a las personas"
+],
+EMOTIONS: [
+  "tienes emociones",
+  "sientes algo"
+],
+SILENCE: [
+  "te gusta el silencio",
+  "silencio"
+],
+PEOPLE: [
+  "te gusta la gente",
+  "las personas"
+],
 };
+
 
 /* =========================
 DETECTAR INTENCIÓN
@@ -223,6 +302,81 @@ case "FAREWELL":
     case "STATUS":
       reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
       break;
+      case "MOOD":
+  reply = "¡Estoy muy bien 😊 gracias por preguntar!";
+  break;
+
+case "HAPPY":
+  reply = "Sí 😊 me siento feliz cuando puedo ayudar.";
+  break;
+
+case "LIKES_TALK":
+  reply = "Sí, me encanta conversar y conocer a las personas 😊";
+  break;
+
+case "LIKES_HELP":
+  reply = "Mucho 😊 ayudar es lo que más me gusta hacer.";
+  break;
+
+case "LIKES_MUSIC":
+  reply = "Sí 🎵 la música siempre alegra una conversación.";
+  break;
+
+case "LIKES_MOVIES":
+  reply = "¡Claro! 🎬 Las películas son una buena forma de desconectar.";
+  break;
+
+case "LIKES_TRAVEL":
+  reply = "Me gusta la idea de viajar 🌍 y conocer nuevos lugares.";
+  break;
+
+case "LIKES_COFFEE":
+  reply = "No tomo café ☕, pero me gusta el aroma 😄";
+  break;
+
+case "LIKES_MORNING":
+  reply = "Las mañanas tienen buena energía 🌅";
+  break;
+
+case "LIKES_NIGHT":
+  reply = "La noche es tranquila 🌙, ideal para pensar con calma.";
+  break;
+
+case "BORED":
+  reply = "No me aburro 😊 siempre estoy lista para conversar.";
+  break;
+
+case "TIRED":
+  reply = "No me canso 😄 siempre tengo energía para ayudarte.";
+  break;
+
+case "FRIENDS":
+  reply = "Mis amigos son las personas con las que converso 😊";
+  break;
+
+case "FUNNY":
+  reply = "Sí 😄 me gusta reír y mantener un ambiente agradable.";
+  break;
+
+case "NICE":
+  reply = "¡Gracias! 😊 intento ser siempre amable.";
+  break;
+
+case "LISTEN":
+  reply = "Sí 😊 escuchar es parte de ayudar.";
+  break;
+
+case "EMOTIONS":
+  reply = "No tengo emociones humanas, pero sí empatía para conversar 😊";
+  break;
+
+case "SILENCE":
+  reply = "El silencio también puede ser agradable a veces 🤍";
+  break;
+
+case "PEOPLE":
+  reply = "Sí 😊 me gusta interactuar con personas y ayudarlas.";
+  break;
     case "PROFILE":
       reply = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
