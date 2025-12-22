@@ -325,6 +325,9 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
   sx={{
     position: "fixed",
     zIndex: 1300,
+    display: "flex",
+    flexDirection: "column",
+    minHeight: 0, // 🔑 CLAVE
 
     ...(!isLandscape && {
       bottom: 90,
@@ -341,17 +344,10 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       width: "92vw",
       height: "92vh",
       maxWidth: 600,
-      maxHeight: 420,
     }),
-
-    display: "flex",
-    flexDirection: "column",
-
-    // 🔑 CLAVE PARA EL SCROLL
-    minHeight: 0,
   }}
 >
-    <Box
+<Box
   sx={{
     p: 1,
     bgcolor: primaryBg,
@@ -359,7 +355,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    flexShrink: 0, // 🔑 IMPORTANTE
+    flexShrink: 0, // 🔑
   }}
 >
   <Typography>Sasha </Typography>
@@ -405,9 +401,9 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
           <Box
   sx={{
     flex: 1,
-    minHeight: 0,        // 🔑 ESTA LÍNEA TE FALTA
     p: 1,
     overflowY: "auto",
+    minHeight: 0, // 🔑 ESTO ARREGLA EL SCROLL
   }}
 >
             {messages.map((msg, i) => (
