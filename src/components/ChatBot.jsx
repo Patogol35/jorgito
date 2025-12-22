@@ -86,106 +86,50 @@ const SUGGESTIONS = [
 INTENCIONES (CORREGIDAS)
 ========================= */
 const INTENTS = {
-  GREETING: ["hola", "buenas", "hey"],
-  PROFILE: ["jorge", "quién es", "perfil"],
-  EDUCATION: ["estudios", "formación", "máster"],
-  EXPERIENCE: ["experiencia", "trabajo"],
-  SKILLS: ["tecnologías", "herramientas", "lenguajes"],
-  STACK: ["full stack", "es full stack", "frontend", "backend"],
-  PROJECTS: ["proyectos", "portfolio"],
-  MOTIVATION: ["por qué contratar", "ventajas"],
-  CONTACT: ["contactar", "whatsapp", "correo", "email"],
+  // 👇 PERSONAL ESPECÍFICAS (PRIMERO)
+  LIKES_COFFEE: ["café", "cafe"],
+  LIKES_MUSIC: ["música", "musica"],
+  LIKES_MOVIES: ["películas", "peliculas"],
+  LIKES_TRAVEL: ["viajar"],
+  LIKES_TALK: ["conversar", "hablar"],
+  LIKES_HELP: ["ayudar"],
+  LIKES_MORNING: ["mañanas", "madrugar"],
+  LIKES_NIGHT: ["noche"],
+  BORED: ["aburr"],
+  TIRED: ["cans"],
+  FRIENDS: ["amigos"],
+  FUNNY: ["reír", "reir"],
+  NICE: ["simpática", "simpatica"],
+  LISTEN: ["escuchar"],
+  EMOTIONS: ["emociones", "sentir"],
+  SILENCE: ["silencio"],
+  PEOPLE: ["gente", "personas"],
 
-  ASSISTANT: ["quién eres", "quien eres", "eres sasha"],
-  CREATOR: ["quién te creó", "quien te creo", "te programó"],
-  STATUS: ["cómo estás", "como estas", "qué tal"],
+  // 👇 ESTADO
+  MOOD: ["cómo estás", "como estas", "estás bien"],
+  HAPPY: ["feliz"],
 
-  // 🔽 NUEVAS
-  PERSONAL: ["te gusta", "qué te gusta", "que te gusta"],
+  // 👇 IDENTIDAD
   NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
+  ASSISTANT: ["quién eres", "quien eres", "sasha"],
+  CREATOR: ["quién te creó", "quien te creo"],
+
+  // 👇 FUNCIONAL
   HELP: ["qué puedes hacer", "que puedes hacer"],
-  FAREWELL: ["adiós", "adios", "bye", "hasta luego", "nos vemos",  "chao"],
+  FAREWELL: ["adiós", "adios", "bye", "chao"],
 
-  MOOD: [
-  "cómo estás",
-  "como estas",
-  "estás bien"
-],
-HAPPY: [
-  "estás feliz",
-  "eres feliz"
-],
-LIKES_TALK: [
-  "te gusta conversar",
-  "te gusta hablar"
-],
-LIKES_HELP: [
-  "te gusta ayudar",
-  "ayudar a personas"
-],
-LIKES_MUSIC: [
-  "te gusta la música",
-  "musica te gusta"
-],
-LIKES_MOVIES: [
-  "te gustan las películas",
-  "peliculas"
-],
-LIKES_TRAVEL: [
-  "te gusta viajar",
-  "viajar"
-],
-LIKES_COFFEE: [
-  "te gusta el café",
-  "cafe"
-],
-LIKES_MORNING: [
-  "te gusta madrugar",
-  "mañanas"
-],
-LIKES_NIGHT: [
-  "te gusta trabajar de noche",
-  "noche"
-],
-BORED: [
-  "te aburres",
-  "estás aburrida"
-],
-TIRED: [
-  "te cansas",
-  "estás cansada"
-],
-FRIENDS: [
-  "tienes amigos",
-  "amigos"
-],
-FUNNY: [
-  "te gusta reír",
-  "reir"
-],
-NICE: [
-  "eres simpática",
-  "simpática"
-],
-LISTEN: [
-  "te gusta escuchar",
-  "escuchar a las personas"
-],
-EMOTIONS: [
-  "tienes emociones",
-  "sientes algo"
-],
-SILENCE: [
-  "te gusta el silencio",
-  "silencio"
-],
-PEOPLE: [
-  "te gusta la gente",
-  "las personas"
-],
+  // 👇 PERFIL JORGE (AL FINAL)
+  GREETING: ["hola", "buenas"],
+  PROFILE: ["jorge", "perfil"],
+  EDUCATION: ["estudios", "máster"],
+  EXPERIENCE: ["experiencia"],
+  SKILLS: ["tecnologías", "lenguajes"],
+  STACK: ["full stack"],
+  PROJECTS: ["proyectos"],
+  MOTIVATION: ["contratar"],
+  CONTACT: ["contactar", "whatsapp"],
 };
-
 
 /* =========================
 DETECTAR INTENCIÓN
