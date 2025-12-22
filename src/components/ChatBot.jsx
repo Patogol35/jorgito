@@ -133,7 +133,7 @@ function getSmartResponse(message, context) {
       text = `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`;
       break;
     case "EDUCATION":
-      text = `Cuenta con ${PROFILE.education}.`;
+      text = `Cuenta con un ${PROFILE.education}.`;
       break;
     case "EXPERIENCE":
       text = `Tiene experiencia como ${PROFILE.experience.join(", ")}.`;
