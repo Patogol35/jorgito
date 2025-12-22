@@ -86,24 +86,26 @@ const SUGGESTIONS = [
 INTENCIONES (CORREGIDAS)
 ========================= */
 const INTENTS = {
-GREETING: ["hola", "buenas", "hey"],
-PROFILE: ["jorge", "quién es", "perfil"],
-EDUCATION: ["estudios", "formación", "máster"],
-EXPERIENCE: ["experiencia", "trabajo"],
+  GREETING: ["hola", "buenas", "hey"],
+  PROFILE: ["jorge", "quién es", "perfil"],
+  EDUCATION: ["estudios", "formación", "máster"],
+  EXPERIENCE: ["experiencia", "trabajo"],
+  SKILLS: ["tecnologías", "herramientas", "lenguajes"],
+  STACK: ["full stack", "es full stack", "frontend", "backend"],
+  PROJECTS: ["proyectos", "portfolio"],
+  MOTIVATION: ["por qué contratar", "ventajas"],
+  CONTACT: ["contactar", "whatsapp", "correo", "email"],
 
-// 👉 SOLO tecnologías
-SKILLS: ["tecnologías", "herramientas", "lenguajes"],
+  ASSISTANT: ["quién eres", "quien eres", "eres sasha"],
+  CREATOR: ["quién te creó", "quien te creo", "te programó"],
+  STATUS: ["cómo estás", "como estas", "qué tal"],
 
-// 👉 SOLO Full Stack
-STACK: ["full stack", "es full stack", "frontend", "backend"],
-
-PROJECTS: ["proyectos", "portfolio"],
-MOTIVATION: ["por qué contratar", "ventajas"],
-CONTACT: ["contactar", "whatsapp", "correo", "email"],
-
-ASSISTANT: ["quién eres", "quien eres", "eres sasha"],
-CREATOR: ["quién te creó", "quien te creo", "te programó"],
-STATUS: ["cómo estás", "como estas", "qué tal"],
+  // 🔽 NUEVAS
+  PERSONAL: ["te gusta", "qué te gusta", "que te gusta"],
+  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
+  HUMAN: ["eres humana", "eres humano", "robot"],
+  HELP: ["qué puedes hacer", "que puedes hacer"],
+  FAREWELL: ["adiós", "adios", "bye", "hasta luego", "nos vemos"],
 };
 
 /* =========================
@@ -190,6 +192,34 @@ function getSmartResponse(message, context) {
       reply =
         "Fui creada por Jorge 😊 para responder preguntas sobre su perfil profesional.";
       break;
+
+
+case "NAME":
+  reply = "Me llamo Sasha 😊 Soy la asistente virtual de Jorge.";
+  break;
+
+case "HUMAN":
+  reply =
+    "No soy humana 🤖, pero estoy diseñada para conversar de forma natural y ayudarte.";
+  break;
+
+case "PERSONAL":
+  reply =
+    "Me gusta hablar de tecnología 💻, ayudar a las personas y mostrar el trabajo de Jorge.";
+  break;
+
+case "HELP":
+  reply =
+    "Puedo contarte sobre el perfil profesional de Jorge, su experiencia, estudios, proyectos y cómo contactarlo.";
+  break;
+
+case "FAREWELL":
+  reply =
+    "¡Gracias por visitar el portafolio! 👋 Si necesitas algo más, aquí estaré 😊";
+  break;
+
+
+      
     case "STATUS":
       reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
       break;
