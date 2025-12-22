@@ -114,23 +114,23 @@ const INTENTS = {
   NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
-  CREATOR: ["quién te creó", "quien te creo"],
-  BOOK: ["sus libros favoritos", "libros favoritos"],
+  CREATOR: ["quién te creó", "quien te creo" "quien te hizo"],
+  BOOK: ["sus libros favoritos", "libros favoritos" "libros"],
 
   // 👇 FUNCIONAL
   HELP: ["qué puedes hacer", "que puedes hacer"],
-  FAREWELL: ["adiós", "adios", "bye", "chao"],
+  FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   // 👇 PERFIL JORGE (AL FINAL)
-  GREETING: ["hola", "buenas"],
+  GREETING: ["hola", "buenas" "buenks días"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster"],
+  EDUCATION: ["estudios", "máster" "formación"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes"],
   STACK: ["full stack"],
-  PROJECTS: ["proyectos"],
+  PROJECTS: ["proyectos" "proyecto"],
   MOTIVATION: ["contratar"],
-  CONTACT: ["contactar", "whatsapp"],
+  CONTACT: ["contactar", "whatsapp" "contacto"],
 };
 
 /* =========================
