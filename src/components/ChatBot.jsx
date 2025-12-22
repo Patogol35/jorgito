@@ -315,17 +315,27 @@ export default function ChatBot() {
       </Fab>
 
       {open && (
-        <Paper
-          sx={{
-            position: "fixed",
-            bottom: 90,
-            left: 16,
-            width: 360,
-            height: 520,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+      <Paper
+  sx={{
+    position: "fixed",
+    bottom: 90,
+    left: 16,
+    width: 360,
+
+    height: "70vh",        // 🔥 se adapta en horizontal
+    maxHeight: "520px",    // límite en vertical
+    minHeight: "320px",    // evita que sea muy pequeño
+
+    display: "flex",
+    flexDirection: "column",
+
+    "@media (max-width: 600px)": {
+      width: "calc(100vw - 32px)", // móvil
+      left: 16,
+      right: 16,
+    },
+  }}
+>
           <Box
   sx={{
     p: 1,
