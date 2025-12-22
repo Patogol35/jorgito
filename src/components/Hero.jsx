@@ -140,9 +140,9 @@ export default function Hero({ mode, setMode }) {
               <Button
   variant="contained"
   onClick={() => {
-    document
-      .querySelector('[aria-label="sasha-chat"]')
-      ?.click();
+    if (window.openSashaChat) {
+      window.openSashaChat();
+    }
   }}
   sx={{
     borderRadius: "25px",
