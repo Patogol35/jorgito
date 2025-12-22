@@ -321,6 +321,8 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       </Fab>
 
       {open && (
+
+
 <Paper
   sx={{
     position: "fixed",
@@ -328,7 +330,7 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
     display: "flex",
     flexDirection: "column",
     minHeight: 0,
-    overflow: "hidden", // 🔑 CLAVE QUE FALTA
+    overflow: "hidden",
 
     ...(!isLandscape && {
       bottom: 90,
@@ -338,18 +340,17 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
       maxHeight: 520,
     }),
 
-  ...(isLandscape && {
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "92vw",
-  maxWidth: 600,
-
-  height: 420,        // 🔑 ALTURA FIJA
-  maxHeight: "90vh",  // respaldo
-}),
+    ...(isLandscape && {
+      top: 8,
+      bottom: 8,
+      left: 8,
+      right: 8,
+    }),
   }}
 >
+
+
+      
 <Box
   sx={{
     p: 1,
