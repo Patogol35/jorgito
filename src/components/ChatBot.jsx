@@ -386,8 +386,7 @@ onClick={() => setOpen(false)}  >   <CloseIcon fontSize="small" />    </IconButt
 </Tooltip>    </Box>  
 </Box>  
     
-    
-<Box
+    <Box
   sx={{
     p: 1,
     flexShrink: 0,
@@ -399,7 +398,7 @@ onClick={() => setOpen(false)}  >   <CloseIcon fontSize="small" />    </IconButt
     spacing={1}
     sx={{
       flexWrap: isLandscape ? "nowrap" : "wrap",
-      width: "max-content",
+      width: isLandscape ? "max-content" : "100%",
     }}
   >
     {SUGGESTIONS.map((q) => (
