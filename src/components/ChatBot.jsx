@@ -321,29 +321,35 @@ color: "#fff",
 > 
 
 <SmartToyIcon />        
-</Fab>  {open && (  <Paper    
-sx={{    
-position: "fixed",    
-zIndex: 1300,    
-display: "flex",    
-flexDirection: "column",    
-minHeight: 0,    
-overflow: "hidden",  ...(!isLandscape && {  
-bottom: 90,  
-left: 16,  
-width: 360,  
-height: "70vh",  
-maxHeight: 520,  
-}),  ...(isLandscape && {
-top: 8,
-bottom: 8,
-left: 8,
-right: 8,
-}),
+</Fab>  {open && (  
+          
+          
+<Paper
+  sx={{
+    position: "fixed",
+    zIndex: 1300,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
 
-}}
+    ...(isLandscape
+      ? {
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: "60vh",
+          borderRadius: "16px 16px 0 0",
+        }
+      : {
+          bottom: 90,
+          left: 16,
+          width: 360,
+          height: 520,
+        }),
+  }}
+>
 
-> 
+          
 
 <Box
 sx={{
