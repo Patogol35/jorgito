@@ -75,22 +75,22 @@ export default function Hero({ mode, setMode }) {
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
-            {/* TEXTO ELEGANTE – UN SOLO COLOR */}
-            <Typography
-              variant="subtitle1"
-              paragraph
-              sx={{
-                lineHeight: 1.9,
-                letterSpacing: "0.3px",
-                color: theme.palette.text.secondary,
-                maxWidth: "540px",
-              }}
-            >
-              Me apasiona crear tecnología que transforma ideas en realidades
-              digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones digitales seguras, innovadoras y
-              orientadas a generar impacto positivo.
-            </Typography>
+          <Typography
+  variant="body1"
+  sx={{
+    fontFamily: "'Inter', 'Roboto', sans-serif",
+    fontSize: { xs: "0.98rem", sm: "1.05rem" },
+    lineHeight: 1.9,
+    letterSpacing: "0.4px",
+    fontWeight: 400,
+    color: theme.palette.text.secondary,
+    maxWidth: "540px",
+  }}
+>
+  Me apasiona crear tecnología que transforma ideas en realidades digitales.
+  Mi enfoque está en aportar valor constante, desarrollando soluciones
+  digitales seguras, innovadoras y orientadas a generar impacto positivo.
+</Typography>
 
             {/* Botones */}
             <Box
