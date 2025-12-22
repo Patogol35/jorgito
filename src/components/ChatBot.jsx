@@ -336,16 +336,16 @@ const isLandscape = useMediaQuery("(orientation: landscape)");
         maxHeight: 520,
       }),
 
-      // 📱 HORIZONTAL
-      ...(isLandscape && {
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "92vw",
-        height: "92vh",
-        maxWidth: 600,
-        maxHeight: 420,
-      }),
+  // 📱 HORIZONTAL
+...(isLandscape && {
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "92vw",
+  height: "92vh",
+  maxWidth: 600,
+  maxHeight: 420,
+}),
 
       display: "flex",
       flexDirection: "column",
