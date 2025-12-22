@@ -80,26 +80,21 @@ export default function Hero({ mode, setMode }) {
   sx={{
     fontFamily: "'Inter', 'Roboto', sans-serif",
     fontSize: { xs: "1rem", sm: "1.08rem" },
-    lineHeight: 2,
-    letterSpacing: "0.45px",
+    lineHeight: 1.9,
+    letterSpacing: "0.4px",
     fontWeight: 400,
-    color: theme.palette.text.secondary,
+
+    // 🔑 clave para claro y oscuro
+    color: theme.palette.text.primary,
+    opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
+
     maxWidth: "520px",
-    mb: { xs: 4, sm: 5 }, // 🔥 separación clara de los botones
+    mb: { xs: 4, sm: 5 },
   }}
 >
-  Me apasiona crear tecnología que transforma ideas en realidades digitales.
-  <br />
-  <span
-    style={{
-      opacity: 0.9,
-      display: "inline-block",
-      marginTop: "10px",
-    }}
-  >
-    Mi enfoque está en aportar valor constante, desarrollando soluciones
-    digitales seguras, innovadoras y orientadas a generar impacto positivo.
-  </span>
+  Me apasiona crear tecnología que transforma ideas en soluciones digitales.
+  Desarrollo productos seguros e innovadores, enfocados en aportar valor y
+  generar impacto positivo.
 </Typography>
 
             {/* Botones */}
