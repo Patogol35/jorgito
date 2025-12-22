@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import { useMediaQuery } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -246,6 +247,11 @@ export default function ChatBot() {
   const isDark = theme.palette.mode === "dark";
   const primaryBg = isDark ? "#000" : theme.palette.primary.main;
 
+const isLandscape = useMediaQuery("(orientation: landscape)");
+
+  const bottomRef = useRef(null);
+  
+  
   const bottomRef = useRef(null);
   const [open, setOpen] = useState(false);
   useEffect(() => {
@@ -316,40 +322,35 @@ export default function ChatBot() {
 
       {open && (
 
+  <Paper
+    sx={{
+      position: "fixed",
+      zIndex: 1300,
 
-const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+      // 📱 VERTICAL
+      ...(!isLandscape && {
+        bottom: 90,
+        left: 16,
+        width: 360,
+        height: "70vh",
+        maxHeight: 520,
+      }),
 
-      <Paper
-  sx={{
-    position: "fixed",
-    zIndex: 1300,
+      // 📱 HORIZONTAL
+      ...(isLandscape && {
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "92vw",
+        height: "92vh",
+        maxWidth: 600,
+        maxHeight: 420,
+      }),
 
-    // 📱 PORTRAIT (vertical)
-    ...( !isLandscape && {
-      bottom: 90,
-      left: 16,
-      width: 360,
-      height: "70vh",
-      maxHeight: 520,
-    }),
-
-    // 📱 LANDSCAPE (horizontal)
-    ...( isLandscape && {
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-
-      width: "92vw",
-      height: "92vh",
-
-      maxWidth: 600,
-      maxHeight: 420,
-    }),
-
-    display: "flex",
-    flexDirection: "column",
-  }}
->
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
           <Box
   sx={{
     p: 1,
