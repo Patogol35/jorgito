@@ -115,7 +115,7 @@ const INTENTS = {
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
   CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
-  BOOK: ["sus libros favoritos", "libros favoritos" "libros"],
+  BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
 
   // 👇 FUNCIONAL
   HELP: ["qué puedes hacer", "que puedes hacer"],
