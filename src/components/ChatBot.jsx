@@ -189,14 +189,25 @@ RESPUESTA INTELIGENTE
 function getSmartResponse(message, context) {
   const text = normalizeText(message);
 
-  if (context.awaiting === "CONTACT_CONFIRM") {
-    if (YES_WORDS.includes(text)) {
-      window.open(WHATSAPP_URL, "_blank");
-      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
-    }
-    if (NO_WORDS.includes(text)) {
-      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
-    }
+  // =========================
+  // IDENTIFICAR NOMBRE DEL USUARIO (PRIORIDAD MÁXIMA)
+  // =========================
+  if (
+    text.startsWith("me llamo") ||
+    text.startsWith("soy ") ||
+    text.startsWith("mi nombre es")
+  ) {
+    const name = message
+      .replace(/me llamo|soy|mi nombre es/i, "")
+      .trim();
+
+    context.userName = name;
+    saveMemory(context, { type: "user_name", value: name });
+
+    return {
+      text: `Encantada, ${name} 😊 ¿En qué puedo ayudarte?`,
+      intent: "USER_NAME",
+    };
   }
 
   if (context.awaitingFollowUp) {
