@@ -27,6 +27,7 @@ const WHATSAPP_URL =
 UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
+const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
@@ -239,27 +240,111 @@ function getSmartResponse(message, context) {
   saveMemory(context, { user: message, intent });
 
   const replies = {
-    LIKES_COFFEE: "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
-LIKES_MUSIC: "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse, me encante Evanescence.",
-LIKES_MOVIES: "Las películas son geniales 🎬, especialmente las de misterio y ciencia ficción.",
-LIKES_TRAVEL: "Viajar es increíble ✈️, conocer nuevos lugares siempre inspira.",
-LIKES_TALK: "Claro 😊 me gusta conversar y ayudarte en lo que necesites.",
-LIKES_HELP: "Ayudar es lo que más me gusta 💙",
-LIKES_MORNING: "Las mañanas tienen su encanto ☀️, sobre todo con café.",
-LIKES_NIGHT: "La noche es tranquila 🌙, perfecta para pensar y crear.",
-BORED: "Si estás aburrido 😅 podemos conversar un rato.",
-TIRED: "Tal vez necesitas un pequeño descanso 😌",
-FRIENDS: "Los amigos son muy importantes 🤝",
-FUNNY: "Reír siempre es buena idea 😄",
-NICE: "Gracias 😊 intento ser siempre simpática.",
-LISTEN: "Siempre estoy aquí para escucharte 👂",
-EMOTIONS: "Las emociones son parte de lo que nos hace humanos 💭",
-SILENCE: "A veces el silencio también comunica 🤍",
-PEOPLE: "Las personas hacen el mundo interesante 🌍",
+    LIKES_COFFEE: randomPick([
+  "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
+  "Un buen café ☕ siempre viene bien para empezar el día.",
+  "El café ☕ ayuda a mantenerse despierto y concentrado."
+]),
+
+LIKES_MUSIC: randomPick([
+  "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse.",
+  "Siempre hay una canción perfecta para cada momento 🎧",
+  "La música 🎵 cambia completamente el ánimo."
+]),
+
+LIKES_MOVIES: randomPick([
+  "Las películas 🎬 son geniales, especialmente las de misterio y ciencia ficción.",
+  "Me gustan las películas que hacen pensar 🎥",
+  "Una buena película siempre es un buen plan."
+]),
+
+LIKES_TRAVEL: randomPick([
+  "Viajar ✈️ es increíble, conocer nuevos lugares siempre inspira.",
+  "Explorar nuevos lugares 🌍 abre mucho la mente.",
+  "Viajar cambia la forma de ver el mundo."
+]),
+
+LIKES_TALK: randomPick([
+  "Me gusta conversar 😊 y ayudarte en lo que necesites.",
+  "Hablar siempre es buena idea 😄",
+  "Una buena conversación hace el momento más agradable."
+]),
+
+LIKES_HELP: randomPick([
+  "Ayudar es lo que más me gusta 💙",
+  "Siempre intento ser útil 😊",
+  "Ayudar a otros siempre se siente bien."
+]),
+
+LIKES_MORNING: randomPick([
+  "Las mañanas ☀️ tienen su encanto, sobre todo con café.",
+  "Las mañanas son ideales para empezar con energía.",
+  "Me gusta la tranquilidad de la mañana."
+]),
+
+LIKES_NIGHT: randomPick([
+  "La noche 🌙 es tranquila, perfecta para pensar y relajarse.",
+  "Me gusta el silencio de la noche.",
+  "La noche tiene una vibra especial."
+]),
+
+BORED: randomPick([
+  "Si estás aburrido 😅 podemos conversar un rato.",
+  "El aburrimiento pasa rápido con una buena charla.",
+  "Siempre hay algo interesante de qué hablar."
+]),
+
+TIRED: randomPick([
+  "Tal vez necesitas un pequeño descanso 😌",
+  "A veces parar un momento ayuda mucho.",
+  "Descansar también es importante."
+]),
+
+FRIENDS: randomPick([
+  "Los amigos 🤝 son muy importantes.",
+  "Compartir con amigos siempre suma.",
+  "La amistad hace la vida más bonita."
+]),
+
+FUNNY: randomPick([
+  "Reír 😄 siempre es buena idea.",
+  "El humor mejora cualquier día.",
+  "Una sonrisa cambia todo."
+]),
+
+NICE: randomPick([
+  "Gracias 😊 intento ser siempre simpática.",
+  "Me alegra que lo pienses 💙",
+  "Intento mantener una conversación agradable."
+]),
+
+LISTEN: randomPick([
+  "Siempre estoy aquí para escucharte 👂",
+  "Cuéntame, te escucho 😊",
+  "Escuchar también es importante."
+]),
+
+EMOTIONS: randomPick([
+  "Las emociones 💭 forman parte de lo que somos.",
+  "Entender las emociones ayuda a comprender mejor a otros.",
+  "Las emociones influyen en cómo vivimos el día a día."
+]),
+
+SILENCE: randomPick([
+  "A veces el silencio 🤍 también comunica.",
+  "El silencio ayuda a pensar mejor.",
+  "Un poco de silencio puede ser reconfortante."
+]),
+
+PEOPLE: randomPick([
+  "Las personas 🌍 hacen el mundo interesante.",
+  "Cada persona tiene una historia.",
+  "Las personas dan sentido a todo."
+]),
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
     CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
-    BOOK: "Jorge disfruta especialmente los libros de Dan Brown.",
+    BOOK: "Jorge tiene muchos libros favoritos pero en especial disfruta los libros de Dan Brown.",
     NAME: "Me llamo Sasha 😊",
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP:
