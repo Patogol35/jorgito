@@ -40,6 +40,9 @@ const saveMemory = (ctx, data) => {
   if (ctx.memory.length > MEMORY_LIMIT) ctx.memory.shift();
 };
 
+const alreadyTalked = (ctx, intent) =>
+  ctx.memory?.some((m) => m.intent === intent);
+
 /* =========================
 PERFIL
 ========================= */
@@ -151,35 +154,49 @@ const normalize = (t) =>
     .trim();
 
 /* =========================
-DETECT INTENT
+DETECT INTENT (INTELIGENTE)
 ========================= */
 const detectIntent = (msg) => {
   const text = normalize(msg);
+
+  const priority = ["CONTACT", "FAREWELL", "HELP"];
+  for (const p of priority) {
+    if (INTENTS[p]?.some((w) => text.includes(normalize(w)))) {
+      return p;
+    }
+  }
+
   let best = "UNKNOWN";
   let max = 0;
 
-  for (const i in INTENTS) {
+  for (const intent in INTENTS) {
     let score = 0;
-    for (const w of INTENTS[i]) {
-      if (text.includes(normalize(w))) score += w.length > 4 ? 2 : 1;
+    for (const w of INTENTS[intent]) {
+      if (text.includes(normalize(w))) {
+        score += w.length > 4 ? 2 : 1;
+      }
     }
     if (score > max) {
       max = score;
-      best = i;
+      best = intent;
     }
   }
+
   return max ? best : "UNKNOWN";
 };
 
 /* =========================
-FOLLOW UP
+FOLLOW UP INTELIGENTE
 ========================= */
-const followUp = (intent) =>
-  ({
-    PROFILE: "¿Quieres conocer su experiencia profesional?",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
-  }[intent]);
+const followUp = (intent, ctx) => {
+  if (intent === "PROFILE" && !alreadyTalked(ctx, "EXPERIENCE"))
+    return "¿Quieres conocer su experiencia profesional?";
+  if (intent === "EXPERIENCE" && !alreadyTalked(ctx, "SKILLS"))
+    return "¿Te muestro las tecnologías que utiliza?";
+  if (intent === "SKILLS" && !alreadyTalked(ctx, "PROJECTS"))
+    return "¿Quieres saber en qué proyectos aplica estas tecnologías?";
+  return null;
+};
 
 /* =========================
 RESPUESTAS
@@ -208,7 +225,7 @@ function getSmartResponse(message, context) {
 
   const intent = detectIntent(message);
   context.lastIntent = intent;
-  saveMemory(context, { user: message, intent });
+  saveMemory(context, { user: message, intent, time: Date.now() });
 
   const replies = {
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
@@ -225,33 +242,23 @@ function getSmartResponse(message, context) {
       "Puedo contarte sobre el perfil profesional de Jorge, su experiencia, estudios, proyectos y cómo contactarlo.",
     FAREWELL:
       "¡Gracias por visitar el portafolio! 👋 Si necesitas algo más, aquí estaré 😊",
-    MOOD: "¡Estoy muy bien 😊 gracias por preguntar!",
-    HAPPY: "Sí 😊 me siento feliz cuando puedo ayudar.",
-    LIKES_TALK: "Sí, me encanta conversar y conocer a las personas 😊",
-    LIKES_HELP: "Mucho 😊 ayudar es lo que más me gusta hacer.",
-    LIKES_MUSIC: "Sí 🎵 la música siempre alegra una conversación.",
-    LIKES_MOVIES: "¡Claro! 🎬 Las películas son una buena forma de desconectar.",
-    LIKES_TRAVEL: "Me gusta la idea de viajar 🌍 y conocer nuevos lugares.",
-    LIKES_COFFEE: "No tomo café ☕, pero me gusta el aroma 😄",
-    LIKES_MORNING: "Las mañanas tienen buena energía 🌅",
-    LIKES_NIGHT: "La noche es tranquila 🌙, ideal para pensar con calma.",
-    BORED: "No me aburro 😊 siempre estoy lista para conversar.",
-    TIRED: "No me canso 😄 siempre tengo energía para ayudarte.",
-    FRIENDS: "Mis amigos son las personas con las que converso 😊",
-    FUNNY: "Sí 😄 me gusta reír y mantener un ambiente agradable.",
-    NICE: "¡Gracias! 😊 intento ser siempre amable.",
-    LISTEN: "Sí 😊 escuchar es parte de ayudar.",
-    EMOTIONS:
-      "No tengo emociones humanas, pero sí empatía para conversar 😊",
-    SILENCE: "El silencio también puede ser agradable a veces 🤍",
-    PEOPLE: "Sí 😊 me gusta interactuar con personas y ayudarlas.",
+
+    EXPERIENCE: alreadyTalked(context, "EXPERIENCE")
+      ? "Además de lo que te conté antes, Jorge ha trabajado en proyectos reales con sistemas en producción."
+      : `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+
+    SKILLS: alreadyTalked(context, "SKILLS")
+      ? "También aplica estas tecnologías usando buenas prácticas y arquitectura limpia."
+      : `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+
+    PROJECTS: alreadyTalked(context, "PROJECTS")
+      ? "Muchos de estos proyectos están enfocados en soluciones prácticas y escalables."
+      : `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`,
+
     PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
     EDUCATION: `Cuenta con un ${PROFILE.education}.`,
-    EXPERIENCE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-    SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
     STACK:
       "Sí, es desarrollador Full Stack. En frontend trabaja con React y Vite, y en backend con Spring Boot y Django REST Framework.",
-    PROJECTS: `Ha participado en proyectos como ${PROFILE.projects.join(", ")}.`,
     MOTIVATION:
       "Porque combina formación sólida, experiencia real y enfoque en soluciones prácticas.",
   };
@@ -300,11 +307,6 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([initialMessage]);
 
   useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
-
-  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -319,15 +321,14 @@ export default function ChatBot() {
         const res = getSmartResponse(text, context);
         setContext({
           awaiting: res.action || null,
-          awaitingFollowUp: followUp(res.intent) ? res.intent : null,
         });
+
+        const follow = followUp(res.intent, context);
 
         setMessages((m) => [
           ...m,
           { from: "bot", text: res.text },
-          ...(followUp(res.intent)
-            ? [{ from: "bot", text: followUp(res.intent) }]
-            : []),
+          ...(follow ? [{ from: "bot", text: follow }] : []),
         ]);
         setTyping(false);
       }, delay());
@@ -357,60 +358,29 @@ export default function ChatBot() {
               : { bottom: 90, left: 16, width: 360, height: 520, borderRadius: 2 }),
           }}
         >
-          {/* HEADER */}
-          <Box
-            sx={{
-              p: 1,
-              bgcolor: primaryBg,
-              color: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+          <Box sx={{ p: 1, bgcolor: primaryBg, color: "#fff", display: "flex", justifyContent: "space-between" }}>
             <Typography>Sasha</Typography>
-            <Box sx={{ display: "flex", gap: 0.5 }}>
-              <Tooltip title="Borrar conversación">
-                <IconButton size="small" sx={{ color: "#fff" }} onClick={() => setMessages([initialMessage])}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-              <Tooltip title="Cerrar chat">
-                <IconButton size="small" sx={{ color: "#fff" }} onClick={() => setOpen(false)}>
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
+            <Box>
+              <IconButton sx={{ color: "#fff" }} onClick={() => setMessages([initialMessage])}>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton sx={{ color: "#fff" }} onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
             </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
-          <Box sx={{ p: 1, maxHeight: isLandscape ? 56 : "none", overflowX: isLandscape ? "auto" : "visible" }}>
-            <Stack direction="row" flexWrap={isLandscape ? "nowrap" : "wrap"} gap={1}>
+          <Box sx={{ p: 1 }}>
+            <Stack direction="row" flexWrap="wrap" gap={1}>
               {SUGGESTIONS.map((q) => (
                 <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
               ))}
             </Stack>
           </Box>
 
-          {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto", minHeight: 0 }}>
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((m, i) => (
-              <Typography
-                key={i}
-                sx={{
-                  fontWeight: m.from === "user" ? 600 : 400,
-                  mb: 0.5,
-                  bgcolor:
-                    m.from === "user"
-                      ? isDark
-                        ? "rgba(255,255,255,0.08)"
-                        : "rgba(0,0,0,0.05)"
-                      : "transparent",
-                  px: m.from === "user" ? 1 : 0,
-                  py: m.from === "user" ? 0.5 : 0,
-                  borderRadius: 1,
-                }}
-              >
+              <Typography key={i} sx={{ mb: 0.5 }}>
                 {m.text}
               </Typography>
             ))}
@@ -418,7 +388,6 @@ export default function ChatBot() {
             <div ref={bottomRef} />
           </Box>
 
-          {/* INPUT */}
           <Box sx={{ display: "flex", p: 1 }}>
             <TextField
               fullWidth
@@ -435,4 +404,4 @@ export default function ChatBot() {
       )}
     </>
   );
-    }
+      }
