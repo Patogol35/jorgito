@@ -98,45 +98,15 @@ const SUGGESTIONS = [
 INTENCIONES
 ========================= */
 const INTENTS = {
-  LIKES_COFFEE: ["café", "cafe"],
-  LIKES_MUSIC: ["música", "musica"],
-  LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
-  LIKES_TALK: ["conversar", "hablar"],
-  LIKES_HELP: ["ayudar"],
-  LIKES_MORNING: ["mañanas", "madrugar"],
-  LIKES_NIGHT: ["noche"],
-  BORED: ["aburr"],
-  TIRED: ["cans"],
-  FRIENDS: ["amigos"],
-  FUNNY: ["reír", "reir"],
-  NICE: ["simpática", "simpatica"],
-  LISTEN: ["escuchar"],
-  EMOTIONS: ["emociones", "sentir"],
-  SILENCE: ["silencio"],
-  PEOPLE: ["gente", "personas"],
-
-  MOOD: ["cómo estás", "como estas", "estás bien"],
-  HAPPY: ["feliz"],
-
-  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
-  HUMAN: ["eres humana", "eres humano", "robot"],
-  ASSISTANT: ["quién eres", "quien eres", "sasha"],
-  CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
-  BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
-
-  HELP: ["qué puedes hacer", "que puedes hacer"],
-  FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
-
   GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster", "formación", "estudio"],
+  EDUCATION: ["estudios", "máster", "formación"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades"],
   STACK: ["full stack"],
-  PROJECTS: ["proyectos", "proyecto"],
+  PROJECTS: ["proyectos"],
   MOTIVATION: ["contratar"],
-  CONTACT: ["contactar", "whatsapp", "contacto"],
+  CONTACT: ["contactar", "whatsapp"],
 };
 
 /* =========================
@@ -162,9 +132,7 @@ const detectIntent = (msg) => {
   for (const intent in INTENTS) {
     let score = 0;
     for (const word of INTENTS[intent]) {
-      if (text.includes(normalize(word))) {
-        score += word.length > 4 ? 2 : 1;
-      }
+      if (text.includes(normalize(word))) score++;
     }
     if (score > max) {
       max = score;
@@ -190,19 +158,31 @@ RESPUESTAS
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
-  if (/^(me llamo|soy|mi nombre es)/i.test(text)) {
-    const name = message.replace(/me llamo|soy|mi nombre es/i, "").trim();
-    context.userName = name;
-    saveMemory(context, { type: "user_name", value: name });
-    return { text: `Encantada, ${name} 😊 ¿En qué puedo ayudarte?` };
+  /* 🔥 RESPUESTA A FOLLOW-UP */
+  if (context.awaitingFollowUp) {
+    if (YES_WORDS.includes(text)) {
+      const intent = context.awaitingFollowUp;
+      context.awaitingFollowUp = null;
+
+      const autoReplies = {
+        PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+        EXPERIENCE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      };
+
+      return { text: autoReplies[intent], intent };
+    }
+
+    if (NO_WORDS.includes(text)) {
+      context.awaitingFollowUp = null;
+      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
+    }
   }
 
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.includes(text)) {
       window.open(WHATSAPP_URL, "_blank");
-      return {
-        text: `Perfecto${context.userName ? " " + context.userName : ""} 😊 Te llevo a WhatsApp ahora.`,
-      };
+      return { text: "Perfecto 😊 Te llevo a WhatsApp ahora." };
     }
     if (NO_WORDS.includes(text)) {
       return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
@@ -215,22 +195,11 @@ function getSmartResponse(message, context) {
 
   const replies = {
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
-    ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
-    CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
-    BOOK: "Jorge disfruta especialmente los libros de Dan Brown.",
-    NAME: "Me llamo Sasha 😊",
-    HUMAN: "No soy humana 🤖, pero converso de forma natural.",
-    HELP:
-      "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
-    FAREWELL: "¡Gracias por visitar el portafolio! 👋",
-    MOOD: "¡Estoy muy bien 😊!",
-    HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
     PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
     EDUCATION: `Cuenta con un ${PROFILE.education}.`,
     EXPERIENCE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
     SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-    STACK:
-      "Sí, es Full Stack: React/Vite en frontend y Spring Boot/Django en backend.",
+    STACK: "Sí, es desarrollador Full Stack.",
     PROJECTS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
     MOTIVATION:
       "Porque combina formación sólida, experiencia real y enfoque práctico.",
@@ -238,8 +207,7 @@ function getSmartResponse(message, context) {
 
   if (intent === "CONTACT") {
     return {
-      text:
-        "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
       intent,
     };
@@ -266,11 +234,11 @@ export default function ChatBot() {
   );
 
   const bottomRef = useRef(null);
-
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({});
+
   const initialMessage = useMemo(
     () => ({
       from: "bot",
@@ -280,12 +248,8 @@ export default function ChatBot() {
     }),
     []
   );
-  const [messages, setMessages] = useState([initialMessage]);
 
-  useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
+  const [messages, setMessages] = useState([initialMessage]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -301,9 +265,12 @@ export default function ChatBot() {
 
       setTimeout(() => {
         const res = getSmartResponse(text, context);
-        setContext({
+
+        setContext((prev) => ({
+          ...prev,
           awaiting: res.action || null,
-        });
+          awaitingFollowUp: followUp(res.intent) ? res.intent : prev.awaitingFollowUp,
+        }));
 
         setMessages((m) => [
           ...m,
@@ -322,13 +289,7 @@ export default function ChatBot() {
     <>
       <Fab
         onClick={() => setOpen(!open)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          bgcolor: primaryBg,
-          color: "#fff",
-        }}
+        sx={{ position: "fixed", bottom: 16, left: 16, bgcolor: primaryBg, color: "#fff" }}
       >
         <SmartToyIcon />
       </Fab>
@@ -346,60 +307,20 @@ export default function ChatBot() {
               : { bottom: 90, left: 16, width: 360, height: 520 }),
           }}
         >
-          {/* HEADER */}
-          <Box
-            sx={{
-              p: 1,
-              bgcolor: primaryBg,
-              color: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <Box sx={{ p: 1, bgcolor: primaryBg, color: "#fff" }}>
             <Typography>Sasha</Typography>
-            <Box>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
-          <Box sx={{ p: 1 }}>
-            <Stack direction="row" flexWrap="wrap" gap={1}>
-              {SUGGESTIONS.map((q) => (
-                <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
-              ))}
-            </Stack>
-          </Box>
-
-          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((m, i) => (
               <Typography key={i} sx={{ mb: 0.5 }}>
                 {m.text}
               </Typography>
             ))}
-            {typing && (
-              <Typography variant="caption">
-                Sasha está escribiendo…
-              </Typography>
-            )}
+            {typing && <Typography variant="caption">Sasha está escribiendo…</Typography>}
             <div ref={bottomRef} />
           </Box>
 
-          {/* INPUT */}
           <Box sx={{ display: "flex", p: 1 }}>
             <TextField
               fullWidth
@@ -416,4 +337,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+            }
