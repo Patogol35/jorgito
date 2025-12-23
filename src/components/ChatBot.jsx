@@ -295,6 +295,24 @@ function getSmartResponse(message, context) {
 
   };
 
+/* =========================
+   🟢 DETECTAR NOMBRE USUARIO
+========================= */
+if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
+  const name = message
+    .replace(/^(me llamo|soy|mi nombre es)/i, "")
+    .trim();
+
+  context.userName = name;
+  saveMemory(context, { type: "user_name", value: name });
+
+  return {
+    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
+    intent: "USER_NAME"
+  };
+}
+
+  
   /* =========================
      🔴 DESPEDIDA PRIORIDAD ABSOLUTA
   ========================= */
