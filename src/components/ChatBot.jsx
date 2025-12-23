@@ -122,15 +122,15 @@ const INTENTS = {
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   // 👇 PERFIL JORGE (AL FINAL)
-  GREETING: ["hola", "buenas" "buenks días"],
+  GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster" "formación" "estudio"],
+  EDUCATION: ["estudios", "máster", "formación", "estudio"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologías", "lenguajes" "habilidades"],
+  SKILLS: ["tecnologías", "lenguajes", "habilidades"],
   STACK: ["full stack"],
-  PROJECTS: ["proyectos" "proyecto"],
+  PROJECTS: ["proyectos", "proyecto"],
   MOTIVATION: ["contratar"],
-  CONTACT: ["contactar", "whatsapp" "contacto"],
+  CONTACT: ["contactar", "whatsapp", "contacto"],
 };
 
 /* =========================
