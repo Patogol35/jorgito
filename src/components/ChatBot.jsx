@@ -263,6 +263,23 @@ saveMemory(context, { user: message, intent });
 
 
   const replies = {
+
+    FAREWELL: randomPick([
+  "¡Gracias por visitar el portafolio! 👋",
+  "¡Hasta luego! 😊",
+  "Cuídate 👋 aquí estaré cuando quieras volver",
+  "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
+]),
+
+    // 🔴 PRIORIDAD ABSOLUTA: DESPEDIDA
+  if (INTENTS.FAREWELL.some(word =>
+    text.includes(normalize(word))
+  )) {
+    return {
+      text: replies.FAREWELL,
+      intent: "FAREWELL",
+    };
+  }
     LIKES_COFFEE: randomPick([
   "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
   "Un buen café ☕ siempre viene bien para empezar el día.",
@@ -380,12 +397,7 @@ PEOPLE: randomPick([
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP:
       "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
-    FAREWELL: randomPick([
-  "¡Gracias por visitar el portafolio! 👋",
-  "¡Hasta luego! 😊",
-  "Cuídate 👋 aquí estaré cuando quieras volver",
-  "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
-]),
+    
     MOOD: "¡Estoy muy bien 😊!",
     HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
     PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
