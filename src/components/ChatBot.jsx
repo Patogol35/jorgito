@@ -271,9 +271,15 @@ function getSmartResponse(message, context) {
   "Jorge disfruta libros que mezclan misterio, historia y suspenso 📚.",
   "Los libros de misterio son de sus favoritos, sobre todo los de Dan Brown 📖."
       ]),
+
+    CREATOR: randomPick([
+  "Fui creada por Jorge 😊 para responder preguntas sobre su perfil prosesional.",
+  "Soy una Inteligencia Artificial creada por Jorge.",
+  "Me llamo Sasha soy una IA creada por Jorge.",
+  "Soy Sasha y soybuna creación de Jorge, mi objeto es brindar informacion acerca de perfil profesional"
+      ]),
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
-    CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
     NAME: "Me llamo Sasha 😊",
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP: "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
