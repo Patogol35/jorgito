@@ -202,7 +202,11 @@ function getSmartResponse(message, context) {
         SKILLS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
       };
 
-      return { text: chainReplies[intent], intent };
+      return { 
+  text: chainReplies[intent], 
+  intent,
+  fromFollowUp: true 
+};
     }
 
     if (NO_WORDS.includes(text)) {
@@ -326,17 +330,18 @@ export default function ChatBot() {
         setContext((prev) => ({
           ...prev,
           awaiting: res.action || null,
-          awaitingFollowUp: followUp(res.intent)
-            ? res.intent
-            : prev.awaitingFollowUp,
+        awaitingFollowUp:
+  !res.fromFollowUp && followUp(res.intent)
+    ? res.intent
+    : null,
         }));
 
         setMessages((m) => [
           ...m,
           { from: "bot", text: res.text },
-          ...(followUp(res.intent)
-            ? [{ from: "bot", text: followUp(res.intent) }]
-            : []),
+        ...(!res.fromFollowUp && followUp(res.intent)
+  ? [{ from: "bot", text: followUp(res.intent) }]
+  : []),
         ]);
         setTyping(false);
       }, delay());
