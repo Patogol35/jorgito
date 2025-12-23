@@ -250,16 +250,7 @@ function getSmartResponse(message, context) {
 context.lastIntent = intent;
 saveMemory(context, { user: message, intent });
 
-const replies = {
-  ...
-  FAREWELL: randomPick([
-    "¡Gracias por visitar el portafolio! 👋",
-    "¡Hasta luego! 😊",
-    "Cuídate 👋 aquí estaré cuando quieras volver"
-  ]),
-  ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
-  ...
-};
+
 
   const replies = {
     LIKES_COFFEE: randomPick([
@@ -379,7 +370,12 @@ PEOPLE: randomPick([
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP:
       "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
-    FAREWELL: "¡Gracias por visitar el portafolio puedes regresar cuando desees ☺️! 👋",
+    FAREWELL: randomPick([
+  "¡Gracias por visitar el portafolio! 👋",
+  "¡Hasta luego! 😊",
+  "Cuídate 👋 aquí estaré cuando quieras volver",
+  "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
+]),
     MOOD: "¡Estoy muy bien 😊!",
     HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
     PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
