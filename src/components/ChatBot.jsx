@@ -200,7 +200,7 @@ function getSmartResponse(message, context) {
       const chainReplies = {
   PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
   EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-  SKILLS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
+  SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
 };
 
       return { 
