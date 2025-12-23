@@ -239,6 +239,23 @@ function getSmartResponse(message, context) {
   saveMemory(context, { user: message, intent });
 
   const replies = {
+    LIKES_COFFEE: "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
+LIKES_MUSIC: "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse, me encante Evanescence.",
+LIKES_MOVIES: "Las películas son geniales 🎬, especialmente las de misterio y ciencia ficción.",
+LIKES_TRAVEL: "Viajar es increíble ✈️, conocer nuevos lugares siempre inspira.",
+LIKES_TALK: "Claro 😊 me gusta conversar y ayudarte en lo que necesites.",
+LIKES_HELP: "Ayudar es lo que más me gusta 💙",
+LIKES_MORNING: "Las mañanas tienen su encanto ☀️, sobre todo con café.",
+LIKES_NIGHT: "La noche es tranquila 🌙, perfecta para pensar y crear.",
+BORED: "Si estás aburrido 😅 podemos conversar un rato.",
+TIRED: "Tal vez necesitas un pequeño descanso 😌",
+FRIENDS: "Los amigos son muy importantes 🤝",
+FUNNY: "Reír siempre es buena idea 😄",
+NICE: "Gracias 😊 intento ser siempre simpática.",
+LISTEN: "Siempre estoy aquí para escucharte 👂",
+EMOTIONS: "Las emociones son parte de lo que nos hace humanos 💭",
+SILENCE: "A veces el silencio también comunica 🤍",
+PEOPLE: "Las personas hacen el mundo interesante 🌍",
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
     CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
