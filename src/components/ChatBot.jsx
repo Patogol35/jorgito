@@ -243,7 +243,7 @@ function getSmartResponse(message, context) {
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
     CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
-    BOOK: "Jorge disfruta especialmente los libros de Dan Brown.",
+    BOOK: "Jorge tiene muchos libros favoritos pero en especial disfruta especialmente los libros de Dan Brown.",
     NAME: "Me llamo Sasha 😊",
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP:
