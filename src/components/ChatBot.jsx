@@ -182,6 +182,7 @@ const followUp = (intent) =>
     PROFILE: "¿Quieres conocer su experiencia profesional?",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
     SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
+    PROJECTS: null,
   }[intent] || null);
 
 /* =========================
@@ -197,14 +198,14 @@ function getSmartResponse(message, context) {
       context.awaitingFollowUp = null;
 
       const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
-      };
+  PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+  EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+  SKILLS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
+};
 
       return { 
   text: chainReplies[intent], 
-  intent,
+  intent: intent === "SKILLS" ? "PROJECTS" : intent,
   fromFollowUp: true 
 };
     }
