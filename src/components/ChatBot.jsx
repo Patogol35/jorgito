@@ -215,6 +215,13 @@ function getSmartResponse(message, context) {
       "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
     ]),
 
+    STACK: randomPick([
+  "Sí 😊 Jorge es Full Stack: trabaja tanto en frontend como en backend.",
+  "Así es 💻 Jorge es desarrollador Full Stack.",
+  "Sí, combina frontend y backend en sus proyectos Full Stack.",
+  "Correcto ✅ Jorge trabaja como desarrollador Full Stack."
+]),
+
     LIKES_COFFEE: randomPick([
       "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
       "Un buen café ☕ siempre viene bien para empezar el día.",
