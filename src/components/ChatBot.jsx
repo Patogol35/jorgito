@@ -393,8 +393,11 @@ default:
     reply =
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
+  break;
+}
 
-  return { text: reply, intent };
+// ✅ ESTE RETURN VA FUERA DEL SWITCH
+return { text: reply, intent };
 }
 /* =========================
 FOLLOW UP
