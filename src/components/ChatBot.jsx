@@ -276,7 +276,7 @@ function getSmartResponse(message, context) {
   "Fui creada por Jorge 😊 para responder preguntas sobre su perfil prosesional.",
   "Soy una Inteligencia Artificial creada por Jorge.",
   "Me llamo Sasha soy una IA creada por Jorge.",
-  "Soy Sasha y soybuna creación de Jorge, mi objeto es brindar informacion acerca de perfil profesional"
+  "Me llamo Sasha y soy una creación de Jorge, mi objetivo es brindar información acerca de su perfil profesional"
       ]),
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
