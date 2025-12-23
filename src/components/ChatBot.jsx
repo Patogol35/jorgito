@@ -272,6 +272,12 @@ function getSmartResponse(message, context) {
     SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
     PROJECTS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
     MOTIVATION: "Porque combina formación sólida, experiencia real y enfoque práctico."
+    BOOK: randomPick([
+  "A Jorge le gustan especialmente los libros de misterio y suspenso 📚, como los de Dan Brown.",
+  "Entre sus lecturas favoritas están los libros de Dan Brown 📖, ideales si te gusta el misterio.",
+  "Jorge disfruta libros que mezclan misterio, historia y suspenso 📚.",
+  "Los libros de misterio son de sus favoritos, sobre todo los de Dan Brown 📖."
+]),
   };
 
   /* =========================
