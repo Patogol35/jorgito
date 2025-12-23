@@ -209,7 +209,7 @@ function getSmartResponse(message, context) {
   ========================= */
   const replies = {
     FAREWELL: randomPick([
-      "¡Gracias por visitar el portafolio! 👋",
+      "¡Gracias por visitar el portafolio de Jorge, regresa cuando quieras! 👋",
       "¡Hasta luego! 😊",
       "Cuídate 👋 aquí estaré cuando quieras volver",
       "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
@@ -225,18 +225,18 @@ function getSmartResponse(message, context) {
     LIKES_COFFEE: randomPick([
       "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
       "Un buen café ☕ siempre viene bien para empezar el día.",
-      "El café ☕ ayuda a mantenerse despierto y concentrado."
+      "El café ☕ ayuda a mantenerse despierto y concentrado, me encanta su aroma."
     ]),
 
     LIKES_MUSIC: randomPick([
-      "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse.",
-      "Siempre hay una canción perfecta para cada momento 🎧",
+      "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse, me encanta Evanescence.",
+      "Siempre hay una canción perfecta para cada momento ☺️ 🎧",
       "La música 🎵 cambia completamente el ánimo."
     ]),
 
     LIKES_MOVIES: randomPick([
       "Las películas 🎬 son geniales, especialmente las de misterio y ciencia ficción.",
-      "Me gustan las películas que hacen pensar 🎥",
+      "Me gustan las películas románticas 🎥",
       "Una buena película siempre es un buen plan."
     ]),
 
