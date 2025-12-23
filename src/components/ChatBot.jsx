@@ -114,7 +114,7 @@ const INTENTS = {
   NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
-  CREATOR: ["quién te creó", "quien te creo" "quien te hizo"],
+  CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
   BOOK: ["sus libros favoritos", "libros favoritos" "libros"],
 
   // 👇 FUNCIONAL
