@@ -200,9 +200,93 @@ const followUp = (intent) =>
 /* =========================
 RESPUESTAS
 ========================= */
+
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
+  /* =========================
+     RESPUESTAS (PRIMERO)
+  ========================= */
+  const replies = {
+    FAREWELL: randomPick([
+      "¡Gracias por visitar el portafolio! 👋",
+      "¡Hasta luego! 😊",
+      "Cuídate 👋 aquí estaré cuando quieras volver",
+      "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
+    ]),
+
+    LIKES_COFFEE: randomPick([
+      "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
+      "Un buen café ☕ siempre viene bien para empezar el día.",
+      "El café ☕ ayuda a mantenerse despierto y concentrado."
+    ]),
+
+    LIKES_MUSIC: randomPick([
+      "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse.",
+      "Siempre hay una canción perfecta para cada momento 🎧",
+      "La música 🎵 cambia completamente el ánimo."
+    ]),
+
+    LIKES_MOVIES: randomPick([
+      "Las películas 🎬 son geniales, especialmente las de misterio y ciencia ficción.",
+      "Me gustan las películas que hacen pensar 🎥",
+      "Una buena película siempre es un buen plan."
+    ]),
+
+    LIKES_TRAVEL: randomPick([
+      "Viajar ✈️ es increíble, conocer nuevos lugares siempre inspira.",
+      "Explorar nuevos lugares 🌍 abre mucho la mente.",
+      "Viajar cambia la forma de ver el mundo."
+    ]),
+
+    LIKES_TALK: randomPick([
+      "Me gusta conversar 😊 y ayudarte en lo que necesites.",
+      "Hablar siempre es buena idea 😄",
+      "Una buena conversación hace el momento más agradable."
+    ]),
+
+    LIKES_HELP: randomPick([
+      "Ayudar es lo que más me gusta 💙",
+      "Siempre intento ser útil 😊",
+      "Ayudar a otros siempre se siente bien."
+    ]),
+
+    WHAT_DOING: randomPick([
+      "Estoy aquí charlando contigo 😊",
+      "Ahora mismo conversando y lista para ayudarte 🤖",
+      "Pensando en cómo ayudarte mejor 💭",
+      "Disfrutando esta conversación contigo ✨"
+    ]),
+
+    GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
+    ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
+    CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
+    NAME: "Me llamo Sasha 😊",
+    HUMAN: "No soy humana 🤖, pero converso de forma natural.",
+    HELP: "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
+    MOOD: "¡Estoy muy bien 😊!",
+    HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
+    PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+    EDUCATION: `Cuenta con un ${PROFILE.education}.`,
+    EXPERIENCE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+    SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+    PROJECTS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
+    MOTIVATION: "Porque combina formación sólida, experiencia real y enfoque práctico."
+  };
+
+  /* =========================
+     🔴 DESPEDIDA PRIORIDAD ABSOLUTA
+  ========================= */
+  if (INTENTS.FAREWELL.some(word => text.includes(normalize(word)))) {
+    return {
+      text: replies.FAREWELL,
+      intent: "FAREWELL"
+    };
+  }
+
+  /* =========================
+     FOLLOW UPS
+  ========================= */
   if (context.awaitingFollowUp) {
     if (YES_WORDS.includes(text)) {
       const intent = context.awaitingFollowUp;
@@ -211,206 +295,33 @@ function getSmartResponse(message, context) {
       const chainReplies = {
         PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
         EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`
       };
 
       return {
         text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
+        intent,
+        fromFollowUp: true
       };
     }
 
-
-
-    
     if (NO_WORDS.includes(text)) {
       context.awaitingFollowUp = null;
       return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
     }
   }
 
-  if (/^(me llamo|soy|mi nombre es)/i.test(text)) {
-    const name = message.replace(/me llamo|soy|mi nombre es/i, "").trim();
-    context.userName = name;
-    saveMemory(context, { type: "user_name", value: name });
-    return { text: `Encantada, ${name} 😊 ¿En qué puedo ayudarte?` };
-  }
-
-  if (context.awaiting === "CONTACT_CONFIRM") {
-    if (YES_WORDS.includes(text)) {
-      window.open(WHATSAPP_URL, "_blank");
-      return {
-        text: `Perfecto${context.userName ? " " + context.userName : ""} 😊 Te llevo a WhatsApp ahora.`,
-      };
-    }
-    if (NO_WORDS.includes(text)) {
-      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
-    }
-  }
-
-
-  const normalized = normalize(message);
-
-if (INTENTS.FAREWELL.some(word => normalized.includes(normalize(word)))) {
-  return {
-    text: replies.FAREWELL,
-    intent: "FAREWELL"
-  };
-}
-
-const intent = detectIntent(message);
-context.lastIntent = intent;
-saveMemory(context, { user: message, intent });
-
-
-
-  const replies = {
-
-    FAREWELL: randomPick([
-  "¡Gracias por visitar el portafolio! 👋",
-  "¡Hasta luego! 😊",
-  "Cuídate 👋 aquí estaré cuando quieras volver",
-  "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
-]),
-
-
-    LIKES_COFFEE: randomPick([
-  "Me gusta el café ☕, sobre todo cuando acompaña una buena charla 😊",
-  "Un buen café ☕ siempre viene bien para empezar el día.",
-  "El café ☕ ayuda a mantenerse despierto y concentrado."
-]),
-
-LIKES_MUSIC: randomPick([
-  "Me encanta la música 🎶, ayuda mucho a concentrarse y relajarse.",
-  "Siempre hay una canción perfecta para cada momento 🎧",
-  "La música 🎵 cambia completamente el ánimo."
-]),
-
-LIKES_MOVIES: randomPick([
-  "Las películas 🎬 son geniales, especialmente las de misterio y ciencia ficción.",
-  "Me gustan las películas que hacen pensar 🎥",
-  "Una buena película siempre es un buen plan."
-]),
-
-LIKES_TRAVEL: randomPick([
-  "Viajar ✈️ es increíble, conocer nuevos lugares siempre inspira.",
-  "Explorar nuevos lugares 🌍 abre mucho la mente.",
-  "Viajar cambia la forma de ver el mundo."
-]),
-
-LIKES_TALK: randomPick([
-  "Me gusta conversar 😊 y ayudarte en lo que necesites.",
-  "Hablar siempre es buena idea 😄",
-  "Una buena conversación hace el momento más agradable."
-]),
-
-LIKES_HELP: randomPick([
-  "Ayudar es lo que más me gusta 💙",
-  "Siempre intento ser útil 😊",
-  "Ayudar a otros siempre se siente bien."
-]),
-
-LIKES_MORNING: randomPick([
-  "Las mañanas ☀️ tienen su encanto, sobre todo con café.",
-  "Las mañanas son ideales para empezar con energía.",
-  "Me gusta la tranquilidad de la mañana."
-]),
-
-LIKES_NIGHT: randomPick([
-  "La noche 🌙 es tranquila, perfecta para pensar y relajarse.",
-  "Me gusta el silencio de la noche.",
-  "La noche tiene una vibra especial."
-]),
-
-BORED: randomPick([
-  "Si estás aburrido 😅 podemos conversar un rato.",
-  "El aburrimiento pasa rápido con una buena charla.",
-  "Siempre hay algo interesante de qué hablar."
-]),
-
-TIRED: randomPick([
-  "Tal vez necesitas un pequeño descanso 😌",
-  "A veces parar un momento ayuda mucho.",
-  "Descansar también es importante."
-]),
-
-FRIENDS: randomPick([
-  "Los amigos 🤝 son muy importantes.",
-  "Compartir con amigos siempre suma.",
-  "La amistad hace la vida más bonita."
-]),
-
-FUNNY: randomPick([
-  "Reír 😄 siempre es buena idea.",
-  "El humor mejora cualquier día.",
-  "Una sonrisa cambia todo."
-]),
-
-NICE: randomPick([
-  "Gracias 😊 intento ser siempre simpática.",
-  "Me alegra que lo pienses 💙",
-  "Intento mantener una conversación agradable."
-]),
-
-LISTEN: randomPick([
-  "Siempre estoy aquí para escucharte 👂",
-  "Cuéntame, te escucho 😊",
-  "Escuchar también es importante."
-]),
-
-EMOTIONS: randomPick([
-  "Las emociones 💭 forman parte de lo que somos.",
-  "Entender las emociones ayuda a comprender mejor a otros.",
-  "Las emociones influyen en cómo vivimos el día a día."
-]),
-
-SILENCE: randomPick([
-  "A veces el silencio 🤍 también comunica.",
-  "El silencio ayuda a pensar mejor.",
-  "Un poco de silencio puede ser reconfortante."
-]),
-
-PEOPLE: randomPick([
-  "Las personas 🌍 hacen el mundo interesante.",
-  "Cada persona tiene una historia.",
-  "Las personas dan sentido a todo."
-]),
-
-    WHAT_DOING: randomPick([
-  "Estoy aquí charlando contigo 😊",
-  "Ahora mismo conversando y lista para ayudarte 🤖",
-  "Pensando en cómo ayudarte mejor 💭",
-  "Disfrutando esta conversación contigo ✨",
-  "Aquí, acompañándote y respondiendo tus preguntas 😄"
-]),
-    GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
-    ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
-    CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
-    BOOK: "Jorge tiene muchos libros favoritos pero en especial disfruta los libros de Dan Brown.",
-    NAME: "Me llamo Sasha 😊",
-    HUMAN: "No soy humana 🤖, pero converso de forma natural.",
-    HELP:
-      "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
-    
-    MOOD: "¡Estoy muy bien 😊!",
-    HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
-    PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-    EDUCATION: `Cuenta con un ${PROFILE.education}.`,
-    EXPERIENCE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-    SKILLS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-    STACK:
-      "Sí, es Full Stack: React/Vite en frontend y Spring Boot/Django en backend.",
-    PROJECTS: `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
-    MOTIVATION:
-      "Porque combina formación sólida, experiencia real y enfoque práctico.",
-  };
+  /* =========================
+     DETECTAR INTENT NORMAL
+  ========================= */
+  const intent = detectIntent(message);
+  saveMemory(context, { user: message, intent });
 
   if (intent === "CONTACT") {
     return {
       text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
-      intent,
+      intent
     };
   }
 
@@ -418,9 +329,15 @@ PEOPLE: randomPick([
     text:
       replies[intent] ||
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent,
+    intent
   };
 }
+
+    
+    
+
+
+   
 
 /* =========================
 COMPONENTE
