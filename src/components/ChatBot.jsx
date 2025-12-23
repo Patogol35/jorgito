@@ -247,8 +247,16 @@ function getSmartResponse(message, context) {
   }
 
   const intent = detectIntent(message);
-  context.lastIntent = intent;
-  saveMemory(context, { user: message, intent });
+context.lastIntent = intent;
+saveMemory(context, { user: message, intent });
+
+// 👇 PRIORIDAD DESPEDIDA
+if (intent === "FAREWELL") {
+  return {
+    text: replies.FAREWELL,
+    intent,
+  };
+}
 
   const replies = {
     LIKES_COFFEE: randomPick([
