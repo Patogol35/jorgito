@@ -250,19 +250,16 @@ function getSmartResponse(message, context) {
 context.lastIntent = intent;
 saveMemory(context, { user: message, intent });
 
-// 👇 PRIORIDAD DESPEDIDA
-if (
-  normalize(message).includes("chao") ||
-  normalize(message).includes("adios") ||
-  normalize(message).includes("adiós") ||
-  normalize(message).includes("bye") ||
-  normalize(message).includes("hasta luego")
-) {
-  return {
-    text: replies.FAREWELL,
-    intent: "FAREWELL",
-  };
-}
+const replies = {
+  ...
+  FAREWELL: randomPick([
+    "¡Gracias por visitar el portafolio! 👋",
+    "¡Hasta luego! 😊",
+    "Cuídate 👋 aquí estaré cuando quieras volver"
+  ]),
+  ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
+  ...
+};
 
   const replies = {
     LIKES_COFFEE: randomPick([
