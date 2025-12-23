@@ -145,13 +145,10 @@ const INTENTS = {
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
 };
-
 /* =========================
 DETECTAR INTENCIÓN
 ========================= */
-/* ========================
 
-/* 👇 AQUÍ VA */
 function normalizeText(text) {
   return text
     .toLowerCase()
