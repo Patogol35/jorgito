@@ -99,6 +99,17 @@ const SUGGESTIONS = [
 INTENCIONES
 ========================= */
 const INTENTS = {
+
+  WHAT_DOING: [
+  "que haces",
+  "qué haces",
+  "que estas haciendo",
+  "qué estás haciendo",
+  "en que estas",
+  "en qué estás",
+  "que andas haciendo",
+  "qué andas haciendo"
+],
   LIKES_COFFEE: ["café", "cafe"],
   LIKES_MUSIC: ["música", "musica"],
   LIKES_MOVIES: ["películas", "peliculas"],
@@ -341,6 +352,14 @@ PEOPLE: randomPick([
   "Cada persona tiene una historia.",
   "Las personas dan sentido a todo."
 ]),
+
+    WHAT_DOING: randomPick([
+  "Estoy aquí charlando contigo 😊",
+  "Ahora mismo conversando y lista para ayudarte 🤖",
+  "Pensando en cómo ayudarte mejor 💭",
+  "Disfrutando esta conversación contigo ✨",
+  "Aquí, acompañándote y respondiendo tus preguntas 😄"
+]),
     GREETING: "Hola 👋 Soy Sasha, la asistente virtual de Jorge.",
     ASSISTANT: "Soy Sasha 🤖, la asistente virtual de Jorge.",
     CREATOR: "Fui creada por Jorge 😊 para responder preguntas sobre su perfil.",
@@ -349,7 +368,7 @@ PEOPLE: randomPick([
     HUMAN: "No soy humana 🤖, pero converso de forma natural.",
     HELP:
       "Puedo contarte sobre el perfil, experiencia, estudios, proyectos y contacto de Jorge.",
-    FAREWELL: "¡Gracias por visitar el portafolio! 👋",
+    FAREWELL: "¡Gracias por visitar el portafolio puedes regresar cuando desees ☺️! 👋",
     MOOD: "¡Estoy muy bien 😊!",
     HAPPY: "Sí 😊 me siento feliz cuando ayudo.",
     PROFILE: `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
