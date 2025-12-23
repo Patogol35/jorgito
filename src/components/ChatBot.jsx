@@ -145,34 +145,39 @@ function normalizeText(text) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[¿?¡!.,]/g, "")
+    .replace(/\s+/g, " ")
     .trim();
 }
+
 function detectIntent(message) {
   const text = normalizeText(message);
   let best = "UNKNOWN";
-  let scoreMax = 0;
+  let maxScore = 0;
 
   for (const intent in INTENTS) {
-    const score = INTENTS[intent].filter((w) =>
-      text.includes(normalizeText(w))
-    ).length;
+    let score = 0;
 
-    if (score > scoreMax) {
-      scoreMax = score;
+    INTENTS[intent].forEach((word) => {
+      if (text.includes(normalizeText(word))) {
+        score += word.length > 4 ? 2 : 1;
+      }
+    });
+
+    if (score > maxScore) {
+      maxScore = score;
       best = intent;
     }
   }
 
-  return scoreMax ? best : "UNKNOWN";
+  return maxScore > 0 ? best : "UNKNOWN";
 }
-
 
 
 /* =========================
 RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
-  const text = message.toLowerCase().trim();
+  const text = normalizeText(message);
 
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.includes(text)) {
@@ -260,11 +265,6 @@ case "FAREWELL":
     "¡Gracias por visitar el portafolio! 👋 Si necesitas algo más, aquí estaré 😊";
   break;
 
-
-      
-    case "STATUS":
-      reply = "¡Estoy muy bien! 😊 Lista para ayudarte.";
-      break;
       case "MOOD":
   reply = "¡Estoy muy bien 😊 gracias por preguntar!";
   break;
@@ -372,7 +372,8 @@ case "PEOPLE":
         action: "CONTACT_CONFIRM",
       };
     default:
-      reply = "Puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+  reply =
+    "No estoy segura de haber entendido 🤔, pero puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
 
   return { text: reply, intent };
