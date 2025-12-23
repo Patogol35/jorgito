@@ -222,20 +222,6 @@ function getSmartResponse(message, context) {
     }
 
 
-// ✅ DESPEDIDA CON PRIORIDAD
-if (INTENTS.FAREWELL.some(word =>
-  text.includes(normalize(word))
-)) {
-  return {
-    text: randomPick([
-      "¡Gracias por visitar el portafolio! 👋",
-      "¡Hasta luego! 😊",
-      "Cuídate 👋 aquí estaré cuando quieras volver",
-      "Fue un gusto hablar contigo 😊 ¡Hasta pronto!"
-    ]),
-    intent: "FAREWELL",
-  };
-}
 
     
     if (NO_WORDS.includes(text)) {
