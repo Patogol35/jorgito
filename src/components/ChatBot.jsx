@@ -31,6 +31,19 @@ const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
+MEMORIA DE CONVERSACIÓN
+========================= */
+const MEMORY_LIMIT = 10;
+
+function saveMemory(context, data) {
+  context.memory = context.memory || [];
+  context.memory.push(data);
+  if (context.memory.length > MEMORY_LIMIT) {
+    context.memory.shift();
+  }
+}
+
+/* =========================
 PERFIL
 ========================= */
 const PROFILE = {
@@ -218,7 +231,9 @@ function getSmartResponse(message, context) {
   }
 
   const intent = detectIntent(message);
-  let reply = "";
+context.lastIntent = intent;
+saveMemory(context, { user: message, intent });
+let reply = "";
 
   switch (intent) {
     case "GREETING":
@@ -371,9 +386,15 @@ case "PEOPLE":
           "¿Quieres que abra WhatsApp ahora?",
         action: "CONTACT_CONFIRM",
       };
-    default:
-  reply =
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte a conocer el perfil profesional de Jorge 😊";
+default:
+  if (context.lastIntent && context.lastIntent !== "UNKNOWN") {
+    reply =
+      "¿Quieres saber más sobre " +
+      context.lastIntent.toLowerCase().replace("_", " ") +
+      "? 😊";
+  } else {
+    reply =
+      "No estoy segura de haber entendido 🤔, pero puedo ayudarte a conocer el perfil profesional de Jorge 😊";
   }
 
   return { text: reply, intent };
