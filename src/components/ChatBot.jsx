@@ -246,7 +246,17 @@ function getSmartResponse(message, context) {
     }
   }
 
-  const intent = detectIntent(message);
+
+  const normalized = normalize(message);
+
+if (INTENTS.FAREWELL.some(word => normalized.includes(normalize(word)))) {
+  return {
+    text: replies.FAREWELL,
+    intent: "FAREWELL"
+  };
+}
+
+const intent = detectIntent(message);
 context.lastIntent = intent;
 saveMemory(context, { user: message, intent });
 
