@@ -124,9 +124,9 @@ const INTENTS = {
   // 👇 PERFIL JORGE (AL FINAL)
   GREETING: ["hola", "buenas" "buenks días"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster" "formación"],
+  EDUCATION: ["estudios", "máster" "formación" "estudio"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologías", "lenguajes"],
+  SKILLS: ["tecnologías", "lenguajes" "habilidades"],
   STACK: ["full stack"],
   PROJECTS: ["proyectos" "proyecto"],
   MOTIVATION: ["contratar"],
