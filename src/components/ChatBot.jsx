@@ -251,10 +251,16 @@ context.lastIntent = intent;
 saveMemory(context, { user: message, intent });
 
 // 👇 PRIORIDAD DESPEDIDA
-if (intent === "FAREWELL") {
+if (
+  normalize(message).includes("chao") ||
+  normalize(message).includes("adios") ||
+  normalize(message).includes("adiós") ||
+  normalize(message).includes("bye") ||
+  normalize(message).includes("hasta luego")
+) {
   return {
     text: replies.FAREWELL,
-    intent,
+    intent: "FAREWELL",
   };
 }
 
