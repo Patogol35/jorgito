@@ -197,6 +197,31 @@ const followUp = (intent) =>
     PROJECTS: null,
   }[intent] || null);
 
+
+
+
+
+
+const isValidFarewell = (text) => {
+  const t = normalize(text);
+
+  // despedidas permitidas exactamente
+  const valid = [
+    "chao",
+    "chau",
+    "bye",
+    "adios",
+    "hasta luego",
+    "chao sasha",
+    "bye sasha",
+    "adios sasha"
+  ];
+
+  return valid.includes(t);
+};
+
+
+
 /* =========================
 RESPUESTAS
 ========================= */
@@ -376,11 +401,11 @@ if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
   /* =========================
      🔴 DESPEDIDA PRIORIDAD ABSOLUTA
   ========================= */
-  if (INTENTS.FAREWELL.some(word => text.includes(normalize(word)))) {
-    return {
-      text: replies.FAREWELL,
-      intent: "FAREWELL"
-    };
+  if (isValidFarewell(text)) {
+  return {
+    text: replies.FAREWELL,
+    intent: "FAREWELL"
+  };
   }
 
 /* =========================
