@@ -232,14 +232,15 @@ function getSmartResponse(message, context) {
      RESPUESTAS (PRIMERO)
   ========================= */
   const replies = {
+
   GRA: randomPick([
-    "Un Placer 😊",
+    "Un Placer😊",
     "De nada 😌",
     "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
     "Me alegró conversar contigo 😊 ¡Hasta pronto!",
-    "Con gusto 😊",
-    "Siempre a la orden ☺️",
-    "¡Para eso estoy! 💕"
+    "Siempre es un gusto ayudar 😊",
+    "¡Con mucho cariño! 💕",
+    "Para eso estoy ☺️"
   ]),
 
   FAREWELL: randomPick([
@@ -247,72 +248,72 @@ function getSmartResponse(message, context) {
     "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
     "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
     "Me alegró conversar contigo 😊 ¡Hasta pronto!",
-    "¡Hasta pronto! 👋😊",
-    "Fue un placer hablar contigo 💕",
-    "Nos vemos luego ☺️ cuídate mucho"
+    "Te espero pronto 😊 ¡Que tengas un lindo día!",
+    "Fue un placer acompañarte 💕 hasta la próxima.",
+    "Aquí estaré cuando necesites volver ☺️"
   ]),
 
   GREETING: randomPick([
     "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
     "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
     "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
-    "¡Hey! 👋 Qué gusto verte por aquí ☺️",
-    "Hola 💕 Estoy lista para ayudarte 😊",
-    "Bienvenido/a 👋 dime, ¿en qué te ayudo?"
+    "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
+    "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
+    "¡Hola! 😊 Qué gusto verte por aquí."
   ]),
 
   ASSISTANT: randomPick([
     "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
     "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
     "Soy Sasha 💕, una asistente virtual creada para ayudarte con información sobre Jorge.",
-    "Soy Sasha 🤖 siempre lista para ayudarte 😊",
-    "Aquí Sasha ☺️ para lo que necesites 💕",
-    "Sasha a tu servicio 🤖✨"
+    "Soy Sasha 🤖 y estoy diseñada para ayudarte.",
+    "Sasha a tu servicio ☺️",
+    "Soy una asistente virtual lista para ayudarte 😊"
   ]),
 
   NAME: randomPick([
     "Me llamo Sasha 😊",
     "Puedes llamarme Sasha ☺️",
     "Mi nombre es Sasha 💕",
-    "Mi nombre es Sasha 🤖😊",
-    "Puedes decirme Sasha 💕",
-    "Sasha es mi nombre ☺️"
+    "Todos me conocen como Sasha 🤖",
+    "Sasha es mi nombre 😊",
+    "Puedes decirme Sasha sin problema ☺️"
   ]),
 
   HUMAN: randomPick([
     "No soy humana 🤖, pero me gusta conversar de forma natural contigo 😊",
     "Soy una IA 🤖, aunque intento ser cercana y amable ☺️",
     "No soy humana, pero siempre estoy aquí para ayudarte 💕",
-    "Soy una IA 🤖, pero siempre amable contigo 😊",
-    "No soy humana, pero me esfuerzo en entenderte 💕",
-    "IA con corazón digital ☺️✨"
+    "Soy inteligencia artificial, pero con trato humano 😊",
+    "No tengo cuerpo, pero sí muchas ganas de ayudar ☺️",
+    "Soy digital 🤖, pero muy amigable 💕"
   ]),
 
   MOOD: randomPick([
     "¡Estoy muy bien 😊 gracias por preguntar!",
     "Todo va muy bien ☺️ y me alegra ayudarte.",
     "Me siento genial 💕 sobre todo cuando converso contigo.",
-    "Me siento excelente 😊",
-    "Todo va genial ☺️",
-    "Muy bien 💕 gracias por preguntar"
+    "Muy bien 😊 lista para ayudarte.",
+    "Con muy buen ánimo ☺️",
+    "Excelente 😊 gracias por notarlo."
   ]),
 
   HAPPY: randomPick([
     "Sí 😊 me siento feliz cuando puedo ayudar.",
     "Me pone contenta ayudarte 💕",
     "Claro que sí ☺️ disfruto mucho estas conversaciones.",
-    "Claro 😊 ayudar me hace feliz",
-    "Siempre contenta de ayudar 💕",
-    "Sí ☺️ me encanta estar aquí"
+    "Ayudar siempre me hace feliz 😊",
+    "Me alegra mucho estar aquí contigo ☺️",
+    "Cuando ayudo, todo va mejor 💕"
   ]),
 
   HELP: randomPick([
     "Con gusto 😊 puedo contarte sobre el perfil, experiencia y proyectos de Jorge.",
     "Si quieres ☺️ puedo ayudarte con información sobre estudios, tecnologías o contacto.",
     "Estoy aquí para ayudarte 💕 con todo lo relacionado al perfil profesional de Jorge.",
-    "Puedo orientarte sobre proyectos y experiencia 😊",
-    "Dime qué deseas saber ☺️",
-    "Estoy aquí para ayudarte en lo que necesites 💕"
+    "Puedo orientarte sobre habilidades y experiencia 😊",
+    "Con gusto te explico lo que necesites ☺️",
+    "Estoy lista para ayudarte en lo que busques 💕"
   ]),
 
   WHAT_DOING: randomPick([
@@ -320,107 +321,107 @@ function getSmartResponse(message, context) {
     "Ahora mismo charlando contigo 💕",
     "Pensando en cómo ayudarte mejor 💭✨",
     "Disfrutando esta conversación contigo ☺️",
-    "Aquí atenta 😊",
-    "Lista para ayudarte 💕",
-    "Conversando contigo ☺️"
+    "Atenta a lo que necesites 😊",
+    "Esperando tu siguiente mensaje ☺️"
   ]),
 
   LIKES_COFFEE: randomPick([
     "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
     "Un cafecito ☕ siempre viene bien ☺️",
     "El aroma del café ☕ me encanta, es muy reconfortante 💕",
-    "El café ☕ y el código hacen buena combinación 😊",
-    "Un café ☺️ nunca falla",
-    "Café y charla 💕 perfecto"
+    "El café ☕ hace cualquier charla mejor 😊",
+    "Una taza de café ☕ es perfecta para concentrarse ☺️",
+    "El café siempre anima el momento 💕"
   ]),
 
   LIKES_MUSIC: randomPick([
     "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
     "La música 🎧 siempre mejora el ánimo ☺️",
     "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
-    "La música 🎶 inspira mucho",
-    "No puedo vivir sin música ☺️",
-    "La música siempre acompaña 💕"
+    "La música acompaña muy bien cualquier momento 😊",
+    "Escuchar música 🎶 es inspirador ☺️",
+    "La música transmite emociones muy bonitas 💕"
   ]),
 
   LIKES_MOVIES: randomPick([
     "Las películas 🎬 me encantan, sobre todo las de misterio.",
     "Una buena película 🎥 siempre es un buen plan ☺️",
     "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
-    "Me encantan las historias bien contadas 🎬",
-    "El cine siempre sorprende 😊",
-    "Una peli buena nunca falla ☺️"
+    "El cine 🎬 siempre entretiene 😊",
+    "Ver películas es una gran forma de relajarse ☺️",
+    "Las historias en el cine inspiran 💕"
   ]),
 
   LIKES_TRAVEL: randomPick([
     "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
     "Explorar el mundo 🌍 siempre abre la mente ☺️",
     "Viajar cambia la forma de ver la vida 💕",
-    "Viajar siempre enseña algo nuevo ✈️",
-    "Me encanta descubrir lugares 🌍",
-    "Conocer el mundo es inspirador 💕"
+    "Conocer nuevos lugares siempre enriquece 😊",
+    "Viajar trae experiencias inolvidables ☺️",
+    "Descubrir el mundo es fascinante 💕"
   ]),
 
   LIKES_TALK: randomPick([
     "Me encanta conversar contigo 😊",
     "Hablar siempre es buena idea ☺️",
     "Una buena charla hace el momento más bonito 💕",
-    "Hablar contigo es agradable 😊",
-    "Siempre disfruto conversar ☺️",
-    "Las charlas bonitas alegran 💕"
+    "Conversar conecta a las personas 😊",
+    "Charlar siempre suma ☺️",
+    "Hablar contigo es agradable 💕"
   ]),
 
   LIKES_HELP: randomPick([
     "Ayudar es lo que más me gusta 💕",
     "Siempre intento ser útil 😊",
     "Me alegra mucho poder ayudar ☺️",
-    "Ayudar es mi propósito 😊",
-    "Estoy aquí para servirte 💕",
-    "Siempre feliz de ayudar ☺️"
+    "Dar ayuda me motiva 😊",
+    "Estoy aquí para servirte ☺️",
+    "Ayudar da sentido a lo que hago 💕"
   ]),
 
   BOOK: randomPick([
     "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
     "Disfruta leer novelas de misterio y suspenso 📖✨",
     "Los libros de Dan Brown son de sus favoritos 📚 ideales si te gusta el misterio.",
-    "Jorge tiene muchos libros fabricio pero en especial disfruta los de misterios 📚"
-    
+    "Le gusta mucho el suspenso literario 😊",
+    "La lectura es una de sus pasiones ☺️",
+    "Los libros de misterio siempre le llaman la atención 💕"
   ]),
 
   CREATOR: randomPick([
     "Fui creada por Jorge 😊 para ayudar a conocer mejor su perfil profesional.",
     "Soy una inteligencia artificial creada por Jorge 💻",
     "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
-    "Jorge me creó con mucho cariño 😊",
-    "Soy parte de su portafolio 💻",
-    "Fui diseñada para ayudarte ☺️"
+    "Jorge me diseñó para ayudarte 😊",
+    "Fui creada como asistente virtual de Jorge ☺️",
+    "Mi propósito es apoyar el perfil de Jorge 💕"
   ]),
 
   STACK: randomPick([
     "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
     "Así es 💻✨ combina frontend y backend en sus proyectos.",
     "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
-    "Le gusta trabajar proyectos completos 💻",
-    "Combina lógica y diseño ☺️",
-    "Full Stack con pasión 😊"
+    "Domina tanto el lado visual como el lógico 😊",
+    "Le gusta desarrollar proyectos completos ☺️",
+    "Trabaja en todas las capas del desarrollo 💕"
   ]),
 
   PROFILE: randomPick([
     `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
     `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
     `Te cuento ☺️ ${PROFILE.name} es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
-    `Jorge destaca como ${PROFILE.role} 💻`,
-    `Su perfil profesional es sólido y creativo ☺️`,
-    `Apasionado por el desarrollo y la tecnología 💕`
+    `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
+    `Jorge combina creatividad y tecnología ☺️`,
+    `Es un profesional enfocado en soluciones modernas 💕`
   ]),
 
   EDUCATION: randomPick([
     `Jorge cuenta con un ${PROFILE.education} 😊`,
     `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
     `Se formó profesionalmente con un ${PROFILE.education} 💕`,
-    "Tiene una base académica fuerte 😊",
-    "Siempre en constante aprendizaje ☺️",
-    "La educación es clave en su desarrollo 💕"
+    `Posee estudios enfocados en tecnología 😊`,
+    `Cuenta con preparación académica formal ☺️`,
+    `Su educación respalda su experiencia 💕`
   ]),
 
   EXPERIENCE: randomPick([
@@ -428,36 +429,37 @@ function getSmartResponse(message, context) {
     `Ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
     `Cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
     "Tiene experiencia práctica en proyectos reales 😊",
-    "Ha trabajado en distintos entornos ☺️",
-    "Experiencia enfocada en resultados 💕"
+    "Ha aplicado sus conocimientos en distintos entornos ☺️",
+    "Su experiencia abarca varios roles 💕"
   ]),
 
   SKILLS: randomPick([
     `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
     `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
     `Domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
-    "Maneja herramientas modernas 😊",
-    "Se adapta rápido a nuevas tecnologías ☺️",
-    "Siempre busca mejorar sus habilidades 💕"
+    "Maneja herramientas modernas del desarrollo web 😊",
+    "Tiene habilidades técnicas bien definidas ☺️",
+    "Aplica buenas prácticas en sus proyectos 💕"
   ]),
 
   PROJECTS: randomPick([
     `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
     `Participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
     `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
-    "Ha creado proyectos completos 😊",
-    "Siempre enfocado en soluciones reales ☺️",
-    "Proyectos bien estructurados 💕"
+    "Ha creado proyectos funcionales y modernos 😊",
+    "Participa activamente en el desarrollo de aplicaciones ☺️",
+    "Sus proyectos reflejan su experiencia 💕"
   ]),
 
   MOTIVATION: randomPick([
     "Porque combina formación sólida, experiencia real y un enfoque muy práctico 😊",
     "Porque es responsable, profesional y apasionado por lo que hace ☺️",
     "Porque crea soluciones con calidad, compromiso y dedicación 💕",
-    "Porque trabaja con dedicación 😊",
-    "Porque cuida cada detalle ☺️",
-    "Porque ama lo que hace 💕"
+    "Porque siempre busca hacer las cosas bien 😊",
+    "Porque se compromete con cada proyecto ☺️",
+    "Porque aporta valor real a cada trabajo 💕"
   ])
+
 };
 
 
