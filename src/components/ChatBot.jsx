@@ -402,7 +402,7 @@ function getSmartResponse(message, context) {
     "Así es 💻✨ combina frontend y backend en sus proyectos.",
     "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
     "Si, Jorge domina tanto el lado visual como el lógico 😊",
-    "Le gusta desarrollar proyectos completos ☺️",
+    "Si, le gusta desarrollar proyectos completos ☺️",
     "Si Jorge trabaja en todas las capas del desarrollo 💕"
   ]),
 
@@ -420,7 +420,7 @@ function getSmartResponse(message, context) {
     `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
     `Se formó profesionalmente con un ${PROFILE.education} 💕`,
     `Posee estudios enfocados en tecnología 😊`,
-    `Cuenta con preparación académica solida en el área de la informatica ☺️`
+    `Cuenta con preparación académica solida en el área de la informática☺️`
   ]),
 
   EXPERIENCE: randomPick([
