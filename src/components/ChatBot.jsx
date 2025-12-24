@@ -137,7 +137,7 @@ const INTENTS = {
   CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
   BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
 
-  HELP: ["qué puedes hacer", "que puedes hacer"],
+  HELP: ["qué puedes hacer", "que puedes hacer", "buenas tardes", "buenas noches"],
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
