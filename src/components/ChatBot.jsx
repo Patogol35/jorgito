@@ -350,27 +350,30 @@ if (context.awaiting === "CONTACT_CONFIRM") {
      FOLLOW UPS
   ========================= */
   if (context.awaitingFollowUp) {
-    if (YES_WORDS.includes(text)) {
-      const intent = context.awaitingFollowUp;
-      context.awaitingFollowUp = null;
 
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`
-      };
+  if (YES_WORDS.some(word => text.includes(word))) {
+    const intent = context.awaitingFollowUp;
+    context.awaitingFollowUp = null;
 
-      return {
-        text: chainReplies[intent],
-        intent,
-        fromFollowUp: true
-      };
-    }
+    const chainReplies = {
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
 
-    if (NO_WORDS.includes(text)) {
-      context.awaitingFollowUp = null;
-      return { text: "Está bien 😊 ¿En qué más puedo ayudarte?" };
-    }
+    return {
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
+  }
+
+  if (NO_WORDS.some(word => text.includes(word))) {
+    context.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
   }
 
   /* =========================
