@@ -755,7 +755,12 @@ export default function ChatBot() {
               justifyContent: "space-between",
             }}
           >
-            <Typography>Sasha</Typography>
+            <Box display="flex" alignItems="center" gap={1}>
+  <SmartToyIcon fontSize="small" />
+  <Typography fontWeight="bold">
+    Sasha
+  </Typography>
+</Box>
             <Box>
               <IconButton
                 size="small"
