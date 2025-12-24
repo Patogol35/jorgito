@@ -387,7 +387,7 @@ function getSmartResponse(message, context) {
    🟢 SALUDO CORRECTO
 ========================= */
 const greetingMatch = text.match(
-  /^(hola|buenas|buenos dias)(\s+[a-zA-Záéíóúñ]+)?$/i
+  /^(hola|buenas|buenos dias|buenos noches|buenos tardes)(\s+[a-zA-Záéíóúñ]+)?$/i
 );
 
 if (greetingMatch) {
