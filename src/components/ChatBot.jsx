@@ -420,7 +420,7 @@ function getSmartResponse(message, context) {
     `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
     `Se formó profesionalmente con un ${PROFILE.education} 💕`,
     `Posee estudios enfocados en tecnología 😊`,
-    `Cuenta con preparación académica solida en el área de la informática☺️`
+    `Cuenta con preparación académica solida en el área de la informática y es ${PROFILE.education}☺️`
   ]),
 
   EXPERIENCE: randomPick([
