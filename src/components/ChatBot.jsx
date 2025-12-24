@@ -380,6 +380,38 @@ function getSmartResponse(message, context) {
     ])
   };
 
+
+/* =========================
+   🟢 SALUDO CON NOMBRE
+========================= */
+const greetingMatch = text.match(/^(hola|buenas|buenos dias)\s+([a-zA-Záéíóúñ]+)/i);
+
+if (greetingMatch) {
+  const name = greetingMatch[2];
+
+  if (!context.userName) {
+    context.userName = name;
+    saveMemory(context, { type: "user_name", value: name });
+  }
+
+  if (!context.hasGreeted) {
+    context.hasGreeted = true;
+
+    return {
+      text: `Hola ${name} 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?`,
+      intent: "GREETING"
+    };
+  }
+
+  return {
+    text: `¿En qué puedo ayudarte, ${name}? 😊`,
+    intent: "GREETING_REPEAT"
+  };
+}
+
+
+
+  
 /* =========================
    🟢 DETECTAR NOMBRE USUARIO
 ========================= */
