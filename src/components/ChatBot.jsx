@@ -671,7 +671,10 @@ color: isUser
       >
       <Typography
   variant="body1"
-  sx={{ fontSize: "0.95rem", lineHeight: 1.5 }}
+  sx={{
+    fontSize: isLandscape ? "0.85rem" : "0.95rem",
+    lineHeight: isLandscape ? 1.4 : 1.5,
+  }}
 >
   {m.text}
 </Typography>
