@@ -464,8 +464,14 @@ if (context.awaiting === "CONTACT_CONFIRM") {
   /* =========================
      DETECTAR INTENT NORMAL
   ========================= */
-  const intent = detectIntent(message);
-  saveMemory(context, { user: message, intent });
+  let intent = detectIntent(message);
+
+// 🚫 Bloquear despedidas inválidas
+if (intent === "FAREWELL" && !isValidFarewell(message)) {
+  intent = "UNKNOWN";
+}
+
+saveMemory(context, { user: message, intent });
 
   if (intent === "CONTACT") {
     return {
