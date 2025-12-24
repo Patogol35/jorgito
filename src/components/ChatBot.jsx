@@ -100,6 +100,12 @@ INTENCIONES
 ========================= */
 const INTENTS = {
 
+GRA: [
+  "Gracias"
+
+],
+
+  
   WHAT_DOING: [
   "que haces",
   "qué haces",
@@ -226,6 +232,15 @@ function getSmartResponse(message, context) {
      RESPUESTAS (PRIMERO)
   ========================= */
   const replies = {
+
+
+GRA: randomPick([
+      "Un Placer😊",
+      " De nada 😌",
+      "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
+      "Me alegró conversar contigo 😊 ¡Hasta pronto!"
+    ]),
+    
     FAREWELL: randomPick([
       "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
       "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
