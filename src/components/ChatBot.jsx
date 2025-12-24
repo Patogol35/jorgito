@@ -424,6 +424,46 @@ if (greetingMatch) {
   };
 }
 
+
+
+
+/* =========================
+   🟢 GRACIAS CONTROLADO
+========================= */
+const thanksMatch = text.match(
+  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (thanksMatch) {
+  const name = normalize(thanksMatch[2]?.trim() || "");
+
+  // ✅ Caso 1: solo "gracias"
+  if (!name) {
+    return {
+      text: replies.GRA,
+      intent: "GRA"
+    };
+  }
+
+  // ✅ Caso 2: "gracias sasha"
+  if (name === BOT_NAME) {
+    return {
+      text: replies.GRA,
+      intent: "GRA"
+    };
+  }
+
+  // ❌ Caso 3: "gracias otroNombre"
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN"
+  };
+}
+
+
+
+
+  
 /* =========================
    🟢 DETECTAR NOMBRE USUARIO
 ========================= */
