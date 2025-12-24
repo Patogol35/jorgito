@@ -197,11 +197,6 @@ const followUp = (intent) =>
     PROJECTS: null,
   }[intent] || null);
 
-
-
-
-
-
 const isValidFarewell = (text) => {
   const t = normalize(text);
 
@@ -219,8 +214,6 @@ const isValidFarewell = (text) => {
 
   return valid.includes(t);
 };
-
-
 
 /* =========================
 RESPUESTAS
@@ -416,8 +409,6 @@ if (greetingMatch) {
   };
 }
 
-
-  
 /* =========================
    🟢 DETECTAR NOMBRE USUARIO
 ========================= */
@@ -435,8 +426,7 @@ if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
   };
 }
 
-  
-  /* =========================
+   /* =========================
      🔴 DESPEDIDA PRIORIDAD ABSOLUTA
   ========================= */
   if (isValidFarewell(text)) {
@@ -526,13 +516,6 @@ saveMemory(context, { user: message, intent });
     intent
   };
 }
-
-    
-    
-
-
-   
-
 /* =========================
 COMPONENTE
 ========================= */
