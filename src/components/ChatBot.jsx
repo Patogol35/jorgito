@@ -659,71 +659,66 @@ export default function ChatBot() {
 
 
 <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-{messages.map((m, i) => {
-  const isUser = m.from === "user";
-  const isDark = theme.palette.mode === "dark";
+  {messages.map((m, i) => {
+    const isUser = m.from === "user";
+    const isDark = theme.palette.mode === "dark";
 
-  return (
-    <Box
-      key={i}
-      sx={{
-        display: "flex",
-        justifyContent: isUser ? "flex-end" : "flex-start",
-        mb: 1,
-      }}
-    >
+    return (
       <Box
+        key={i}
         sx={{
-          maxWidth: "80%",
-          px: 1.5,
-          py: 1,
-          borderRadius: 2,
-          bgcolor: isUser
-  ? isDark
-    ? theme.palette.primary.light
-    : theme.palette.primary.main
-  : isDark
-  ? "rgba(255,255,255,0.10)"
-  : "rgba(0,0,0,0.06)",
-
-color: isUser
-  ? isDark
-    ? "#000"
-    : "#fff"
-  : isDark
-  ? "rgba(255,255,255,0.9)"
-  : "inherit",
-          whiteSpace: "pre-line",
+          display: "flex",
+          justifyContent: isUser ? "flex-end" : "flex-start",
+          mb: 1,
         }}
       >
-      <Typography
-  variant="body1"
-  sx={{
-    fontSize: isLandscape ? "0.85rem" : "0.95rem",
-    lineHeight: isLandscape ? 1.4 : 1.5,
-  }}
->
-  {m.text}
-</Typography>
+        <Box
+          sx={{
+            maxWidth: "80%",
+            px: 1.5,
+            py: 1,
+            borderRadius: 2,
+            bgcolor: isUser
+              ? isDark
+                ? theme.palette.primary.light
+                : theme.palette.primary.main
+              : isDark
+              ? "rgba(255,255,255,0.10)"
+              : "rgba(0,0,0,0.06)",
+            color: isUser
+              ? isDark
+                ? "#000"
+                : "#fff"
+              : isDark
+              ? "rgba(255,255,255,0.9)"
+              : "inherit",
+            whiteSpace: "pre-line",
+          }}
+        >
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: isLandscape ? "0.85rem" : "0.95rem",
+              lineHeight: isLandscape ? 1.4 : 1.5,
+            }}
+          >
+            {m.text}
+          </Typography>
+        </Box>
       </Box>
-    </Box>
-  );
-})}
+    );
+  })}
 
-{typing && (
-  <Typography
-    variant="caption"
-    sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
-  >
-    Sasha está escribiendo…
-  </Typography>
-)}
+  {typing && (
+    <Typography
+      variant="caption"
+      sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+    >
+      Sasha está escribiendo…
+    </Typography>
+  )}
 
-<div ref={bottomRef} />
-</Box>
-
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-  {/* mensajes */}
+  <div ref={bottomRef} />
 </Box>
 
 <Box sx={{ display: "flex", p: 1 }}>
