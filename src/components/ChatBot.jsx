@@ -380,31 +380,41 @@ function getSmartResponse(message, context) {
     ])
   };
 
+
+  const BOT_NAME = "sasha";
+
 /* =========================
-   🟢 SALUDO SOLO A SASHA
+   🟢 SALUDO CORRECTO
 ========================= */
 const greetingMatch = text.match(
-  /^(hola|buenas|buenos dias)\s*([a-zA-Záéíóúñ]*)$/i
+  /^(hola|buenas|buenos dias)(\s+[a-zA-Záéíóúñ]+)?$/i
 );
 
 if (greetingMatch) {
-  const name = normalize(greetingMatch[2] || "");
+  const name = normalize(greetingMatch[2]?.trim() || "");
 
-  // ✅ Si dicen Sasha → responde
-  if (name === "sasha" || text === "sasha") {
+  // ✅ Caso 1: saludo SIN nombre → responde
+  if (!name) {
     return {
       text: replies.GREETING,
       intent: "GREETING"
     };
   }
 
-  // ❌ Cualquier otro caso → ambiguo
+  // ✅ Caso 2: saludo CON Sasha → responde
+  if (name === BOT_NAME) {
+    return {
+      text: replies.GREETING,
+      intent: "GREETING"
+    };
+  }
+
+  // ❌ Caso 3: saludo con otro nombre
   return {
     text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent: "UNKNOWN"
   };
 }
-
 
 
   
