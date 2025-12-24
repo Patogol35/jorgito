@@ -601,37 +601,11 @@ export default function ChatBot() {
 
 
 <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-  {messages.map((m, i) => (
-    <Typography
-      key={i}
-      sx={{
-        mb: 0.8,
-        px: m.isQuestion ? 1 : 0,
-        py: m.isQuestion ? 0.5 : 0,
-        borderRadius: 1,
-        fontWeight: m.isQuestion ? 600 : 400,
-        fontStyle: m.isQuestion ? "italic" : "normal",
-        color: m.isQuestion ? "primary.main" : "text.primary",
-        bgcolor: m.isQuestion
-          ? theme.palette.mode === "dark"
-            ? "rgba(255,255,255,0.06)"
-            : "rgba(0,0,0,0.05)"
-          : "transparent",
-      }}
-    >
-      {m.text}
-    </Typography>
-  ))}
-
-  {typing && (
-    <Typography variant="caption">
-      Sasha está escribiendo…
-    </Typography>
-  )}
-
-  <div ref={bottomRef} />
-</Box>
-          
+            {messages.map((m, i) => (
+              <Typography key={i} sx={{ mb: 0.5 }}>
+                {m.text}
+              </Typography>
+            ))}
             {typing && (
               <Typography variant="caption">
                 Sasha está escribiendo…
@@ -656,4 +630,4 @@ export default function ChatBot() {
       )}
     </>
   );
-  }
+}
