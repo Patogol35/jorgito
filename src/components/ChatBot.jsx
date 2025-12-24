@@ -591,12 +591,12 @@ export default function ChatBot() {
             overflow: "hidden",
         ...(isLandscape
   ? {
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      height: "100vh",
-      borderRadius: 0,
+      bottom: 16,
+      left: 16,
+      right: 16,
+      height: "85vh",
+      maxHeight: 520,
+      borderRadius: 12,
     }
   : {
       bottom: 90,
