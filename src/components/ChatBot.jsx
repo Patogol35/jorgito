@@ -632,31 +632,43 @@ export default function ChatBot() {
 
 
 <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-            {messages.map((m, i) => (
-              <Typography key={i} sx={{ mb: 0.5 }}>
-                {m.text}
-              </Typography>
-            ))}
-            {typing && (
-              <Typography variant="caption">
-                Sasha está escribiendo…
-              </Typography>
-            )}
-            <div ref={bottomRef} />
-          </Box>
+  {messages.map((m, i) => {
+    const isUser = m.from === "user";
 
-          <Box sx={{ display: "flex", p: 1 }}>
-            <TextField
-              fullWidth
-              size="small"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-            />
-            <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon sx={{ color: "#03A9F4" }} />
-            </IconButton>
-          </Box>
+    return (
+      <Box
+        key={i}
+        sx={{
+          display: "flex",
+          justifyContent: isUser ? "flex-end" : "flex-start",
+          mb: 1,
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: "80%",
+            px: 1.5,
+            py: 1,
+            borderRadius: 2,
+            bgcolor: isUser ? "#03A9F4" : "rgba(0,0,0,0.05)",
+            color: isUser ? "#fff" : "inherit",
+            whiteSpace: "pre-line",
+          }}
+        >
+          <Typography variant="body2">{m.text}</Typography>
+        </Box>
+      </Box>
+    );
+  })}
+
+  {typing && (
+    <Typography variant="caption" sx={{ opacity: 0.7 }}>
+      Sasha está escribiendo…
+    </Typography>
+  )}
+
+  <div ref={bottomRef} />
+</Box>
         </Paper>
       )}
     </>
