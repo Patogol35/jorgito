@@ -669,7 +669,12 @@ color: isUser
           whiteSpace: "pre-line",
         }}
       >
-        <Typography variant="body2">{m.text}</Typography>
+      <Typography
+  variant="body1"
+  sx={{ fontSize: "0.95rem", lineHeight: 1.5 }}
+>
+  {m.text}
+</Typography>
       </Box>
     </Box>
   );
