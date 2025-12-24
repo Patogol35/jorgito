@@ -686,6 +686,24 @@ color: isUser
 
 <div ref={bottomRef} />
 </Box>
+
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
+  {/* mensajes */}
+</Box>
+
+<Box sx={{ display: "flex", p: 1 }}>
+  <TextField
+    fullWidth
+    size="small"
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+    onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
+    placeholder="Escribe tu mensaje…"
+  />
+  <IconButton onClick={() => sendMessage(input)}>
+    <SendIcon sx={{ color: "#03A9F4" }} />
+  </IconButton>
+</Box>
         </Paper>
       )}
     </>
