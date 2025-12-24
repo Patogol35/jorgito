@@ -622,30 +622,36 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-        <Box
-  sx={{
-    p: 1,
-    overflowX: "auto",
-    whiteSpace: "nowrap",
-  }}
->
-  <Stack
-    direction="row"
-    spacing={1}
-    sx={{
-      width: "max-content",
-    }}
-  >
-    {SUGGESTIONS.map((q) => (
-      <Chip
-        key={q}
-        label={q}
-        size="small"
-        onClick={() => sendMessage(q)}
-        sx={{ flexShrink: 0 }}
-      />
-    ))}
-  </Stack>
+      <Box sx={{ p: 1 }}>
+  {isLandscape ? (
+    /* 👉 SOLO HORIZONTAL: una línea con scroll */
+    <Box
+      sx={{
+        display: "flex",
+        gap: 1,
+        overflowX: "auto",
+        whiteSpace: "nowrap",
+        pb: 1,
+      }}
+    >
+      {SUGGESTIONS.map((q) => (
+        <Chip
+          key={q}
+          label={q}
+          size="small"
+          onClick={() => sendMessage(q)}
+          sx={{ flexShrink: 0 }}
+        />
+      ))}
+    </Box>
+  ) : (
+    /* 👉 VERTICAL: como antes */
+    <Stack direction="row" flexWrap="wrap" gap={1}>
+      {SUGGESTIONS.map((q) => (
+        <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
+      ))}
+    </Stack>
+  )}
 </Box>
 
 
