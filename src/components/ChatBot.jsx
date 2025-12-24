@@ -358,25 +358,25 @@ GRA: randomPick([
     ]),
 
     EDUCATION: randomPick([
-      `Cuenta con un ${PROFILE.education} 😊`,
+      `Jorge centa con un ${PROFILE.education} 😊`,
       `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
       `Se formó profesionalmente con un ${PROFILE.education} 💕`
     ]),
 
     EXPERIENCE: randomPick([
-      `Tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
+      `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
       `Ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
       `Cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`
     ]),
 
     SKILLS: randomPick([
       `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-      `Utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
+      `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
       `Domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`
     ]),
 
     PROJECTS: randomPick([
-      `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+      `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
       `Participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
       `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`
     ]),
