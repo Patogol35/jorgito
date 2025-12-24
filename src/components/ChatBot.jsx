@@ -383,9 +383,8 @@ function getSmartResponse(message, context) {
     "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
     "Disfruta leer novelas de misterio y suspenso 📖✨",
     "Los libros de Dan Brown son de sus favoritos 📚 ideales si te gusta el misterio.",
-    "La lectura siempre inspira 📚",
-    "Los libros abren la mente ☺️",
-    "Leer es un gran hábito 💕"
+    "Jorge tiene muchos libros fabricio pero en especial disfruta los de misterios 📚"
+    
   ]),
 
   CREATOR: randomPick([
