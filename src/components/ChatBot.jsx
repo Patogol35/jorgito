@@ -387,7 +387,9 @@ function getSmartResponse(message, context) {
 const greetingMatch = text.match(/^(hola|buenas|buenos dias)\s+([a-zA-Záéíóúñ]+)/i);
 
 if (greetingMatch) {
-  const name = greetingMatch[2];
+  const name =
+  greetingMatch[2].charAt(0).toUpperCase() +
+  greetingMatch[2].slice(1).toLowerCase();
 
   if (!context.userName) {
     context.userName = name;
