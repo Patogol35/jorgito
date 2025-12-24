@@ -632,42 +632,54 @@ export default function ChatBot() {
 
 
 <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-  {messages.map((m, i) => {
-    const isUser = m.from === "user";
+{messages.map((m, i) => {
+  const isUser = m.from === "user";
+  const isDark = theme.palette.mode === "dark";
 
-    return (
+  return (
+    <Box
+      key={i}
+      sx={{
+        display: "flex",
+        justifyContent: isUser ? "flex-end" : "flex-start",
+        mb: 1,
+      }}
+    >
       <Box
-        key={i}
         sx={{
-          display: "flex",
-          justifyContent: isUser ? "flex-end" : "flex-start",
-          mb: 1,
+          maxWidth: "80%",
+          px: 1.5,
+          py: 1,
+          borderRadius: 2,
+          bgcolor: isUser
+            ? theme.palette.primary.main
+            : isDark
+            ? "rgba(255,255,255,0.08)"
+            : "rgba(0,0,0,0.06)",
+          color: isUser
+            ? "#fff"
+            : isDark
+            ? "rgba(255,255,255,0.9)"
+            : "inherit",
+          whiteSpace: "pre-line",
         }}
       >
-        <Box
-          sx={{
-            maxWidth: "80%",
-            px: 1.5,
-            py: 1,
-            borderRadius: 2,
-            bgcolor: isUser ? "#03A9F4" : "rgba(0,0,0,0.05)",
-            color: isUser ? "#fff" : "inherit",
-            whiteSpace: "pre-line",
-          }}
-        >
-          <Typography variant="body2">{m.text}</Typography>
-        </Box>
+        <Typography variant="body2">{m.text}</Typography>
       </Box>
-    );
-  })}
+    </Box>
+  );
+})}
 
-  {typing && (
-    <Typography variant="caption" sx={{ opacity: 0.7 }}>
-      Sasha está escribiendo…
-    </Typography>
-  )}
+{typing && (
+  <Typography
+    variant="caption"
+    sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+  >
+    Sasha está escribiendo…
+  </Typography>
+)}
 
-  <div ref={bottomRef} />
+<div ref={bottomRef} />
 </Box>
         </Paper>
       )}
