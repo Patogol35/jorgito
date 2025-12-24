@@ -589,9 +589,22 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
-            ...(isLandscape
-              ? { left: 0, right: 0, bottom: 0, height: "70vh" }
-              : { bottom: 90, left: 16, width: 360, height: 520 }),
+        ...(isLandscape
+  ? {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      height: "100vh",
+      borderRadius: 0,
+    }
+  : {
+      bottom: 90,
+      left: 16,
+      width: 360,
+      height: 520,
+      borderRadius: 12,
+    }),
           }}
         >
           <Box
