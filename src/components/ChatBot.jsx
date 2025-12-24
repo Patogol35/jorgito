@@ -401,9 +401,9 @@ function getSmartResponse(message, context) {
     "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
     "Así es 💻✨ combina frontend y backend en sus proyectos.",
     "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
-    "Domina tanto el lado visual como el lógico 😊",
+    "Si, Jorge domina tanto el lado visual como el lógico 😊",
     "Le gusta desarrollar proyectos completos ☺️",
-    "Trabaja en todas las capas del desarrollo 💕"
+    "Si Jorge trabaja en todas las capas del desarrollo 💕"
   ]),
 
   PROFILE: randomPick([
@@ -420,8 +420,7 @@ function getSmartResponse(message, context) {
     `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
     `Se formó profesionalmente con un ${PROFILE.education} 💕`,
     `Posee estudios enfocados en tecnología 😊`,
-    `Cuenta con preparación académica formal ☺️`,
-    `Su educación respalda su experiencia 💕`
+    `Cuenta con preparación académica solida en el área de la informatica ☺️`
   ]),
 
   EXPERIENCE: randomPick([
@@ -436,10 +435,10 @@ function getSmartResponse(message, context) {
   SKILLS: randomPick([
     `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
     `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
-    `Domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
+    `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
     "Maneja herramientas modernas del desarrollo web 😊",
     "Tiene habilidades técnicas bien definidas ☺️",
-    "Aplica buenas prácticas en sus proyectos 💕"
+    "Jorge aplica buenas prácticas en sus proyectos 💕"
   ]),
 
   PROJECTS: randomPick([
