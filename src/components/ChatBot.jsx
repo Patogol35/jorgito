@@ -747,20 +747,21 @@ export default function ChatBot() {
     overflow: "hidden",
 
     ...(isLandscape
-      ? {
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "100%",
-          maxWidth: 640,
-          height: "78vh",
-        }
-      : {
-          bottom: 90,
-          left: 16,
-          width: 360,
-          height: 520,
-        }),
+  ? {
+      top: 64,                 // 👈 deja espacio al menú
+      bottom: 0,
+      left: "50%",
+      transform: "translateX(-50%)",
+      width: "100%",
+      maxWidth: 640,
+      height: "auto",
+    }
+  : {
+      bottom: 90,
+      left: 16,
+      width: 360,
+      height: 520,
+    }),
   }}
 >
 
