@@ -738,34 +738,29 @@ export default function ChatBot() {
 
 
 
-      <Paper
+   <Paper
   sx={{
     position: "fixed",
-    zIndex: 1300,
+    zIndex: (theme) => theme.zIndex.modal + 2, // 👈 SIEMPRE encima del menú
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
 
     ...(isLandscape
-  ? {
-      top: 64,                 // 👈 deja espacio al menú
-      bottom: 0,
-      left: "50%",
-      transform: "translateX(-50%)",
-      width: "100%",
-      maxWidth: 640,
-      height: "auto",
-    }
-  : {
-      bottom: 90,
-      left: 16,
-      width: 360,
-      height: 520,
-    }),
+      ? {
+          inset: "64px 0 0 0",        // 👈 respeta el menú SIEMPRE
+          margin: "0 auto",
+          width: "100%",
+          maxWidth: 640,
+        }
+      : {
+          bottom: 90,
+          left: 16,
+          width: 360,
+          height: 520,
+        }),
   }}
 >
-
-
 
 
 
