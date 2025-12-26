@@ -748,7 +748,7 @@ export default function ChatBot() {
 
     ...(isLandscape
       ? {
-          inset: "64px 0 0 0",        // 👈 respeta el menú SIEMPRE
+          inset: "72px 0 0 0",        // 👈 respeta el menú SIEMPRE
           margin: "0 auto",
           width: "100%",
           maxWidth: 640,
