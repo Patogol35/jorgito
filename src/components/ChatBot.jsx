@@ -731,21 +731,45 @@ export default function ChatBot() {
       </Fab>
 
       {open && (
-        <Paper
-          sx={{
-            position: "fixed",
-            zIndex: 1300,
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
 
-...(isLandscape
-  ? { left: 0, right: 0, bottom: 0, height: "78vh" }
-  : { bottom: 90, left: 16, width: 360, height: 520 }),
 
-            
-          }}
-        >
+
+
+
+
+
+      <Paper
+  sx={{
+    position: "fixed",
+    zIndex: 1300,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+
+    ...(isLandscape
+      ? {
+          bottom: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100%",
+          maxWidth: 640,
+          height: "78vh",
+        }
+      : {
+          bottom: 90,
+          left: 16,
+          width: 360,
+          height: 520,
+        }),
+  }}
+>
+
+
+
+
+
+
+        
           <Box
             sx={{
               p: 1,
