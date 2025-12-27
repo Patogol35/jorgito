@@ -22,15 +22,14 @@ export default function Hero({ mode, setMode }) {
           justifyContent: "center",
           gap: { xs: 4, md: 8 },
           pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 2, sm: 3 },
+          pb: { xs: 2, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
         {/* Avatar */}
         <motion.div
-          animate={{ y: [0, -15, 0] }}
+          animate={{ y: [0, -12, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
-          style={{ borderRadius: "50%" }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -50,7 +49,7 @@ export default function Hero({ mode, setMode }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
+          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth={600}>
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -76,15 +75,15 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
                 lineHeight: 1.9,
-                opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
-                maxWidth: "520px",
+                maxWidth: 520,
                 mt: 3,
                 mb: 5,
+                opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
               }}
             >
               Me apasiona crear tecnología que transforma ideas en realidades
-              digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones seguras, innovadoras y con impacto real.
+              digitales. Desarrollo soluciones seguras, innovadoras y con impacto
+              positivo.
             </Typography>
 
             {/* Botones */}
@@ -92,44 +91,35 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 display: "flex",
                 gap: 2,
-                justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
+                justifyContent: { xs: "center", sm: "flex-start" },
               }}
             >
-              {/* CV */}
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
                 sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
+                  borderRadius: 25,
                   px: 4,
                   py: 1.4,
-                  textTransform: "none",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: `0 0 15px ${theme.palette.primary.main}88`,
-                  },
                 }}
               >
                 Ver CV
               </Button>
 
-              {/* Título */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
                 href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
                 target="_blank"
                 sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
+                  borderRadius: 25,
                   px: 4,
                   py: 1.4,
-                  textTransform: "none",
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: "none",
                 }}
@@ -137,19 +127,14 @@ export default function Hero({ mode, setMode }) {
                 Ver Título
               </Button>
 
-              {/* Sasha */}
               <Button
                 variant="contained"
                 startIcon={<SmartToyIcon />}
-                onClick={() => {
-                  if (window.openSashaChat) window.openSashaChat();
-                }}
+                onClick={() => window.openSashaChat?.()}
                 sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
+                  borderRadius: 25,
                   px: 4,
                   py: 1.4,
-                  textTransform: "none",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
                 }}
@@ -157,27 +142,25 @@ export default function Hero({ mode, setMode }) {
                 Sasha
               </Button>
 
-              {/* Modo oscuro */}
-              <Button
-                variant="outlined"
-                onClick={() =>
-                  setMode(mode === "light" ? "dark" : "light")
-                }
-                sx={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: "50%",
-                  minWidth: 48,
-                  borderColor: theme.palette.primary.main,
-                  color: theme.palette.primary.main,
-                  "&:hover": {
-                    background: theme.palette.primary.main,
+              {/* BOTÓN MODO SOLO ÍCONO */}
+              <motion.div whileTap={{ scale: 0.9 }} whileHover={{ rotate: 20 }}>
+                <Button
+                  onClick={() =>
+                    setMode(mode === "light" ? "dark" : "light")
+                  }
+                  sx={{
+                    width: 52,
+                    height: 52,
+                    minWidth: 52,
+                    borderRadius: "50%",
+                    background: `linear-gradient(135deg, ${theme.palette.primary.main}, #3b82f6)`,
                     color: "#fff",
-                  },
-                }}
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </Button>
+                    boxShadow: `0 0 20px ${theme.palette.primary.main}88`,
+                  }}
+                >
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </Button>
+              </motion.div>
             </Box>
           </Box>
         </motion.div>
