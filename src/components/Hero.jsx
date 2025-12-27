@@ -192,26 +192,22 @@ Sasha
 </Button>
 
 {/* Modo */}  
-          <Button  
-            variant="outlined"  
-            startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}  
-            onClick={() => setMode(mode === "light" ? "dark" : "light")}  
-            sx={{  
-              borderRadius: "25px",  
-              textTransform: "none",  
-              fontWeight: "bold",  
-              px: { xs: 3.5, md: 5 },  
-              py: 1.4,  
-              borderColor: theme.palette.primary.main,  
-              color: theme.palette.primary.main,  
-              "&:hover": {  
-                background: theme.palette.primary.main,  
-                color: "#fff",  
-              },  
-            }}  
-          >  
-            {mode === "light" ? "Modo Noche" : "Modo Día"}  
-          </Button>  
+          <IconButton
+  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+  sx={{
+    border: `2px solid ${theme.palette.primary.main}`,
+    color: theme.palette.primary.main,
+    width: 48,
+    height: 48,
+    borderRadius: "50%",
+    "&:hover": {
+      background: theme.palette.primary.main,
+      color: "#fff",
+    },
+  }}
+>
+  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+</IconButton>
         </Box>  
       </Box>  
     </motion.div>  
