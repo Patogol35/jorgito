@@ -644,6 +644,7 @@ saveMemory(context, { user: message, intent });
     intent
   };
 }
+
 /* =========================
 COMPONENTE
 ========================= */
@@ -651,6 +652,7 @@ export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isLandscape = useMediaQuery("(orientation: landscape)");
+
   const primaryBg = useMemo(
     () => (isDark ? "#000" : theme.palette.primary.main),
     [isDark, theme]
@@ -662,6 +664,7 @@ export default function ChatBot() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({});
+
   const initialMessage = useMemo(
     () => ({
       from: "bot",
@@ -671,6 +674,7 @@ export default function ChatBot() {
     }),
     []
   );
+
   const [messages, setMessages] = useState([initialMessage]);
 
   useEffect(() => {
@@ -680,27 +684,18 @@ export default function ChatBot() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, typing]);
 
-  const sendMessage = useCallback(
-    (text) => {
-      if (!text.trim()) return;
+  const sendMessage = useCallback((text) => {
+    if (!text.trim()) return;
 
-      setMessages((m) => [...m, { from: "user", text }]);
-      setInput("");
-      setTyping(true);
+    setMessages((m) => [...m, { from: "user", text }]);
+    setInput("");
+    setTyping(true);
 
-      setTimeout(() => {
-        const res = getSmartResponse(text, context);
-
-        setContext((prev) => ({
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp:
-            !res.fromFollowUp && followUp(res.intent)
-              ? res.intent
-              : null,
-        }));
+    setTimeout(() => {
+      setContext((prev) => {
+        const res = getSmartResponse(text, prev);
 
         setMessages((m) => [
           ...m,
@@ -709,16 +704,26 @@ export default function ChatBot() {
             ? [{ from: "bot", text: followUp(res.intent) }]
             : []),
         ]);
+
         setTyping(false);
-      }, delay());
-    },
-    [context]
-  );
+
+        return {
+          ...prev,
+          awaiting: res.action || null,
+          awaitingFollowUp:
+            !res.fromFollowUp && followUp(res.intent)
+              ? res.intent
+              : null,
+        };
+      });
+    }, delay());
+  }, []);
 
   return (
     <>
+      {/* BOTÓN FLOTANTE */}
       <Fab
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(true)}
         sx={{
           position: "fixed",
           bottom: 16,
@@ -730,42 +735,45 @@ export default function ChatBot() {
         <SmartToyIcon />
       </Fab>
 
+      {/* OVERLAY → CLICK FUERA CIERRA */}
       {open && (
+        <Box
+          onClick={() => setOpen(false)}
+          sx={{
+            position: "fixed",
+            inset: 0,
+            zIndex: (theme) => theme.zIndex.modal + 1,
+          }}
+        />
+      )}
 
+      {/* CHAT */}
+      {open && (
+        <Paper
+          onClick={(e) => e.stopPropagation()}
+          sx={{
+            position: "fixed",
+            zIndex: (theme) => theme.zIndex.modal + 2,
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
 
-
-
-
-
-
-   <Paper
-  sx={{
-    position: "fixed",
-    zIndex: (theme) => theme.zIndex.modal + 2, // 👈 SIEMPRE encima del menú
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
-
-    ...(isLandscape
-      ? {
-          inset: "72px 0 0 0",        // 👈 respeta el menú SIEMPRE
-          margin: "0 auto",
-          width: "100%",
-          maxWidth: 640,
-        }
-      : {
-          bottom: 90,
-          left: 16,
-          width: 360,
-          height: 520,
-        }),
-  }}
->
-
-
-
-
-        
+            ...(isLandscape
+              ? {
+                  inset: "72px 0 0 0",
+                  margin: "0 auto",
+                  width: "100%",
+                  maxWidth: 640,
+                }
+              : {
+                  bottom: 90,
+                  left: 16,
+                  width: 360,
+                  height: 520,
+                }),
+          }}
+        >
+          {/* HEADER */}
           <Box
             sx={{
               p: 1,
@@ -773,14 +781,14 @@ export default function ChatBot() {
               color: "#fff",
               display: "flex",
               justifyContent: "space-between",
+              alignItems: "center",
             }}
           >
             <Box display="flex" alignItems="center" gap={1}>
-  <SmartToyIcon fontSize="small" />
-  <Typography fontWeight="bold">
-    Sasha
-  </Typography>
-</Box>
+              <SmartToyIcon fontSize="small" />
+              <Typography fontWeight="bold">Sasha</Typography>
+            </Box>
+
             <Box>
               <IconButton
                 size="small"
@@ -799,117 +807,123 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-      <Box sx={{ p: 1 }}>
-  {isLandscape ? (
-    /* 👉 SOLO HORIZONTAL: una línea con scroll */
-    <Box
-      sx={{
-        display: "flex",
-        gap: 1,
-        overflowX: "auto",
-        whiteSpace: "nowrap",
-        pb: 1,
-      }}
-    >
-      {SUGGESTIONS.map((q) => (
-        <Chip
-          key={q}
-          label={q}
-          size="small"
-          onClick={() => sendMessage(q)}
-          sx={{ flexShrink: 0 }}
-        />
-      ))}
-    </Box>
-  ) : (
-    /* 👉 VERTICAL: como antes */
-    <Stack direction="row" flexWrap="wrap" gap={1}>
-      {SUGGESTIONS.map((q) => (
-        <Chip key={q} label={q} size="small" onClick={() => sendMessage(q)} />
-      ))}
-    </Stack>
-  )}
-</Box>
+          {/* SUGERENCIAS */}
+          <Box sx={{ p: 1 }}>
+            {isLandscape ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  overflowX: "auto",
+                  whiteSpace: "nowrap",
+                  pb: 1,
+                }}
+              >
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                    sx={{ flexShrink: 0 }}
+                  />
+                ))}
+              </Box>
+            ) : (
+              <Stack direction="row" flexWrap="wrap" gap={1}>
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                  />
+                ))}
+              </Stack>
+            )}
+          </Box>
 
+          {/* MENSAJES */}
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
+            {messages.map((m, i) => {
+              const isUser = m.from === "user";
 
-<Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-  {messages.map((m, i) => {
-    const isUser = m.from === "user";
-    const isDark = theme.palette.mode === "dark";
+              return (
+                <Box
+                  key={i}
+                  sx={{
+                    display: "flex",
+                    justifyContent: isUser ? "flex-end" : "flex-start",
+                    mb: 1,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      maxWidth: "80%",
+                      px: 1.5,
+                      py: 1,
+                      borderRadius: 2,
+                      bgcolor: isUser
+                        ? isDark
+                          ? theme.palette.primary.light
+                          : theme.palette.primary.main
+                        : isDark
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(0,0,0,0.06)",
+                      color: isUser
+                        ? isDark
+                          ? "#000"
+                          : "#fff"
+                        : "inherit",
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
+                        lineHeight: isLandscape ? 1.4 : 1.5,
+                      }}
+                    >
+                      {m.text}
+                    </Typography>
+                  </Box>
+                </Box>
+              );
+            })}
 
-    return (
-      <Box
-        key={i}
-        sx={{
-          display: "flex",
-          justifyContent: isUser ? "flex-end" : "flex-start",
-          mb: 1,
-        }}
-      >
-        <Box
-          sx={{
-            maxWidth: "80%",
-            px: 1.5,
-            py: 1,
-            borderRadius: 2,
-            bgcolor: isUser
-              ? isDark
-                ? theme.palette.primary.light
-                : theme.palette.primary.main
-              : isDark
-              ? "rgba(255,255,255,0.10)"
-              : "rgba(0,0,0,0.06)",
-            color: isUser
-              ? isDark
-                ? "#000"
-                : "#fff"
-              : isDark
-              ? "rgba(255,255,255,0.9)"
-              : "inherit",
-            whiteSpace: "pre-line",
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: isLandscape ? "0.85rem" : "0.95rem",
-              lineHeight: isLandscape ? 1.4 : 1.5,
-            }}
-          >
-            {m.text}
-          </Typography>
-        </Box>
-      </Box>
-    );
-  })}
+            {typing && (
+              <Typography
+                variant="caption"
+                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+              >
+                Sasha está escribiendo…
+              </Typography>
+            )}
 
-  {typing && (
-    <Typography
-      variant="caption"
-      sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
-    >
-      Sasha está escribiendo…
-    </Typography>
-  )}
+            <div ref={bottomRef} />
+          </Box>
 
-  <div ref={bottomRef} />
-</Box>
-
-<Box sx={{ display: "flex", p: 1 }}>
-  <TextField
-    fullWidth
-    size="small"
-    value={input}
-    onChange={(e) => setInput(e.target.value)}
-    onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-    placeholder="Escribe tu mensaje…"
-  />
-  <IconButton onClick={() => sendMessage(input)}>
-    <SendIcon sx={{ color: "#03A9F4" }} />
-  </IconButton>
-</Box>
+          {/* INPUT */}
+          <Box sx={{ display: "flex", p: 1 }}>
+            <TextField
+              fullWidth
+              size="small"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage(input);
+                }
+              }}
+              placeholder="Escribe tu mensaje…"
+            />
+            <IconButton onClick={() => sendMessage(input)}>
+              <SendIcon sx={{ color: "#03A9F4" }} />
+            </IconButton>
+          </Box>
         </Paper>
       )}
     </>
   );
-}
+                 }
