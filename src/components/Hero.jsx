@@ -191,10 +191,10 @@ Sasha
     minWidth: 48,
     width: 48,
     height: 48,
+    padding: 0,
     borderRadius: "50%",
     borderColor: theme.palette.primary.main,
     color: theme.palette.primary.main,
-    padding: 0,
     "&:hover": {
       background: theme.palette.primary.main,
       color: "#fff",
