@@ -535,6 +535,30 @@ if (thanksMatch) {
 
 
 
+const moodMatch = text.match(
+  /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (moodMatch) {
+  const name = normalize(moodMatch[2] || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.MOOD,
+      intent: "MOOD",
+    };
+  }
+
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
+
+
+
+  
+
 
   
 /* =========================
