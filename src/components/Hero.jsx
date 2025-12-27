@@ -1,25 +1,13 @@
-import {
-  Toolbar,
-  Box,
-  Typography,
-  Button,
-  Avatar,
-  Dialog,
-  IconButton,
-} from "@mui/material";
+import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { Brightness4, Brightness7, Close } from "@mui/icons-material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
-
-  const [openTitle, setOpenTitle] = useState(false);
-  const [zoom, setZoom] = useState(false);
 
   return (
     <>
@@ -39,10 +27,11 @@ export default function Hero({ mode, setMode }) {
           color: theme.palette.text.primary,
         }}
       >
-        {/* Avatar */}
+        {/* Avatar animado */}
         <motion.div
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
+          style={{ borderRadius: "50%" }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -61,7 +50,11 @@ export default function Hero({ mode, setMode }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
+          <Box
+            textAlign={{ xs: "center", sm: "left" }}
+            maxWidth="600px"
+            mx="auto"
+          >
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -89,6 +82,7 @@ export default function Hero({ mode, setMode }) {
                 lineHeight: 1.9,
                 letterSpacing: "0.3px",
                 fontWeight: 400,
+                color: theme.palette.text.primary,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 maxWidth: "520px",
                 mt: { xs: 3, sm: 3.5 },
@@ -110,27 +104,43 @@ export default function Hero({ mode, setMode }) {
                 flexWrap: "wrap",
               }}
             >
+              {/* CV */}
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
+                  textTransform: "none",
                   fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver CV
               </Button>
 
-              {/* BOTÓN TÍTULO (MISMO DISEÑO) */}
+              {/* Título */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
-                onClick={() => setOpenTitle(true)}
+                href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
+                  textTransform: "none",
                   fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver Título
@@ -139,17 +149,48 @@ export default function Hero({ mode, setMode }) {
               <Button
                 variant="contained"
                 startIcon={<SmartToyIcon />}
-                onClick={() => window.openSashaChat?.()}
-                sx={{ borderRadius: "25px", fontWeight: "bold" }}
+                onClick={() => {
+                  if (window.openSashaChat) window.openSashaChat();
+                }}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(
+                    90deg,
+                    ${theme.palette.primary.main},
+                    #3b82f6
+                  )`,
+                  boxShadow: "none",
+                  minHeight: 48,
+                  "&:hover": {
+                    boxShadow: "none",
+                  },
+                }}
               >
                 Sasha
               </Button>
 
+              {/* Modo */}
               <Button
                 variant="outlined"
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{ borderRadius: "25px", fontWeight: "bold" }}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  borderColor: theme.palette.primary.main,
+                  color: theme.palette.primary.main,
+                  "&:hover": {
+                    background: theme.palette.primary.main,
+                    color: "#fff",
+                  },
+                }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
               </Button>
@@ -157,49 +198,6 @@ export default function Hero({ mode, setMode }) {
           </Box>
         </motion.div>
       </Box>
-
-      {/* MODAL TÍTULO CON ZOOM REAL */}
-      <Dialog
-        open={openTitle}
-        onClose={() => {
-          setOpenTitle(false);
-          setZoom(false);
-        }}
-        maxWidth="md"
-        fullWidth
-        PaperProps={{
-          sx: {
-            borderRadius: 3,
-          },
-        }}
-      >
-        <Box sx={{ position: "relative", p: 2 }}>
-          <IconButton
-            onClick={() => {
-              setOpenTitle(false);
-              setZoom(false);
-            }}
-            sx={{ position: "absolute", top: 8, right: 8 }}
-          >
-            <Close />
-          </IconButton>
-
-          <Box
-            component="img"
-            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-            alt="Título"
-            onClick={() => setZoom(!zoom)}
-            sx={{
-              width: "100%",
-              maxHeight: "70vh",
-              objectFit: "contain",
-              cursor: zoom ? "zoom-out" : "zoom-in",
-              transform: zoom ? "scale(1.25)" : "scale(1)",
-              transition: "transform 0.3s ease",
-            }}
-          />
-        </Box>
-      </Dialog>
     </>
   );
 }
