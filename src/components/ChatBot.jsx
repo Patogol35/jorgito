@@ -802,7 +802,7 @@ export default function ChatBot() {
 
             ...(isLandscape
               ? {
-                  inset: "72px 0 0 0",
+                  inset: "72px 0 24px 0",
                   margin: "0 auto",
                   width: "100%",
                   maxWidth: 640,
