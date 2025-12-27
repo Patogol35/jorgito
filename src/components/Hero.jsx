@@ -17,7 +17,9 @@ import { useState } from "react";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
+
   const [openTitle, setOpenTitle] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
   return (
     <>
@@ -34,11 +36,12 @@ export default function Hero({ mode, setMode }) {
           pt: { xs: 6, sm: 8, md: 10 },
           pb: { xs: 1.5, sm: 2.5, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
+          color: theme.palette.text.primary,
         }}
       >
         {/* Avatar */}
         <motion.div
-          animate={{ y: [0, -12, 0] }}
+          animate={{ y: [0, -15, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
         >
           <Avatar
@@ -54,9 +57,9 @@ export default function Hero({ mode, setMode }) {
 
         {/* Texto */}
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8 }}
         >
           <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
             <Typography
@@ -84,15 +87,18 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
                 lineHeight: 1.9,
-                maxWidth: "520px",
-                mt: 3,
-                mb: 5,
+                letterSpacing: "0.3px",
+                fontWeight: 400,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
+                maxWidth: "520px",
+                mt: { xs: 3, sm: 3.5 },
+                mb: { xs: 4, sm: 5 },
               }}
             >
               Me apasiona crear tecnología que transforma ideas en realidades
               digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones seguras e innovadoras.
+              desarrollando soluciones digitales seguras, innovadoras y
+              orientadas a generar impacto positivo.
             </Typography>
 
             {/* Botones */}
@@ -100,8 +106,8 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 display: "flex",
                 gap: 2,
-                flexWrap: "wrap",
                 justifyContent: { xs: "center", sm: "flex-start" },
+                flexWrap: "wrap",
               }}
             >
               <Button
@@ -109,16 +115,23 @@ export default function Hero({ mode, setMode }) {
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
-                sx={{ borderRadius: "25px", fontWeight: "bold" }}
+                sx={{
+                  borderRadius: "25px",
+                  fontWeight: "bold",
+                }}
               >
                 Ver CV
               </Button>
 
+              {/* BOTÓN TÍTULO (MISMO DISEÑO) */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
                 onClick={() => setOpenTitle(true)}
-                sx={{ borderRadius: "25px", fontWeight: "bold" }}
+                sx={{
+                  borderRadius: "25px",
+                  fontWeight: "bold",
+                }}
               >
                 Ver Título
               </Button>
@@ -145,22 +158,27 @@ export default function Hero({ mode, setMode }) {
         </motion.div>
       </Box>
 
-      {/* Modal Título — versión BONITA */}
+      {/* MODAL TÍTULO CON ZOOM REAL */}
       <Dialog
         open={openTitle}
-        onClose={() => setOpenTitle(false)}
-        maxWidth="sm"
+        onClose={() => {
+          setOpenTitle(false);
+          setZoom(false);
+        }}
+        maxWidth="md"
         fullWidth
         PaperProps={{
           sx: {
             borderRadius: 3,
-            background: theme.palette.background.paper,
           },
         }}
       >
         <Box sx={{ position: "relative", p: 2 }}>
           <IconButton
-            onClick={() => setOpenTitle(false)}
+            onClick={() => {
+              setOpenTitle(false);
+              setZoom(false);
+            }}
             sx={{ position: "absolute", top: 8, right: 8 }}
           >
             <Close />
@@ -169,16 +187,19 @@ export default function Hero({ mode, setMode }) {
           <Box
             component="img"
             src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-            alt="Título de Máster"
+            alt="Título"
+            onClick={() => setZoom(!zoom)}
             sx={{
               width: "100%",
               maxHeight: "70vh",
               objectFit: "contain",
-              borderRadius: 2,
+              cursor: zoom ? "zoom-out" : "zoom-in",
+              transform: zoom ? "scale(1.25)" : "scale(1)",
+              transition: "transform 0.3s ease",
             }}
           />
         </Box>
       </Dialog>
     </>
   );
-              }
+}
