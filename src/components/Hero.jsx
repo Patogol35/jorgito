@@ -22,12 +22,11 @@ export default function Hero({ mode, setMode }) {
           justifyContent: "center",
           gap: { xs: 4, md: 8 },
           pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 1.5, sm: 2.5, md: 3 },
+          pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
-          color: theme.palette.text.primary,
         }}
       >
-        {/* Avatar animado */}
+        {/* Avatar */}
         <motion.div
           animate={{ y: [0, -15, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
@@ -40,21 +39,18 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
+              boxShadow: `0 0 30px ${theme.palette.primary.main}55`,
             }}
           />
         </motion.div>
 
         {/* Texto */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Box
-            textAlign={{ xs: "center", sm: "left" }}
-            maxWidth="600px"
-            mx="auto"
-          >
+          <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -80,19 +76,15 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
                 lineHeight: 1.9,
-                letterSpacing: "0.3px",
-                fontWeight: 400,
-                color: theme.palette.text.primary,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 maxWidth: "520px",
-                mt: { xs: 3, sm: 3.5 },
-                mb: { xs: 4, sm: 5 },
+                mt: 3,
+                mb: 5,
               }}
             >
               Me apasiona crear tecnología que transforma ideas en realidades
               digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones digitales seguras, innovadoras y
-              orientadas a generar impacto positivo.
+              desarrollando soluciones seguras, innovadoras y con impacto real.
             </Typography>
 
             {/* Botones */}
@@ -110,17 +102,16 @@ export default function Hero({ mode, setMode }) {
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
-                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
-                  textTransform: "none",
                   fontWeight: "bold",
-                  px: { xs: 3.5, md: 5 },
+                  px: 4,
                   py: 1.4,
+                  textTransform: "none",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
                   "&:hover": {
-                    boxShadow: "none",
+                    boxShadow: `0 0 15px ${theme.palette.primary.main}88`,
                   },
                 }}
               >
@@ -133,18 +124,14 @@ export default function Hero({ mode, setMode }) {
                 startIcon={<WorkspacePremiumIcon />}
                 href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
                 target="_blank"
-                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
-                  textTransform: "none",
                   fontWeight: "bold",
-                  px: { xs: 3.5, md: 5 },
+                  px: 4,
                   py: 1.4,
+                  textTransform: "none",
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                  },
                 }}
               >
                 Ver Título
@@ -159,35 +146,28 @@ export default function Hero({ mode, setMode }) {
                 }}
                 sx={{
                   borderRadius: "25px",
-                  textTransform: "none",
                   fontWeight: "bold",
-                  px: { xs: 3.5, md: 5 },
+                  px: 4,
                   py: 1.4,
-                  minHeight: 48,
+                  textTransform: "none",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  },
-                  "&:active": {
-                    transform: "none",
-                  },
                 }}
               >
                 Sasha
               </Button>
 
-              {/* Modo oscuro/claro */}
+              {/* Modo oscuro */}
               <Button
                 variant="outlined"
-                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                onClick={() =>
+                  setMode(mode === "light" ? "dark" : "light")
+                }
                 sx={{
-                  minWidth: 48,
                   width: 48,
                   height: 48,
-                  padding: 0,
                   borderRadius: "50%",
+                  minWidth: 48,
                   borderColor: theme.palette.primary.main,
                   color: theme.palette.primary.main,
                   "&:hover": {
