@@ -555,7 +555,25 @@ if (moodMatch) {
   };
 }
 
+const doingMatch = text.match(
+  /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
+if (doingMatch) {
+  const name = normalize(doingMatch[2] || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.WHAT_DOING,
+      intent: "WHAT_DOING",
+    };
+  }
+
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
 
   
 
