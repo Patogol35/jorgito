@@ -1,18 +1,23 @@
-import { Toolbar, Box, Typography, Button, Avatar, Dialog, IconButton, useMediaQuery } from "@mui/material";
+import {
+  Toolbar,
+  Box,
+  Typography,
+  Button,
+  Avatar,
+  Dialog,
+  IconButton,
+} from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7, Close } from "@mui/icons-material";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const [openTitle, setOpenTitle] = useState(false);
-  const [zoom, setZoom] = useState(false);
 
   return (
     <>
@@ -33,7 +38,7 @@ export default function Hero({ mode, setMode }) {
       >
         {/* Avatar */}
         <motion.div
-          animate={{ y: [0, -15, 0] }}
+          animate={{ y: [0, -12, 0] }}
           transition={{ duration: 3, repeat: Infinity }}
         >
           <Avatar
@@ -49,9 +54,9 @@ export default function Hero({ mode, setMode }) {
 
         {/* Texto */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
+          initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
         >
           <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
             <Typography
@@ -66,7 +71,12 @@ export default function Hero({ mode, setMode }) {
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
 
-            <Typography variant="h6" color="text.secondary" gutterBottom sx={{ fontStyle: "italic" }}>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              gutterBottom
+              sx={{ fontStyle: "italic" }}
+            >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
 
@@ -80,25 +90,26 @@ export default function Hero({ mode, setMode }) {
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
               }}
             >
-              Me apasiona crear tecnología que transforma ideas en realidades digitales.
-              Mi enfoque está en aportar valor constante, desarrollando soluciones digitales
-              seguras, innovadoras y orientadas a generar impacto positivo.
+              Me apasiona crear tecnología que transforma ideas en realidades
+              digitales. Mi enfoque está en aportar valor constante,
+              desarrollando soluciones seguras e innovadoras.
             </Typography>
 
             {/* Botones */}
-            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", justifyContent: { xs: "center", sm: "flex-start" } }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                flexWrap: "wrap",
+                justifyContent: { xs: "center", sm: "flex-start" },
+              }}
+            >
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
-                sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                }}
+                sx={{ borderRadius: "25px", fontWeight: "bold" }}
               >
                 Ver CV
               </Button>
@@ -107,13 +118,7 @@ export default function Hero({ mode, setMode }) {
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
                 onClick={() => setOpenTitle(true)}
-                sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                  background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                }}
+                sx={{ borderRadius: "25px", fontWeight: "bold" }}
               >
                 Ver Título
               </Button>
@@ -122,12 +127,7 @@ export default function Hero({ mode, setMode }) {
                 variant="contained"
                 startIcon={<SmartToyIcon />}
                 onClick={() => window.openSashaChat?.()}
-                sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                }}
+                sx={{ borderRadius: "25px", fontWeight: "bold" }}
               >
                 Sasha
               </Button>
@@ -136,12 +136,7 @@ export default function Hero({ mode, setMode }) {
                 variant="outlined"
                 startIcon={mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                sx={{
-                  borderRadius: "25px",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                }}
+                sx={{ borderRadius: "25px", fontWeight: "bold" }}
               >
                 {mode === "light" ? "Modo Noche" : "Modo Día"}
               </Button>
@@ -150,45 +145,38 @@ export default function Hero({ mode, setMode }) {
         </motion.div>
       </Box>
 
-      {/* Modal Título */}
+      {/* Modal Título — versión BONITA */}
       <Dialog
         open={openTitle}
-        onClose={() => {
-          setOpenTitle(false);
-          setZoom(false);
-        }}
-        fullScreen={isMobile}
-        maxWidth="md"
+        onClose={() => setOpenTitle(false)}
+        maxWidth="sm"
         fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 3,
+            background: theme.palette.background.paper,
+          },
+        }}
       >
         <Box sx={{ position: "relative", p: 2 }}>
           <IconButton
-            onClick={() => {
-              setOpenTitle(false);
-              setZoom(false);
-            }}
-            sx={{ position: "absolute", top: 8, right: 8, zIndex: 10 }}
+            onClick={() => setOpenTitle(false)}
+            sx={{ position: "absolute", top: 8, right: 8 }}
           >
             <Close />
           </IconButton>
 
-          <AnimatePresence>
-            <motion.img
-              key={zoom ? "zoom" : "normal"}
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-              alt="Título de Máster"
-              onClick={() => setZoom(!zoom)}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: zoom ? 1.4 : 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              style={{
-                width: "100%",
-                cursor: "zoom-in",
-                borderRadius: 12,
-              }}
-            />
-          </AnimatePresence>
+          <Box
+            component="img"
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
+            alt="Título de Máster"
+            sx={{
+              width: "100%",
+              maxHeight: "70vh",
+              objectFit: "contain",
+              borderRadius: 2,
+            }}
+          />
         </Box>
       </Dialog>
     </>
