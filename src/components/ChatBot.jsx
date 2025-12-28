@@ -629,12 +629,13 @@ if (context.awaiting === "CONTACT_CONFIRM") {
   }
 }
   
+
 /* =========================
    FOLLOW UPS
 ========================= */
 if (context.awaitingFollowUp) {
 
-  if (YES_WORDS.some(word => text.includes(word))) {
+  if (YES_WORDS.some(word => normalizedText.includes(word))) {
     const followIntent = context.awaitingFollowUp;
     context.awaitingFollowUp = null;
 
@@ -678,7 +679,7 @@ if (context.awaitingFollowUp) {
     };
   }
 
-  if (NO_WORDS.some(word => text.includes(word))) {
+  if (NO_WORDS.some(word => normalizedText.includes(word))) {
     context.awaitingFollowUp = null;
     return {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
@@ -686,7 +687,10 @@ if (context.awaitingFollowUp) {
       fromFollowUp: true,
     };
   }
-}
+      }
+
+
+  
   /* =========================
      DETECTAR INTENT NORMAL
   ========================= */
