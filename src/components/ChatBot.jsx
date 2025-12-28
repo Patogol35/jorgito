@@ -554,6 +554,7 @@ const match = text.match(patternAskPerson);
 if (match) {
   const askedName = normalize(match[2]);
 
+  // 👉 Si NO está permitido → responder rechazo
   if (!allowedNames.includes(askedName)) {
     return {
       text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
@@ -561,8 +562,8 @@ if (match) {
     };
   }
 
-  // 👉 Si es Jorge, Sasha o Patricio → continuar normal
-  return null;
+  // 👉 Si es permitido → dejar que siga el chat normal SIN devolver nada
+  return; // <--- ESTA ES LA CLAVE para que NO rompa la pantalla
 }
   
 /* =========================
