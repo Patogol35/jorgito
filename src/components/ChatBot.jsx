@@ -461,7 +461,7 @@ if (thanksMatch) {
 
   if (!name || name === BOT_NAME) {
     return {
-      text: replies.GRA,
+      text: replies.GRA(context),
       intent: "GRA",
     };
   }
@@ -484,7 +484,7 @@ if (moodMatch) {
 
   if (!name || name === BOT_NAME) {
     return {
-      text: replies.MOOD,
+      text: replies.MOOD(context),
       intent: "MOOD",
     };
   }
@@ -507,7 +507,7 @@ if (doingMatch) {
 
   if (!name || name === BOT_NAME) {
     return {
-      text: replies.WHAT_DOING,
+      text: replies.WHAT_DOING(context),
       intent: "WHAT_DOING",
     };
   }
