@@ -540,31 +540,63 @@ LIKES_HELP: (ctx) =>
 };
 
 const BOT_NAME = "sasha";
+/* =========================================
+   🟣 DETECTOR DE NOMBRES EN EL MENSAJE
+========================================= */
+const allowedNames = ["jorge", "sasha"]; // Nombres con información
+const userNames = ["patricio"]; // Nombre del usuario
 
-  /* =========================
-⚠️ NOMBRE DESCONOCIDO
-========================= */
-const allowedNames = ["jorge", "sasha"];
+const normalize = (str) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-// solo detectar palabras con pinta de nombre propio
+const presentingMyself = /(me llamo|soy|mi nombre es)\s+([a-záéíóúñ]+)/i;
+const askingAboutName = /(háblame|hablame|quién es|quien es|info|información)\s+de\s+([a-záéíóúñ]+)/i;
+
 const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
 
 if (nameCheck) {
   const normalized = nameCheck.map(normalize);
-  const foundAllowed = normalized.some((nm) => allowedNames.includes(nm));
-  const foundUnknown = normalized.some((nm) => !allowedNames.includes(nm));
 
-  // 👉 Si menciona un nombre PERMITIDO → seguimos normal
-  if (foundAllowed) return null;
+  // 👉 Caso: “Me llamo Patricio”
+  const matchSelf = text.match(presentingMyself);
+  if (matchSelf) {
+    const saidName = normalize(matchSelf[2]);
+    if (userNames.includes(saidName)) {
+      return {
+        text: `¡Mucho gusto, ${matchSelf[2]}! 😊`,
+        intent: "USER_NAME",
+      };
+    }
+  }
 
-  // 👉 Si solo menciona nombres desconocidos → bloqueo
-  if (foundUnknown) {
+  // 👉 Caso: “Háblame de …”
+  const matchAsk = text.match(askingAboutName);
+  if (matchAsk) {
+    const askedName = normalize(matchAsk[2]);
+
+    // Si es sobre Sasha
+    if (askedName === "sasha") {
+      return {
+        text: "¡Claro! Sasha soy yo 🤖💕 ¿Qué te gustaría saber?",
+        intent: "ABOUT_SASHA",
+      };
+    }
+
+    // Si es sobre Jorge
+    if (askedName === "jorge") {
+      return {
+        text: "Jorge es el creador de todo este proyecto 😎✨",
+        intent: "ABOUT_JORGE",
+      };
+    }
+
+    // Si piden información de un nombre desconocido o del usuario → bloquear
     return {
       text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
       intent: "UNKNOWN",
     };
   }
-}
+  }
 
 /* =========================
 🟢 SALUDO CORRECTO
