@@ -541,29 +541,7 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
-/* =========================
-⚠️ NOMBRE DESCONOCIDO (solo Jorge permitido)
-========================= */
-const allowedPerson = "jorge";
-const patternAskPerson =
-  /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
 
-const match = text.match(patternAskPerson);
-
-if (match) {
-  const askedName = normalize(match[2]);
-
-  // 👉 Si es Jorge → permitir
-  if (askedName === allowedPerson) {
-    // No retornes nada aquí, deja que siga el flujo normal para Jorge
-  } else {
-    // 👉 Cualquier otro nombre → bloquear
-    return {
-      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-      intent: "UNKNOWN",
-    };
-  }
-}
   
 /* =========================
 🟢 SALUDO CORRECTO
