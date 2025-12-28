@@ -605,6 +605,9 @@ if (intent === "CONTACT") {
   };
 }
 
+// =========================
+// 🧠 RESPUESTA NORMAL
+// =========================
 let replyText;
 
 if (typeof replies[intent] === "function") {
