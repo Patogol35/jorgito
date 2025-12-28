@@ -541,10 +541,11 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
-/* =========================
-⚠️ BLOQUEAR NOMBRES DESCONOCIDOS
-========================= */
-const allowedNames = ["jorge", "sasha", "patricio"];
+/* ===================================================
+   🔎 CONTROL DE NOMBRES PERMITIDOS Y RESPUESTAS
+=================================================== */
+const allowedProfiles = ["jorge", "sasha"];  // Perfiles con info
+const userNames = ["patricio"]; // Nombres del usuario (NO bloquear)
 
 const patternAskPerson =
   /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
@@ -554,18 +555,36 @@ const match = text.match(patternAskPerson);
 if (match) {
   const askedName = normalize(match[2]);
 
-  // 👉 Si NO está permitido → responder rechazo
-  if (!allowedNames.includes(askedName)) {
+  // ⭐ Caso especial: El usuario también es Patricio
+  if (userNames.includes(askedName)) {
     return {
-      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-      intent: "UNKNOWN",
+      text: "¡Claro que sí! 😊 Tú eres Patricio, la persona con la que estoy conversando ahora mismo 🤝✨ ¿Qué te gustaría que cuente sobre ti?",
+      intent: "ABOUT_USER",
     };
   }
 
-  // 👉 Si es permitido → dejar que siga el chat normal SIN devolver nada
-  return; // <--- ESTA ES LA CLAVE para que NO rompa la pantalla
-}
-  
+  // ⭐ Información sobre Sasha
+  if (askedName === "sasha") {
+    return {
+      text: "¡Claro! Sasha soy yo 🤖💕 Tu asistente virtual.",
+      intent: "ABOUT_SASHA",
+    };
+  }
+
+  // ⭐ Información sobre Jorge
+  if (askedName === "jorge") {
+    return {
+      text: "Jorge es el creador de este proyecto 😎✨ ¿Quieres saber su experiencia o tecnologías?",
+      intent: "ABOUT_JORGE",
+    };
+  }
+
+  // 🚫 Nombres desconocidos → bloquear
+  return {
+    text: "Perdón 😅 no tengo información sobre esa persona, ¡pero sí puedo contarte sobre Jorge! 😊",
+    intent: "UNKNOWN",
+  };
+      }
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
