@@ -199,7 +199,7 @@ const followUp = (intent) =>
   ({
     PROFILE: "¿Quieres conocer su experiencia profesional?",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: null,
+    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
     PROJECTS: null,
   }[intent] || null);
 
