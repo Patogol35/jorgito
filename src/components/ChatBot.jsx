@@ -164,8 +164,6 @@ const INTENTS = {
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
 };
-
-
 /* =========================
 NORMALIZACIÓN
 ========================= */
@@ -257,9 +255,6 @@ const pickNonRepeated = (ctx, intent, options) => {
   return choice;
 };
 
-
-
-
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
@@ -271,7 +266,6 @@ function getSmartResponse(message, context) {
       context.awaitingFollowUp = null;
     }
   }
-
 
 const replies = {
   GRA: (ctx) =>
@@ -375,98 +369,97 @@ const replies = {
     ]),
 
   BOOK: (ctx) =>
-    pickNonRepeated(ctx, "BOOK", [
-      "A Jorge le encantan los libros de misterio 📚, especialmente Dan Brown 😊",
-      "Disfruta leer novelas de suspenso 📖",
-      "La lectura es una de sus pasiones, le gustan los libros de Dan Brown☺️",
-      "Jorge tiene muchos libros favoritos, uno de sus libros favoritos trata acerca de las ciencias noèticas 😌",
-      "Jorge suele leer novelas de suspenso literario😊",
-      "Los libros lo inspiran mucho y tiene muchos libros favoritos, tiene una biblioteca con varias temáticas, entre sus favoritas las de misterio💕",
-    ]),
+  pickNonRepeated(ctx, "BOOK", [
+    "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
+    "Disfruta leer novelas de misterio y suspenso 📖✨",
+    "Los libros de Dan Brown son de sus favoritos 📚 ideales si te gusta el misterio.",
+    "Le gusta mucho el suspenso literario 😊",
+    "La lectura es una de sus pasiones ☺️",
+    "Los libros de misterio siempre le llaman la atención 💕",
+  ]),
 
   CREATOR: (ctx) =>
-    pickNonRepeated(ctx, "CREATOR", [
-      "Fui creada por Jorge 😊 para ayudar a conocer su perfil profesional.",
-      "Soy una IA creada por Jorge 💻",
-      "Mi propósito es apoyar el perfil de Jorge 💕",
-      "Jorge me diseñó con cariño ☺️",
-      "Nací para representar el trabajo de Jorge, mi creador 😊",
-      "Jorge me creo con el objetivo de formar parte de su portafolio digital 💻",
-    ]),
+  pickNonRepeated(ctx, "CREATOR", [
+    "Fui creada por Jorge 😊 para ayudar a conocer mejor su perfil profesional.",
+    "Soy una inteligencia artificial creada por Jorge 💻",
+    "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
+    "Jorge me diseñó para ayudarte 😊",
+    "Fui creada como asistente virtual de Jorge ☺️",
+    "Mi propósito es apoyar el perfil de Jorge 💕",
+  ]),
 
   STACK: (ctx) =>
-    pickNonRepeated(ctx, "STACK", [
-      "Sí 😊 Jorge es Full Stack.",
-      "Jorge combina frontend y backend en sus proyectos 💻",
-      "Jorge disfruta crear soluciones completas ☺️",
-      "Jorge tiene una visión integral del desarrollo 😊",
-      " Jorge maneja varias tecnologías, por lo tanto es Full Stack.💕",
-      "Jorge es full stack, domina el modelo y visual de un proyecto.💻",
-    ]),
+  pickNonRepeated(ctx, "STACK", [
+    "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
+    "Así es 💻✨ combina frontend y backend en sus proyectos.",
+    "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
+    "Sí 😊 Jorge domina tanto el lado visual como el lógico.",
+    "Sí ☺️ le gusta desarrollar proyectos completos de principio a fin.",
+    "Jorge trabaja en todas las capas del desarrollo 💕",
+  ]),
 
   PROFILE: (ctx) =>
-    pickNonRepeated(ctx, "PROFILE", [
-      `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-      `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-      `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
-      `Jorge es un profesional enfocado en tecnología y calidad 💻`,
-      `Jorge es un desarrollador apasionado por crear impacto 😊`,
-      `Su perfil destaca por compromiso y creatividad 💕`,
-    ]),
+  pickNonRepeated(ctx, "PROFILE", [
+    `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+    `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
+    `Te cuento ☺️ ${PROFILE.name} es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
+    `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
+    "Jorge combina creatividad y tecnología ☺️",
+    "Es un profesional enfocado en soluciones modernas 💕",
+  ]),
 
   EDUCATION: (ctx) =>
-    pickNonRepeated(ctx, "EDUCATION", [
-      `Jorge cuenta con un ${PROFILE.education} 😊`,
-      `Jorge tiene formación académica sólida: ${PROFILE.education}`,
-      `Jorge posee estudios enfocados en tecnología 💕`,
-      `Jorge cuenta con preparación técnica relevante 😊`,
-      `Su educación respalda su experiencia, el es: ${PROFILE.education}☺️`,
-       `Jorge es ${PROFILE.education} ♥️`,
-    ]),
+  pickNonRepeated(ctx, "EDUCATION", [
+    `Jorge cuenta con un ${PROFILE.education} 😊`,
+    `Tiene formación académica sólida: ${PROFILE.education} ☺️`,
+    `Se formó profesionalmente con un ${PROFILE.education} 💕`,
+    "Posee estudios enfocados en tecnología 😊",
+    `Cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
+    `Su formación académica respalda su perfil profesional: ${PROFILE.education} 💻`,
+  ]),
 
   EXPERIENCE: (ctx) =>
-    pickNonRepeated(ctx, "EXPERIENCE", [
-      `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-      `Jorge trabajado en ${PROFILE.experience.join(", ")} ☺️`,
-      "Tiene experiencia práctica en proyectos reales 💻",
-      "Ha participado en distintos proyectos 😊",
-      "Cuenta con experiencia profesional sólida 💕",
-      "Su experiencia respalda su trabajo ☺️",
-    ]),
+  pickNonRepeated(ctx, "EXPERIENCE", [
+    `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
+    `Ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
+    `Cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
+    "Tiene experiencia práctica en proyectos reales 😊",
+    "Ha aplicado sus conocimientos en distintos entornos ☺️",
+    "Su experiencia abarca varios roles 💕",
+  ]),
 
   SKILLS: (ctx) =>
-    pickNonRepeated(ctx, "SKILLS", [
-      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
-      `Su stack tecnológico incluye ${PROFILE.stack.join(", ")}.`,
-      `Aplica tecnologías modernas como ${PROFILE.stack.join(", ")}.`,
-      `Domina herramientas actuales como ${PROFILE.stack.join(", ")} 🚀`,
-      `Desarrolla soluciones usando ${PROFILE.stack.join(", ")}.`,
-      `Utiliza buenas prácticas de desarrollo 💕`,
-    ]),
+  pickNonRepeated(ctx, "SKILLS", [
+    `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
+    `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
+    `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
+    "Maneja herramientas modernas del desarrollo web 😊",
+    "Tiene habilidades técnicas bien definidas ☺️",
+    "Jorge aplica buenas prácticas en sus proyectos 💕",
+  ]),
 
   PROJECTS: (ctx) =>
-    pickNonRepeated(ctx, "PROJECTS", [
-      `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-      `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")}`,
-      "Sus proyectos reflejan su experiencia 💕",
-      "Cuenta con proyectos funcionales 💻",
-      "Aplica lo aprendido en proyectos reales 😊",
-      "Cada proyecto muestra su evolución ☺️",
-    ]),
+  pickNonRepeated(ctx, "PROJECTS", [
+    `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+    `Participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
+    `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
+    "Ha creado proyectos funcionales y modernos 😊",
+    "Participa activamente en el desarrollo de aplicaciones ☺️",
+    "Sus proyectos reflejan su experiencia 💕",
+  ]),
 
   MOTIVATION: (ctx) =>
     pickNonRepeated(ctx, "MOTIVATION", [
-      "Porque combina formación sólida y experiencia real 😊",
-      "Porque es responsable y apasionado ☺️",
-      "Porque aporta valor real a cada proyecto 💕",
-      "Porque se compromete con la calidad 💻",
-      "Porque busca soluciones eficientes 😊",
-      "Porque le apasiona lo que hace ☺️",
+      "Porque combina formación sólida, experiencia real y un enfoque muy práctico 😊",
+"Porque es responsable, profesional y apasionado por lo que hace ☺️",
+"Porque crea soluciones con calidad, compromiso y dedicación 💕",
+"Porque siempre busca hacer las cosas bien 😊",
+"Porque se compromete con cada proyecto ☺️",
+"Porque aporta valor real a cada trabajo 💕"
     ]),
 };
 
-
-  const BOT_NAME = "sasha";
+const BOT_NAME = "sasha";
 
 /* =========================
 🟢 SALUDO CORRECTO
