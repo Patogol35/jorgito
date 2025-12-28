@@ -274,8 +274,9 @@ function getSmartResponse(message, context) {
 
 
 
-  const replies = {
-    GRA: randomPick([
+const replies = {
+  GRA: (ctx) =>
+    pickNonRepeated(ctx, "GRA", [
       "Un placer 😊",
       "De nada 😌",
       "Siempre es un gusto ayudar 😊",
@@ -283,119 +284,135 @@ function getSmartResponse(message, context) {
       "¡Con mucho cariño! 💕",
     ]),
 
-    FAREWELL: randomPick([
+  FAREWELL: (ctx) =>
+    pickNonRepeated(ctx, "FAREWELL", [
       "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
       "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
       "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
       "Te espero pronto 😊 ¡Que tengas un lindo día!",
     ]),
 
-    GREETING: randomPick([
+  GREETING: (ctx) =>
+    pickNonRepeated(ctx, "GREETING", [
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
       "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
       "Hola 😊 ¿En qué puedo ayudarte hoy?",
     ]),
 
-    ASSISTANT: randomPick([
+  ASSISTANT: (ctx) =>
+    pickNonRepeated(ctx, "ASSISTANT", [
       "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
       "Soy una asistente virtual creada para ayudarte 💕",
       "Sasha a tu servicio ☺️",
     ]),
 
-    NAME: randomPick([
+  NAME: (ctx) =>
+    pickNonRepeated(ctx, "NAME", [
       "Me llamo Sasha 😊",
       "Puedes llamarme Sasha ☺️",
       "Mi nombre es Sasha 💕",
     ]),
 
-    HUMAN: randomPick([
+  HUMAN: (ctx) =>
+    pickNonRepeated(ctx, "HUMAN", [
       "No soy humana 🤖, pero me gusta conversar contigo 😊",
       "Soy inteligencia artificial con trato humano ☺️",
       "Soy digital, pero muy amigable 💕",
     ]),
 
-    MOOD: randomPick([
+  MOOD: (ctx) =>
+    pickNonRepeated(ctx, "MOOD", [
       "¡Estoy muy bien 😊 gracias por preguntar!",
       "Excelente ☺️ lista para ayudarte.",
       "Con muy buen ánimo 💕",
     ]),
 
-    HAPPY: randomPick([
+  HAPPY: (ctx) =>
+    pickNonRepeated(ctx, "HAPPY", [
       "Sí 😊 me siento feliz cuando puedo ayudar.",
       "Ayudar siempre me hace feliz 💕",
       "Me alegra mucho estar aquí contigo ☺️",
     ]),
 
-    HELP: randomPick([
+  HELP: (ctx) =>
+    pickNonRepeated(ctx, "HELP", [
       "Puedo contarte sobre el perfil, experiencia y proyectos de Jorge 😊",
       "Te ayudo con estudios, tecnologías o contacto ☺️",
       "Estoy aquí para ayudarte 💕",
     ]),
 
-    WHAT_DOING: randomPick([
+  WHAT_DOING: (ctx) =>
+    pickNonRepeated(ctx, "WHAT_DOING", [
       "Estoy aquí contigo 😊 lista para ayudarte.",
       "Pensando en cómo ayudarte mejor 💭✨",
       "Esperando tu siguiente mensaje ☺️",
     ]),
 
-    BOOK: randomPick([
+  BOOK: (ctx) =>
+    pickNonRepeated(ctx, "BOOK", [
       "A Jorge le encantan los libros de misterio 📚, especialmente Dan Brown 😊",
       "Disfruta leer novelas de suspenso 📖",
       "La lectura es una de sus pasiones ☺️",
     ]),
 
-    CREATOR: randomPick([
+  CREATOR: (ctx) =>
+    pickNonRepeated(ctx, "CREATOR", [
       "Fui creada por Jorge 😊 para ayudar a conocer su perfil profesional.",
       "Soy una IA creada por Jorge 💻",
       "Mi propósito es apoyar el perfil de Jorge 💕",
     ]),
 
-    STACK: randomPick([
+  STACK: (ctx) =>
+    pickNonRepeated(ctx, "STACK", [
       "Sí 😊 Jorge es Full Stack.",
       "Combina frontend y backend en sus proyectos 💻",
       "Disfruta crear soluciones completas ☺️",
     ]),
 
-    PROFILE: randomPick([
+  PROFILE: (ctx) =>
+    pickNonRepeated(ctx, "PROFILE", [
       `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
       `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
       `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
     ]),
 
-    EDUCATION: randomPick([
+  EDUCATION: (ctx) =>
+    pickNonRepeated(ctx, "EDUCATION", [
       `Jorge cuenta con ${PROFILE.education} 😊`,
       `Tiene formación académica sólida: ${PROFILE.education}`,
       `Posee estudios enfocados en tecnología 💕`,
     ]),
 
-    EXPERIENCE: randomPick([
+  EXPERIENCE: (ctx) =>
+    pickNonRepeated(ctx, "EXPERIENCE", [
       `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
       `Ha trabajado en ${PROFILE.experience.join(", ")} ☺️`,
       "Tiene experiencia práctica en proyectos reales 💻",
     ]),
 
-    SKILLS: (ctx) =>
-  pickNonRepeated(ctx, "SKILLS", [
-    `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
-    `Su stack tecnológico incluye ${PROFILE.stack.join(", ")}.`,
-    `Aplica tecnologías modernas como ${PROFILE.stack.join(", ")}.`,
-    `Domina herramientas actuales como ${PROFILE.stack.join(", ")} 🚀`,
-    `Desarrolla soluciones usando ${PROFILE.stack.join(", ")}.`,
-  ]),
+  SKILLS: (ctx) =>
+    pickNonRepeated(ctx, "SKILLS", [
+      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
+      `Su stack tecnológico incluye ${PROFILE.stack.join(", ")}.`,
+      `Aplica tecnologías modernas como ${PROFILE.stack.join(", ")}.`,
+      `Domina herramientas actuales como ${PROFILE.stack.join(", ")} 🚀`,
+      `Desarrolla soluciones usando ${PROFILE.stack.join(", ")}.`,
+    ]),
 
-    PROJECTS: randomPick([
+  PROJECTS: (ctx) =>
+    pickNonRepeated(ctx, "PROJECTS", [
       `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
       `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")}`,
       "Sus proyectos reflejan su experiencia 💕",
     ]),
 
-    MOTIVATION: randomPick([
+  MOTIVATION: (ctx) =>
+    pickNonRepeated(ctx, "MOTIVATION", [
       "Porque combina formación sólida y experiencia real 😊",
       "Porque es responsable y apasionado ☺️",
       "Porque aporta valor real a cada proyecto 💕",
     ]),
-  };
-
+};
 
   const BOT_NAME = "sasha";
 
