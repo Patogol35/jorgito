@@ -634,7 +634,6 @@ if (context.awaiting === "CONTACT_CONFIRM") {
 ========================= */
 if (context.awaitingFollowUp) {
 
-  // ✅ Usuario responde SÍ
   if (YES_WORDS.some(word => text.includes(word))) {
     const followIntent = context.awaitingFollowUp;
     context.awaitingFollowUp = null;
@@ -649,14 +648,13 @@ if (context.awaitingFollowUp) {
         next: "SKILLS",
       },
       SKILLS: {
-        text: `Estas tecnologías aplican en proyectos como ${PROFILE.projects.join(", ")}.`,
+        text: `Estas tecnologías se aplican en proyectos como ${PROFILE.projects.join(", ")}.`,
         next: null,
       },
     };
 
     const reply = chainReplies[followIntent];
 
-    // 🔒 Seguridad: si no existe el intent
     if (!reply) {
       return {
         text: "Perfecto 😊 ¿Qué te gustaría saber ahora?",
@@ -665,8 +663,8 @@ if (context.awaitingFollowUp) {
       };
     }
 
-    // 👉 Preparar siguiente follow-up (si existe)
-    const nextQuestion = reply.next ? followUp(reply.next) : null;
+    const nextQuestion = followUp(reply.next);
+
     if (nextQuestion) {
       context.awaitingFollowUp = reply.next;
     }
@@ -680,11 +678,12 @@ if (context.awaitingFollowUp) {
     };
   }
 
-  // ❌ Usuario responde NO
   if (NO_WORDS.some(word => text.includes(word))) {
     context.awaitingFollowUp = null;
     return {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      intent: "UNKNOWN",
+      fromFollowUp: true,
     };
   }
 }
