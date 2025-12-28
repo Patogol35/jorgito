@@ -513,6 +513,7 @@ if (context.awaiting === "CONTACT_CONFIRM") {
 FOLLOW UPS
 ========================= */
 if (context.awaitingFollowUp) {
+  // ✅ Respuesta afirmativa
   if (YES_WORDS.some((word) => text.includes(word))) {
     const intent = context.awaitingFollowUp;
     context.awaitingFollowUp = null;
@@ -530,12 +531,16 @@ if (context.awaitingFollowUp) {
     };
   }
 
+  // ❌ Respuesta negativa
   if (NO_WORDS.some((word) => text.includes(word))) {
     context.awaitingFollowUp = null;
     return {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
     };
   }
+
+  // 🔁 Cualquier otra cosa → cancelar follow-up y continuar
+  context.awaitingFollowUp = null;
 }
 
 /* =========================
