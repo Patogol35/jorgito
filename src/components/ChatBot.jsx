@@ -398,9 +398,6 @@ DESPEDIDA PRIORIDAD
   };
 }
 
-
-
-
 /* =========================
 COMPONENTE
 ========================= */
@@ -452,12 +449,13 @@ export default function ChatBot() {
     setTimeout(() => {
       setContext((prev) => {
         const res = getSmartResponse(text, prev);
+        const follow = followUp(res.intent);
 
         setMessages((m) => [
           ...m,
           { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && followUp(res.intent)
-            ? [{ from: "bot", text: followUp(res.intent) }]
+          ...(!res.fromFollowUp && follow
+            ? [{ from: "bot", text: follow }]
             : []),
         ]);
 
@@ -466,10 +464,7 @@ export default function ChatBot() {
         return {
           ...prev,
           awaiting: res.action || null,
-          awaitingFollowUp:
-            !res.fromFollowUp && followUp(res.intent)
-              ? res.intent
-              : null,
+          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
         };
       });
     }, delay());
@@ -491,7 +486,7 @@ export default function ChatBot() {
         <SmartToyIcon />
       </Fab>
 
-      {/* OVERLAY → CLICK FUERA CIERRA */}
+      {/* OVERLAY */}
       {open && (
         <Box
           onClick={() => setOpen(false)}
@@ -513,7 +508,6 @@ export default function ChatBot() {
             display: "flex",
             flexDirection: "column",
             overflow: "hidden",
-
             ...(isLandscape
               ? {
                   inset: "72px 0 10px 0",
@@ -682,4 +676,4 @@ export default function ChatBot() {
       )}
     </>
   );
- 
+      }
