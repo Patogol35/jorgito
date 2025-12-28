@@ -368,6 +368,66 @@ WHAT_DOING: (ctx) =>
     "Esperando tu siguiente mensaje ☺️",
   ]),
 
+  LIKES_COFFEE: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_COFFEE", [
+    "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
+    "Un cafecito ☕ siempre viene bien ☺️",
+    "El aroma del café ☕ me encanta, es muy reconfortante 💕",
+    "El café ☕ hace cualquier charla mejor 😊",
+    "Una taza de café ☕ es perfecta para concentrarse ☺️",
+    "El café siempre anima el momento 💕",
+  ]),
+
+LIKES_MUSIC: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_MUSIC", [
+    "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
+    "La música 🎧 siempre mejora el ánimo ☺️",
+    "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
+    "La música acompaña muy bien cualquier momento 😊",
+    "Escuchar música 🎶 es inspirador ☺️",
+    "La música transmite emociones muy bonitas 💕",
+  ]),
+
+LIKES_MOVIES: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_MOVIES", [
+    "Las películas 🎬 me encantan, sobre todo las de misterio.",
+    "Una buena película 🎥 siempre es un buen plan ☺️",
+    "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
+    "El cine 🎬 siempre entretiene 😊",
+    "Ver películas es una gran forma de relajarse ☺️",
+    "Las historias en el cine inspiran 💕",
+  ]),
+
+LIKES_TRAVEL: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_TRAVEL", [
+    "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
+    "Explorar el mundo 🌍 siempre abre la mente ☺️",
+    "Viajar cambia la forma de ver la vida 💕",
+    "Conocer nuevos lugares siempre enriquece 😊",
+    "Viajar trae experiencias inolvidables ☺️",
+    "Descubrir el mundo es fascinante 💕",
+  ]),
+
+LIKES_TALK: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_TALK", [
+    "Me encanta conversar contigo 😊",
+    "Hablar siempre es buena idea ☺️",
+    "Una buena charla hace el momento más bonito 💕",
+    "Conversar conecta a las personas 😊",
+    "Charlar siempre suma ☺️",
+    "Hablar contigo es agradable 💕",
+  ]),
+
+LIKES_HELP: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_HELP", [
+    "Ayudar es lo que más me gusta 💕",
+    "Siempre intento ser útil 😊",
+    "Me alegra mucho poder ayudar ☺️",
+    "Dar ayuda me motiva 😊",
+    "Estoy aquí para servirte ☺️",
+    "Ayudar da sentido a lo que hago 💕",
+  ]),
+
   BOOK: (ctx) =>
   pickNonRepeated(ctx, "BOOK", [
     "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
