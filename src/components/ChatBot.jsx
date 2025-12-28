@@ -255,6 +255,24 @@ const pickNonRepeated = (ctx, intent, options) => {
   return choice;
 };
 
+
+// =========================
+// ❓ RESPUESTA DESCONOCIDA
+// =========================
+const unknownReplies = (ctx) =>
+  pickNonRepeated(ctx, "UNKNOWN", [
+    "No estoy segura de haber entendido 🤔, ¿quizás te interesa conocer la experiencia de Jorge?",
+    "Disculpa 😅, ¿quieres saber algo del perfil o los proyectos de Jorge?",
+    randomPick(SUGGESTIONS),
+    "Perdón 😅 no tengo información sobre eso, pero sí puedo contarte sobre el perfil profesional de Jorge 😊",
+    "Creo que me perdí un poquito 🤔 ¿te gustaría saber sobre sus tecnologías o sus proyectos?",
+    "Mmm… no entendí muy bien 😅 pero puedo ayudarte a conocer a Jorge y su trabajo 💻",
+    "Lo siento 😥 no tengo esa información pero con gusto puedo hablarte de lo que hace Jorge ✨",
+    "No entendí bien 🤔 pero puedo ayudarte a conocer el perfil de Jorge y cómo contactarlo 😊",
+  ]);
+
+
+
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
@@ -517,6 +535,8 @@ LIKES_HELP: (ctx) =>
 "Porque Jorge se compromete con cada proyecto ☺️",
 "Porque Jorge aporta valor real a cada trabajo 💕"
     ]),
+
+  UNKNOWN: (ctx) => unknownReplies(ctx),
 };
 
 const BOT_NAME = "sasha";
