@@ -538,12 +538,12 @@ if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
 /* =========================
 🔴 DESPEDIDA PRIORIDAD ABSOLUTA
 ========================= */
-if (isValidFarewell(text)) {
+  if (isValidFarewell(text)) {
   return {
-    text: replies.FAREWELL,
+    text: replies.FAREWELL(context),
     intent: "FAREWELL",
   };
-}
+  }
 
 /* =========================
 🔵 CONFIRMACIÓN WHATSAPP
