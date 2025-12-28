@@ -290,6 +290,7 @@ const replies = {
       "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
       "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
       "Te espero pronto 😊 ¡Que tengas un lindo día!",
+      "¡Chao! 💕 pásala súper.",
     ]),
 
   GREETING: (ctx) =>
