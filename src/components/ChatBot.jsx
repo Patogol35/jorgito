@@ -540,61 +540,22 @@ LIKES_HELP: (ctx) =>
 };
 
 const BOT_NAME = "sasha";
-/* =========================================
-   🟣 DETECTOR DE NOMBRES EN EL MENSAJE
-========================================= */
-const allowedNames = ["jorge", "sasha"];
-const userNames = ["patricio"];
-
-const normalize = (str) =>
-  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-const presentingMyself = /(me llamo|soy|mi nombre es)\s+([a-záéíóúñ]+)/i;
-const askingAboutName = /(háblame|hablame|quién es|quien es|info|información)\s+de\s+([a-záéíóúñ]+)/i;
-
-const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
+/* =========================
+⚠️ NOMBRE DESCONOCIDO
+========================= */
+const nameCheck = text.match(/\b([a-záéíóúñ]+)\b/gi);
 
 if (nameCheck) {
-  const normalized = nameCheck.map(normalize);
-
-  // 👉 “Me llamo Patricio”
-  const matchSelf = text.match(presentingMyself);
-  if (matchSelf) {
-    const saidName = normalize(matchSelf[2]);
-    if (userNames.includes(saidName)) {
+  const names = nameCheck.map(normalize);
+  for (const nm of names) {
+    if (nm !== "jorge" && nm !== "sasha") {
       return {
-        text: `¡Mucho gusto, ${matchSelf[2]}! 😊`,
-        intent: "GREETING", // Intent válido
+        text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+        intent: "UNKNOWN",
       };
     }
-  }
-
-  // 👉 “Háblame de …”
-  const matchAsk = text.match(askingAboutName);
-  if (matchAsk) {
-    const askedName = normalize(matchAsk[2]);
-
-    if (askedName === "sasha") {
-      return {
-        text: "¡Yo soy Sasha 🤖✨! Tu asistente virtual para conocer a Jorge 😄",
-        intent: "ABOUT_BOT", // Intent válido
-      };
-    }
-
-    if (askedName === "jorge") {
-      return {
-        text: "¡Claro! Jorge es un desarrollador apasionado por la tecnología 😎✨",
-        intent: "SUMMARY", // Intent válido del bot sobre Jorge
-      };
-    }
-
-    return {
-      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-      intent: "UNKNOWN",
-    };
   }
 }
-
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
