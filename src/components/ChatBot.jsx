@@ -541,19 +541,20 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 /* =========================
-⚠️ NOMBRE DESCONOCIDO
+⚠️ BLOQUEAR NOMBRES DESCONOCIDOS
 ========================= */
-const nameCheck = text.match(/\b([a-záéíóúñ]+)\b/gi);
+const allowedNames = ["jorge", "sasha"];
+const patternAskPerson = /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
 
-if (nameCheck) {
-  const names = nameCheck.map(normalize);
-  for (const nm of names) {
-    if (nm !== "jorge" && nm !== "sasha") {
-      return {
-        text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-        intent: "UNKNOWN",
-      };
-    }
+const match = text.match(patternAskPerson);
+if (match) {
+  const askedName = normalize(match[2]);
+
+  if (!allowedNames.includes(askedName)) {
+    return {
+      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+      intent: "UNKNOWN",
+    };
   }
 }
 /* =========================
