@@ -593,7 +593,7 @@ function getSmartResponse(message, context) {
   action: "CONTACT_CONFIRM",
   intent,
 };
-
+}
 /* =========================
 COMPONENTE
 ========================= */
