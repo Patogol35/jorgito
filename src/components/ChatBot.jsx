@@ -629,10 +629,10 @@ if (context.awaiting === "CONTACT_CONFIRM") {
   }
 }
   
-  /* =========================
-     FOLLOW UPS
-  ========================= */
-  if (context.awaitingFollowUp) {
+/* =========================
+   FOLLOW UPS
+========================= */
+if (context.awaitingFollowUp) {
 
   if (YES_WORDS.some(word => text.includes(word))) {
     const intent = context.awaitingFollowUp;
@@ -641,12 +641,11 @@ if (context.awaiting === "CONTACT_CONFIRM") {
     const chainReplies = {
       PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
       EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
     };
 
     return {
       text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      intent,
       fromFollowUp: true,
     };
   }
@@ -657,8 +656,7 @@ if (context.awaiting === "CONTACT_CONFIRM") {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
     };
   }
-  }
-
+}
   /* =========================
      DETECTAR INTENT NORMAL
   ========================= */
