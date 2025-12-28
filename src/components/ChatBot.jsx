@@ -429,7 +429,7 @@ if (greetingMatch) {
   // ✅ Caso 1: saludo SIN nombre
   if (!name) {
     return {
-      text: replies.GREETING,
+      text: replies.GREETING(context),
       intent: "GREETING",
     };
   }
@@ -437,7 +437,7 @@ if (greetingMatch) {
   // ✅ Caso 2: saludo CON Sasha
   if (name === BOT_NAME) {
     return {
-      text: replies.GREETING,
+      text: replies.GREETING(context),
       intent: "GREETING",
     };
   }
