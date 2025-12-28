@@ -543,19 +543,34 @@ const BOT_NAME = "sasha";
 /* =========================
 ⚠️ BLOQUEAR NOMBRES DESCONOCIDOS
 ========================= */
-const allowedNames = ["jorge", "sasha"];
+const allowedNames = ["jorge", "sasha"]; // Info disponible
+const userNames = ["patricio"]; // Nombre del usuario
+
+// Detecta: "háblame de X", "experiencia de X", etc.
 const patternAskPerson = /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
 
 const match = text.match(patternAskPerson);
 if (match) {
   const askedName = normalize(match[2]);
 
-  if (!allowedNames.includes(askedName)) {
+  // Si habla de sí mismo → permitir
+  if (userNames.includes(askedName)) {
     return {
-      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-      intent: "UNKNOWN",
+      text: `¡Oh claro! Tú eres ${match[2]} 😄 pero yo estoy aquí para hablarte del perfil profesional de Jorge ✨ ¿Qué te gustaría saber?`,
+      intent: "USER_ABOUT_SELF",
     };
   }
+
+  // Si habla de Jorge o Sasha → permitir que siga el flujo normal
+  if (allowedNames.includes(askedName)) {
+    return null; // 👍 No bloquear
+  }
+
+  // Si es una persona desconocida → bloquear
+  return {
+    text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+    intent: "UNKNOWN",
+  };
 }
 /* =========================
 🟢 SALUDO CORRECTO
