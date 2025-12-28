@@ -543,8 +543,8 @@ const BOT_NAME = "sasha";
 /* =========================================
    🟣 DETECTOR DE NOMBRES EN EL MENSAJE
 ========================================= */
-const allowedNames = ["jorge", "sasha"]; // Nombres con información
-const userNames = ["patricio"]; // Nombre del usuario
+const allowedNames = ["jorge", "sasha"];
+const userNames = ["patricio"];
 
 const normalize = (str) =>
   str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -557,46 +557,43 @@ const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
 if (nameCheck) {
   const normalized = nameCheck.map(normalize);
 
-  // 👉 Caso: “Me llamo Patricio”
+  // 👉 “Me llamo Patricio”
   const matchSelf = text.match(presentingMyself);
   if (matchSelf) {
     const saidName = normalize(matchSelf[2]);
     if (userNames.includes(saidName)) {
       return {
         text: `¡Mucho gusto, ${matchSelf[2]}! 😊`,
-        intent: "USER_NAME",
+        intent: "GREETING", // Intent válido
       };
     }
   }
 
-  // 👉 Caso: “Háblame de …”
+  // 👉 “Háblame de …”
   const matchAsk = text.match(askingAboutName);
   if (matchAsk) {
     const askedName = normalize(matchAsk[2]);
 
-    // Si es sobre Sasha
     if (askedName === "sasha") {
       return {
-        text: "¡Claro! Sasha soy yo 🤖💕 ¿Qué te gustaría saber?",
-        intent: "ABOUT_SASHA",
+        text: "¡Yo soy Sasha 🤖✨! Tu asistente virtual para conocer a Jorge 😄",
+        intent: "ABOUT_BOT", // Intent válido
       };
     }
 
-    // Si es sobre Jorge
     if (askedName === "jorge") {
       return {
-        text: "Jorge es el creador de todo este proyecto 😎✨",
-        intent: "ABOUT_JORGE",
+        text: "¡Claro! Jorge es un desarrollador apasionado por la tecnología 😎✨",
+        intent: "SUMMARY", // Intent válido del bot sobre Jorge
       };
     }
 
-    // Si piden información de un nombre desconocido o del usuario → bloquear
     return {
       text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
       intent: "UNKNOWN",
     };
   }
-  }
+}
 
 /* =========================
 🟢 SALUDO CORRECTO
