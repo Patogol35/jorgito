@@ -232,6 +232,34 @@ const isValidFarewell = (text) => {
 /* =========================
 RESPUESTAS
 ========================= */
+
+// =========================
+// 🧠 CONTROL DE REPETICIÓN
+// =========================
+const pickNonRepeated = (ctx, intent, options) => {
+  ctx.usedReplies = ctx.usedReplies || {};
+  ctx.usedReplies[intent] = ctx.usedReplies[intent] || [];
+
+  const unused = options.filter(
+    (opt) => !ctx.usedReplies[intent].includes(opt)
+  );
+
+  const choice = unused.length
+    ? randomPick(unused)
+    : randomPick(options);
+
+  ctx.usedReplies[intent].push(choice);
+
+  if (ctx.usedReplies[intent].length > options.length - 1) {
+    ctx.usedReplies[intent] = [];
+  }
+
+  return choice;
+};
+
+
+
+
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
@@ -346,11 +374,14 @@ function getSmartResponse(message, context) {
       "Tiene experiencia práctica en proyectos reales 💻",
     ]),
 
-    SKILLS: randomPick([
-      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-      `Domina herramientas modernas del desarrollo web 💻`,
-      "Aplica buenas prácticas en sus proyectos 💕",
-    ]),
+    SKILLS: (ctx) =>
+  pickNonRepeated(ctx, "SKILLS", [
+    `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
+    `Su stack tecnológico incluye ${PROFILE.stack.join(", ")}.`,
+    `Aplica tecnologías modernas como ${PROFILE.stack.join(", ")}.`,
+    `Domina herramientas actuales como ${PROFILE.stack.join(", ")} 🚀`,
+    `Desarrolla soluciones usando ${PROFILE.stack.join(", ")}.`,
+  ]),
 
     PROJECTS: randomPick([
       `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
