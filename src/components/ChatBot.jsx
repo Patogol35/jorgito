@@ -235,6 +235,17 @@ RESPUESTAS
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
+  // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
+  // se cancela el follow-up y se responde normalmente
+  if (context.awaitingFollowUp) {
+    const directIntent = detectIntent(message);
+    if (directIntent !== "UNKNOWN") {
+      context.awaitingFollowUp = null;
+    }
+  }
+
+
+
   const replies = {
     GRA: randomPick([
       "Un placer 😊",
