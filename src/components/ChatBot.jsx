@@ -639,11 +639,20 @@ if (context.awaitingFollowUp) {
     context.awaitingFollowUp = null;
 
     const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      PROFILE: {
+        text: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        next: "EXPERIENCE",
+      },
+      EXPERIENCE: {
+        text: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        next: "SKILLS",
+      },
     };
 
-    if (!chainReplies[followIntent]) {
+    const reply = chainReplies[followIntent];
+
+    // 🔒 Si no hay encadenamiento
+    if (!reply) {
       return {
         text: "Perfecto 😊 ¿Qué te gustaría saber ahora?",
         intent: "UNKNOWN",
@@ -651,8 +660,16 @@ if (context.awaitingFollowUp) {
       };
     }
 
+    // 👉 Preparar siguiente follow up
+    const nextFollowUp = followUp(reply.next);
+    if (nextFollowUp) {
+      context.awaitingFollowUp = reply.next;
+    }
+
     return {
-      text: chainReplies[followIntent],
+      text: nextFollowUp
+        ? `${reply.text}\n\n${nextFollowUp}`
+        : reply.text,
       intent: followIntent,
       fromFollowUp: true,
     };
