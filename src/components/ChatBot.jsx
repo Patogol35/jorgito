@@ -589,7 +589,10 @@ function getSmartResponse(message, context) {
 
   if (intent === "CONTACT") {
     return {
-      text: "📱 Puedes contactarlo por 
+  text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+  action: "CONTACT_CONFIRM",
+  intent,
+};
 
 /* =========================
 COMPONENTE
