@@ -544,17 +544,25 @@ const BOT_NAME = "sasha";
   /* =========================
 ⚠️ NOMBRE DESCONOCIDO
 ========================= */
-const nameCheck = text.match(/\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)\b/g);
+const allowedNames = ["jorge", "sasha"];
+
+// solo detectar palabras con pinta de nombre propio
+const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
 
 if (nameCheck) {
-  const names = nameCheck.map(normalize);
-  for (const nm of names) {
-    if (nm !== "jorge" && nm !== "sasha") {
-      return {
-        text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-        intent: "UNKNOWN",
-      };
-    }
+  const normalized = nameCheck.map(normalize);
+  const foundAllowed = normalized.some((nm) => allowedNames.includes(nm));
+  const foundUnknown = normalized.some((nm) => !allowedNames.includes(nm));
+
+  // 👉 Si menciona un nombre PERMITIDO → seguimos normal
+  if (foundAllowed) return null;
+
+  // 👉 Si solo menciona nombres desconocidos → bloqueo
+  if (foundUnknown) {
+    return {
+      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+      intent: "UNKNOWN",
+    };
   }
 }
 
