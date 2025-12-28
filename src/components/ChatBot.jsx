@@ -541,6 +541,23 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
+  /* =========================
+⚠️ NOMBRE DESCONOCIDO
+========================= */
+const nameCheck = text.match(/\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)\b/g);
+
+if (nameCheck) {
+  const names = nameCheck.map(normalize);
+  for (const nm of names) {
+    if (nm !== "jorge" && nm !== "sasha") {
+      return {
+        text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+        intent: "UNKNOWN",
+      };
+    }
+  }
+}
+
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
