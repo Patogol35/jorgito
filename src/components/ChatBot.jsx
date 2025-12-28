@@ -635,7 +635,7 @@ if (context.awaiting === "CONTACT_CONFIRM") {
 if (context.awaitingFollowUp) {
 
   if (YES_WORDS.some(word => text.includes(word))) {
-    const intent = context.awaitingFollowUp;
+    const followIntent = context.awaitingFollowUp;
     context.awaitingFollowUp = null;
 
     const chainReplies = {
@@ -643,9 +643,18 @@ if (context.awaitingFollowUp) {
       EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
     };
 
+    // 🔒 Protección: si no hay respuesta encadenada
+    if (!chainReplies[followIntent]) {
+      return {
+        text: "Perfecto 😊 ¿Qué te gustaría saber ahora?",
+        intent: "UNKNOWN",
+        fromFollowUp: true,
+      };
+    }
+
     return {
-      text: chainReplies[intent],
-      intent,
+      text: chainReplies[followIntent],
+      intent: followIntent,
       fromFollowUp: true,
     };
   }
