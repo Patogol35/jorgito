@@ -541,47 +541,47 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
-/* ===================================================
-   🔎 CONTROL DE PREGUNTAS SOBRE PERSONAS
-=================================================== */
+/* =========================================
+   🟣 DETECTOR DE NOMBRES EN EL MENSAJE
+========================================= */
+const allowedNames = ["jorge", "sasha"];
+const normalize = (str) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-const allowedProfiles = ["jorge", "sasha"];
-const userNames = ["patricio"]; // tu nombre válido también
+const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
 
-const patternAskPerson =
-  /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
+if (nameCheck) {
+  const normalized = nameCheck.map(normalize);
 
-const matchAsk = text.match(patternAskPerson);
+  const foundAllowed = normalized.some((nm) => allowedNames.includes(nm));
+  const foundUnknown = normalized.some((nm) => !allowedNames.includes(nm));
 
-if (matchAsk) {
-  const askedName = normalize(matchAsk[2]);
+  // 👉 Nombre permitido: responder de forma correcta
+  if (foundAllowed) {
+    if (normalized.includes("sasha")) {
+      return {
+        text: "¡Claro! Sasha es mi nombre 🤖💕 ¿Qué te gustaría saber?",
+        intent: "ABOUT_SASHA",
+      };
+    }
 
-  if (userNames.includes(askedName)) {
-    return {
-      text: "¡Hey Patricio! 😄 Me encanta hablar contigo 🚀 ¿Qué parte de tu experiencia te gustaría destacar?",
-      intent: "ABOUT_USER",
-    };
+    if (normalized.includes("jorge")) {
+      return {
+        text: "Jorge es el creador de todo este proyecto 😎✨",
+        intent: "ABOUT_JORGE",
+      };
+    }
   }
 
-  if (askedName === "sasha") {
+  // 👉 Solo nombres NO permitidos: bloquear
+  if (foundUnknown && !foundAllowed) {
     return {
-      text: "¡Aquí estoy! 🤖✨ ¿Qué quieres saber sobre mí?",
-      intent: "ABOUT_SASHA",
+      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+      intent: "UNKNOWN",
     };
   }
-
-  if (askedName === "jorge") {
-    return {
-      text: "¡Perfecto! Jorge es el creador de este proyecto 😎 ¿Experiencia o tecnologías?",
-      intent: "ABOUT_JORGE",
-    };
-  }
-
-  return {
-    text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-    intent: "UNKNOWN",
-  };
 }
+  
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
