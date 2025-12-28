@@ -540,38 +540,39 @@ LIKES_HELP: (ctx) =>
 };
 
 const BOT_NAME = "sasha";
-/* =========================
-⚠️ BLOQUEAR NOMBRES DESCONOCIDOS
-========================= */
-const allowedNames = ["jorge", "sasha"]; // Info disponible
-const userNames = ["patricio"]; // Nombre del usuario
 
-// Detecta: "háblame de X", "experiencia de X", etc.
-const patternAskPerson = /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
+/* =========================
+⚠️ BLOQUEAR / PERMITIR NOMBRES
+========================= */
+const allowedNames = ["jorge", "sasha", "patricio"];
+
+const patternAskPerson =
+  /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
 
 const match = text.match(patternAskPerson);
+
 if (match) {
   const askedName = normalize(match[2]);
 
-  // Si habla de sí mismo → permitir
-  if (userNames.includes(askedName)) {
-    return {
-      text: `¡Oh claro! Tú eres ${match[2]} 😄 pero yo estoy aquí para hablarte del perfil profesional de Jorge ✨ ¿Qué te gustaría saber?`,
-      intent: "USER_ABOUT_SELF",
-    };
-  }
-
-  // Si habla de Jorge o Sasha → permitir que siga el flujo normal
   if (allowedNames.includes(askedName)) {
-    return null; // 👍 No bloquear
+    if (askedName === "patricio") {
+      return {
+        text: "¡Patricio también soy tú! 😄 ¿Qué te gustaría contarle al mundo sobre ti?",
+        intent: "ABOUT_ME",
+      };
+    }
+    
+    // Sasha o Jorge → normal
+    return null;
   }
 
-  // Si es una persona desconocida → bloquear
+  // Nombre desconocido → bloqueo controlado
   return {
     text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
     intent: "UNKNOWN",
   };
 }
+  
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
