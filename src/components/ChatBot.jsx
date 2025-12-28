@@ -542,7 +542,7 @@ LIKES_HELP: (ctx) =>
 const BOT_NAME = "sasha";
 
 /* =========================
-⚠️ BLOQUEAR / PERMITIR NOMBRES
+⚠️ BLOQUEAR NOMBRES DESCONOCIDOS
 ========================= */
 const allowedNames = ["jorge", "sasha", "patricio"];
 
@@ -554,23 +554,15 @@ const match = text.match(patternAskPerson);
 if (match) {
   const askedName = normalize(match[2]);
 
-  if (allowedNames.includes(askedName)) {
-    if (askedName === "patricio") {
-      return {
-        text: "¡Patricio también soy tú! 😄 ¿Qué te gustaría contarle al mundo sobre ti?",
-        intent: "ABOUT_ME",
-      };
-    }
-    
-    // Sasha o Jorge → normal
-    return null;
+  if (!allowedNames.includes(askedName)) {
+    return {
+      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+      intent: "UNKNOWN",
+    };
   }
 
-  // Nombre desconocido → bloqueo controlado
-  return {
-    text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-    intent: "UNKNOWN",
-  };
+  // 👉 Si es Jorge, Sasha o Patricio → continuar normal
+  return null;
 }
   
 /* =========================
