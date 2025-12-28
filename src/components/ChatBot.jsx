@@ -271,36 +271,6 @@ const unknownReplies = (ctx) =>
     "No entendí bien 🤔 pero puedo ayudarte a conocer el perfil de Jorge y cómo contactarlo 😊",
   ]);
 
-
-
-function getSmartResponse(message, context) {
-  const text = normalize(message);
-
-  // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
-  // se cancela el follow-up y se responde normalmente
-/* =========================
-🟡 FOLLOW-UP NUEVO (SI / NO)
-========================= */
-if (context.awaitingFollowUp) {
-  if (YES_WORDS.some(w => text.includes(w))) {
-    const nextIntent = context.awaitingFollowUp;
-    context.awaitingFollowUp = null;
-
-    return {
-      text: replies[nextIntent](context),
-      intent: nextIntent,
-    };
-  }
-
-  if (NO_WORDS.some(w => text.includes(w))) {
-    context.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 Avísame si deseas saber algo más.",
-      intent: "FOLLOWUP_CANCEL",
-    };
-  }
-}
-
 const replies = {
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", [
@@ -554,6 +524,97 @@ LIKES_HELP: (ctx) =>
 
   UNKNOWN: (ctx) => unknownReplies(ctx),
 };
+
+const BOT_NAME = "sasha";
+
+
+  
+/* =========================
+🟢 SALUDO CORRECTO
+========================= */
+const greetingMatch = text.match(
+  /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (greetingMatch) {
+  const name = normalize(greetingMatch[2]?.trim() || "");
+
+  // ✅ Caso 1: saludo SIN nombre
+  if (!name) {
+    return {
+      text: replies.GREETING(context),
+      intent: "GREETING",
+    };
+  }
+
+  // ✅ Caso 2: saludo CON Sasha
+  if (name === BOT_NAME) {
+    return {
+      text: replies.GREETING(context),
+      intent: "GREETING",
+    };
+  }
+
+  // ❌ Caso 3: saludo con otro nombre
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+🟢 GRACIAS CONTROLADO
+========================= */
+const thanksMatch = text.match(
+  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (thanksMatch) {
+  const name = normalize(thanksMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.GRA(context),
+      intent: "GRA",
+    };
+  }
+
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+  }
+
+
+function getSmartResponse(message, context) {
+  const text = normalize(message);
+
+  // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
+  // se cancela el follow-up y se responde normalmente
+/* =========================
+🟡 FOLLOW-UP NUEVO (SI / NO)
+========================= */
+if (context.awaitingFollowUp) {
+  if (YES_WORDS.some(w => text.includes(w))) {
+    const nextIntent = context.awaitingFollowUp;
+    context.awaitingFollowUp = null;
+
+    return {
+      text: replies[nextIntent](context),
+      intent: nextIntent,
+    };
+  }
+
+  if (NO_WORDS.some(w => text.includes(w))) {
+    context.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 Avísame si deseas saber algo más.",
+      intent: "FOLLOWUP_CANCEL",
+    };
+  }
+}
+
+  
 
 const BOT_NAME = "sasha";
 
