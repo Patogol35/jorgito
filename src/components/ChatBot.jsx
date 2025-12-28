@@ -544,8 +544,11 @@ const BOT_NAME = "sasha";
 /* ===================================================
    🔎 CONTROL DE NOMBRES PERMITIDOS Y RESPUESTAS
 =================================================== */
-const allowedProfiles = ["jorge", "sasha"];  // Perfiles con info
-const userNames = ["patricio"]; // Nombres del usuario (NO bloquear)
+const allowedProfiles = ["jorge", "sasha"];
+const userNames = ["patricio"];
+
+const normalize = (str) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 const patternAskPerson =
   /(háblame de|hablame de|quién es|quien es|experiencia de|info de|información de)\s+([a-záéíóúñ]+)/i;
@@ -555,36 +558,32 @@ const match = text.match(patternAskPerson);
 if (match) {
   const askedName = normalize(match[2]);
 
-  // ⭐ Caso especial: El usuario también es Patricio
   if (userNames.includes(askedName)) {
     return {
-      text: "¡Claro que sí! 😊 Tú eres Patricio, la persona con la que estoy conversando ahora mismo 🤝✨ ¿Qué te gustaría que cuente sobre ti?",
+      text: "¡Claro Patricio! 😄 Tú eres una persona muy creativa y con ganas de aprender 🚀 ¿Qué parte de tu experiencia quieres que comparta?",
       intent: "ABOUT_USER",
     };
   }
 
-  // ⭐ Información sobre Sasha
   if (askedName === "sasha") {
     return {
-      text: "¡Claro! Sasha soy yo 🤖💕 Tu asistente virtual.",
+      text: "¡Aquí estoy! 🤖✨ ¿Qué deseas saber sobre mí?",
       intent: "ABOUT_SASHA",
     };
   }
 
-  // ⭐ Información sobre Jorge
   if (askedName === "jorge") {
     return {
-      text: "Jorge es el creador de este proyecto 😎✨ ¿Quieres saber su experiencia o tecnologías?",
+      text: "¡Perfecto! Jorge es el desarrollador de este proyecto 😎✨ ¿Experiencia o tecnologías?",
       intent: "ABOUT_JORGE",
     };
   }
 
-  // 🚫 Nombres desconocidos → bloquear
   return {
-    text: "Perdón 😅 no tengo información sobre esa persona, ¡pero sí puedo contarte sobre Jorge! 😊",
+    text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
     intent: "UNKNOWN",
   };
-      }
+  }
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
