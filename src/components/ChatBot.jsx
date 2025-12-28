@@ -12,6 +12,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
@@ -28,6 +29,7 @@ UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
 const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
@@ -35,10 +37,13 @@ const NO_WORDS = ["no", "ahora no", "luego"];
 MEMORIA
 ========================= */
 const MEMORY_LIMIT = 10;
+
 const saveMemory = (ctx, data) => {
   const memory = ctx.memory ?? [];
   memory.push(data);
+
   if (memory.length > MEMORY_LIMIT) memory.shift();
+
   ctx.memory = memory;
 };
 
@@ -99,7 +104,7 @@ const SUGGESTIONS = [
 INTENCIONES
 ========================= */
 const INTENTS = {
-  GRA: ["gracias"],
+  GRA: ["Gracias"],
 
   WHAT_DOING: [
     "que haces",
@@ -111,6 +116,7 @@ const INTENTS = {
     "que andas haciendo",
     "qué andas haciendo",
   ],
+
   LIKES_COFFEE: ["café", "cafe"],
   LIKES_MUSIC: ["música", "musica"],
   LIKES_MOVIES: ["películas", "peliculas"],
@@ -119,6 +125,7 @@ const INTENTS = {
   LIKES_HELP: ["ayudar"],
   LIKES_MORNING: ["mañanas", "madrugar"],
   LIKES_NIGHT: ["noche"],
+
   BORED: ["aburr"],
   TIRED: ["cans"],
   FRIENDS: ["amigos"],
@@ -138,7 +145,13 @@ const INTENTS = {
   CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
   BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
 
-  HELP: ["qué puedes hacer", "que puedes hacer", "buenas tardes", "buenas noches"],
+  HELP: [
+    "qué puedes hacer",
+    "que puedes hacer",
+    "buenas tardes",
+    "buenas noches",
+  ],
+
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
@@ -151,6 +164,7 @@ const INTENTS = {
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
 };
+
 
 /* =========================
 NORMALIZACIÓN
@@ -186,7 +200,6 @@ const detectIntent = (msg) => {
   }
   return max ? best : "UNKNOWN";
 };
-
 
 /* =========================
 FOLLOW UP
@@ -224,179 +237,337 @@ function getSmartResponse(message, context) {
 
   const replies = {
     GRA: randomPick([
-      "Un Placer😊",
+      "Un placer 😊",
       "De nada 😌",
-      "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
-      "Me alegró conversar contigo 😊 ¡Hasta pronto!",
       "Siempre es un gusto ayudar 😊",
-      "¡Con mucho cariño! 💕",
       "Para eso estoy ☺️",
+      "¡Con mucho cariño! 💕",
     ]),
 
     FAREWELL: randomPick([
       "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
       "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
       "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
-      "Me alegró conversar contigo 😊 ¡Hasta pronto!",
       "Te espero pronto 😊 ¡Que tengas un lindo día!",
-      "Fue un placer acompañarte 💕 hasta la próxima.",
-      "Aquí estaré cuando necesites volver ☺️",
     ]),
 
     GREETING: randomPick([
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
       "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
-      "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
-      "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
-      "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
-      "¡Hola! 😊 Qué gusto verte por aquí.",
+      "Hola 😊 ¿En qué puedo ayudarte hoy?",
     ]),
 
     ASSISTANT: randomPick([
       "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
-      "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
-      "Soy Sasha 💕, una asistente virtual creada para ayudarte con información sobre Jorge.",
-      "Soy Sasha 🤖 y estoy diseñada para ayudarte.",
+      "Soy una asistente virtual creada para ayudarte 💕",
       "Sasha a tu servicio ☺️",
-      "Soy una asistente virtual lista para ayudarte 😊",
     ]),
 
     NAME: randomPick([
       "Me llamo Sasha 😊",
       "Puedes llamarme Sasha ☺️",
       "Mi nombre es Sasha 💕",
-      "Todos me conocen como Sasha 🤖",
-      "Sasha es mi nombre 😊",
-      "Puedes decirme Sasha sin problema ☺️",
     ]),
 
     HUMAN: randomPick([
-      "No soy humana 🤖, pero me gusta conversar de forma natural contigo 😊",
-      "Soy una IA 🤖, aunque intento ser cercana y amable ☺️",
-      "No soy humana, pero siempre estoy aquí para ayudarte 💕",
-      "Soy inteligencia artificial, pero con trato humano 😊",
-      "No tengo cuerpo, pero sí muchas ganas de ayudar ☺️",
-      "Soy digital 🤖, pero muy amigable 💕",
+      "No soy humana 🤖, pero me gusta conversar contigo 😊",
+      "Soy inteligencia artificial con trato humano ☺️",
+      "Soy digital, pero muy amigable 💕",
     ]),
 
     MOOD: randomPick([
       "¡Estoy muy bien 😊 gracias por preguntar!",
-      "Todo va muy bien ☺️ y me alegra ayudarte.",
-      "Me siento genial 💕 sobre todo cuando converso contigo.",
-      "Muy bien 😊 lista para ayudarte.",
-      "Con muy buen ánimo ☺️",
-      "Excelente 😊 gracias por notarlo.",
+      "Excelente ☺️ lista para ayudarte.",
+      "Con muy buen ánimo 💕",
+    ]),
+
+    HAPPY: randomPick([
+      "Sí 😊 me siento feliz cuando puedo ayudar.",
+      "Ayudar siempre me hace feliz 💕",
+      "Me alegra mucho estar aquí contigo ☺️",
+    ]),
+
+    HELP: randomPick([
+      "Puedo contarte sobre el perfil, experiencia y proyectos de Jorge 😊",
+      "Te ayudo con estudios, tecnologías o contacto ☺️",
+      "Estoy aquí para ayudarte 💕",
     ]),
 
     WHAT_DOING: randomPick([
       "Estoy aquí contigo 😊 lista para ayudarte.",
-      "Ahora mismo charlando contigo 💕",
       "Pensando en cómo ayudarte mejor 💭✨",
-      "Disfrutando esta conversación contigo ☺️",
-      "Atenta a lo que necesites 😊",
       "Esperando tu siguiente mensaje ☺️",
+    ]),
+
+    BOOK: randomPick([
+      "A Jorge le encantan los libros de misterio 📚, especialmente Dan Brown 😊",
+      "Disfruta leer novelas de suspenso 📖",
+      "La lectura es una de sus pasiones ☺️",
+    ]),
+
+    CREATOR: randomPick([
+      "Fui creada por Jorge 😊 para ayudar a conocer su perfil profesional.",
+      "Soy una IA creada por Jorge 💻",
+      "Mi propósito es apoyar el perfil de Jorge 💕",
+    ]),
+
+    STACK: randomPick([
+      "Sí 😊 Jorge es Full Stack.",
+      "Combina frontend y backend en sus proyectos 💻",
+      "Disfruta crear soluciones completas ☺️",
     ]),
 
     PROFILE: randomPick([
       `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
       `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-      `Te cuento ☺️ ${PROFILE.name} es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
       `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
-      "Jorge combina creatividad y tecnología ☺️",
-      "Es un profesional enfocado en soluciones modernas 💕",
     ]),
 
     EDUCATION: randomPick([
-      `Jorge cuenta con un ${PROFILE.education} 😊`,
-      `Tiene formación académica sólida ☺️: ${PROFILE.education}`,
-      `Se formó profesionalmente con un ${PROFILE.education} 💕`,
-      "Posee estudios enfocados en tecnología 😊",
-      `Cuenta con preparación académica sólida y es ${PROFILE.education} ☺️`,
+      `Jorge cuenta con ${PROFILE.education} 😊`,
+      `Tiene formación académica sólida: ${PROFILE.education}`,
+      `Posee estudios enfocados en tecnología 💕`,
     ]),
 
     EXPERIENCE: randomPick([
       `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-      `Ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
-      `Cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
-      "Tiene experiencia práctica en proyectos reales 😊",
-      "Ha aplicado sus conocimientos en distintos entornos ☺️",
-      "Su experiencia abarca varios roles 💕",
+      `Ha trabajado en ${PROFILE.experience.join(", ")} ☺️`,
+      "Tiene experiencia práctica en proyectos reales 💻",
     ]),
 
     SKILLS: randomPick([
       `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-      `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
-      `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
-      "Maneja herramientas modernas del desarrollo web 😊",
-      "Tiene habilidades técnicas bien definidas ☺️",
-      "Jorge aplica buenas prácticas en sus proyectos 💕",
+      `Domina herramientas modernas del desarrollo web 💻`,
+      "Aplica buenas prácticas en sus proyectos 💕",
     ]),
 
     PROJECTS: randomPick([
-      `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-      `Participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
-      `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
-      "Ha creado proyectos funcionales y modernos 😊",
-      "Participa activamente en el desarrollo de aplicaciones ☺️",
+      `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+      `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")}`,
       "Sus proyectos reflejan su experiencia 💕",
     ]),
 
     MOTIVATION: randomPick([
-      "Porque combina formación sólida, experiencia real y un enfoque muy práctico 😊",
-      "Porque es responsable, profesional y apasionado por lo que hace ☺️",
-      "Porque crea soluciones con calidad, compromiso y dedicación 💕",
-      "Porque siempre busca hacer las cosas bien 😊",
-      "Porque se compromete con cada proyecto ☺️",
-      "Porque aporta valor real a cada trabajo 💕",
+      "Porque combina formación sólida y experiencia real 😊",
+      "Porque es responsable y apasionado ☺️",
+      "Porque aporta valor real a cada proyecto 💕",
     ]),
   };
 
+
   const BOT_NAME = "sasha";
 
-  /* =========================
-SALUDO CORRECTO
+/* =========================
+🟢 SALUDO CORRECTO
 ========================= */
-  const greetingMatch = text.match(
-    /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
+const greetingMatch = text.match(
+  /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-  if (greetingMatch) {
-    const name = normalize(greetingMatch[2]?.trim() || "");
+if (greetingMatch) {
+  const name = normalize(greetingMatch[2]?.trim() || "");
 
-    if (!name || name === BOT_NAME) {
-      return { text: replies.GREETING, intent: "GREETING" };
-    }
-
+  // ✅ Caso 1: saludo SIN nombre
+  if (!name) {
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
+      text: replies.GREETING,
+      intent: "GREETING",
     };
   }
 
-  /* =========================
-DESPEDIDA PRIORIDAD
-========================= */
-  if (isValidFarewell(text)) {
-    return { text: replies.FAREWELL, intent: "FAREWELL" };
+  // ✅ Caso 2: saludo CON Sasha
+  if (name === BOT_NAME) {
+    return {
+      text: replies.GREETING,
+      intent: "GREETING",
+    };
   }
 
-  let intent = detectIntent(message);
+  // ❌ Caso 3: saludo con otro nombre
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
 
-  if (intent === "CONTACT") {
-    context.awaiting = "CONTACT_CONFIRM";
+/* =========================
+🟢 GRACIAS CONTROLADO
+========================= */
+const thanksMatch = text.match(
+  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (thanksMatch) {
+  const name = normalize(thanksMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
     return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      intent,
+      text: replies.GRA,
+      intent: "GRA",
     };
   }
 
   return {
-    text:
-      replies[intent] ||
-      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+🟢 ESTADO DE ÁNIMO
+========================= */
+const moodMatch = text.match(
+  /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (moodMatch) {
+  const name = normalize(moodMatch[2] || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.MOOD,
+      intent: "MOOD",
+    };
+  }
+
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+🟢 QUÉ ESTÁ HACIENDO
+========================= */
+const doingMatch = text.match(
+  /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (doingMatch) {
+  const name = normalize(doingMatch[2] || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.WHAT_DOING,
+      intent: "WHAT_DOING",
+    };
+  }
+
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+🟢 DETECTAR NOMBRE USUARIO
+========================= */
+if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
+  const name = message
+    .replace(/^(me llamo|soy|mi nombre es)/i, "")
+    .trim();
+
+  context.userName = name;
+  saveMemory(context, { type: "user_name", value: name });
+
+  return {
+    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
+    intent: "USER_NAME",
+  };
+}
+
+/* =========================
+🔴 DESPEDIDA PRIORIDAD ABSOLUTA
+========================= */
+if (isValidFarewell(text)) {
+  return {
+    text: replies.FAREWELL,
+    intent: "FAREWELL",
+  };
+}
+
+/* =========================
+🔵 CONFIRMACIÓN WHATSAPP
+========================= */
+if (context.awaiting === "CONTACT_CONFIRM") {
+  if (YES_WORDS.includes(text)) {
+    context.awaiting = null;
+    window.open(WHATSAPP_URL, "_blank");
+
+    return {
+      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+      intent: "CONTACT_OPENED",
+    };
+  }
+
+  if (NO_WORDS.includes(text)) {
+    context.awaiting = null;
+    return {
+      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+      intent: "CONTACT_CANCEL",
+    };
+  }
+}
+
+/* =========================
+FOLLOW UPS
+========================= */
+if (context.awaitingFollowUp) {
+  if (YES_WORDS.some((word) => text.includes(word))) {
+    const intent = context.awaitingFollowUp;
+    context.awaitingFollowUp = null;
+
+    const chainReplies = {
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
+
+    return {
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
+  }
+
+  if (NO_WORDS.some((word) => text.includes(word))) {
+    context.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+}
+
+/* =========================
+DETECTAR INTENT NORMAL
+========================= */
+let intent = detectIntent(message);
+
+// 🚫 Bloquear despedidas inválidas
+if (intent === "FAREWELL" && !isValidFarewell(message)) {
+  intent = "UNKNOWN";
+}
+
+saveMemory(context, { user: message, intent });
+
+if (intent === "CONTACT") {
+  return {
+    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+    action: "CONTACT_CONFIRM",
     intent,
   };
 }
+
+return {
+  text:
+    replies[intent] ||
+    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+  intent,
+};
+}
+
+
+
 
 /* =========================
 COMPONENTE
