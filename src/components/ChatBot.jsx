@@ -199,7 +199,7 @@ const followUp = (intent) =>
   ({
     PROFILE: "¿Quieres conocer su experiencia profesional?",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
+    SKILLS: null,
     PROJECTS: null,
   }[intent] || null);
 
@@ -643,7 +643,6 @@ if (context.awaitingFollowUp) {
       EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
     };
 
-    // 🔒 Protección: si no hay respuesta encadenada
     if (!chainReplies[followIntent]) {
       return {
         text: "Perfecto 😊 ¿Qué te gustaría saber ahora?",
