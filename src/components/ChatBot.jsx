@@ -605,13 +605,20 @@ if (intent === "CONTACT") {
   };
 }
 
+let replyText;
+
+if (typeof replies[intent] === "function") {
+  replyText = replies[intent](context);
+} else {
+  replyText = replies[intent];
+}
+
 return {
   text:
-    replies[intent] ||
+    replyText ||
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
   intent,
 };
-}
 
 
 
