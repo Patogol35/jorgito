@@ -278,12 +278,28 @@ function getSmartResponse(message, context) {
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
   // se cancela el follow-up y se responde normalmente
-  if (context.awaitingFollowUp) {
-    const directIntent = detectIntent(message);
-    if (directIntent !== "UNKNOWN") {
-      context.awaitingFollowUp = null;
-    }
+/* =========================
+🟡 FOLLOW-UP NUEVO (SI / NO)
+========================= */
+if (context.awaitingFollowUp) {
+  if (YES_WORDS.some(w => text.includes(w))) {
+    const nextIntent = context.awaitingFollowUp;
+    context.awaitingFollowUp = null;
+
+    return {
+      text: replies[nextIntent](context),
+      intent: nextIntent,
+    };
   }
+
+  if (NO_WORDS.some(w => text.includes(w))) {
+    context.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 Avísame si deseas saber algo más.",
+      intent: "FOLLOWUP_CANCEL",
+    };
+  }
+}
 
 const replies = {
   GRA: (ctx) =>
@@ -695,39 +711,7 @@ if (context.awaiting === "CONTACT_CONFIRM") {
   }
 }
 
-/* =========================
-FOLLOW UPS
-========================= */
-if (context.awaitingFollowUp) {
-  // ✅ Respuesta afirmativa
-  if (YES_WORDS.some((word) => text.includes(word))) {
-    const intent = context.awaitingFollowUp;
-    context.awaitingFollowUp = null;
 
-    const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-    };
-
-    return {
-      text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
-  }
-
-  // ❌ Respuesta negativa
-  if (NO_WORDS.some((word) => text.includes(word))) {
-    context.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-
-  // 🔁 Cualquier otra cosa → cancelar follow-up y continuar
-  context.awaitingFollowUp = null;
-}
 
 /* =========================
 DETECTAR INTENT NORMAL
@@ -750,22 +734,29 @@ if (intent === "CONTACT") {
 }
 
 // =========================
-// 🧠 RESPUESTA NORMAL
+// 🧠 RESPUESTA NORMAL + FOLLOW-UP
 // =========================
-let replyText;
+const replyFn = replies[intent] || replies.UNKNOWN;
+const replyText = replyFn(context);
 
-if (typeof replies[intent] === "function") {
-  replyText = replies[intent](context);
-} else {
-  replyText = replies[intent];
+// 🔁 FOLLOW-UP AUTOMÁTICO
+const nextFollowUp = followUp(intent);
+
+if (nextFollowUp) {
+  context.awaitingFollowUp =
+    intent === "PROFILE"
+      ? "EXPERIENCE"
+      : intent === "EXPERIENCE"
+      ? "SKILLS"
+      : intent === "SKILLS"
+      ? "PROJECTS"
+      : null;
 }
 
 return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+  text: nextFollowUp ? `${replyText}\n\n${nextFollowUp}` : replyText,
   intent,
-};}
+};
 
 
 
