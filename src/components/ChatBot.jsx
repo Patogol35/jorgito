@@ -270,7 +270,7 @@ const unknownReplies = (ctx) =>
     "Lo siento 😥 no tengo esa información pero con gusto puedo hablarte de lo que hace Jorge ✨",
     "No entendí bien 🤔 pero puedo ayudarte a conocer el perfil de Jorge y cómo contactarlo 😊",
   ]);
-
+const BOT_NAME = "sasha";
 const replies = {
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", [
@@ -525,7 +525,7 @@ LIKES_HELP: (ctx) =>
   UNKNOWN: (ctx) => unknownReplies(ctx),
 };
 
-const BOT_NAME = "sasha";
+
 
 
   
