@@ -541,44 +541,20 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
-/* =========================================
-   🟣 DETECTOR DE NOMBRES EN EL MENSAJE
-========================================= */
-const allowedNames = ["jorge", "sasha"];
-const normalize = (str) =>
-  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-const nameCheck = text.match(/\b[A-ZÁÉÍÓÚÑ]?[a-záéíóúñ]{3,}\b/gi);
+/* =========================
+⚠️ NOMBRE DESCONOCIDO
+========================= */
+const nameCheck = text.match(/\b([a-záéíóúñ]+)\b/gi);
 
 if (nameCheck) {
-  const normalized = nameCheck.map(normalize);
-
-  const foundAllowed = normalized.some((nm) => allowedNames.includes(nm));
-  const foundUnknown = normalized.some((nm) => !allowedNames.includes(nm));
-
-  // 👉 Nombre permitido: responder de forma correcta
-  if (foundAllowed) {
-    if (normalized.includes("sasha")) {
+  const names = nameCheck.map(normalize);
+  for (const nm of names) {
+    if (nm !== "jorge" && nm !== "sasha") {
       return {
-        text: "¡Claro! Sasha es mi nombre 🤖💕 ¿Qué te gustaría saber?",
-        intent: "ABOUT_SASHA",
+        text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
+        intent: "UNKNOWN",
       };
     }
-
-    if (normalized.includes("jorge")) {
-      return {
-        text: "Jorge es el creador de todo este proyecto 😎✨",
-        intent: "ABOUT_JORGE",
-      };
-    }
-  }
-
-  // 👉 Solo nombres NO permitidos: bloquear
-  if (foundUnknown && !foundAllowed) {
-    return {
-      text: "No tengo información sobre esa persona 😅, pero sí puedo contarte sobre Jorge 😊",
-      intent: "UNKNOWN",
-    };
   }
 }
   
