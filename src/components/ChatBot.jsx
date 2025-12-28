@@ -419,9 +419,9 @@ const replies = {
       `Jorge cuenta con un ${PROFILE.education} 😊`,
       `Jorge tiene formación académica sólida: ${PROFILE.education}`,
       `Jorge posee estudios enfocados en tecnología 💕`,
-      `Jorge cuenta con preparación técnica relevante 😊",
+      `Jorge cuenta con preparación técnica relevante 😊`,
       `Su educación respalda su experiencia, el es: ${PROFILE.education}`☺️,
-       `Jorge es ${PROFILE.education}♥️",
+       `Jorge es ${PROFILE.education}♥️`,
     ]),
 
   EXPERIENCE: (ctx) =>
