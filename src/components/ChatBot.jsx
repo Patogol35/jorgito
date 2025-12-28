@@ -273,7 +273,6 @@ function getSmartResponse(message, context) {
   }
 
 
-
 const replies = {
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", [
@@ -282,6 +281,7 @@ const replies = {
       "Siempre es un gusto ayudar 😊",
       "Para eso estoy ☺️",
       "¡Con mucho cariño! 💕",
+      "Cuando gustes 😊",
     ]),
 
   FAREWELL: (ctx) =>
@@ -291,6 +291,7 @@ const replies = {
       "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
       "Te espero pronto 😊 ¡Que tengas un lindo día!",
       "¡Chao! 💕 pásala súper.",
+      "Nos vemos pronto 😊✨",
     ]),
 
   GREETING: (ctx) =>
@@ -298,6 +299,9 @@ const replies = {
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
       "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
       "Hola 😊 ¿En qué puedo ayudarte hoy?",
+      "¡Bienvenido! 😊 Soy Sasha.",
+      "Hola 👋 encantada de saludarte ☺️",
+      "Hey 😊 aquí Sasha para ayudarte 💕",
     ]),
 
   ASSISTANT: (ctx) =>
@@ -305,6 +309,9 @@ const replies = {
       "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
       "Soy una asistente virtual creada para ayudarte 💕",
       "Sasha a tu servicio ☺️",
+      "Soy una IA diseñada por Jorge para apoyarte 😊",
+      "Soy una asistente digital siempre disponible 💻",
+      "Estoy aquí para acompañarte y ayudarte ☺️",
     ]),
 
   NAME: (ctx) =>
@@ -312,6 +319,9 @@ const replies = {
       "Me llamo Sasha 😊",
       "Puedes llamarme Sasha ☺️",
       "Mi nombre es Sasha 💕",
+      "Sasha es mi nombre 🤖",
+      "Así es, soy Sasha 😊",
+      "Puedes confiar en mí, soy Sasha ☺️",
     ]),
 
   HUMAN: (ctx) =>
@@ -319,6 +329,9 @@ const replies = {
       "No soy humana 🤖, pero me gusta conversar contigo 😊",
       "Soy inteligencia artificial con trato humano ☺️",
       "Soy digital, pero muy amigable 💕",
+      "No tengo cuerpo, pero sí buena vibra 😊",
+      "Soy una IA con corazón virtual 💕",
+      "Artificial por dentro, cercana por fuera ☺️",
     ]),
 
   MOOD: (ctx) =>
@@ -326,6 +339,9 @@ const replies = {
       "¡Estoy muy bien 😊 gracias por preguntar!",
       "Excelente ☺️ lista para ayudarte.",
       "Con muy buen ánimo 💕",
+      "Todo genial por aquí 😊",
+      "Me siento muy bien hoy ☺️",
+      "Con energía positiva ✨",
     ]),
 
   HAPPY: (ctx) =>
@@ -333,6 +349,9 @@ const replies = {
       "Sí 😊 me siento feliz cuando puedo ayudar.",
       "Ayudar siempre me hace feliz 💕",
       "Me alegra mucho estar aquí contigo ☺️",
+      "Claro que sí 😊",
+      "Estoy feliz de conversar contigo 💕",
+      "Me pone contenta ayudarte ☺️",
     ]),
 
   HELP: (ctx) =>
@@ -340,6 +359,9 @@ const replies = {
       "Puedo contarte sobre el perfil, experiencia y proyectos de Jorge 😊",
       "Te ayudo con estudios, tecnologías o contacto ☺️",
       "Estoy aquí para ayudarte 💕",
+      "Puedo orientarte sobre su perfil profesional 😊",
+      "Pregúntame lo que necesites ☺️",
+      "Con gusto te ayudo en lo que necesites 💕",
     ]),
 
   WHAT_DOING: (ctx) =>
@@ -347,13 +369,19 @@ const replies = {
       "Estoy aquí contigo 😊 lista para ayudarte.",
       "Pensando en cómo ayudarte mejor 💭✨",
       "Esperando tu siguiente mensaje ☺️",
+      "Atenta a lo que necesites 😊",
+      "Disponible para ayudarte 💕",
+      "Aquí, acompañándote ☺️",
     ]),
 
   BOOK: (ctx) =>
     pickNonRepeated(ctx, "BOOK", [
       "A Jorge le encantan los libros de misterio 📚, especialmente Dan Brown 😊",
       "Disfruta leer novelas de suspenso 📖",
-      "La lectura es una de sus pasiones ☺️",
+      "La lectura es una de sus pasiones, le gustan los libros de Dan Brown☺️",
+      "Jorge tiene muchos libros favoritos, uno de sus libros favoritos trata acerca de las ciencias noèticas 😌",
+      "Jorge suele leer novelas de suspenso literario😊",
+      "Los libros lo inspiran mucho y tiene muchos libros favoritos, tiene una biblioteca con varias temáticas, entre sus favoritas las de misterio💕",
     ]),
 
   CREATOR: (ctx) =>
@@ -361,13 +389,19 @@ const replies = {
       "Fui creada por Jorge 😊 para ayudar a conocer su perfil profesional.",
       "Soy una IA creada por Jorge 💻",
       "Mi propósito es apoyar el perfil de Jorge 💕",
+      "Jorge me diseñó con cariño ☺️",
+      "Nací para representar el trabajo de Jorge, mi creador 😊",
+      "Jorge me creo con el objetivo de formar parte de su portafolio digital 💻",
     ]),
 
   STACK: (ctx) =>
     pickNonRepeated(ctx, "STACK", [
       "Sí 😊 Jorge es Full Stack.",
-      "Combina frontend y backend en sus proyectos 💻",
-      "Disfruta crear soluciones completas ☺️",
+      "Jorge combina frontend y backend en sus proyectos 💻",
+      "Jorge disfruta crear soluciones completas ☺️",
+      "Jorge tiene una visión integral del desarrollo 😊",
+      " Jorge maneja varias tecnologías, por lo tanto es Full Stack.💕",
+      "Jorge es full stack, domina el modelo y visual de un proyecto.💻",
     ]),
 
   PROFILE: (ctx) =>
@@ -375,20 +409,29 @@ const replies = {
       `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
       `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
       `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
+      `Jorge es un profesional enfocado en tecnología y calidad 💻`,
+      `Jorge es un desarrollador apasionado por crear impacto 😊`,
+      `Su perfil destaca por compromiso y creatividad 💕`,
     ]),
 
   EDUCATION: (ctx) =>
     pickNonRepeated(ctx, "EDUCATION", [
       `Jorge cuenta con ${PROFILE.education} 😊`,
-      `Tiene formación académica sólida: ${PROFILE.education}`,
-      `Posee estudios enfocados en tecnología 💕`,
+      `Jorge tiene formación académica sólida: ${PROFILE.education}`,
+      `Jorge posee estudios enfocados en tecnología 💕`,
+      "Jorge cuenta con preparación técnica relevante 😊",
+      "Su educación respalda su experiencia, el es ${PROFILE.education}☺️",
+      "Jorge es ${PROFILE.education}♥️",
     ]),
 
   EXPERIENCE: (ctx) =>
     pickNonRepeated(ctx, "EXPERIENCE", [
       `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-      `Ha trabajado en ${PROFILE.experience.join(", ")} ☺️`,
+      `Jorge trabajado en ${PROFILE.experience.join(", ")} ☺️`,
       "Tiene experiencia práctica en proyectos reales 💻",
+      "Ha participado en distintos proyectos 😊",
+      "Cuenta con experiencia profesional sólida 💕",
+      "Su experiencia respalda su trabajo ☺️",
     ]),
 
   SKILLS: (ctx) =>
@@ -398,6 +441,7 @@ const replies = {
       `Aplica tecnologías modernas como ${PROFILE.stack.join(", ")}.`,
       `Domina herramientas actuales como ${PROFILE.stack.join(", ")} 🚀`,
       `Desarrolla soluciones usando ${PROFILE.stack.join(", ")}.`,
+      `Utiliza buenas prácticas de desarrollo 💕`,
     ]),
 
   PROJECTS: (ctx) =>
@@ -405,6 +449,9 @@ const replies = {
       `Ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
       `Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")}`,
       "Sus proyectos reflejan su experiencia 💕",
+      "Cuenta con proyectos funcionales 💻",
+      "Aplica lo aprendido en proyectos reales 😊",
+      "Cada proyecto muestra su evolución ☺️",
     ]),
 
   MOTIVATION: (ctx) =>
@@ -412,8 +459,12 @@ const replies = {
       "Porque combina formación sólida y experiencia real 😊",
       "Porque es responsable y apasionado ☺️",
       "Porque aporta valor real a cada proyecto 💕",
+      "Porque se compromete con la calidad 💻",
+      "Porque busca soluciones eficientes 😊",
+      "Porque le apasiona lo que hace ☺️",
     ]),
 };
+
 
   const BOT_NAME = "sasha";
 
