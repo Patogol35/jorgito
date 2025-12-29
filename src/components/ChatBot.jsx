@@ -745,7 +745,6 @@ const normalize = (text = "") =>
 
 /* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
-(SOLO CUANDO SE PREGUNTA POR UNA PERSONA)
 ========================= */
 const extractNameReference = (text) => {
   const clean = normalize(text);
@@ -774,11 +773,11 @@ const extractNameReference = (text) => {
 /* =========================
 🧠 PROCESAR MENSAJE
 ========================= */
-const processMessage = (text) => {
+const processMessage = (text, context) => {
   const referencedName = extractNameReference(text);
   let intent = detectIntent(text);
 
-  const allowedNames = ["jorge", "patricio"];
+  const allowedNames = ["jorge", "patricio", "jorge patricio"];
   const restrictedIntents = ["PROFILE", "INFO", "CONTACT", "STUDIES"];
 
   /* =========================
@@ -786,9 +785,7 @@ const processMessage = (text) => {
   ========================= */
   if (
     referencedName &&
-    !allowedNames.some((n) =>
-      referencedName.includes(n)
-    ) &&
+    !allowedNames.some((n) => referencedName.includes(n)) &&
     restrictedIntents.includes(intent)
   ) {
     return {
@@ -832,7 +829,7 @@ const processMessage = (text) => {
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
   };
-}
+};
 
 /* =========================
 COMPONENTE
