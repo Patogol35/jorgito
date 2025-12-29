@@ -711,40 +711,30 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  // ✅ Si menciona tu nombre → permitir
+  // ✅ Si menciona alguno de tus nombres → permitir
   if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
 
-  // 🚫 Lista ampliada de nombres comunes (ajustable)
-  const commonOtherNames = [
-    "luis", "carlos", "ana", "maria", "pedro", "juan", "diego", "andrea",
-    "alejandro", "cristina", "daniel", "laura", "raul", "gabriel", "sofia",
-    "manuel", "fernando", "ricardo", "jose", "josefina", "esteban", "miguel",
-    "camila", "valeria", "sebastian", "natalia", "rodrigo", "gabriela"
+  // 🚫 Palabras clave que solo aplican a TU perfil
+  const sensitiveKeywords = [
+    "tecnologia", "tecnologias", "tecnologías",
+    "experiencia", "estudios", "perfil", "contratar",
+    "proyectos", "stack", "habilidades", "lenguajes",
+    "quien es", "quién es", "formacion", "formación",
+    "educacion", "educación", "máster", "master",
+    "libros", "libro", "full stack", "desarrollador",
+    "ingeniero", "portafolio"
   ];
 
-  // ✅ Palabras sensibles (ampliadas para cubrir variantes)
-  const sensitiveWords = [
-    "tecnologia", "tecnologias", "tecnologías", // <-- ahora incluye "tecnologia"
-    "experiencia", "estudios", "perfil", "contratar", "proyectos",
-    "stack", "habilidades", "quien es", "quién es", "formacion", "formación",
-    "educacion", "educación", "máster", "master", "libros", "lenguajes"
-  ];
+  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
 
-  const hasSensitive = sensitiveWords.some(w => normalizedText.includes(w));
-  const hasOtherName = commonOtherNames.some(name => {
-    // Buscar el nombre como palabra completa (rodeada de espacios, inicio o fin)
-    const regex = new RegExp(`\\b${name}\\b`, 'i');
-    return regex.test(text); // usa el texto original para respetar límites de palabra
-  });
-
-  // 🚫 Si hay palabra sensible + nombre ajeno → bloquear
-  if (hasSensitive && hasOtherName) {
+  // 🛑 Si hay palabra sensible PERO no menciona tu nombre → NO es sobre ti
+  if (hasSensitive) {
     return false;
   }
 
-  // ✅ En cualquier otro caso, permitir
+  // ✅ Si no hay palabra sensible (ej: "Hola", "Gracias") → permitir
   return true;
 };
 
