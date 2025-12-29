@@ -532,6 +532,19 @@ const OWNER_NAMES = [
   "patricio",
   "jorge patricio",
 ];
+
+  const INVALID_REFERENCES = [
+  "su",
+  "sus",
+  "mi",
+  "mis",
+  "tu",
+  "tus",
+  "nuestro",
+  "nuestros",
+  "nuestra",
+  "nuestras",
+];
   
 /* =========================
 🟢 SALUDO CORRECTO
@@ -746,6 +759,7 @@ const referencedName = extractNameReference(text);
 
 if (
   referencedName &&
+  !INVALID_REFERENCES.includes(referencedName) &&
   referencedName !== "jorge" &&
   referencedName !== "jorge patricio"
 ) {
