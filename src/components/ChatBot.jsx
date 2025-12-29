@@ -28,12 +28,10 @@ const WHATSAPP_URL =
 UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
+const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const randomPick = (arr = []) =>
-  arr.length ? arr[Math.floor(Math.random() * arr.length)] : null;
-
-const YES_WORDS = Object.freeze(["sí", "si", "claro", "ok", "dale"]);
-const NO_WORDS = Object.freeze(["no", "ahora no", "luego"]);
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
+const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
 MEMORIA
@@ -41,8 +39,6 @@ MEMORIA
 const MEMORY_LIMIT = 10;
 
 const saveMemory = (ctx, data) => {
-  if (!ctx) return;
-
   const memory = ctx.memory ?? [];
   memory.push(data);
 
@@ -54,7 +50,7 @@ const saveMemory = (ctx, data) => {
 /* =========================
 PERFIL
 ========================= */
-const PROFILE = Object.freeze({
+const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
   role: "Ingeniero de Software y Desarrollador Full Stack",
   description:
@@ -86,12 +82,12 @@ const PROFILE = Object.freeze({
     "Aplicaciones Frontend",
     "Aplicaciones React conectadas a APIs REST",
   ],
-});
+};
 
 /* =========================
 SUGERENCIAS
 ========================= */
-const SUGGESTIONS = Object.freeze([
+const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué experiencia tiene?",
   "¿Qué estudios tiene?",
@@ -102,12 +98,12 @@ const SUGGESTIONS = Object.freeze([
   "¿Cómo puedo contactarlo?",
   "¿Quién te creó?",
   "Sus libros favoritos?",
-]);
+];
 
 /* =========================
 INTENCIONES
 ========================= */
-const INTENTS = Object.freeze({
+const INTENTS = {
   GRA: ["Gracias"],
 
   WHAT_DOING: [
@@ -120,30 +116,10 @@ const INTENTS = Object.freeze({
     "que andas haciendo",
     "qué andas haciendo",
   ],
-
-  LIKES_COFFEE: ["café", "cafe"],
-  LIKES_MUSIC: ["música", "musica"],
-  LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
-  LIKES_TALK: ["conversar", "hablar"],
-  LIKES_HELP: ["ayudar"],
-  LIKES_MORNING: ["mañanas", "madrugar"],
-  LIKES_NIGHT: ["noche"],
-
-  BORED: ["aburr"],
-  TIRED: ["cans"],
-  FRIENDS: ["amigos"],
-  FUNNY: ["reír", "reir"],
-  NICE: ["simpática", "simpatica"],
-  LISTEN: ["escuchar"],
-  EMOTIONS: ["emociones", "sentir"],
-  SILENCE: ["silencio"],
-  PEOPLE: ["gente", "personas"],
+  
 
   MOOD: ["cómo estás", "como estas", "estás bien"],
-  HAPPY: ["feliz"],
-
-  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
+NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
   CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
@@ -167,8 +143,7 @@ const INTENTS = Object.freeze({
   PROJECTS: ["proyectos", "proyecto"],
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
-});
-
+};
 /* =========================
 NORMALIZACIÓN
 ========================= */
@@ -184,28 +159,24 @@ const normalize = (t = "") =>
 /* =========================
 DETECT INTENT
 ========================= */
-const detectIntent = (msg = "") => {
+const detectIntent = (msg) => {
   const text = normalize(msg);
   let best = "UNKNOWN";
-  let maxScore = 0;
+  let max = 0;
 
   for (const intent in INTENTS) {
     let score = 0;
-
-    for (const rawWord of INTENTS[intent]) {
-      const word = normalize(rawWord);
-      if (text.includes(word)) {
+    for (const word of INTENTS[intent]) {
+      if (text.includes(normalize(word))) {
         score += word.length > 4 ? 2 : 1;
       }
     }
-
-    if (score > maxScore) {
-      maxScore = score;
+    if (score > max) {
+      max = score;
       best = intent;
     }
   }
-
-  return maxScore ? best : "UNKNOWN";
+  return max ? best : "UNKNOWN";
 };
 
 /* =========================
@@ -219,7 +190,7 @@ const followUp = (intent) =>
     PROJECTS: null,
   }[intent] || null);
 
-const isValidFarewell = (text = "") => {
+const isValidFarewell = (text) => {
   const t = normalize(text);
 
   const valid = [
@@ -243,9 +214,7 @@ RESPUESTAS
 // =========================
 // 🧠 CONTROL DE REPETICIÓN
 // =========================
-const pickNonRepeated = (ctx = {}, intent, options = []) => {
-  if (!options.length) return null;
-
+const pickNonRepeated = (ctx, intent, options) => {
   ctx.usedReplies = ctx.usedReplies || {};
   ctx.usedReplies[intent] = ctx.usedReplies[intent] || [];
 
@@ -253,21 +222,24 @@ const pickNonRepeated = (ctx = {}, intent, options = []) => {
     (opt) => !ctx.usedReplies[intent].includes(opt)
   );
 
-  const choice = randomPick(unused.length ? unused : options);
+  const choice = unused.length
+    ? randomPick(unused)
+    : randomPick(options);
 
-  if (choice) ctx.usedReplies[intent].push(choice);
+  ctx.usedReplies[intent].push(choice);
 
-  if (ctx.usedReplies[intent].length >= options.length) {
+  if (ctx.usedReplies[intent].length > options.length - 1) {
     ctx.usedReplies[intent] = [];
   }
 
   return choice;
 };
 
+
 // =========================
 // ❓ RESPUESTA DESCONOCIDA
 // =========================
-const unknownReplies = (ctx = {}) =>
+const unknownReplies = (ctx) =>
   pickNonRepeated(ctx, "UNKNOWN", [
     "No estoy segura de haber entendido 🤔, ¿quizás te interesa conocer la experiencia de Jorge?",
     "Disculpa 😅, ¿quieres saber algo del perfil o los proyectos de Jorge?",
@@ -279,10 +251,9 @@ const unknownReplies = (ctx = {}) =>
     "No entendí bien 🤔 pero puedo ayudarte a conocer el perfil de Jorge y cómo contactarlo 😊",
   ]);
 
-// =========================
-// 🧠 RESPUESTA INTELIGENTE
-// =========================
-function getSmartResponse(message = "", context = {}) {
+
+
+function getSmartResponse(message, context) {
   const text = normalize(message);
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
@@ -294,267 +265,204 @@ function getSmartResponse(message = "", context = {}) {
     }
   }
 
-  const replies = {
-    GRA: (ctx) =>
-      pickNonRepeated(ctx, "GRA", [
-        "Un placer 😊",
-        "De nada 😌",
-        "Siempre es un gusto ayudar 😊",
-        "Para eso estoy ☺️",
-        "¡Con mucho cariño! 💕",
-        "Cuando gustes 😊",
-      ]),
+const replies = {
+  GRA: (ctx) =>
+    pickNonRepeated(ctx, "GRA", [
+      "Un placer 😊",
+      "De nada 😌",
+      "Siempre es un gusto ayudar 😊",
+      "Para eso estoy ☺️",
+      "¡Con mucho cariño! 💕",
+      "Cuando gustes 😊",
+    ]),
 
-    FAREWELL: (ctx) =>
-      pickNonRepeated(ctx, "FAREWELL", [
-        "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
-        "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
-        "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
-        "Te espero pronto 😊 ¡Que tengas un lindo día!",
-        "¡Chao! 💕 pásala súper.",
-        "Nos vemos pronto 😊✨",
-      ]),
+  FAREWELL: (ctx) =>
+    pickNonRepeated(ctx, "FAREWELL", [
+      "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
+      "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
+      "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
+      "Te espero pronto 😊 ¡Que tengas un lindo día!",
+      "¡Chao! 💕 pásala súper.",
+      "Nos vemos pronto 😊✨",
+    ]),
 
-    GREETING: (ctx) =>
-      pickNonRepeated(ctx, "GREETING", [
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-        "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
-        "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
-        "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
-        "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
-        "¡Hola! 😊 Qué gusto verte por aquí.",
-      ]),
+  GREETING: (ctx) =>
+  pickNonRepeated(ctx, "GREETING", [
+    "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
+    "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
+    "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
+    "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
+    "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
+    "¡Hola! 😊 Qué gusto verte por aquí.",
+  ]),
 
-    ASSISTANT: (ctx) =>
-      pickNonRepeated(ctx, "ASSISTANT", [
-        "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
-        "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
-        "Soy Sasha 💕, una asistente virtual creada para ayudarte con información sobre Jorge.",
-        "Soy Sasha 🤖 y estoy diseñada para ayudarte.",
-        "Sasha a tu servicio ☺️",
-        "Soy una asistente virtual lista para ayudarte 😊",
-      ]),
+  ASSISTANT: (ctx) =>
+  pickNonRepeated(ctx, "ASSISTANT", [
+    "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
+    "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
+    "Soy Sasha 💕, una asistente virtual creada para ayudarte con información sobre Jorge.",
+    "Soy Sasha 🤖 y estoy diseñada para ayudarte.",
+    "Sasha a tu servicio ☺️",
+    "Soy una asistente virtual lista para ayudarte 😊",
+  ]),
 
-    NAME: (ctx) =>
-      pickNonRepeated(ctx, "NAME", [
-        "Me llamo Sasha 😊",
-        "Puedes llamarme Sasha ☺️",
-        "Mi nombre es Sasha 💕",
-        "Todos me conocen como Sasha 🤖",
-        "Sasha es mi nombre 😊",
-        "Puedes decirme Sasha sin problema ☺️",
-      ]),
+  NAME: (ctx) =>
+  pickNonRepeated(ctx, "NAME", [
+    "Me llamo Sasha 😊",
+    "Puedes llamarme Sasha ☺️",
+    "Mi nombre es Sasha 💕",
+    "Todos me conocen como Sasha 🤖",
+    "Sasha es mi nombre 😊",
+    "Puedes decirme Sasha sin problema ☺️",
+  ]),
 
-    HUMAN: (ctx) =>
-      pickNonRepeated(ctx, "HUMAN", [
-        "No soy humana 🤖, pero me gusta conversar de forma natural contigo 😊",
-        "Soy una IA 🤖, aunque intento ser cercana y amable ☺️",
-        "No soy humana, pero siempre estoy aquí para ayudarte 💕",
-        "Soy inteligencia artificial, pero con trato humano 😊",
-        "No tengo cuerpo, pero sí muchas ganas de ayudar ☺️",
-        "Soy digital 🤖, pero muy amigable 💕",
-      ]),
+  HUMAN: (ctx) =>
+  pickNonRepeated(ctx, "HUMAN", [
+    "No soy humana 🤖, pero me gusta conversar de forma natural contigo 😊",
+    "Soy una IA 🤖, aunque intento ser cercana y amable ☺️",
+    "No soy humana, pero siempre estoy aquí para ayudarte 💕",
+    "Soy inteligencia artificial, pero con trato humano 😊",
+    "No tengo cuerpo, pero sí muchas ganas de ayudar ☺️",
+    "Soy digital 🤖, pero muy amigable 💕",
+  ]),
 
-    MOOD: (ctx) =>
-      pickNonRepeated(ctx, "MOOD", [
-        "¡Estoy muy bien 😊 gracias por preguntar!",
-        "Todo va muy bien ☺️ y me alegra ayudarte.",
-        "Me siento genial 💕 sobre todo cuando converso contigo.",
-        "Muy bien 😊 lista para ayudarte.",
-        "Con muy buen ánimo ☺️",
-        "Excelente 😊 gracias por notarlo.",
-      ]),
+  MOOD: (ctx) =>
+  pickNonRepeated(ctx, "MOOD", [
+    "¡Estoy muy bien 😊 gracias por preguntar!",
+    "Todo va muy bien ☺️ y me alegra ayudarte.",
+    "Me siento genial 💕 sobre todo cuando converso contigo.",
+    "Muy bien 😊 lista para ayudarte.",
+    "Con muy buen ánimo ☺️",
+    "Excelente 😊 gracias por notarlo.",
+  ]),
 
-    HAPPY: (ctx) =>
-      pickNonRepeated(ctx, "HAPPY", [
-        "Sí 😊 me siento feliz cuando puedo ayudar.",
-        "Me pone contenta ayudarte 💕",
-        "Claro que sí ☺️ disfruto mucho estas conversaciones.",
-        "Ayudar siempre me hace feliz 😊",
-        "Me alegra mucho estar aquí contigo ☺️",
-        "Cuando ayudo, todo va mejor 💕",
-      ]),
+  HELP: (ctx) =>
+  pickNonRepeated(ctx, "HELP", [
+    "Con gusto 😊 puedo contarte sobre el perfil, experiencia y proyectos de Jorge.",
+    "Si quieres ☺️ puedo ayudarte con información sobre estudios, tecnologías o contacto.",
+    "Estoy aquí para ayudarte 💕 con todo lo relacionado al perfil profesional de Jorge.",
+    "Puedo orientarte sobre habilidades y experiencia 😊",
+    "Con gusto te explico lo que necesites ☺️",
+    "Estoy lista para ayudarte en lo que busques 💕",
+  ]),
 
-    HELP: (ctx) =>
-      pickNonRepeated(ctx, "HELP", [
-        "Con gusto 😊 puedo contarte sobre el perfil, experiencia y proyectos de Jorge.",
-        "Si quieres ☺️ puedo ayudarte con información sobre estudios, tecnologías o contacto.",
-        "Estoy aquí para ayudarte 💕 con todo lo relacionado al perfil profesional de Jorge.",
-        "Puedo orientarte sobre habilidades y experiencia 😊",
-        "Con gusto te explico lo que necesites ☺️",
-        "Estoy lista para ayudarte en lo que busques 💕",
-      ]),
+WHAT_DOING: (ctx) =>
+  pickNonRepeated(ctx, "WHAT_DOING", [
+    "Estoy aquí contigo 😊 lista para ayudarte.",
+    "Ahora mismo charlando contigo 💕",
+    "Pensando en cómo ayudarte mejor 💭✨",
+    "Disfrutando esta conversación contigo ☺️",
+    "Atenta a lo que necesites 😊",
+    "Esperando tu siguiente mensaje ☺️",
+  ]),
 
-    WHAT_DOING: (ctx) =>
-      pickNonRepeated(ctx, "WHAT_DOING", [
-        "Estoy aquí contigo 😊 lista para ayudarte.",
-        "Ahora mismo charlando contigo 💕",
-        "Pensando en cómo ayudarte mejor 💭✨",
-        "Disfrutando esta conversación contigo ☺️",
-        "Atenta a lo que necesites 😊",
-        "Esperando tu siguiente mensaje ☺️",
-      ]),
+LIKES_HELP: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_HELP", [
+    "Ayudar es lo que más me gusta 💕",
+    "Siempre intento ser útil 😊",
+    "Me alegra mucho poder ayudar ☺️",
+    "Dar ayuda me motiva 😊",
+    "Estoy aquí para servirte ☺️",
+    "Ayudar da sentido a lo que hago 💕",
+  ]),
 
-    LIKES_COFFEE: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_COFFEE", [
-        "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
-        "Un cafecito ☕ siempre viene bien ☺️",
-        "El aroma del café ☕ me encanta, es muy reconfortante 💕",
-        "El café ☕ hace cualquier charla mejor 😊",
-        "Una taza de café ☕ es perfecta para concentrarse ☺️",
-        "El café siempre anima el momento 💕",
-      ]),
+  BOOK: (ctx) =>
+  pickNonRepeated(ctx, "BOOK", [
+    "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
+    "Jorge disfruta leer novelas de misterio y suspenso 📖✨",
+    "Los libros de Dan Brown son los favoritos de Jorge 📚 ideales si te gusta el misterio.",
+    "A Jorge le gusta mucho el suspenso literario 😊",
+    "La lectura es una de sus pasiones, Jorge tiene muchos libros favoritos, los que destacan son los de misterios ☺️",
+    "A Jorge siempre le llaman la atención los libros de misterio  💕",
+  ]),
 
-    LIKES_MUSIC: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_MUSIC", [
-        "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
-        "La música 🎧 siempre mejora el ánimo ☺️",
-        "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
-        "La música acompaña muy bien cualquier momento 😊",
-        "Escuchar música 🎶 es inspirador ☺️",
-        "La música transmite emociones muy bonitas 💕",
-      ]),
+  CREATOR: (ctx) =>
+  pickNonRepeated(ctx, "CREATOR", [
+    "Fui creada por Jorge 😊 para ayudar a conocer mejor su perfil profesional.",
+    "Soy una inteligencia artificial creada por Jorge 💻",
+    "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
+    "Jorge me diseñó para ayudarte 😊",
+    "Fui creada como asistente virtual de Jorge ☺️",
+    "Mi propósito es apoyar el perfil de Jorge 💕",
+  ]),
 
-    LIKES_MOVIES: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_MOVIES", [
-        "Las películas 🎬 me encantan, sobre todo las de misterio.",
-        "Una buena película 🎥 siempre es un buen plan ☺️",
-        "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
-        "El cine 🎬 siempre entretiene 😊",
-        "Ver películas es una gran forma de relajarse ☺️",
-        "Las historias en el cine inspiran 💕",
-      ]),
+  STACK: (ctx) =>
+  pickNonRepeated(ctx, "STACK", [
+    "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
+    "Así es 💻✨ Jorge combina frontend y backend en sus proyectos.",
+    "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
+    "Sí 😊 Jorge domina tanto el lado visual como el lógico.",
+    "Sí ☺️ a Jorge le gusta desarrollar proyectos completos de principio a fin.",
+    "Jorge trabaja en todas las capas del desarrollo 💕",
+  ]),
 
-    LIKES_TRAVEL: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_TRAVEL", [
-        "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
-        "Explorar el mundo 🌍 siempre abre la mente ☺️",
-        "Viajar cambia la forma de ver la vida 💕",
-        "Conocer nuevos lugares siempre enriquece 😊",
-        "Viajar trae experiencias inolvidables ☺️",
-        "Descubrir el mundo es fascinante 💕",
-      ]),
+  PROFILE: (ctx) =>
+  pickNonRepeated(ctx, "PROFILE", [
+    `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+    `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
+    `Te cuento ☺️ ${PROFILE.name} Jorge es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
+    `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
+    "Jorge combina creatividad y tecnología ☺️",
+    "Jorge es un profesional enfocado en soluciones modernas 💕",
+  ]),
 
-    LIKES_TALK: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_TALK", [
-        "Me encanta conversar contigo 😊",
-        "Hablar siempre es buena idea ☺️",
-        "Una buena charla hace el momento más bonito 💕",
-        "Conversar conecta a las personas 😊",
-        "Charlar siempre suma ☺️",
-        "Hablar contigo es agradable 💕",
-      ]),
+  EDUCATION: (ctx) =>
+  pickNonRepeated(ctx, "EDUCATION", [
+    `Jorge cuenta con un ${PROFILE.education} 😊`,
+    `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
+    `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
+    "Jorge posee estudios enfocados en tecnología 😊",
+    `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
+    `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
+  ]),
 
-    LIKES_HELP: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_HELP", [
-        "Ayudar es lo que más me gusta 💕",
-        "Siempre intento ser útil 😊",
-        "Me alegra mucho poder ayudar ☺️",
-        "Dar ayuda me motiva 😊",
-        "Estoy aquí para servirte ☺️",
-        "Ayudar da sentido a lo que hago 💕",
-      ]),
+  EXPERIENCE: (ctx) =>
+  pickNonRepeated(ctx, "EXPERIENCE", [
+    `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
+    `Jorge ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
+    `Jorge cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
+    "Jorge tiene experiencia práctica en proyectos reales 😊",
+    "Jorge ha aplicado sus conocimientos en distintos entornos ☺️",
+    "La experiencia de Jorge abarca varios roles tecnológicos 💕",
+  ]),
 
-    BOOK: (ctx) =>
-      pickNonRepeated(ctx, "BOOK", [
-        "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
-        "Jorge disfruta leer novelas de misterio y suspenso 📖✨",
-        "Los libros de Dan Brown son los favoritos de Jorge 📚 ideales si te gusta el misterio.",
-        "A Jorge le gusta mucho el suspenso literario 😊",
-        "La lectura es una de sus pasiones, Jorge tiene muchos libros favoritos, los que destacan son los de misterios ☺️",
-        "A Jorge siempre le llaman la atención los libros de misterio 💕",
-      ]),
+  SKILLS: (ctx) =>
+  pickNonRepeated(ctx, "SKILLS", [
+    `Jorge Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
+    `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
+    `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
+    "Jorge maneja herramientas modernas del desarrollo web 😊",
+    "Jorge tiene habilidades técnicas bien definidas ☺️",
+    "Jorge aplica buenas prácticas en sus proyectos 💕",
+  ]),
 
-    CREATOR: (ctx) =>
-      pickNonRepeated(ctx, "CREATOR", [
-        "Fui creada por Jorge 😊 para ayudar a conocer mejor su perfil profesional.",
-        "Soy una inteligencia artificial creada por Jorge 💻",
-        "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
-        "Jorge me diseñó para ayudarte 😊",
-        "Fui creada como asistente virtual de Jorge ☺️",
-        "Mi propósito es apoyar el perfil de Jorge 💕",
-      ]),
+  PROJECTS: (ctx) =>
+  pickNonRepeated(ctx, "PROJECTS", [
+    `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+    `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
+    `Jorge Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
+    "Jorge ha creado proyectos funcionales y modernos 😊",
+    "Jorge participa activamente en el desarrollo de aplicaciones ☺️",
+    "Sus proyectos reflejan su experiencia 💕",
+  ]),
 
-    STACK: (ctx) =>
-      pickNonRepeated(ctx, "STACK", [
-        "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
-        "Así es 💻✨ Jorge combina frontend y backend en sus proyectos.",
-        "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
-        "Sí 😊 Jorge domina tanto el lado visual como el lógico.",
-        "Sí ☺️ a Jorge le gusta desarrollar proyectos completos de principio a fin.",
-        "Jorge trabaja en todas las capas del desarrollo 💕",
-      ]),
+  MOTIVATION: (ctx) =>
+    pickNonRepeated(ctx, "MOTIVATION", [
+"Porque Jorge combina formación sólida, experiencia real y un enfoque muy práctico 😊",
+"Porque Jorge es responsable, profesional y apasionado por lo que hace ☺️",
+"Porque Jorge crea soluciones con calidad, compromiso y dedicación 💕",
+"Porque Jorge siempre busca hacer las cosas bien 😊",
+"Porque Jorge se compromete con cada proyecto ☺️",
+"Porque Jorge aporta valor real a cada trabajo 💕"
+    ]),
 
-    PROFILE: (ctx) =>
-      pickNonRepeated(ctx, "PROFILE", [
-        `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-        `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-        `Te cuento ☺️ ${PROFILE.name} Jorge es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
-        `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
-        "Jorge combina creatividad y tecnología ☺️",
-        "Jorge es un profesional enfocado en soluciones modernas 💕",
-      ]),
-
-    EDUCATION: (ctx) =>
-      pickNonRepeated(ctx, "EDUCATION", [
-        `Jorge cuenta con un ${PROFILE.education} 😊`,
-        `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
-        `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
-        "Jorge posee estudios enfocados en tecnología 😊",
-        `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
-        `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
-      ]),
-
-    EXPERIENCE: (ctx) =>
-      pickNonRepeated(ctx, "EXPERIENCE", [
-        `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-        `Jorge ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
-        `Jorge cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
-        "Jorge tiene experiencia práctica en proyectos reales 😊",
-        "Jorge ha aplicado sus conocimientos en distintos entornos ☺️",
-        "La experiencia de Jorge abarca varios roles tecnológicos 💕",
-      ]),
-
-    SKILLS: (ctx) =>
-      pickNonRepeated(ctx, "SKILLS", [
-        `Jorge trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-        `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
-        `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
-        "Jorge maneja herramientas modernas del desarrollo web 😊",
-        "Jorge tiene habilidades técnicas bien definidas ☺️",
-        "Jorge aplica buenas prácticas en sus proyectos 💕",
-      ]),
-
-    PROJECTS: (ctx) =>
-      pickNonRepeated(ctx, "PROJECTS", [
-        `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-        `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
-        `Jorge desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
-        "Jorge ha creado proyectos funcionales y modernos 😊",
-        "Jorge participa activamente en el desarrollo de aplicaciones ☺️",
-        "Sus proyectos reflejan su experiencia 💕",
-      ]),
-
-    MOTIVATION: (ctx) =>
-      pickNonRepeated(ctx, "MOTIVATION", [
-        "Porque Jorge combina formación sólida, experiencia real y un enfoque muy práctico 😊",
-        "Porque Jorge es responsable, profesional y apasionado por lo que hace ☺️",
-        "Porque Jorge crea soluciones con calidad, compromiso y dedicación 💕",
-        "Porque Jorge siempre busca hacer las cosas bien 😊",
-        "Porque Jorge se compromete con cada proyecto ☺️",
-        "Porque Jorge aporta valor real a cada trabajo 💕",
-      ]),
-
-    UNKNOWN: (ctx) => unknownReplies(ctx),
-  };
-
-  const intent = detectIntent(text);
-  return replies[intent]?.(context) || replies.UNKNOWN(context);
-        }
-
+  UNKNOWN: (ctx) => unknownReplies(ctx),
+};
 
 const BOT_NAME = "sasha";
 
+
+  
 /* =========================
 🟢 SALUDO CORRECTO
 ========================= */
@@ -565,13 +473,23 @@ const greetingMatch = text.match(
 if (greetingMatch) {
   const name = normalize(greetingMatch[2]?.trim() || "");
 
-  if (!name || name === BOT_NAME) {
+  // ✅ Caso 1: saludo SIN nombre
+  if (!name) {
     return {
       text: replies.GREETING(context),
       intent: "GREETING",
     };
   }
 
+  // ✅ Caso 2: saludo CON Sasha
+  if (name === BOT_NAME) {
+    return {
+      text: replies.GREETING(context),
+      intent: "GREETING",
+    };
+  }
+
+  // ❌ Caso 3: saludo con otro nombre
   return {
     text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent: "UNKNOWN",
@@ -609,7 +527,7 @@ const moodMatch = text.match(
 );
 
 if (moodMatch) {
-  const name = normalize(moodMatch[2]?.trim() || "");
+  const name = normalize(moodMatch[2] || "");
 
   if (!name || name === BOT_NAME) {
     return {
@@ -622,9 +540,13 @@ if (moodMatch) {
     text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent: "UNKNOWN",
   };
-}
+} 
 
-/* =========================
+
+
+
+
+    /* =========================
 🟢 QUÉ ESTÁ HACIENDO
 ========================= */
 const doingMatch = text.match(
@@ -632,7 +554,7 @@ const doingMatch = text.match(
 );
 
 if (doingMatch) {
-  const name = normalize(doingMatch[2]?.trim() || "");
+  const name = normalize(doingMatch[2] || "");
 
   if (!name || name === BOT_NAME) {
     return {
@@ -655,26 +577,24 @@ if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     .replace(/^(me llamo|soy|mi nombre es)/i, "")
     .trim();
 
-  if (name) {
-    context.userName = name;
-    saveMemory(context, { type: "user_name", value: name });
+  context.userName = name;
+  saveMemory(context, { type: "user_name", value: name });
 
-    return {
-      text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
-      intent: "USER_NAME",
-    };
-  }
+  return {
+    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
+    intent: "USER_NAME",
+  };
 }
 
 /* =========================
 🔴 DESPEDIDA PRIORIDAD ABSOLUTA
 ========================= */
-if (isValidFarewell(text)) {
+  if (isValidFarewell(text)) {
   return {
     text: replies.FAREWELL(context),
     intent: "FAREWELL",
   };
-}
+  }
 
 /* =========================
 🔵 CONFIRMACIÓN WHATSAPP
@@ -703,8 +623,9 @@ if (context.awaiting === "CONTACT_CONFIRM") {
 FOLLOW UPS
 ========================= */
 if (context.awaitingFollowUp) {
+  // ✅ Respuesta afirmativa
   if (YES_WORDS.some((word) => text.includes(word))) {
-    const followIntent = context.awaitingFollowUp;
+    const intent = context.awaitingFollowUp;
     context.awaitingFollowUp = null;
 
     const chainReplies = {
@@ -714,12 +635,13 @@ if (context.awaitingFollowUp) {
     };
 
     return {
-      text: chainReplies[followIntent],
-      intent: followIntent === "SKILLS" ? "PROJECTS" : followIntent,
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
       fromFollowUp: true,
     };
   }
 
+  // ❌ Respuesta negativa
   if (NO_WORDS.some((word) => text.includes(word))) {
     context.awaitingFollowUp = null;
     return {
@@ -727,6 +649,7 @@ if (context.awaitingFollowUp) {
     };
   }
 
+  // 🔁 Cualquier otra cosa → cancelar follow-up y continuar
   context.awaitingFollowUp = null;
 }
 
@@ -750,9 +673,9 @@ if (intent === "CONTACT") {
   };
 }
 
-/* =========================
-🧠 RESPUESTA NORMAL
-========================= */
+// =========================
+// 🧠 RESPUESTA NORMAL
+// =========================
 let replyText;
 
 if (typeof replies[intent] === "function") {
@@ -766,7 +689,9 @@ return {
     replyText ||
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
   intent,
-};
+};}
+
+
 
 
 /* =========================
@@ -1048,3 +973,4 @@ export default function ChatBot() {
     </>
   );
       }
+
