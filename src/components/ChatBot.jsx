@@ -733,18 +733,23 @@ if (context.awaitingFollowUp) {
   context.awaitingFollowUp = null;
 }
 
-/* =========================
+
+  /* =========================
 🟡 UTILIDAD: NORMALIZAR TEXTO
 ========================= */
 const normalize = (str = "") =>
-  String(str || "").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  String(str ?? "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 
 /* =========================
 🟡 DETECTAR REFERENCIA A PERSONA (SAFE)
 ========================= */
 const extractNameReference = (inputText) => {
   try {
-    const text = String(inputText || "");
+    const text = String(inputText ?? "");
     const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
 
     const patterns = [
@@ -763,7 +768,6 @@ const extractNameReference = (inputText) => {
     for (const p of patterns) {
       const match = text.match(p);
       if (match) {
-        // Última captura válida
         const foundName = match.slice(1).find(Boolean) || "";
         return normalize(foundName);
       }
@@ -775,13 +779,18 @@ const extractNameReference = (inputText) => {
 };
 
 /* =========================
-🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO (SAFE)
+🟡 TEXTO SEGURO (ANTI CRASH)
 ========================= */
-let referencedName;
+const safeText = String(text ?? "");
+
+/* =========================
+🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO
+========================= */
+let referencedName = null;
+
 try {
-  referencedName = extractNameReference(text);
+  referencedName = extractNameReference(safeText);
 } catch (e) {
-  referencedName = null;
   console.error("Error referencedName:", e);
 }
 
@@ -797,10 +806,11 @@ if (referencedName && !validNames.includes(referencedName)) {
 /* =========================
 🟢 DETECTAR INTENT (SAFE)
 ========================= */
-let intent;
+let intent = "UNKNOWN";
+
 try {
-  intent = detectIntent(String(text || ""));
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = detectIntent(safeText);
+  if (intent === "FAREWELL" && !isValidFarewell(safeText)) {
     intent = "UNKNOWN";
   }
 } catch (e) {
@@ -808,32 +818,39 @@ try {
   intent = "UNKNOWN";
 }
 
-saveMemory(context, { user: text, intent });
+/* =========================
+🟢 GUARDAR MEMORIA (SAFE)
+========================= */
+try {
+  if (typeof saveMemory === "function" && context) {
+    saveMemory(context, { user: safeText, intent });
+  }
+} catch (e) {
+  console.error("Error saveMemory:", e);
+}
 
 /* =========================
 🟢 FLUJO DE CONTACTO
 ========================= */
 if (intent === "CONTACT") {
-  context.awaiting = "CONTACT_CONFIRM";
+  if (context) context.awaiting = "CONTACT_CONFIRM";
 
   return {
     text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
     action: "CONTACT_CONFIRM",
     intent,
   };
-    }
+}
 
-  
-                                                  
-// =========================
-// 🧠 RESPUESTA NORMAL
-// =========================
+/* =========================
+🧠 RESPUESTA NORMAL
+========================= */
 let replyText;
 
-if (typeof replies[intent] === "function") {
+if (typeof replies?.[intent] === "function") {
   replyText = replies[intent](context);
 } else {
-  replyText = replies[intent];
+  replyText = replies?.[intent];
 }
 
 return {
@@ -841,8 +858,7 @@ return {
     replyText ||
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
   intent,
-};}
-
+};
 
 
 
