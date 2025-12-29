@@ -737,42 +737,54 @@ if (context.awaitingFollowUp) {
 🟡 UTILIDAD: NORMALIZAR TEXTO
 ========================= */
 const normalize = (str = "") =>
-  String(str).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  String(str || "").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 /* =========================
-🟡 DETECTAR REFERENCIA A PERSONA
+🟡 DETECTAR REFERENCIA A PERSONA (SAFE)
 ========================= */
-const extractNameReference = (text) => {
-  const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
+const extractNameReference = (inputText) => {
+  try {
+    const text = String(inputText || "");
+    const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
 
-  const patterns = [
-    new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
-    new RegExp(`hablame de\\s+${namePattern}`, "i"),
-    new RegExp(`habla de\\s+${namePattern}`, "i"),
-    new RegExp(`perfil de\\s+${namePattern}`, "i"),
-    new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
-    new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
-    new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
-    new RegExp(`estudios de\\s+${namePattern}`, "i"),
-    new RegExp(`libros de\\s+${namePattern}`, "i"),
-    new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
-  ];
+    const patterns = [
+      new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
+      new RegExp(`hablame de\\s+${namePattern}`, "i"),
+      new RegExp(`habla de\\s+${namePattern}`, "i"),
+      new RegExp(`perfil de\\s+${namePattern}`, "i"),
+      new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
+      new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
+      new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
+      new RegExp(`estudios de\\s+${namePattern}`, "i"),
+      new RegExp(`libros de\\s+${namePattern}`, "i"),
+      new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
+    ];
 
-  for (const p of patterns) {
-    const match = text.match(p);
-    if (match) {
-      // Usamos la última captura válida disponible para evitar undefined
-      const foundName = match.slice(1).find(Boolean) || "";
-      return normalize(foundName);
+    for (const p of patterns) {
+      const match = text.match(p);
+      if (match) {
+        // Última captura válida
+        const foundName = match.slice(1).find(Boolean) || "";
+        return normalize(foundName);
+      }
     }
+  } catch (e) {
+    console.error("Error extractNameReference:", e);
   }
   return null;
 };
 
 /* =========================
-🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO
+🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO (SAFE)
 ========================= */
-const referencedName = extractNameReference(text);
+let referencedName;
+try {
+  referencedName = extractNameReference(text);
+} catch (e) {
+  referencedName = null;
+  console.error("Error referencedName:", e);
+}
+
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
 if (referencedName && !validNames.includes(referencedName)) {
@@ -783,12 +795,16 @@ if (referencedName && !validNames.includes(referencedName)) {
 }
 
 /* =========================
-🟢 DETECTAR INTENT (YA VALIDADO)
+🟢 DETECTAR INTENT (SAFE)
 ========================= */
-let intent = detectIntent(text);
-
-// Bloqueo de despedidas inválidas
-if (intent === "FAREWELL" && !isValidFarewell(text)) {
+let intent;
+try {
+  intent = detectIntent(String(text || ""));
+  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+    intent = "UNKNOWN";
+  }
+} catch (e) {
+  console.error("Error detectIntent:", e);
   intent = "UNKNOWN";
 }
 
@@ -805,8 +821,7 @@ if (intent === "CONTACT") {
     action: "CONTACT_CONFIRM",
     intent,
   };
-}
-
+    }
 
   
                                                   
