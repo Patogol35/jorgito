@@ -251,7 +251,7 @@ const pickNonRepeated = (ctx = {}, intent, options) => {
 };
 
 /* =========================
-REPONSE INTELIGENTE
+RESPUESTA INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
   const text = normalize(message);
@@ -269,7 +269,6 @@ function getSmartResponse(message, context) {
 
   // 🔑 Constantes al inicio
   const BOT_NAME = "sasha";
-  const OWNER_NAMES = ["jorge", "patricio", "jorge patricio"];
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
   // se cancela el follow-up y se responde normalmente
@@ -710,50 +709,51 @@ function getSmartResponse(message, context) {
   ========================= */
   const isAboutOwner = (text) => {
     const validNames = ["jorge", "patricio", "jorge patricio"];
-    const normalizedText = text.toLowerCase();
+    const normalizedText = text.toLowerCase().trim();
 
-    // Si menciona alguno de los nombres válidos → permitido
+    // ✅ Si menciona tu nombre → permitir
     if (validNames.some(name => normalizedText.includes(name))) {
       return true;
     }
 
-    // Patrones que indican consulta SOBRE alguien
-    const questionPatterns = [
-      /hablame de\s+(\w+(?:\s+\w+)*)/i,
-      /habla de\s+(\w+(?:\s+\w+)*)/i,
-      /quién es\s+(\w+(?:\s+\w+)*)/i,
-      /quien es\s+(\w+(?:\s+\w+)*)/i,
-      /perfil de\s+(\w+(?:\s+\w+)*)/i,
-      /contratar (?:a\s+)?(\w+(?:\s+\w+)*)/i,
-      /experiencia de\s+(\w+(?:\s+\w+)*)/i,
-      /estudios de\s+(\w+(?:\s+\w+)*)/i,
-      /tecnologías de\s+(\w+(?:\s+\w+)*)/i,
-      /proyectos de\s+(\w+(?:\s+\w+)*)/i,
-      /libros de\s+(\w+(?:\s+\w+)*)/i,
+    // 🚫 Lista de nombres comunes (ampliable)
+    const commonOtherNames = [
+      "luis", "carlos", "ana", "maria", "pedro", "juan", "diego", "andrea",
+      "alejandro", "cristina", "daniel", "laura", "raul", "gabriel", "sofia",
+      "manuel", "fernando", "ricardo", "jose", "josefina", "esteban"
     ];
 
-    for (const pattern of questionPatterns) {
-      const match = normalizedText.match(pattern);
-      if (match) {
-        const mentionedName = normalize(match[1]);
-        // Verificar si el nombre mencionado coincide (parcial o total) con algún nombre válido
-        const isOwner = validNames.some(name =>
-          mentionedName === name ||
-          name.includes(mentionedName) ||
-          mentionedName.includes(name)
-        );
-        if (!isOwner) {
-          return false; // Es sobre otra persona → bloquear
-        }
-        return true; // Es sobre Jorge → permitir
-      }
+    // Extraer primera palabra (caso: "Luis tecnologías")
+    const firstWord = normalizedText.split(/\s+/)[0] || "";
+
+    // Si la primera palabra es un nombre común ajeno → bloquear
+    if (commonOtherNames.includes(firstWord)) {
+      return false;
     }
 
-    // Si no hay mención explícita de otro nombre → permitir (ej: "¿Por qué contratarlo?")
+    // También bloquear si aparece nombre ajeno seguido de palabra sensible
+    // (aunque no esté al inicio)
+    const sensitiveWords = [
+      "tecnologias", "tecnologías", "experiencia", "estudios", "perfil",
+      "contratar", "proyectos", "stack", "habilidades", "quien es", "quién es"
+    ];
+
+    const hasSensitive = sensitiveWords.some(w => normalizedText.includes(w));
+    const hasOtherName = commonOtherNames.some(name => 
+      normalizedText.includes(` ${name} `) || 
+      normalizedText.startsWith(`${name} `) ||
+      normalizedText.endsWith(` ${name}`)
+    );
+
+    if (hasSensitive && hasOtherName) {
+      return false;
+    }
+
+    // ✅ En cualquier otro caso, asumir que es sobre ti o genérico
     return true;
   };
 
-  // 🔒 Validación central: si NO es sobre Jorge → bloquear
+  // 🔒 Bloquear si NO es sobre ti
   if (!isAboutOwner(text)) {
     return {
       text: "Solo tengo información sobre Jorge Patricio 🙂",
@@ -1082,6 +1082,4 @@ export default function ChatBot() {
       )}
     </>
   );
-            }
- 
-              
+              }
