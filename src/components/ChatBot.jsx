@@ -733,114 +733,102 @@ if (context.awaitingFollowUp) {
   context.awaitingFollowUp = null;
 }
 
+/* =========================
+🟡 NORMALIZAR TEXTO
+========================= */
+const normalizeText = (text = "") =>
+  text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 
+/* =========================
+🟡 EXTRAER NOMBRE REFERENCIADO
+========================= */
+const extractNameReference = (text) => {
+  const clean = normalizeText(text);
 
-function processMessage(text, context) {
-  /* =========================
-  🟡 UTILIDAD: NORMALIZAR TEXTO
-  ========================= */
-  const normalize = (str = "") =>
-    String(str ?? "")
-      .trim()
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+  const patterns = [
+    /\bquien\s+es\s+([a-z]+(?:\s+[a-z]+){0,3})/,
+    /\bhabla(me)?\s+de\s+([a-z]+(?:\s+[a-z]+){0,3})/,
+    /\bperfil\s+de\s+([a-z]+(?:\s+[a-z]+){0,3})/,
+    /\bsobre\s+([a-z]+(?:\s+[a-z]+){0,3})/,
+    /\bcontactar\s+(a\s+)?([a-z]+(?:\s+[a-z]+){0,3})/,
+  ];
 
-  /* =========================
-  🟡 DETECTAR REFERENCIA A PERSONA
-  ========================= */
-  const extractNameReference = (inputText) => {
-    try {
-      const text = String(inputText ?? "");
-      const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
-
-      const patterns = [
-        new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
-        new RegExp(`hablame de\\s+${namePattern}`, "i"),
-        new RegExp(`habla de\\s+${namePattern}`, "i"),
-        new RegExp(`perfil de\\s+${namePattern}`, "i"),
-        new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
-        new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
-        new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
-        new RegExp(`estudios de\\s+${namePattern}`, "i"),
-        new RegExp(`libros de\\s+${namePattern}`, "i"),
-        new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
-      ];
-
-      for (const p of patterns) {
-        const match = text.match(p);
-        if (match) {
-          const foundName = match.slice(1).find(Boolean) || "";
-          return normalize(foundName);
-        }
-      }
-    } catch (e) {
-      console.error("extractNameReference:", e);
+  for (const p of patterns) {
+    const match = clean.match(p);
+    if (match) {
+      return match[2] || match[1];
     }
-    return null;
-  };
-
-  const safeText = String(text ?? "");
-
-  /* =========================
-  🔴 VALIDAR NOMBRE
-  ========================= */
-  const referencedName = extractNameReference(safeText);
-  const validNames = ["jorge", "patricio", "jorge patricio"];
-
-  if (referencedName && !validNames.includes(referencedName)) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
   }
 
-  /* =========================
-  🟢 INTENT
-  ========================= */
-  let intent = "UNKNOWN";
+  return null;
+};
 
-  try {
-    intent = detectIntent(safeText);
-    if (intent === "FAREWELL" && !isValidFarewell(safeText)) {
-      intent = "UNKNOWN";
-    }
-  } catch (e) {
-    console.error("detectIntent:", e);
-  }
+/* =========================
+🟡 DETECTAR NOMBRE
+========================= */
+const referencedName = extractNameReference(text);
+const allowedNames = ["jorge", "patricio"];
 
-  if (typeof saveMemory === "function" && context) {
-    saveMemory(context, { user: safeText, intent });
-  }
+/* =========================
+🟢 DETECTAR INTENT
+========================= */
+let intent = detectIntent(text);
 
-  /* =========================
-  🟢 CONTACTO
-  ========================= */
-  if (intent === "CONTACT") {
-    if (context) context.awaiting = "CONTACT_CONFIRM";
+/* =========================
+🔴 BLOQUEO INTELIGENTE (NO GLOBAL)
+========================= */
+const restrictedIntents = ["PROFILE", "CONTACT", "INFO", "STUDIES"];
 
-    return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      action: "CONTACT_CONFIRM",
-      intent,
-    };
-  }
-
-  /* =========================
-  🧠 RESPUESTA
-  ========================= */
-  let replyText =
-    typeof replies?.[intent] === "function"
-      ? replies[intent](context)
-      : replies?.[intent];
-
+if (
+  referencedName &&
+  !allowedNames.some((n) => referencedName.includes(n)) &&
+  restrictedIntents.includes(intent)
+) {
   return {
-    text:
-      replyText ||
-      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    text: "Solo tengo información sobre Jorge Patricio 🙂",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+🟢 DESPEDIDAS
+========================= */
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = "UNKNOWN";
+}
+
+saveMemory(context, { user: text, intent });
+
+/* =========================
+🟢 CONTACTO
+========================= */
+if (intent === "CONTACT") {
+  context.awaiting = "CONTACT_CONFIRM";
+  return {
+    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+    action: "CONTACT_CONFIRM",
     intent,
   };
 }
+
+/* =========================
+🧠 RESPUESTA FINAL
+========================= */
+let replyText =
+  typeof replies[intent] === "function"
+    ? replies[intent](context)
+    : replies[intent];
+
+return {
+  text:
+    replyText ||
+    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+  intent,
+};
 
 /* =========================
 COMPONENTE
