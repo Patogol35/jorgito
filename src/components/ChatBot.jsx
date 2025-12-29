@@ -734,88 +734,88 @@ if (context.awaitingFollowUp) {
 }
 
 
-/* =========================
-🟡 DETECTAR REFERENCIA DE NOMBRE
-========================= */
-const extractNameReference = (text) => {
-  const patterns = [
-    /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-    /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-  ];
+// =========================
+// 🧠 LÓGICA PRINCIPAL DEL BOT
+// =========================
+function processMessage(text, context) {
 
-  for (const p of patterns) {
-    const match = text.match(p);
-    if (match) {
-      return normalize(match[1] ?? match[match.length - 1]);
+  /* =========================
+  🟡 DETECTAR REFERENCIA DE NOMBRE
+  ========================= */
+  const extractNameReference = (text) => {
+    const patterns = [
+      /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
+      /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+      /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+      /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+      /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+      /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    ];
+
+    for (const p of patterns) {
+      const match = text.match(p);
+      if (match) {
+        return normalize(match[1] ?? match[match.length - 1]);
+      }
     }
+    return null;
+  };
+
+  /* =========================
+  🔴 VALIDACIÓN GLOBAL DE PERSONA
+  ========================= */
+  const referencedName = extractNameReference(text);
+
+  if (
+    referencedName &&
+    !/\bjorge\b/i.test(text) &&
+    !/\bpatricio\b/i.test(text)
+  ) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
   }
-  return null;
-};
 
-/* =========================
-🔴 VALIDACIÓN GLOBAL DE PERSONA
-========================= */
-const referencedName = extractNameReference(text);
+  /* =========================
+  🟢 CONTACTO (PRIORIDAD ABSOLUTA)
+  ========================= */
+  if (/^contactar\b/i.test(text)) {
+    context.awaiting = "CONTACT_CONFIRM";
 
-// ❌ Si menciona a alguien que NO sea Jorge
-if (
-  referencedName &&
-  !/\bjorge\b/i.test(text) &&
-  !/\bpatricio\b/i.test(text)
-) {
+    return {
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+      action: "CONTACT_CONFIRM",
+      intent: "CONTACT",
+    };
+  }
+
+  /* =========================
+  🟢 DETECTAR INTENT NORMAL
+  ========================= */
+  let intent = detectIntent(text);
+
+  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+    intent = "UNKNOWN";
+  }
+
+  saveMemory(context, { user: text, intent });
+
+  /* =========================
+  🧠 RESPUESTA NORMAL
+  ========================= */
+  const replyText =
+    typeof replies[intent] === "function"
+      ? replies[intent](context)
+      : replies[intent];
+
   return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
+    text:
+      replyText ||
+      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent,
   };
 }
-
-/* =========================
-🟢 CONTACTO (PRIORIDAD ABSOLUTA)
-========================= */
-if (/^contactar\b/i.test(text)) {
-  context.awaiting = "CONTACT_CONFIRM";
-
-  return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
-    intent: "CONTACT",
-  };
-}
-
-/* =========================
-🟢 DETECTAR INTENT NORMAL
-========================= */
-let intent = detectIntent(text);
-
-// 🚫 Bloquear despedidas inválidas
-if (intent === "FAREWELL" && !isValidFarewell(text)) {
-  intent = "UNKNOWN";
-}
-
-saveMemory(context, { user: text, intent });
-
-/* =========================
-🧠 RESPUESTA NORMAL
-========================= */
-let replyText;
-
-if (typeof replies[intent] === "function") {
-  replyText = replies[intent](context);
-} else {
-  replyText = replies[intent];
-}
-
-return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-  intent,
-};
-
 
 /* =========================
 COMPONENTE
