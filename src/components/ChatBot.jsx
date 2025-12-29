@@ -521,8 +521,7 @@ LIKES_HELP: (ctx) =>
     ]),
 
   
-  UNKNOWN_PERSON: (ctx = {}) =>
-  pickNonRepeated(ctx, "UNKNOWN_PERSON", UNKNOWN_PERSON_REPLIES),
+
 
 };
 
@@ -722,20 +721,36 @@ if (context.awaitingFollowUp) {
 
 
 /* =========================
-DETECTAR INTENT NORMAL
-========================= */
-/* =========================
-/* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
-const referencedName = extractNameReference(message);
+const extractNameReference = (text) => {
+  const patterns = [
+    /hablame de\s+([a-zA-Záéíóúñ]+)/i,
+    /habla de\s+([a-zA-Záéíóúñ]+)/i,
+    /perfil de\s+([a-zA-Záéíóúñ]+)/i,
+    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+)/i,
+  ];
 
-if (referencedName && !OWNER_NAMES.includes(referencedName)) {
-  // Asegurarse de que context exista y se pueda usar pickNonRepeated
-  context.usedReplies = context.usedReplies || {};
+  for (const p of patterns) {
+    const match = text.match(p);
+    if (match) return normalize(match[match.length - 1]);
+  }
 
+  return null;
+};
+
+/* =========================
+🟡 VALIDAR PERSONA CONSULTADA
+========================= */
+const referencedName = extractNameReference(text);
+
+if (
+  referencedName &&
+  referencedName !== "jorge" &&
+  referencedName !== "jorge patricio"
+) {
   return {
-    text: replies.UNKNOWN_PERSON(context),
+    text: "¿Te refieres a Jorge? 😊 Actualmente solo tengo información sobre su perfil.",
     intent: "UNKNOWN",
   };
 }
@@ -758,7 +773,7 @@ if (intent === "CONTACT") {
     action: "CONTACT_CONFIRM",
     intent,
   };
-}
+                                                  }
 // =========================
 // 🧠 RESPUESTA NORMAL
 // =========================
