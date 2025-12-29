@@ -739,47 +739,33 @@ if (context.awaitingFollowUp) {
 ========================= */
 const extractNameReference = (text) => {
   const patterns = [
-    // "Luis es...", "Jorge Patricio es..."
     /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-
-    // "háblame de Luis"
     /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
     /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "perfil de Luis"
     /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "sobre Luis"
     /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "quien es Luis"
     /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "contactar a Luis"
-    /contactar\s+(a\s+)?([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
   ];
 
   for (const p of patterns) {
     const match = text.match(p);
     if (match) {
-      return normalize(match[2] || match[1]);
+      return normalize(match[1] ?? match[match.length - 1]);
     }
   }
-
   return null;
 };
 
 /* =========================
-🔴 VALIDACIÓN GLOBAL DE PERSONA (PRIORIDAD MÁXIMA)
+🔴 VALIDACIÓN GLOBAL DE PERSONA
 ========================= */
 const referencedName = extractNameReference(text);
 
-// 🚫 Si se menciona un nombre y NO es Jorge / Patricio → bloquear TODO
+// ❌ Si menciona a alguien que NO sea Jorge
 if (
   referencedName &&
-  !["jorge", "patricio", "jorge patricio"].some((n) =>
-    text.toLowerCase().includes(n)
-  )
+  !/\bjorge\b/i.test(text) &&
+  !/\bpatricio\b/i.test(text)
 ) {
   return {
     text: "Solo tengo información sobre Jorge Patricio 🙂",
@@ -788,7 +774,20 @@ if (
 }
 
 /* =========================
-🟢 DETECTAR INTENT (SOLO SI PASÓ LA VALIDACIÓN)
+🟢 CONTACTO (PRIORIDAD ABSOLUTA)
+========================= */
+if (/^contactar\b/i.test(text)) {
+  context.awaiting = "CONTACT_CONFIRM";
+
+  return {
+    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+    action: "CONTACT_CONFIRM",
+    intent: "CONTACT",
+  };
+}
+
+/* =========================
+🟢 DETECTAR INTENT NORMAL
 ========================= */
 let intent = detectIntent(text);
 
@@ -800,25 +799,8 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 saveMemory(context, { user: text, intent });
 
 /* =========================
-🟢 CONTACTO (YA VALIDADO)
+🧠 RESPUESTA NORMAL
 ========================= */
-if (intent === "CONTACT") {
-  context.awaiting = "CONTACT_CONFIRM";
-
-  return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
-    intent,
-  };
-}
-
-
-
-  
-                                                  
-// =========================
-// 🧠 RESPUESTA NORMAL
-// =========================
 let replyText;
 
 if (typeof replies[intent] === "function") {
@@ -832,9 +814,7 @@ return {
     replyText ||
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
   intent,
-};}
-
-
+};
 
 
 /* =========================
