@@ -733,6 +733,17 @@ if (context.awaitingFollowUp) {
 }
 
 
+
+
+  // =========================
+// 🔴 REGLA GLOBAL: SOLO JORGE
+// =========================
+if (!/jorge(\s+patricio)?/i.test(text)) {
+  return {
+    text: "Solo tengo información sobre Jorge Patricio 🙂",
+    intent: "UNKNOWN",
+  };
+}
 /* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
