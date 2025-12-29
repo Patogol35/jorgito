@@ -711,38 +711,47 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  // ✅ Si menciona tu nombre → permitir
   if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
 
-  // 🚫 Palabras sensibles (incluye contacto)
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
     "experiencia", "estudios", "perfil", "contratar",
     "proyectos", "stack", "habilidades", "lenguajes",
     "quien es", "quién es", "formacion", "formación",
     "educacion", "educación", "máster", "master",
-    "libros", "libro", "full stack", "desarrollador", "ingeniero",
-    "contactar", "contacto", "whatsapp"
+    "libros", "libro", "full stack", "desarrollador",
+    "ingeniero", "contactar", "contacto", "whatsapp"
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
+  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
+  const wordCount = words.length;
 
-  // Si no hay palabra sensible → permitir (ej: "Hola")
   if (!hasSensitive) {
     return true;
   }
 
-  // Detectar si hay un nombre propio (palabra con mayúscula inicial y ≥3 letras)
-  const hasProperName = /\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,}\b/.test(text.trim());
+  // Frases multi-palabra válidas sin nombre
+  const validMultiWord = [
+    "full stack",
+    "libros favoritos",
+    "máster en",
+    "proyectos realizados",
+    "experiencia profesional"
+  ];
 
-  // Si NO hay nombre propio → es una pregunta genérica sobre ti → permitir
-  if (!hasProperName) {
+  if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
     return true;
   }
 
-  // Si hay nombre propio pero no es el tuyo → bloquear
+  // Permitir si es 1 palabra
+  if (wordCount === 1) {
+    return true;
+  }
+
+  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
   return false;
 };
 
