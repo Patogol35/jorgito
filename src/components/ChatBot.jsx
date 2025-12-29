@@ -745,7 +745,7 @@ const normalize = (text = "") =>
 
 /* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
-(SOLO CUANDO SE PREGUNTA POR ALGUIEN)
+(SOLO CUANDO SE PREGUNTA POR UNA PERSONA)
 ========================= */
 const extractNameReference = (text) => {
   const clean = normalize(text);
@@ -772,63 +772,67 @@ const extractNameReference = (text) => {
 };
 
 /* =========================
-🟢 DETECTAR INTENT
+🧠 PROCESAR MENSAJE
 ========================= */
-let intent = detectIntent(text);
+const processMessage = (text) => {
+  const referencedName = extractNameReference(text);
+  let intent = detectIntent(text);
 
-/* =========================
-🔴 VALIDACIÓN DE PERSONA (INTELIGENTE)
-========================= */
-const referencedName = extractNameReference(text);
-const allowedNames = ["jorge", "patricio"];
-const restrictedIntents = ["PROFILE", "INFO", "CONTACT", "STUDIES"];
+  const allowedNames = ["jorge", "patricio"];
+  const restrictedIntents = ["PROFILE", "INFO", "CONTACT", "STUDIES"];
 
-if (
-  referencedName &&
-  !allowedNames.some((n) => referencedName.includes(n)) &&
-  restrictedIntents.includes(intent)
-) {
+  /* =========================
+  🔴 VALIDACIÓN DE PERSONA
+  ========================= */
+  if (
+    referencedName &&
+    !allowedNames.some((n) =>
+      referencedName.includes(n)
+    ) &&
+    restrictedIntents.includes(intent)
+  ) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
+
+  /* =========================
+  🟢 DESPEDIDAS
+  ========================= */
+  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+    intent = "UNKNOWN";
+  }
+
+  saveMemory(context, { user: text, intent });
+
+  /* =========================
+  🟢 CONTACTO
+  ========================= */
+  if (intent === "CONTACT") {
+    context.awaiting = "CONTACT_CONFIRM";
+    return {
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+      action: "CONTACT_CONFIRM",
+      intent,
+    };
+  }
+
+  /* =========================
+  🧠 RESPUESTA FINAL
+  ========================= */
+  const replyText =
+    typeof replies[intent] === "function"
+      ? replies[intent](context)
+      : replies[intent];
+
   return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 DESPEDIDAS
-========================= */
-if (intent === "FAREWELL" && !isValidFarewell(text)) {
-  intent = "UNKNOWN";
-}
-
-saveMemory(context, { user: text, intent });
-
-/* =========================
-🟢 CONTACTO
-========================= */
-if (intent === "CONTACT") {
-  context.awaiting = "CONTACT_CONFIRM";
-  return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
+    text:
+      replyText ||
+      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
   };
-}
-
-/* =========================
-🧠 RESPUESTA FINAL
-========================= */
-let replyText =
-  typeof replies[intent] === "function"
-    ? replies[intent](context)
-    : replies[intent];
-
-return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-  intent,
-}; }
+};
 
 /* =========================
 COMPONENTE
