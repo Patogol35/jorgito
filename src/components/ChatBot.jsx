@@ -740,6 +740,10 @@ if (context.awaitingFollowUp) {
 ========================= */
 const extractNameReference = (text) => {
   const patterns = [
+    // Luis es full stack
+    /^([a-zA-Záéíóúñ]+)\s+es\s+/i,
+
+    // háblame de Luis
     /hablame de\s+([a-zA-Záéíóúñ]+)/i,
     /habla de\s+([a-zA-Záéíóúñ]+)/i,
     /perfil de\s+([a-zA-Záéíóúñ]+)/i,
@@ -748,7 +752,9 @@ const extractNameReference = (text) => {
 
   for (const p of patterns) {
     const match = text.match(p);
-    if (match) return normalize(match[match.length - 1]);
+    if (match) {
+      return normalize(match[1] ?? match[match.length - 1]);
+    }
   }
 
   return null;
