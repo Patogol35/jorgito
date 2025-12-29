@@ -734,133 +734,113 @@ if (context.awaitingFollowUp) {
 }
 
 
+
+function processMessage(text, context) {
   /* =========================
-🟡 UTILIDAD: NORMALIZAR TEXTO
-========================= */
-const normalize = (str = "") =>
-  String(str ?? "")
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+  🟡 UTILIDAD: NORMALIZAR TEXTO
+  ========================= */
+  const normalize = (str = "") =>
+    String(str ?? "")
+      .trim()
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
 
-/* =========================
-🟡 DETECTAR REFERENCIA A PERSONA (SAFE)
-========================= */
-const extractNameReference = (inputText) => {
-  try {
-    const text = String(inputText ?? "");
-    const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
+  /* =========================
+  🟡 DETECTAR REFERENCIA A PERSONA
+  ========================= */
+  const extractNameReference = (inputText) => {
+    try {
+      const text = String(inputText ?? "");
+      const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
 
-    const patterns = [
-      new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
-      new RegExp(`hablame de\\s+${namePattern}`, "i"),
-      new RegExp(`habla de\\s+${namePattern}`, "i"),
-      new RegExp(`perfil de\\s+${namePattern}`, "i"),
-      new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
-      new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
-      new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
-      new RegExp(`estudios de\\s+${namePattern}`, "i"),
-      new RegExp(`libros de\\s+${namePattern}`, "i"),
-      new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
-    ];
+      const patterns = [
+        new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
+        new RegExp(`hablame de\\s+${namePattern}`, "i"),
+        new RegExp(`habla de\\s+${namePattern}`, "i"),
+        new RegExp(`perfil de\\s+${namePattern}`, "i"),
+        new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
+        new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
+        new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
+        new RegExp(`estudios de\\s+${namePattern}`, "i"),
+        new RegExp(`libros de\\s+${namePattern}`, "i"),
+        new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
+      ];
 
-    for (const p of patterns) {
-      const match = text.match(p);
-      if (match) {
-        const foundName = match.slice(1).find(Boolean) || "";
-        return normalize(foundName);
+      for (const p of patterns) {
+        const match = text.match(p);
+        if (match) {
+          const foundName = match.slice(1).find(Boolean) || "";
+          return normalize(foundName);
+        }
       }
+    } catch (e) {
+      console.error("extractNameReference:", e);
+    }
+    return null;
+  };
+
+  const safeText = String(text ?? "");
+
+  /* =========================
+  🔴 VALIDAR NOMBRE
+  ========================= */
+  const referencedName = extractNameReference(safeText);
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  if (referencedName && !validNames.includes(referencedName)) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
+
+  /* =========================
+  🟢 INTENT
+  ========================= */
+  let intent = "UNKNOWN";
+
+  try {
+    intent = detectIntent(safeText);
+    if (intent === "FAREWELL" && !isValidFarewell(safeText)) {
+      intent = "UNKNOWN";
     }
   } catch (e) {
-    console.error("Error extractNameReference:", e);
+    console.error("detectIntent:", e);
   }
-  return null;
-};
 
-/* =========================
-🟡 TEXTO SEGURO (ANTI CRASH)
-========================= */
-const safeText = String(text ?? "");
-
-/* =========================
-🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO
-========================= */
-let referencedName = null;
-
-try {
-  referencedName = extractNameReference(safeText);
-} catch (e) {
-  console.error("Error referencedName:", e);
-}
-
-const validNames = ["jorge", "patricio", "jorge patricio"];
-
-if (referencedName && !validNames.includes(referencedName)) {
-  return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 DETECTAR INTENT (SAFE)
-========================= */
-let intent = "UNKNOWN";
-
-try {
-  intent = detectIntent(safeText);
-  if (intent === "FAREWELL" && !isValidFarewell(safeText)) {
-    intent = "UNKNOWN";
-  }
-} catch (e) {
-  console.error("Error detectIntent:", e);
-  intent = "UNKNOWN";
-}
-
-/* =========================
-🟢 GUARDAR MEMORIA (SAFE)
-========================= */
-try {
   if (typeof saveMemory === "function" && context) {
     saveMemory(context, { user: safeText, intent });
   }
-} catch (e) {
-  console.error("Error saveMemory:", e);
-}
 
-/* =========================
-🟢 FLUJO DE CONTACTO
-========================= */
-if (intent === "CONTACT") {
-  if (context) context.awaiting = "CONTACT_CONFIRM";
+  /* =========================
+  🟢 CONTACTO
+  ========================= */
+  if (intent === "CONTACT") {
+    if (context) context.awaiting = "CONTACT_CONFIRM";
+
+    return {
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+      action: "CONTACT_CONFIRM",
+      intent,
+    };
+  }
+
+  /* =========================
+  🧠 RESPUESTA
+  ========================= */
+  let replyText =
+    typeof replies?.[intent] === "function"
+      ? replies[intent](context)
+      : replies?.[intent];
 
   return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
+    text:
+      replyText ||
+      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
   };
 }
-
-/* =========================
-🧠 RESPUESTA NORMAL
-========================= */
-let replyText;
-
-if (typeof replies?.[intent] === "function") {
-  replyText = replies[intent](context);
-} else {
-  replyText = replies?.[intent];
-}
-
-return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-  intent,
-};
-
-
 
 /* =========================
 COMPONENTE
