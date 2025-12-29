@@ -519,6 +519,14 @@ LIKES_HELP: (ctx) =>
 "Porque Jorge se compromete con cada proyecto ☺️",
 "Porque Jorge aporta valor real a cada trabajo 💕"
     ]),
+
+  
+  /* =========================
+  ❓ NOMBRE NO COINCIDE
+  ========================= */
+  UNKNOWN_PERSON: (ctx) =>
+    pickNonRepeated(ctx, "UNKNOWN_PERSON", UNKNOWN_PERSON_REPLIES),
+
 };
 
 const BOT_NAME = "sasha";
@@ -749,9 +757,9 @@ if (
   !OWNER_NAMES.includes(referencedName)
 ) {
   return {
-    text: "¿Te refieres a Jorge? 😊 Actualmente solo tengo información sobre su perfil.",
-    intent: "UNKNOWN",
-  };
+  text: replies.UNKNOWN_PERSON(context),
+  intent: "UNKNOWN",
+};
 }
 
 /* =========================
