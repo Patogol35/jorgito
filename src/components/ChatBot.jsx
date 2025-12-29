@@ -234,9 +234,9 @@ RESPUESTAS
 // =========================
 // 🧠 CONTROL DE REPETICIÓN
 // =========================
-const pickNonRepeated = (ctx, intent, options) => {
-  ctx.usedReplies = ctx.usedReplies || {};
-  ctx.usedReplies[intent] = ctx.usedReplies[intent] || [];
+const pickNonRepeated = (ctx = {}, intent, options) => {
+  if (!ctx.usedReplies) ctx.usedReplies = {};
+  if (!ctx.usedReplies[intent]) ctx.usedReplies[intent] = [];
 
   const unused = options.filter(
     (opt) => !ctx.usedReplies[intent].includes(opt)
@@ -248,7 +248,7 @@ const pickNonRepeated = (ctx, intent, options) => {
 
   ctx.usedReplies[intent].push(choice);
 
-  if (ctx.usedReplies[intent].length > options.length - 1) {
+  if (ctx.usedReplies[intent].length >= options.length) {
     ctx.usedReplies[intent] = [];
   }
 
@@ -522,11 +522,7 @@ LIKES_HELP: (ctx) =>
 
   
   UNKNOWN_PERSON: (ctx = {}) =>
-  pickNonRepeated(
-    ctx,
-    "UNKNOWN_PERSON",
-    UNKNOWN_PERSON_REPLIES
-  ),
+  pickNonRepeated(ctx, "UNKNOWN_PERSON", UNKNOWN_PERSON_REPLIES),
 
 };
 
@@ -756,16 +752,8 @@ if (
   referencedName &&
   !OWNER_NAMES.includes(referencedName)
 ) {
-let text;
-
-try {
-  text = replies.UNKNOWN_PERSON(context);
-} catch (e) {
-  text = "Puedo ayudarte con el perfil de Jorge 😊";
-}
-
 return {
-  text,
+  text: replies.UNKNOWN_PERSON(context),
   intent: "UNKNOWN",
 };
 }
