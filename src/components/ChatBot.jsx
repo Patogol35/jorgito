@@ -116,10 +116,30 @@ const INTENTS = {
     "que andas haciendo",
     "qué andas haciendo",
   ],
-  
+
+  LIKES_COFFEE: ["café", "cafe"],
+  LIKES_MUSIC: ["música", "musica"],
+  LIKES_MOVIES: ["películas", "peliculas"],
+  LIKES_TRAVEL: ["viajar"],
+  LIKES_TALK: ["conversar", "hablar"],
+  LIKES_HELP: ["ayudar"],
+  LIKES_MORNING: ["mañanas", "madrugar"],
+  LIKES_NIGHT: ["noche"],
+
+  BORED: ["aburr"],
+  TIRED: ["cans"],
+  FRIENDS: ["amigos"],
+  FUNNY: ["reír", "reir"],
+  NICE: ["simpática", "simpatica"],
+  LISTEN: ["escuchar"],
+  EMOTIONS: ["emociones", "sentir"],
+  SILENCE: ["silencio"],
+  PEOPLE: ["gente", "personas"],
 
   MOOD: ["cómo estás", "como estas", "estás bien"],
-NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
+  HAPPY: ["feliz"],
+
+  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
   HUMAN: ["eres humana", "eres humano", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
   CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
@@ -236,6 +256,7 @@ const pickNonRepeated = (ctx, intent, options) => {
 };
 
 
+
 function getSmartResponse(message, context) {
   const text = normalize(message);
 
@@ -247,6 +268,7 @@ function getSmartResponse(message, context) {
       context.awaitingFollowUp = null;
     }
   }
+
 const replies = {
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", [
@@ -318,6 +340,16 @@ const replies = {
     "Excelente 😊 gracias por notarlo.",
   ]),
 
+  HAPPY: (ctx) =>
+  pickNonRepeated(ctx, "HAPPY", [
+    "Sí 😊 me siento feliz cuando puedo ayudar.",
+    "Me pone contenta ayudarte 💕",
+    "Claro que sí ☺️ disfruto mucho estas conversaciones.",
+    "Ayudar siempre me hace feliz 😊",
+    "Me alegra mucho estar aquí contigo ☺️",
+    "Cuando ayudo, todo va mejor 💕",
+  ]),
+
   HELP: (ctx) =>
   pickNonRepeated(ctx, "HELP", [
     "Con gusto 😊 puedo contarte sobre el perfil, experiencia y proyectos de Jorge.",
@@ -336,6 +368,56 @@ WHAT_DOING: (ctx) =>
     "Disfrutando esta conversación contigo ☺️",
     "Atenta a lo que necesites 😊",
     "Esperando tu siguiente mensaje ☺️",
+  ]),
+
+  LIKES_COFFEE: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_COFFEE", [
+    "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
+    "Un cafecito ☕ siempre viene bien ☺️",
+    "El aroma del café ☕ me encanta, es muy reconfortante 💕",
+    "El café ☕ hace cualquier charla mejor 😊",
+    "Una taza de café ☕ es perfecta para concentrarse ☺️",
+    "El café siempre anima el momento 💕",
+  ]),
+
+LIKES_MUSIC: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_MUSIC", [
+    "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
+    "La música 🎧 siempre mejora el ánimo ☺️",
+    "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
+    "La música acompaña muy bien cualquier momento 😊",
+    "Escuchar música 🎶 es inspirador ☺️",
+    "La música transmite emociones muy bonitas 💕",
+  ]),
+
+LIKES_MOVIES: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_MOVIES", [
+    "Las películas 🎬 me encantan, sobre todo las de misterio.",
+    "Una buena película 🎥 siempre es un buen plan ☺️",
+    "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
+    "El cine 🎬 siempre entretiene 😊",
+    "Ver películas es una gran forma de relajarse ☺️",
+    "Las historias en el cine inspiran 💕",
+  ]),
+
+LIKES_TRAVEL: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_TRAVEL", [
+    "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
+    "Explorar el mundo 🌍 siempre abre la mente ☺️",
+    "Viajar cambia la forma de ver la vida 💕",
+    "Conocer nuevos lugares siempre enriquece 😊",
+    "Viajar trae experiencias inolvidables ☺️",
+    "Descubrir el mundo es fascinante 💕",
+  ]),
+
+LIKES_TALK: (ctx) =>
+  pickNonRepeated(ctx, "LIKES_TALK", [
+    "Me encanta conversar contigo 😊",
+    "Hablar siempre es buena idea ☺️",
+    "Una buena charla hace el momento más bonito 💕",
+    "Conversar conecta a las personas 😊",
+    "Charlar siempre suma ☺️",
+    "Hablar contigo es agradable 💕",
   ]),
 
 LIKES_HELP: (ctx) =>
@@ -437,8 +519,6 @@ LIKES_HELP: (ctx) =>
 "Porque Jorge se compromete con cada proyecto ☺️",
 "Porque Jorge aporta valor real a cada trabajo 💕"
     ]),
-
-  UNKNOWN: (ctx) => unknownReplies(ctx),
 };
 
 const BOT_NAME = "sasha";
@@ -524,11 +604,7 @@ if (moodMatch) {
   };
 } 
 
-
-
-
-
-    /* =========================
+/* =========================
 🟢 QUÉ ESTÁ HACIENDO
 ========================= */
 const doingMatch = text.match(
@@ -954,5 +1030,4 @@ export default function ChatBot() {
       )}
     </>
   );
-      }
-
+            }
