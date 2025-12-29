@@ -1,4 +1,11 @@
-import { useState, useRef } from "react";
+import { 
+  useState, 
+  useRef, 
+  useEffect, 
+  useCallback, 
+  useMemo 
+} from "react";
+
 import {
   Box,
   Fab,
@@ -8,12 +15,16 @@ import {
   IconButton,
   Stack,
   Tooltip,
+  Chip
 } from "@mui/material";
+
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 /* =========================
 CONFIG
