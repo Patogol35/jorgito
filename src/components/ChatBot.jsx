@@ -117,10 +117,7 @@ const INTENTS = {
     "qué andas haciendo",
   ],
 
-  LIKES_COFFEE: ["café", "cafe"],
-  LIKES_MUSIC: ["música", "musica"],
-  LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
+  
   LIKES_TALK: ["conversar", "hablar"],
   LIKES_HELP: ["ayudar"],
   LIKES_MORNING: ["mañanas", "madrugar"],
@@ -367,6 +364,25 @@ function getSmartResponse(message, context) {
         "Así es 💻 Jorge desarrolla soluciones completas.",
         "Jorge disfruta crear proyectos de principio a fin ☺️",
       ]),
+    PROFILE: (ctx) =>
+  pickNonRepeated(ctx, "PROFILE", [
+    `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+    `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
+    `Te cuento ☺️ ${PROFILE.name} Jorge es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
+    `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
+    "Jorge combina creatividad y tecnología ☺️",
+    "Jorge es un profesional enfocado en soluciones modernas 💕",
+  ]),
+
+  EDUCATION: (ctx) =>
+  pickNonRepeated(ctx, "EDUCATION", [
+    `Jorge cuenta con un ${PROFILE.education} 😊`,
+    `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
+    `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
+    "Jorge posee estudios enfocados en tecnología 😊",
+    `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
+    `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
+  ]),
 
     EXPERIENCE: (ctx) =>
       pickNonRepeated(ctx, "EXPERIENCE", [
