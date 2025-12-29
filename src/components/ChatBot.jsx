@@ -708,16 +708,16 @@ if (context.awaitingFollowUp) {
     context.awaitingFollowUp = null;
 
     const chainReplies = {
-  PROFILE: () => replies.EXPERIENCE(context),
-  EXPERIENCE: () => replies.SKILLS(context),
-  SKILLS: () => replies.PROJECTS(context),
-};
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
 
     return {
-  text: chainReplies[intent](),
-  intent: intent === "SKILLS" ? "PROJECTS" : intent,
-  fromFollowUp: true,
-};
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
   }
 
   // ❌ Respuesta negativa
