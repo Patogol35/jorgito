@@ -736,7 +736,7 @@ if (context.awaitingFollowUp) {
 /* =========================
 🟡 NORMALIZAR TEXTO
 ========================= */
-const normalizeText = (text = "") =>
+const normalize = (text = "") =>
   text
     .toLowerCase()
     .normalize("NFD")
@@ -744,17 +744,21 @@ const normalizeText = (text = "") =>
     .trim();
 
 /* =========================
-🟡 EXTRAER NOMBRE REFERENCIADO
+🟡 DETECTAR REFERENCIA DE NOMBRE
+(SOLO CUANDO SE PREGUNTA POR ALGUIEN)
 ========================= */
 const extractNameReference = (text) => {
-  const clean = normalizeText(text);
+  const clean = normalize(text);
 
   const patterns = [
-    /\bquien\s+es\s+([a-z]+(?:\s+[a-z]+){0,3})/,
-    /\bhabla(me)?\s+de\s+([a-z]+(?:\s+[a-z]+){0,3})/,
-    /\bperfil\s+de\s+([a-z]+(?:\s+[a-z]+){0,3})/,
-    /\bsobre\s+([a-z]+(?:\s+[a-z]+){0,3})/,
-    /\bcontactar\s+(a\s+)?([a-z]+(?:\s+[a-z]+){0,3})/,
+    /quien\s+es\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /hablame\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /habla\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /perfil\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /\bsobre\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /contactar\s+(a\s+)?([a-z]+(?:\s+[a-z]+)?)/,
+    /estudios\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
+    /libros\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
   ];
 
   for (const p of patterns) {
@@ -768,20 +772,16 @@ const extractNameReference = (text) => {
 };
 
 /* =========================
-🟡 DETECTAR NOMBRE
-========================= */
-const referencedName = extractNameReference(text);
-const allowedNames = ["jorge", "patricio"];
-
-/* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
 
 /* =========================
-🔴 BLOQUEO INTELIGENTE (NO GLOBAL)
+🔴 VALIDACIÓN DE PERSONA (INTELIGENTE)
 ========================= */
-const restrictedIntents = ["PROFILE", "CONTACT", "INFO", "STUDIES"];
+const referencedName = extractNameReference(text);
+const allowedNames = ["jorge", "patricio"];
+const restrictedIntents = ["PROFILE", "INFO", "CONTACT", "STUDIES"];
 
 if (
   referencedName &&
