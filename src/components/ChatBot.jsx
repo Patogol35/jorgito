@@ -28,8 +28,8 @@ const WHATSAPP_URL =
 /* =========================
 UTILIDADES
 ========================= */
-const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const containsAny = (text, words) => words.some((w) => text.includes(w));
 
 const YES_WORDS = ["si", "sí", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
@@ -94,55 +94,25 @@ const SUGGESTIONS = [
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
-  "¿Quién te creó?",
-  "¿Sus libros favoritos?",
 ];
 
 /* =========================
 INTENCIONES
 ========================= */
 const INTENTS = {
+  GREETING: ["hola", "buenas", "buenos dias", "buenas tardes", "buenas noches"],
   GRA: ["gracias", "muchas gracias"],
-
-  WHAT_DOING: [
-    "que haces",
-    "qué haces",
-    "que estas haciendo",
-    "qué estás haciendo",
-    "en que estas",
-    "en qué estás",
-    "que andas haciendo",
-    "qué andas haciendo",
-  ],
-
-  LIKES_COFFEE: ["café", "cafe"],
-  LIKES_MUSIC: ["música", "musica"],
-  LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
-  LIKES_TALK: ["conversar", "hablar"],
-  LIKES_HELP: ["ayudar"],
-
-  MOOD: ["cómo estás", "como estas", "estás bien"],
-
-  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
-  HUMAN: ["eres humana", "robot"],
-  ASSISTANT: ["quién eres", "quien eres", "sasha"],
-  CREATOR: ["quién te creó", "quien te creo"],
-  BOOK: ["libros"],
-
-  HELP: ["qué puedes hacer", "que puedes hacer"],
-
-  FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
-
-  GREETING: ["hola", "buenas", "buenos días"],
+  MOOD: ["como estas", "estas bien"],
+  WHAT_DOING: ["que haces", "que estas haciendo"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster", "formación"],
+  EDUCATION: ["estudios", "master", "formacion"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologías", "lenguajes", "habilidades"],
-  STACK: ["full stack"],
+  SKILLS: ["tecnologias", "lenguajes", "habilidades"],
   PROJECTS: ["proyectos"],
+  STACK: ["full stack"],
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
+  FAREWELL: ["chao", "chau", "bye", "adios", "hasta luego"],
 };
 
 /* =========================
@@ -158,7 +128,7 @@ const normalize = (t = "") =>
     .trim();
 
 /* =========================
-DETECT INTENT
+DETECTAR INTENT
 ========================= */
 const detectIntent = (msg) => {
   const text = normalize(msg);
@@ -168,9 +138,7 @@ const detectIntent = (msg) => {
   for (const intent in INTENTS) {
     let score = 0;
     for (const word of INTENTS[intent]) {
-      if (text.includes(normalize(word))) {
-        score += word.length > 4 ? 2 : 1;
-      }
+      if (text.includes(word)) score++;
     }
     if (score > max) {
       max = score;
@@ -181,59 +149,29 @@ const detectIntent = (msg) => {
 };
 
 /* =========================
-UTILIDADES LÓGICAS
+UTILIDADES
 ========================= */
-const containsAny = (text, words) =>
-  words.some((w) => text.includes(w));
-
-const isValidFarewell = (text) => {
-  const t = normalize(text);
-  return [
-    "chao",
-    "chau",
-    "bye",
-    "adios",
-    "hasta luego",
-    "chao sasha",
-    "bye sasha",
-    "adios sasha",
-  ].includes(t);
-};
+const isValidFarewell = (text) =>
+  ["chao", "chau", "bye", "adios", "hasta luego"].includes(normalize(text));
 
 /* =========================
-🧠 CONTROL DE REPETICIÓN
+CONTROL DE REPETICIÓN
 ========================= */
 const pickNonRepeated = (ctx, intent, options) => {
-  ctx.usedReplies = ctx.usedReplies || {};
-  ctx.usedReplies[intent] = ctx.usedReplies[intent] || [];
+  ctx.usedReplies = ctx.usedReplies ?? {};
+  ctx.usedReplies[intent] = ctx.usedReplies[intent] ?? [];
 
   const unused = options.filter(
-    (opt) => !ctx.usedReplies[intent].includes(opt)
+    (o) => !ctx.usedReplies[intent].includes(o)
   );
-
-  const choice = unused.length
-    ? randomPick(unused)
-    : randomPick(options);
+  const choice = unused.length ? randomPick(unused) : randomPick(options);
 
   ctx.usedReplies[intent].push(choice);
-
-  if (ctx.usedReplies[intent].length >= options.length) {
+  if (ctx.usedReplies[intent].length >= options.length)
     ctx.usedReplies[intent] = [];
-  }
 
   return choice;
 };
-
-/* =========================
-RESPUESTAS DESCONOCIDAS
-========================= */
-const unknownReplies = (ctx) =>
-  pickNonRepeated(ctx, "UNKNOWN", [
-    "No estoy segura de haber entendido 🤔, ¿quizás te interesa conocer la experiencia de Jorge?",
-    "Disculpa 😅, ¿quieres saber algo del perfil o los proyectos de Jorge?",
-    randomPick(SUGGESTIONS),
-    "Puedo ayudarte a conocer el perfil profesional de Jorge 😊",
-  ]);
 
 /* =========================
 RESPUESTAS
@@ -242,78 +180,66 @@ const replies = {
   GREETING: (ctx) =>
     pickNonRepeated(ctx, "GREETING", [
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-      "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
-      "Hola 😊 ¿en qué puedo ayudarte hoy?",
+      "¡Hola! 😊 Estoy aquí para ayudarte.",
     ]),
 
   GRA: (ctx) =>
-    pickNonRepeated(ctx, "GRA", [
-      "Un placer 😊",
-      "De nada ☺️",
-      "Siempre es un gusto ayudar 💕",
-    ]),
+    pickNonRepeated(ctx, "GRA", ["Un placer 😊", "¡De nada! ☺️"]),
 
-  FAREWELL: (ctx) =>
-    pickNonRepeated(ctx, "FAREWELL", [
-      "¡Gracias por visitar el portafolio de Jorge 😊!",
-      "¡Hasta luego! 💕",
-      "Cuídate mucho 👋",
-    ]),
+  MOOD: () => "¡Estoy muy bien 😊 gracias por preguntar!",
 
-  WHAT_DOING: (ctx) =>
-    pickNonRepeated(ctx, "WHAT_DOING", [
-      "Estoy aquí contigo 😊 lista para ayudarte.",
-      "Pensando en cómo ayudarte mejor 💭",
-      "Atenta a lo que necesites ☺️",
-    ]),
+  WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte.",
 
-  PROFILE: (ctx) =>
-    pickNonRepeated(ctx, "PROFILE", [
-      `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-    ]),
+  PROFILE: () =>
+    `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
 
-  EDUCATION: (ctx) =>
-    pickNonRepeated(ctx, "EDUCATION", [
-      `Jorge cuenta con un ${PROFILE.education} 😊`,
-    ]),
+  EDUCATION: () => `Cuenta con un ${PROFILE.education}.`,
 
-  EXPERIENCE: (ctx) =>
-    pickNonRepeated(ctx, "EXPERIENCE", [
-      `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-    ]),
+  EXPERIENCE: () =>
+    `Tiene experiencia en ${PROFILE.experience.join(", ")}.`,
 
-  SKILLS: (ctx) =>
-    pickNonRepeated(ctx, "SKILLS", [
-      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
-    ]),
+  SKILLS: () =>
+    `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
 
-  PROJECTS: (ctx) =>
-    pickNonRepeated(ctx, "PROJECTS", [
-      `Ha trabajado en proyectos como ${PROFILE.projects.join(", ")} 😊`,
-    ]),
+  PROJECTS: () =>
+    `Ha trabajado en proyectos como ${PROFILE.projects.join(", ")}.`,
+
+  STACK: () => "Sí 😊 Jorge es desarrollador Full Stack.",
+
+  MOTIVATION: () =>
+    "Porque combina formación sólida, experiencia real y compromiso.",
 
   CONTACT: () =>
     "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
 
-  UNKNOWN: (ctx) => unknownReplies(ctx),
+  FAREWELL: () => "¡Gracias por tu visita! 👋",
+
+  UNKNOWN: (ctx) =>
+    pickNonRepeated(ctx, "UNKNOWN", [
+      "No estoy segura de haber entendido 🤔",
+      randomPick(SUGGESTIONS),
+    ]),
 };
 
 /* =========================
 FUNCIÓN PRINCIPAL
 ========================= */
 function getSmartResponse(message, context) {
+  context = context ?? {}; // 🔥 evita pantallazo blanco
   const text = normalize(message);
 
-  /* 🔴 DESPEDIDA PRIORIDAD */
+  /* 🔴 DESPEDIDA */
   if (isValidFarewell(text)) {
-    return { text: replies.FAREWELL(context), intent: "FAREWELL" };
+    return { text: replies.FAREWELL(), intent: "FAREWELL" };
   }
 
   /* 🔵 CONFIRMACIÓN WHATSAPP */
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (containsAny(text, YES_WORDS)) {
       context.awaiting = null;
-      window.open(WHATSAPP_URL, "_blank");
+      if (typeof window !== "undefined") {
+        window.open(WHATSAPP_URL, "_blank");
+      }
       return {
         text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
         intent: "CONTACT_OPENED",
@@ -330,16 +256,13 @@ function getSmartResponse(message, context) {
   }
 
   /* 🔍 DETECTAR INTENT */
-  let intent = detectIntent(message);
+  const intent = detectIntent(message);
   saveMemory(context, { user: message, intent });
 
   /* 📱 CONTACTO */
   if (intent === "CONTACT") {
     context.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: replies.CONTACT(),
-      intent,
-    };
+    return { text: replies.CONTACT(), intent };
   }
 
   /* 🧠 RESPUESTA NORMAL */
