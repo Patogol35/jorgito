@@ -1,5 +1,4 @@
-
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
   Fab,
@@ -7,17 +6,14 @@ import {
   TextField,
   Typography,
   IconButton,
-  Chip,
   Stack,
   Tooltip,
-  useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 /* =========================
 CONFIG
@@ -87,15 +83,15 @@ INTENCIONES
 ========================= */
 const INTENTS = {
   GRA: ["gracias"],
-  WHAT_DOING: ["que haces", "que estas haciendo"],
+  GREETING: ["hola", "buenas", "buenos dias"],
+  FAREWELL: ["adios", "bye", "chao", "hasta luego"],
   MOOD: ["como estas", "estas bien"],
+  WHAT_DOING: ["que haces", "que estas haciendo"],
   NAME: ["como te llamas", "tu nombre"],
-  HUMAN: ["eres humana", "eres humano", "robot"],
+  HUMAN: ["eres humano", "eres humana", "robot"],
   ASSISTANT: ["quien eres", "sasha"],
   CREATOR: ["quien te creo", "quien te hizo"],
   BOOK: ["libros"],
-  FAREWELL: ["adios", "bye", "chao", "hasta luego"],
-  GREETING: ["hola", "buenas", "buenos dias"],
   PROFILE: ["jorge", "perfil"],
   EDUCATION: ["estudios", "master", "formacion"],
   EXPERIENCE: ["experiencia"],
@@ -119,7 +115,7 @@ const normalize = (t = "") =>
     .trim();
 
 /* =========================
-DETECT INTENT
+DETECTAR INTENCIÓN
 ========================= */
 const detectIntent = (msg) => {
   const text = normalize(msg);
@@ -161,7 +157,7 @@ const pickNonRepeated = (ctx = {}, intent, options) => {
 };
 
 /* =========================
-FUNCIÓN PRINCIPAL
+LÓGICA DEL BOT
 ========================= */
 function getSmartResponse(message, context = {}) {
   const text = normalize(message);
@@ -190,48 +186,31 @@ function getSmartResponse(message, context = {}) {
       ]),
 
     MOOD: () => "¡Estoy muy bien 😊 gracias por preguntar!",
-
     WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte",
-
     NAME: () => "Me llamo Sasha 😊",
-
     HUMAN: () => "No soy humana 🤖, soy una asistente virtual",
-
     ASSISTANT: () =>
       "Soy Sasha 🤖, la asistente virtual del portafolio de Jorge",
-
     CREATOR: () =>
       "Fui creada por Jorge para ayudarte a conocer su perfil profesional 😊",
-
     BOOK: () =>
       "A Jorge le gustan los libros de misterio 📚, especialmente los de Dan Brown",
-
     PROFILE: () =>
       `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-
     EDUCATION: () => PROFILE.education,
-
     EXPERIENCE: () => PROFILE.experience.join(", "),
-
     SKILLS: () => PROFILE.stack.join(", "),
-
     STACK: () =>
       "Sí 😊 Jorge es Full Stack y disfruta trabajar tanto en frontend como backend",
-
     PROJECTS: () => PROFILE.projects.join(", "),
-
     MOTIVATION: () =>
       "Porque Jorge combina experiencia real, formación sólida y compromiso profesional 😊",
-
     CONTACT: () => ({
       text: "📱 Puedes contactarlo por WhatsApp.\n¿Deseas que lo abra ahora?",
       action: "CONTACT_CONFIRM",
     }),
   };
 
-  /* =========================
-CONFIRMACIÓN WHATSAPP
-========================= */
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.some((w) => text.includes(normalize(w)))) {
       context.awaiting = null;
@@ -241,7 +220,6 @@ CONFIRMACIÓN WHATSAPP
         url: WHATSAPP_URL,
       };
     }
-
     if (NO_WORDS.some((w) => text.includes(normalize(w)))) {
       context.awaiting = null;
       return { text: "Está bien 😊 cuando quieras avísame." };
@@ -264,285 +242,91 @@ CONFIRMACIÓN WHATSAPP
   };
 }
 
-export default getSmartResponse;
-
+/* 👉 export nombrado (NO default) */
+export { getSmartResponse };
 
 /* =========================
-COMPONENTE
+COMPONENTE CHATBOT
 ========================= */
 export default function ChatBot() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const isLandscape = useMediaQuery("(orientation: landscape)");
-
-  const primaryBg = useMemo(
-    () => (isDark ? "#000" : theme.palette.primary.main),
-    [isDark, theme]
-  );
-
-  const bottomRef = useRef(null);
-
   const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({});
+  const contextRef = useRef({});
 
-  const initialMessage = useMemo(
-    () => ({
-      from: "bot",
-      text:
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    }),
-    []
-  );
+  const sendMessage = () => {
+    if (!input.trim()) return;
 
-  const [messages, setMessages] = useState([initialMessage]);
+    const userMsg = { from: "user", text: input };
+    const response = getSmartResponse(input, contextRef.current);
 
-  useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
+    const botMsg = { from: "bot", text: response.text };
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, typing]);
-
-  const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
-
-    setMessages((m) => [...m, { from: "user", text }]);
+    setMessages((prev) => [...prev, userMsg, botMsg]);
     setInput("");
-    setTyping(true);
 
-    setTimeout(() => {
-      setContext((prev) => {
-        const res = getSmartResponse(text, prev);
-        const follow = followUp(res.intent);
-
-        setMessages((m) => [
-          ...m,
-          { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && follow
-            ? [{ from: "bot", text: follow }]
-            : []),
-        ]);
-
-        setTyping(false);
-
-        return {
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-        };
-      });
-    }, delay());
-  }, []);
+    if (response.action === "OPEN_WHATSAPP") {
+      window.open(response.url, "_blank");
+    }
+  };
 
   return (
     <>
-      {/* BOTÓN FLOTANTE */}
       <Fab
-        onClick={() => setOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          bgcolor: primaryBg,
-          color: "#fff",
-        }}
+        color="primary"
+        onClick={() => setOpen((o) => !o)}
+        sx={{ position: "fixed", bottom: 20, right: 20 }}
       >
         <SmartToyIcon />
       </Fab>
 
-      {/* OVERLAY */}
-      {open && (
-        <Box
-          onClick={() => setOpen(false)}
-          sx={{
-            position: "fixed",
-            inset: 0,
-            zIndex: (theme) => theme.zIndex.modal + 1,
-          }}
-        />
-      )}
-
-      {/* CHAT */}
       {open && (
         <Paper
-          onClick={(e) => e.stopPropagation()}
           sx={{
             position: "fixed",
-            zIndex: (theme) => theme.zIndex.modal + 2,
+            bottom: 90,
+            right: 20,
+            width: 320,
+            height: 420,
             display: "flex",
             flexDirection: "column",
-            overflow: "hidden",
-            ...(isLandscape
-              ? {
-                  inset: "72px 0 10px 0",
-                  margin: "0 auto",
-                  width: "100%",
-                  maxWidth: 640,
-                }
-              : {
-                  bottom: 90,
-                  left: 16,
-                  width: 360,
-                  height: 520,
-                }),
           }}
         >
-          {/* HEADER */}
-          <Box
-            sx={{
-              p: 1,
-              bgcolor: primaryBg,
-              color: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <SmartToyIcon fontSize="small" />
-              <Typography fontWeight="bold">Sasha</Typography>
-            </Box>
-
-            <Box>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
-              >
-                <DeleteIcon fontSize="small" />
+          <Box sx={{ p: 1, bgcolor: "primary.main", color: "#fff" }}>
+            <Stack direction="row" justifyContent="space-between">
+              <Typography>Sasha</Typography>
+              <IconButton size="small" onClick={() => setOpen(false)}>
+                <CloseIcon sx={{ color: "#fff" }} />
               </IconButton>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </Box>
+            </Stack>
           </Box>
 
-          {/* SUGERENCIAS */}
-          <Box sx={{ p: 1 }}>
-            {isLandscape ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                  pb: 1,
-                }}
-              >
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                    sx={{ flexShrink: 0 }}
-                  />
-                ))}
-              </Box>
-            ) : (
-              <Stack direction="row" flexWrap="wrap" gap={1}>
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                  />
-                ))}
-              </Stack>
-            )}
-          </Box>
-
-          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-            {messages.map((m, i) => {
-              const isUser = m.from === "user";
-
-              return (
-                <Box
-                  key={i}
-                  sx={{
-                    display: "flex",
-                    justifyContent: isUser ? "flex-end" : "flex-start",
-                    mb: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      maxWidth: "80%",
-                      px: 1.5,
-                      py: 1,
-                      borderRadius: 2,
-                      bgcolor: isUser
-                        ? isDark
-                          ? theme.palette.primary.light
-                          : theme.palette.primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
-                      color: isUser
-                        ? isDark
-                          ? "#000"
-                          : "#fff"
-                        : "inherit",
-                      whiteSpace: "pre-line",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
-                        lineHeight: isLandscape ? 1.4 : 1.5,
-                      }}
-                    >
-                      {m.text}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-
-            {typing && (
+            {messages.map((m, i) => (
               <Typography
-                variant="caption"
-                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+                key={i}
+                align={m.from === "user" ? "right" : "left"}
               >
-                Sasha está escribiendo…
+                {m.text}
               </Typography>
-            )}
-
-            <div ref={bottomRef} />
+            ))}
           </Box>
 
-          {/* INPUT */}
-          <Box sx={{ display: "flex", p: 1 }}>
+          <Box sx={{ p: 1, display: "flex", gap: 1 }}>
             <TextField
-              fullWidth
               size="small"
+              fullWidth
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage(input);
-                }
-              }}
-              placeholder="Escribe tu mensaje…"
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
-            <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon sx={{ color: "#03A9F4" }} />
+            <IconButton onClick={sendMessage}>
+              <SendIcon />
             </IconButton>
           </Box>
         </Paper>
       )}
     </>
   );
-                    }
+}
