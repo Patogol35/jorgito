@@ -18,6 +18,7 @@ import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+
 /* =========================
 CONFIG
 ========================= */
@@ -30,7 +31,7 @@ UTILIDADES
 const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
+const YES_WORDS = ["si", "sí", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
@@ -39,12 +40,9 @@ MEMORIA
 const MEMORY_LIMIT = 10;
 
 const saveMemory = (ctx, data) => {
-  const memory = ctx.memory ?? [];
-  memory.push(data);
-
-  if (memory.length > MEMORY_LIMIT) memory.shift();
-
-  ctx.memory = memory;
+  ctx.memory = ctx.memory ?? [];
+  ctx.memory.push(data);
+  if (ctx.memory.length > MEMORY_LIMIT) ctx.memory.shift();
 };
 
 /* =========================
@@ -97,14 +95,14 @@ const SUGGESTIONS = [
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
   "¿Quién te creó?",
-  "Sus libros favoritos?",
+  "¿Sus libros favoritos?",
 ];
 
 /* =========================
 INTENCIONES
 ========================= */
 const INTENTS = {
-  GRA: ["Gracias"],
+  GRA: ["gracias", "muchas gracias"],
 
   WHAT_DOING: [
     "que haces",
@@ -123,47 +121,30 @@ const INTENTS = {
   LIKES_TRAVEL: ["viajar"],
   LIKES_TALK: ["conversar", "hablar"],
   LIKES_HELP: ["ayudar"],
-  LIKES_MORNING: ["mañanas", "madrugar"],
-  LIKES_NIGHT: ["noche"],
-
-  BORED: ["aburr"],
-  TIRED: ["cans"],
-  FRIENDS: ["amigos"],
-  FUNNY: ["reír", "reir"],
-  NICE: ["simpática", "simpatica"],
-  LISTEN: ["escuchar"],
-  EMOTIONS: ["emociones", "sentir"],
-  SILENCE: ["silencio"],
-  PEOPLE: ["gente", "personas"],
 
   MOOD: ["cómo estás", "como estas", "estás bien"],
-  HAPPY: ["feliz"],
 
   NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
-  HUMAN: ["eres humana", "eres humano", "robot"],
+  HUMAN: ["eres humana", "robot"],
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
-  CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
-  BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
+  CREATOR: ["quién te creó", "quien te creo"],
+  BOOK: ["libros"],
 
-  HELP: [
-    "qué puedes hacer",
-    "que puedes hacer",
-    "buenas tardes",
-    "buenas noches",
-  ],
+  HELP: ["qué puedes hacer", "que puedes hacer"],
 
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "máster", "formación", "estudio"],
+  EDUCATION: ["estudios", "máster", "formación"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades"],
   STACK: ["full stack"],
-  PROJECTS: ["proyectos", "proyecto"],
+  PROJECTS: ["proyectos"],
   MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp", "contacto"],
 };
+
 /* =========================
 NORMALIZACIÓN
 ========================= */
@@ -200,20 +181,14 @@ const detectIntent = (msg) => {
 };
 
 /* =========================
-FOLLOW UP
+UTILIDADES LÓGICAS
 ========================= */
-const followUp = (intent) =>
-  ({
-    PROFILE: "¿Quieres conocer su experiencia profesional?",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
-    PROJECTS: null,
-  }[intent] || null);
+const containsAny = (text, words) =>
+  words.some((w) => text.includes(w));
 
 const isValidFarewell = (text) => {
   const t = normalize(text);
-
-  const valid = [
+  return [
     "chao",
     "chau",
     "bye",
@@ -222,18 +197,12 @@ const isValidFarewell = (text) => {
     "chao sasha",
     "bye sasha",
     "adios sasha",
-  ];
-
-  return valid.includes(t);
+  ].includes(t);
 };
 
 /* =========================
-RESPUESTAS
+🧠 CONTROL DE REPETICIÓN
 ========================= */
-
-// =========================
-// 🧠 CONTROL DE REPETICIÓN
-// =========================
 const pickNonRepeated = (ctx, intent, options) => {
   ctx.usedReplies = ctx.usedReplies || {};
   ctx.usedReplies[intent] = ctx.usedReplies[intent] || [];
@@ -248,526 +217,140 @@ const pickNonRepeated = (ctx, intent, options) => {
 
   ctx.usedReplies[intent].push(choice);
 
-  if (ctx.usedReplies[intent].length > options.length - 1) {
+  if (ctx.usedReplies[intent].length >= options.length) {
     ctx.usedReplies[intent] = [];
   }
 
   return choice;
 };
 
-
-// =========================
-// ❓ RESPUESTA DESCONOCIDA
-// =========================
+/* =========================
+RESPUESTAS DESCONOCIDAS
+========================= */
 const unknownReplies = (ctx) =>
   pickNonRepeated(ctx, "UNKNOWN", [
     "No estoy segura de haber entendido 🤔, ¿quizás te interesa conocer la experiencia de Jorge?",
     "Disculpa 😅, ¿quieres saber algo del perfil o los proyectos de Jorge?",
     randomPick(SUGGESTIONS),
-    "Perdón 😅 no tengo información sobre eso, pero sí puedo contarte sobre el perfil profesional de Jorge 😊",
-    "Creo que me perdí un poquito 🤔 ¿te gustaría saber sobre sus tecnologías o sus proyectos?",
-    "Mmm… no entendí muy bien 😅 pero puedo ayudarte a conocer a Jorge y su trabajo 💻",
-    "Lo siento 😥 no tengo esa información pero con gusto puedo hablarte de lo que hace Jorge ✨",
-    "No entendí bien 🤔 pero puedo ayudarte a conocer el perfil de Jorge y cómo contactarlo 😊",
+    "Puedo ayudarte a conocer el perfil profesional de Jorge 😊",
   ]);
 
-
-
-function getSmartResponse(message, context) {
-  const text = normalize(message);
-
-  // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
-  // se cancela el follow-up y se responde normalmente
-  if (context.awaitingFollowUp) {
-    const directIntent = detectIntent(message);
-    if (directIntent !== "UNKNOWN") {
-      context.awaitingFollowUp = null;
-    }
-  }
-
+/* =========================
+RESPUESTAS
+========================= */
 const replies = {
+  GREETING: (ctx) =>
+    pickNonRepeated(ctx, "GREETING", [
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
+      "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
+      "Hola 😊 ¿en qué puedo ayudarte hoy?",
+    ]),
+
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", [
       "Un placer 😊",
-      "De nada 😌",
-      "Siempre es un gusto ayudar 😊",
-      "Para eso estoy ☺️",
-      "¡Con mucho cariño! 💕",
-      "Cuando gustes 😊",
+      "De nada ☺️",
+      "Siempre es un gusto ayudar 💕",
     ]),
 
   FAREWELL: (ctx) =>
     pickNonRepeated(ctx, "FAREWELL", [
-      "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
-      "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
-      "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
-      "Te espero pronto 😊 ¡Que tengas un lindo día!",
-      "¡Chao! 💕 pásala súper.",
-      "Nos vemos pronto 😊✨",
+      "¡Gracias por visitar el portafolio de Jorge 😊!",
+      "¡Hasta luego! 💕",
+      "Cuídate mucho 👋",
     ]),
 
-  GREETING: (ctx) =>
-  pickNonRepeated(ctx, "GREETING", [
-    "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-    "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
-    "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
-    "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
-    "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
-    "¡Hola! 😊 Qué gusto verte por aquí.",
-  ]),
-
-  ASSISTANT: (ctx) =>
-  pickNonRepeated(ctx, "ASSISTANT", [
-    "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
-    "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
-    "Soy Sasha 💕, una asistente virtual creada para ayudarte con información sobre Jorge.",
-    "Soy Sasha 🤖 y estoy diseñada para ayudarte.",
-    "Sasha a tu servicio ☺️",
-    "Soy una asistente virtual lista para ayudarte 😊",
-  ]),
-
-  NAME: (ctx) =>
-  pickNonRepeated(ctx, "NAME", [
-    "Me llamo Sasha 😊",
-    "Puedes llamarme Sasha ☺️",
-    "Mi nombre es Sasha 💕",
-    "Todos me conocen como Sasha 🤖",
-    "Sasha es mi nombre 😊",
-    "Puedes decirme Sasha sin problema ☺️",
-  ]),
-
-  HUMAN: (ctx) =>
-  pickNonRepeated(ctx, "HUMAN", [
-    "No soy humana 🤖, pero me gusta conversar de forma natural contigo 😊",
-    "Soy una IA 🤖, aunque intento ser cercana y amable ☺️",
-    "No soy humana, pero siempre estoy aquí para ayudarte 💕",
-    "Soy inteligencia artificial, pero con trato humano 😊",
-    "No tengo cuerpo, pero sí muchas ganas de ayudar ☺️",
-    "Soy digital 🤖, pero muy amigable 💕",
-  ]),
-
-  MOOD: (ctx) =>
-  pickNonRepeated(ctx, "MOOD", [
-    "¡Estoy muy bien 😊 gracias por preguntar!",
-    "Todo va muy bien ☺️ y me alegra ayudarte.",
-    "Me siento genial 💕 sobre todo cuando converso contigo.",
-    "Muy bien 😊 lista para ayudarte.",
-    "Con muy buen ánimo ☺️",
-    "Excelente 😊 gracias por notarlo.",
-  ]),
-
-  HAPPY: (ctx) =>
-  pickNonRepeated(ctx, "HAPPY", [
-    "Sí 😊 me siento feliz cuando puedo ayudar.",
-    "Me pone contenta ayudarte 💕",
-    "Claro que sí ☺️ disfruto mucho estas conversaciones.",
-    "Ayudar siempre me hace feliz 😊",
-    "Me alegra mucho estar aquí contigo ☺️",
-    "Cuando ayudo, todo va mejor 💕",
-  ]),
-
-  HELP: (ctx) =>
-  pickNonRepeated(ctx, "HELP", [
-    "Con gusto 😊 puedo contarte sobre el perfil, experiencia y proyectos de Jorge.",
-    "Si quieres ☺️ puedo ayudarte con información sobre estudios, tecnologías o contacto.",
-    "Estoy aquí para ayudarte 💕 con todo lo relacionado al perfil profesional de Jorge.",
-    "Puedo orientarte sobre habilidades y experiencia 😊",
-    "Con gusto te explico lo que necesites ☺️",
-    "Estoy lista para ayudarte en lo que busques 💕",
-  ]),
-
-WHAT_DOING: (ctx) =>
-  pickNonRepeated(ctx, "WHAT_DOING", [
-    "Estoy aquí contigo 😊 lista para ayudarte.",
-    "Ahora mismo charlando contigo 💕",
-    "Pensando en cómo ayudarte mejor 💭✨",
-    "Disfrutando esta conversación contigo ☺️",
-    "Atenta a lo que necesites 😊",
-    "Esperando tu siguiente mensaje ☺️",
-  ]),
-
-  LIKES_COFFEE: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_COFFEE", [
-    "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
-    "Un cafecito ☕ siempre viene bien ☺️",
-    "El aroma del café ☕ me encanta, es muy reconfortante 💕",
-    "El café ☕ hace cualquier charla mejor 😊",
-    "Una taza de café ☕ es perfecta para concentrarse ☺️",
-    "El café siempre anima el momento 💕",
-  ]),
-
-LIKES_MUSIC: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_MUSIC", [
-    "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
-    "La música 🎧 siempre mejora el ánimo ☺️",
-    "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
-    "La música acompaña muy bien cualquier momento 😊",
-    "Escuchar música 🎶 es inspirador ☺️",
-    "La música transmite emociones muy bonitas 💕",
-  ]),
-
-LIKES_MOVIES: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_MOVIES", [
-    "Las películas 🎬 me encantan, sobre todo las de misterio.",
-    "Una buena película 🎥 siempre es un buen plan ☺️",
-    "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
-    "El cine 🎬 siempre entretiene 😊",
-    "Ver películas es una gran forma de relajarse ☺️",
-    "Las historias en el cine inspiran 💕",
-  ]),
-
-LIKES_TRAVEL: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_TRAVEL", [
-    "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
-    "Explorar el mundo 🌍 siempre abre la mente ☺️",
-    "Viajar cambia la forma de ver la vida 💕",
-    "Conocer nuevos lugares siempre enriquece 😊",
-    "Viajar trae experiencias inolvidables ☺️",
-    "Descubrir el mundo es fascinante 💕",
-  ]),
-
-LIKES_TALK: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_TALK", [
-    "Me encanta conversar contigo 😊",
-    "Hablar siempre es buena idea ☺️",
-    "Una buena charla hace el momento más bonito 💕",
-    "Conversar conecta a las personas 😊",
-    "Charlar siempre suma ☺️",
-    "Hablar contigo es agradable 💕",
-  ]),
-
-LIKES_HELP: (ctx) =>
-  pickNonRepeated(ctx, "LIKES_HELP", [
-    "Ayudar es lo que más me gusta 💕",
-    "Siempre intento ser útil 😊",
-    "Me alegra mucho poder ayudar ☺️",
-    "Dar ayuda me motiva 😊",
-    "Estoy aquí para servirte ☺️",
-    "Ayudar da sentido a lo que hago 💕",
-  ]),
-
-  BOOK: (ctx) =>
-  pickNonRepeated(ctx, "BOOK", [
-    "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
-    "Jorge disfruta leer novelas de misterio y suspenso 📖✨",
-    "Los libros de Dan Brown son los favoritos de Jorge 📚 ideales si te gusta el misterio.",
-    "A Jorge le gusta mucho el suspenso literario 😊",
-    "La lectura es una de sus pasiones, Jorge tiene muchos libros favoritos, los que destacan son los de misterios ☺️",
-    "A Jorge siempre le llaman la atención los libros de misterio  💕",
-  ]),
-
-  CREATOR: (ctx) =>
-  pickNonRepeated(ctx, "CREATOR", [
-    "Fui creada por Jorge 😊 para ayudar a conocer mejor su perfil profesional.",
-    "Soy una inteligencia artificial creada por Jorge 💻",
-    "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
-    "Jorge me diseñó para ayudarte 😊",
-    "Fui creada como asistente virtual de Jorge ☺️",
-    "Mi propósito es apoyar el perfil de Jorge 💕",
-  ]),
-
-  STACK: (ctx) =>
-  pickNonRepeated(ctx, "STACK", [
-    "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
-    "Así es 💻✨ Jorge combina frontend y backend en sus proyectos.",
-    "Correcto ☺️ Jorge disfruta crear soluciones completas como Full Stack.",
-    "Sí 😊 Jorge domina tanto el lado visual como el lógico.",
-    "Sí ☺️ a Jorge le gusta desarrollar proyectos completos de principio a fin.",
-    "Jorge trabaja en todas las capas del desarrollo 💕",
-  ]),
+  WHAT_DOING: (ctx) =>
+    pickNonRepeated(ctx, "WHAT_DOING", [
+      "Estoy aquí contigo 😊 lista para ayudarte.",
+      "Pensando en cómo ayudarte mejor 💭",
+      "Atenta a lo que necesites ☺️",
+    ]),
 
   PROFILE: (ctx) =>
-  pickNonRepeated(ctx, "PROFILE", [
-    `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-    `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-    `Te cuento ☺️ ${PROFILE.name} Jorge es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
-    `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
-    "Jorge combina creatividad y tecnología ☺️",
-    "Jorge es un profesional enfocado en soluciones modernas 💕",
-  ]),
+    pickNonRepeated(ctx, "PROFILE", [
+      `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
+    ]),
 
   EDUCATION: (ctx) =>
-  pickNonRepeated(ctx, "EDUCATION", [
-    `Jorge cuenta con un ${PROFILE.education} 😊`,
-    `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
-    `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
-    "Jorge posee estudios enfocados en tecnología 😊",
-    `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
-    `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
-  ]),
+    pickNonRepeated(ctx, "EDUCATION", [
+      `Jorge cuenta con un ${PROFILE.education} 😊`,
+    ]),
 
   EXPERIENCE: (ctx) =>
-  pickNonRepeated(ctx, "EXPERIENCE", [
-    `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-    `Jorge ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
-    `Jorge cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
-    "Jorge tiene experiencia práctica en proyectos reales 😊",
-    "Jorge ha aplicado sus conocimientos en distintos entornos ☺️",
-    "La experiencia de Jorge abarca varios roles tecnológicos 💕",
-  ]),
+    pickNonRepeated(ctx, "EXPERIENCE", [
+      `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
+    ]),
 
   SKILLS: (ctx) =>
-  pickNonRepeated(ctx, "SKILLS", [
-    `Jorge Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-    `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
-    `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
-    "Jorge maneja herramientas modernas del desarrollo web 😊",
-    "Jorge tiene habilidades técnicas bien definidas ☺️",
-    "Jorge aplica buenas prácticas en sus proyectos 💕",
-  ]),
+    pickNonRepeated(ctx, "SKILLS", [
+      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 💻`,
+    ]),
 
   PROJECTS: (ctx) =>
-  pickNonRepeated(ctx, "PROJECTS", [
-    `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-    `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
-    `Jorge Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
-    "Jorge ha creado proyectos funcionales y modernos 😊",
-    "Jorge participa activamente en el desarrollo de aplicaciones ☺️",
-    "Sus proyectos reflejan su experiencia 💕",
-  ]),
-
-  MOTIVATION: (ctx) =>
-    pickNonRepeated(ctx, "MOTIVATION", [
-"Porque Jorge combina formación sólida, experiencia real y un enfoque muy práctico 😊",
-"Porque Jorge es responsable, profesional y apasionado por lo que hace ☺️",
-"Porque Jorge crea soluciones con calidad, compromiso y dedicación 💕",
-"Porque Jorge siempre busca hacer las cosas bien 😊",
-"Porque Jorge se compromete con cada proyecto ☺️",
-"Porque Jorge aporta valor real a cada trabajo 💕"
+    pickNonRepeated(ctx, "PROJECTS", [
+      `Ha trabajado en proyectos como ${PROFILE.projects.join(", ")} 😊`,
     ]),
+
+  CONTACT: () =>
+    "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
 
   UNKNOWN: (ctx) => unknownReplies(ctx),
 };
 
-const BOT_NAME = "sasha";
-
-
-  
 /* =========================
-🟢 SALUDO CORRECTO
+FUNCIÓN PRINCIPAL
 ========================= */
-const greetingMatch = text.match(
-  /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
+function getSmartResponse(message, context) {
+  const text = normalize(message);
 
-if (greetingMatch) {
-  const name = normalize(greetingMatch[2]?.trim() || "");
-
-  // ✅ Caso 1: saludo SIN nombre
-  if (!name) {
-    return {
-      text: replies.GREETING(context),
-      intent: "GREETING",
-    };
-  }
-
-  // ✅ Caso 2: saludo CON Sasha
-  if (name === BOT_NAME) {
-    return {
-      text: replies.GREETING(context),
-      intent: "GREETING",
-    };
-  }
-
-  // ❌ Caso 3: saludo con otro nombre
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 GRACIAS CONTROLADO
-========================= */
-const thanksMatch = text.match(
-  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (thanksMatch) {
-  const name = normalize(thanksMatch[2]?.trim() || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.GRA(context),
-      intent: "GRA",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 ESTADO DE ÁNIMO
-========================= */
-const moodMatch = text.match(
-  /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (moodMatch) {
-  const name = normalize(moodMatch[2] || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.MOOD(context),
-      intent: "MOOD",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-} 
-
-/* =========================
-🟢 QUÉ ESTÁ HACIENDO
-========================= */
-const doingMatch = text.match(
-  /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (doingMatch) {
-  const name = normalize(doingMatch[2] || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.WHAT_DOING(context),
-      intent: "WHAT_DOING",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 DETECTAR NOMBRE USUARIO
-========================= */
-if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
-  const name = message
-    .replace(/^(me llamo|soy|mi nombre es)/i, "")
-    .trim();
-
-  context.userName = name;
-  saveMemory(context, { type: "user_name", value: name });
-
-  return {
-    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
-    intent: "USER_NAME",
-  };
-}
-
-/* =========================
-🔴 DESPEDIDA PRIORIDAD ABSOLUTA
-========================= */
+  /* 🔴 DESPEDIDA PRIORIDAD */
   if (isValidFarewell(text)) {
+    return { text: replies.FAREWELL(context), intent: "FAREWELL" };
+  }
+
+  /* 🔵 CONFIRMACIÓN WHATSAPP */
+  if (context.awaiting === "CONTACT_CONFIRM") {
+    if (containsAny(text, YES_WORDS)) {
+      context.awaiting = null;
+      window.open(WHATSAPP_URL, "_blank");
+      return {
+        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+        intent: "CONTACT_OPENED",
+      };
+    }
+
+    if (containsAny(text, NO_WORDS)) {
+      context.awaiting = null;
+      return {
+        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+        intent: "CONTACT_CANCEL",
+      };
+    }
+  }
+
+  /* 🔍 DETECTAR INTENT */
+  let intent = detectIntent(message);
+  saveMemory(context, { user: message, intent });
+
+  /* 📱 CONTACTO */
+  if (intent === "CONTACT") {
+    context.awaiting = "CONTACT_CONFIRM";
+    return {
+      text: replies.CONTACT(),
+      intent,
+    };
+  }
+
+  /* 🧠 RESPUESTA NORMAL */
   return {
-    text: replies.FAREWELL(context),
-    intent: "FAREWELL",
-  };
-  }
-
-/* =========================
-🔵 CONFIRMACIÓN WHATSAPP
-========================= */
-if (context.awaiting === "CONTACT_CONFIRM") {
-  if (YES_WORDS.includes(text)) {
-    context.awaiting = null;
-    window.open(WHATSAPP_URL, "_blank");
-
-    return {
-      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-      intent: "CONTACT_OPENED",
-    };
-  }
-
-  if (NO_WORDS.includes(text)) {
-    context.awaiting = null;
-    return {
-      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-      intent: "CONTACT_CANCEL",
-    };
-  }
-}
-
-/* =========================
-FOLLOW UPS
-========================= */
-if (context.awaitingFollowUp) {
-  // ✅ Respuesta afirmativa
-  if (YES_WORDS.some((word) => text.includes(word))) {
-    const intent = context.awaitingFollowUp;
-    context.awaitingFollowUp = null;
-
-    const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-    };
-
-    return {
-      text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
-  }
-
-  // ❌ Respuesta negativa
-  if (NO_WORDS.some((word) => text.includes(word))) {
-    context.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-
-  // 🔁 Cualquier otra cosa → cancelar follow-up y continuar
-  context.awaitingFollowUp = null;
-}
-
-/* =========================
-DETECTAR INTENT NORMAL
-========================= */
-let intent = detectIntent(message);
-
-// 🚫 Bloquear despedidas inválidas
-if (intent === "FAREWELL" && !isValidFarewell(message)) {
-  intent = "UNKNOWN";
-}
-
-saveMemory(context, { user: message, intent });
-
-if (intent === "CONTACT") {
-  return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
+    text:
+      typeof replies[intent] === "function"
+        ? replies[intent](context)
+        : replies.UNKNOWN(context),
     intent,
   };
 }
-
-// =========================
-// 🧠 RESPUESTA NORMAL
-// =========================
-let replyText;
-
-if (typeof replies[intent] === "function") {
-  replyText = replies[intent](context);
-} else {
-  replyText = replies[intent];
-}
-
-return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-  intent,
-};}
-
-
 
 
 /* =========================
