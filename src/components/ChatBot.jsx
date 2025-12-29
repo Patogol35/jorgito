@@ -828,7 +828,7 @@ return {
     replyText ||
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
   intent,
-};
+}; }
 
 /* =========================
 COMPONENTE
