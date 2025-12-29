@@ -716,7 +716,8 @@ if (context.awaitingFollowUp) {
 DETECTAR INTENT NORMAL
 ========================= */
 /* =========================
-🟡 VALIDAR REFERENCIA DE NOMBRE
+/* =========================
+🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
 const extractNameReference = (text) => {
   const patterns = [
@@ -734,8 +735,25 @@ const extractNameReference = (text) => {
   return null;
 };
 
+/* =========================
+🟡 VALIDAR PERSONA CONSULTADA
+========================= */
+const referencedName = extractNameReference(text);
 
-  
+if (
+  referencedName &&
+  referencedName !== "jorge" &&
+  referencedName !== "jorge patricio"
+) {
+  return {
+    text: "¿Te refieres a Jorge? 😊 Actualmente solo tengo información sobre su perfil.",
+    intent: "UNKNOWN",
+  };
+}
+
+/* =========================
+DETECTAR INTENT NORMAL
+========================= */
 let intent = detectIntent(message);
 
 // 🚫 Bloquear despedidas inválidas
