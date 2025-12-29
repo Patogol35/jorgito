@@ -735,28 +735,28 @@ if (context.awaitingFollowUp) {
 
 
 /* =========================
-🟡 DETECTAR REFERENCIA DE NOMBRE
+🟡 UTILIDAD: NORMALIZAR TEXTO
+========================= */
+const normalize = (str = "") =>
+  str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+/* =========================
+🟡 DETECTAR REFERENCIA A PERSONA
 ========================= */
 const extractNameReference = (text) => {
+  const namePattern = "([a-zA-Záéíóúñ]+(?:\\s+[a-zA-Záéíóúñ]+)?)";
+
   const patterns = [
-    // "Luis es...", "Jorge Patricio es..."
-    /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-
-    // "háblame de Luis"
-    /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "perfil de Luis"
-    /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "sobre Luis"
-    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "quien es Luis"
-    /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-
-    // "contactar a Luis"
-    /contactar\s+(a\s+)?([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    new RegExp(`^${namePattern}\\s+es\\s+`, "i"),
+    new RegExp(`hablame de\\s+${namePattern}`, "i"),
+    new RegExp(`habla de\\s+${namePattern}`, "i"),
+    new RegExp(`perfil de\\s+${namePattern}`, "i"),
+    new RegExp(`(de|del|sobre)\\s+${namePattern}`, "i"),
+    new RegExp(`quien\\s+es\\s+${namePattern}`, "i"),
+    new RegExp(`contactar\\s+(a\\s+)?${namePattern}`, "i"),
+    new RegExp(`estudios de\\s+${namePattern}`, "i"),
+    new RegExp(`libros de\\s+${namePattern}`, "i"),
+    new RegExp(`contratar\\s+(a\\s+)?${namePattern}`, "i"),
   ];
 
   for (const p of patterns) {
@@ -765,22 +765,16 @@ const extractNameReference = (text) => {
       return normalize(match[2] || match[1]);
     }
   }
-
   return null;
 };
 
 /* =========================
-🔴 VALIDACIÓN GLOBAL DE PERSONA (PRIORIDAD MÁXIMA)
+🔴 VALIDACIÓN GLOBAL DE NOMBRE PERMITIDO
 ========================= */
 const referencedName = extractNameReference(text);
+const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// 🚫 Si se menciona un nombre y NO es Jorge / Patricio → bloquear TODO
-if (
-  referencedName &&
-  !["jorge", "patricio", "jorge patricio"].some((n) =>
-    text.toLowerCase().includes(n)
-  )
-) {
+if (referencedName && !validNames.includes(referencedName)) {
   return {
     text: "Solo tengo información sobre Jorge Patricio 🙂",
     intent: "UNKNOWN",
@@ -788,11 +782,11 @@ if (
 }
 
 /* =========================
-🟢 DETECTAR INTENT (SOLO SI PASÓ LA VALIDACIÓN)
+🟢 DETECTAR INTENT (YA VALIDADO)
 ========================= */
 let intent = detectIntent(text);
 
-// 🚫 Bloquear despedidas inválidas
+// Bloqueo de despedidas inválidas
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
   intent = "UNKNOWN";
 }
@@ -800,7 +794,7 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 saveMemory(context, { user: text, intent });
 
 /* =========================
-🟢 CONTACTO (YA VALIDADO)
+🟢 FLUJO DE CONTACTO
 ========================= */
 if (intent === "CONTACT") {
   context.awaiting = "CONTACT_CONFIRM";
