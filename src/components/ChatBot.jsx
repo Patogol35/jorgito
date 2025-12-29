@@ -156,7 +156,7 @@ const INTENTS = {
   PROFILE: ["jorge", "perfil", "patricio"],
   EDUCATION: ["estudios", "máster", "formación", "estudio"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologías", "lenguajes", "habilidades"],
+  SKILLS: ["tecnologías", "lenguajes", "habilidades","tecnología"],
   STACK: ["full stack"],
   PROJECTS: ["proyectos", "proyecto"],
   MOTIVATION: ["contratar"],
