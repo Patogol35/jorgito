@@ -764,12 +764,13 @@ const extractNameReference = (text) => {
 /* =========================
 🟡 VALIDAR PERSONA CONSULTADA
 ========================= */
+// =========================
 const referencedName = extractNameReference(text);
 
+// Si se detecta un nombre y NO es Jorge ni Patricio → bloquear
 if (
   referencedName &&
-  !referencedName.includes("jorge") &&
-  !referencedName.includes("patricio")
+  !/jorge|patricio/i.test(referencedName)
 ) {
   return {
     text: "Solo tengo información sobre Jorge Patricio 🙂",
