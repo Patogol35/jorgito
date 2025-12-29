@@ -22,7 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 CONFIG
 ========================= */
 const WHATSAPP_URL =
-  "https://wa.me/593997979099?text=Hola%20Jorge ,%20vi%20tu%20portafolio";
+  "https://wa.me/593997979099?text=Hola%20Jorge%20,%20vi%20tu%20portafolio";
 
 /* =========================
 UTILIDADES
@@ -251,7 +251,7 @@ const pickNonRepeated = (ctx = {}, intent, options) => {
 };
 
 /* =========================
-RESPUESTA INTELIGENTE
+REPONSE INTELIGENTE
 ========================= */
 function getSmartResponse(message, context) {
   const text = normalize(message);
@@ -270,18 +270,6 @@ function getSmartResponse(message, context) {
   // 🔑 Constantes al inicio
   const BOT_NAME = "sasha";
   const OWNER_NAMES = ["jorge", "patricio", "jorge patricio"];
-  const INVALID_REFERENCES = [
-    "su",
-    "sus",
-    "mi",
-    "mis",
-    "tu",
-    "tus",
-    "nuestro",
-    "nuestros",
-    "nuestra",
-    "nuestras",
-  ];
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
   // se cancela el follow-up y se responde normalmente
@@ -718,35 +706,55 @@ function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🟡 DETECTAR REFERENCIA DE NOMBRE
+  🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
   ========================= */
-  const extractNameReference = (text) => {
-    const patterns = [
-      /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-      /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /contactar\s+(a\s+)?([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+  const isAboutOwner = (text) => {
+    const validNames = ["jorge", "patricio", "jorge patricio"];
+    const normalizedText = text.toLowerCase();
+
+    // Si menciona alguno de los nombres válidos → permitido
+    if (validNames.some(name => normalizedText.includes(name))) {
+      return true;
+    }
+
+    // Patrones que indican consulta SOBRE alguien
+    const questionPatterns = [
+      /hablame de\s+(\w+(?:\s+\w+)*)/i,
+      /habla de\s+(\w+(?:\s+\w+)*)/i,
+      /quién es\s+(\w+(?:\s+\w+)*)/i,
+      /quien es\s+(\w+(?:\s+\w+)*)/i,
+      /perfil de\s+(\w+(?:\s+\w+)*)/i,
+      /contratar (?:a\s+)?(\w+(?:\s+\w+)*)/i,
+      /experiencia de\s+(\w+(?:\s+\w+)*)/i,
+      /estudios de\s+(\w+(?:\s+\w+)*)/i,
+      /tecnologías de\s+(\w+(?:\s+\w+)*)/i,
+      /proyectos de\s+(\w+(?:\s+\w+)*)/i,
+      /libros de\s+(\w+(?:\s+\w+)*)/i,
     ];
 
-    for (const p of patterns) {
-      const match = text.match(p);
+    for (const pattern of questionPatterns) {
+      const match = normalizedText.match(pattern);
       if (match) {
-        return normalize(match[2] || match[1]);
+        const mentionedName = normalize(match[1]);
+        // Verificar si el nombre mencionado coincide (parcial o total) con algún nombre válido
+        const isOwner = validNames.some(name =>
+          mentionedName === name ||
+          name.includes(mentionedName) ||
+          mentionedName.includes(name)
+        );
+        if (!isOwner) {
+          return false; // Es sobre otra persona → bloquear
+        }
+        return true; // Es sobre Jorge → permitir
       }
     }
 
-    return null;
+    // Si no hay mención explícita de otro nombre → permitir (ej: "¿Por qué contratarlo?")
+    return true;
   };
 
-  const referencedName = extractNameReference(text);
-
-  if (
-    referencedName &&
-    !OWNER_NAMES.some((n) => text.toLowerCase().includes(n))
-  ) {
+  // 🔒 Validación central: si NO es sobre Jorge → bloquear
+  if (!isAboutOwner(text)) {
     return {
       text: "Solo tengo información sobre Jorge Patricio 🙂",
       intent: "UNKNOWN",
@@ -754,7 +762,7 @@ function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🟢 DETECTAR INTENT (SOLO SI PASÓ LA VALIDACIÓN)
+  🟢 DETECTAR INTENT (SOLO SI ES SOBRE JORGE)
   ========================= */
   let intent = detectIntent(text);
 
@@ -863,8 +871,6 @@ export default function ChatBot() {
           ...prev,
           awaiting: res.action || null,
           awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-          // Si necesitas persistir memory o usedReplies, deberías extraerlos de `res.context`
-          // Pero en esta versión, no los usamos más allá de la respuesta
         };
       });
     }, delay());
@@ -1076,4 +1082,6 @@ export default function ChatBot() {
       )}
     </>
   );
-      }
+            }
+ 
+              
