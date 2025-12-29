@@ -525,8 +525,8 @@ LIKES_HELP: (ctx) =>
 
 };
 
-
 const BOT_NAME = "sasha";
+
 
 const OWNER_NAMES = [
   "jorge",
@@ -534,7 +534,7 @@ const OWNER_NAMES = [
   "jorge patricio",
 ];
 
-const INVALID_REFERENCES = [
+  const INVALID_REFERENCES = [
   "su",
   "sus",
   "mi",
@@ -546,534 +546,131 @@ const INVALID_REFERENCES = [
   "nuestra",
   "nuestras",
 ];
+  
+/* =========================
+🟢 SALUDO CORRECTO
+========================= */
+const greetingMatch = text.match(
+  /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-// =========================
-// 🧠 LÓGICA PRINCIPAL DEL BOT
-// =========================
-function processMessage(text, context) {
+if (greetingMatch) {
+  const name = normalize(greetingMatch[2]?.trim() || "");
 
-  /* =========================
-  🟢 SALUDO CORRECTO
-  ========================= */
-  const greetingMatch = text.match(
-    /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (greetingMatch) {
-    const name = normalize(greetingMatch[2]?.trim() || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.GREETING(context),
-        intent: "GREETING",
-      };
-    }
-
+  // ✅ Caso 1: saludo SIN nombre
+  if (!name) {
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
+      text: replies.GREETING(context),
+      intent: "GREETING",
     };
   }
 
-  /* =========================
-  🟢 GRACIAS CONTROLADO
-  ========================= */
-  const thanksMatch = text.match(
-    /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (thanksMatch) {
-    const name = normalize(thanksMatch[2]?.trim() || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.GRA(context),
-        intent: "GRA",
-      };
-    }
-
+  // ✅ Caso 2: saludo CON Sasha
+  if (name === BOT_NAME) {
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
+      text: replies.GREETING(context),
+      intent: "GREETING",
     };
   }
 
-  /* =========================
-  🟢 ESTADO DE ÁNIMO
-  ========================= */
-  const moodMatch = text.match(
-    /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (moodMatch) {
-    const name = normalize(moodMatch[2] || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.MOOD(context),
-        intent: "MOOD",
-      };
-    }
-
-    return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
-  }
-
-  /* =========================
-  🟢 QUÉ ESTÁ HACIENDO
-  ========================= */
-  const doingMatch = text.match(
-    /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (doingMatch) {
-    const name = normalize(doingMatch[2] || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.WHAT_DOING(context),
-        intent: "WHAT_DOING",
-      };
-    }
-
-    return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
-  }
-
-  /* =========================
-  🟢 DETECTAR NOMBRE USUARIO
-  ========================= */
-  if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
-    const name = text
-      .replace(/^(me llamo|soy|mi nombre es)/i, "")
-      .trim();
-
-    context.userName = name;
-    saveMemory(context, { type: "user_name", value: name });
-
-    return {
-      text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
-      intent: "USER_NAME",
-    };
-  }
-
-  /* =========================
-  🔴 DESPEDIDA PRIORIDAD ABSOLUTA
-  ========================= */
-  if (isValidFarewell(text)) {
-    return {
-      text: replies.FAREWELL(context),
-      intent: "FAREWELL",
-    };
-  }
-
-  /* =========================
-  🔵 CONFIRMACIÓN WHATSAPP
-  ========================= */
-  if (context.awaiting === "CONTACT_CONFIRM") {
-
-    if (YES_WORDS.includes(text)) {
-      context.awaiting = null;
-      window.open(WHATSAPP_URL, "_blank");
-
-      return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-        intent: "CONTACT_OPENED",
-      };
-    }
-
-    if (NO_WORDS.includes(text)) {
-      context.awaiting = null;
-      return {
-        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-        intent: "CONTACT_CANCEL",
-      };
-    }
-  }
-
-  /* =========================
-  FOLLOW UPS
-  ========================= */
-  if (context.awaitingFollowUp) {
-
-    if (YES_WORDS.some(word => text.includes(word))) {
-      const intent = context.awaitingFollowUp;
-      context.awaitingFollowUp = null;
-
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-      };
-
-      return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-
-    if (NO_WORDS.some(word => text.includes(word))) {
-      context.awaitingFollowUp = null;
-      return {
-        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-      };
-    }
-
-    context.awaitingFollowUp = null;
-  }
-
-  /* =========================
-  🟡 DETECTAR REFERENCIA DE NOMBRE
-  ========================= */
-  const extractNameReference = (text) => {
-    const patterns = [
-      /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-      /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-      /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
-    ];
-
-    for (const p of patterns) {
-      const match = text.match(p);
-      if (match) {
-        return normalize(match[1] ?? match[match.length - 1]);
-      }
-    }
-    return null;
-  };
-
-  const referencedName = extractNameReference(text);
-
-  if (
-    referencedName &&
-    !/\bjorge\b/i.test(text) &&
-    !/\bpatricio\b/i.test(text)
-  ) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
-
-  /* =========================
-  🟢 CONTACTO (PRIORIDAD ABSOLUTA)
-  ========================= */
-  if (/^contactar\b/i.test(text)) {
-    context.awaiting = "CONTACT_CONFIRM";
-
-    return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      action: "CONTACT_CONFIRM",
-      intent: "CONTACT",
-    };
-  }
-
-  /* =========================
-  🟢 DETECTAR INTENT NORMAL
-  ========================= */
-  let intent = detectIntent(text);
-
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
-  }
-
-  saveMemory(context, { user: text, intent });
-
-  const replyText =
-    typeof replies[intent] === "function"
-      ? replies[intent](context)
-      : replies[intent];
-
+  // ❌ Caso 3: saludo con otro nombre
   return {
-    text: replyText ||
-      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent,
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
   };
 }
 
 /* =========================
-COMPONENTE
+🟢 GRACIAS CONTROLADO
 ========================= */
-export default function ChatBot() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const isLandscape = useMediaQuery("(orientation: landscape)");
+const thanksMatch = text.match(
+  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-  const primaryBg = useMemo(
-    () => (isDark ? "#000" : theme.palette.primary.main),
-    [isDark, theme]
-  );
+if (thanksMatch) {
+  const name = normalize(thanksMatch[2]?.trim() || "");
 
-  const bottomRef = useRef(null);
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.GRA(context),
+      intent: "GRA",
+    };
+  }
 
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState("");
-  const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({});
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
 
-  const initialMessage = useMemo(
-    () => ({
-      from: "bot",
-      text:
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    }),
-    []
-  );
+/* =========================
+🟢 ESTADO DE ÁNIMO
+========================= */
+const moodMatch = text.match(
+  /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-  const [messages, setMessages] = useState([initialMessage]);
+if (moodMatch) {
+  const name = normalize(moodMatch[2] || "");
 
-  useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.MOOD(context),
+      intent: "MOOD",
+    };
+  }
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, typing]);
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+} 
 
-  const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
+/* =========================
+🟢 QUÉ ESTÁ HACIENDO
+========================= */
+const doingMatch = text.match(
+  /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-    setMessages((m) => [...m, { from: "user", text }]);
-    setInput("");
-    setTyping(true);
+if (doingMatch) {
+  const name = normalize(doingMatch[2] || "");
 
-    setTimeout(() => {
-      setContext((prev) => {
-        const res = getSmartResponse(text, prev);
-        const follow = followUp(res.intent);
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.WHAT_DOING(context),
+      intent: "WHAT_DOING",
+    };
+  }
 
-        setMessages((m) => [
-          ...m,
-          { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && follow
-            ? [{ from: "bot", text: follow }]
-            : []),
-        ]);
+  return {
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
+  };
+}
 
-        setTyping(false);
+/* =========================
+🟢 DETECTAR NOMBRE USUARIO
+========================= */
+if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
+  const name = message
+    .replace(/^(me llamo|soy|mi nombre es)/i, "")
+    .trim();
 
-        return {
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-        };
-      });
-    }, delay());
-  }, []);
+  context.userName = name;
+  saveMemory(context, { type: "user_name", value: name });
 
-  return (
-    <>
-      {/* BOTÓN FLOTANTE */}
-      <Fab
-        onClick={() => setOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          bgcolor: primaryBg,
-          color: "#fff",
-        }}
-      >
-        <SmartToyIcon />
-      </Fab>
+  return {
+    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
+    intent: "USER_NAME",
+  };
+}
 
-      {/* OVERLAY */}
-      {open && (
-        <Box
-          onClick={() => setOpen(false)}
-          sx={{
-            position: "fixed",
-            inset: 0,
-            zIndex: (theme) => theme.zIndex.modal + 1,
-          }}
-        />
-      )}
-
-      {/* CHAT */}
-      {open && (
-        <Paper
-          onClick={(e) => e.stopPropagation()}
-          sx={{
-            position: "fixed",
-            zIndex: (theme) => theme.zIndex.modal + 2,
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            ...(isLandscape
-              ? {
-                  inset: "72px 0 10px 0",
-                  margin: "0 auto",
-                  width: "100%",
-                  maxWidth: 640,
-                }
-              : {
-                  bottom: 90,
-                  left: 16,
-                  width: 360,
-                  height: 520,
-                }),
-          }}
-        >
-          {/* HEADER */}
-          <Box
-            sx={{
-              p: 1,
-              bgcolor: primaryBg,
-              color: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Box display="flex" alignItems="center" gap={1}>
-              <SmartToyIcon fontSize="small" />
-              <Typography fontWeight="bold">Sasha</Typography>
-            </Box>
-
-            <Box>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{ color: "#fff" }}
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </Box>
-          </Box>
-
-          {/* SUGERENCIAS */}
-          <Box sx={{ p: 1 }}>
-            {isLandscape ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                  pb: 1,
-                }}
-              >
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                    sx={{ flexShrink: 0 }}
-                  />
-                ))}
-              </Box>
-            ) : (
-              <Stack direction="row" flexWrap="wrap" gap={1}>
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                  />
-                ))}
-              </Stack>
-            )}
-          </Box>
-
-          {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-            {messages.map((m, i) => {
-              const isUser = m.from === "user";
-
-              return (
-                <Box
-                  key={i}
-                  sx={{
-                    display: "flex",
-                    justifyContent: isUser ? "flex-end" : "flex-start",
-                    mb: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      maxWidth: "80%",
-                      px: 1.5,
-                      py: 1,
-                      borderRadius: 2,
-                      bgcolor: isUser
-                        ? isDark
-                          ? theme.palette.primary.light
-                          : theme.palette.primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
-                      color: isUser
-                        ? isDark
-                          ? "#000"
-                          : "#fff"
-                        : "inherit",
-                      whiteSpace: "pre-line",
-                    }}
-                  >
-                    <Typography
-                      sx={{
-                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
-                        lineHeight: isLandscape ? 1.4 : 1.5,
-                      }}
-                    >
-                      {m.text}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-
-            {typing && (
-              <Typography
-                variant="caption"
-                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
-              >
-                Sasha está escribiendo…
-              </Typography>
-            )}
-
-            <div ref={bottomRef} />
-          </Box>
-
-          {/* INPUT */}
-          <Box sx={{ display: "flex", p: 1 }}>
-            <TextField
-              fullWidth
-              size="small"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage(input);
-                }
-              }}
-              placeholder="Escribe tu mensaje…"
-            />
-            <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon sx={{ color: "#03A9F4" }} />
-            </IconButton>
-          </Box>
-        </Paper>
-      )}
-    </>
-  );
-            }
+/* =========================
+🔴 DESPEDIDA PRIORIDAD ABSOLUTA
+========================= */
+  if (isValidFarewell(text)) {
+  return {
+    text: replies.FAREWELL(context),
+    intent: "FAREWELL",
+  };
