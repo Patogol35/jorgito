@@ -527,6 +527,27 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
+
+  // =========================
+// 🔴 VALIDACIÓN GLOBAL DE PERSONA
+// =========================
+const referencedName = extractNameReference(text);
+
+// Si hay un nombre y NO se menciona Jorge o Patricio → bloquear
+if (
+  referencedName &&
+  !/\bjorge\b/i.test(text) &&
+  !/\bpatricio\b/i.test(text)
+) {
+  return {
+    text: "Solo tengo información sobre Jorge Patricio 🙂",
+    intent: "UNKNOWN",
+  };
+}
+
+
+  
+
 const OWNER_NAMES = [
   "jorge",
   "patricio",
