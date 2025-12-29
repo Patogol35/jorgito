@@ -728,7 +728,6 @@ if (context.awaitingFollowUp) {
 DETECTAR INTENT NORMAL
 ========================= */
 /* =========================
-/* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
 const extractNameReference = (text) => {
@@ -750,16 +749,16 @@ const extractNameReference = (text) => {
 /* =========================
 🟡 VALIDAR PERSONA CONSULTADA
 ========================= */
-const referencedName = extractNameReference(text);
+const referencedName = extractNameReference(message);
 
 if (
   referencedName &&
   !OWNER_NAMES.includes(referencedName)
 ) {
   return {
-  text: replies.UNKNOWN_PERSON(context),
-  intent: "UNKNOWN",
-};
+    text: replies.UNKNOWN_PERSON(context),
+    intent: "UNKNOWN",
+  };
 }
 
 /* =========================
