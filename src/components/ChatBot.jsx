@@ -1,22 +1,11 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useRef } from "react";
 import {
   Box,
-  Fab,
-  Paper,
   TextField,
   Typography,
   IconButton,
-  Chip,
-  Stack,
-  Tooltip,
-  useMediaQuery,
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-
-import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
-import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 /* =========================
 CONFIG
@@ -28,13 +17,9 @@ const WHATSAPP_URL =
 UTILIDADES
 ========================= */
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
 const YES_WORDS = ["si", "sí", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
-/* =========================
-NORMALIZACIÓN
-========================= */
 const normalize = (t = "") =>
   t
     .toLowerCase()
@@ -47,13 +32,10 @@ const normalize = (t = "") =>
 /* =========================
 MEMORIA
 ========================= */
-const MEMORY_LIMIT = 10;
-
 const saveMemory = (ctx, data) => {
-  const memory = ctx.memory ?? [];
-  memory.push(data);
-  if (memory.length > MEMORY_LIMIT) memory.shift();
-  ctx.memory = memory;
+  ctx.memory = ctx.memory ?? [];
+  ctx.memory.push(data);
+  if (ctx.memory.length > 10) ctx.memory.shift();
 };
 
 /* =========================
@@ -63,31 +45,27 @@ const PROFILE = {
   name: "Jorge Patricio Santamaría Cherrez",
   role: "Ingeniero de Software y Desarrollador Full Stack",
   description:
-    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, aplicando buenas prácticas y arquitectura limpia.",
+    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables.",
   education:
-    "Máster en Ingeniería de Software y Sistemas Informáticos – Universidad Internacional de La Rioja (UNIR), España",
+    "Máster en Ingeniería de Software – UNIR, España",
   experience: [
-    "Desarrollador de aulas virtuales",
-    "Desarrollo de aplicaciones web Full Stack",
-    "Creación de APIs REST seguras y escalables",
+    "Aulas virtuales",
+    "Aplicaciones Full Stack",
+    "APIs REST seguras",
   ],
   stack: [
     "React",
-    "Vite",
     "JavaScript",
     "Spring Boot",
-    "Django REST Framework",
+    "Django REST",
     "Python",
     "MySQL",
     "AWS",
-    "Git",
-    "Linux",
   ],
   projects: [
     "Aulas virtuales",
-    "Tiendas online Full Stack",
-    "Aplicaciones Frontend",
-    "Aplicaciones React conectadas a APIs REST",
+    "Tiendas online",
+    "Aplicaciones React + API",
   ],
 };
 
@@ -95,24 +73,17 @@ const PROFILE = {
 INTENCIONES
 ========================= */
 const INTENTS = {
-  GREETING: ["hola", "buenos dias", "buenas tardes", "buenas noches"],
-  FAREWELL: ["adios", "bye", "chao", "hasta luego"],
-  THANKS: ["gracias", "muchas gracias"],
+  GREETING: ["hola", "buenos dias", "buenas"],
+  THANKS: ["gracias"],
   MOOD: ["como estas", "estas bien"],
-  WHAT_DOING: ["que haces", "que estas haciendo"],
-  NAME: ["como te llamas", "tu nombre"],
-  HUMAN: ["eres humano", "eres humana", "robot"],
-  ASSISTANT: ["quien eres", "sasha"],
-  CREATOR: ["quien te creo", "quien te hizo"],
-  BOOK: ["libros favoritos", "libros"],
+  WHAT_DOING: ["que haces"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "formacion", "master"],
+  EDUCATION: ["estudios", "formacion"],
   EXPERIENCE: ["experiencia"],
-  TECH_STACK: ["tecnologias", "habilidades", "lenguajes", "stack"],
+  TECH_STACK: ["tecnologias", "stack"],
   FULLSTACK: ["full stack"],
   PROJECTS: ["proyectos"],
-  MOTIVATION: ["por que contratar"],
-  CONTACT: ["contacto", "whatsapp", "contactar"],
+  CONTACT: ["contacto", "whatsapp"],
 };
 
 /* =========================
@@ -126,8 +97,7 @@ const detectIntent = (msg) => {
   for (const intent in INTENTS) {
     let score = 0;
     for (const key of INTENTS[intent]) {
-      if (text === normalize(key)) score += 3;
-      else if (text.includes(normalize(key))) score += 1;
+      if (text.includes(normalize(key))) score++;
     }
     if (score > max) {
       max = score;
@@ -138,110 +108,48 @@ const detectIntent = (msg) => {
 };
 
 /* =========================
-CONTROL DE REPETICIÓN
-========================= */
-const pickNonRepeated = (ctx, intent, options) => {
-  if (!ctx.usedReplies) ctx.usedReplies = {};
-  if (!ctx.usedReplies[intent]) ctx.usedReplies[intent] = [];
-
-  const unused = options.filter(
-    (opt) => !ctx.usedReplies[intent].includes(opt)
-  );
-
-  const choice = unused.length ? randomPick(unused) : randomPick(options);
-
-  ctx.usedReplies[intent].push(choice);
-  if (ctx.usedReplies[intent].length >= options.length) {
-    ctx.usedReplies[intent] = [];
-  }
-
-  return choice;
-};
-
-/* =========================
 RESPUESTAS
 ========================= */
 const replies = {
-  GREETING: (ctx) =>
-    pickNonRepeated(ctx, "GREETING", [
-      "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-      "¡Hola! 😊 Me llamo Sasha y estoy aquí para ayudarte",
-    ]),
-
-  THANKS: (ctx) =>
-    pickNonRepeated(ctx, "THANKS", [
-      "¡Con gusto 😊!",
-      "Siempre es un placer ayudarte 💕",
-    ]),
-
-  FAREWELL: (ctx) =>
-    pickNonRepeated(ctx, "FAREWELL", [
-      "¡Gracias por tu visita! 👋😊",
-      "¡Hasta luego! Aquí estaré cuando regreses 💕",
-    ]),
-
-  MOOD: () => "¡Estoy muy bien 😊 gracias por preguntar!",
-
-  WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte",
-
-  NAME: () => "Me llamo Sasha 😊",
-
-  HUMAN: () => "No soy humana 🤖, soy una asistente virtual",
-
-  ASSISTANT: () =>
-    "Soy Sasha 🤖, la asistente virtual del portafolio de Jorge",
-
-  CREATOR: () =>
-    "Fui creada por Jorge para ayudarte a conocer su perfil profesional 😊",
-
-  BOOK: () =>
-    "A Jorge le gustan los libros de misterio 📚, especialmente los de Dan Brown",
-
+  GREETING: () => "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
+  THANKS: () => "¡Con gusto 😊!",
+  MOOD: () => "¡Estoy muy bien 😊!",
+  WHAT_DOING: () => "Aquí contigo, lista para ayudarte 💕",
   PROFILE: () =>
     `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-
   EDUCATION: () => PROFILE.education,
-
   EXPERIENCE: () => PROFILE.experience.join(", "),
-
   TECH_STACK: () => PROFILE.stack.join(", "),
-
   FULLSTACK: () =>
-    "Sí 😊 Jorge es Full Stack y disfruta trabajar tanto en frontend como backend",
-
+    "Sí 😊 Jorge es Full Stack y trabaja frontend y backend",
   PROJECTS: () => PROFILE.projects.join(", "),
-
-  MOTIVATION: () =>
-    "Porque Jorge combina experiencia real, formación sólida y compromiso profesional 😊",
-
   CONTACT: () => ({
-    text: "📱 Puedes contactarlo por WhatsApp.\n¿Deseas que lo abra ahora?",
+    text: "📱 ¿Quieres que abra WhatsApp ahora?",
     action: "CONTACT_CONFIRM",
   }),
 };
 
 /* =========================
-FUNCIÓN PRINCIPAL
+BOT ENGINE
 ========================= */
-function getSmartResponse(message, context = {}) {
+function getSmartResponse(message, context) {
   const text = normalize(message);
   const intent = detectIntent(text);
 
   saveMemory(context, { user: text, intent });
 
-  // Confirmación WhatsApp
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.some((w) => text.includes(w))) {
       context.awaiting = null;
       return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+        text: "Perfecto 😊 Te llevo a WhatsApp.",
         action: "OPEN_WHATSAPP",
         url: WHATSAPP_URL,
       };
     }
     if (NO_WORDS.some((w) => text.includes(w))) {
       context.awaiting = null;
-      return { text: "Está bien 😊 cuando quieras avísame." };
+      return { text: "Está bien 😊" };
     }
   }
 
@@ -251,20 +159,86 @@ function getSmartResponse(message, context = {}) {
   }
 
   if (typeof replies[intent] === "function") {
-    return { text: replies[intent](context), intent };
-  }
-
-  if (typeof replies[intent] === "object") {
-    return replies[intent];
+    return { text: replies[intent]() };
   }
 
   return {
     text:
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
   };
 }
 
+/* =========================
+COMPONENTE REACT
+========================= */
+export default function ChatBot() {
+  const [messages, setMessages] = useState([
+    { from: "bot", text: "Hola 👋 Soy Sasha, ¿en qué puedo ayudarte?" },
+  ]);
+  const [input, setInput] = useState("");
+  const contextRef = useRef({});
+
+  const sendMessage = () => {
+    if (!input.trim()) return;
+
+    const userMsg = { from: "user", text: input };
+    const res = getSmartResponse(input, contextRef.current);
+    const botMsg = { from: "bot", text: res.text };
+
+    setMessages((prev) => [...prev, userMsg, botMsg]);
+    setInput("");
+
+    if (res.action === "OPEN_WHATSAPP") {
+      window.open(res.url, "_blank");
+    }
+  };
+
+  return (
+    <Box
+      sx={{
+        width: 360,
+        height: 500,
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: 2,
+        boxShadow: 4,
+        bgcolor: "background.paper",
+      }}
+    >
+      <Box sx={{ p: 2, bgcolor: "primary.main", color: "white" }}>
+        <Typography variant="h6">Sasha 🤖</Typography>
+      </Box>
+
+      <Box sx={{ flex: 1, p: 2, overflowY: "auto" }}>
+        {messages.map((m, i) => (
+          <Typography
+            key={i}
+            sx={{
+              mb: 1,
+              textAlign: m.from === "user" ? "right" : "left",
+            }}
+          >
+            <b>{m.from === "user" ? "Tú" : "Sasha"}:</b> {m.text}
+          </Typography>
+        ))}
+      </Box>
+
+      <Box sx={{ p: 1, display: "flex", gap: 1 }}>
+        <TextField
+          fullWidth
+          size="small"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Escribe un mensaje..."
+        />
+        <IconButton color="primary" onClick={sendMessage}>
+          <SendIcon />
+        </IconButton>
+      </Box>
+    </Box>
+  );
+    }
 
 /* =========================
 COMPONENTE
