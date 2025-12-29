@@ -786,23 +786,52 @@ const isAboutOwner = (text) => {
 
   saveMemory(ctx, { user: text, intent });
 
-    /* =========================
+      /* =========================
   🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
   ========================= */
   if (intent === "CONTACT") {
-    // Validación adicional: evitar contacto si es sobre otra persona
-    const validNames = ["jorge", "patricio", "jorge patricio"];
     const normalizedText = text.toLowerCase();
-    const hasProperName = /\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,}\b/.test(text.trim());
-    const mentionsMe = validNames.some(name => normalizedText.includes(name));
+    const validNames = ["jorge", "patricio", "jorge patricio"];
 
-    if (hasProperName && !mentionsMe) {
+    // Si menciona tu nombre → permitir
+    if (validNames.some(name => normalizedText.includes(name))) {
+      ctx.awaiting = "CONTACT_CONFIRM";
+      return {
+        text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+        action: "CONTACT_CONFIRM",
+        intent,
+      };
+    }
+
+    // Extraer posibles nombres después de "contactar"
+    // Patrones: "contactar a [nombre]", "contactar [nombre]", "contacto de [nombre]"
+    let otherName = null;
+
+    // Buscar con regex que ignore mayúsculas y capture el nombre
+    const patterns = [
+      /contactar\s+a\s+(\w+)/i,
+      /contactar\s+(\w+)/i,
+      /contacto\s+de\s+(\w+)/i,
+      /contacto\s+(\w+)/i,
+    ];
+
+    for (const pattern of patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        otherName = normalize(match[1]);
+        break;
+      }
+    }
+
+    // Si encontramos un nombre y NO es el tuyo → bloquear
+    if (otherName && !validNames.some(name => otherName.includes(name) || name.includes(otherName))) {
       return {
         text: "Solo tengo información sobre Jorge Patricio 🙂",
         intent: "UNKNOWN",
       };
     }
 
+    // Si no hay nombre explícito → asumir que es sobre ti (ej: "contactar")
     ctx.awaiting = "CONTACT_CONFIRM";
     return {
       text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
