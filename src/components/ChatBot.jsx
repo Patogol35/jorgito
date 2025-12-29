@@ -19,6 +19,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 
+  "¿Cómo puedo contactarlo?",
+];
+
 /* =========================
 CONFIG
 ========================= */
@@ -28,10 +31,10 @@ const WHATSAPP_URL =
 /* =========================
 UTILIDADES
 ========================= */
+const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const containsAny = (text, words) => words.some((w) => text.includes(w));
 
-const YES_WORDS = ["si", "sí", "claro", "ok", "dale"];
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
@@ -94,25 +97,39 @@ const SUGGESTIONS = [
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
+  "¿Quién te creó?",
+  "¿Sus libros favoritos?",
 ];
 
 /* =========================
 INTENCIONES
 ========================= */
 const INTENTS = {
-  GREETING: ["hola", "buenas", "buenos dias", "buenas tardes", "buenas noches"],
-  GRA: ["gracias", "muchas gracias"],
-  MOOD: ["como estas", "estas bien"],
+  GRA: ["gracias"],
   WHAT_DOING: ["que haces", "que estas haciendo"],
+  LIKES_COFFEE: ["cafe"],
+  LIKES_MUSIC: ["musica"],
+  LIKES_MOVIES: ["peliculas"],
+  LIKES_TRAVEL: ["viajar"],
+  LIKES_TALK: ["conversar", "hablar"],
+  LIKES_HELP: ["ayudar"],
+  BOOK: ["libros"],
+  MOOD: ["como estas", "estas bien"],
+  NAME: ["como te llamas", "tu nombre"],
+  HUMAN: ["eres humana", "robot"],
+  ASSISTANT: ["quien eres", "sasha"],
+  CREATOR: ["quien te creo"],
+  HELP: ["que puedes hacer"],
+  FAREWELL: ["adios", "bye", "chao"],
+  GREETING: ["hola", "buenas"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "master", "formacion"],
+  EDUCATION: ["estudios", "master"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologias", "lenguajes", "habilidades"],
-  PROJECTS: ["proyectos"],
+  SKILLS: ["tecnologias"],
   STACK: ["full stack"],
+  PROJECTS: ["proyectos"],
   MOTIVATION: ["contratar"],
-  CONTACT: ["contactar", "whatsapp", "contacto"],
-  FAREWELL: ["chao", "chau", "bye", "adios", "hasta luego"],
+  CONTACT: ["contactar", "whatsapp"],
 };
 
 /* =========================
@@ -124,11 +141,10 @@ const normalize = (t = "") =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[¿?¡!.,]/g, "")
-    .replace(/\s+/g, " ")
     .trim();
 
 /* =========================
-DETECTAR INTENT
+DETECT INTENT
 ========================= */
 const detectIntent = (msg) => {
   const text = normalize(msg);
@@ -138,7 +154,7 @@ const detectIntent = (msg) => {
   for (const intent in INTENTS) {
     let score = 0;
     for (const word of INTENTS[intent]) {
-      if (text.includes(word)) score++;
+      if (text.includes(normalize(word))) score++;
     }
     if (score > max) {
       max = score;
@@ -147,12 +163,6 @@ const detectIntent = (msg) => {
   }
   return max ? best : "UNKNOWN";
 };
-
-/* =========================
-UTILIDADES
-========================= */
-const isValidFarewell = (text) =>
-  ["chao", "chau", "bye", "adios", "hasta luego"].includes(normalize(text));
 
 /* =========================
 CONTROL DE REPETICIÓN
@@ -164,12 +174,13 @@ const pickNonRepeated = (ctx, intent, options) => {
   const unused = options.filter(
     (o) => !ctx.usedReplies[intent].includes(o)
   );
+
   const choice = unused.length ? randomPick(unused) : randomPick(options);
 
   ctx.usedReplies[intent].push(choice);
-  if (ctx.usedReplies[intent].length >= options.length)
+  if (ctx.usedReplies[intent].length >= options.length) {
     ctx.usedReplies[intent] = [];
-
+  }
   return choice;
 };
 
@@ -180,13 +191,11 @@ const replies = {
   GREETING: (ctx) =>
     pickNonRepeated(ctx, "GREETING", [
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-      "¡Hola! 😊 Estoy aquí para ayudarte.",
+      "¡Hola! 😊 ¿En qué puedo ayudarte?",
     ]),
 
   GRA: (ctx) =>
     pickNonRepeated(ctx, "GRA", ["Un placer 😊", "¡De nada! ☺️"]),
-
-  MOOD: () => "¡Estoy muy bien 😊 gracias por preguntar!",
 
   WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte.",
 
@@ -225,17 +234,12 @@ const replies = {
 FUNCIÓN PRINCIPAL
 ========================= */
 function getSmartResponse(message, context) {
-  context = context ?? {}; // 🔥 evita pantallazo blanco
+  context = context ?? {};
   const text = normalize(message);
-
-  /* 🔴 DESPEDIDA */
-  if (isValidFarewell(text)) {
-    return { text: replies.FAREWELL(), intent: "FAREWELL" };
-  }
 
   /* 🔵 CONFIRMACIÓN WHATSAPP */
   if (context.awaiting === "CONTACT_CONFIRM") {
-    if (containsAny(text, YES_WORDS)) {
+    if (YES_WORDS.some((w) => text.includes(normalize(w)))) {
       context.awaiting = null;
       if (typeof window !== "undefined") {
         window.open(WHATSAPP_URL, "_blank");
@@ -246,7 +250,7 @@ function getSmartResponse(message, context) {
       };
     }
 
-    if (containsAny(text, NO_WORDS)) {
+    if (NO_WORDS.some((w) => text.includes(normalize(w)))) {
       context.awaiting = null;
       return {
         text: "Está bien 😊 Avísame si luego deseas contactarlo.",
@@ -255,26 +259,30 @@ function getSmartResponse(message, context) {
     }
   }
 
-  /* 🔍 DETECTAR INTENT */
+  /* 🔍 INTENT */
   const intent = detectIntent(message);
   saveMemory(context, { user: message, intent });
 
-  /* 📱 CONTACTO */
   if (intent === "CONTACT") {
     context.awaiting = "CONTACT_CONFIRM";
-    return { text: replies.CONTACT(), intent };
+    return {
+      text: replies.CONTACT(),
+      intent,
+    };
   }
 
-  /* 🧠 RESPUESTA NORMAL */
+  if (typeof replies[intent] === "function") {
+    return {
+      text: replies[intent](context),
+      intent,
+    };
+  }
+
   return {
-    text:
-      typeof replies[intent] === "function"
-        ? replies[intent](context)
-        : replies.UNKNOWN(context),
-    intent,
+    text: replies.UNKNOWN(context),
+    intent: "UNKNOWN",
   };
 }
-
 
 /* =========================
 COMPONENTE
