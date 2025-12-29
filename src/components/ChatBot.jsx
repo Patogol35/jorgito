@@ -722,7 +722,7 @@ const isAboutOwner = (text) => {
     "quien es", "quién es", "formacion", "formación",
     "educacion", "educación", "máster", "master",
     "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "stack","full","contactar", "contacto", "full stack,""whatsapp"
+    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
