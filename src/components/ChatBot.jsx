@@ -725,37 +725,19 @@ if (context.awaitingFollowUp) {
 DETECTAR INTENT NORMAL
 ========================= */
 /* =========================
-🟡 DETECTAR REFERENCIA DE NOMBRE
-========================= */
-const extractNameReference = (text) => {
-  const patterns = [
-    /hablame de\s+([a-zA-Záéíóúñ]+)/i,
-    /habla de\s+([a-zA-Záéíóúñ]+)/i,
-    /perfil de\s+([a-zA-Záéíóúñ]+)/i,
-    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+)/i,
-  ];
-
-  for (const p of patterns) {
-    const match = text.match(p);
-    if (match) return normalize(match[match.length - 1]);
-  }
-
-  return null;
-};
-
 /* =========================
-🟡 VALIDAR PERSONA CONSULTADA
+🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
 const referencedName = extractNameReference(message);
 
-if (
-  referencedName &&
-  !OWNER_NAMES.includes(referencedName)
-) {
-return {
-  text: replies.UNKNOWN_PERSON(context),
-  intent: "UNKNOWN",
-};
+if (referencedName && !OWNER_NAMES.includes(referencedName)) {
+  // Asegurarse de que context exista y se pueda usar pickNonRepeated
+  context.usedReplies = context.usedReplies || {};
+
+  return {
+    text: replies.UNKNOWN_PERSON(context),
+    intent: "UNKNOWN",
+  };
 }
 
 /* =========================
@@ -777,7 +759,6 @@ if (intent === "CONTACT") {
     intent,
   };
 }
-
 // =========================
 // 🧠 RESPUESTA NORMAL
 // =========================
