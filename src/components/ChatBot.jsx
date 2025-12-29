@@ -733,12 +733,11 @@ if (context.awaitingFollowUp) {
   context.awaitingFollowUp = null;
 }
 
-
 /* =========================
 🟡 UTILIDAD: NORMALIZAR TEXTO
 ========================= */
 const normalize = (str = "") =>
-  str.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  String(str).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
 /* =========================
 🟡 DETECTAR REFERENCIA A PERSONA
@@ -762,7 +761,9 @@ const extractNameReference = (text) => {
   for (const p of patterns) {
     const match = text.match(p);
     if (match) {
-      return normalize(match[2] || match[1]);
+      // Usamos la última captura válida disponible para evitar undefined
+      const foundName = match.slice(1).find(Boolean) || "";
+      return normalize(foundName);
     }
   }
   return null;
@@ -805,7 +806,6 @@ if (intent === "CONTACT") {
     intent,
   };
 }
-
 
 
   
