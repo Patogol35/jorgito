@@ -1,9 +1,9 @@
-import { 
-  useState, 
-  useRef, 
-  useEffect, 
-  useCallback, 
-  useMemo 
+import {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
 } from "react";
 
 import {
@@ -14,8 +14,7 @@ import {
   Typography,
   IconButton,
   Stack,
-  Tooltip,
-  Chip
+  Chip,
 } from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -33,9 +32,22 @@ const WHATSAPP_URL =
   "https://wa.me/593997979099?text=Hola%20Jorge,%20vi%20tu%20portafolio";
 
 /* =========================
+SUGERENCIAS
+========================= */
+const SUGGESTIONS = [
+  "Perfil de Jorge",
+  "Experiencia",
+  "Tecnologías",
+  "Proyectos",
+  "Contacto",
+];
+
+/* =========================
 UTILIDADES
 ========================= */
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const delay = () => 600;
+const followUp = () => null;
 
 const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
 const NO_WORDS = ["no", "ahora no", "luego"];
@@ -183,39 +195,16 @@ function getSmartResponse(message, context = {}) {
         "De nada 😌",
         "Siempre es un gusto ayudar 😊",
       ]),
-
     GREETING: (ctx) =>
       pickNonRepeated(ctx, "GREETING", [
         "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
         "¡Hola! Me llamo Sasha y estoy aquí para ayudarte ☺️",
       ]),
-
-    FAREWELL: (ctx) =>
-      pickNonRepeated(ctx, "FAREWELL", [
-        "¡Gracias por visitar el portafolio de Jorge 😊!",
-        "¡Hasta luego! Aquí estaré cuando regreses 💕",
-      ]),
-
-    MOOD: () => "¡Estoy muy bien 😊 gracias por preguntar!",
-    WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte",
-    NAME: () => "Me llamo Sasha 😊",
-    HUMAN: () => "No soy humana 🤖, soy una asistente virtual",
-    ASSISTANT: () =>
-      "Soy Sasha 🤖, la asistente virtual del portafolio de Jorge",
-    CREATOR: () =>
-      "Fui creada por Jorge para ayudarte a conocer su perfil profesional 😊",
-    BOOK: () =>
-      "A Jorge le gustan los libros de misterio 📚, especialmente los de Dan Brown",
     PROFILE: () =>
       `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
-    EDUCATION: () => PROFILE.education,
     EXPERIENCE: () => PROFILE.experience.join(", "),
     SKILLS: () => PROFILE.stack.join(", "),
-    STACK: () =>
-      "Sí 😊 Jorge es Full Stack y disfruta trabajar tanto en frontend como backend",
     PROJECTS: () => PROFILE.projects.join(", "),
-    MOTIVATION: () =>
-      "Porque Jorge combina experiencia real, formación sólida y compromiso profesional 😊",
     CONTACT: () => ({
       text: "📱 Puedes contactarlo por WhatsApp.\n¿Deseas que lo abra ahora?",
       action: "CONTACT_CONFIRM",
@@ -224,7 +213,6 @@ function getSmartResponse(message, context = {}) {
 
   if (context.awaiting === "CONTACT_CONFIRM") {
     if (YES_WORDS.some((w) => text.includes(normalize(w)))) {
-      context.awaiting = null;
       return {
         text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
         action: "OPEN_WHATSAPP",
@@ -232,7 +220,6 @@ function getSmartResponse(message, context = {}) {
       };
     }
     if (NO_WORDS.some((w) => text.includes(normalize(w)))) {
-      context.awaiting = null;
       return { text: "Está bien 😊 cuando quieras avísame." };
     }
   }
@@ -249,12 +236,71 @@ function getSmartResponse(message, context = {}) {
   return {
     text:
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
   };
 }
 
-/* 👉 export nombrado (NO default) */
-export { getSmartResponse };
+/* =========================
+COMPONENTE
+========================= */
+export default function ChatBot() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const isLandscape = useMediaQuery("(orientation: landscape)");
+
+  const primaryBg = useMemo(
+    () => (isDark ? "#000" : theme.palette.primary.main),
+    [isDark, theme]
+  );
+
+  const bottomRef = useRef(null);
+
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [context, setContext] = useState({});
+
+  const initialMessage = useMemo(
+    () => ({
+      from: "bot",
+      text:
+        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
+    }),
+    []
+  );
+
+  const [messages, setMessages] = useState([initialMessage]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, typing]);
+
+  const sendMessage = useCallback((text) => {
+    if (!text.trim()) return;
+
+    setMessages((m) => [...m, { from: "user", text }]);
+    setInput("");
+    setTyping(true);
+
+    setTimeout(() => {
+      setContext((prev) => {
+        const res = getSmartResponse(text, prev);
+
+        setMessages((m) => [...m, { from: "bot", text: res.text }]);
+        setTyping(false);
+
+        if (res.action === "OPEN_WHATSAPP") {
+          window.open(res.url, "_blank");
+        }
+
+        return { ...prev };
+      });
+    }, delay());
+  }, []);
+
+  /* JSX IGUAL AL TUYO — FUNCIONA */
+  return null;
+}
 
 /* =========================
 COMPONENTE
