@@ -19,9 +19,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 
-  "¿Cómo puedo contactarlo?",
-];
-
 /* =========================
 CONFIG
 ========================= */
@@ -31,7 +28,6 @@ const WHATSAPP_URL =
 /* =========================
 UTILIDADES
 ========================= */
-const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
@@ -97,43 +93,26 @@ const SUGGESTIONS = [
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratarlo?",
   "¿Cómo puedo contactarlo?",
-  "¿Quién te creó?",
-  "¿Sus libros favoritos?",
 ];
 
 /* =========================
 INTENCIONES
 ========================= */
 const INTENTS = {
-  GRA: ["gracias"],
-  WHAT_DOING: ["que haces", "que estas haciendo"],
-  LIKES_COFFEE: ["cafe"],
-  LIKES_MUSIC: ["musica"],
-  LIKES_MOVIES: ["peliculas"],
-  LIKES_TRAVEL: ["viajar"],
-  LIKES_TALK: ["conversar", "hablar"],
-  LIKES_HELP: ["ayudar"],
-  BOOK: ["libros"],
-  MOOD: ["como estas", "estas bien"],
-  NAME: ["como te llamas", "tu nombre"],
-  HUMAN: ["eres humana", "robot"],
-  ASSISTANT: ["quien eres", "sasha"],
-  CREATOR: ["quien te creo"],
-  HELP: ["que puedes hacer"],
-  FAREWELL: ["adios", "bye", "chao"],
-  GREETING: ["hola", "buenas"],
+  GREETING: ["hola", "buenas", "buenos dias"],
   PROFILE: ["jorge", "perfil"],
-  EDUCATION: ["estudios", "master"],
+  EDUCATION: ["estudios", "máster", "formación"],
   EXPERIENCE: ["experiencia"],
-  SKILLS: ["tecnologias"],
+  SKILLS: ["tecnologías", "habilidades"],
   STACK: ["full stack"],
   PROJECTS: ["proyectos"],
-  MOTIVATION: ["contratar"],
   CONTACT: ["contactar", "whatsapp"],
+  FAREWELL: ["chao", "bye", "adios"],
+  GRA: ["gracias"],
 };
 
 /* =========================
-NORMALIZACIÓN
+NORMALIZAR
 ========================= */
 const normalize = (t = "") =>
   t
@@ -148,142 +127,88 @@ DETECT INTENT
 ========================= */
 const detectIntent = (msg) => {
   const text = normalize(msg);
-  let best = "UNKNOWN";
-  let max = 0;
-
   for (const intent in INTENTS) {
-    let score = 0;
-    for (const word of INTENTS[intent]) {
-      if (text.includes(normalize(word))) score++;
-    }
-    if (score > max) {
-      max = score;
-      best = intent;
+    if (INTENTS[intent].some((w) => text.includes(w))) {
+      return intent;
     }
   }
-  return max ? best : "UNKNOWN";
-};
-
-/* =========================
-CONTROL DE REPETICIÓN
-========================= */
-const pickNonRepeated = (ctx, intent, options) => {
-  ctx.usedReplies = ctx.usedReplies ?? {};
-  ctx.usedReplies[intent] = ctx.usedReplies[intent] ?? [];
-
-  const unused = options.filter(
-    (o) => !ctx.usedReplies[intent].includes(o)
-  );
-
-  const choice = unused.length ? randomPick(unused) : randomPick(options);
-
-  ctx.usedReplies[intent].push(choice);
-  if (ctx.usedReplies[intent].length >= options.length) {
-    ctx.usedReplies[intent] = [];
-  }
-  return choice;
+  return "UNKNOWN";
 };
 
 /* =========================
 RESPUESTAS
 ========================= */
 const replies = {
-  GREETING: (ctx) =>
-    pickNonRepeated(ctx, "GREETING", [
+  GREETING: () =>
+    randomPick([
       "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
       "¡Hola! 😊 ¿En qué puedo ayudarte?",
     ]),
 
-  GRA: (ctx) =>
-    pickNonRepeated(ctx, "GRA", ["Un placer 😊", "¡De nada! ☺️"]),
-
-  WHAT_DOING: () => "Aquí contigo 😊 lista para ayudarte.",
-
   PROFILE: () =>
     `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
 
-  EDUCATION: () => `Cuenta con un ${PROFILE.education}.`,
+  EDUCATION: () => `Cuenta con ${PROFILE.education}.`,
 
   EXPERIENCE: () =>
-    `Tiene experiencia en ${PROFILE.experience.join(", ")}.`,
+    `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
 
   SKILLS: () =>
     `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
 
+  STACK: () => "Sí 😊 Jorge es desarrollador Full Stack.",
+
   PROJECTS: () =>
     `Ha trabajado en proyectos como ${PROFILE.projects.join(", ")}.`,
 
-  STACK: () => "Sí 😊 Jorge es desarrollador Full Stack.",
+  CONTACT: (ctx) => {
+    ctx.awaiting = "CONTACT_CONFIRM";
+    return "📱 ¿Quieres que abra WhatsApp ahora?";
+  },
 
-  MOTIVATION: () =>
-    "Porque combina formación sólida, experiencia real y compromiso.",
+  GRA: () => randomPick(["De nada 😊", "Un gusto ayudarte ☺️"]),
 
-  CONTACT: () =>
-    "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+  FAREWELL: () =>
+    randomPick([
+      "¡Hasta luego! 👋",
+      "Gracias por visitar el portafolio 😊",
+    ]),
 
-  FAREWELL: () => "¡Gracias por tu visita! 👋",
-
-  UNKNOWN: (ctx) =>
-    pickNonRepeated(ctx, "UNKNOWN", [
-      "No estoy segura de haber entendido 🤔",
+  UNKNOWN: () =>
+    randomPick([
+      "No entendí bien 🤔",
       randomPick(SUGGESTIONS),
     ]),
 };
 
 /* =========================
-FUNCIÓN PRINCIPAL
+MAIN EXPORT
 ========================= */
-function getSmartResponse(message, context) {
-  context = context ?? {};
+export function getSmartResponse(message, context = {}) {
   const text = normalize(message);
 
-  /* 🔵 CONFIRMACIÓN WHATSAPP */
   if (context.awaiting === "CONTACT_CONFIRM") {
-    if (YES_WORDS.some((w) => text.includes(normalize(w)))) {
+    if (YES_WORDS.includes(text)) {
       context.awaiting = null;
-      if (typeof window !== "undefined") {
-        window.open(WHATSAPP_URL, "_blank");
-      }
-      return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-        intent: "CONTACT_OPENED",
-      };
+      window.open(WHATSAPP_URL, "_blank");
+      return { text: "Perfecto 😊 Abriendo WhatsApp.", intent: "CONTACT" };
     }
-
-    if (NO_WORDS.some((w) => text.includes(normalize(w)))) {
+    if (NO_WORDS.includes(text)) {
       context.awaiting = null;
-      return {
-        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-        intent: "CONTACT_CANCEL",
-      };
+      return { text: "Está bien 😊", intent: "CANCEL" };
     }
   }
 
-  /* 🔍 INTENT */
   const intent = detectIntent(message);
   saveMemory(context, { user: message, intent });
 
-  if (intent === "CONTACT") {
-    context.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: replies.CONTACT(),
-      intent,
-    };
-  }
+  const reply =
+    typeof replies[intent] === "function"
+      ? replies[intent](context)
+      : replies.UNKNOWN();
 
-  if (typeof replies[intent] === "function") {
-    return {
-      text: replies[intent](context),
-      intent,
-    };
-  }
-
-  return {
-    text: replies.UNKNOWN(context),
-    intent: "UNKNOWN",
-  };
+  return { text: reply, intent };
 }
-
 /* =========================
 COMPONENTE
 ========================= */
