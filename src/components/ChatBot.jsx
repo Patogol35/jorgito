@@ -155,7 +155,7 @@ const INTENTS = {
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
-  PROFILE: ["jorge", "perfil"],
+  PROFILE: ["jorge", "perfil", "patricio"],
   EDUCATION: ["estudios", "máster", "formación", "estudio"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades"],
