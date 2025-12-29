@@ -525,217 +525,16 @@ LIKES_HELP: (ctx) =>
 
 };
 
-const BOT_NAME = "sasha";
 
 
-const OWNER_NAMES = [
-  "jorge",
-  "patricio",
-  "jorge patricio",
+  const BOT_NAME = "sasha";
+
+const OWNER_NAMES = ["jorge", "patricio", "jorge patricio"];
+
+const INVALID_REFERENCES = [
+  "su","sus","mi","mis","tu","tus","nuestro","nuestros","nuestra","nuestras",
 ];
 
-  const INVALID_REFERENCES = [
-  "su",
-  "sus",
-  "mi",
-  "mis",
-  "tu",
-  "tus",
-  "nuestro",
-  "nuestros",
-  "nuestra",
-  "nuestras",
-];
-  
-/* =========================
-🟢 SALUDO CORRECTO
-========================= */
-const greetingMatch = text.match(
-  /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (greetingMatch) {
-  const name = normalize(greetingMatch[2]?.trim() || "");
-
-  // ✅ Caso 1: saludo SIN nombre
-  if (!name) {
-    return {
-      text: replies.GREETING(context),
-      intent: "GREETING",
-    };
-  }
-
-  // ✅ Caso 2: saludo CON Sasha
-  if (name === BOT_NAME) {
-    return {
-      text: replies.GREETING(context),
-      intent: "GREETING",
-    };
-  }
-
-  // ❌ Caso 3: saludo con otro nombre
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 GRACIAS CONTROLADO
-========================= */
-const thanksMatch = text.match(
-  /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (thanksMatch) {
-  const name = normalize(thanksMatch[2]?.trim() || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.GRA(context),
-      intent: "GRA",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 ESTADO DE ÁNIMO
-========================= */
-const moodMatch = text.match(
-  /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (moodMatch) {
-  const name = normalize(moodMatch[2] || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.MOOD(context),
-      intent: "MOOD",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-} 
-
-/* =========================
-🟢 QUÉ ESTÁ HACIENDO
-========================= */
-const doingMatch = text.match(
-  /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
-);
-
-if (doingMatch) {
-  const name = normalize(doingMatch[2] || "");
-
-  if (!name || name === BOT_NAME) {
-    return {
-      text: replies.WHAT_DOING(context),
-      intent: "WHAT_DOING",
-    };
-  }
-
-  return {
-    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent: "UNKNOWN",
-  };
-}
-
-/* =========================
-🟢 DETECTAR NOMBRE USUARIO
-========================= */
-if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
-  const name = message
-    .replace(/^(me llamo|soy|mi nombre es)/i, "")
-    .trim();
-
-  context.userName = name;
-  saveMemory(context, { type: "user_name", value: name });
-
-  return {
-    text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
-    intent: "USER_NAME",
-  };
-}
-
-/* =========================
-🔴 DESPEDIDA PRIORIDAD ABSOLUTA
-========================= */
-  if (isValidFarewell(text)) {
-  return {
-    text: replies.FAREWELL(context),
-    intent: "FAREWELL",
-  };
-  }
-
-/* =========================
-🔵 CONFIRMACIÓN WHATSAPP
-========================= */
-if (context.awaiting === "CONTACT_CONFIRM") {
-  if (YES_WORDS.includes(text)) {
-    context.awaiting = null;
-    window.open(WHATSAPP_URL, "_blank");
-
-    return {
-      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-      intent: "CONTACT_OPENED",
-    };
-  }
-
-  if (NO_WORDS.includes(text)) {
-    context.awaiting = null;
-    return {
-      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-      intent: "CONTACT_CANCEL",
-    };
-  }
-}
-
-/* =========================
-FOLLOW UPS
-========================= */
-if (context.awaitingFollowUp) {
-  // ✅ Respuesta afirmativa
-  if (YES_WORDS.some((word) => text.includes(word))) {
-    const intent = context.awaitingFollowUp;
-    context.awaitingFollowUp = null;
-
-    const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-    };
-
-    return {
-      text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
-  }
-
-  // ❌ Respuesta negativa
-  if (NO_WORDS.some((word) => text.includes(word))) {
-    context.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-
-  // 🔁 Cualquier otra cosa → cancelar follow-up y continuar
-  context.awaitingFollowUp = null;
-}
-
-/* =========================
-🟡 NORMALIZAR TEXTO
-========================= */
 const normalize = (text = "") =>
   text
     .toLowerCase()
@@ -743,93 +542,74 @@ const normalize = (text = "") =>
     .replace(/[\u0300-\u036f]/g, "")
     .trim();
 
-/* =========================
-🟡 DETECTAR REFERENCIA DE NOMBRE
-========================= */
 const extractNameReference = (text) => {
   const clean = normalize(text);
-
   const patterns = [
     /quien\s+es\s+([a-z]+(?:\s+[a-z]+)?)/,
     /hablame\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
-    /habla\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
     /perfil\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
-    /\bsobre\s+([a-z]+(?:\s+[a-z]+)?)/,
     /contactar\s+(a\s+)?([a-z]+(?:\s+[a-z]+)?)/,
-    /estudios\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
-    /libros\s+de\s+([a-z]+(?:\s+[a-z]+)?)/,
   ];
-
   for (const p of patterns) {
-    const match = clean.match(p);
-    if (match) {
-      return match[2] || match[1];
-    }
+    const m = clean.match(p);
+    if (m) return m[2] || m[1];
   }
-
   return null;
 };
 
-/* =========================
-🧠 PROCESAR MENSAJE
-========================= */
-const processMessage = (text, context) => {
-  const referencedName = extractNameReference(text);
-  let intent = detectIntent(text);
+  const processMessage = (text, context) => {
+  const cleanText = normalize(text);
 
-  const allowedNames = ["jorge", "patricio", "jorge patricio"];
-  const restrictedIntents = ["PROFILE", "INFO", "CONTACT", "STUDIES"];
+  /* 🟢 SALUDO */
+  const greetingMatch = cleanText.match(
+    /^(hola|buenos?\sdias|buenas?\stardes|buenas?\snoches)(\s+[a-z]+)?$/
+  );
 
-  /* =========================
-  🔴 VALIDACIÓN DE PERSONA
-  ========================= */
-  if (
-    referencedName &&
-    !allowedNames.some((n) => referencedName.includes(n)) &&
-    restrictedIntents.includes(intent)
-  ) {
+  if (greetingMatch) {
+    const name = greetingMatch[2]?.trim();
+    if (!name || name === BOT_NAME) {
+      return { text: replies.GREETING(context), intent: "GREETING" };
+    }
     return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
       intent: "UNKNOWN",
     };
   }
 
-  /* =========================
-  🟢 DESPEDIDAS
-  ========================= */
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
+  /* 🟢 GRACIAS */
+  if (/^(gracias|muchas gracias)/i.test(cleanText)) {
+    return { text: replies.GRA(context), intent: "GRA" };
   }
 
-  saveMemory(context, { user: text, intent });
+  /* 🟢 ESTADO DE ÁNIMO */
+  if (/como estas|estas bien/i.test(cleanText)) {
+    return { text: replies.MOOD(context), intent: "MOOD" };
+  }
 
-  /* =========================
-  🟢 CONTACTO
-  ========================= */
-  if (intent === "CONTACT") {
+  /* 🟢 DESPEDIDA */
+  if (isValidFarewell(cleanText)) {
+    return { text: replies.FAREWELL(context), intent: "FAREWELL" };
+  }
+
+  /* 🟢 CONTACTO */
+  if (detectIntent(cleanText) === "CONTACT") {
     context.awaiting = "CONTACT_CONFIRM";
     return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      action: "CONTACT_CONFIRM",
-      intent,
+      text: "📱 ¿Quieres que abra WhatsApp ahora?",
+      intent: "CONTACT",
     };
   }
 
-  /* =========================
-  🧠 RESPUESTA FINAL
-  ========================= */
-  const replyText =
-    typeof replies[intent] === "function"
-      ? replies[intent](context)
-      : replies[intent];
-
+  /* 🔴 DEFAULT */
   return {
-    text:
-      replyText ||
-      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent,
+    text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    intent: "UNKNOWN",
   };
 };
+
+  export default function ChatBot() {
+  // tu componente React aquí
+  }
 
 /* =========================
 COMPONENTE
