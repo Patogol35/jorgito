@@ -766,10 +766,11 @@ const extractNameReference = (text) => {
 ========================= */
 const referencedName = extractNameReference(text);
 
-// permitir tanto "jorge", "patricio" como "jorge patricio"
-const ALLOWED_NAMES = ["jorge", "patricio", "jorge patricio"];
-
-if (referencedName && !ALLOWED_NAMES.includes(referencedName)) {
+if (
+  referencedName &&
+  !referencedName.includes("jorge") &&
+  !referencedName.includes("patricio")
+) {
   return {
     text: "Solo tengo información sobre Jorge Patricio 🙂",
     intent: "UNKNOWN",
