@@ -735,16 +735,7 @@ if (context.awaitingFollowUp) {
 
 
 
-  // =========================
-// 🔴 REGLA GLOBAL: SOLO JORGE
-// =========================
-if (!/jorge(\s+patricio)?/i.test(text)) {
-  return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
-  };
-}
-/* =========================
+  /* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
 const extractNameReference = (text) => {
@@ -768,7 +759,7 @@ const extractNameReference = (text) => {
 ========================= */
 const referencedName = extractNameReference(text);
 
-const ALLOWED_NAMES = ["jorge", "jorge patricio"];
+const ALLOWED_NAMES = ["jorge", "patricio", "jorge patricio"];
 
 if (referencedName && !ALLOWED_NAMES.includes(referencedName)) {
   return {
@@ -776,6 +767,8 @@ if (referencedName && !ALLOWED_NAMES.includes(referencedName)) {
     intent: "UNKNOWN",
   };
 }
+
+  
 
 /* =========================
 DETECTAR INTENT NORMAL
