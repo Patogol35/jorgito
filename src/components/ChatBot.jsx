@@ -711,9 +711,31 @@ if (context.awaitingFollowUp) {
   context.awaitingFollowUp = null;
 }
 
+
 /* =========================
 DETECTAR INTENT NORMAL
 ========================= */
+/* =========================
+🟡 VALIDAR REFERENCIA DE NOMBRE
+========================= */
+const extractNameReference = (text) => {
+  const patterns = [
+    /hablame de\s+([a-zA-Záéíóúñ]+)/i,
+    /habla de\s+([a-zA-Záéíóúñ]+)/i,
+    /perfil de\s+([a-zA-Záéíóúñ]+)/i,
+    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+)/i,
+  ];
+
+  for (const p of patterns) {
+    const match = text.match(p);
+    if (match) return normalize(match[match.length - 1]);
+  }
+
+  return null;
+};
+
+
+  
 let intent = detectIntent(message);
 
 // 🚫 Bloquear despedidas inválidas
