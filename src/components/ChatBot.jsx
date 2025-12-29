@@ -757,14 +757,11 @@ const extractNameReference = (text) => {
 ========================= */
 const referencedName = extractNameReference(text);
 
-if (
-  referencedName &&
-  !INVALID_REFERENCES.includes(referencedName) &&
-  referencedName !== "jorge" &&
-  referencedName !== "jorge patricio"
-) {
+const ALLOWED_NAMES = ["jorge", "jorge patricio"];
+
+if (referencedName && !ALLOWED_NAMES.includes(referencedName)) {
   return {
-    text: "¿Te refieres a Jorge? 😊 Actualmente solo tengo información sobre su perfil.",
+    text: "Solo tengo información sobre Jorge Patricio 🙂",
     intent: "UNKNOWN",
   };
 }
