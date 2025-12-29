@@ -740,14 +740,15 @@ if (context.awaitingFollowUp) {
 ========================= */
 const extractNameReference = (text) => {
   const patterns = [
-    // Luis es full stack
-    /^([a-zA-Záéíóúñ]+)\s+es\s+/i,
+    // Nombres compuestos: Jorge Patricio es ...
+    /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
 
-    // háblame de Luis
-    /hablame de\s+([a-zA-Záéíóúñ]+)/i,
-    /habla de\s+([a-zA-Záéíóúñ]+)/i,
-    /perfil de\s+([a-zA-Záéíóúñ]+)/i,
-    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+)/i,
+    // háblame de Luis / Jorge Patricio / etc.
+    /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    /\b(de|del|sobre)\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
+    /quien\s+es\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
   ];
 
   for (const p of patterns) {
@@ -765,6 +766,7 @@ const extractNameReference = (text) => {
 ========================= */
 const referencedName = extractNameReference(text);
 
+// permitir tanto "jorge", "patricio" como "jorge patricio"
 const ALLOWED_NAMES = ["jorge", "patricio", "jorge patricio"];
 
 if (referencedName && !ALLOWED_NAMES.includes(referencedName)) {
