@@ -521,11 +521,12 @@ LIKES_HELP: (ctx) =>
     ]),
 
   
-  /* =========================
-  ❓ NOMBRE NO COINCIDE
-  ========================= */
-  UNKNOWN_PERSON: (ctx) =>
-    pickNonRepeated(ctx, "UNKNOWN_PERSON", UNKNOWN_PERSON_REPLIES),
+  UNKNOWN_PERSON: (ctx = {}) =>
+  pickNonRepeated(
+    ctx,
+    "UNKNOWN_PERSON",
+    UNKNOWN_PERSON_REPLIES
+  ),
 
 };
 
@@ -755,10 +756,18 @@ if (
   referencedName &&
   !OWNER_NAMES.includes(referencedName)
 ) {
-  return {
-    text: replies.UNKNOWN_PERSON(context),
-    intent: "UNKNOWN",
-  };
+let text;
+
+try {
+  text = replies.UNKNOWN_PERSON(context);
+} catch (e) {
+  text = "Puedo ayudarte con el perfil de Jorge 😊";
+}
+
+return {
+  text,
+  intent: "UNKNOWN",
+};
 }
 
 /* =========================
