@@ -711,31 +711,39 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  // ✅ Si menciona alguno de tus nombres → permitir
+  // ✅ Si menciona tu nombre → permitir
   if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
 
-  // 🚫 Palabras clave que solo aplican a TU perfil
+  // 🚫 Palabras sensibles (incluye contacto)
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
     "experiencia", "estudios", "perfil", "contratar",
     "proyectos", "stack", "habilidades", "lenguajes",
     "quien es", "quién es", "formacion", "formación",
     "educacion", "educación", "máster", "master",
-    "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "portafolio"
+    "libros", "libro", "full stack", "desarrollador", "ingeniero",
+    "contactar", "contacto", "whatsapp"
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
 
-  // 🛑 Si hay palabra sensible PERO no menciona tu nombre → NO es sobre ti
-  if (hasSensitive) {
-    return false;
+  // Si no hay palabra sensible → permitir (ej: "Hola")
+  if (!hasSensitive) {
+    return true;
   }
 
-  // ✅ Si no hay palabra sensible (ej: "Hola", "Gracias") → permitir
-  return true;
+  // Detectar si hay un nombre propio (palabra con mayúscula inicial y ≥3 letras)
+  const hasProperName = /\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,}\b/.test(text.trim());
+
+  // Si NO hay nombre propio → es una pregunta genérica sobre ti → permitir
+  if (!hasProperName) {
+    return true;
+  }
+
+  // Si hay nombre propio pero no es el tuyo → bloquear
+  return false;
 };
 
   // 🔒 Bloquear si NO es sobre ti
@@ -778,12 +786,24 @@ const isAboutOwner = (text) => {
 
   saveMemory(ctx, { user: text, intent });
 
-  /* =========================
-  🟢 CONTACTO (YA VALIDADO)
+    /* =========================
+  🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
   ========================= */
   if (intent === "CONTACT") {
-    ctx.awaiting = "CONTACT_CONFIRM";
+    // Validación adicional: evitar contacto si es sobre otra persona
+    const validNames = ["jorge", "patricio", "jorge patricio"];
+    const normalizedText = text.toLowerCase();
+    const hasProperName = /\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{2,}\b/.test(text.trim());
+    const mentionsMe = validNames.some(name => normalizedText.includes(name));
 
+    if (hasProperName && !mentionsMe) {
+      return {
+        text: "Solo tengo información sobre Jorge Patricio 🙂",
+        intent: "UNKNOWN",
+      };
+    }
+
+    ctx.awaiting = "CONTACT_CONFIRM";
     return {
       text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
