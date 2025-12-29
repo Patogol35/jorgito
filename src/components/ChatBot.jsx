@@ -505,9 +505,9 @@ function getSmartResponse(message, context) {
         `Jorge Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
         `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
         `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
-        "Jorge maneja herramientas modernas del desarrollo web 😊",
-        "Jorge tiene habilidades técnicas bien definidas ☺️",
-        "Jorge aplica buenas prácticas en sus proyectos 💕",
+        `Jorge maneja herramientas modernas del desarrollo web como ${PROFILE.stack.join(", ")} 😊`,
+        `Jorge tiene habilidades técnicas bien definidas y domina tecnologías como ${PROFILE.stack.join(", ")}  ☺️` ,
+        `Jorge aplica buenas prácticas en sus proyectos, usa tecnología como ${PROFILE.stack.join(", ")} 💕`,
       ]),
 
     PROJECTS: (ctx) =>
