@@ -767,10 +767,13 @@ const extractNameReference = (text) => {
 // =========================
 const referencedName = extractNameReference(text);
 
-// Si se detecta un nombre y NO es Jorge ni Patricio → bloquear
+// 🔴 Solo bloquear si:
+// - se detecta un nombre
+// - y el TEXTO NO menciona a Jorge ni Patricio
 if (
   referencedName &&
-  !/jorge|patricio/i.test(referencedName)
+  !/\bjorge\b/i.test(text) &&
+  !/\bpatricio\b/i.test(text)
 ) {
   return {
     text: "Solo tengo información sobre Jorge Patricio 🙂",
