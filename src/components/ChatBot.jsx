@@ -528,26 +528,6 @@ LIKES_HELP: (ctx) =>
 const BOT_NAME = "sasha";
 
 
-  // =========================
-// 🔴 VALIDACIÓN GLOBAL DE PERSONA
-// =========================
-const referencedName = extractNameReference(text);
-
-// Si hay un nombre y NO se menciona Jorge o Patricio → bloquear
-if (
-  referencedName &&
-  !/\bjorge\b/i.test(text) &&
-  !/\bpatricio\b/i.test(text)
-) {
-  return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
-  };
-}
-
-
-  
-
 const OWNER_NAMES = [
   "jorge",
   "patricio",
@@ -754,17 +734,12 @@ if (context.awaitingFollowUp) {
 }
 
 
-
-
-  /* =========================
+/* =========================
 🟡 DETECTAR REFERENCIA DE NOMBRE
 ========================= */
 const extractNameReference = (text) => {
   const patterns = [
-    // Nombres compuestos: Jorge Patricio es ...
     /^([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)\s+es\s+/i,
-
-    // háblame de Luis / Jorge Patricio / etc.
     /hablame de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
     /habla de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
     /perfil de\s+([a-zA-Záéíóúñ]+(?:\s+[a-zA-Záéíóúñ]+)?)/i,
@@ -778,19 +753,14 @@ const extractNameReference = (text) => {
       return normalize(match[1] ?? match[match.length - 1]);
     }
   }
-
   return null;
 };
 
 /* =========================
-🟡 VALIDAR PERSONA CONSULTADA
+🔴 VALIDACIÓN GLOBAL DE PERSONA
 ========================= */
-// =========================
 const referencedName = extractNameReference(text);
 
-// 🔴 Solo bloquear si:
-// - se detecta un nombre
-// - y el TEXTO NO menciona a Jorge ni Patricio
 if (
   referencedName &&
   !/\bjorge\b/i.test(text) &&
@@ -802,15 +772,13 @@ if (
   };
 }
 
-  
-
 /* =========================
 DETECTAR INTENT NORMAL
 ========================= */
-let intent = detectIntent(message);
+let intent = detectIntent(text);
 
 // 🚫 Bloquear despedidas inválidas
-if (intent === "FAREWELL" && !isValidFarewell(message)) {
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
   intent = "UNKNOWN";
 }
 
@@ -822,6 +790,12 @@ if (intent === "CONTACT") {
     action: "CONTACT_CONFIRM",
     intent,
   };
+}
+
+
+
+
+  
                                                   }
 // =========================
 // 🧠 RESPUESTA NORMAL
