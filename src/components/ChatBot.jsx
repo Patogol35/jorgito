@@ -705,53 +705,48 @@ function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
-  ========================= */
-  const isAboutOwner = (text) => {
-    const validNames = ["jorge", "patricio", "jorge patricio"];
-    const normalizedText = text.toLowerCase().trim();
+🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
+========================= */
+const isAboutOwner = (text) => {
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+  const normalizedText = text.toLowerCase().trim();
 
-    // ✅ Si menciona tu nombre → permitir
-    if (validNames.some(name => normalizedText.includes(name))) {
-      return true;
-    }
-
-    // 🚫 Lista de nombres comunes (ampliable)
-    const commonOtherNames = [
-      "luis", "carlos", "ana", "maria", "pedro", "juan", "diego", "andrea",
-      "alejandro", "cristina", "daniel", "laura", "raul", "gabriel", "sofia",
-      "manuel", "fernando", "ricardo", "jose", "josefina", "esteban"
-    ];
-
-    // Extraer primera palabra (caso: "Luis tecnologías")
-    const firstWord = normalizedText.split(/\s+/)[0] || "";
-
-    // Si la primera palabra es un nombre común ajeno → bloquear
-    if (commonOtherNames.includes(firstWord)) {
-      return false;
-    }
-
-    // También bloquear si aparece nombre ajeno seguido de palabra sensible
-    // (aunque no esté al inicio)
-    const sensitiveWords = [
-      "tecnologias", "tecnologías", "experiencia", "estudios", "perfil",
-      "contratar", "proyectos", "stack", "habilidades", "quien es", "quién es"
-    ];
-
-    const hasSensitive = sensitiveWords.some(w => normalizedText.includes(w));
-    const hasOtherName = commonOtherNames.some(name => 
-      normalizedText.includes(` ${name} `) || 
-      normalizedText.startsWith(`${name} `) ||
-      normalizedText.endsWith(` ${name}`)
-    );
-
-    if (hasSensitive && hasOtherName) {
-      return false;
-    }
-
-    // ✅ En cualquier otro caso, asumir que es sobre ti o genérico
+  // ✅ Si menciona tu nombre → permitir
+  if (validNames.some(name => normalizedText.includes(name))) {
     return true;
-  };
+  }
+
+  // 🚫 Lista ampliada de nombres comunes (ajustable)
+  const commonOtherNames = [
+    "luis", "carlos", "ana", "maria", "pedro", "juan", "diego", "andrea",
+    "alejandro", "cristina", "daniel", "laura", "raul", "gabriel", "sofia",
+    "manuel", "fernando", "ricardo", "jose", "josefina", "esteban", "miguel",
+    "camila", "valeria", "sebastian", "natalia", "rodrigo", "gabriela"
+  ];
+
+  // ✅ Palabras sensibles (ampliadas para cubrir variantes)
+  const sensitiveWords = [
+    "tecnologia", "tecnologias", "tecnologías", // <-- ahora incluye "tecnologia"
+    "experiencia", "estudios", "perfil", "contratar", "proyectos",
+    "stack", "habilidades", "quien es", "quién es", "formacion", "formación",
+    "educacion", "educación", "máster", "master", "libros", "lenguajes"
+  ];
+
+  const hasSensitive = sensitiveWords.some(w => normalizedText.includes(w));
+  const hasOtherName = commonOtherNames.some(name => {
+    // Buscar el nombre como palabra completa (rodeada de espacios, inicio o fin)
+    const regex = new RegExp(`\\b${name}\\b`, 'i');
+    return regex.test(text); // usa el texto original para respetar límites de palabra
+  });
+
+  // 🚫 Si hay palabra sensible + nombre ajeno → bloquear
+  if (hasSensitive && hasOtherName) {
+    return false;
+  }
+
+  // ✅ En cualquier otro caso, permitir
+  return true;
+};
 
   // 🔒 Bloquear si NO es sobre ti
   if (!isAboutOwner(text)) {
