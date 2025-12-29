@@ -761,14 +761,35 @@ function getSmartResponse(message, context) {
     };
   }
 
-  /* =========================
+    /* =========================
   🟢 DETECTAR INTENT (SOLO SI ES SOBRE JORGE)
   ========================= */
   let intent = detectIntent(text);
 
+  // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+  // priorizar la intención técnica/sensible sobre PROFILE
+  const normalizedText = text.toLowerCase();
+  if (normalizedText.includes("jorge")) {
+    if (normalizedText.includes("tecnolog")) {
+      intent = "SKILLS";
+    } else if (normalizedText.includes("experiencia")) {
+      intent = "EXPERIENCE";
+    } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
+      intent = "EDUCATION";
+    } else if (normalizedText.includes("proyecto")) {
+      intent = "PROJECTS";
+    } else if (normalizedText.includes("contratar")) {
+      intent = "MOTIVATION";
+    } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+      intent = "STACK";
+    } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+      intent = "BOOK";
+    }
+  }
+
   if (intent === "FAREWELL" && !isValidFarewell(text)) {
     intent = "UNKNOWN";
-  }
+        }
 
   saveMemory(ctx, { user: text, intent });
 
