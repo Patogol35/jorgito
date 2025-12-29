@@ -766,6 +766,7 @@ function processMessage(text, context) {
   ========================= */
   const referencedName = extractNameReference(text);
 
+  // ❌ Si menciona alguien distinto a Jorge / Patricio
   if (
     referencedName &&
     !/\bjorge\b/i.test(text) &&
@@ -815,7 +816,7 @@ function processMessage(text, context) {
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
   };
-}
+        }
 
 /* =========================
 COMPONENTE
