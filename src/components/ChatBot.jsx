@@ -523,7 +523,11 @@ LIKES_HELP: (ctx) =>
 
 const BOT_NAME = "sasha";
 
-
+const OWNER_NAMES = [
+  "jorge",
+  "patricio",
+  "jorge patricio",
+];
   
 /* =========================
 🟢 SALUDO CORRECTO
@@ -742,8 +746,7 @@ const referencedName = extractNameReference(text);
 
 if (
   referencedName &&
-  referencedName !== "jorge" &&
-  referencedName !== "jorge patricio"
+  !OWNER_NAMES.includes(referencedName)
 ) {
   return {
     text: "¿Te refieres a Jorge? 😊 Actualmente solo tengo información sobre su perfil.",
