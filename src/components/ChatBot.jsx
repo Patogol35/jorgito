@@ -889,14 +889,17 @@ export default function ChatBot() {
   const [context, setContext] = useState({});
 
   const initialMessage = useMemo(
-    () => ({
-      from: "bot",
-      text:
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    }),
-    []
-  );
+  () => ({
+    from: "bot",
+    text:
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+      "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
+  }),
+  []
+);
+
+// 👇 AGREGA ESTA LÍNEA (FALTANTE)
+const [messages, setMessages] = useState([initialMessage]);
 
   const sendMessage = useCallback((text) => {
   if (!text.trim()) return;
