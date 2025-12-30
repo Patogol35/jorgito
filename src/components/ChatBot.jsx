@@ -743,13 +743,33 @@ const isAboutOwner = (text) => {
     return true;
   }
 
-  // Frases multi-palabra válidas sin nombre
+    // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
     "full stack",
     "libros favoritos",
     "máster en",
     "proyectos realizados",
-    "experiencia profesional"
+    "experiencia profesional",
+    "qué estudios",
+    "que estudios",
+    "qué experiencia",
+    "que experiencia",
+    "qué tecnologías",
+    "que tecnologias",
+    "tecnologías trabaja",
+    "es full stack",
+    "por qué contratar",
+    "como contactar",
+    "cómo contactar",
+    "quién te creó",
+    "quien te creo",
+    "sus libros",
+    "estudios tiene",
+    "experiencia tiene",
+    "tecnologías trabaja",
+    "proyectos ha hecho",
+    "cuéntame sobre",
+    "cuentame sobre"
   ];
 
   if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
