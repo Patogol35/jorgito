@@ -600,7 +600,7 @@ function getSmartResponse(message, context) {
     };
   }
 
-    /* =========================
+      /* =========================
   🟢 QUÉ ESTÁ HACIENDO
   ========================= */
   const doingMatch = text.match(
@@ -860,13 +860,13 @@ const isAboutOwner = (text) => {
     replyText = replies[intent];
   }
 
-    return {
+  return {
     text:
       replyText ||
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
-    context: ctx, // 👈 Esto es clave
-  }; }
+  };
+}
 
 /* =========================
 COMPONENTE
@@ -889,51 +889,58 @@ export default function ChatBot() {
   const [context, setContext] = useState({});
 
   const initialMessage = useMemo(
-  () => ({
-    from: "bot",
-    text:
-      "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-      "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-  }),
-  []
-);
+    () => ({
+      from: "bot",
+      text:
+        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
+        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
+    }),
+    []
+  );
 
-// 👇 AGREGA ESTA LÍNEA (FALTANTE)
-const [messages, setMessages] = useState([initialMessage]);
+  const [messages, setMessages] = useState([initialMessage]);
+
+  useEffect(() => {
+    window.openSashaChat = () => setOpen(true);
+    window.closeSashaChat = () => setOpen(false);
+  }, []);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, typing]);
 
   const sendMessage = useCallback((text) => {
-  if (!text.trim()) return;
+    if (!text.trim()) return;
 
-  setMessages((m) => [...m, { from: "user", text }]);
-  setInput("");
-  setTyping(true);
+    setMessages((m) => [...m, { from: "user", text }]);
+    setInput("");
+    setTyping(true);
 
-  setTimeout(() => {
-    const res = getSmartResponse(text, context);
-    const follow = followUp(res.intent);
+    setTimeout(() => {
+      setContext((prev) => {
+        const res = getSmartResponse(text, prev);
+        const follow = followUp(res.intent);
 
-    // Actualizar mensajes
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { from: "bot", text: res.text },
-      ...(!res.fromFollowUp && follow
-        ? [{ from: "bot", text: follow }]
-        : []),
-    ]);
+        setMessages((m) => [
+          ...m,
+          { from: "bot", text: res.text },
+          ...(!res.fromFollowUp && follow
+            ? [{ from: "bot", text: follow }]
+            : []),
+        ]);
 
-    // Actualizar contexto
-    setContext((prevContext) => ({
-      ...prevContext,
-      awaiting: res.action || null,
-      awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-      usedReplies: res.context?.usedReplies || prevContext.usedReplies,
-      memory: res.context?.memory || prevContext.memory,
-    }));
+        setTyping(false);
 
-    setTyping(false);
-  }, delay());
-}, [context]);
-
+        return {
+          ...prev,
+          awaiting: res.action || null,
+          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+          // Si necesitas persistir memory o usedReplies, deberías extraerlos de `res.context`
+          // Pero en esta versión, no los usamos más allá de la respuesta
+        };
+      });
+    }, delay());
+  }, []);
   return (
     <>
       {/* BOTÓN FLOTANTE */}
@@ -1140,4 +1147,4 @@ const [messages, setMessages] = useState([initialMessage]);
       )}
     </>
   );
-              }
+                                       
