@@ -860,13 +860,13 @@ const isAboutOwner = (text) => {
     replyText = replies[intent];
   }
 
-  return {
+    return {
     text:
       replyText ||
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
     intent,
-  };
-}
+    context: ctx, // 👈 Esto es clave
+  }; }
 
 /* =========================
 COMPONENTE
@@ -909,7 +909,7 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
-  const sendMessage = useCallback((text) => {
+    const sendMessage = useCallback((text) => {
     if (!text.trim()) return;
 
     setMessages((m) => [...m, { from: "user", text }]);
@@ -931,10 +931,13 @@ export default function ChatBot() {
 
         setTyping(false);
 
+        // ✅ Guardar el contexto actualizado (esto faltaba)
         return {
           ...prev,
           awaiting: res.action || null,
           awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+          usedReplies: res.context.usedReplies, // 👈
+          memory: res.context.memory,           // 👈
         };
       });
     }, delay());
