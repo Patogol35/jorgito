@@ -773,38 +773,40 @@ const isAboutOwner = (text) => {
     };
   }
 
-    /* =========================
-  🟢 DETECTAR INTENT (SOLO SI ES SOBRE JORGE)
+ /* =========================
+  🟢 DETECTAR INTENT (SOBRE JORGE)
   ========================= */
-  let intent = detectIntent(text);
+let intent = detectIntent(text);
 
-  // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-  // priorizar la intención técnica/sensible sobre PROFILE
-  const normalizedText = text.toLowerCase();
-  if (normalizedText.includes("jorge")) {
-    if (normalizedText.includes("tecnolog")) {
-      intent = "SKILLS";
-    } else if (normalizedText.includes("experiencia")) {
-      intent = "EXPERIENCE";
-    } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
-      intent = "EDUCATION";
-    } else if (normalizedText.includes("proyecto")) {
-      intent = "PROJECTS";
-    } else if (normalizedText.includes("contratar")) {
-      intent = "MOTIVATION";
-    } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
-      intent = "STACK";
-    } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
-      intent = "BOOK";
-    }
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
+const normalizedText = text.toLowerCase();
+if (normalizedText.includes("jorge")) {
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+    intent = "CONTACT";
+  } else if (normalizedText.includes("tecnolog")) {
+    intent = "SKILLS";
+  } else if (normalizedText.includes("experiencia")) {
+    intent = "EXPERIENCE";
+  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
+    intent = "EDUCATION";
+  } else if (normalizedText.includes("proyecto")) {
+    intent = "PROJECTS";
+  } else if (normalizedText.includes("contratar")) {
+    intent = "MOTIVATION";
+  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+    intent = "STACK";
+  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+    intent = "BOOK";
   }
+  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
+}
 
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
-        }
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = "UNKNOWN";
+}
 
-  saveMemory(ctx, { user: text, intent });
-
+saveMemory(ctx, { user: text, intent });
       /* =========================
   🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
   ========================= */
