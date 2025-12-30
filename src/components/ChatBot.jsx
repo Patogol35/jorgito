@@ -898,49 +898,27 @@ export default function ChatBot() {
     []
   );
 
-  const [messages, setMessages] = useState([initialMessage]);
+  const sendMessage = useCallback((text) => {
+  if (!text.trim()) return;
 
-  useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
+  setMessages((m) => [...m, { from: "user", text }]);
+  setInput("");
+  setTyping(true);
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, typing]);
+  setTimeout(() => {
+    const res = getSmartResponse(text, context);
+    const follow = followUp(res.intent);
 
-    const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
+    // Actualizar mensajes
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { from: "bot", text: res.text },
+      ...(!res.fromFollowUp && follow
+        ? [{ from: "bot", text: follow }]
+        : []),
+    ]);
 
-    setMessages((m) => [...m, { from: "user", text }]);
-    setInput("");
-    setTyping(true);
-
-    setTimeout(() => {
-      setContext((prev) => {
-        const res = getSmartResponse(text, prev);
-        const follow = followUp(res.intent);
-
-        setMessages((m) => [
-          ...m,
-          { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && follow
-            ? [{ from: "bot", text: follow }]
-            : []),
-        ]);
-
-        setTyping(false);
-
-        return {
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-        };
-      });
-    }, delay());
-  }, []);
-
-    // 3. Actualizar contexto
+    // Actualizar contexto
     setContext((prevContext) => ({
       ...prevContext,
       awaiting: res.action || null,
@@ -951,7 +929,7 @@ export default function ChatBot() {
 
     setTyping(false);
   }, delay());
-}, [context]); // 👈 dependencia en context para evitar stale closure
+}, [context]);
 
   return (
     <>
