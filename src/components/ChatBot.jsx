@@ -92,7 +92,7 @@ const SUGGESTIONS = [
   "¿En qué tecnologías trabaja?",
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
-  "¿Por qué contratarlo?",
+  "¿Por qué contratar a Jorge?",
   "¿Cómo puedo contactarlo?",
   "¿Quién te creó?",
   "Sus libros favoritos?",
