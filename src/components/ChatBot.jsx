@@ -910,38 +910,38 @@ export default function ChatBot() {
   }, [messages, typing]);
 
     const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
+  if (!text.trim()) return;
 
-    setMessages((m) => [...m, { from: "user", text }]);
-    setInput("");
-    setTyping(true);
+  setMessages((m) => [...m, { from: "user", text }]);
+  setInput("");
+  setTyping(true);
 
-    setTimeout(() => {
-      setContext((prev) => {
-        const res = getSmartResponse(text, prev);
-        const follow = followUp(res.intent);
+  setTimeout(() => {
+    // 1. Generar respuesta usando el contexto actual
+    const res = getSmartResponse(text, context);
+    const follow = followUp(res.intent);
 
-        setMessages((m) => [
-          ...m,
-          { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && follow
-            ? [{ from: "bot", text: follow }]
-            : []),
-        ]);
+    // 2. Actualizar mensajes
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { from: "bot", text: res.text },
+      ...(!res.fromFollowUp && follow
+        ? [{ from: "bot", text: follow }]
+        : []),
+    ]);
 
-        setTyping(false);
+    // 3. Actualizar contexto
+    setContext((prevContext) => ({
+      ...prevContext,
+      awaiting: res.action || null,
+      awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+      usedReplies: res.context?.usedReplies || prevContext.usedReplies,
+      memory: res.context?.memory || prevContext.memory,
+    }));
 
-        // ✅ Guardar el contexto actualizado (esto faltaba)
-        return {
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-          usedReplies: res.context.usedReplies, // 👈
-          memory: res.context.memory,           // 👈
-        };
-      });
-    }, delay());
-  }, []);
+    setTyping(false);
+  }, delay());
+}, [context]); // 👈 dependencia en context para evitar stale closure
 
   return (
     <>
