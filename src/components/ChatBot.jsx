@@ -30,7 +30,7 @@ UTILIDADES
 const delay = () => Math.floor(Math.random() * 500) + 400;
 const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const YES_WORDS = ["sí", "si", "claro", "ok", "dale"];
+const YES_WORDS = ["sí", "si", "claro", "ok", "dale", "okey"];
 const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
