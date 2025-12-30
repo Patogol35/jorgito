@@ -300,6 +300,16 @@ function getSmartResponse(message, context) {
         "Nos vemos pronto 😊✨",
       ]),
 
+    CONTACT: (ctx) =>
+  pickNonRepeated(ctx, "CONTACT", [
+    `¡Claro! Puedes contactar a Jorge directamente por WhatsApp: ${WHATSAPP_URL} 😊`,
+    `Jorge está disponible en WhatsApp para atender tus consultas: ${WHATSAPP_URL} ☺️`,
+    `Puedes escribirle a Jorge por WhatsApp aquí: ${WHATSAPP_URL} 💕`,
+    `Para contactar a Jorge, solo haz clic aquí: ${WHATSAPP_URL} ✨`,
+    `¡Fácil! Comunícate con Jorge por WhatsApp: ${WHATSAPP_URL} 😊`,
+    `Jorge te atiende por WhatsApp: ${WHATSAPP_URL} ☺️`,
+  ]),
+
     GREETING: (ctx) =>
       pickNonRepeated(ctx, "GREETING", [
         "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
