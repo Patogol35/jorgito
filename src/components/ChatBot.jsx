@@ -154,7 +154,7 @@ const INTENTS = {
 
   GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil", "patricio"],
-  EDUCATION: ["estudios", "máster", "formación", "estudio"],
+  EDUCATION: ["estudios", "máster", "formación", "estudio","formacion"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades","tecnología"],
   STACK: ["full stack"],
