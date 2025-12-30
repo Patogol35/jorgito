@@ -93,7 +93,7 @@ const SUGGESTIONS = [
   "¿Es Full Stack?",
   "Cuéntame sobre sus proyectos",
   "¿Por qué contratar a Jorge?",
-  "¿Cómo puedo contactarlo?",
+  "¿Cómo puedo contactar a Jorge?",
   "¿Quién te creó?",
   "Sus libros favoritos?",
 ];
@@ -909,36 +909,43 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
-  const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
+  // ... otros hooks ...
 
-    setMessages((m) => [...m, { from: "user", text }]);
-    setInput("");
-    setTyping(true);
+const [context, setContext] = useState({});
 
-    setTimeout(() => {
-      setContext((prev) => {
-        const res = getSmartResponse(text, prev);
-        const follow = followUp(res.intent);
+// ... más código ...
 
-        setMessages((m) => [
-          ...m,
-          { from: "bot", text: res.text },
-          ...(!res.fromFollowUp && follow
-            ? [{ from: "bot", text: follow }]
-            : []),
-        ]);
+// ✅ SOLO REEMPLAZA ESTA FUNCIÓN
+const sendMessage = useCallback((text) => {
+  if (!text.trim()) return;
 
-        setTyping(false);
+  setMessages((m) => [...m, { from: "user", text }]);
+  setInput("");
+  setTyping(true);
 
-        return {
-          ...prev,
-          awaiting: res.action || null,
-          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-        };
-      });
-    }, delay());
-  }, []);
+  setTimeout(() => {
+    const res = getSmartResponse(text, context);
+    const follow = followUp(res.intent);
+
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { from: "bot", text: res.text },
+      ...(!res.fromFollowUp && follow
+        ? [{ from: "bot", text: follow }]
+        : []),
+    ]);
+
+    setContext((prevContext) => ({
+      ...prevContext,
+      awaiting: res.action || null,
+      awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+      usedReplies: res.context?.usedReplies || prevContext.usedReplies,
+      memory: res.context?.memory || prevContext.memory,
+    }));
+
+    setTyping(false);
+  }, delay());
+}, [context]); // ← esta dependencia es clave
 
   return (
     <>
