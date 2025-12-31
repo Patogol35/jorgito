@@ -1,5 +1,4 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Typography, Grid, Box, Link, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 
 // Íconos
@@ -11,10 +10,10 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories"; // 📚 Libros
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 // =====================
-// Datos de proyectos
+// Datos de proyectos (corregidos sin espacios al final de los enlaces)
 // =====================
 const proyectos = [
   {
@@ -70,23 +69,47 @@ const proyectos = [
 // =====================
 // Tarjeta individual
 // =====================
-function ProjectCard({ p, i, palette }) {
+function ProjectCard({ p, i, textPrimary, textSecondary }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.3 }}
-        viewport={{ once: false }}
+        transition={{ duration: 0.5, delay: i * 0.1 }}
+        viewport={{ once: true }}
       >
-        <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color }} />
+        <Box
+          sx={{
+            textAlign: "center",
+            px: 1.5,
+            py: 2.5,
+            borderRadius: "16px",
+            backgroundColor: "background.paper",
+            boxShadow: (theme) =>
+              theme.palette.mode === "dark"
+                ? "0 4px 12px rgba(0,0,0,0.4)"
+                : "0 4px 12px rgba(0,0,0,0.06)",
+            transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            "&:hover": {
+              transform: "translateY(-4px)",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "0 6px 16px rgba(0,0,0,0.5)"
+                  : "0 6px 16px rgba(0,0,0,0.1)",
+            },
+          }}
+        >
+          <Icon sx={{ fontSize: 32, color: p.color, mb: 1.5 }} />
 
           <Typography
             variant="subtitle1"
-            sx={{ fontWeight: "bold", mt: 1 }}
+            fontWeight={600}
+            sx={{
+              color: textPrimary,
+              lineHeight: 1.4,
+            }}
           >
             <Link
               href={p.link}
@@ -94,8 +117,8 @@ function ProjectCard({ p, i, palette }) {
               rel="noopener noreferrer"
               underline="none"
               sx={{
-                color: palette.text.primary,
-                fontWeight: "bold",
+                color: "inherit",
+                fontWeight: 600,
                 "&:hover": { color: p.color },
               }}
             >
@@ -112,50 +135,61 @@ function ProjectCard({ p, i, palette }) {
 // Componente principal
 // =====================
 export default function Projects() {
-  const { palette } = useTheme();
-  const isDark = palette.mode === "dark";
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
   const badgeBg = isDark
-    ? "rgba(144,202,249,0.1)"
-    : "rgba(25,118,210,0.1)";
+    ? "linear-gradient(135deg, rgba(30,30,40,0.85) 0%, rgba(20,20,30,0.9) 100%)"
+    : "linear-gradient(135deg, rgba(240,245,255,0.9) 0%, rgba(230,240,255,0.9) 100%)";
 
   return (
     <Box
       id="projects"
       sx={{
-        py: 4,
+        py: { xs: 6, md: 8 },
         scrollMarginTop: "80px",
-        color: palette.text.primary,
+        color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado */}
+      {/* Encabezado tipo badge */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true }}
+        style={{ textAlign: "center", marginBottom: "2.5rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            px: 4,
-            py: 1.2,
-            borderRadius: "999px",
+            px: 3,
+            py: 0.8,
+            borderRadius: "50px",
             background: badgeBg,
+            boxShadow: isDark
+              ? "0 4px 12px rgba(0,0,0,0.3)"
+              : "0 4px 12px rgba(0,0,0,0.08)",
+            backdropFilter: "blur(4px)",
+            border: isDark
+              ? "1px solid rgba(144,202,249,0.2)"
+              : "1px solid rgba(25,118,210,0.2)",
           }}
         >
           <WorkOutlineIcon
-            sx={{ fontSize: 26, mr: 1.2, color: primaryColor }}
+            sx={{ fontSize: 22, mr: 1, color: primaryColor }}
           />
           <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            variant="subtitle2"
+            fontWeight={600}
+            sx={{
+              color: primaryColor,
+              letterSpacing: "0.5px",
+            }}
           >
-            Algunos Proyectos
+            PROYECTOS DESTACADOS
           </Typography>
         </Box>
       </motion.div>
@@ -163,7 +197,13 @@ export default function Projects() {
       {/* Grid de proyectos */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard key={p.titulo} p={p} i={i} palette={palette} />
+          <ProjectCard
+            key={p.titulo}
+            p={p}
+            i={i}
+            textPrimary={theme.palette.text.primary}
+            textSecondary={theme.palette.text.secondary}
+          />
         ))}
       </Grid>
     </Box>
