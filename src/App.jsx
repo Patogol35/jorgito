@@ -38,17 +38,11 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
                 text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
                 text: { primary: "#ffffff" },
               }),
         },
@@ -56,23 +50,30 @@ function App() {
     [mode]
   );
 
-  const sectionStyles = {
+  const sectionStyles = (color) => ({
     mb: 4,
     p: { xs: 3, md: 6 },
     borderRadius: 3,
     scrollMarginTop: scrollOffset,
     borderLeft: "0",
-    backgroundImage:
-      "linear-gradient(to right, rgba(31,53,85,0.85) 0%, rgba(31,53,85,0.85) 6px, transparent 6px)",
+    backgroundImage: `
+      linear-gradient(to right, ${color} 0%, ${color} 4px, transparent 4px)
+    `,
     backdropFilter: "blur(3px)",
     transition: "all 0.35s ease",
     "&:hover": {
       transform: "translateY(-3px)",
       boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-      backgroundImage:
-        "linear-gradient(to right, rgba(45,80,120,1) 0%, rgba(45,80,120,1) 6px, transparent 6px)",
+      backgroundImage: `
+        linear-gradient(
+          to right,
+          ${color} 0%,
+          ${color.replace("0.85", "1")} 4px,
+          transparent 4px
+        )
+      `,
     },
-  };
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -92,13 +93,18 @@ function App() {
           }}
         >
           {[
-            { id: "about", Component: About },
-            { id: "skills", Component: Skills },
-            { id: "certifications", Component: Certifications },
-            { id: "projects", Component: Projects },
-            { id: "contact", Component: Contact },
-          ].map(({ id, Component }) => (
-            <Paper key={id} id={id} elevation={3} sx={sectionStyles}>
+            { id: "about", color: "rgba(76, 175, 80, 0.85)", Component: About },
+            { id: "skills", color: "rgba(255, 152, 0, 0.85)", Component: Skills },
+            { id: "certifications", color: "rgba(156, 39, 176, 0.85)", Component: Certifications },
+            { id: "projects", color: "rgba(25, 118, 210, 0.85)", Component: Projects },
+            { id: "contact", color: "rgba(244, 67, 54, 0.85)", Component: Contact },
+          ].map(({ id, color, Component }) => (
+            <Paper
+              key={id}
+              id={id}
+              elevation={3}
+              sx={sectionStyles(color)}
+            >
               <Component />
             </Paper>
           ))}
