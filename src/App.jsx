@@ -111,7 +111,7 @@ function App() {
                 scrollMarginTop: scrollOffset,
                 transition: "border-left-width 1s ease-out",
                 "&.border-visible": {
-                  borderLeftWidth: "10px",
+                  borderLeftWidth: "6px",
                 },
                 "&:hover": {
                   transform: "translateY(-4px)",
