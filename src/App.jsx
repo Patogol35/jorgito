@@ -60,7 +60,7 @@ function App() {
               }),
         },
         shape: {
-          borderRadius: 16,
+          borderRadius: 6, // 👈 RECTO, NO OVALADO
         },
       }),
     [mode]
@@ -78,7 +78,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO GLOBAL */}
+      {/* FONDO */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -89,17 +89,13 @@ function App() {
               : "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)",
         }}
       >
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="xl"
           sx={{
-            py: 9,
+            py: 8,
             px: { xs: 2, sm: 4, md: 6, lg: 10 },
           }}
         >
@@ -108,61 +104,35 @@ function App() {
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.55, ease: "easeOut" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
               sx={{
-                position: "relative",
-                mb: 7,
+                mb: 6,
                 p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
 
-                /* DETALLE SUPERIOR */
+                /* ESTILO RECTO */
                 borderTop: `4px solid ${color}`,
-                borderRadius: 16,
+                borderRadius: 6,
 
-                /* SOMBRA NATURAL */
+                /* SOMBRA LIMPIA */
                 boxShadow:
                   mode === "light"
-                    ? `
-                      0 1px 3px rgba(0,0,0,0.06),
-                      0 12px 24px rgba(0,0,0,0.08)
-                    `
-                    : `
-                      0 1px 3px rgba(0,0,0,0.3),
-                      0 12px 24px rgba(0,0,0,0.6)
-                    `,
+                    ? "0 8px 22px rgba(0,0,0,0.08)"
+                    : "0 8px 22px rgba(0,0,0,0.5)",
 
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-3px)",
+                  transform: "translateY(-2px)",
                   boxShadow:
                     mode === "light"
-                      ? `
-                        0 4px 6px rgba(0,0,0,0.08),
-                        0 18px 36px rgba(0,0,0,0.12)
-                      `
-                      : `
-                        0 4px 6px rgba(0,0,0,0.5),
-                        0 18px 36px rgba(0,0,0,0.8)
-                      `,
-                },
-
-                /* MICRO DETALLE INTERNO */
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: 16,
-                  pointerEvents: "none",
-                  boxShadow:
-                    mode === "light"
-                      ? "inset 0 1px 0 rgba(255,255,255,0.6)"
-                      : "inset 0 1px 0 rgba(255,255,255,0.05)",
+                      ? "0 12px 30px rgba(0,0,0,0.12)"
+                      : "0 12px 30px rgba(0,0,0,0.7)",
                 },
               }}
             >
@@ -171,10 +141,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -184,21 +152,17 @@ function App() {
               right: 20,
               zIndex: 1000,
               bgcolor: "#25D366",
-              boxShadow: "0 8px 25px rgba(37,211,102,0.45)",
-              "&:hover": {
-                bgcolor: "#1ebe5c",
-                transform: "scale(1.04)",
-              },
+              boxShadow: "0 6px 20px rgba(37,211,102,0.45)",
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 30, color: "#fff" }} />
+            <WhatsAppIcon sx={{ fontSize: 28, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
