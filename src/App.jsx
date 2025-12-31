@@ -4,11 +4,11 @@ import {
   createTheme,
   CssBaseline,
   Box,
-  Paper,
   Container,
   Fab,
   Tooltip,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles"; // 👈 Importante para los bordes semitransparentes
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { motion } from "framer-motion";
 
@@ -22,7 +22,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-const MotionPaper = motion(Paper);
+const MotionPaper = motion(Box); // 👈 Usamos Box en lugar de Paper para mayor control de estilos
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -66,13 +66,13 @@ function App() {
     [mode]
   );
 
-  /* 🔒 COLORES ORIGINALES (NO TOCADOS) */
+  // ✨ Colores profesionales y significativos
   const sections = [
-    { id: "about", color: "#00bfa5", Component: About },
-    { id: "skills", color: "#ff9800", Component: Skills },
-    { id: "certifications", color: "#ab47bc", Component: Certifications },
-    { id: "projects", color: "#42a5f5", Component: Projects },
-    { id: "contact", color: "#ef5350", Component: Contact },
+    { id: "about", color: "#0288d1", Component: About },         // Azul profesional → confianza
+    { id: "skills", color: "#5e35b1", Component: Skills },       // Púrpura técnico → innovación
+    { id: "certifications", color: "#00796b", Component: Certifications }, // Verde esmeralda → logro
+    { id: "projects", color: "#c2185b", Component: Projects },   // Rosa intenso → creatividad
+    { id: "contact", color: "#689f38", Component: Contact },     // Verde oliva → accesibilidad
   ];
 
   return (
@@ -94,12 +94,16 @@ function App() {
 
         <Container
           maxWidth="xl"
-          sx={{ py: 8, px: { xs: 2, sm: 4, md: 6, lg: 10 } }}
+          sx={{
+            py: 8,
+            px: { xs: 2, sm: 4, md: 6, lg: 10 },
+          }}
         >
           {sections.map(({ id, color, Component }) => (
             <MotionPaper
               key={id}
               id={id}
+              component="section"
               elevation={0}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -111,25 +115,31 @@ function App() {
                 scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
 
-                /* BORDE TÉCNICO */
-                border: `1.5px solid ${color}`,
-                borderRadius: 6,
+                // ✅ Borde semitransparente adaptativo
+                border: "1px solid",
+                borderColor: alpha(color, mode === "light" ? 0.25 : 0.35),
+                borderRadius: 3,
 
-                /* SOMBRA LIMPIA */
+                // ✅ Sombras refinadas
                 boxShadow:
                   mode === "light"
-                    ? "0 8px 22px rgba(0,0,0,0.08)"
-                    : "0 8px 22px rgba(0,0,0,0.5)",
+                    ? "0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.08)"
+                    : "0 4px 20px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.2)",
 
-                /* MICRO-ANIMACIÓN */
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                // ✅ Transiciones suaves y naturales
+                transition:
+                  "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), " +
+                  "box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), " +
+                  "border-color 0.3s ease",
 
+                // ✅ Efecto hover elegante
                 "&:hover": {
-                  transform: "translateY(-3px)",
+                  transform: "translateY(-4px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 12px 30px rgba(0,0,0,0.12)"
-                      : "0 12px 30px rgba(0,0,0,0.7)",
+                      ? "0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.1)"
+                      : "0 10px 30px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25)",
+                  borderColor: alpha(color, mode === "light" ? 0.4 : 0.55),
                 },
               }}
             >
