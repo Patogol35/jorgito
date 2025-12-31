@@ -116,9 +116,6 @@ export default function Projects() {
   const isDark = palette.mode === "dark";
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const badgeBg = isDark
-    ? "rgba(144,202,249,0.1)"
-    : "rgba(25,118,210,0.1)";
 
   return (
     <Box
@@ -138,26 +135,39 @@ export default function Projects() {
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    px: 4,
-    py: 1.2,
-    borderRadius: "999px",
-    background: isDark
-      ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-      : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
-    border: `1px solid ${
-      isDark
-        ? "rgba(144,202,249,0.25)"
-        : "rgba(25,118,210,0.25)"
-    }`,
-  }}
->
-          <WorkOutlineIcon
-            sx={{ fontSize: 26, mr: 1.2, color: primaryColor }}
-          />
+          sx={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            px: 4,
+            py: 1.2,
+            borderRadius: "999px",
+            background: isDark
+              ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+              : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+            border: `1px solid ${
+              isDark
+                ? "rgba(144,202,249,0.25)"
+                : "rgba(25,118,210,0.25)"
+            }`,
+          }}
+        >
+          {/* Icono con círculo */}
+          <Box
+            sx={{
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: isDark ? "#1e3a5f" : "#1976d2",
+              mr: 1.2,
+            }}
+          >
+            <WorkOutlineIcon sx={{ fontSize: 20, color: "#fff" }} />
+          </Box>
+
           <Typography
             variant="h6"
             sx={{ fontWeight: "bold", color: primaryColor }}
@@ -175,4 +185,4 @@ export default function Projects() {
       </Grid>
     </Box>
   );
-}
+      }
