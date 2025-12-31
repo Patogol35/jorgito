@@ -60,6 +60,20 @@ function App() {
     [mode]
   );
 
+  const sectionStyles = {
+    mb: 4,
+    p: { xs: 3, md: 6 },
+    borderRadius: 3,
+    borderLeft: "6px solid", // Más elegante y delgado
+    backdropFilter: "blur(3px)", // Efecto pro ✨
+    scrollMarginTop: scrollOffset,
+    transition: "all 0.35s ease",
+    "&:hover": {
+      transform: "translateY(-3px)",
+      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+    },
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -81,27 +95,17 @@ function App() {
           }}
         >
           {[
-            { id: "about", color: "#2e7d32", Component: About },
-            { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
-            { id: "projects", color: "#1976d2", Component: Projects },
-            { id: "contact", color: "#d32f2f", Component: Contact },
+            { id: "about", color: "rgba(76, 175, 80, 0.85)", Component: About },
+            { id: "skills", color: "rgba(255, 152, 0, 0.85)", Component: Skills },
+            { id: "certifications", color: "rgba(156, 39, 176, 0.85)", Component: Certifications },
+            { id: "projects", color: "rgba(25, 118, 210, 0.85)", Component: Projects },
+            { id: "contact", color: "rgba(244, 67, 54, 0.85)", Component: Contact },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
               elevation={3}
-              sx={{
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `10px solid ${color}`,
-                scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                },
-              }}
+              sx={{ ...sectionStyles, borderLeftColor: color }}
             >
               <Component />
             </Paper>
