@@ -34,9 +34,7 @@ function App() {
   }, [mode]);
 
   useEffect(() => {
-    const options = {
-      threshold: 0.25,
-    };
+    const options = { threshold: 0.25 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -60,22 +58,12 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
+                text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: {
-                  primary: "#ffffff",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
@@ -86,38 +74,52 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
+      {/* ✨ Estilos del borde futurista */}
       <style>
         {`
-          .border-animate {
+          .reveal-border {
             position: relative;
-            border-left: 5px solid transparent;
+            border-left: 5px solid currentColor;
+            overflow: hidden;
           }
 
-          .border-animate::before {
+          .reveal-border::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            height: 0%;
             width: 5px;
+            height: 0%;
             background: currentColor;
-            transition: height 1.2s ease-out;
+            transition: height 1.2s cubic-bezier(0.25, 1, 0.35, 1);
           }
 
+          /* Aparece progresivamente */
           .visible-border::before {
             height: 100%;
+          }
+
+          /* Glow futurista solo modo oscuro */
+          html.dark-mode .reveal-border::before,
+          html.dark-mode .reveal-border:hover::before {
+            box-shadow: 0 0 12px currentColor;
           }
         `}
       </style>
 
+      {/* HTML class para activar glow en modo oscuro */}
+      {useEffect(() => {
+        document.documentElement.classList.toggle("dark-mode", mode === "dark");
+      }, [mode])}
+
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
+        {/* NAV */}
         <Navbar mode={mode} setMode={setMode} />
 
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
+        {/* SECCIONES */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -137,19 +139,19 @@ function App() {
               key={id}
               id={id}
               ref={(el) => (sectionRefs.current[index] = el)}
-              className="border-animate"
+              className="reveal-border"
               elevation={3}
               sx={{
-                color,
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 scrollMarginTop: scrollOffset,
+                color,
                 transition: "transform 0.3s ease, box-shadow 0.4s ease",
 
                 "&:hover": {
                   transform: "translateY(-6px)",
-                  boxShadow: `0 8px 24px rgba(0,0,0,0.18)`,
+                  boxShadow: `0 8px 24px rgba(0,0,0,0.25)`,
                 },
               }}
             >
@@ -161,7 +163,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -181,7 +183,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
