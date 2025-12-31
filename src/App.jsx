@@ -8,9 +8,9 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles"; // 👈 Importante para los bordes semitransparentes
+import { alpha } from "@mui/material/styles";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
@@ -22,12 +22,12 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-const MotionPaper = motion(Box); // 👈 Usamos Box en lugar de Paper para mayor control de estilos
+// Motion wrapper con layout y hover
+const MotionSection = motion(Box);
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
-
   const scrollOffset = "90px";
 
   useEffect(() => {
@@ -41,38 +41,33 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
+                background: { default: "#f8fafc", paper: "#ffffff" },
+                text: { primary: "#0f172a" },
+                divider: "rgba(15,23,42,0.12)",
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: {
-                  primary: "#ffffff",
-                },
+                background: { default: "#020814", paper: "#0f172a" },
+                text: { primary: "#f1f5f9" },
+                divider: "rgba(241,245,249,0.12)",
               }),
         },
-        shape: {
-          borderRadius: 6,
+        typography: {
+          fontFamily: '"Inter", "Roboto", -apple-system, BlinkMacSystemFont, sans-serif',
+          h1: { fontWeight: 700 },
+          h2: { fontWeight: 600 },
+          body1: { fontWeight: 400, lineHeight: 1.6 },
         },
+        shape: { borderRadius: 8 },
       }),
     [mode]
   );
 
-  // ✨ Colores profesionales y significativos
   const sections = [
-    { id: "about", color: "#0288d1", Component: About },         // Azul profesional → confianza
-    { id: "skills", color: "#5e35b1", Component: Skills },       // Púrpura técnico → innovación
-    { id: "certifications", color: "#00796b", Component: Certifications }, // Verde esmeralda → logro
-    { id: "projects", color: "#c2185b", Component: Projects },   // Rosa intenso → creatividad
-    { id: "contact", color: "#689f38", Component: Contact },     // Verde oliva → accesibilidad
+    { id: "about", color: "#3b82f6", Component: About },        // Azul moderno (confianza + tech)
+    { id: "skills", color: "#8b5cf6", Component: Skills },      // Violeta (complejidad controlada)
+    { id: "certifications", color: "#10b981", Component: Certifications }, // Esmeralda (logro sostenible)
+    { id: "projects", color: "#ec4899", Component: Projects },  // Rosa eléctrico (creatividad técnica)
+    { id: "contact", color: "#f59e0b", Component: Contact },    // Ámbar (energía + accesibilidad)
   ];
 
   return (
@@ -85,8 +80,8 @@ function App() {
           overflowX: "hidden",
           background:
             mode === "light"
-              ? "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)"
-              : "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)",
+              ? "linear-gradient(to bottom, #f8fafc, #e2e8f0)"
+              : "radial-gradient(circle at 10% 20%, rgba(30,41,59,0.8), rgba(2,8,20,1))",
         }}
       >
         <Navbar mode={mode} setMode={setMode} />
@@ -95,72 +90,98 @@ function App() {
         <Container
           maxWidth="xl"
           sx={{
-            py: 8,
-            px: { xs: 2, sm: 4, md: 6, lg: 10 },
+            py: { xs: 6, md: 10 },
+            px: { xs: 2, sm: 3, md: 4, lg: 6 },
           }}
         >
-          {sections.map(({ id, color, Component }) => (
-            <MotionPaper
-              key={id}
-              id={id}
-              component="section"
-              elevation={0}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
-              sx={{
-                mb: 6,
-                p: { xs: 3, md: 5 },
-                scrollMarginTop: scrollOffset,
-                backgroundColor: "background.paper",
+          <AnimatePresence>
+            {sections.map(({ id, color, Component }, index) => (
+              <MotionSection
+                key={id}
+                id={id}
+                component="section"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: index * 0.08,
+                }}
+                whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                sx={{
+                  mb: 8,
+                  position: "relative",
+                  overflow: "hidden",
+                  borderRadius: 4,
+                  scrollMarginTop: scrollOffset,
 
-                // ✅ Borde semitransparente adaptativo
-                border: "1px solid",
-                borderColor: alpha(color, mode === "light" ? 0.25 : 0.35),
-                borderRadius: 3,
+                  // ✨ Gradiente de fondo sutil
+                  background: mode === "light"
+                    ? `linear-gradient(140deg, ${alpha(color, 0.03)}, ${alpha(color, 0.01)})`
+                    : `linear-gradient(140deg, ${alpha(color, 0.06)}, ${alpha(color, 0.02)})`,
 
-                // ✅ Sombras refinadas
-                boxShadow:
-                  mode === "light"
-                    ? "0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.08)"
-                    : "0 4px 20px rgba(0,0,0,0.3), 0 1px 4px rgba(0,0,0,0.2)",
+                  // ✨ Borde con iluminación dinámica
+                  border: "1px solid",
+                  borderColor: alpha(color, mode === "light" ? 0.18 : 0.25),
 
-                // ✅ Transiciones suaves y naturales
-                transition:
-                  "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), " +
-                  "box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), " +
-                  "border-color 0.3s ease",
+                  // ✨ Sombra arquitectónica
+                  boxShadow: mode === "light"
+                    ? "0 10px 30px -10px rgba(0,0,0,0.07)"
+                    : "0 10px 30px -10px rgba(0,0,0,0.4)",
 
-                // ✅ Efecto hover elegante
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow:
-                    mode === "light"
-                      ? "0 10px 30px rgba(0,0,0,0.12), 0 4px 8px rgba(0,0,0,0.1)"
-                      : "0 10px 30px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25)",
-                  borderColor: alpha(color, mode === "light" ? 0.4 : 0.55),
-                },
-              }}
-            >
-              <Component />
-            </MotionPaper>
-          ))}
+                  // ✨ Efecto de brillo en hover
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: `linear-gradient(90deg, transparent, ${alpha(color, 0.08)}, transparent)`,
+                    opacity: 0,
+                    transition: "opacity 0.4s ease",
+                    pointerEvents: "none",
+                  },
+                  "&:hover::before": {
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Box
+                  p={{ xs: 3, md: 5 }}
+                  sx={{
+                    backgroundColor: "background.paper",
+                    borderRadius: 3,
+                    position: "relative",
+                    zIndex: 2,
+                  }}
+                >
+                  <Component />
+                </Box>
+              </MotionSection>
+            ))}
+          </AnimatePresence>
         </Container>
 
         <Footer />
 
+        {/* WhatsApp FAB mejorado */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
+            component={motion.div}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
             sx={{
               position: "fixed",
-              bottom: 20,
-              right: 20,
-              zIndex: 1000,
+              bottom: 24,
+              right: 24,
+              zIndex: 1300,
               bgcolor: "#25D366",
-              boxShadow: "0 6px 20px rgba(37,211,102,0.45)",
-              "&:hover": { bgcolor: "#1ebe5c" },
+              boxShadow:
+                "0 4px 14px rgba(37,211,102,0.4), 0 2px 6px rgba(0,0,0,0.15)",
+              "&:hover": { bgcolor: "#128C7E" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
