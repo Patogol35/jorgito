@@ -24,40 +24,12 @@ import ChatBot from "./components/ChatBot.jsx";
 
 const MotionPaper = motion(Paper);
 
-/* 🎨 GRADIENTE NORMALIZADO Y SUAVE */
-const softGradient = (color, isDark) =>
-  isDark
-    ? `linear-gradient(
-        135deg,
-        ${color}22 0%,
-        transparent 70%
-      )`
-    : `linear-gradient(
-        135deg,
-        ${color}14 0%,
-        #ffffff 75%
-      )`;
-
-/* ✨ GRADIENTE HOVER (UN POCO MÁS VISIBLE) */
-const hoverGradient = (color, isDark) =>
-  isDark
-    ? `linear-gradient(
-        135deg,
-        ${color}30 0%,
-        transparent 70%
-      )`
-    : `linear-gradient(
-        135deg,
-        ${color}22 0%,
-        #ffffff 75%
-      )`;
-
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
 
-  const scrollOffset = "90px";
   const isDark = mode === "dark";
+  const scrollOffset = "90px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -95,7 +67,7 @@ function App() {
     [mode]
   );
 
-  /* 🎯 COLORES BASE (YA NORMALIZADOS) */
+  /* 🎯 SOLO BORDES CON COLOR */
   const sections = [
     { id: "about", color: "#26a69a", Component: About },
     { id: "skills", color: "#fb8c00", Component: Skills },
@@ -133,36 +105,35 @@ function App() {
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
               sx={{
                 mb: 6,
                 p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
 
-                /* 🎨 FONDO ELEGANTE */
-                background: softGradient(color, isDark),
+                /* 🧱 FONDO NEUTRO */
+                backgroundColor: "background.paper",
 
-                /* BORDE FINO Y CONSISTENTE */
-                border: `1px solid ${color}55`,
+                /* 🔥 BORDE PROTAGONISTA */
+                border: `2px solid ${color}`,
                 borderRadius: 6,
 
-                /* SOMBRA SUAVE */
+                /* SOMBRA SOBRIA */
                 boxShadow: isDark
-                  ? "0 8px 20px rgba(0,0,0,0.45)"
-                  : "0 8px 20px rgba(0,0,0,0.08)",
+                  ? "0 6px 18px rgba(0,0,0,0.45)"
+                  : "0 6px 18px rgba(0,0,0,0.08)",
 
                 transition:
-                  "transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease",
+                  "transform 0.3s ease, box-shadow 0.3s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px)",
-                  background: hoverGradient(color, isDark),
+                  transform: "translateY(-3px)",
                   boxShadow: isDark
-                    ? "0 14px 32px rgba(0,0,0,0.65)"
-                    : "0 14px 32px rgba(0,0,0,0.14)",
+                    ? "0 12px 30px rgba(0,0,0,0.65)"
+                    : "0 12px 30px rgba(0,0,0,0.14)",
                 },
               }}
             >
@@ -173,7 +144,7 @@ function App() {
 
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
