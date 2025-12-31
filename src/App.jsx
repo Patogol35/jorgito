@@ -8,7 +8,6 @@ import {
   Container,
   Fab,
   Tooltip,
-  Divider,
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { motion } from "framer-motion";
@@ -29,7 +28,7 @@ function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
 
-  const scrollOffset = "96px";
+  const scrollOffset = "90px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -43,17 +42,17 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f4f6fb",
-                  paper: "rgba(255,255,255,0.85)",
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
                 },
                 text: {
-                  primary: "#0f172a",
+                  primary: "#111",
                 },
               }
             : {
                 background: {
-                  default: "#0b0f19",
-                  paper: "rgba(30,30,30,0.85)",
+                  default: "#121212",
+                  paper: "#1e1e1e",
                 },
                 text: {
                   primary: "#ffffff",
@@ -61,10 +60,7 @@ function App() {
               }),
         },
         shape: {
-          borderRadius: 20,
-        },
-        typography: {
-          fontFamily: `"Inter", "Roboto", "Helvetica", "Arial", sans-serif`,
+          borderRadius: 16,
         },
       }),
     [mode]
@@ -89,14 +85,8 @@ function App() {
           overflowX: "hidden",
           background:
             mode === "light"
-              ? `
-                radial-gradient(circle at top, rgba(0,191,165,0.08), transparent 40%),
-                linear-gradient(180deg, #f4f6fb 0%, #eaeef5 100%)
-              `
-              : `
-                radial-gradient(circle at top, rgba(66,165,245,0.15), transparent 40%),
-                linear-gradient(180deg, #0b0f19 0%, #06080f 100%)
-              `,
+              ? "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)"
+              : "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)",
         }}
       >
         {/* NAVBAR */}
@@ -109,68 +99,45 @@ function App() {
         <Container
           maxWidth="xl"
           sx={{
-            py: { xs: 8, md: 12 },
+            py: 9,
             px: { xs: 2, sm: 4, md: 6, lg: 10 },
           }}
         >
-          {sections.map(({ id, color, Component }, index) => (
-            <Box key={id}>
-              <MotionPaper
-                id={id}
-                elevation={0}
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-                sx={{
-                  mb: 10,
-                  p: { xs: 3, md: 6 },
-                  scrollMarginTop: scrollOffset,
-                  backdropFilter: "blur(12px)",
-                  backgroundColor: "background.paper",
-                  border: `1px solid ${
-                    mode === "light"
-                      ? "rgba(0,0,0,0.05)"
-                      : "rgba(255,255,255,0.08)"
-                  }`,
+          {sections.map(({ id, color, Component }) => (
+            <MotionPaper
+              key={id}
+              id={id}
+              elevation={0}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              sx={{
+                mb: 7,
+                p: { xs: 3, md: 5 },
+                scrollMarginTop: scrollOffset,
+                backgroundColor: "background.paper",
+
+                borderTop: `5px solid ${color}`,
+
+                boxShadow:
+                  mode === "light"
+                    ? "0 14px 40px rgba(0,0,0,0.08)"
+                    : "0 14px 40px rgba(0,0,0,0.55)",
+
+                transition: "all 0.3s ease",
+
+                "&:hover": {
+                  transform: "translateY(-4px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 20px 50px rgba(0,0,0,0.08)"
-                      : "0 20px 50px rgba(0,0,0,0.6)",
-                  position: "relative",
-                  overflow: "hidden",
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "4px",
-                    background: `linear-gradient(90deg, ${color}, transparent)`,
-                  },
-                  transition: "all 0.4s ease",
-                  "&:hover": {
-                    transform: "translateY(-8px)",
-                    boxShadow:
-                      mode === "light"
-                        ? "0 30px 70px rgba(0,0,0,0.12)"
-                        : "0 30px 70px rgba(0,0,0,0.8)",
-                  },
-                }}
-              >
-                <Component />
-              </MotionPaper>
-
-              {/* DIVISOR ENTRE SECCIONES */}
-              {index < sections.length - 1 && (
-                <Divider
-                  sx={{
-                    mb: 10,
-                    opacity: 0.15,
-                  }}
-                />
-              )}
-            </Box>
+                      ? "0 20px 55px rgba(0,0,0,0.12)"
+                      : "0 20px 55px rgba(0,0,0,0.7)",
+                },
+              }}
+            >
+              <Component />
+            </MotionPaper>
           ))}
         </Container>
 
@@ -183,14 +150,14 @@ function App() {
             aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: 24,
-              right: 24,
+              bottom: 20,
+              right: 20,
               zIndex: 1000,
               bgcolor: "#25D366",
-              boxShadow: "0 10px 30px rgba(37,211,102,0.45)",
+              boxShadow: "0 8px 25px rgba(37,211,102,0.45)",
               "&:hover": {
                 bgcolor: "#1ebe5c",
-                transform: "scale(1.05)",
+                transform: "scale(1.04)",
               },
             }}
             onClick={() =>
