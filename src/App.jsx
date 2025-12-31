@@ -27,6 +27,7 @@ const MotionPaper = motion(Paper);
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
+
   const scrollOffset = "90px";
 
   useEffect(() => {
@@ -44,18 +45,22 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: { primary: "#111" },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
                 background: {
                   default: "#121212",
-                  paper: "#1a1a1a",
+                  paper: "#1e1e1e",
                 },
-                text: { primary: "#ffffff" },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
         },
         shape: {
-          borderRadius: 14,
+          borderRadius: 6, // recto
         },
       }),
     [mode]
@@ -73,58 +78,61 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
+      {/* FONDO */}
       <Box
         sx={{
           minHeight: "100vh",
           overflowX: "hidden",
           background:
             mode === "light"
-              ? "linear-gradient(180deg, #f5f7fa 0%, #eef2f8 100%)"
-              : "linear-gradient(180deg, #121212 0%, #0d0d0d 100%)",
+              ? "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)"
+              : "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)",
         }}
       >
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container maxWidth="xl" sx={{ py: 8, px: { xs: 2, md: 6, lg: 10 } }}>
+        <Container
+          maxWidth="xl"
+          sx={{
+            py: 8,
+            px: { xs: 2, sm: 4, md: 6, lg: 10 },
+          }}
+        >
           {sections.map(({ id, color, Component }) => (
             <MotionPaper
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
               sx={{
-                position: "relative",
-                mb: 7,
-                p: { xs: 3.5, md: 5 },
+                mb: 6,
+                p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
-                borderRadius: 4,
 
-                /* BARRA LATERAL ELEGANTE */
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "6px",
-                  height: "100%",
-                  background: color,
-                  borderRadius: "16px 0 0 16px",
-                },
+                /* BORDE COMPLETO */
+                border: `1.5px solid ${color}`,
+                borderRadius: 6,
 
+                /* SOMBRA SOBRIA */
                 boxShadow:
                   mode === "light"
-                    ? "0 10px 40px rgba(0,0,0,0.06)"
-                    : "0 10px 40px rgba(0,0,0,0.55)",
+                    ? "0 8px 22px rgba(0,0,0,0.08)"
+                    : "0 8px 22px rgba(0,0,0,0.5)",
 
-                transition: "all 0.3s ease",
+                transition:
+                  "transform 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  transform: "translateY(-2px)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 12px 30px rgba(0,0,0,0.12)"
+                      : "0 12px 30px rgba(0,0,0,0.7)",
                 },
               }}
             >
@@ -135,21 +143,16 @@ function App() {
 
         <Footer />
 
-        {/* WHATSAPP FAB */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: 24,
-              right: 24,
+              bottom: 20,
+              right: 20,
               zIndex: 1000,
               bgcolor: "#25D366",
-              animation: "pulse 2s infinite",
-              "@keyframes pulse": {
-                "0%": { boxShadow: "0 0 0 0 rgba(37,211,102,0.6)" },
-                "70%": { boxShadow: "0 0 0 14px rgba(37,211,102,0)" },
-                "100%": { boxShadow: "0 0 0 0 rgba(37,211,102,0)" },
-              },
+              boxShadow: "0 6px 20px rgba(37,211,102,0.45)",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
