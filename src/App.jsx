@@ -55,25 +55,46 @@ function App() {
     p: { xs: 3, md: 6 },
     borderRadius: 3,
     scrollMarginTop: scrollOffset,
-    borderLeft: "0",
-    backgroundImage: `
-      linear-gradient(to right, ${color} 0%, ${color} 4px, transparent 4px)
-    `,
-    backdropFilter: "blur(3px)",
+    position: "relative",
+    overflow: "hidden",
+    backdropFilter: "blur(4px)",
     transition: "all 0.35s ease",
+    "&:before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      height: "100%",
+      width: "4px",
+      backgroundColor: color,
+      transform: "scaleY(0)",
+      transformOrigin: "top",
+      transition: "transform 0.5s ease",
+    },
+    "&.visible:before": {
+      transform: "scaleY(1)",
+    },
     "&:hover": {
-      transform: "translateY(-3px)",
+      transform: "translateY(-4px)",
       boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-      backgroundImage: `
-        linear-gradient(
-          to right,
-          ${color} 0%,
-          ${color.replace("0.85", "1")} 4px,
-          transparent 4px
-        )
-      `,
     },
   });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        }),
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".section-item").forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +102,6 @@ function App() {
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         <Navbar mode={mode} setMode={setMode} />
-
         <Hero mode={mode} setMode={setMode} />
 
         <Container
@@ -103,6 +123,7 @@ function App() {
               key={id}
               id={id}
               elevation={3}
+              className="section-item"
               sx={sectionStyles(color)}
             >
               <Component />
