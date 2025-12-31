@@ -24,6 +24,12 @@ import ChatBot from "./components/ChatBot.jsx";
 
 const MotionPaper = motion(Paper);
 
+/* 👉 FONDO SUAVE POR COLOR (ELEGANTE) */
+const softGradient = (color, isDark) =>
+  isDark
+    ? `linear-gradient(135deg, ${color}22, transparent)`
+    : `linear-gradient(135deg, ${color}18, #ffffff)`;
+
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
@@ -60,7 +66,7 @@ function App() {
               }),
         },
         shape: {
-          borderRadius: 6, // recto
+          borderRadius: 6,
         },
       }),
     [mode]
@@ -78,7 +84,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO */}
+      {/* FONDO GENERAL */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -112,9 +118,11 @@ function App() {
                 mb: 6,
                 p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
-                backgroundColor: "background.paper",
 
-                /* BORDE COMPLETO */
+                /* 🎨 FONDO CON COLOR SUAVE */
+                background: softGradient(color, mode === "dark"),
+
+                /* BORDE FINO */
                 border: `1.5px solid ${color}`,
                 borderRadius: 6,
 
@@ -143,6 +151,7 @@ function App() {
 
         <Footer />
 
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
