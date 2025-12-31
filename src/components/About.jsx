@@ -22,10 +22,8 @@ export default function About() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const badgeBg = isDark
-    ? "rgba(144,202,249,0.1)"
-    : "rgba(25,118,210,0.1)";
+  const secondary = theme.palette.text.secondary;
+  const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
   return (
     <Box
@@ -36,7 +34,7 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado */}
+      {/* Encabezado con badge MEJORADO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -50,43 +48,60 @@ export default function About() {
             alignItems: "center",
             justifyContent: "center",
             px: 4,
-            py: 1.2,
+            py: 1.4,
             borderRadius: "999px",
-            background: badgeBg,
+            background: isDark
+              ? "linear-gradient(135deg, rgba(144,202,249,0.18), rgba(144,202,249,0.05))"
+              : "linear-gradient(135deg, rgba(25,118,210,0.18), rgba(25,118,210,0.05))",
+            border: `1px solid ${
+              isDark
+                ? "rgba(144,202,249,0.35)"
+                : "rgba(25,118,210,0.35)"
+            }`,
+            boxShadow: isDark
+              ? "0 0 18px rgba(144,202,249,0.25)"
+              : "0 0 18px rgba(25,118,210,0.25)",
           }}
         >
           <GraduationCap
             size={26}
-            style={{ marginRight: "0.8rem", color: primaryColor }}
+            style={{
+              marginRight: "0.8rem",
+              color: isDark ? "#bbdefb" : "#1976d2",
+            }}
           />
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            sx={{
+              fontWeight: "bold",
+              letterSpacing: "0.5px",
+              color: isDark ? "#e3f2fd" : "#0d47a1",
+            }}
           >
             Formación
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Estudios */}
+      {/* Grid de estudios */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: i * 0.2 }}
+              transition={{ duration: 0.8, delay: i * 0.3 }}
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
                 <GraduationCap size={28} color={est.iconColor} />
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+                <Typography variant="subtitle1" sx={subtitleStyle}>
                   {est.titulo}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color={secondary}>
                   {est.institucion}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color={secondary}>
                   {est.detalle}
                 </Typography>
               </Box>
