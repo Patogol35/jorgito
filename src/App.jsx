@@ -78,7 +78,6 @@ function App() {
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -106,11 +105,22 @@ function App() {
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
-                  borderLeft: `6px solid ${color}`,
+                  position: "relative",
+                  overflow: "hidden",
                   scrollMarginTop: scrollOffset,
                   transition: "all 0.3s ease",
                   "&:hover": {
                     transform: "translateY(-4px)",
+                  },
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "60px",
+                    height: "6px",
+                    backgroundColor: color,
+                    borderRadius: "0 0 6px 0",
                   },
                 }}
               >
@@ -123,7 +133,7 @@ function App() {
         <Footer />
         <ChatBot />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
