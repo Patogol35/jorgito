@@ -60,7 +60,7 @@ function App() {
               }),
         },
         shape: {
-          borderRadius: 6, // 👈 RECTO, NO OVALADO
+          borderRadius: 6, // recto
         },
       }),
     [mode]
@@ -104,7 +104,7 @@ function App() {
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 28 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.45, ease: "easeOut" }}
@@ -114,11 +114,11 @@ function App() {
                 scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
 
-                /* ESTILO RECTO */
-                borderTop: `4px solid ${color}`,
+                /* BORDE COMPLETO */
+                border: `1.5px solid ${color}`,
                 borderRadius: 6,
 
-                /* SOMBRA LIMPIA */
+                /* SOMBRA SOBRIA */
                 boxShadow:
                   mode === "light"
                     ? "0 8px 22px rgba(0,0,0,0.08)"
