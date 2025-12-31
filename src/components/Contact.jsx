@@ -63,18 +63,23 @@ export default function Contact() {
           style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
           <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              px: 4,
-              py: 1.2,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
-            }}
-          >
+  sx={{
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    px: 4,
+    py: 1.2,
+    borderRadius: "999px",
+    background: isDark
+      ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+      : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+    border: `1px solid ${
+      isDark
+        ? "rgba(144,202,249,0.25)"
+        : "rgba(25,118,210,0.25)"
+    }`,
+  }}
+>
             {/* ICONO MEJORADO (único cambio) */}
             <Box
               sx={{
