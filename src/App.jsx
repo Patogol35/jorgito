@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -27,30 +27,9 @@ function App() {
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
 
-  const sectionRefs = useRef([]);
-
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
-
-  // Animación al entrar en pantalla (scroll reveal)
-  useEffect(() => {
-    const options = { threshold: 0.25 };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("border-visible");
-        }
-      });
-    }, options);
-
-    sectionRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   const theme = useMemo(
     () =>
@@ -59,12 +38,22 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: { default: "#f5f7fa", paper: "#ffffff" },
-                text: { primary: "#111" },
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
-                background: { default: "#121212", paper: "#1e1e1e" },
-                text: { primary: "#ffffff" },
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
         },
       }),
@@ -75,40 +64,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* === Estilos del borde animado === */}
-      <style>
-        {`
-          .animated-border {
-            position: relative;
-            overflow: hidden;
-          }
-
-          .animated-border::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 0%;
-            background-color: currentColor;
-            border-radius: 2px;
-            transition: height 1s ease-out;
-          }
-
-          .border-visible::before {
-            height: 100%;
-          }
-        `}
-      </style>
-
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -123,25 +82,21 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }, index) => (
+          ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
-              ref={(el) => (sectionRefs.current[index] = el)}
-              className="animated-border"
+              className="reveal-border"
               elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                borderLeft: `4px solid ${color}`,
+                borderLeft: `6px solid ${color}`,
+                opacity: 0,
+                transform: "translateX(-20px)",
+                transition: "opacity 0.8s ease-out, transform 0.8s ease-out, border-color 0.8s ease-out",
                 scrollMarginTop: scrollOffset,
-                color,
-                transition: "transform 0.3s ease, box-shadow 0.4s ease",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: `0 8px 22px rgba(0,0,0,0.18)`,
-                },
               }}
             >
               <Component />
@@ -149,10 +104,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -172,7 +125,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
