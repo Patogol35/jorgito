@@ -61,17 +61,36 @@ export default function Skills() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               px: 4,
               py: 1.2,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
+                ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+                : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
             }}
           >
-            <BuildIcon
-              sx={{ fontSize: 26, mr: 1.2, color: isDark ? "#bbdefb" : "#1976d2" }}
-            />
+            {/* Icono con círculo */}
+            <Box
+              sx={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
+              }}
+            >
+              <BuildIcon sx={{ fontSize: 20, color: "#fff" }} />
+            </Box>
+
             <Typography
               variant="h6"
               sx={{
@@ -92,7 +111,9 @@ export default function Skills() {
             onChange={(e, val) => val && setFilter(val)}
             aria-label="Filtros de Skills"
             sx={{
-              background: isDark ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.7)",
+              background: isDark
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(255,255,255,0.7)",
               borderRadius: "12px",
               boxShadow: isDark
                 ? "0 4px 12px rgba(0,0,0,0.3)"
