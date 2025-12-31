@@ -24,17 +24,40 @@ import ChatBot from "./components/ChatBot.jsx";
 
 const MotionPaper = motion(Paper);
 
-/* 👉 FONDO SUAVE POR COLOR (ELEGANTE) */
+/* 🎨 GRADIENTE NORMALIZADO Y SUAVE */
 const softGradient = (color, isDark) =>
   isDark
-    ? `linear-gradient(135deg, ${color}22, transparent)`
-    : `linear-gradient(135deg, ${color}18, #ffffff)`;
+    ? `linear-gradient(
+        135deg,
+        ${color}22 0%,
+        transparent 70%
+      )`
+    : `linear-gradient(
+        135deg,
+        ${color}14 0%,
+        #ffffff 75%
+      )`;
+
+/* ✨ GRADIENTE HOVER (UN POCO MÁS VISIBLE) */
+const hoverGradient = (color, isDark) =>
+  isDark
+    ? `linear-gradient(
+        135deg,
+        ${color}30 0%,
+        transparent 70%
+      )`
+    : `linear-gradient(
+        135deg,
+        ${color}22 0%,
+        #ffffff 75%
+      )`;
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
 
   const scrollOffset = "90px";
+  const isDark = mode === "dark";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -72,12 +95,13 @@ function App() {
     [mode]
   );
 
+  /* 🎯 COLORES BASE (YA NORMALIZADOS) */
   const sections = [
-    { id: "about", color: "#00bfa5", Component: About },
-    { id: "skills", color: "#ff9800", Component: Skills },
-    { id: "certifications", color: "#ab47bc", Component: Certifications },
-    { id: "projects", color: "#42a5f5", Component: Projects },
-    { id: "contact", color: "#ef5350", Component: Contact },
+    { id: "about", color: "#26a69a", Component: About },
+    { id: "skills", color: "#fb8c00", Component: Skills },
+    { id: "certifications", color: "#8e24aa", Component: Certifications },
+    { id: "projects", color: "#1e88e5", Component: Projects },
+    { id: "contact", color: "#e53935", Component: Contact },
   ];
 
   return (
@@ -89,10 +113,9 @@ function App() {
         sx={{
           minHeight: "100vh",
           overflowX: "hidden",
-          background:
-            mode === "light"
-              ? "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)"
-              : "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)",
+          background: isDark
+            ? "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)"
+            : "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)",
         }}
       >
         <Navbar mode={mode} setMode={setMode} />
@@ -110,37 +133,36 @@ function App() {
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               sx={{
                 mb: 6,
                 p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
 
-                /* 🎨 FONDO CON COLOR SUAVE */
-                background: softGradient(color, mode === "dark"),
+                /* 🎨 FONDO ELEGANTE */
+                background: softGradient(color, isDark),
 
-                /* BORDE FINO */
-                border: `1.5px solid ${color}`,
+                /* BORDE FINO Y CONSISTENTE */
+                border: `1px solid ${color}55`,
                 borderRadius: 6,
 
-                /* SOMBRA SOBRIA */
-                boxShadow:
-                  mode === "light"
-                    ? "0 8px 22px rgba(0,0,0,0.08)"
-                    : "0 8px 22px rgba(0,0,0,0.5)",
+                /* SOMBRA SUAVE */
+                boxShadow: isDark
+                  ? "0 8px 20px rgba(0,0,0,0.45)"
+                  : "0 8px 20px rgba(0,0,0,0.08)",
 
                 transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease",
+                  "transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease",
 
                 "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow:
-                    mode === "light"
-                      ? "0 12px 30px rgba(0,0,0,0.12)"
-                      : "0 12px 30px rgba(0,0,0,0.7)",
+                  transform: "translateY(-4px)",
+                  background: hoverGradient(color, isDark),
+                  boxShadow: isDark
+                    ? "0 14px 32px rgba(0,0,0,0.65)"
+                    : "0 14px 32px rgba(0,0,0,0.14)",
                 },
               }}
             >
