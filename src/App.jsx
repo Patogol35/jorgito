@@ -60,26 +60,25 @@ function App() {
               }),
         },
         shape: {
-          borderRadius: 8,
+          borderRadius: 6,
         },
       }),
     [mode]
   );
 
-  /* 🎯 Colores por sección (solo estructurales) */
+  /* 🔒 COLORES ORIGINALES (NO TOCADOS) */
   const sections = [
-    { id: "about", color: "#1976d2", Component: About },
-    { id: "skills", color: "#6d28d9", Component: Skills },
-    { id: "certifications", color: "#9333ea", Component: Certifications },
-    { id: "projects", color: "#2563eb", Component: Projects },
-    { id: "contact", color: "#475569", Component: Contact },
+    { id: "about", color: "#00bfa5", Component: About },
+    { id: "skills", color: "#ff9800", Component: Skills },
+    { id: "certifications", color: "#ab47bc", Component: Certifications },
+    { id: "projects", color: "#42a5f5", Component: Projects },
+    { id: "contact", color: "#ef5350", Component: Contact },
   ];
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO GENERAL */}
       <Box
         sx={{
           minHeight: "100vh",
@@ -95,76 +94,42 @@ function App() {
 
         <Container
           maxWidth="xl"
-          sx={{
-            py: 8,
-            px: { xs: 2, sm: 4, md: 6, lg: 10 },
-          }}
+          sx={{ py: 8, px: { xs: 2, sm: 4, md: 6, lg: 10 } }}
         >
           {sections.map(({ id, color, Component }) => (
             <MotionPaper
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 32 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+              transition={{ duration: 0.45, ease: "easeOut" }}
               sx={{
-                position: "relative",
                 mb: 6,
                 p: { xs: 3, md: 5 },
-                overflow: "hidden",
+                scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
 
-                /* 🧠 BORDE INGENIERÍA */
-                borderLeft: `6px solid ${color}`,
-                borderRadius: 8,
+                /* BORDE TÉCNICO */
+                border: `1.5px solid ${color}`,
+                borderRadius: 6,
 
-                /* SOMBRA TÉCNICA */
+                /* SOMBRA LIMPIA */
                 boxShadow:
                   mode === "light"
-                    ? "0 10px 26px rgba(0,0,0,0.08)"
-                    : "0 10px 30px rgba(0,0,0,0.55)",
+                    ? "0 8px 22px rgba(0,0,0,0.08)"
+                    : "0 8px 22px rgba(0,0,0,0.5)",
 
-                transition: "all 0.45s ease",
-
-                /* CAPA LÓGICA (muy leve) */
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
-                  background: `linear-gradient(
-                    90deg,
-                    ${color}14,
-                    transparent 45%
-                  )`,
-                  opacity: 0,
-                  transition: "opacity 0.45s ease",
-                  pointerEvents: "none",
-                },
-
-                /* LÍNEA SUPERIOR (arquitectura) */
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  height: "3px",
-                  width: "100%",
-                  background: `linear-gradient(90deg, ${color}, transparent)`,
-                  opacity: 0.35,
-                },
+                /* MICRO-ANIMACIÓN */
+                transition: "transform 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-6px)",
+                  transform: "translateY(-3px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 18px 40px rgba(0,0,0,0.15)"
-                      : "0 18px 46px rgba(0,0,0,0.75)",
-
-                  "&::before": {
-                    opacity: 1,
-                  },
+                      ? "0 12px 30px rgba(0,0,0,0.12)"
+                      : "0 12px 30px rgba(0,0,0,0.7)",
                 },
               }}
             >
@@ -175,7 +140,6 @@ function App() {
 
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
