@@ -21,6 +21,7 @@ const estudios = [
 export default function About() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
@@ -34,12 +35,11 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado con badge MEJORADO */}
+      {/* Encabezado — MISMO ESTILO QUE CERTIFICACIONES */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
@@ -48,35 +48,37 @@ export default function About() {
             alignItems: "center",
             justifyContent: "center",
             px: 4,
-            py: 1.4,
+            py: 1.2,
             borderRadius: "999px",
             background: isDark
-              ? "linear-gradient(135deg, rgba(144,202,249,0.18), rgba(144,202,249,0.05))"
-              : "linear-gradient(135deg, rgba(25,118,210,0.18), rgba(25,118,210,0.05))",
+              ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+              : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
             border: `1px solid ${
               isDark
-                ? "rgba(144,202,249,0.35)"
-                : "rgba(25,118,210,0.35)"
+                ? "rgba(144,202,249,0.25)"
+                : "rgba(25,118,210,0.25)"
             }`,
-            boxShadow: isDark
-              ? "0 0 18px rgba(144,202,249,0.25)"
-              : "0 0 18px rgba(25,118,210,0.25)",
           }}
         >
-          <GraduationCap
-            size={26}
-            style={{
-              marginRight: "0.8rem",
-              color: isDark ? "#bbdefb" : "#1976d2",
+          {/* Icono con círculo */}
+          <Box
+            sx={{
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: isDark ? "#1e3a5f" : "#1976d2",
+              mr: 1.2,
             }}
-          />
+          >
+            <GraduationCap size={20} color="#fff" />
+          </Box>
+
           <Typography
             variant="h6"
-            sx={{
-              fontWeight: "bold",
-              letterSpacing: "0.5px",
-              color: isDark ? "#e3f2fd" : "#0d47a1",
-            }}
+            sx={{ fontWeight: "bold", color: primaryColor }}
           >
             Formación
           </Typography>
@@ -111,4 +113,4 @@ export default function About() {
       </Grid>
     </Box>
   );
-}
+              }
