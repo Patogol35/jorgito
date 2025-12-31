@@ -55,44 +55,37 @@ export default function Contact() {
       }}
     >
       <Container maxWidth="sm">
-        {/* Encabezado profesional */}
+        {/* Encabezado original con icono mejorado */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 1.5,
+              justifyContent: "center",
               px: 4,
-              py: 1.5,
+              py: 1.2,
               borderRadius: "999px",
-              backdropFilter: "blur(10px)",
               background: isDark
-                ? "rgba(144,202,249,0.08)"
-                : "rgba(25,118,210,0.08)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              boxShadow: isDark
-                ? "0 8px 24px rgba(0,0,0,0.4)"
-                : "0 8px 24px rgba(25,118,210,0.15)",
+                ? "rgba(144,202,249,0.1)"
+                : "rgba(25,118,210,0.1)",
             }}
           >
+            {/* ICONO MEJORADO (único cambio) */}
             <Box
               sx={{
-                width: 36,
-                height: 36,
+                width: 34,
+                height: 34,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
               }}
             >
               <GroupsIcon sx={{ fontSize: 20, color: "#fff" }} />
@@ -101,9 +94,7 @@ export default function Contact() {
             <Typography
               variant="h6"
               sx={{
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
+                fontWeight: "bold",
                 color: isDark ? "#bbdefb" : "#1976d2",
               }}
             >
