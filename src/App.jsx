@@ -42,23 +42,38 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
+                text: { primary: "#111" },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
     [mode]
   );
+
+  // 👇 ANIMACIÓN DE APARICIÓN DE SECCIONES
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    const sections = document.querySelectorAll(".reveal-section");
+    sections.forEach((sec) => observer.observe(sec));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,7 +81,6 @@ function App() {
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         <Navbar mode={mode} setMode={setMode} />
-
         <Hero mode={mode} setMode={setMode} />
 
         <Container
@@ -88,21 +102,22 @@ function App() {
               key={id}
               id={id}
               elevation={3}
+              className="reveal-section"
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `4px solid ${color}`,
+                borderRadius: "12px",
+                borderLeft: `4px solid ${color}`, // 👈 borde delgado
                 scrollMarginTop: scrollOffset,
                 opacity: 0,
-                transform: "translateX(-20px)",
-                transition: "opacity 0.9s ease, transform 0.9s ease",
+                transform: "translateX(-30px)",
+                transition: "all 0.6s ease-out",
+
                 "&.visible": {
                   opacity: 1,
                   transform: "translateX(0)",
                 },
               }}
-              className="reveal-section"
             >
               <Component />
             </Paper>
@@ -132,23 +147,6 @@ function App() {
 
         <ChatBot />
       </Box>
-
-      {/* OBSERVER ANIMATION */}
-      <script>
-        {`
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-              }
-            });
-          });
-
-          document.querySelectorAll(".reveal-section").forEach(el => {
-            observer.observe(el);
-          });
-        `}
-      </script>
     </ThemeProvider>
   );
 }
