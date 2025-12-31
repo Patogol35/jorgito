@@ -22,6 +22,8 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
+import { motion } from "framer-motion";
+
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
@@ -38,49 +40,35 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: { default: "#f5f7fa", paper: "#ffffff" },
-                text: { primary: "#111" },
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
-                background: { default: "#121212", paper: "#1e1e1e" },
-                text: { primary: "#ffffff" },
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
         },
       }),
     [mode]
   );
 
-  const sectionStyles = (color) => ({
-    mb: 6,
-    p: { xs: 3, md: 6 },
-    borderRadius: 4,
-    scrollMarginTop: scrollOffset,
-    position: "relative",
-    overflow: "hidden",
-    transition: "transform .45s cubic-bezier(.22,1,.36,1)",
-    backdropFilter: "blur(4px)",
-
-    // Borde animado
-    "&:before": {
-      content: '""',
-      position: "absolute",
-      left: 0,
-      top: 0,
-      bottom: 0,
-      width: "0px", // inicia invisible
-      backgroundColor: color,
-      transition: "width .45s cubic-bezier(.22,1,.36,1)",
-      borderRadius: "0 6px 6px 0",
-    },
-
-    "&:hover": {
-      transform: "translateY(-4px)",
-      boxShadow: "0 12px 36px rgba(0,0,0,0.18)",
-      "&:before": {
-        width: "6px", // se expande suavemente 😎
-      },
-    },
-  });
+  const sections = [
+    { id: "about", color: "#2e7d32", Component: About },
+    { id: "skills", color: "#fb8c00", Component: Skills },
+    { id: "certifications", color: "#8e24aa", Component: Certifications },
+    { id: "projects", color: "#1976d2", Component: Projects },
+    { id: "contact", color: "#d32f2f", Component: Contact },
+  ];
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,31 +78,55 @@ function App() {
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 8,
+            py: 6,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {[
-            { id: "about", color: "rgba(76, 175, 80, 1)", Component: About },
-            { id: "skills", color: "rgba(255, 152, 0, 1)", Component: Skills },
-            { id: "certifications", color: "rgba(156, 39, 176, 1)", Component: Certifications },
-            { id: "projects", color: "rgba(25, 118, 210, 1)", Component: Projects },
-            { id: "contact", color: "rgba(244, 67, 54, 1)", Component: Contact },
-          ].map(({ id, color, Component }) => (
-            <Paper key={id} id={id} elevation={0} sx={sectionStyles(color)}>
-              <Component />
-            </Paper>
+          {sections.map(({ id, color, Component }, index) => (
+            <motion.div
+              key={id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.7,
+                delay: index * 0.15,
+                ease: "easeOut",
+              }}
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <Paper
+                id={id}
+                elevation={3}
+                sx={{
+                  mb: 4,
+                  p: { xs: 3, md: 6 },
+                  borderRadius: 3,
+                  borderLeft: `6px solid ${color}`,
+                  scrollMarginTop: scrollOffset,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                  },
+                }}
+              >
+                <Component />
+              </Paper>
+            </motion.div>
           ))}
         </Container>
 
         <Footer />
+        <ChatBot />
 
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
@@ -130,8 +142,6 @@ function App() {
             <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
-
-        <ChatBot />
       </Box>
     </ThemeProvider>
   );
