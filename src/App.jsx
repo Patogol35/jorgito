@@ -113,26 +113,56 @@ function App() {
               viewport={{ once: true }}
               transition={{ duration: 0.55, ease: "easeOut" }}
               sx={{
+                position: "relative",
                 mb: 7,
                 p: { xs: 3, md: 5 },
                 scrollMarginTop: scrollOffset,
                 backgroundColor: "background.paper",
 
-                borderTop: `5px solid ${color}`,
+                /* DETALLE SUPERIOR */
+                borderTop: `4px solid ${color}`,
+                borderRadius: 16,
 
+                /* SOMBRA NATURAL */
                 boxShadow:
                   mode === "light"
-                    ? "0 14px 40px rgba(0,0,0,0.08)"
-                    : "0 14px 40px rgba(0,0,0,0.55)",
+                    ? `
+                      0 1px 3px rgba(0,0,0,0.06),
+                      0 12px 24px rgba(0,0,0,0.08)
+                    `
+                    : `
+                      0 1px 3px rgba(0,0,0,0.3),
+                      0 12px 24px rgba(0,0,0,0.6)
+                    `,
 
-                transition: "all 0.3s ease",
+                transition:
+                  "transform 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  transform: "translateY(-3px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 20px 55px rgba(0,0,0,0.12)"
-                      : "0 20px 55px rgba(0,0,0,0.7)",
+                      ? `
+                        0 4px 6px rgba(0,0,0,0.08),
+                        0 18px 36px rgba(0,0,0,0.12)
+                      `
+                      : `
+                        0 4px 6px rgba(0,0,0,0.5),
+                        0 18px 36px rgba(0,0,0,0.8)
+                      `,
+                },
+
+                /* MICRO DETALLE INTERNO */
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: 16,
+                  pointerEvents: "none",
+                  boxShadow:
+                    mode === "light"
+                      ? "inset 0 1px 0 rgba(255,255,255,0.6)"
+                      : "inset 0 1px 0 rgba(255,255,255,0.05)",
                 },
               }}
             >
