@@ -29,45 +29,67 @@ export default function Contact() {
       id="contact"
       sx={{
         py: { xs: 6, md: 8 },
-        scrollMarginTop: "80px",
         textAlign: "center",
+        scrollMarginTop: "80px",
       }}
     >
       <Container maxWidth="sm">
 
-        {/* Badge */}
+        {/* ===== TÍTULO PREMIUM ===== */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <Box
             sx={{
+              position: "relative",
               display: "inline-flex",
               alignItems: "center",
-              gap: 1.2,
-              px: 4,
-              py: 1.2,
-              mb: 2,
+              gap: 1.4,
+              px: 4.5,
+              py: 1.4,
+              mb: 1.5,
               borderRadius: "999px",
-              backdropFilter: "blur(6px)",
+              backdropFilter: "blur(8px)",
               background: isDark
-                ? "rgba(144,202,249,0.12)"
-                : "rgba(25,118,210,0.12)",
+                ? "linear-gradient(135deg, rgba(144,202,249,0.18), rgba(144,202,249,0.06))"
+                : "linear-gradient(135deg, rgba(25,118,210,0.18), rgba(25,118,210,0.06))",
+              boxShadow: isDark
+                ? "0 0 0 1px rgba(144,202,249,0.3)"
+                : "0 0 0 1px rgba(25,118,210,0.3)",
             }}
           >
+            {/* Punto de acento */}
+            <Box
+              sx={{
+                position: "absolute",
+                left: 10,
+                width: 6,
+                height: 6,
+                borderRadius: "50%",
+                background: isDark ? "#90caf9" : "#1976d2",
+                boxShadow: isDark
+                  ? "0 0 10px rgba(144,202,249,0.9)"
+                  : "0 0 10px rgba(25,118,210,0.7)",
+              }}
+            />
+
             <GroupsIcon
               sx={{
                 fontSize: 26,
                 color: isDark ? "#bbdefb" : "#1976d2",
               }}
             />
+
             <Typography
-              variant="h6"
+              component="h2"
               sx={{
-                fontWeight: 700,
-                letterSpacing: 0.5,
-                color: isDark ? "#bbdefb" : "#1976d2",
+                fontWeight: 800,
+                letterSpacing: 1.2,
+                textTransform: "uppercase",
+                fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                color: isDark ? "#e3f2fd" : "#0d47a1",
               }}
             >
               Redes Sociales
@@ -75,7 +97,7 @@ export default function Contact() {
           </Box>
         </motion.div>
 
-        {/* Subtítulo */}
+        {/* ===== SUBTÍTULO ===== */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -90,11 +112,11 @@ export default function Contact() {
               mx: "auto",
             }}
           >
-            Conéctate conmigo a través de mis redes o escríbeme directamente.
+            Puedes encontrarme y contactarme a través de mis redes o por correo.
           </Typography>
         </motion.div>
 
-        {/* Línea decorativa */}
+        {/* ===== SEPARADOR ===== */}
         <Box
           sx={{
             width: 90,
@@ -108,7 +130,7 @@ export default function Contact() {
           }}
         />
 
-        {/* Iconos sociales */}
+        {/* ===== ICONOS ===== */}
         <SocialLinks
           socialLinks={socialLinks}
           size="42px"
@@ -119,4 +141,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-}
+          }
