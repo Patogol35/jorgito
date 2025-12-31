@@ -42,47 +42,36 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: { primary: "#111" },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: { primary: "#ffffff" },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
         },
       }),
     [mode]
   );
 
-  // 👇 Animación solo del borde
-  useEffect(() => {
-    const cards = document.querySelectorAll(".border-anim");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("border-visible");
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    cards.forEach((card) => observer.observe(card));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -101,18 +90,14 @@ function App() {
             <Paper
               key={id}
               id={id}
-              className="border-anim"
               elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                borderLeft: `0px solid ${color}`, // Se anima después
+                borderLeft: `10px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-                transition: "border-left-width 1s ease-out",
-                "&.border-visible": {
-                  borderLeftWidth: "6px",
-                },
+                transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
                 },
@@ -123,8 +108,10 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -144,6 +131,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
