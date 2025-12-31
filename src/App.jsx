@@ -27,9 +27,7 @@ const MotionPaper = motion(Paper);
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
-
   const isDark = mode === "dark";
-  const scrollOffset = "90px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -40,34 +38,30 @@ function App() {
       createTheme({
         palette: {
           mode,
-          ...(mode === "light"
+          ...(isDark
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
-              }
-            : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
+                text: { primary: "#fff" },
+              }
+            : {
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
                 },
+                text: { primary: "#111" },
               }),
         },
         shape: {
           borderRadius: 6,
         },
       }),
-    [mode]
+    [mode, isDark]
   );
 
-  /* 🎯 SOLO BORDES CON COLOR */
+  /* 🎯 Colores SOLO para identidad */
   const sections = [
     { id: "about", color: "#26a69a", Component: About },
     { id: "skills", color: "#fb8c00", Component: Skills },
@@ -80,60 +74,64 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO GENERAL */}
+      {/* FONDO GLOBAL */}
       <Box
         sx={{
           minHeight: "100vh",
-          overflowX: "hidden",
           background: isDark
-            ? "linear-gradient(180deg, #121212 0%, #0e0e0e 100%)"
-            : "linear-gradient(180deg, #f5f7fa 0%, #edf1f7 100%)",
+            ? "linear-gradient(180deg, #121212, #0e0e0e)"
+            : "linear-gradient(180deg, #f5f7fa, #edf1f7)",
         }}
       >
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container
-          maxWidth="xl"
-          sx={{
-            py: 8,
-            px: { xs: 2, sm: 4, md: 6, lg: 10 },
-          }}
-        >
+        <Container maxWidth="xl" sx={{ py: 8 }}>
           {sections.map(({ id, color, Component }) => (
             <MotionPaper
               key={id}
               id={id}
               elevation={0}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               sx={{
+                position: "relative",
                 mb: 6,
                 p: { xs: 3, md: 5 },
-                scrollMarginTop: scrollOffset,
-
-                /* 🧱 FONDO NEUTRO */
                 backgroundColor: "background.paper",
 
-                /* 🔥 BORDE PROTAGONISTA */
+                /* 🧱 BORDE PRINCIPAL */
                 border: `2px solid ${color}`,
-                borderRadius: 6,
 
-                /* SOMBRA SOBRIA */
+                /* ✨ EFECTO INGENIERÍA */
                 boxShadow: isDark
-                  ? "0 6px 18px rgba(0,0,0,0.45)"
-                  : "0 6px 18px rgba(0,0,0,0.08)",
+                  ? "0 6px 20px rgba(0,0,0,0.55)"
+                  : "0 6px 20px rgba(0,0,0,0.08)",
 
-                transition:
-                  "transform 0.3s ease, box-shadow 0.3s ease",
+                transition: "all 0.35s ease",
+
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: 6,
+                  pointerEvents: "none",
+                  opacity: 0,
+                  transition: "opacity 0.35s ease",
+                  boxShadow: `0 0 0 1px ${color}, 0 0 18px ${color}55`,
+                },
 
                 "&:hover": {
-                  transform: "translateY(-3px)",
+                  transform: "translateY(-4px)",
                   boxShadow: isDark
-                    ? "0 12px 30px rgba(0,0,0,0.65)"
-                    : "0 12px 30px rgba(0,0,0,0.14)",
+                    ? "0 14px 36px rgba(0,0,0,0.7)"
+                    : "0 14px 36px rgba(0,0,0,0.14)",
+
+                  "&::before": {
+                    opacity: 1,
+                  },
                 },
               }}
             >
@@ -147,12 +145,10 @@ function App() {
         {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 20,
               right: 20,
-              zIndex: 1000,
               bgcolor: "#25D366",
               boxShadow: "0 6px 20px rgba(37,211,102,0.45)",
               "&:hover": { bgcolor: "#1ebe5c" },
@@ -161,7 +157,7 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 28, color: "#fff" }} />
+            <WhatsAppIcon sx={{ color: "#fff", fontSize: 28 }} />
           </Fab>
         </Tooltip>
 
