@@ -60,37 +60,15 @@ function App() {
     [mode]
   );
 
-  // 👇 Animación al hacer scroll
-  useEffect(() => {
-    const items = document.querySelectorAll(".fade-border");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = "translateX(0)";
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
 
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -110,37 +88,29 @@ function App() {
               key={id}
               id={id}
               elevation={3}
-              className="fade-border"
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-
-                // 👇 Más delgado, igual que antes, mismo lugar
-                borderLeft: `6px solid ${color}`,
-
+                borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-
-                // 👇 Animación suave inicial
                 opacity: 0,
-                transform: "translateX(-10px)",
-                transition:
-                  "opacity 0.8s ease-out, transform 0.8s ease-out",
-
-                "&:hover": {
-                  transform: "translateY(-4px)",
+                transform: "translateX(-20px)",
+                transition: "opacity 0.9s ease, transform 0.9s ease",
+                "&.visible": {
+                  opacity: 1,
+                  transform: "translateX(0)",
                 },
               }}
+              className="reveal-section"
             >
               <Component />
             </Paper>
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -160,9 +130,25 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
+
+      {/* OBSERVER ANIMATION */}
+      <script>
+        {`
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          });
+
+          document.querySelectorAll(".reveal-section").forEach(el => {
+            observer.observe(el);
+          });
+        `}
+      </script>
     </ThemeProvider>
   );
 }
