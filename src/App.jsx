@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -27,9 +27,31 @@ function App() {
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
 
+  const sectionRefs = useRef([]);
+
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
+
+  useEffect(() => {
+    const options = {
+      threshold: 0.25,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible-border");
+        }
+      });
+    }, options);
+
+    sectionRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const theme = useMemo(
     () =>
@@ -64,6 +86,30 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
+      <style>
+        {`
+          .border-animate {
+            position: relative;
+            border-left: 5px solid transparent;
+          }
+
+          .border-animate::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0%;
+            width: 5px;
+            background: currentColor;
+            transition: height 1.2s ease-out;
+          }
+
+          .visible-border::before {
+            height: 100%;
+          }
+        `}
+      </style>
+
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
@@ -86,45 +132,24 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
+          ].map(({ id, color, Component }, index) => (
             <Paper
               key={id}
               id={id}
-              elevation={0}
+              ref={(el) => (sectionRefs.current[index] = el)}
+              className="border-animate"
+              elevation={3}
               sx={{
-                position: "relative",
+                color,
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                overflow: "hidden",
                 scrollMarginTop: scrollOffset,
-                background: theme.palette.background.paper,
                 transition: "transform 0.3s ease, box-shadow 0.4s ease",
 
                 "&:hover": {
                   transform: "translateY(-6px)",
                   boxShadow: `0 8px 24px rgba(0,0,0,0.18)`,
-                },
-
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  borderLeft: `4px solid ${color}`,
-                  borderRadius: 3,
-                  opacity: 0.35,
-                  transform: "scaleY(0)",
-                  transformOrigin: "top",
-                  transition:
-                    "transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s",
-                },
-
-                "&:hover::before": {
-                  transform: "scaleY(1)",
-                  opacity: 0.9,
                 },
               }}
             >
