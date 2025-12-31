@@ -22,8 +22,6 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-import { motion } from "framer-motion";
-
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
@@ -62,22 +60,18 @@ function App() {
     [mode]
   );
 
-  const sections = [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#8e24aa", Component: Certifications },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-  ];
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -86,54 +80,63 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {sections.map(({ id, color, Component }, index) => (
-            <motion.div
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact },
+          ].map(({ id, color, Component }) => (
+            <Paper
               key={id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.7,
-                delay: index * 0.15,
-                ease: "easeOut",
-              }}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <Paper
-                id={id}
-                elevation={3}
-                sx={{
-                  mb: 4,
-                  p: { xs: 3, md: 6 },
+              id={id}
+              elevation={0}
+              sx={{
+                position: "relative",
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+                overflow: "hidden",
+                scrollMarginTop: scrollOffset,
+                background: theme.palette.background.paper,
+                transition: "transform 0.3s ease, box-shadow 0.4s ease",
+
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: `0 8px 24px rgba(0,0,0,0.18)`,
+                },
+
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  borderLeft: `4px solid ${color}`,
                   borderRadius: 3,
-                  position: "relative",
-                  overflow: "hidden",
-                  scrollMarginTop: scrollOffset,
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                  },
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "60px",
-                    height: "6px",
-                    backgroundColor: color,
-                    borderRadius: "0 0 6px 0",
-                  },
-                }}
-              >
-                <Component />
-              </Paper>
-            </motion.div>
+                  opacity: 0.35,
+                  transform: "scaleY(0)",
+                  transformOrigin: "top",
+                  transition:
+                    "transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s",
+                },
+
+                "&:hover::before": {
+                  transform: "scaleY(1)",
+                  opacity: 0.9,
+                },
+              }}
+            >
+              <Component />
+            </Paper>
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
-        <ChatBot />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -152,6 +155,9 @@ function App() {
             <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
+
+        {/* CHATBOT IA PERSONAL */}
+        <ChatBot />
       </Box>
     </ThemeProvider>
   );
