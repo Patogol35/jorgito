@@ -138,16 +138,23 @@ export default function Projects() {
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
-          sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            px: 4,
-            py: 1.2,
-            borderRadius: "999px",
-            background: badgeBg,
-          }}
-        >
+  sx={{
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    px: 4,
+    py: 1.2,
+    borderRadius: "999px",
+    background: isDark
+      ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+      : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+    border: `1px solid ${
+      isDark
+        ? "rgba(144,202,249,0.25)"
+        : "rgba(25,118,210,0.25)"
+    }`,
+  }}
+>
           <WorkOutlineIcon
             sx={{ fontSize: 26, mr: 1.2, color: primaryColor }}
           />
