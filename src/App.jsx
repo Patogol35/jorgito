@@ -38,110 +38,81 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
+                text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#0c0c0c",
-                  paper: "#151515",
-                },
-                text: {
-                  primary: "#ffffff",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
+                text: { primary: "#ffffff" },
               }),
-        },
-        shape: { borderRadius: 14 },
-        typography: {
-          fontFamily: `"Poppins", "Roboto", sans-serif`,
         },
       }),
     [mode]
   );
 
-  const sectionStyles = {
-    mb: 8,
+  const sectionStyles = (color) => ({
+    mb: 6,
     p: { xs: 3, md: 6 },
-    position: "relative",
-    scrollMarginTop: scrollOffset,
-    backgroundColor: theme.palette.background.paper,
     borderRadius: 4,
-    backdropFilter: "blur(6px)",
-    border: "1px solid rgba(255,255,255,0.06)",
+    scrollMarginTop: scrollOffset,
+    position: "relative",
+    overflow: "hidden",
+    transition: "transform .45s cubic-bezier(.22,1,.36,1)",
+    backdropFilter: "blur(4px)",
 
+    // Borde animado
     "&:before": {
       content: '""',
       position: "absolute",
       left: 0,
-      top: "5%",
-      bottom: "5%",
-      width: "7px",
-      borderRadius: "0 10px 10px 0",
-      backgroundColor: "currentColor",
-      opacity: 0.9,
-      transition: "all .4s cubic-bezier(.22,1,.36,1)",
+      top: 0,
+      bottom: 0,
+      width: "0px", // inicia invisible
+      backgroundColor: color,
+      transition: "width .45s cubic-bezier(.22,1,.36,1)",
+      borderRadius: "0 6px 6px 0",
     },
 
-    transition: "all .4s cubic-bezier(.22,1,.36,1)",
     "&:hover": {
       transform: "translateY(-4px)",
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 18px 45px rgba(0,0,0,0.45)"
-          : "0 16px 40px rgba(0,0,0,0.12)",
+      boxShadow: "0 12px 36px rgba(0,0,0,0.18)",
       "&:before": {
-        width: "10px",
-        opacity: 1,
+        width: "6px", // se expande suavemente 😎
       },
     },
-  };
+  });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
           sx={{
             py: 8,
-            px: { xs: 2, sm: 4, md: 6, lg: 8 },
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
           {[
-            { id: "about", color: "rgba(76,175,80,1)", Component: About },
-            { id: "skills", color: "rgba(255,152,0,1)", Component: Skills },
-            {
-              id: "certifications",
-              color: "rgba(156,39,176,1)",
-              Component: Certifications,
-            },
-            { id: "projects", color: "rgba(25,118,210,1)", Component: Projects },
-            { id: "contact", color: "rgba(244,67,54,1)", Component: Contact },
+            { id: "about", color: "rgba(76, 175, 80, 1)", Component: About },
+            { id: "skills", color: "rgba(255, 152, 0, 1)", Component: Skills },
+            { id: "certifications", color: "rgba(156, 39, 176, 1)", Component: Certifications },
+            { id: "projects", color: "rgba(25, 118, 210, 1)", Component: Projects },
+            { id: "contact", color: "rgba(244, 67, 54, 1)", Component: Contact },
           ].map(({ id, color, Component }) => (
-            <Paper key={id} id={id} elevation={0} sx={{ ...sectionStyles, color }}>
+            <Paper key={id} id={id} elevation={0} sx={sectionStyles(color)}>
               <Component />
             </Paper>
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             sx={{
@@ -160,7 +131,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
