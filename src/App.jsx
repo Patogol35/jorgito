@@ -33,13 +33,14 @@ function App() {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
 
+  // Animación al entrar en pantalla (scroll reveal)
   useEffect(() => {
     const options = { threshold: 0.25 };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add("visible-border");
+          entry.target.classList.add("border-visible");
         }
       });
     }, options);
@@ -74,52 +75,40 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* ✨ Estilos del borde futurista */}
+      {/* === Estilos del borde animado === */}
       <style>
         {`
-          .reveal-border {
+          .animated-border {
             position: relative;
-            border-left: 5px solid currentColor;
             overflow: hidden;
           }
 
-          .reveal-border::before {
+          .animated-border::before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            width: 5px;
+            width: 4px;
             height: 0%;
-            background: currentColor;
-            transition: height 1.2s cubic-bezier(0.25, 1, 0.35, 1);
+            background-color: currentColor;
+            border-radius: 2px;
+            transition: height 1s ease-out;
           }
 
-          /* Aparece progresivamente */
-          .visible-border::before {
+          .border-visible::before {
             height: 100%;
-          }
-
-          /* Glow futurista solo modo oscuro */
-          html.dark-mode .reveal-border::before,
-          html.dark-mode .reveal-border:hover::before {
-            box-shadow: 0 0 12px currentColor;
           }
         `}
       </style>
 
-      {/* HTML class para activar glow en modo oscuro */}
-      {useEffect(() => {
-        document.documentElement.classList.toggle("dark-mode", mode === "dark");
-      }, [mode])}
-
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAV */}
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
 
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* SECCIONES */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -139,19 +128,19 @@ function App() {
               key={id}
               id={id}
               ref={(el) => (sectionRefs.current[index] = el)}
-              className="reveal-border"
+              className="animated-border"
               elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
+                borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
                 color,
                 transition: "transform 0.3s ease, box-shadow 0.4s ease",
-
                 "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: `0 8px 24px rgba(0,0,0,0.25)`,
+                  transform: "translateY(-5px)",
+                  boxShadow: `0 8px 22px rgba(0,0,0,0.18)`,
                 },
               }}
             >
@@ -163,7 +152,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -183,7 +172,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA */}
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
