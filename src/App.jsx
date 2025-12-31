@@ -56,21 +56,21 @@ function App() {
     [mode]
   );
 
-  // 👇 ANIMACIÓN DE APARICIÓN DE SECCIONES
+  // 👇 Animación solo del borde
   useEffect(() => {
+    const cards = document.querySelectorAll(".border-anim");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
+            entry.target.classList.add("border-visible");
           }
         });
       },
       { threshold: 0.2 }
     );
 
-    const sections = document.querySelectorAll(".reveal-section");
-    sections.forEach((sec) => observer.observe(sec));
+    cards.forEach((card) => observer.observe(card));
 
     return () => observer.disconnect();
   }, []);
@@ -101,21 +101,20 @@ function App() {
             <Paper
               key={id}
               id={id}
+              className="border-anim"
               elevation={3}
-              className="reveal-section"
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: "12px",
-                borderLeft: `4px solid ${color}`, // 👈 borde delgado
+                borderRadius: 3,
+                borderLeft: `0px solid ${color}`, // Se anima después
                 scrollMarginTop: scrollOffset,
-                opacity: 0,
-                transform: "translateX(-30px)",
-                transition: "all 0.6s ease-out",
-
-                "&.visible": {
-                  opacity: 1,
-                  transform: "translateX(0)",
+                transition: "border-left-width 1s ease-out",
+                "&.border-visible": {
+                  borderLeftWidth: "10px",
+                },
+                "&:hover": {
+                  transform: "translateY(-4px)",
                 },
               }}
             >
