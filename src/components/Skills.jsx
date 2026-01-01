@@ -103,14 +103,14 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-{/* Filtros mejorados */}
+{/* Filtros */}
 <Box
   sx={{
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     mb: 6,
-    width: '100%',
-    px: { xs: 1, sm: 0 }, // evita tocar los bordes en móvil
+    width: "100%",
+    px: { xs: 2, sm: 0 }, // 👈 evita que toque los bordes en móvil
   }}
 >
   <ToggleButtonGroup
@@ -119,60 +119,52 @@ export default function Skills() {
     onChange={(e, val) => val && setFilter(val)}
     aria-label="Filtros de Skills"
     sx={{
-      display: 'flex',
-      flexWrap: 'nowrap',
-      overflowX: 'auto',
-      px: 1.5,
-      py: 1,
-      borderRadius: '20px',
+      display: "flex",
+      flexWrap: "nowrap",
+      overflowX: "auto", // permite desplazarse si no cabe todo
+      px: 1,
+      py: 0.5,
       background: isDark
-        ? 'rgba(30, 30, 46, 0.6)'
-        : 'rgba(245, 247, 250, 0.8)',
-      backdropFilter: 'blur(8px)',
-      border: '1px solid',
-      borderColor: isDark
-        ? 'rgba(255, 255, 255, 0.1)'
-        : 'rgba(0, 0, 0, 0.08)',
+        ? "rgba(255,255,255,0.05)"
+        : "rgba(255,255,255,0.7)",
+      borderRadius: "12px",
       boxShadow: isDark
-        ? '0 4px 20px rgba(0, 0, 0, 0.4)'
-        : '0 4px 20px rgba(0, 0, 0, 0.08)',
+        ? "0 4px 12px rgba(0,0,0,0.3)"
+        : "0 4px 12px rgba(0,0,0,0.1)",
+      // Ocultar scrollbar visual (pero permitir scroll funcional)
       '&::-webkit-scrollbar': { display: 'none' },
       scrollbarWidth: 'none',
       msOverflowStyle: 'none',
       maxWidth: '100%',
       '& .MuiToggleButton-root': {
         whiteSpace: 'nowrap',
-        minWidth: { xs: 'auto', sm: '80px' },
-        px: { xs: 1.2, sm: 2 },
-        py: { xs: 0.6, sm: 0.8 },
-        fontSize: { xs: '0.75rem', sm: '0.875rem' },
-        fontWeight: '600',
-        textTransform: 'none',
-        borderRadius: '14px',
-        color: theme.palette.text.secondary,
-        backgroundColor: 'transparent',
-        border: 'none',
-        transition: 'all 0.25s ease',
-        mx: { xs: 0.4, sm: 0.6 },
-        '&:hover': {
-          color: primary,
-          backgroundColor: isDark
-            ? 'rgba(255, 255, 255, 0.1)'
-            : 'rgba(25, 118, 210, 0.08)',
-        },
-        '&.Mui-selected': {
-          color: '#fff',
-          backgroundColor: `linear-gradient(90deg, ${primary}, ${isDark ? '#7e22ce' : '#6d28d9'})`,
-          boxShadow: isDark
-            ? '0 2px 8px rgba(144, 202, 249, 0.3)'
-            : '0 2px 8px rgba(25, 118, 210, 0.3)',
-          transform: 'scale(1.03)',
-        },
+        minWidth: { xs: '60px', sm: 'auto' }, // 👈 mínimo razonable en móvil
+        px: { xs: 1.2, sm: 1.5 },
+        py: { xs: 0.4, sm: 0.5 },
+        fontSize: { xs: '0.72rem', sm: '0.85rem' },
+        borderRadius: '8px', // 👈 suaviza las esquinas de los botones
+        mx: { xs: 0.5, sm: 0.75 }, // 👈 espaciado interno para evitar pegotes
       },
     }}
   >
     {categories.map((cat) => (
-      <ToggleButton key={cat} value={cat}>
+      <ToggleButton
+        key={cat}
+        value={cat}
+        sx={{
+          textTransform: "none",
+          fontWeight: "bold",
+          color: theme.palette.text.primary,
+          "&.Mui-selected": {
+            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            color: "white",
+          },
+          "&:hover": {
+            background: "linear-gradient(90deg, #2563eb, #4f46e5)",
+            color: "white",
+          },
+        }}
+      >
         {cat}
       </ToggleButton>
     ))}
