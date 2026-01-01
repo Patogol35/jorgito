@@ -71,58 +71,56 @@ export default function Skills() {
     <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
       <Container>
 
-       {/* =========================
-    HEADER — MISMO ESTILO QUE ABOUT
-========================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8 }}
-  style={{ textAlign: "center", marginBottom: "2rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      px: 4,
-      py: 1.2,
-      borderRadius: "999px",
-      background: isDark
-        ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-        : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-    }}
-  >
-    {/* Icono con círculo */}
-    <Box
-      sx={{
-        width: 34,
-        height: 34,
-        borderRadius: "50%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: isDark ? "#1e3a5f" : "#1976d2",
-        mr: 1.2,
-      }}
-    >
-      <GraduationCap size={20} color="#fff" />
-    </Box>
+        {/* =========================
+            HEADER
+        ========================= */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              px: 4,
+              py: 1.2,
+              borderRadius: "999px",
+              background: isDark
+                ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+                : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+            }}
+          >
+            <Box
+              sx={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
+              }}
+            >
+              <BuildIcon sx={{ color: "#fff", fontSize: 20 }} />
+            </Box>
 
-    <Typography
-      variant="h6"
-      sx={{ fontWeight: "bold", color: primaryColor }}
-    >
-      Tecnologías
-    </Typography>
-  </Box>
-</motion.div>
-        
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primary }}
+            >
+              Tecnologías
+            </Typography>
+          </Box>
+        </motion.div>
+
         {/* =========================
             FILTROS
         ========================= */}
@@ -137,7 +135,7 @@ export default function Skills() {
               overflowX: "auto",
               gap: 1,
               px: 2,
-              '&::-webkit-scrollbar': { display: "none" },
+              "&::-webkit-scrollbar": { display: "none" },
             }}
           >
             {categories.map((cat) => (
