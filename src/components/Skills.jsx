@@ -110,7 +110,7 @@ export default function Skills() {
     justifyContent: "center",
     mb: 6,
     width: "100%",
-    px: { xs: 2, sm: 0 }, // 👈 evita que toque los bordes en móvil
+    px: { xs: 2, sm: 0 },
   }}
 >
   <ToggleButtonGroup
@@ -121,30 +121,20 @@ export default function Skills() {
     sx={{
       display: "flex",
       flexWrap: "nowrap",
-      overflowX: "auto", // permite desplazarse si no cabe todo
+      overflowX: "auto",
       px: 1,
-      py: 0.5,
+      py: 1, // 👈 un poco más de padding vertical
       background: isDark
-        ? "rgba(255,255,255,0.05)"
-        : "rgba(255,255,255,0.7)",
-      borderRadius: "12px",
+        ? "rgba(0,0,0,0.15)"
+        : "rgba(255,255,255,0.6)",
+      borderRadius: "16px",
       boxShadow: isDark
-        ? "0 4px 12px rgba(0,0,0,0.3)"
-        : "0 4px 12px rgba(0,0,0,0.1)",
-      // Ocultar scrollbar visual (pero permitir scroll funcional)
+        ? "0 4px 16px rgba(0,0,0,0.4)"
+        : "0 4px 16px rgba(0,0,0,0.12)",
       '&::-webkit-scrollbar': { display: 'none' },
       scrollbarWidth: 'none',
       msOverflowStyle: 'none',
       maxWidth: '100%',
-      '& .MuiToggleButton-root': {
-        whiteSpace: 'nowrap',
-        minWidth: { xs: '60px', sm: 'auto' }, // 👈 mínimo razonable en móvil
-        px: { xs: 1.2, sm: 1.5 },
-        py: { xs: 0.4, sm: 0.5 },
-        fontSize: { xs: '0.72rem', sm: '0.85rem' },
-        borderRadius: '8px', // 👈 suaviza las esquinas de los botones
-        mx: { xs: 0.5, sm: 0.75 }, // 👈 espaciado interno para evitar pegotes
-      },
     }}
   >
     {categories.map((cat) => (
@@ -154,14 +144,41 @@ export default function Skills() {
         sx={{
           textTransform: "none",
           fontWeight: "bold",
+          fontSize: { xs: '0.8rem', sm: '0.9rem' }, // 👈 un poco más grande
+          px: { xs: 1.6, sm: 2.2 }, // 👈 más ancho
+          py: { xs: 0.7, sm: 0.9 }, // 👈 más alto
+          borderRadius: "12px", // esquinas redondeadas
+          // 👇 Bordes visibles en todos los estados
+          border: `1.5px solid ${
+            isDark 
+              ? 'rgba(255,255,255,0.2)' 
+              : 'rgba(0,0,0,0.15)'
+          }`,
           color: theme.palette.text.primary,
+          backgroundColor: 'transparent',
+          transition: 'all 0.25s ease',
+          mx: { xs: 0.6, sm: 0.8 }, // espacio entre botones
+
+          // Estado seleccionado
           "&.Mui-selected": {
             background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
             color: "white",
+            borderColor: isDark 
+              ? 'rgba(144,202,249,0.6)' 
+              : '#1976d2', // borde más fuerte al seleccionar
+            boxShadow: isDark 
+              ? '0 2px 8px rgba(144,202,249,0.3)'
+              : '0 2px 8px rgba(25,118,210,0.3)',
           },
+
+          // Hover
           "&:hover": {
-            background: "linear-gradient(90deg, #2563eb, #4f46e5)",
-            color: "white",
+            backgroundColor: isDark 
+              ? 'rgba(255,255,255,0.08)' 
+              : 'rgba(25,118,210,0.08)',
+            borderColor: isDark 
+              ? 'rgba(144,202,249,0.4)' 
+              : 'rgba(25,118,210,0.4)',
           },
         }}
       >
