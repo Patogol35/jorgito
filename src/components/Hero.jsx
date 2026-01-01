@@ -21,19 +21,39 @@ export default function Hero({ mode, setMode }) {
     <>
       <Toolbar />
 
+      {/* FONDO ANIMADO SUAVE */}
       <Box
         id="hero"
         sx={{
+          position: "relative",
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          overflow: "hidden",
           px: { xs: 2, sm: 4, md: 8 },
           background: isDark
-            ? "radial-gradient(circle at top, rgba(59,130,246,.12), transparent 60%)"
-            : "radial-gradient(circle at top, rgba(59,130,246,.18), transparent 60%)",
+            ? "linear-gradient(180deg, #050b18, #020617)"
+            : "linear-gradient(180deg, #f8fafc, #ffffff)",
         }}
       >
+        {/* Glow animado */}
+        <motion.div
+          animate={{ opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 6, repeat: Infinity }}
+          style={{
+            position: "absolute",
+            width: 500,
+            height: 500,
+            borderRadius: "50%",
+            background:
+              "radial-gradient(circle, rgba(59,130,246,.25), transparent 65%)",
+            top: "-120px",
+            left: "-120px",
+            pointerEvents: "none",
+          }}
+        />
+
         <Box
           sx={{
             display: "flex",
@@ -42,13 +62,14 @@ export default function Hero({ mode, setMode }) {
             gap: { xs: 5, md: 10 },
             maxWidth: "1200px",
             width: "100%",
+            zIndex: 2,
           }}
         >
           {/* AVATAR */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.8 }}
           >
             <motion.div
               animate={{ y: [0, -10, 0] }}
@@ -83,17 +104,14 @@ export default function Hero({ mode, setMode }) {
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
           >
-            <Box
-              maxWidth="600px"
-              textAlign={{ xs: "center", sm: "left" }}
-            >
+            <Box maxWidth="620px" textAlign={{ xs: "center", sm: "left" }}>
               <Typography
                 sx={{
                   fontWeight: 800,
-                  lineHeight: 1.2,
-                  fontSize: { xs: "2.1rem", sm: "2.5rem", md: "2.9rem" },
+                  lineHeight: 1.15,
+                  fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3rem" },
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -123,8 +141,8 @@ export default function Hero({ mode, setMode }) {
                 }}
               >
                 Desarrollo soluciones digitales modernas, seguras y escalables.
-                Transformo ideas en productos reales con arquitectura limpia,
-                experiencia de usuario y tecnología de alto nivel.
+                Transformo ideas en productos reales combinando arquitectura
+                limpia, experiencia de usuario y tecnología de alto nivel.
               </Typography>
 
               {/* BOTONES */}
@@ -133,46 +151,46 @@ export default function Hero({ mode, setMode }) {
                   display: "flex",
                   gap: 2,
                   flexWrap: "wrap",
-                  justifyContent: { xs: "center", sm: "flex-start" },
                   alignItems: "center",
+                  justifyContent: { xs: "center", sm: "flex-start" },
                 }}
               >
-                <Button
-                  variant="contained"
-                  startIcon={<DescriptionIcon />}
+                <HeroButton
+                  icon={<DescriptionIcon />}
+                  label="Ver CV"
                   href="/Jorge.CV.pdf"
-                  target="_blank"
-                  sx={buttonStyle(theme)}
-                >
-                  Ver CV
-                </Button>
-
-                <Button
-                  variant="contained"
-                  startIcon={<WorkspacePremiumIcon />}
+                />
+                <HeroButton
+                  icon={<WorkspacePremiumIcon />}
+                  label="Ver Título"
                   href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-                  target="_blank"
-                  sx={buttonStyle(theme)}
-                >
-                  Ver Título
-                </Button>
+                />
 
-                <Button
-                  variant="contained"
-                  startIcon={<SmartToyIcon />}
-                  onClick={() =>
-                    window.openSashaChat && window.openSashaChat()
-                  }
-                  sx={{
-                    ...buttonStyle(theme),
-                    background:
-                      "linear-gradient(90deg,#6366f1,#3b82f6)",
-                  }}
-                >
-                  Sasha
-                </Button>
+                {/* SASHA BUBBLE */}
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Button
+                    startIcon={<SmartToyIcon />}
+                    onClick={() =>
+                      window.openSashaChat && window.openSashaChat()
+                    }
+                    sx={{
+                      px: 4,
+                      py: 1.4,
+                      borderRadius: "30px",
+                      fontWeight: 700,
+                      textTransform: "none",
+                      background:
+                        "linear-gradient(90deg,#6366f1,#3b82f6)",
+                      boxShadow:
+                        "0 0 20px rgba(99,102,241,.45)",
+                    }}
+                    variant="contained"
+                  >
+                    Sasha
+                  </Button>
+                </motion.div>
 
-                {/* BOTÓN MODO (NO SE DEFORMA) */}
+                {/* MODO OSCURO / CLARO */}
                 <IconButton
                   onClick={() =>
                     setMode(mode === "light" ? "dark" : "light")
@@ -201,16 +219,29 @@ export default function Hero({ mode, setMode }) {
   );
 }
 
-const buttonStyle = (theme) => ({
-  px: 4,
-  py: 1.4,
-  borderRadius: "30px",
-  fontWeight: 700,
-  textTransform: "none",
-  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-  transition: "all .3s ease",
-  "&:hover": {
-    transform: "translateY(-2px)",
-    boxShadow: "0 12px 30px rgba(59,130,246,.35)",
-  },
-});
+/* BOTÓN BASE */
+function HeroButton({ icon, label, href }) {
+  return (
+    <Button
+      startIcon={icon}
+      href={href}
+      target="_blank"
+      variant="contained"
+      sx={{
+        px: 4,
+        py: 1.4,
+        borderRadius: "30px",
+        fontWeight: 700,
+        textTransform: "none",
+        background: "linear-gradient(90deg,#3b82f6,#2563eb)",
+        transition: "all .3s ease",
+        "&:hover": {
+          transform: "translateY(-2px)",
+          boxShadow: "0 12px 30px rgba(59,130,246,.35)",
+        },
+      }}
+    >
+      {label}
+    </Button>
+  );
+}
