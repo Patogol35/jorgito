@@ -103,78 +103,70 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-{/* Filtros - Versión limpia, ancha y con indicación clara */}
+{/* Filtros */}
 <Box
   sx={{
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     mb: 6,
-    width: '100%',
-    px: { xs: 1.5, sm: 0 },
+    width: "100%",
   }}
 >
-  <Box
+  <ToggleButtonGroup
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    aria-label="Filtros de Skills"
     sx={{
-      display: 'flex',
-      overflowX: 'auto',
-      px: 0.5,
-      py: 0.8,
-      gap: { xs: 0.9, sm: 1.2 }, // espacio consistente entre botones
+      display: "flex",
+      flexWrap: "nowrap", // evita saltos
+      overflowX: "auto", // ✅ permite scroll horizontal suave en móviles
+      px: 1,
+      py: 0.5,
+      background: isDark
+        ? "rgba(255,255,255,0.05)"
+        : "rgba(255,255,255,0.7)",
+      borderRadius: "12px",
+      boxShadow: isDark
+        ? "0 4px 12px rgba(0,0,0,0.3)"
+        : "0 4px 12px rgba(0,0,0,0.1)",
+      '&::-webkit-scrollbar': {
+        display: 'none', // oculta scrollbar en WebKit
+      },
+      scrollbarWidth: 'none', // oculta scrollbar en Firefox
+      msOverflowStyle: 'none', // oculta en IE/Edge
       maxWidth: '100%',
-      '&::-webkit-scrollbar': { display: 'none' },
-      scrollbarWidth: 'none',
-      msOverflowStyle: 'none',
+      '& .MuiToggleButton-root': {
+        whiteSpace: 'nowrap', // evita que el texto se parta
+        minWidth: 'auto',
+        px: { xs: 1, sm: 1.5 },
+        py: { xs: 0.4, sm: 0.5 },
+        fontSize: { xs: '0.75rem', sm: '0.85rem' },
+      },
     }}
   >
     {categories.map((cat) => (
       <ToggleButton
         key={cat}
-        selected={filter === cat}
-        onClick={() => setFilter(cat)}
         value={cat}
         sx={{
-          // TAMAÑO: más ancho y alto
-          px: { xs: 2, sm: 2.8 },
-          py: { xs: 0.8, sm: 1 },
-          minWidth: { xs: '72px', sm: '96px' },
-          height: { xs: '42px', sm: '46px' },
-
-          // ESTILO
-          textTransform: 'none',
-          fontWeight: '600',
-          fontSize: { xs: '0.84rem', sm: '0.94rem' },
-          borderRadius: '14px',
-          border: `1.8px solid ${
-            filter === cat
-              ? (isDark ? 'rgba(144,202,249,0.8)' : '#1976d2')
-              : (isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)')
-          }`,
-          backgroundColor: filter === cat 
-            ? (isDark ? 'rgba(30,60,90,0.4)' : 'rgba(25,118,210,0.1)')
-            : 'transparent',
-          color: filter === cat 
-            ? (isDark ? '#bbdefb' : '#1565c0')
-            : theme.palette.text.primary,
-
-          // TRANSICIONES
-          transition: 'all 0.2s ease',
-          flexShrink: 0, // 👈 ¡IMPORTANTE! evita que se compriman
-
-          // HOVER
-          '&:hover': {
-            borderColor: isDark 
-              ? 'rgba(144,202,249,0.5)' 
-              : 'rgba(25,118,210,0.5)',
-            backgroundColor: isDark 
-              ? 'rgba(255,255,255,0.06)' 
-              : 'rgba(25,118,210,0.06)',
+          textTransform: "none",
+          fontWeight: "bold",
+          color: theme.palette.text.primary,
+          "&.Mui-selected": {
+            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            color: "white",
+          },
+          "&:hover": {
+            background: "linear-gradient(90deg,#2563eb,#4f46e5)",
+            color: "white",
           },
         }}
       >
         {cat}
       </ToggleButton>
     ))}
-  </Box>
+  </ToggleButtonGroup>
 </Box>
 
         {/* Grid de Skills */}
