@@ -103,7 +103,7 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-{/* Filtros */}
+{/* Filtros con indicador de desplazamiento */}
 <Box
   sx={{
     display: "flex",
@@ -111,8 +111,27 @@ export default function Skills() {
     mb: 6,
     width: "100%",
     px: { xs: 2, sm: 0 },
+    position: "relative",
   }}
 >
+  {/* Degradado derecho para indicar que hay más opciones */}
+  <Box
+    sx={{
+      position: "absolute",
+      right: { xs: 20, sm: 0 },
+      top: 0,
+      bottom: 0,
+      width: 40,
+      borderRadius: "16px",
+      background: (theme) =>
+        `linear-gradient(to left, ${
+          isDark ? 'rgba(18,18,18,1)' : 'rgba(245,247,250,1)'
+        }, transparent)`,
+      pointerEvents: "none", // no interfiere con el scroll
+      zIndex: 10,
+    }}
+  />
+
   <ToggleButtonGroup
     value={filter}
     exclusive
@@ -122,16 +141,16 @@ export default function Skills() {
       display: "flex",
       flexWrap: "nowrap",
       overflowX: "auto",
-      px: 0.5, // mínimo padding interno
+      px: 0.5,
       py: 0.5,
-      // 👇 FONDO TOTALMENTE TRANSPARENTE (sin ese fondo que no querías)
       background: "transparent",
       borderRadius: "16px",
-      boxShadow: "none", // 👈 sin sombra en el grupo
+      boxShadow: "none",
       '&::-webkit-scrollbar': { display: 'none' },
       scrollbarWidth: 'none',
       msOverflowStyle: 'none',
       maxWidth: '100%',
+      zIndex: 5,
     }}
   >
     {categories.map((cat) => (
@@ -142,10 +161,9 @@ export default function Skills() {
           textTransform: "none",
           fontWeight: "bold",
           fontSize: { xs: '0.82rem', sm: '0.92rem' },
-          px: { xs: 1.8, sm: 2.6 }, // 👈 más ancho
-          py: { xs: 0.75, sm: 0.95 }, // 👈 más alto
+          px: { xs: 1.8, sm: 2.6 },
+          py: { xs: 0.75, sm: 0.95 },
           borderRadius: "14px",
-          // 👇 Bordes siempre visibles
           border: `1.6px solid ${
             isDark 
               ? 'rgba(255,255,255,0.22)' 
@@ -154,9 +172,8 @@ export default function Skills() {
           color: theme.palette.text.primary,
           backgroundColor: 'transparent',
           transition: 'all 0.25s ease',
-          mx: { xs: 0.7, sm: 0.9 }, // espacio entre botones
+          mx: { xs: 0.7, sm: 0.9 },
 
-          // Estado seleccionado
           "&.Mui-selected": {
             background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
             color: "white",
@@ -168,7 +185,6 @@ export default function Skills() {
               : '0 2px 8px rgba(25,118,210,0.3)',
           },
 
-          // Hover
           "&:hover": {
             backgroundColor: isDark 
               ? 'rgba(255,255,255,0.07)' 
