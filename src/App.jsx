@@ -95,7 +95,7 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                borderLeft: `6px solid ${color}`,
+                borderLeft: `5px solid ${color}`,
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
                 "&:hover": {
