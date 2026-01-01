@@ -21,45 +21,55 @@ export default function Hero({ mode, setMode }) {
     <>
       <Toolbar />
 
-      {/* FONDO ANIMADO SUAVE */}
+      {/* HERO */}
       <Box
         id="hero"
         sx={{
-          position: "relative",
           minHeight: "100vh",
+          position: "relative",
+          overflow: "hidden",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          overflow: "hidden",
           px: { xs: 2, sm: 4, md: 8 },
           background: isDark
-            ? "linear-gradient(180deg, #050b18, #020617)"
-            : "linear-gradient(180deg, #f8fafc, #ffffff)",
+            ? "linear-gradient(135deg, #020617, #050b18, #020617)"
+            : "linear-gradient(135deg, #eef2ff, #ffffff, #eef2ff)",
         }}
       >
-        {/* Glow animado */}
+        {/* BLUR BACKGROUND */}
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            backdropFilter: "blur(6px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* GLOW DECORATIVO */}
         <motion.div
-          animate={{ opacity: [0.4, 0.7, 0.4] }}
+          animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 6, repeat: Infinity }}
           style={{
             position: "absolute",
-            width: 500,
-            height: 500,
+            width: 520,
+            height: 520,
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(59,130,246,.25), transparent 65%)",
-            top: "-120px",
-            left: "-120px",
-            pointerEvents: "none",
+              "radial-gradient(circle, rgba(99,102,241,.35), transparent 65%)",
+            top: "-160px",
+            right: "-160px",
           }}
         />
 
         <Box
           sx={{
+            position: "relative",
             display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
+            flexDirection: { xs: "column", md: "row" },
             alignItems: "center",
-            gap: { xs: 5, md: 10 },
+            gap: { xs: 6, md: 12 },
             maxWidth: "1200px",
             width: "100%",
             zIndex: 2,
@@ -67,82 +77,95 @@ export default function Hero({ mode, setMode }) {
         >
           {/* AVATAR */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.9 }}
           >
             <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              whileHover={{ scale: 1.05 }}
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
               style={{
+                padding: 6,
                 borderRadius: "50%",
-                boxShadow: `0 0 70px ${
-                  isDark
-                    ? "rgba(59,130,246,.35)"
-                    : "rgba(59,130,246,.25)"
-                }`,
+                background:
+                  "linear-gradient(90deg,#6366f1,#3b82f6,#06b6d4)",
               }}
             >
-              <Avatar
-                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-                alt="Jorge Patricio"
-                sx={{
-                  width: { xs: 140, sm: 180, md: 220 },
-                  height: { xs: 140, sm: 180, md: 220 },
-                  border: `4px solid ${theme.palette.primary.main}`,
+              <motion.div
+                animate={{ y: [0, -14, 0] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                style={{
+                  borderRadius: "50%",
+                  boxShadow: "0 0 80px rgba(99,102,241,.6)",
                 }}
-              />
+              >
+                <Avatar
+                  src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+                  sx={{
+                    width: { xs: 150, sm: 200, md: 240 },
+                    height: { xs: 150, sm: 200, md: 240 },
+                    border: "4px solid #020617",
+                  }}
+                />
+              </motion.div>
             </motion.div>
           </motion.div>
 
           {/* TEXTO */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            transition={{ duration: 1 }}
           >
-            <Box maxWidth="620px" textAlign={{ xs: "center", sm: "left" }}>
+            <Box maxWidth="620px" textAlign={{ xs: "center", md: "left" }}>
               <Typography
                 sx={{
-                  fontWeight: 800,
-                  lineHeight: 1.15,
-                  fontSize: { xs: "2.1rem", sm: "2.6rem", md: "3rem" },
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  fontWeight: 900,
+                  fontSize: { xs: "2.3rem", sm: "2.9rem", md: "3.4rem" },
+                  background:
+                    "linear-gradient(90deg,#6366f1,#3b82f6)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
-                  mb: 2,
                 }}
               >
-                Hola, soy Jorge Patricio Santamaría Cherrez
+                Jorge Patricio Santamaría
               </Typography>
+
+              {/* LINEA DECORATIVA */}
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: 120 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+                style={{
+                  height: 4,
+                  borderRadius: 4,
+                  background:
+                    "linear-gradient(90deg,#6366f1,#3b82f6)",
+                  margin: "18px 0",
+                }}
+              />
 
               <Typography
                 sx={{
-                  fontSize: "1.05rem",
+                  fontSize: "1.1rem",
                   fontWeight: 500,
                   color: "text.secondary",
                   mb: 3,
                 }}
               >
-                🎓 Máster en Ingeniería de Software y Sistemas Informáticos
+                Ingeniero de Software · Full Stack Developer
               </Typography>
 
               <Typography
                 sx={{
-                  fontSize: "1.05rem",
-                  lineHeight: 1.9,
-                  opacity: 0.9,
+                  fontSize: "1.1rem",
+                  lineHeight: 1.85,
                   mb: 5,
                 }}
               >
-                Desarrollo soluciones digitales modernas, seguras y escalables.
-                Transformo ideas en productos reales combinando arquitectura
-                limpia, experiencia de usuario y tecnología de alto nivel.
+                Construyo productos digitales con arquitectura limpia,
+                rendimiento y experiencia de usuario profesional.
+                Tecnología pensada para crecer.
               </Typography>
 
               {/* BOTONES */}
@@ -151,46 +174,39 @@ export default function Hero({ mode, setMode }) {
                   display: "flex",
                   gap: 2,
                   flexWrap: "wrap",
+                  justifyContent: { xs: "center", md: "flex-start" },
                   alignItems: "center",
-                  justifyContent: { xs: "center", sm: "flex-start" },
                 }}
               >
-                <HeroButton
-                  icon={<DescriptionIcon />}
-                  label="Ver CV"
-                  href="/Jorge.CV.pdf"
-                />
-                <HeroButton
-                  icon={<WorkspacePremiumIcon />}
-                  label="Ver Título"
-                  href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-                />
+                <Button
+                  variant="contained"
+                  startIcon={<DescriptionIcon />}
+                  sx={heroBtn}
+                >
+                  Ver CV
+                </Button>
 
-                {/* SASHA BUBBLE */}
-                <motion.div whileHover={{ scale: 1.05 }}>
-                  <Button
-                    startIcon={<SmartToyIcon />}
-                    onClick={() =>
-                      window.openSashaChat && window.openSashaChat()
-                    }
-                    sx={{
-                      px: 4,
-                      py: 1.4,
-                      borderRadius: "30px",
-                      fontWeight: 700,
-                      textTransform: "none",
-                      background:
-                        "linear-gradient(90deg,#6366f1,#3b82f6)",
-                      boxShadow:
-                        "0 0 20px rgba(99,102,241,.45)",
-                    }}
-                    variant="contained"
-                  >
-                    Sasha
-                  </Button>
-                </motion.div>
+                <Button
+                  variant="contained"
+                  startIcon={<WorkspacePremiumIcon />}
+                  sx={heroBtn}
+                >
+                  Ver Título
+                </Button>
 
-                {/* MODO OSCURO / CLARO */}
+                <Button
+                  variant="contained"
+                  startIcon={<SmartToyIcon />}
+                  sx={{
+                    ...heroBtn,
+                    background:
+                      "linear-gradient(90deg,#6366f1,#06b6d4)",
+                  }}
+                >
+                  Sasha
+                </Button>
+
+                {/* DARK MODE */}
                 <IconButton
                   onClick={() =>
                     setMode(mode === "light" ? "dark" : "light")
@@ -199,16 +215,14 @@ export default function Hero({ mode, setMode }) {
                     width: 48,
                     height: 48,
                     borderRadius: "50%",
-                    border: `1.5px solid ${theme.palette.primary.main}`,
-                    color: theme.palette.primary.main,
-                    transition: "all .25s ease",
-                    "&:hover": {
-                      background: theme.palette.primary.main,
-                      color: "#fff",
-                    },
+                    border: `2px solid ${theme.palette.primary.main}`,
                   }}
                 >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  {mode === "light" ? (
+                    <Brightness4 />
+                  ) : (
+                    <Brightness7 />
+                  )}
                 </IconButton>
               </Box>
             </Box>
@@ -219,29 +233,17 @@ export default function Hero({ mode, setMode }) {
   );
 }
 
-/* BOTÓN BASE */
-function HeroButton({ icon, label, href }) {
-  return (
-    <Button
-      startIcon={icon}
-      href={href}
-      target="_blank"
-      variant="contained"
-      sx={{
-        px: 4,
-        py: 1.4,
-        borderRadius: "30px",
-        fontWeight: 700,
-        textTransform: "none",
-        background: "linear-gradient(90deg,#3b82f6,#2563eb)",
-        transition: "all .3s ease",
-        "&:hover": {
-          transform: "translateY(-2px)",
-          boxShadow: "0 12px 30px rgba(59,130,246,.35)",
-        },
-      }}
-    >
-      {label}
-    </Button>
-  );
-}
+const heroBtn = {
+  px: 4,
+  py: 1.4,
+  borderRadius: "28px",
+  fontWeight: 800,
+  textTransform: "none",
+  background: "linear-gradient(90deg,#3b82f6,#2563eb)",
+  boxShadow: "0 10px 30px rgba(59,130,246,.45)",
+  transition: "all .3s ease",
+  "&:hover": {
+    transform: "translateY(-4px)",
+    boxShadow: "0 20px 45px rgba(59,130,246,.6)",
+  },
+};
