@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
@@ -9,9 +10,9 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
+// Importa tus componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -21,6 +22,9 @@ import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
+
+// Hook personalizado para detectar visibilidad
+import useOnScreen from "./hooks/useOnScreen"; // Ajusta la ruta si es diferente
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -86,26 +90,33 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={3}
-              sx={{
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `5px solid ${color}`,
-                scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                },
-              }}
-            >
-              <Component />
-            </Paper>
-          ))}
+          ].map(({ id, color, Component }) => {
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.1 });
+
+            return (
+              <Paper
+                ref={ref}
+                key={id}
+                id={id}
+                elevation={3}
+                sx={{
+                  mb: 4,
+                  p: { xs: 3, md: 6 },
+                  borderRadius: 3,
+                  borderLeft: isIntersecting
+                    ? `5px solid ${color}`
+                    : "5px solid transparent",
+                  scrollMarginTop: scrollOffset,
+                  transition: "border-left 0.6s ease-in-out",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                  },
+                }}
+              >
+                <Component />
+              </Paper>
+            );
+          })}
         </Container>
 
         {/* FOOTER */}
