@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Componentes
+// Importa tus componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -23,8 +23,8 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado
-import useOnScreen from "./hooks/useOnScreen";
+// Hook personalizado para detectar visibilidad
+import useOnScreen from "./hooks/useOnScreen"; // Ajusta la ruta si es diferente
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -75,7 +75,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -103,35 +103,17 @@ function App() {
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
-                  position: "relative",
+                  borderLeft: isIntersecting
+                    ? `5px solid ${color}`
+                    : "5px solid transparent",
                   scrollMarginTop: scrollOffset,
-                  overflow: "hidden", // 👈 asegura que el borde animado respete el radio
+                  transition: "border-left 0.6s ease-in-out",
                   "&:hover": {
                     transform: "translateY(-4px)",
-                    transition: "transform 0.3s ease",
                   },
                 }}
               >
-                {/* BORDE IZQUIERDO ANIMADO CON ESQUINAS REDONDEADAS */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    width: "5px",
-                    height: "100%",
-                    backgroundColor: color,
-                    transformOrigin: "top",
-                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
-                    transition: "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    borderRadius: "3px 0 0 3px", // 👈 redondea solo las esquinas izquierdas
-                    zIndex: 0,
-                  }}
-                />
-                {/* CONTENIDO (siempre visible, encima del borde) */}
-                <Box sx={{ position: "relative", zIndex: 1 }}>
-                  <Component />
-                </Box>
+                <Component />
               </Paper>
             );
           })}
@@ -140,7 +122,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE DE WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -160,7 +142,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
