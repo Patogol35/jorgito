@@ -120,7 +120,7 @@ export default function Skills() {
 
               
 {/* =========================
-    FILTROS (FIX DEFINITIVO)
+    FILTROS (AZUL DEL TEMA)
 ========================= */}
 <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
   <ToggleButtonGroup
@@ -156,7 +156,7 @@ export default function Skills() {
           textTransform: "none",
           transition: "all 0.25s ease",
 
-          /* 🌞 MODO CLARO */
+          /* 🌞 / 🌙 BASE */
           backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#ffffff",
           color: isDark ? "#e5e7eb" : "#111827",
           border: isDark
@@ -172,12 +172,16 @@ export default function Skills() {
               : "#f9fafb",
           },
 
-          /* 🔥 ACTIVO */
+          /* 🔵 ACTIVO → AZUL DEL TEMA */
           "&.Mui-selected": {
-            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            background: `linear-gradient(
+              90deg,
+              ${primary},
+              ${theme.palette.primary.dark}
+            )`,
             color: "#ffffff",
             border: "none",
-            boxShadow: "0 8px 22px rgba(0,0,0,0.25)",
+            boxShadow: `0 8px 22px ${primary}55`,
           },
         }}
       >
