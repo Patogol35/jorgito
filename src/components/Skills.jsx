@@ -104,48 +104,70 @@ export default function Skills() {
         </motion.div>
 
         {/* Filtros */}
-        <Box display="flex" justifyContent="center" mb={6}>
-          <ToggleButtonGroup
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            aria-label="Filtros de Skills"
-            sx={{
-              background: isDark
-                ? "rgba(255,255,255,0.05)"
-                : "rgba(255,255,255,0.7)",
-              borderRadius: "12px",
-              boxShadow: isDark
-                ? "0 4px 12px rgba(0,0,0,0.3)"
-                : "0 4px 12px rgba(0,0,0,0.1)",
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                sx={{
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 1.5,
-                  py: 0.5,
-                  fontSize: "0.85rem",
-                  color: theme.palette.text.primary,
-                  "&.Mui-selected": {
-                    background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-                    color: "white",
-                  },
-                  "&:hover": {
-                    background: "linear-gradient(90deg,#2563eb,#4f46e5)",
-                    color: "white",
-                  },
-                }}
-              >
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
+<Box
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    mb: 6,
+    width: "100%",
+  }}
+>
+  <ToggleButtonGroup
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    aria-label="Filtros de Skills"
+    sx={{
+      display: "flex",
+      flexWrap: "nowrap", // evita saltos
+      overflowX: "auto", // ✅ permite scroll horizontal suave en móviles
+      px: 1,
+      py: 0.5,
+      background: isDark
+        ? "rgba(255,255,255,0.05)"
+        : "rgba(255,255,255,0.7)",
+      borderRadius: "12px",
+      boxShadow: isDark
+        ? "0 4px 12px rgba(0,0,0,0.3)"
+        : "0 4px 12px rgba(0,0,0,0.1)",
+      '&::-webkit-scrollbar': {
+        display: 'none', // oculta scrollbar en WebKit
+      },
+      scrollbarWidth: 'none', // oculta scrollbar en Firefox
+      msOverflowStyle: 'none', // oculta en IE/Edge
+      maxWidth: '100%',
+      '& .MuiToggleButton-root': {
+        whiteSpace: 'nowrap', // evita que el texto se parta
+        minWidth: 'auto',
+        px: { xs: 1, sm: 1.5 },
+        py: { xs: 0.4, sm: 0.5 },
+        fontSize: { xs: '0.75rem', sm: '0.85rem' },
+      },
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        sx={{
+          textTransform: "none",
+          fontWeight: "bold",
+          color: theme.palette.text.primary,
+          "&.Mui-selected": {
+            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            color: "white",
+          },
+          "&:hover": {
+            background: "linear-gradient(90deg,#2563eb,#4f46e5)",
+            color: "white",
+          },
+        }}
+      >
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
 
         {/* Grid de Skills */}
         <Grid container spacing={4} justifyContent="center">
