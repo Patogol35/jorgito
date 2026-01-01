@@ -122,15 +122,12 @@ export default function Skills() {
       display: "flex",
       flexWrap: "nowrap",
       overflowX: "auto",
-      px: 1,
-      py: 1, // 👈 un poco más de padding vertical
-      background: isDark
-        ? "rgba(0,0,0,0.15)"
-        : "rgba(255,255,255,0.6)",
+      px: 0.5, // mínimo padding interno
+      py: 0.5,
+      // 👇 FONDO TOTALMENTE TRANSPARENTE (sin ese fondo que no querías)
+      background: "transparent",
       borderRadius: "16px",
-      boxShadow: isDark
-        ? "0 4px 16px rgba(0,0,0,0.4)"
-        : "0 4px 16px rgba(0,0,0,0.12)",
+      boxShadow: "none", // 👈 sin sombra en el grupo
       '&::-webkit-scrollbar': { display: 'none' },
       scrollbarWidth: 'none',
       msOverflowStyle: 'none',
@@ -144,28 +141,28 @@ export default function Skills() {
         sx={{
           textTransform: "none",
           fontWeight: "bold",
-          fontSize: { xs: '0.8rem', sm: '0.9rem' }, // 👈 un poco más grande
-          px: { xs: 1.6, sm: 2.2 }, // 👈 más ancho
-          py: { xs: 0.7, sm: 0.9 }, // 👈 más alto
-          borderRadius: "12px", // esquinas redondeadas
-          // 👇 Bordes visibles en todos los estados
-          border: `1.5px solid ${
+          fontSize: { xs: '0.82rem', sm: '0.92rem' },
+          px: { xs: 1.8, sm: 2.6 }, // 👈 más ancho
+          py: { xs: 0.75, sm: 0.95 }, // 👈 más alto
+          borderRadius: "14px",
+          // 👇 Bordes siempre visibles
+          border: `1.6px solid ${
             isDark 
-              ? 'rgba(255,255,255,0.2)' 
-              : 'rgba(0,0,0,0.15)'
+              ? 'rgba(255,255,255,0.22)' 
+              : 'rgba(0,0,0,0.18)'
           }`,
           color: theme.palette.text.primary,
           backgroundColor: 'transparent',
           transition: 'all 0.25s ease',
-          mx: { xs: 0.6, sm: 0.8 }, // espacio entre botones
+          mx: { xs: 0.7, sm: 0.9 }, // espacio entre botones
 
           // Estado seleccionado
           "&.Mui-selected": {
             background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
             color: "white",
             borderColor: isDark 
-              ? 'rgba(144,202,249,0.6)' 
-              : '#1976d2', // borde más fuerte al seleccionar
+              ? 'rgba(144,202,249,0.7)' 
+              : '#1976d2',
             boxShadow: isDark 
               ? '0 2px 8px rgba(144,202,249,0.3)'
               : '0 2px 8px rgba(25,118,210,0.3)',
@@ -174,11 +171,11 @@ export default function Skills() {
           // Hover
           "&:hover": {
             backgroundColor: isDark 
-              ? 'rgba(255,255,255,0.08)' 
-              : 'rgba(25,118,210,0.08)',
+              ? 'rgba(255,255,255,0.07)' 
+              : 'rgba(25,118,210,0.07)',
             borderColor: isDark 
-              ? 'rgba(144,202,249,0.4)' 
-              : 'rgba(25,118,210,0.4)',
+              ? 'rgba(144,202,249,0.45)' 
+              : 'rgba(25,118,210,0.45)',
           },
         }}
       >
