@@ -24,7 +24,7 @@ import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
 // Hook personalizado para detectar visibilidad
-import useOnScreen from "./hooks/useOnScreen"; // Ajusta la ruta si es diferente
+import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -103,13 +103,18 @@ function App() {
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
-                  borderLeft: isIntersecting
-                    ? `5px solid ${color}`
-                    : "5px solid transparent",
+                  // 👇 Usamos borderLeft con color condicional
+                  borderLeft: `5px solid ${
+                    isIntersecting ? color : "transparent"
+                  }`,
+                  // 👇 Aseguramos que el borde no se "rompa" con el radio
+                  overflow: "hidden",
                   scrollMarginTop: scrollOffset,
-                  transition: "border-left 0.6s ease-in-out",
+                  // 👇 Transición suave con easing refinado
+                  transition: "border-color 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                   "&:hover": {
                     transform: "translateY(-4px)",
+                    transition: "transform 0.3s ease",
                   },
                 }}
               >
