@@ -119,60 +119,70 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-            FILTROS PRO
-        ========================= */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-          <ToggleButtonGroup
-            ref={containerRef}
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              px: 2,
-              py: 1,
-              gap: 1,
-              width: "100%",
-              maxWidth: "960px",
-              background: "transparent",
-              '&::-webkit-scrollbar': { display: "none" },
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                ref={(el) => (buttonRefs.current[cat] = el)}
-                component={motion.button}
-                whileTap={{ scale: 0.9 }}
-                sx={{
-                  border: "none",
-                  borderRadius: "999px",
-                  px: 2.5,
-                  py: 0.8,
-                  fontWeight: 600,
-                  color: theme.palette.text.secondary,
-                  transition: "all 0.25s ease",
+    FILTROS (FIX CONTRASTE)
+========================= */}
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    sx={{
+      display: "flex",
+      overflowX: "auto",
+      px: 2,
+      py: 1,
+      gap: 1,
+      width: "100%",
+      maxWidth: "960px",
+      background: "transparent",
+      '&::-webkit-scrollbar': { display: "none" },
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.5,
+          py: 0.8,
+          fontWeight: 600,
+          fontSize: "0.9rem",
 
-                  "&.Mui-selected": {
-                    color: "#fff",
-                    background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-                    boxShadow: "0 6px 18px rgba(0,0,0,0.3)",
-                  },
+          /* 👀 VISIBILIDAD */
+          color: isDark ? "#e5e7eb" : "#1f2937",
+          border: `1px solid ${
+            isDark ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)"
+          }`,
+          background: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(0,0,0,0.04)",
 
-                  "&:hover": {
-                    background: isDark
-                      ? "rgba(255,255,255,0.08)"
-                      : "rgba(0,0,0,0.06)",
-                  },
-                }}
-              >
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
+          transition: "all 0.25s ease",
+
+          "&.Mui-selected": {
+            color: "#fff",
+            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            border: "none",
+            boxShadow: "0 6px 18px rgba(0,0,0,0.35)",
+          },
+
+          "&:hover": {
+            background: isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.08)",
+          },
+        }}
+      >
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
 
         {/* =========================
             GRID SKILLS
