@@ -120,7 +120,7 @@ export default function Skills() {
 
               
 {/* =========================
-    FILTROS (AZUL DEL TEMA)
+    FILTROS (FINAL)
 ========================= */}
 <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
   <ToggleButtonGroup
@@ -158,9 +158,9 @@ export default function Skills() {
 
           /* 🌞 / 🌙 BASE */
           backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#ffffff",
-          color: isDark ? "#e5e7eb" : "#111827",
+          color: isDark ? "rgba(255,255,255,0.92)" : "#111827",
           border: isDark
-            ? "1px solid rgba(255,255,255,0.2)"
+            ? "1px solid rgba(255,255,255,0.22)"
             : "1px solid rgba(0,0,0,0.12)",
           boxShadow: isDark
             ? "none"
@@ -168,11 +168,11 @@ export default function Skills() {
 
           "&:hover": {
             backgroundColor: isDark
-              ? "rgba(255,255,255,0.12)"
+              ? "rgba(255,255,255,0.16)"
               : "#f9fafb",
           },
 
-          /* 🔵 ACTIVO → AZUL DEL TEMA */
+          /* 🔵 ACTIVO */
           "&.Mui-selected": {
             background: `linear-gradient(
               90deg,
@@ -181,7 +181,7 @@ export default function Skills() {
             )`,
             color: "#ffffff",
             border: "none",
-            boxShadow: `0 8px 22px ${primary}55`,
+            boxShadow: `0 8px 24px ${primary}66`,
           },
         }}
       >
