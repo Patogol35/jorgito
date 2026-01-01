@@ -118,8 +118,9 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* =========================
-    FILTROS (FIX CONTRASTE)
+              
+{/* =========================
+    FILTROS (FIX DEFINITIVO)
 ========================= */}
 <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
   <ToggleButtonGroup
@@ -148,33 +149,35 @@ export default function Skills() {
         whileTap={{ scale: 0.92 }}
         sx={{
           borderRadius: "999px",
-          px: 2.5,
-          py: 0.8,
+          px: 2.6,
+          py: 0.9,
           fontWeight: 600,
           fontSize: "0.9rem",
-
-          /* 👀 VISIBILIDAD */
-          color: isDark ? "#e5e7eb" : "#1f2937",
-          border: `1px solid ${
-            isDark ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.2)"
-          }`,
-          background: isDark
-            ? "rgba(255,255,255,0.04)"
-            : "rgba(0,0,0,0.04)",
-
+          textTransform: "none",
           transition: "all 0.25s ease",
 
-          "&.Mui-selected": {
-            color: "#fff",
-            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-            border: "none",
-            boxShadow: "0 6px 18px rgba(0,0,0,0.35)",
-          },
+          /* 🌞 MODO CLARO */
+          backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#ffffff",
+          color: isDark ? "#e5e7eb" : "#111827",
+          border: isDark
+            ? "1px solid rgba(255,255,255,0.2)"
+            : "1px solid rgba(0,0,0,0.12)",
+          boxShadow: isDark
+            ? "none"
+            : "0 4px 10px rgba(0,0,0,0.08)",
 
           "&:hover": {
-            background: isDark
+            backgroundColor: isDark
               ? "rgba(255,255,255,0.12)"
-              : "rgba(0,0,0,0.08)",
+              : "#f9fafb",
+          },
+
+          /* 🔥 ACTIVO */
+          "&.Mui-selected": {
+            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+            color: "#ffffff",
+            border: "none",
+            boxShadow: "0 8px 22px rgba(0,0,0,0.25)",
           },
         }}
       >
