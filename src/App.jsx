@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Importa tus componentes
+// Componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -23,8 +23,8 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado para detectar visibilidad
-import useOnScreen from "./hooks/useOnScreen"; // Ajusta la ruta si es diferente
+// Hook para detectar visibilidad
+import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -38,28 +38,16 @@ function App() {
   const theme = useMemo(
     () =>
       createTheme({
-        palette: {
-          mode,
-          ...(mode === "light"
-            ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
-                },
-              }
-            : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: {
-                  primary: "#ffffff",
-                },
-              }),
-        },
+        palette: { mode },
+        ...(mode === "light"
+          ? {
+              background: { default: "#f5f7fa", paper: "#ffffff" },
+              text: { primary: "#111" },
+            }
+          : {
+              background: { default: "#121212", paper: "#1e1e1e" },
+              text: { primary: "#ffffff" },
+            }),
       }),
     [mode]
   );
@@ -67,15 +55,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -103,26 +86,40 @@ function App() {
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
-                  borderLeft: isIntersecting
-                    ? `5px solid ${color}`
-                    : "5px solid transparent",
+                  position: "relative",
                   scrollMarginTop: scrollOffset,
-                  transition: "border-left 0.6s ease-in-out",
                   "&:hover": {
                     transform: "translateY(-4px)",
+                    transition: "transform 0.3s ease",
                   },
                 }}
               >
-                <Component />
+                {/* BORDE ANIMADO */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "5px",
+                    height: "100%",
+                    backgroundColor: color,
+                    transformOrigin: "top",
+                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
+                    transition: "transform 0.8s ease-out",
+                    borderRadius: "0 4px 4px 0",
+                  }}
+                />
+                {/* CONTENIDO */}
+                <Box sx={{ position: "relative", zIndex: 1 }}>
+                  <Component />
+                </Box>
               </Paper>
             );
           })}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -142,7 +139,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
