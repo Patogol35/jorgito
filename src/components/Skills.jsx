@@ -133,8 +133,9 @@ export default function Skills() {
     sx={{
       display: "flex",
       overflowX: "auto",
-      gap: 1,
+      gap: 1.2,
       px: 2,
+      py: 0.5,
       "&::-webkit-scrollbar": { display: "none" },
     }}
   >
@@ -147,14 +148,42 @@ export default function Skills() {
         whileTap={{ scale: 0.92 }}
         sx={{
           borderRadius: "999px",
-          px: 2.6,
-          py: 0.9,
+          px: 3,
+          py: 1,
           fontWeight: 600,
+          fontSize: "0.9rem",
           textTransform: "none",
-          backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#fff",
+
+          /* ESTADO NORMAL */
+          backgroundColor: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(255,255,255,0.9)",
+          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
+          border: `1px solid ${
+            isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)"
+          }`,
+
+          /* HOVER */
+          "&:hover": {
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(25,118,210,0.06)",
+          },
+
+          /* ACTIVO */
           "&.Mui-selected": {
-            background: `linear-gradient(90deg, ${primary}, ${theme.palette.primary.dark})`,
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
             color: "#fff",
+            borderColor: "transparent",
+            boxShadow: isDark
+              ? "0 6px 16px rgba(0,0,0,0.4)"
+              : "0 6px 14px rgba(25,118,210,0.35)",
+          },
+
+          "&.Mui-selected:hover": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
           },
         }}
       >
