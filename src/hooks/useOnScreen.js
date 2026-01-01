@@ -1,4 +1,4 @@
-// hooks/useOnScreen.js
+// src/hooks/useOnScreen.js
 import { useState, useEffect, useRef } from "react";
 
 export default function useOnScreen(options) {
