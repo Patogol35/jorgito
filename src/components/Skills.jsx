@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -32,7 +37,14 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
-
+const categoryIcons = {
+  All: <AllInclusiveIcon fontSize="small" />,
+  Frontend: <CodeIcon fontSize="small" />,
+  Backend: <BuildCircleIcon fontSize="small" />,
+  Database: <StorageIcon fontSize="small" />,
+  Cloud: <CloudQueueIcon fontSize="small" />,
+  Tools: <BuildIcon fontSize="small" />,
+};
 /* =========================
    COMPONENT
 ========================= */
@@ -148,13 +160,15 @@ export default function Skills() {
         whileTap={{ scale: 0.92 }}
         sx={{
           borderRadius: "999px",
-          px: 3,
+          px: 2.4,
           py: 1,
           fontWeight: 600,
           fontSize: "0.9rem",
           textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
 
-          /* ESTADO NORMAL */
           backgroundColor: isDark
             ? "rgba(255,255,255,0.04)"
             : "rgba(255,255,255,0.9)",
@@ -165,14 +179,12 @@ export default function Skills() {
               : "rgba(0,0,0,0.12)"
           }`,
 
-          /* HOVER */
           "&:hover": {
             backgroundColor: isDark
               ? "rgba(255,255,255,0.08)"
               : "rgba(25,118,210,0.06)",
           },
 
-          /* ACTIVO */
           "&.Mui-selected": {
             background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
             color: "#fff",
@@ -187,6 +199,7 @@ export default function Skills() {
           },
         }}
       >
+        {categoryIcons[cat]}
         {cat}
       </ToggleButton>
     ))}
