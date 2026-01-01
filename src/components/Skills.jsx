@@ -103,13 +103,14 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* Filtros */}
+{/* Filtros mejorados */}
 <Box
   sx={{
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     mb: 6,
-    width: "100%",
+    width: '100%',
+    px: { xs: 1, sm: 0 }, // evita tocar los bordes en móvil
   }}
 >
   <ToggleButtonGroup
@@ -118,51 +119,60 @@ export default function Skills() {
     onChange={(e, val) => val && setFilter(val)}
     aria-label="Filtros de Skills"
     sx={{
-      display: "flex",
-      flexWrap: "nowrap", // evita saltos
-      overflowX: "auto", // ✅ permite scroll horizontal suave en móviles
-      px: 1,
-      py: 0.5,
+      display: 'flex',
+      flexWrap: 'nowrap',
+      overflowX: 'auto',
+      px: 1.5,
+      py: 1,
+      borderRadius: '20px',
       background: isDark
-        ? "rgba(255,255,255,0.05)"
-        : "rgba(255,255,255,0.7)",
-      borderRadius: "12px",
+        ? 'rgba(30, 30, 46, 0.6)'
+        : 'rgba(245, 247, 250, 0.8)',
+      backdropFilter: 'blur(8px)',
+      border: '1px solid',
+      borderColor: isDark
+        ? 'rgba(255, 255, 255, 0.1)'
+        : 'rgba(0, 0, 0, 0.08)',
       boxShadow: isDark
-        ? "0 4px 12px rgba(0,0,0,0.3)"
-        : "0 4px 12px rgba(0,0,0,0.1)",
-      '&::-webkit-scrollbar': {
-        display: 'none', // oculta scrollbar en WebKit
-      },
-      scrollbarWidth: 'none', // oculta scrollbar en Firefox
-      msOverflowStyle: 'none', // oculta en IE/Edge
+        ? '0 4px 20px rgba(0, 0, 0, 0.4)'
+        : '0 4px 20px rgba(0, 0, 0, 0.08)',
+      '&::-webkit-scrollbar': { display: 'none' },
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
       maxWidth: '100%',
       '& .MuiToggleButton-root': {
-        whiteSpace: 'nowrap', // evita que el texto se parta
-        minWidth: 'auto',
-        px: { xs: 1, sm: 1.5 },
-        py: { xs: 0.4, sm: 0.5 },
-        fontSize: { xs: '0.75rem', sm: '0.85rem' },
+        whiteSpace: 'nowrap',
+        minWidth: { xs: 'auto', sm: '80px' },
+        px: { xs: 1.2, sm: 2 },
+        py: { xs: 0.6, sm: 0.8 },
+        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+        fontWeight: '600',
+        textTransform: 'none',
+        borderRadius: '14px',
+        color: theme.palette.text.secondary,
+        backgroundColor: 'transparent',
+        border: 'none',
+        transition: 'all 0.25s ease',
+        mx: { xs: 0.4, sm: 0.6 },
+        '&:hover': {
+          color: primary,
+          backgroundColor: isDark
+            ? 'rgba(255, 255, 255, 0.1)'
+            : 'rgba(25, 118, 210, 0.08)',
+        },
+        '&.Mui-selected': {
+          color: '#fff',
+          backgroundColor: `linear-gradient(90deg, ${primary}, ${isDark ? '#7e22ce' : '#6d28d9'})`,
+          boxShadow: isDark
+            ? '0 2px 8px rgba(144, 202, 249, 0.3)'
+            : '0 2px 8px rgba(25, 118, 210, 0.3)',
+          transform: 'scale(1.03)',
+        },
       },
     }}
   >
     {categories.map((cat) => (
-      <ToggleButton
-        key={cat}
-        value={cat}
-        sx={{
-          textTransform: "none",
-          fontWeight: "bold",
-          color: theme.palette.text.primary,
-          "&.Mui-selected": {
-            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-            color: "white",
-          },
-          "&:hover": {
-            background: "linear-gradient(90deg,#2563eb,#4f46e5)",
-            color: "white",
-          },
-        }}
-      >
+      <ToggleButton key={cat} value={cat}>
         {cat}
       </ToggleButton>
     ))}
