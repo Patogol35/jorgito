@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado
+// Hook personalizado para detectar visibilidad
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -69,9 +69,13 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -101,14 +105,14 @@ function App() {
                   borderRadius: 3,
                   position: "relative",
                   scrollMarginTop: scrollOffset,
-                  overflow: "hidden", // ✅ esencial para clip-path y bordes
+                  overflow: "hidden", // 👈 esencial para respetar el radio durante la animación
+                  transition: "all 0.3s ease",
                   "&:hover": {
                     transform: "translateY(-4px)",
-                    transition: "transform 0.3s ease",
                   },
                 }}
               >
-                {/* ✨ BORDE ANIMADO CON CLIP-PATH (aparece poco a poco desde arriba) */}
+                {/* ✨ BORDE IZQUIERDO ANIMADO: aparece de arriba a abajo + curvado */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -117,15 +121,14 @@ function App() {
                     width: "5px",
                     height: "100%",
                     backgroundColor: color,
-                    borderRadius: "3px 0 0 3px", // ✅ esquinas redondeadas
-                    clipPath: isIntersecting
-                      ? "inset(0% 0% 0% 0% round 3px 0 0 3px)"
-                      : "inset(100% 0% 0% 0% round 3px 0 0 3px)",
-                    transition: "clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    borderRadius: "3px 0 0 3px", // 👈 curvatura idéntica a la del Paper
+                    transformOrigin: "top",
+                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
+                    transition: "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     zIndex: 0,
                   }}
                 />
-                {/* Contenido encima */}
+                {/* Contenido siempre visible */}
                 <Box sx={{ position: "relative", zIndex: 1 }}>
                   <Component />
                 </Box>
@@ -134,8 +137,10 @@ function App() {
           })}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* BOTÓN FLOTANTE DE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -155,6 +160,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
