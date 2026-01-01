@@ -13,146 +13,137 @@ export default function Hero({ mode, setMode }) {
     <>
       <Toolbar />
 
-      {/* HERO */}
       <Box
         id="hero"
         sx={{
           position: "relative",
+          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
           justifyContent: "center",
-          gap: { xs: 4, md: 8 },
-          pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 3, md: 4 },
+          gap: { xs: 5, md: 10 },
+          pt: { xs: 7, sm: 9, md: 11 },
+          pb: { xs: 4, md: 5 },
           px: { xs: 2, sm: 4, md: 8 },
-          overflow: "hidden",
-
-          /* Fondo con presencia */
           background:
             theme.palette.mode === "dark"
-              ? "radial-gradient(circle at top, rgba(59,130,246,.15), transparent 55%)"
-              : "radial-gradient(circle at top, rgba(59,130,246,.18), transparent 60%)",
+              ? `
+                radial-gradient(900px circle at 10% -10%, rgba(59,130,246,.25), transparent 40%),
+                radial-gradient(700px circle at 90% 10%, rgba(99,102,241,.25), transparent 45%),
+                linear-gradient(#0b0f19, #0b0f19)
+              `
+              : `
+                radial-gradient(900px circle at 10% -10%, rgba(59,130,246,.22), transparent 40%),
+                radial-gradient(700px circle at 90% 10%, rgba(99,102,241,.22), transparent 45%),
+                linear-gradient(#f8fafc, #f8fafc)
+              `,
         }}
       >
-        {/* AVATAR */}
+        {/* GRID TECH */}
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            opacity: theme.palette.mode === "dark" ? 0.25 : 0.18,
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* AVATAR TECH */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8 }}
           style={{ position: "relative" }}
         >
-          {/* Halo */}
-          <Box
-            sx={{
+          {/* ANILLO */}
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+            style={{
               position: "absolute",
-              inset: -12,
+              inset: -18,
               borderRadius: "50%",
-              background: `radial-gradient(circle, ${theme.palette.primary.main}33, transparent 65%)`,
-              filter: "blur(14px)",
+              background:
+                "conic-gradient(from 0deg, transparent, #3b82f6, transparent)",
+              filter: "blur(2px)",
             }}
           />
 
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 3.2, repeat: Infinity }}
-          >
-            <Avatar
-              alt="Jorge Patricio"
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-              sx={{
-                width: { xs: 130, sm: 170, md: 200 },
-                height: { xs: 130, sm: 170, md: 200 },
-                border: `4px solid ${theme.palette.primary.main}`,
-                boxShadow: "0 25px 60px rgba(0,0,0,.35)",
-                position: "relative",
-                zIndex: 1,
-              }}
-            />
-          </motion.div>
+          <Avatar
+            alt="Jorge Patricio"
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+            sx={{
+              width: { xs: 140, sm: 180, md: 210 },
+              height: { xs: 140, sm: 180, md: 210 },
+              border: `4px solid ${theme.palette.primary.main}`,
+              boxShadow: "0 30px 70px rgba(0,0,0,.45)",
+              position: "relative",
+              zIndex: 1,
+            }}
+          />
         </motion.div>
 
         {/* TEXTO */}
-        <Box maxWidth="600px" textAlign={{ xs: "center", sm: "left" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+        <Box maxWidth="620px" textAlign={{ xs: "center", sm: "left" }}>
+          <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6 }}>
             <Typography
               variant="h3"
-              fontWeight={700}
+              fontWeight={800}
               gutterBottom
               sx={{
-                color: theme.palette.primary.main,
-                fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
-                letterSpacing: "-0.6px",
+                fontSize: { xs: "2rem", sm: "2.4rem", md: "2.8rem" },
+                background: "linear-gradient(90deg, #3b82f6, #6366f1)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                letterSpacing: "-0.7px",
               }}
             >
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-          >
+          <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, delay: 0.15 }}>
             <Typography
               variant="h6"
-              sx={{
-                fontStyle: "italic",
-                color: theme.palette.text.secondary,
-              }}
+              sx={{ fontStyle: "italic", color: theme.palette.text.secondary }}
               gutterBottom
             >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
+          <motion.div initial={{ y: 15, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, delay: 0.3 }}>
             <Typography
               sx={{
-                fontSize: { xs: "1rem", sm: "1.08rem" },
+                fontSize: { xs: "1.05rem", sm: "1.1rem" },
                 lineHeight: 1.9,
-                maxWidth: "520px",
                 mt: 3,
                 mb: 5,
-                color: theme.palette.text.primary,
-                opacity: 0.9,
+                maxWidth: "520px",
+                opacity: 0.92,
               }}
             >
-              Me apasiona crear tecnología que transforma ideas en realidades
-              digitales. Mi enfoque está en aportar valor constante,
-              desarrollando soluciones seguras, innovadoras y con impacto real.
+              Desarrollo soluciones digitales seguras, escalables y modernas,
+              enfocadas en generar impacto real y valor constante.
             </Typography>
           </motion.div>
 
           {/* BOTONES */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              justifyContent: { xs: "center", sm: "flex-start" },
-              flexWrap: "wrap",
-            }}
-          >
-            {[
-              {
-                label: "Ver CV",
-                icon: <DescriptionIcon />,
-                href: "/Jorge.CV.pdf",
-              },
-              {
-                label: "Ver Título",
-                icon: <WorkspacePremiumIcon />,
-                href: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
-              },
-            ].map((btn) => (
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", justifyContent: { xs: "center", sm: "flex-start" } }}>
+            {[{
+              label: "Ver CV",
+              icon: <DescriptionIcon />,
+              href: "/Jorge.CV.pdf",
+            },{
+              label: "Ver Título",
+              icon: <WorkspacePremiumIcon />,
+              href: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
+            }].map(btn => (
               <Button
                 key={btn.label}
                 variant="contained"
@@ -160,17 +151,17 @@ export default function Hero({ mode, setMode }) {
                 href={btn.href}
                 target="_blank"
                 sx={{
-                  borderRadius: "25px",
+                  borderRadius: "26px",
                   textTransform: "none",
-                  fontWeight: "bold",
-                  px: { xs: 3.5, md: 5 },
+                  fontWeight: 700,
+                  px: { xs: 4, md: 5 },
                   py: 1.4,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "0 10px 25px rgba(0,0,0,.25)",
+                  background: "linear-gradient(90deg, #3b82f6, #6366f1)",
+                  boxShadow: "0 12px 30px rgba(59,130,246,.45)",
                   transition: "all .25s ease",
                   "&:hover": {
-                    transform: "translateY(-3px)",
-                    boxShadow: "0 16px 40px rgba(0,0,0,.35)",
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 20px 45px rgba(59,130,246,.6)",
                   },
                 }}
               >
@@ -178,28 +169,25 @@ export default function Hero({ mode, setMode }) {
               </Button>
             ))}
 
-            {/* SASHA */}
             <Button
               variant="contained"
               startIcon={<SmartToyIcon />}
               onClick={() => window.openSashaChat?.()}
               sx={{
-                borderRadius: "25px",
+                borderRadius: "26px",
                 textTransform: "none",
-                fontWeight: "bold",
-                px: { xs: 3.5, md: 5 },
+                fontWeight: 700,
+                px: { xs: 4, md: 5 },
                 py: 1.4,
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "0 10px 25px rgba(0,0,0,.25)",
-                "&:hover": {
-                  transform: "translateY(-3px)",
-                },
+                background: "linear-gradient(90deg, #3b82f6, #6366f1)",
+                boxShadow: "0 12px 30px rgba(59,130,246,.45)",
+                "&:hover": { transform: "translateY(-4px)" },
               }}
             >
               Sasha
             </Button>
 
-            {/* MODO */}
+            {/* MODO (NO SE DEFORMA) */}
             <Button
               variant="outlined"
               onClick={() => setMode(mode === "light" ? "dark" : "light")}
