@@ -103,102 +103,78 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-{/* Filtros con indicador de desplazamiento */}
+{/* Filtros - Versión limpia, ancha y con indicación clara */}
 <Box
   sx={{
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     mb: 6,
-    width: "100%",
-    px: { xs: 2, sm: 0 },
-    position: "relative",
+    width: '100%',
+    px: { xs: 1.5, sm: 0 },
   }}
 >
-  {/* Degradado derecho para indicar que hay más opciones */}
   <Box
     sx={{
-      position: "absolute",
-      right: { xs: 20, sm: 0 },
-      top: 0,
-      bottom: 0,
-      width: 40,
-      borderRadius: "16px",
-      background: (theme) =>
-        `linear-gradient(to left, ${
-          isDark ? 'rgba(18,18,18,1)' : 'rgba(245,247,250,1)'
-        }, transparent)`,
-      pointerEvents: "none", // no interfiere con el scroll
-      zIndex: 10,
-    }}
-  />
-
-  <ToggleButtonGroup
-    value={filter}
-    exclusive
-    onChange={(e, val) => val && setFilter(val)}
-    aria-label="Filtros de Skills"
-    sx={{
-      display: "flex",
-      flexWrap: "nowrap",
-      overflowX: "auto",
+      display: 'flex',
+      overflowX: 'auto',
       px: 0.5,
-      py: 0.5,
-      background: "transparent",
-      borderRadius: "16px",
-      boxShadow: "none",
+      py: 0.8,
+      gap: { xs: 0.9, sm: 1.2 }, // espacio consistente entre botones
+      maxWidth: '100%',
       '&::-webkit-scrollbar': { display: 'none' },
       scrollbarWidth: 'none',
       msOverflowStyle: 'none',
-      maxWidth: '100%',
-      zIndex: 5,
     }}
   >
     {categories.map((cat) => (
       <ToggleButton
         key={cat}
+        selected={filter === cat}
+        onClick={() => setFilter(cat)}
         value={cat}
         sx={{
-          textTransform: "none",
-          fontWeight: "bold",
-          fontSize: { xs: '0.82rem', sm: '0.92rem' },
-          px: { xs: 1.8, sm: 2.6 },
-          py: { xs: 0.75, sm: 0.95 },
-          borderRadius: "14px",
-          border: `1.6px solid ${
-            isDark 
-              ? 'rgba(255,255,255,0.22)' 
-              : 'rgba(0,0,0,0.18)'
+          // TAMAÑO: más ancho y alto
+          px: { xs: 2, sm: 2.8 },
+          py: { xs: 0.8, sm: 1 },
+          minWidth: { xs: '72px', sm: '96px' },
+          height: { xs: '42px', sm: '46px' },
+
+          // ESTILO
+          textTransform: 'none',
+          fontWeight: '600',
+          fontSize: { xs: '0.84rem', sm: '0.94rem' },
+          borderRadius: '14px',
+          border: `1.8px solid ${
+            filter === cat
+              ? (isDark ? 'rgba(144,202,249,0.8)' : '#1976d2')
+              : (isDark ? 'rgba(255,255,255,0.25)' : 'rgba(0,0,0,0.2)')
           }`,
-          color: theme.palette.text.primary,
-          backgroundColor: 'transparent',
-          transition: 'all 0.25s ease',
-          mx: { xs: 0.7, sm: 0.9 },
+          backgroundColor: filter === cat 
+            ? (isDark ? 'rgba(30,60,90,0.4)' : 'rgba(25,118,210,0.1)')
+            : 'transparent',
+          color: filter === cat 
+            ? (isDark ? '#bbdefb' : '#1565c0')
+            : theme.palette.text.primary,
 
-          "&.Mui-selected": {
-            background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-            color: "white",
+          // TRANSICIONES
+          transition: 'all 0.2s ease',
+          flexShrink: 0, // 👈 ¡IMPORTANTE! evita que se compriman
+
+          // HOVER
+          '&:hover': {
             borderColor: isDark 
-              ? 'rgba(144,202,249,0.7)' 
-              : '#1976d2',
-            boxShadow: isDark 
-              ? '0 2px 8px rgba(144,202,249,0.3)'
-              : '0 2px 8px rgba(25,118,210,0.3)',
-          },
-
-          "&:hover": {
+              ? 'rgba(144,202,249,0.5)' 
+              : 'rgba(25,118,210,0.5)',
             backgroundColor: isDark 
-              ? 'rgba(255,255,255,0.07)' 
-              : 'rgba(25,118,210,0.07)',
-            borderColor: isDark 
-              ? 'rgba(144,202,249,0.45)' 
-              : 'rgba(25,118,210,0.45)',
+              ? 'rgba(255,255,255,0.06)' 
+              : 'rgba(25,118,210,0.06)',
           },
         }}
       >
         {cat}
       </ToggleButton>
     ))}
-  </ToggleButtonGroup>
+  </Box>
 </Box>
 
         {/* Grid de Skills */}
