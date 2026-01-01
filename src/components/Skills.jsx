@@ -122,48 +122,47 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-            FILTROS
-        ========================= */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-          <ToggleButtonGroup
-            ref={containerRef}
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 1,
-              px: 2,
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                ref={(el) => (buttonRefs.current[cat] = el)}
-                component={motion.button}
-                whileTap={{ scale: 0.92 }}
-                sx={{
-                  borderRadius: "999px",
-                  px: 2.6,
-                  py: 0.9,
-                  fontWeight: 600,
-                  textTransform: "none",
-                  backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#fff",
-                  "&.Mui-selected": {
-                    background: `linear-gradient(90deg, ${primary}, ${theme.palette.primary.dark})`,
-                    color: "#fff",
-                  },
-                }}
-              >
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
-
+    FILTROS
+========================= */}
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    sx={{
+      display: "flex",
+      overflowX: "auto",
+      gap: 1,
+      px: 2,
+      "&::-webkit-scrollbar": { display: "none" },
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.6,
+          py: 0.9,
+          fontWeight: 600,
+          textTransform: "none",
+          backgroundColor: isDark ? "rgba(255,255,255,0.06)" : "#fff",
+          "&.Mui-selected": {
+            background: `linear-gradient(90deg, ${primary}, ${theme.palette.primary.dark})`,
+            color: "#fff",
+          },
+        }}
+      >
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
         {/* =========================
             GRID
         ========================= */}
