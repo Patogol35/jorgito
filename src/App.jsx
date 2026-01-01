@@ -118,7 +118,7 @@ function App() {
                     position: "absolute",
                     left: 0,
                     top: 0,
-                    width: "5px",
+                    width: "6px",
                     height: "100%",
                     backgroundColor: color,
                     borderRadius: "3px 0 0 3px", // 👈 curvatura idéntica a la del Paper
