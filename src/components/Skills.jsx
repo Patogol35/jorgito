@@ -119,29 +119,35 @@ export default function Skills() {
     aria-label="Filtros de Skills"
     sx={{
       display: "flex",
-      flexWrap: "nowrap", // evita saltos
-      overflowX: "auto", // ✅ permite scroll horizontal suave en móviles
-      px: 1,
-      py: 0.5,
-      background: isDark
-        ? "rgba(255,255,255,0.05)"
-        : "rgba(255,255,255,0.7)",
-      borderRadius: "12px",
-      boxShadow: isDark
-        ? "0 4px 12px rgba(0,0,0,0.3)"
-        : "0 4px 12px rgba(0,0,0,0.1)",
-      '&::-webkit-scrollbar': {
-        display: 'none', // oculta scrollbar en WebKit
-      },
-      scrollbarWidth: 'none', // oculta scrollbar en Firefox
-      msOverflowStyle: 'none', // oculta en IE/Edge
-      maxWidth: '100%',
+      flexWrap: "nowrap",
+      overflowX: "auto",
+      px: { xs: 1, sm: 2 },
+      py: 1,
+
+      /* ❌ sin fondo */
+      background: "transparent",
+      boxShadow: "none",
+      borderRadius: 0,
+
+      /* 📏 más ancha */
+      width: "100%",
+      maxWidth: "900px", // ajusta si deseas más
+
+      gap: { xs: 0.5, sm: 1 },
+
+      '&::-webkit-scrollbar': { display: 'none' },
+      scrollbarWidth: 'none',
+      msOverflowStyle: 'none',
+
       '& .MuiToggleButton-root': {
-        whiteSpace: 'nowrap', // evita que el texto se parta
+        whiteSpace: 'nowrap',
         minWidth: 'auto',
-        px: { xs: 1, sm: 1.5 },
-        py: { xs: 0.4, sm: 0.5 },
-        fontSize: { xs: '0.75rem', sm: '0.85rem' },
+        px: { xs: 1.4, sm: 2.2 },   // ⬅ más ancho por botón
+        py: { xs: 0.6, sm: 0.8 },
+        fontSize: { xs: '0.8rem', sm: '0.9rem' },
+        borderRadius: "999px",
+        border: `1px solid ${theme.palette.divider}`,
+        transition: "all 0.25s ease",
       },
     }}
   >
@@ -151,15 +157,19 @@ export default function Skills() {
         value={cat}
         sx={{
           textTransform: "none",
-          fontWeight: "bold",
+          fontWeight: 600,
           color: theme.palette.text.primary,
+
           "&.Mui-selected": {
             background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
             color: "white",
+            border: "none",
           },
+
           "&:hover": {
-            background: "linear-gradient(90deg,#2563eb,#4f46e5)",
-            color: "white",
+            background: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(0,0,0,0.06)",
           },
         }}
       >
