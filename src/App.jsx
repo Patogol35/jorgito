@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook para detectar visibilidad
+// Hook personalizado
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -38,16 +38,28 @@ function App() {
   const theme = useMemo(
     () =>
       createTheme({
-        palette: { mode },
-        ...(mode === "light"
-          ? {
-              background: { default: "#f5f7fa", paper: "#ffffff" },
-              text: { primary: "#111" },
-            }
-          : {
-              background: { default: "#121212", paper: "#1e1e1e" },
-              text: { primary: "#ffffff" },
-            }),
+        palette: {
+          mode,
+          ...(mode === "light"
+            ? {
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
+              }
+            : {
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
+              }),
+        },
       }),
     [mode]
   );
@@ -55,10 +67,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -88,13 +105,14 @@ function App() {
                   borderRadius: 3,
                   position: "relative",
                   scrollMarginTop: scrollOffset,
+                  overflow: "hidden", // 👈 asegura que el borde animado respete el radio
                   "&:hover": {
                     transform: "translateY(-4px)",
                     transition: "transform 0.3s ease",
                   },
                 }}
               >
-                {/* BORDE ANIMADO */}
+                {/* BORDE IZQUIERDO ANIMADO CON ESQUINAS REDONDEADAS */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -105,11 +123,12 @@ function App() {
                     backgroundColor: color,
                     transformOrigin: "top",
                     transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
-                    transition: "transform 0.8s ease-out",
-                    borderRadius: "0 4px 4px 0",
+                    transition: "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    borderRadius: "3px 0 0 3px", // 👈 redondea solo las esquinas izquierdas
+                    zIndex: 0,
                   }}
                 />
-                {/* CONTENIDO */}
+                {/* CONTENIDO (siempre visible, encima del borde) */}
                 <Box sx={{ position: "relative", zIndex: 1 }}>
                   <Component />
                 </Box>
@@ -118,8 +137,10 @@ function App() {
           })}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* BOTÓN FLOTANTE DE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -139,6 +160,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
