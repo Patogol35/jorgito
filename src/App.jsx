@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Importa tus componentes
+// Componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado para detectar visibilidad
+// Hook personalizado
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -69,13 +69,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -103,31 +99,43 @@ function App() {
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
-                  // 👇 Usamos borderLeft con color condicional
-                  borderLeft: `5px solid ${
-                    isIntersecting ? color : "transparent"
-                  }`,
-                  // 👇 Aseguramos que el borde no se "rompa" con el radio
-                  overflow: "hidden",
+                  position: "relative",
                   scrollMarginTop: scrollOffset,
-                  // 👇 Transición suave con easing refinado
-                  transition: "border-color 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                  overflow: "hidden", // ✅ esencial para clip-path y bordes
                   "&:hover": {
                     transform: "translateY(-4px)",
                     transition: "transform 0.3s ease",
                   },
                 }}
               >
-                <Component />
+                {/* ✨ BORDE ANIMADO CON CLIP-PATH (aparece poco a poco desde arriba) */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "5px",
+                    height: "100%",
+                    backgroundColor: color,
+                    borderRadius: "3px 0 0 3px", // ✅ esquinas redondeadas
+                    clipPath: isIntersecting
+                      ? "inset(0% 0% 0% 0% round 3px 0 0 3px)"
+                      : "inset(100% 0% 0% 0% round 3px 0 0 3px)",
+                    transition: "clip-path 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    zIndex: 0,
+                  }}
+                />
+                {/* Contenido encima */}
+                <Box sx={{ position: "relative", zIndex: 1 }}>
+                  <Component />
+                </Box>
               </Paper>
             );
           })}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -147,7 +155,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
