@@ -89,81 +89,75 @@ export default function Skills() {
             </Typography>
           </Box>
         </motion.div>
+{/* =========================
+    FILTROS (PRO + SIN SCROLL)
+========================= */}
+<Box
+  display="flex"
+  justifyContent="center"
+  mb={6}
+>
+  <ToggleButtonGroup
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    aria-label="Filtros de Skills"
+    sx={{
+      display: "flex",
+      flexWrap: "wrap",          // 👈 CLAVE: no scroll
+      justifyContent: "center",
+      gap: 1,
+      px: 2,
+      py: 1,
+      maxWidth: "900px",
+      borderRadius: "20px",
+      background: isDark
+        ? "rgba(255,255,255,0.04)"
+        : "rgba(255,255,255,0.85)",
+      backdropFilter: "blur(14px)",
+      border: isDark
+        ? "1px solid rgba(255,255,255,0.12)"
+        : "1px solid rgba(0,0,0,0.08)",
+      boxShadow: isDark
+        ? "0 8px 24px rgba(0,0,0,0.45)"
+        : "0 8px 24px rgba(0,0,0,0.12)",
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        sx={{
+          textTransform: "none",
+          fontWeight: 600,
+          px: 2.5,
+          py: 0.8,
+          fontSize: "0.85rem",
+          minHeight: "38px",
+          borderRadius: "14px",
+          border: "none",
+          color: theme.palette.text.secondary,
+          transition: "all 0.25s ease",
 
-        {/* =========================
-            FILTROS (MEJORADOS)
-        ========================= */}
-        <Box
-          display="flex"
-          justifyContent="center"
-          mb={6}
-          sx={{
-            overflowX: "auto",
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": { display: "none" },
-          }}
-        >
-          <ToggleButtonGroup
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            aria-label="Filtros de Skills"
-            sx={{
-              px: 1,
-              py: 0.6,
-              gap: 0.6,
-              maxWidth: "100%",
-              flexWrap: "nowrap",
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(255,255,255,0.05)"
-                : "rgba(255,255,255,0.75)",
-              backdropFilter: "blur(12px)",
-              border: isDark
-                ? "1px solid rgba(255,255,255,0.1)"
-                : "1px solid rgba(0,0,0,0.08)",
-              boxShadow: isDark
-                ? "0 4px 14px rgba(0,0,0,0.4)"
-                : "0 4px 14px rgba(0,0,0,0.12)",
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                sx={{
-                  whiteSpace: "nowrap",
-                  textTransform: "none",
-                  fontWeight: 600,
-                  px: 2,
-                  py: 0.6,
-                  fontSize: "0.8rem",
-                  minHeight: "34px",
-                  borderRadius: "999px",
-                  border: "none",
-                  flexShrink: 0,
-                  color: theme.palette.text.secondary,
-                  transition: "all 0.25s ease",
+          "&.Mui-selected": {
+            background: `linear-gradient(135deg, ${primary}, #6366f1)`,
+            color: "#fff",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+          },
 
-                  "&.Mui-selected": {
-                    background: `linear-gradient(90deg, ${primary}, #6366f1)`,
-                    color: "#fff",
-                    boxShadow: "0 3px 8px rgba(0,0,0,0.25)",
-                  },
-
-                  "&:hover": {
-                    background: isDark
-                      ? "rgba(255,255,255,0.08)"
-                      : "rgba(0,0,0,0.05)",
-                    color: theme.palette.text.primary,
-                  },
-                }}
-              >
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
+          "&:hover": {
+            background: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(0,0,0,0.05)",
+            color: theme.palette.text.primary,
+          },
+        }}
+      >
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
 
         {/* =========================
             GRID DE SKILLS
