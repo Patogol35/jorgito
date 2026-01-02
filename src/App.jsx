@@ -56,18 +56,22 @@ function App() {
     [mode]
   );
 
+  const sections = [
+    { id: "about", color: "#2e7d32", Component: About },
+    { id: "skills", color: "#fb8c00", Component: Skills },
+    { id: "certifications", color: "#8e24aa", Component: Certifications },
+    { id: "projects", color: "#1976d2", Component: Projects },
+    { id: "contact", color: "#d32f2f", Component: Contact },
+  ];
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -76,13 +80,7 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {[
-            { id: "about", color: "#2e7d32", Component: About },
-            { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
-            { id: "projects", color: "#1976d2", Component: Projects },
-            { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
+          {sections.map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
@@ -95,50 +93,71 @@ function App() {
                 scrollMarginTop: scrollOffset,
                 overflow: "hidden",
 
-                /* sombra premium */
+                /* SOMBRA BASE */
                 boxShadow:
                   mode === "light"
-                    ? "0 10px 24px rgba(0,0,0,0.06)"
-                    : "0 10px 24px rgba(0,0,0,0.5)",
+                    ? "0 10px 26px rgba(0,0,0,0.06)"
+                    : "0 10px 26px rgba(0,0,0,0.55)",
 
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                transition:
+                  "transform 0.3s ease, box-shadow 0.3s ease",
 
                 "&:hover": {
-                  transform: "translateY(-6px)",
+                  transform: "translateY(-8px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 18px 36px rgba(0,0,0,0.12)"
-                      : "0 18px 36px rgba(0,0,0,0.7)",
+                      ? "0 20px 40px rgba(0,0,0,0.14)"
+                      : "0 20px 40px rgba(0,0,0,0.8)",
                 },
 
-                /* 🎨 BORDE IZQUIERDO ANIMADO (SOLO VISUAL) */
+                /* 🎨 BORDE + GLOW */
                 "&::before": {
                   content: '""',
                   position: "absolute",
                   left: 0,
                   top: 0,
-                  width: "8px",
+                  width: "9px",
                   height: "100%",
                   background: `linear-gradient(180deg, ${color}, transparent)`,
                   borderRadius: "3px 0 0 3px",
-                  animation: "growBorder 0.8s ease forwards",
+                  animation: "borderGrow 0.9s ease forwards",
+                  zIndex: 0,
                 },
 
-                "@keyframes growBorder": {
-                  from: { transform: "scaleY(0)", transformOrigin: "top" },
-                  to: { transform: "scaleY(1)" },
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  width: "9px",
+                  height: "100%",
+                  background: color,
+                  opacity: mode === "light" ? 0.25 : 0.4,
+                  filter: "blur(10px)",
+                  zIndex: 0,
+                },
+
+                "@keyframes borderGrow": {
+                  from: {
+                    transform: "scaleY(0)",
+                    transformOrigin: "top",
+                  },
+                  to: {
+                    transform: "scaleY(1)",
+                  },
                 },
               }}
             >
-              <Component />
+              <Box sx={{ position: "relative", zIndex: 1 }}>
+                <Component />
+              </Box>
             </Paper>
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -158,7 +177,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
