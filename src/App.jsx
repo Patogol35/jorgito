@@ -60,6 +60,9 @@ function App() {
                 },
               }),
         },
+        typography: {
+          fontFamily: "Inter, Roboto, sans-serif",
+        },
       }),
     [mode]
   );
@@ -91,44 +94,62 @@ function App() {
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
           ].map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({ threshold: 0.1 });
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
 
             return (
               <Paper
                 ref={ref}
                 key={id}
                 id={id}
-                elevation={3}
+                elevation={6}
                 sx={{
-                  mb: 4,
+                  mb: 6,
                   p: { xs: 3, md: 6 },
-                  borderRadius: 3,
+                  borderRadius: 4,
                   position: "relative",
                   scrollMarginTop: scrollOffset,
-                  overflow: "hidden", // 👈 esencial para respetar el radio durante la animación
-                  transition: "all 0.3s ease",
+                  overflow: "hidden",
+                  background: mode === "light"
+                    ? "linear-gradient(180deg, #ffffff, #f9fafc)"
+                    : "linear-gradient(180deg, #1e1e1e, #232323)",
+                  transition: "all 0.5s ease",
+                  transform: isIntersecting ? "translateY(0)" : "translateY(30px)",
+                  opacity: isIntersecting ? 1 : 0,
+                  boxShadow:
+                    mode === "light"
+                      ? "0 8px 24px rgba(0,0,0,0.08)"
+                      : "0 8px 24px rgba(0,0,0,0.5)",
                   "&:hover": {
-                    transform: "translateY(-4px)",
+                    transform: "translateY(-8px) scale(1.01)",
+                    boxShadow:
+                      mode === "light"
+                        ? "0 20px 40px rgba(0,0,0,0.15)"
+                        : "0 20px 40px rgba(0,0,0,0.7)",
                   },
                 }}
               >
-                {/* ✨ BORDE IZQUIERDO ANIMADO: aparece de arriba a abajo + curvado */}
+                {/* ✨ BORDE IZQUIERDO CON GRADIENTE Y GLOW */}
                 <Box
+                  className="border-accent"
                   sx={{
                     position: "absolute",
                     left: 0,
                     top: 0,
                     width: "6px",
                     height: "100%",
-                    backgroundColor: color,
-                    borderRadius: "3px 0 0 3px", // 👈 curvatura idéntica a la del Paper
+                    background: `linear-gradient(180deg, ${color}, transparent)`,
+                    borderRadius: "4px 0 0 4px",
                     transformOrigin: "top",
                     transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
                     transition: "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    boxShadow: isIntersecting
+                      ? `0 0 10px ${color}`
+                      : "none",
                     zIndex: 0,
                   }}
                 />
-                {/* Contenido siempre visible */}
+
+                {/* Contenido */}
                 <Box sx={{ position: "relative", zIndex: 1 }}>
                   <Component />
                 </Box>
@@ -146,11 +167,16 @@ function App() {
             aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: 16,
-              right: 16,
+              bottom: 20,
+              right: 20,
               zIndex: 1000,
               bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
+              "&:hover": {
+                bgcolor: "#1ebe5c",
+                boxShadow: "0 0 20px rgba(37,211,102,0.6)",
+                transform: "scale(1.05)",
+              },
+              transition: "all 0.3s ease",
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
