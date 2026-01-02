@@ -103,78 +103,78 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        
 {/* =========================
     FILTROS
 ========================= */}
 <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-  {/* CONTENEDOR QUE DA ANCHO */}
-  <Box
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
     sx={{
-      width: "100%",
-      maxWidth: { xs: "100%", sm: 720, md: 900 }, // ⬅️ CLAVE
+      display: "flex",
+      overflowX: "auto",
+      gap: 1.2,
+      px: 2,
+      py: 0.5,
+      "&::-webkit-scrollbar": { display: "none" },
     }}
   >
-    <ToggleButtonGroup
-      ref={containerRef}
-      value={filter}
-      exclusive
-      onChange={(e, val) => val && setFilter(val)}
-      sx={{
-        display: "flex",
-        overflowX: "auto",
-        gap: 1.2,
-        px: 2,
-        py: 0.5,
-        "&::-webkit-scrollbar": { display: "none" },
-      }}
-    >
-      {categories.map((cat) => (
-        <ToggleButton
-          key={cat}
-          value={cat}
-          ref={(el) => (buttonRefs.current[cat] = el)}
-          component={motion.button}
-          whileTap={{ scale: 0.92 }}
-          sx={{
-            minWidth: 120, // ⬅️ asegura que se vean más de 2
-            borderRadius: "999px",
-            px: 2.4,
-            py: 1,
-            fontWeight: 600,
-            fontSize: "0.9rem",
-            textTransform: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.4,
+          py: 1,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
 
+          backgroundColor: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(255,255,255,0.9)",
+          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
+          border: `1px solid ${
+            isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)"
+          }`,
+
+          "&:hover": {
             backgroundColor: isDark
-              ? "rgba(255,255,255,0.04)"
-              : "rgba(255,255,255,0.9)",
-            color: isDark
-              ? "rgba(255,255,255,0.85)"
-              : "rgba(0,0,0,0.75)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(255,255,255,0.12)"
-                : "rgba(0,0,0,0.12)"
-            }`,
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(25,118,210,0.06)",
+          },
 
-            "&.Mui-selected": {
-              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-              color: "#fff",
-              borderColor: "transparent",
-            },
-          }}
-        >
-          {categoryIcons[cat]}
-          {cat}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
-  </Box>
+          "&.Mui-selected": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+            color: "#fff",
+            borderColor: "transparent",
+            boxShadow: isDark
+              ? "0 6px 16px rgba(0,0,0,0.4)"
+              : "0 6px 14px rgba(25,118,210,0.35)",
+          },
+
+          "&.Mui-selected:hover": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+          },
+        }}
+      >
+        {categoryIcons[cat]}
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
 </Box>
-
         {/* =========================
         GRID SKILLS
         ========================= */}
