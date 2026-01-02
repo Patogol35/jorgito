@@ -92,7 +92,7 @@ export default function Hero({ mode, setMode }) {
               duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: 1.8,
+              delay: 4.8,
             }}
           >
             <Box
