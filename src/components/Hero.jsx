@@ -5,12 +5,35 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion, useReducedMotion } from "framer-motion";
 
+// Configuración de animaciones avanzadas
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 12,
+      stiffness: 100,
+      mass: 0.5,
+    },
+  },
+};
+
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
-  const shouldReduceMotion = useReducedMotion(); // Detecta prefers-reduced-motion
-
-  // Configuración base de transición
-  const transition = { duration: 0.6, ease: "easeOut" };
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
@@ -28,51 +51,95 @@ export default function Hero({ mode, setMode }) {
           pb: { xs: 1.5, sm: 2.5, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
           color: theme.palette.text.primary,
+          position: "relative",
         }}
       >
-        {/* Avatar animado */}
-        <motion.div
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  y: [-8, 8, -8],
-                  scale: [1, 1.02, 1],
-                }
-          }
-          transition={
-            shouldReduceMotion
-              ? {}
-              : {
-                  y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-                }
-          }
-          style={{ borderRadius: "50%", display: "inline-block" }}
-        >
-          <Avatar
-            alt="Jorge Patricio"
-            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-            sx={{
-              width: { xs: 130, sm: 170, md: 200 },
-              height: { xs: 130, sm: 170, md: 200 },
-              border: `4px solid ${theme.palette.primary.main}`,
-              background: theme.palette.background.paper, // evita fondo transparente si la imagen falla
-            }}
-          />
-        </motion.div>
-
-        {/* Contenido de texto con animaciones secuenciales */}
+        {/* Avatar con efecto flotante + destello */}
         <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
+          sx={{
+            position: "relative",
+            display: "inline-block",
+          }}
         >
           <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: 0.1 }}
+            animate={
+              shouldReduceMotion
+                ? {}
+                : {
+                    y: [0, -16, 0],
+                    rotate: [0, 1, -1, 0],
+                  }
+            }
+            transition={
+              shouldReduceMotion
+                ? {}
+                : {
+                    y: {
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                    rotate: {
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  }
+            }
+            style={{ display: "inline-block" }}
           >
+            <Avatar
+              alt="Jorge Patricio"
+              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+              sx={{
+                width: { xs: 130, sm: 170, md: 200 },
+                height: { xs: 130, sm: 170, md: 200 },
+                border: `4px solid ${theme.palette.primary.main}`,
+                position: "relative",
+                zIndex: 2,
+              }}
+            />
+          </motion.div>
+
+          {/* Destello animado (shine effect) */}
+          {!shouldReduceMotion && (
+            <motion.div
+              animate={{
+                x: ["-100%", "100%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "50%",
+                height: "100%",
+                background: `linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent)`,
+                zIndex: 1,
+                borderRadius: "50%",
+                opacity: 0.6,
+              }}
+            />
+          )}
+        </Box>
+
+        {/* Contenido con animación stagger avanzada */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={shouldReduceMotion ? "visible" : "visible"}
+          style={{
+            textAlign: "center",
+            maxWidth: "600px",
+            margin: "0 auto",
+          }}
+        >
+          <motion.div variants={itemVariants}>
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -80,17 +147,14 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 color: theme.palette.primary.main,
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                lineHeight: 1.2,
               }}
             >
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: 0.25 }}
-          >
+          <motion.div variants={itemVariants}>
             <Typography
               variant="h6"
               color="text.secondary"
@@ -101,11 +165,7 @@ export default function Hero({ mode, setMode }) {
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: 0.4 }}
-          >
+          <motion.div variants={itemVariants}>
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
@@ -125,12 +185,8 @@ export default function Hero({ mode, setMode }) {
             </Typography>
           </motion.div>
 
-          {/* Botones con animación y micro-interacciones */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
-            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
-            transition={{ ...transition, delay: 0.55 }}
-          >
+          {/* Botones */}
+          <motion.div variants={itemVariants}>
             <Box
               sx={{
                 display: "flex",
@@ -139,7 +195,6 @@ export default function Hero({ mode, setMode }) {
                 flexWrap: "wrap",
               }}
             >
-              {/* CV */}
               <Button
                 variant="contained"
                 startIcon={<DescriptionIcon />}
@@ -153,18 +208,17 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "none",
+                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                    transition: "transform 0.2s, box-shadow 0.2s",
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
+                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
                   },
                 }}
               >
                 Ver CV
               </Button>
 
-              {/* Título */}
               <Button
                 variant="contained"
                 startIcon={<WorkspacePremiumIcon />}
@@ -178,18 +232,17 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                  boxShadow: "none",
+                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                    transition: "transform 0.2s, box-shadow 0.2s",
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
+                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
                   },
                 }}
               >
                 Ver Título
               </Button>
 
-              {/* Sasha (ChatBot) */}
               <Button
                 variant="contained"
                 startIcon={<SmartToyIcon />}
@@ -202,40 +255,18 @@ export default function Hero({ mode, setMode }) {
                   fontWeight: "bold",
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
-                  minHeight: 48,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "none",
-                  position: "relative",
-                  overflow: "hidden",
+                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                  },
-                  "&:after": {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    background: "rgba(255,255,255,0.1)",
-                    opacity: 0,
-                    animation: shouldReduceMotion
-                      ? "none"
-                      : "pulseGlow 2s infinite",
-                  },
-                  "@keyframes pulseGlow": {
-                    "0%": { opacity: 0 },
-                    "50%": { opacity: 0.3 },
-                    "100%": { opacity: 0 },
+                    transform: "translateY(-3px)",
+                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
+                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
                   },
                 }}
               >
                 Sasha
               </Button>
 
-              {/* Toggle modo oscuro/claro */}
               <Button
                 variant="outlined"
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -250,8 +281,8 @@ export default function Hero({ mode, setMode }) {
                   "&:hover": {
                     background: theme.palette.primary.main,
                     color: "#fff",
-                    transform: "scale(1.05)",
-                    transition: "transform 0.2s, background 0.2s, color 0.2s",
+                    transform: "scale(1.1)",
+                    transition: "all 0.25s ease",
                   },
                 }}
               >
@@ -259,8 +290,8 @@ export default function Hero({ mode, setMode }) {
               </Button>
             </Box>
           </motion.div>
-        </Box>
+        </motion.div>
       </Box>
     </>
   );
-                }
+        }
