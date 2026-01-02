@@ -8,7 +8,6 @@ import {
   Container,
   Fab,
   Tooltip,
-  GlobalStyles,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -50,26 +49,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* KEYFRAMES GLOBAL */}
-      <GlobalStyles
-        styles={{
-          "@keyframes borderRun": {
-            to: {
-              strokeDashoffset: 0,
-            },
-          },
-        }}
-      />
-
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container
-          maxWidth="lg"
-          disableGutters
-          sx={{ py: 6, px: { xs: 2, md: 6 } }}
-        >
+        <Container maxWidth="lg" disableGutters sx={{ py: 6 }}>
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
@@ -89,7 +73,7 @@ function App() {
                 borderRadius: 3,
                 scrollMarginTop: scrollOffset,
 
-                /* LÍNEA IZQUIERDA BASE */
+                /* línea base */
                 borderLeft: `5px solid ${color}`,
 
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -99,14 +83,14 @@ function App() {
                   boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
                 },
 
-                "&:hover .border-svg": {
-                  opacity: 1,
+                /* activar animación */
+                "&:hover .border-rect": {
+                  strokeDashoffset: 0,
                 },
               }}
             >
               {/* SVG ANIMADO */}
               <svg
-                className="border-svg"
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
                 style={{
@@ -115,11 +99,10 @@ function App() {
                   width: "100%",
                   height: "100%",
                   pointerEvents: "none",
-                  opacity: 0,
-                  transition: "opacity 0.2s ease",
                 }}
               >
                 <rect
+                  className="border-rect"
                   x="2"
                   y="2"
                   width="96"
@@ -133,7 +116,7 @@ function App() {
                   style={{
                     strokeDasharray: "1",
                     strokeDashoffset: "1",
-                    animation: "borderRun 0.9s ease forwards",
+                    transition: "stroke-dashoffset 0.8s ease",
                   }}
                 />
               </svg>
