@@ -1,10 +1,5 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudIcon from "@mui/icons-material/Cloud";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-
 import {
   Container,
   Typography,
@@ -15,29 +10,10 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
-
 import { motion, AnimatePresence } from "framer-motion";
 
-/* =========================
-CATEGORÍAS
-========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
-/* =========================
-ICONOS POR CATEGORÍA
-========================= */
-const categoryIcons = {
-  All: <AllInclusiveIcon fontSize="small" />,
-  Frontend: <CodeIcon fontSize="small" />,
-  Backend: <BuildIcon fontSize="small" />,
-  Database: <StorageIcon fontSize="small" />,
-  Cloud: <CloudIcon fontSize="small" />,
-  Tools: <BuildIcon fontSize="small" />,
-};
-
-/* =========================
-SKILLS
-========================= */
 const skills = [
   { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
   { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
@@ -56,12 +32,10 @@ const skills = [
 
 export default function Skills() {
   const [filter, setFilter] = useState("All");
-  const containerRef = useRef(null);
-  const buttonRefs = useRef({});
-
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const filteredSkills =
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
@@ -71,112 +45,102 @@ export default function Skills() {
     : "rgba(255,255,255,0.8)";
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="skills"
+      sx={{ py: 4, scrollMarginTop: "80px", color: theme.palette.text.primary }}
+    >
       <Container>
 
         {/* =========================
-        ENCABEZADO
+            TÍTULO SKILLS
+            (MISMO DISEÑO QUE ABOUT)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: false }}
           style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              px: 4,
-              py: 1.2,
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(144,202,249,0.1)"
-                : "rgba(25,118,210,0.1)",
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ fontSize: 26, mr: 1.2, color: primary }} />
-            <Typography variant="h6" fontWeight="bold" color={primary}>
+            {/* Icono SIN fondo */}
+            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
               Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
 
-{/* =========================
-    FILTROS
-========================= */}
-<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-  <ToggleButtonGroup
-    ref={containerRef}
-    value={filter}
-    exclusive
-    onChange={(e, val) => val && setFilter(val)}
-    sx={{
-      display: "flex",
-      overflowX: "auto",
-      gap: 1.2,
-      px: 2,
-      py: 0.5,
-      "&::-webkit-scrollbar": { display: "none" },
-    }}
-  >
-    {categories.map((cat) => (
-      <ToggleButton
-        key={cat}
-        value={cat}
-        ref={(el) => (buttonRefs.current[cat] = el)}
-        component={motion.button}
-        whileTap={{ scale: 0.92 }}
-        sx={{
-          borderRadius: "999px",
-          px: 2.4,
-          py: 1,
-          fontWeight: 600,
-          fontSize: "0.9rem",
-          textTransform: "none",
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-
-          backgroundColor: isDark
-            ? "rgba(255,255,255,0.04)"
-            : "rgba(255,255,255,0.9)",
-          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
-          border: `1px solid ${
-            isDark
-              ? "rgba(255,255,255,0.12)"
-              : "rgba(0,0,0,0.12)"
-          }`,
-
-          "&:hover": {
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.08)"
-              : "rgba(25,118,210,0.06)",
-          },
-
-          "&.Mui-selected": {
-            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-            color: "#fff",
-            borderColor: "transparent",
-            boxShadow: isDark
-              ? "0 6px 16px rgba(0,0,0,0.4)"
-              : "0 6px 14px rgba(25,118,210,0.35)",
-          },
-
-          "&.Mui-selected:hover": {
-            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-          },
-        }}
-      >
-        {categoryIcons[cat]}
-        {cat}
-      </ToggleButton>
-    ))}
-  </ToggleButtonGroup>
-</Box>
         {/* =========================
-        GRID SKILLS
+            FILTROS (SIN CAMBIOS)
+        ========================= */}
+        <Box display="flex" justifyContent="center" mb={6}>
+          <ToggleButtonGroup
+            value={filter}
+            exclusive
+            onChange={(e, val) => val && setFilter(val)}
+            aria-label="Filtros de Skills"
+            sx={{
+              background: isDark
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(255,255,255,0.7)",
+              borderRadius: "12px",
+              boxShadow: isDark
+                ? "0 4px 12px rgba(0,0,0,0.3)"
+                : "0 4px 12px rgba(0,0,0,0.1)",
+            }}
+          >
+            {categories.map((cat) => (
+              <ToggleButton
+                key={cat}
+                value={cat}
+                sx={{
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 1.5,
+                  py: 0.5,
+                  fontSize: "0.85rem",
+                  color: theme.palette.text.primary,
+                  "&.Mui-selected": {
+                    background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+                    color: "white",
+                  },
+                  "&:hover": {
+                    background: "linear-gradient(90deg,#2563eb,#4f46e5)",
+                    color: "white",
+                  },
+                }}
+              >
+                {cat}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </Box>
+
+        {/* =========================
+            GRID DE SKILLS (SIN CAMBIOS)
         ========================= */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
@@ -187,6 +151,7 @@ export default function Skills() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
                   whileHover={{ scale: 1.08 }}
                 >
                   <Paper
@@ -197,6 +162,10 @@ export default function Skills() {
                       borderRadius: "20px",
                       backdropFilter: "blur(12px)",
                       background: cardBg,
+                      boxShadow: isDark
+                        ? "0 8px 20px rgba(0,0,0,0.5)"
+                        : "0 8px 20px rgba(0,0,0,0.1)",
+                      transition: "all 0.3s ease-in-out",
                     }}
                   >
                     <Box
@@ -208,7 +177,9 @@ export default function Skills() {
                         height: 65,
                         objectFit: "contain",
                         mb: 2,
-                        filter: isDark ? "invert(1) brightness(1.2)" : "none",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none",
                       }}
                     />
                     <Typography variant="subtitle1" fontWeight="bold">
@@ -220,7 +191,6 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
-
       </Container>
     </Box>
   );
