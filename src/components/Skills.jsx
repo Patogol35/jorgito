@@ -66,7 +66,10 @@ export default function Skills() {
   return (
     <Box
       id="skills"
-      sx={{ py: 4, scrollMarginTop: "80px", color: theme.palette.text.primary }}
+      sx={{
+  py: 4,
+  color: theme.palette.text.primary,
+}}
     >
       <Container>
 
