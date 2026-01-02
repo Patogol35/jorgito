@@ -1,4 +1,11 @@
-import { Toolbar, Box, Typography, Button, Avatar, IconButton } from "@mui/material";
+import {
+  Toolbar,
+  Box,
+  Typography,
+  Button,
+  Avatar,
+  IconButton,
+} from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
@@ -225,7 +232,7 @@ export default function Hero({ mode, setMode }) {
                 </motion.div>
               ))}
 
-              {/* TOGGLE DARK / LIGHT SOLO ICONO */}
+              {/* TOGGLE DARK / LIGHT SOLO ICONO (MÁS GRANDE) */}
               <motion.div variants={fadeCinematic}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -238,7 +245,11 @@ export default function Hero({ mode, setMode }) {
                     transition: "transform 0.2s ease",
                   }}
                 >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  {mode === "light" ? (
+                    <Brightness4 sx={{ fontSize: 28 }} />
+                  ) : (
+                    <Brightness7 sx={{ fontSize: 28 }} />
+                  )}
                 </IconButton>
               </motion.div>
             </Box>
@@ -247,4 +258,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-}
+                    }
