@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import {
   Container,
@@ -32,6 +32,8 @@ const skills = [
 
 export default function Skills() {
   const [filter, setFilter] = useState("All");
+  const filtersRef = useRef(null);
+
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
@@ -44,6 +46,23 @@ export default function Skills() {
     ? "rgba(255,255,255,0.05)"
     : "rgba(255,255,255,0.8)";
 
+  /* =========================
+     AUTO SCROLL AL SELECCIONAR
+  ========================= */
+  useEffect(() => {
+    if (!filtersRef.current) return;
+
+    const active = filtersRef.current.querySelector(
+      ".MuiToggleButton-root.Mui-selected"
+    );
+
+    active?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }, [filter]);
+
   return (
     <Box
       id="skills"
@@ -52,8 +71,7 @@ export default function Skills() {
       <Container>
 
         {/* =========================
-            TÍTULO SKILLS
-            (MISMO DISEÑO QUE ABOUT)
+            TÍTULO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -65,7 +83,6 @@ export default function Skills() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -81,96 +98,80 @@ export default function Skills() {
               backdropFilter: "blur(6px)",
             }}
           >
-            {/* Icono SIN fondo */}
             <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-            >
+            <Typography variant="h6" fontWeight="bold" color={primaryColor}>
               Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
 
         {/* =========================
-    FILTROS (PRO + AUTO SCROLL)
-========================= */}
-<Box
-  display="flex"
-  justifyContent="center"
-  mb={6}
-  sx={{
-    overflowX: "auto",
-    scrollbarWidth: "none",
-    "&::-webkit-scrollbar": { display: "none" },
-  }}
->
-  <ToggleButtonGroup
-    ref={filtersRef}
-    value={filter}
-    exclusive
-    onChange={(e, val) => val && setFilter(val)}
-    aria-label="Filtros de Skills"
-    sx={{
-      maxWidth: "100%",
-      px: 1,
-      py: 0.6,
-      gap: 0.8,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(255,255,255,0.05)"
-        : "rgba(255,255,255,0.75)",
-      backdropFilter: "blur(14px)",
-      border: isDark
-        ? "1px solid rgba(255,255,255,0.1)"
-        : "1px solid rgba(0,0,0,0.08)",
-      boxShadow: isDark
-        ? "0 6px 18px rgba(0,0,0,0.45)"
-        : "0 6px 18px rgba(0,0,0,0.15)",
-      flexWrap: "nowrap",
-    }}
-  >
-    {categories.map((cat) => (
-      <ToggleButton
-        key={cat}
-        value={cat}
-        sx={{
-          whiteSpace: "nowrap",
-          textTransform: "none",
-          fontWeight: 600,
-          px: 2.2,
-          py: 0.7,
-          fontSize: "0.8rem",
-          minHeight: "34px",
-          borderRadius: "999px",
-          border: "none",
-          flexShrink: 0,
-          color: theme.palette.text.secondary,
-          transition: "all 0.25s ease",
+            FILTROS PRO + SCROLL
+        ========================= */}
+        <Box
+          display="flex"
+          justifyContent="center"
+          mb={6}
+          sx={{
+            overflowX: "auto",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": { display: "none" },
+          }}
+        >
+          <ToggleButtonGroup
+            ref={filtersRef}
+            value={filter}
+            exclusive
+            onChange={(e, val) => val && setFilter(val)}
+            sx={{
+              px: 1,
+              py: 0.6,
+              gap: 0.8,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(255,255,255,0.05)"
+                : "rgba(255,255,255,0.75)",
+              backdropFilter: "blur(14px)",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.1)"
+                : "1px solid rgba(0,0,0,0.08)",
+              boxShadow: isDark
+                ? "0 6px 18px rgba(0,0,0,0.45)"
+                : "0 6px 18px rgba(0,0,0,0.15)",
+              flexWrap: "nowrap",
+            }}
+          >
+            {categories.map((cat) => (
+              <ToggleButton
+                key={cat}
+                value={cat}
+                sx={{
+                  whiteSpace: "nowrap",
+                  fontWeight: 600,
+                  px: 2.2,
+                  py: 0.7,
+                  fontSize: "0.8rem",
+                  minHeight: "34px",
+                  borderRadius: "999px",
+                  border: "none",
+                  flexShrink: 0,
+                  color: theme.palette.text.secondary,
 
-          "&.Mui-selected": {
-            background: `linear-gradient(90deg, ${primary}, #6366f1)`,
-            color: "#fff",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
-          },
-
-          "&:hover": {
-            background: isDark
-              ? "rgba(255,255,255,0.08)"
-              : "rgba(0,0,0,0.05)",
-            color: theme.palette.text.primary,
-          },
-        }}
-      >
-        {cat}
-      </ToggleButton>
-    ))}
-  </ToggleButtonGroup>
-</Box>
+                  "&.Mui-selected": {
+                    background: `linear-gradient(90deg, ${primary}, #6366f1)`,
+                    color: "#fff",
+                    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+                  },
+                }}
+              >
+                {cat}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </Box>
 
         {/* =========================
-            GRID DE SKILLS (SIN CAMBIOS)
+            GRID DE SKILLS
         ========================= */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
@@ -179,7 +180,6 @@ export default function Skills() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.08 }}
@@ -192,10 +192,6 @@ export default function Skills() {
                       borderRadius: "20px",
                       backdropFilter: "blur(12px)",
                       background: cardBg,
-                      boxShadow: isDark
-                        ? "0 8px 20px rgba(0,0,0,0.5)"
-                        : "0 8px 20px rgba(0,0,0,0.1)",
-                      transition: "all 0.3s ease-in-out",
                     }}
                   >
                     <Box
@@ -205,14 +201,11 @@ export default function Skills() {
                       sx={{
                         width: 65,
                         height: 65,
-                        objectFit: "contain",
                         mb: 2,
-                        filter: isDark
-                          ? "invert(1) brightness(1.2)"
-                          : "none",
+                        filter: isDark ? "invert(1) brightness(1.2)" : "none",
                       }}
                     />
-                    <Typography variant="subtitle1" fontWeight="bold">
+                    <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
                   </Paper>
@@ -221,7 +214,8 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
+
       </Container>
     </Box>
   );
-}
+      }
