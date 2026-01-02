@@ -94,28 +94,40 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-    FILTROS (MEJORADOS)
+    FILTROS (ANCHO CONTROLADO + PREMIUM)
 ========================= */}
-<Box display="flex" justifyContent="center" mb={5}>
+<Box
+  display="flex"
+  justifyContent="center"
+  mb={5}
+  sx={{
+    overflowX: "auto",
+    WebkitOverflowScrolling: "touch",
+    scrollbarWidth: "none",
+    "&::-webkit-scrollbar": { display: "none" },
+  }}
+>
   <ToggleButtonGroup
     value={filter}
     exclusive
     onChange={(e, val) => val && setFilter(val)}
     aria-label="Filtros de Skills"
     sx={{
-      p: 0.5,
+      maxWidth: "100%",
+      px: 0.5,
       gap: 0.5,
       borderRadius: "999px",
       background: isDark
         ? "rgba(255,255,255,0.04)"
-        : "rgba(255,255,255,0.55)",
-      backdropFilter: "blur(10px)",
+        : "rgba(255,255,255,0.6)",
+      backdropFilter: "blur(12px)",
       border: isDark
         ? "1px solid rgba(255,255,255,0.08)"
         : "1px solid rgba(0,0,0,0.06)",
       boxShadow: isDark
-        ? "0 2px 8px rgba(0,0,0,0.4)"
-        : "0 2px 8px rgba(0,0,0,0.1)",
+        ? "0 3px 10px rgba(0,0,0,0.35)"
+        : "0 3px 10px rgba(0,0,0,0.12)",
+      flexWrap: "nowrap",
     }}
   >
     {categories.map((cat) => (
@@ -123,13 +135,16 @@ export default function Skills() {
         key={cat}
         value={cat}
         sx={{
+          whiteSpace: "nowrap",
           textTransform: "none",
           fontWeight: 500,
           px: 1.6,
-          py: 0.4,
+          py: 0.45,
           fontSize: "0.75rem",
+          minHeight: "28px",
           borderRadius: "999px",
           border: "none",
+          flexShrink: 0,
           color: theme.palette.text.secondary,
           transition: "all 0.25s ease",
 
