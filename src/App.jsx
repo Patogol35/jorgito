@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado para detectar visibilidad
+// Hook personalizado
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -46,18 +46,14 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
+                text: { primary: "#111" },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
+                text: { primary: "#ffffff" },
               }),
         },
         typography: {
@@ -78,7 +74,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -94,7 +90,14 @@ function App() {
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
           ].map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.25 });
+            const [hasAnimated, setHasAnimated] = useState(false);
+
+            useEffect(() => {
+              if (isIntersecting && !hasAnimated) {
+                setHasAnimated(true);
+              }
+            }, [isIntersecting, hasAnimated]);
 
             return (
               <Paper
@@ -109,18 +112,34 @@ function App() {
                   position: "relative",
                   scrollMarginTop: scrollOffset,
                   overflow: "hidden",
-                  background: mode === "light"
-                    ? "linear-gradient(180deg, #ffffff, #f9fafc)"
-                    : "linear-gradient(180deg, #1e1e1e, #232323)",
+
+                  /* 🔥 SOLUCIÓN CONTACT */
+                  minHeight: id === "contact" ? "100vh" : "auto",
+                  display: "flex",
+                  alignItems: "center",
+
+                  background:
+                    id === "contact"
+                      ? mode === "light"
+                        ? "linear-gradient(180deg, #ffffff, #f0f4ff)"
+                        : "linear-gradient(180deg, #1e1e1e, #0f172a)"
+                      : mode === "light"
+                      ? "linear-gradient(180deg, #ffffff, #f9fafc)"
+                      : "linear-gradient(180deg, #1e1e1e, #232323)",
+
                   transition: "all 0.5s ease",
-                  transform: isIntersecting ? "translateY(0)" : "translateY(30px)",
-                  opacity: isIntersecting ? 1 : 0,
+                  transform: hasAnimated
+                    ? "translateY(0)"
+                    : "translateY(30px)",
+                  opacity: hasAnimated ? 1 : 0,
+
                   boxShadow:
                     mode === "light"
                       ? "0 8px 24px rgba(0,0,0,0.08)"
                       : "0 8px 24px rgba(0,0,0,0.5)",
+
                   "&:hover": {
-                    transform: "translateY(-8px) scale(1.01)",
+                    transform: "translateY(-6px) scale(1.01)",
                     boxShadow:
                       mode === "light"
                         ? "0 20px 40px rgba(0,0,0,0.15)"
@@ -128,9 +147,8 @@ function App() {
                   },
                 }}
               >
-                {/* ✨ BORDE IZQUIERDO CON GRADIENTE Y GLOW */}
+                {/* BORDE IZQUIERDO */}
                 <Box
-                  className="border-accent"
                   sx={{
                     position: "absolute",
                     left: 0,
@@ -140,17 +158,17 @@ function App() {
                     background: `linear-gradient(180deg, ${color}, transparent)`,
                     borderRadius: "4px 0 0 4px",
                     transformOrigin: "top",
-                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
-                    transition: "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    boxShadow: isIntersecting
+                    transform: hasAnimated ? "scaleY(1)" : "scaleY(0)",
+                    transition: "transform 1s cubic-bezier(0.25,0.46,0.45,0.94)",
+                    boxShadow: hasAnimated
                       ? `0 0 10px ${color}`
                       : "none",
                     zIndex: 0,
                   }}
                 />
 
-                {/* Contenido */}
-                <Box sx={{ position: "relative", zIndex: 1 }}>
+                {/* CONTENIDO */}
+                <Box sx={{ position: "relative", zIndex: 1, width: "100%" }}>
                   <Component />
                 </Box>
               </Paper>
@@ -161,7 +179,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE DE WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -171,12 +189,12 @@ function App() {
               right: 20,
               zIndex: 1000,
               bgcolor: "#25D366",
+              transition: "all 0.3s ease",
               "&:hover": {
                 bgcolor: "#1ebe5c",
-                boxShadow: "0 0 20px rgba(37,211,102,0.6)",
                 transform: "scale(1.05)",
+                boxShadow: "0 0 20px rgba(37,211,102,0.6)",
               },
-              transition: "all 0.3s ease",
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
@@ -186,7 +204,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
