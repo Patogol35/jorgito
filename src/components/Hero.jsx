@@ -72,21 +72,6 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ===== LUZ AMBIENTAL CINEMATOGRÁFICA ===== */}
-        <Box
-          aria-hidden
-          sx={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-            pointerEvents: "none",
-            background:
-              theme.palette.mode === "dark"
-                ? "radial-gradient(600px 300px at 30% 40%, rgba(59,130,246,0.18), transparent 70%)"
-                : "radial-gradient(600px 300px at 30% 40%, rgba(96,165,250,0.22), transparent 70%)",
-          }}
-        />
-
         {/* ================= AVATAR ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.82, rotateY: -120 }}
