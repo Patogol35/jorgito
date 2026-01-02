@@ -9,6 +9,11 @@ import { useTheme } from "@mui/material/styles";
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
+  const glowColor =
+    theme.palette.mode === "dark"
+      ? "rgba(59,130,246,0.55)"
+      : "rgba(59,130,246,0.35)";
+
   return (
     <>
       <Toolbar />
@@ -24,29 +29,45 @@ export default function Hero({ mode, setMode }) {
           pt: { xs: 6, sm: 8, md: 10 },
           pb: { xs: 1.5, sm: 2.5, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
-          color: theme.palette.text.primary,
         }}
       >
-        {/* Avatar animado */}
+        {/* Avatar con giro 3D + aura */}
         <motion.div
-          initial={{ opacity: 0, rotate: -180, scale: 0.6 }}
+          initial={{
+            opacity: 0,
+            rotateY: -180,
+            scale: 0.6,
+          }}
           animate={{
             opacity: 1,
-            rotate: 0,
+            rotateY: 0,
             scale: 1,
-            y: [0, -15, 0],
+            y: [0, -16, 0],
+            boxShadow: [
+              `0 0 25px ${glowColor}`,
+              `0 0 45px ${glowColor}`,
+              `0 0 25px ${glowColor}`,
+            ],
           }}
           transition={{
             opacity: { duration: 0.8 },
-            rotate: { duration: 0.8, ease: "easeOut" },
+            rotateY: { duration: 0.9, ease: "easeOut" },
             scale: { duration: 0.8 },
             y: {
               duration: 3,
               repeat: Infinity,
               ease: "easeInOut",
             },
+            boxShadow: {
+              duration: 2.8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
           }}
-          style={{ borderRadius: "50%" }}
+          style={{
+            borderRadius: "50%",
+            perspective: 1000,
+          }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -55,6 +76,7 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
+              backfaceVisibility: "hidden",
             }}
           />
         </motion.div>
@@ -96,12 +118,10 @@ export default function Hero({ mode, setMode }) {
                 fontSize: { xs: "1rem", sm: "1.08rem" },
                 lineHeight: 1.9,
                 letterSpacing: "0.3px",
-                fontWeight: 400,
-                color: theme.palette.text.primary,
-                opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 maxWidth: "520px",
                 mt: { xs: 3, sm: 3.5 },
                 mb: { xs: 4, sm: 5 },
+                opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
               }}
             >
               Me apasiona crear tecnología que transforma ideas en realidades
@@ -124,7 +144,6 @@ export default function Hero({ mode, setMode }) {
                 startIcon={<DescriptionIcon />}
                 href="/Jorge.CV.pdf"
                 target="_blank"
-                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
                   textTransform: "none",
@@ -133,7 +152,6 @@ export default function Hero({ mode, setMode }) {
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
-                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver CV
@@ -144,7 +162,6 @@ export default function Hero({ mode, setMode }) {
                 startIcon={<WorkspacePremiumIcon />}
                 href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
                 target="_blank"
-                rel="noopener noreferrer"
                 sx={{
                   borderRadius: "25px",
                   textTransform: "none",
@@ -153,7 +170,6 @@ export default function Hero({ mode, setMode }) {
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: "none",
-                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver Título
@@ -171,13 +187,8 @@ export default function Hero({ mode, setMode }) {
                   fontWeight: "bold",
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
-                  minHeight: 48,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
-                  "&:hover": {
-                    boxShadow: "none",
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  },
                 }}
               >
                 Sasha
@@ -190,7 +201,6 @@ export default function Hero({ mode, setMode }) {
                   minWidth: 48,
                   width: 48,
                   height: 48,
-                  padding: 0,
                   borderRadius: "50%",
                   borderColor: theme.palette.primary.main,
                   color: theme.palette.primary.main,
