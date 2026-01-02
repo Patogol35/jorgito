@@ -100,25 +100,48 @@ function App() {
             { id: "contact", color: "#d32f2f", Component: Contact },
           ].map(({ id, color, Component }) => (
             <Paper
-              key={id}
-              id={id}
-              elevation={3}
-              sx={{
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `5px solid ${color}`,
-                scrollMarginTop: scrollOffset,
-                backdropFilter: "blur(6px)",
-                transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
-                "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
-                },
-              }}
-            >
-              <Component />
-            </Paper>
+  key={id}
+  id={id}
+  elevation={3}
+  sx={{
+    position: "relative",
+    overflow: "hidden",
+
+    mb: 4,
+    p: { xs: 3, md: 6 },
+    borderRadius: 3,
+    scrollMarginTop: scrollOffset,
+    backdropFilter: "blur(6px)",
+
+    transition: "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s",
+
+    /* Marco animado */
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: 0,
+      borderRadius: "inherit",
+      border: `2px solid ${color}`,
+
+      /* Empieza solo como línea izquierda */
+      clipPath: "inset(0 100% 0 0)",
+      transition: "clip-path 0.6s cubic-bezier(.4,0,.2,1)",
+      pointerEvents: "none",
+    },
+
+    "&:hover": {
+      transform: "translateY(-6px)",
+      boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
+    },
+
+    /* El borde recorre toda la card */
+    "&:hover::before": {
+      clipPath: "inset(0 0 0 0)",
+    },
+  }}
+>
+  <Component />
+</Paper>
           ))}
         </Container>
 
