@@ -84,7 +84,14 @@ export default function Skills() {
     : "rgba(255,255,255,0.85)";
 
   return (
-    <Box id="skills" sx={{ scrollMarginTop: "80px" }}>
+    <Box
+  id="skills"
+  sx={{
+    pt: 4,          // 👈 aire arriba (32px)
+    pb: 0,          // 👈 nada abajo
+    scrollMarginTop: "80px",
+  }}
+>
       <Container>
 
         {/* =========================
