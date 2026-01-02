@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Tus componentes
+// Componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -20,7 +20,7 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import ChatBot from "./components/ChatBot.jsx"; // Asegúrate del nombre correcto
+import ChatBot from "./components/ChatBot.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -60,33 +60,36 @@ function App() {
     [mode]
   );
 
-  // Animación definida en el componente
-  const animationStyle = `
-    @keyframes scrollLine {
-      0% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(100%);
-      }
-      100% {
-        transform: translateY(0);
-      }
-    }
-  `;
-
   return (
     <>
-      {/* Inyectamos la animación global (solo una vez) */}
-      <style>{animationStyle}</style>
+      {/* Animación que hace que la línea recorra toda la card y regrese */}
+      <style>
+        {`
+          @keyframes slideLine {
+            0% {
+              background-position: 0 0;
+            }
+            50% {
+              background-position: 0 100%;
+            }
+            100% {
+              background-position: 0 0;
+            }
+          }
+        `}
+      </style>
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
         <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+          {/* NAVBAR */}
           <Navbar mode={mode} setMode={setMode} />
+
+          {/* HERO */}
           <Hero mode={mode} setMode={setMode} />
 
+          {/* CONTENIDO PRINCIPAL */}
           <Container
             maxWidth="lg"
             disableGutters
@@ -110,22 +113,26 @@ function App() {
                   scrollMarginTop: scrollOffset,
                   position: "relative",
                   borderRadius: 3,
-                  overflow: "hidden",
+                  overflow: "hidden", // Esencial para que la animación no se salga
                 }}
               >
-                {/* Línea animada */}
+                {/* Línea animada que recorre toda la altura de la card */}
                 <Box
                   sx={{
                     position: "absolute",
                     left: 0,
                     top: 0,
-                    width: "6px",
+                    width: "8px", // Grosor de la línea
                     height: "100%",
-                    bgcolor: color,
-                    animation: `scrollLine 2s ease-in-out ${index * 0.2}s forwards`,
+                    background: `linear-gradient(to bottom, ${color}, ${color})`,
+                    backgroundSize: "100% 200%",
+                    backgroundPosition: "0 0",
+                    animation: `slideLine 2s ease-in-out ${index * 0.2}s forwards`,
                     zIndex: 2,
                   }}
                 />
+
+                {/* Contenido de la card */}
                 <Paper
                   elevation={3}
                   sx={{
@@ -143,9 +150,10 @@ function App() {
             ))}
           </Container>
 
+          {/* FOOTER */}
           <Footer />
 
-          {/* WhatsApp */}
+          {/* BOTÓN WHATSAPP */}
           <Tooltip title="Chatea por WhatsApp" placement="left">
             <Fab
               aria-label="whatsapp"
@@ -165,6 +173,7 @@ function App() {
             </Fab>
           </Tooltip>
 
+          {/* CHATBOT */}
           <ChatBot />
         </Box>
       </ThemeProvider>
