@@ -86,13 +86,13 @@ export default function Skills() {
       <Container>
 
         {/* =========================
-            HEADER
+            HEADER (sin margen inferior)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          style={{ textAlign: "center" }}
         >
           <Box
             sx={{
@@ -125,9 +125,16 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-            FILTROS
+            FILTROS (controlan el spacing)
         ========================= */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mt: 4,
+            mb: 3,
+          }}
+        >
           <ToggleButtonGroup
             ref={containerRef}
             value={filter}
@@ -185,7 +192,7 @@ export default function Skills() {
         </Box>
 
         {/* =========================
-            GRID
+            GRID (igual a About)
         ========================= */}
         <Grid container spacing={3} justifyContent="center">
           <AnimatePresence>
@@ -230,4 +237,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-        }
+}
