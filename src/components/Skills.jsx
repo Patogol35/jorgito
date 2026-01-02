@@ -104,61 +104,71 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-        FILTROS
-        ========================= */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-          <ToggleButtonGroup
-            ref={containerRef}
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 1.2,
-              px: 2,
-              py: 0.5,
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                ref={(el) => (buttonRefs.current[cat] = el)}
-                component={motion.button}
-                whileTap={{ scale: 0.92 }}
-                sx={{
-                  borderRadius: "999px",
-                  px: 2.4,
-                  py: 1,
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  textTransform: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-
-                  backgroundColor: isDark
-                    ? "rgba(255,255,255,0.04)"
-                    : "rgba(255,255,255,0.9)",
-                  color: isDark
-                    ? "rgba(255,255,255,0.85)"
-                    : "rgba(0,0,0,0.75)",
-
-                  "&.Mui-selected": {
-                    background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                    color: "#fff",
-                  },
-                }}
-              >
-                {categoryIcons[cat]}
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
-
+    FILTROS
+========================= */}
+<Box
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    mt: 4,
+    mb: 3,
+  }}
+>
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    sx={{
+      display: "flex",
+      overflowX: "auto",
+      gap: 1.2,
+      px: 2,
+      py: 0.5,
+      "&::-webkit-scrollbar": { display: "none" },
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.4,
+          py: 1,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          backgroundColor: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(255,255,255,0.9)",
+          color: isDark
+            ? "rgba(255,255,255,0.85)"
+            : "rgba(0,0,0,0.75)",
+          border: `1px solid ${
+            isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)"
+          }`,
+          "&.Mui-selected": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+            color: "#fff",
+            borderColor: "transparent",
+          },
+        }}
+      >
+        {categoryIcons[cat]}
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
         {/* =========================
         GRID SKILLS
         ========================= */}
