@@ -78,7 +78,7 @@ function ProjectCard({ p, i, palette }) {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.3 }}
+        transition={{ duration: 0.8, delay: i * 0.12 }}
         viewport={{ once: false }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
