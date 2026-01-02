@@ -46,18 +46,14 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
+                text: { primary: "#111" },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
@@ -93,7 +89,7 @@ function App() {
           }}
         >
           {sections.map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.1 });
 
             return (
               <Paper
@@ -108,22 +104,14 @@ function App() {
                   position: "relative",
                   scrollMarginTop: scrollOffset,
                   overflow: "hidden",
+                  transition: "box-shadow 0.3s ease, transform 0.3s ease",
 
-                  /* 🎬 Entrada elegante */
-                  opacity: isIntersecting ? 1 : 0,
-                  transform: isIntersecting
-                    ? "translateY(0)"
-                    : "translateY(30px)",
-                  transition:
-                    "opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
-
-                  /* 🖱 Hover premium */
                   "&:hover": {
                     transform: "translateY(-6px)",
                     boxShadow:
                       mode === "light"
-                        ? "0 20px 40px rgba(0,0,0,0.12)"
-                        : "0 20px 40px rgba(0,0,0,0.5)",
+                        ? "0 18px 36px rgba(0,0,0,0.12)"
+                        : "0 18px 36px rgba(0,0,0,0.45)",
                   },
                 }}
               >
@@ -145,30 +133,17 @@ function App() {
                   }}
                 />
 
-                {/* OVERLAY SUTIL */}
-                <Box
-                  className="card-overlay"
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    background:
-                      mode === "light"
-                        ? "linear-gradient(180deg, transparent, rgba(0,0,0,0.03))"
-                        : "linear-gradient(180deg, transparent, rgba(255,255,255,0.04))",
-                    opacity: 0,
-                    transition: "opacity 0.4s ease",
-                    pointerEvents: "none",
-                  }}
-                />
-
-                {/* CONTENIDO */}
+                {/* CONTENIDO (animación segura) */}
                 <Box
                   sx={{
                     position: "relative",
                     zIndex: 1,
-                    "&:hover ~ .card-overlay": {
-                      opacity: 1,
-                    },
+                    opacity: isIntersecting ? 1 : 0,
+                    transform: isIntersecting
+                      ? "none"
+                      : "translateY(16px)",
+                    transition:
+                      "opacity 0.6s ease, transform 0.6s ease",
                   }}
                 >
                   <Component />
@@ -181,7 +156,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
