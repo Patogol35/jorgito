@@ -83,7 +83,7 @@ export default function Hero({ mode, setMode }) {
         <motion.div
           initial={{ opacity: 0, scale: 0.82, rotateY: -120 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-          transition={{ duration: 1.6, ease: easeOutExpo }}
+          transition={{ duration: 3.6, ease: easeOutExpo }}
           style={{ perspective: 1200, zIndex: 1 }}
         >
           <motion.div
