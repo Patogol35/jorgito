@@ -1,10 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -17,9 +12,6 @@ import {
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 
-/* =========================
-   DATA
-========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
 const skills = [
@@ -37,60 +29,33 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
-const categoryIcons = {
-  All: <AllInclusiveIcon fontSize="small" />,
-  Frontend: <CodeIcon fontSize="small" />,
-  Backend: <BuildCircleIcon fontSize="small" />,
-  Database: <StorageIcon fontSize="small" />,
-  Cloud: <CloudQueueIcon fontSize="small" />,
-  Tools: <BuildIcon fontSize="small" />,
-};
-/* =========================
-   COMPONENT
-========================= */
+
 export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
 
-  const containerRef = useRef(null);
-  const buttonRefs = useRef({});
-
-  useEffect(() => {
-    const activeBtn = buttonRefs.current[filter];
-    const container = containerRef.current;
-
-    if (activeBtn && container) {
-      container.scrollTo({
-        left:
-          activeBtn.offsetLeft -
-          container.offsetWidth / 2 +
-          activeBtn.offsetWidth / 2,
-        behavior: "smooth",
-      });
-    }
-  }, [filter]);
-
   const filteredSkills =
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.85)";
+    : "rgba(255,255,255,0.8)";
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="skills"
+      sx={{ py: 4, scrollMarginTop: "80px", color: theme.palette.text.primary }}
+    >
       <Container>
-
-        {/* =========================
-            HEADER
-        ========================= */}
+        {/* Encabezado */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          viewport={{ once: false }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
         >
           <Box
             sx={{
@@ -100,35 +65,21 @@ export default function Skills() {
               py: 1.2,
               borderRadius: "999px",
               background: isDark
-                ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-                : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
+                ? "rgba(144,202,249,0.1)"
+                : "rgba(25,118,210,0.1)",
             }}
           >
-            <Box
-              sx={{
-                width: 34,
-                height: 34,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: isDark ? "#1e3a5f" : "#1976d2",
-                mr: 1.2,
-              }}
-            >
-              <BuildIcon sx={{ color: "#fff", fontSize: 20 }} />
-            </Box>
-
+            <BuildIcon
+              sx={{ fontSize: 26, mr: 1.2, color: isDark ? "#bbdefb" : "#1976d2" }}
+            />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primary }}
+              sx={{
+                fontWeight: "bold",
+                color: isDark ? "#bbdefb" : "#1976d2",
+              }}
             >
-              Tecnologías
+              Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
@@ -205,25 +156,40 @@ export default function Skills() {
     ))}
   </ToggleButtonGroup>
 </Box>
-        {/* =========================
-            GRID
-        ========================= */}
+
+        {/* Grid de Skills */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.08 }}
                 >
                   <Paper
+                    elevation={8}
                     sx={{
                       p: 3,
                       textAlign: "center",
-                      borderRadius: "22px",
+                      borderRadius: "20px",
+                      backdropFilter: "blur(12px)",
                       background: cardBg,
+                      boxShadow: isDark
+                        ? "0 8px 20px rgba(0,0,0,0.5)"
+                        : "0 8px 20px rgba(0,0,0,0.1)",
+                      transition: "all 0.3s ease-in-out",
+                      "&:hover": {
+                        background: isDark
+                          ? "rgba(255,255,255,0.1)"
+                          : "rgba(255,255,255,0.95)",
+                        boxShadow: isDark
+                          ? "0 12px 24px rgba(0,0,0,0.6)"
+                          : "0 12px 24px rgba(0,0,0,0.2)",
+                      },
                     }}
                   >
                     <Box
@@ -233,12 +199,22 @@ export default function Skills() {
                       sx={{
                         width: 65,
                         height: 65,
-                        mb: 2,
                         objectFit: "contain",
-                        filter: isDark ? "invert(1)" : "none",
+                        mb: 2,
+                        transition: "transform 0.3s ease, filter 0.3s ease",
+                        filter: isDark ? "invert(1) brightness(1.2)" : "none",
+                        "&:hover": { transform: "rotate(8deg) scale(1.1)" },
                       }}
                     />
-                    <Typography fontWeight="bold">
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={{
+                        transition: "color 0.3s",
+                        color: theme.palette.text.primary,
+                        "&:hover": { color: primary },
+                      }}
+                    >
                       {skill.name}
                     </Typography>
                   </Paper>
@@ -247,8 +223,7 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
-
       </Container>
     </Box>
   );
-                }
+                          
