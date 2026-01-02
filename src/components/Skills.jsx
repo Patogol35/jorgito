@@ -103,17 +103,10 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* =========================
+        {/* =========================  
     FILTROS
 ========================= */}
-<Box
-  sx={{
-    display: "flex",
-    justifyContent: "center",
-    mt: 4,
-    mb: 3,
-  }}
->
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
   <ToggleButtonGroup
     ref={containerRef}
     value={filter}
@@ -145,6 +138,7 @@ export default function Skills() {
           display: "flex",
           alignItems: "center",
           gap: 1,
+
           backgroundColor: isDark
             ? "rgba(255,255,255,0.04)"
             : "rgba(255,255,255,0.9)",
@@ -156,10 +150,24 @@ export default function Skills() {
               ? "rgba(255,255,255,0.12)"
               : "rgba(0,0,0,0.12)"
           }`,
+
+          "&:hover": {
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(25,118,210,0.06)",
+          },
+
           "&.Mui-selected": {
             background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
             color: "#fff",
             borderColor: "transparent",
+            boxShadow: isDark
+              ? "0 6px 16px rgba(0,0,0,0.4)"
+              : "0 6px 14px rgba(25,118,210,0.35)",
+          },
+
+          "&.Mui-selected:hover": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
           },
         }}
       >
