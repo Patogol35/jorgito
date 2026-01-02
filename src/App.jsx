@@ -9,9 +9,9 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
+// Componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -20,7 +20,7 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import ChatBot from "./components/ChatBot.jsx";
+import ChatBus from "./components/ChatBot.jsx"; // Asegúrate del nombre correcto (ChatBus vs ChatBot)
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -36,118 +36,161 @@ function App() {
       createTheme({
         palette: {
           mode,
-          background: {
-            default: mode === "light" ? "#f5f7fa" : "#121212",
-            paper: mode === "light" ? "#ffffff" : "#1e1e1e",
-          },
+          ...(mode === "light"
+            ? {
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
+              }
+            : {
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
+              }),
         },
       }),
     [mode]
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
+      {/* Animación de la línea al hacer hover */}
+      <style>
+        {`
+          @keyframes slideDownUp {
+            0% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(100%);
+            }
+            100% {
+              transform: translateY(0);
+            }
+          }
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        <Navbar mode={mode} setMode={setMode} />
-        <Hero mode={mode} setMode={setMode} />
+          .animated-border-line {
+            transition: transform 0.3s ease;
+          }
 
-        <Container maxWidth="lg" disableGutters sx={{ py: 6 }}>
-          {[
-            { id: "about", color: "#2e7d32", Component: About },
-            { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
-            { id: "projects", color: "#1976d2", Component: Projects },
-            { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={3}
-              sx={{
-                position: "relative",
-                overflow: "hidden",
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                scrollMarginTop: scrollOffset,
+          .hover-trigger:hover .animated-border-line {
+            animation: slideDownUp 1.2s ease-in-out;
+          }
+        `}
+      </style>
 
-                /* línea base */
-                borderLeft: `5px solid ${color}`,
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+        <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+          {/* NAVBAR */}
+          <Navbar mode={mode} setMode={setMode} />
 
-                "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
-                },
+          {/* HERO */}
+          <Hero mode={mode} setMode={setMode} />
 
-                /* activar animación */
-                "&:hover .border-rect": {
-                  strokeDashoffset: 0,
-                },
-              }}
-            >
-              {/* SVG ANIMADO */}
-              <svg
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  pointerEvents: "none",
+          {/* CONTENIDO */}
+          <Container
+            maxWidth="lg"
+            disableGutters
+            sx={{
+              py: 6,
+              px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+            }}
+          >
+            {[
+              { id: "about", color: "#2e7d32", Component: About },
+              { id: "skills", color: "#fb8c00", Component: Skills },
+              { id: "certifications", color: "#8e24aa", Component: Certifications },
+              { id: "projects", color: "#1976d2", Component: Projects },
+              { id: "contact", color: "#d32f2f", Component: Contact },
+            ].map(({ id, color, Component }) => (
+              <Box
+                key={id}
+                id={id}
+                className="hover-trigger"
+                sx={{
+                  mb: 4,
+                  scrollMarginTop: scrollOffset,
+                  position: "relative",
+                  borderRadius: 3,
+                  overflow: "hidden",
+                  // Estilo para el efecto de elevación al hacer hover
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: theme.shadows[6],
+                  },
                 }}
               >
-                <rect
-                  className="border-rect"
-                  x="2"
-                  y="2"
-                  width="96"
-                  height="96"
-                  rx="6"
-                  ry="6"
-                  fill="none"
-                  stroke={color}
-                  strokeWidth="2"
-                  pathLength="1"
-                  style={{
-                    strokeDasharray: "1",
-                    strokeDashoffset: "1",
-                    transition: "stroke-dashoffset 0.8s ease",
+                {/* Línea animada a la izquierda */}
+                <Box
+                  className="animated-border-line"
+                  sx={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: "6px",
+                    height: "100%",
+                    bgcolor: color,
+                    zIndex: 2,
                   }}
                 />
-              </svg>
 
-              <Component />
-            </Paper>
-          ))}
-        </Container>
+                {/* Contenido principal sin borde izquierdo */}
+                <Paper
+                  elevation={3}
+                  sx={{
+                    p: { xs: 3, md: 6 },
+                    borderRadius: 3,
+                    borderLeft: "none",
+                    backgroundColor: "background.paper",
+                    position: "relative",
+                    zIndex: 1,
+                  }}
+                >
+                  <Component />
+                </Paper>
+              </Box>
+            ))}
+          </Container>
 
-        <Footer />
+          {/* FOOTER */}
+          <Footer />
 
-        <Tooltip title="WhatsApp" placement="left">
-          <Fab
-            sx={{
-              position: "fixed",
-              bottom: 16,
-              right: 16,
-              bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
-            }}
-            onClick={() =>
-              window.open("https://wa.me/593997979099", "_blank")
-            }
-          >
-            <WhatsAppIcon sx={{ color: "#fff", fontSize: 32 }} />
-          </Fab>
-        </Tooltip>
+          {/* BOTÓN FLOTANTE WHATSAPP */}
+          <Tooltip title="Chatea por WhatsApp" placement="left">
+            <Fab
+              aria-label="whatsapp"
+              sx={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+                zIndex: 1000,
+                bgcolor: "#25D366",
+                "&:hover": { bgcolor: "#1ebe5c" },
+              }}
+              onClick={() =>
+                window.open("https://wa.me/593997979099", "_blank")
+              }
+            >
+              <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            </Fab>
+          </Tooltip>
 
-        <ChatBot />
-      </Box>
-    </ThemeProvider>
+          {/* CHATBOT IA PERSONAL */}
+          <ChatBus />
+        </Box>
+      </ThemeProvider>
+    </>
   );
 }
 
