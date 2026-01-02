@@ -15,6 +15,7 @@ import { useTheme } from "@mui/material/styles";
 export default function Contact() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const socialLinks = [
     {
@@ -49,59 +50,47 @@ export default function Contact() {
       id="contact"
       sx={{
         py: 4,
-        pb: 4,
         color: theme.palette.text.primary,
         scrollMarginTop: "80px",
       }}
     >
       <Container maxWidth="sm">
-        {/* Encabezado original con icono mejorado */}
+
+        {/* =========================
+            TÍTULO CONTACTO (IGUAL A ABOUT)
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "1.5rem" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    px: 4,
-    py: 1.2,
-    borderRadius: "999px",
-    background: isDark
-      ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-      : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
-    border: `1px solid ${
-      isDark
-        ? "rgba(144,202,249,0.25)"
-        : "rgba(25,118,210,0.25)"
-    }`,
-  }}
->
-            {/* ICONO MEJORADO (único cambio) */}
-            <Box
-              sx={{
-                width: 34,
-                height: 34,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: isDark ? "#1e3a5f" : "#1976d2",
-                mr: 1.2,
-              }}
-            >
-              <GroupsIcon sx={{ fontSize: 20, color: "#fff" }} />
-            </Box>
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            {/* Icono SIN fondo */}
+            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
 
             <Typography
               variant="h6"
-              sx={{
-                fontWeight: "bold",
-                color: isDark ? "#bbdefb" : "#1976d2",
-              }}
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
               Redes Sociales
             </Typography>
