@@ -1,13 +1,16 @@
-import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
+import { Toolbar, Box, Typography, Button, Avatar, useTheme } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { motion } from "framer-motion";
-import { useTheme } from "@mui/material/styles";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
+  const shouldReduceMotion = useReducedMotion(); // Detecta prefers-reduced-motion
+
+  // Configuración base de transición
+  const transition = { duration: 0.6, ease: "easeOut" };
 
   return (
     <>
@@ -29,9 +32,23 @@ export default function Hero({ mode, setMode }) {
       >
         {/* Avatar animado */}
         <motion.div
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          style={{ borderRadius: "50%" }}
+          animate={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: [-8, 8, -8],
+                  scale: [1, 1.02, 1],
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                  scale: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                }
+          }
+          style={{ borderRadius: "50%", display: "inline-block" }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -40,20 +57,21 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
+              background: theme.palette.background.paper, // evita fondo transparente si la imagen falla
             }}
           />
         </motion.div>
 
-        {/* Texto */}
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
+        {/* Contenido de texto con animaciones secuenciales */}
+        <Box
+          textAlign={{ xs: "center", sm: "left" }}
+          maxWidth="600px"
+          mx="auto"
         >
-          <Box
-            textAlign={{ xs: "center", sm: "left" }}
-            maxWidth="600px"
-            mx="auto"
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+            transition={{ ...transition, delay: 0.1 }}
           >
             <Typography
               variant="h3"
@@ -66,7 +84,13 @@ export default function Hero({ mode, setMode }) {
             >
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
+          </motion.div>
 
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+            transition={{ ...transition, delay: 0.25 }}
+          >
             <Typography
               variant="h6"
               color="text.secondary"
@@ -75,7 +99,13 @@ export default function Hero({ mode, setMode }) {
             >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
+          </motion.div>
 
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+            transition={{ ...transition, delay: 0.4 }}
+          >
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
@@ -84,7 +114,6 @@ export default function Hero({ mode, setMode }) {
                 fontWeight: 400,
                 color: theme.palette.text.primary,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
-                maxWidth: "520px",
                 mt: { xs: 3, sm: 3.5 },
                 mb: { xs: 4, sm: 5 },
               }}
@@ -94,8 +123,14 @@ export default function Hero({ mode, setMode }) {
               desarrollando soluciones digitales seguras, innovadoras y
               orientadas a generar impacto positivo.
             </Typography>
+          </motion.div>
 
-            {/* Botones */}
+          {/* Botones con animación y micro-interacciones */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+            animate={shouldReduceMotion ? {} : { opacity: 1, y: 0 }}
+            transition={{ ...transition, delay: 0.55 }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -120,7 +155,9 @@ export default function Hero({ mode, setMode }) {
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
                   "&:hover": {
-                    boxShadow: "none",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "transform 0.2s, box-shadow 0.2s",
                   },
                 }}
               >
@@ -143,14 +180,16 @@ export default function Hero({ mode, setMode }) {
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
                   boxShadow: "none",
                   "&:hover": {
-                    boxShadow: "none",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "transform 0.2s, box-shadow 0.2s",
                   },
                 }}
               >
                 Ver Título
               </Button>
 
-              {/* Sasha */}
+              {/* Sasha (ChatBot) */}
               <Button
                 variant="contained"
                 startIcon={<SmartToyIcon />}
@@ -166,19 +205,37 @@ export default function Hero({ mode, setMode }) {
                   minHeight: 48,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   boxShadow: "none",
+                  position: "relative",
+                  overflow: "hidden",
                   "&:hover": {
-                    boxShadow: "none",
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "transform 0.2s, box-shadow 0.2s",
                   },
-                  "&:active": {
-                    transform: "none",
+                  "&:after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: "rgba(255,255,255,0.1)",
+                    opacity: 0,
+                    animation: shouldReduceMotion
+                      ? "none"
+                      : "pulseGlow 2s infinite",
+                  },
+                  "@keyframes pulseGlow": {
+                    "0%": { opacity: 0 },
+                    "50%": { opacity: 0.3 },
+                    "100%": { opacity: 0 },
                   },
                 }}
               >
                 Sasha
               </Button>
 
-              {/* Modo oscuro/claro */}
+              {/* Toggle modo oscuro/claro */}
               <Button
                 variant="outlined"
                 onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -193,15 +250,17 @@ export default function Hero({ mode, setMode }) {
                   "&:hover": {
                     background: theme.palette.primary.main,
                     color: "#fff",
+                    transform: "scale(1.05)",
+                    transition: "transform 0.2s, background 0.2s, color 0.2s",
                   },
                 }}
               >
                 {mode === "light" ? <Brightness4 /> : <Brightness7 />}
               </Button>
             </Box>
-          </Box>
-        </motion.div>
+          </motion.div>
+        </Box>
       </Box>
     </>
   );
-              }
+                }
