@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado
+// Hook visibilidad
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -69,7 +69,7 @@ function App() {
     { id: "skills", color: "#fb8c00", Component: Skills },
     { id: "certifications", color: "#8e24aa", Component: Certifications },
     { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact, stable: true },
+    { id: "contact", color: "#d32f2f", Component: Contact },
   ];
 
   return (
@@ -92,7 +92,7 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {sections.map(({ id, color, Component, stable }) => {
+          {sections.map(({ id, color, Component }) => {
             const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
 
             return (
@@ -108,18 +108,23 @@ function App() {
                   position: "relative",
                   scrollMarginTop: scrollOffset,
                   overflow: "hidden",
-                  background:
-                    theme.palette.mode === "light"
-                      ? "linear-gradient(180deg, #ffffff 0%, #fafafa 100%)"
-                      : "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
+
+                  /* 🎬 Entrada elegante */
+                  opacity: isIntersecting ? 1 : 0,
+                  transform: isIntersecting
+                    ? "translateY(0)"
+                    : "translateY(30px)",
                   transition:
-                    "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease",
-                  "&:hover": stable
-                    ? {}
-                    : {
-                        transform: "translateY(-6px)",
-                        boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
-                      },
+                    "opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
+
+                  /* 🖱 Hover premium */
+                  "&:hover": {
+                    transform: "translateY(-6px)",
+                    boxShadow:
+                      mode === "light"
+                        ? "0 20px 40px rgba(0,0,0,0.12)"
+                        : "0 20px 40px rgba(0,0,0,0.5)",
+                  },
                 }}
               >
                 {/* BORDE IZQUIERDO ANIMADO */}
@@ -135,8 +140,24 @@ function App() {
                     transformOrigin: "top",
                     transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
                     transition:
-                      "transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                      "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     zIndex: 0,
+                  }}
+                />
+
+                {/* OVERLAY SUTIL */}
+                <Box
+                  className="card-overlay"
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      mode === "light"
+                        ? "linear-gradient(180deg, transparent, rgba(0,0,0,0.03))"
+                        : "linear-gradient(180deg, transparent, rgba(255,255,255,0.04))",
+                    opacity: 0,
+                    transition: "opacity 0.4s ease",
+                    pointerEvents: "none",
                   }}
                 />
 
@@ -145,12 +166,9 @@ function App() {
                   sx={{
                     position: "relative",
                     zIndex: 1,
-                    opacity: isIntersecting ? 1 : 0,
-                    transform: isIntersecting
-                      ? "translateY(0)"
-                      : "translateY(16px)",
-                    transition:
-                      "opacity 0.6s ease, transform 0.6s ease",
+                    "&:hover ~ .card-overlay": {
+                      opacity: 1,
+                    },
                   }}
                 >
                   <Component />
