@@ -5,28 +5,26 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion, useReducedMotion } from "framer-motion";
 
-// Configuración de animaciones avanzadas
-const containerVariants = {
+// Variantes refinadas
+const container = {
   hidden: { opacity: 0 },
-  visible: {
+  show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
+      staggerChildren: 0.12,
+      delayChildren: 0.3,
     },
   },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
     opacity: 1,
     y: 0,
     transition: {
-      type: "spring",
-      damping: 12,
-      stiffness: 100,
-      mass: 0.5,
+      duration: 0.7,
+      ease: [0.33, 1, 0.68, 1], // easeOut personalizado (suave al final)
     },
   },
 };
@@ -51,95 +49,66 @@ export default function Hero({ mode, setMode }) {
           pb: { xs: 1.5, sm: 2.5, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
           color: theme.palette.text.primary,
-          position: "relative",
         }}
       >
-        {/* Avatar con efecto flotante + destello */}
-        <Box
-          sx={{
-            position: "relative",
-            display: "inline-block",
-          }}
-        >
-          <motion.div
-            animate={
-              shouldReduceMotion
-                ? {}
-                : {
-                    y: [0, -16, 0],
-                    rotate: [0, 1, -1, 0],
-                  }
-            }
-            transition={
-              shouldReduceMotion
-                ? {}
-                : {
-                    y: {
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    },
-                    rotate: {
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    },
-                  }
-            }
-            style={{ display: "inline-block" }}
-          >
-            <Avatar
-              alt="Jorge Patricio"
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-              sx={{
-                width: { xs: 130, sm: 170, md: 200 },
-                height: { xs: 130, sm: 170, md: 200 },
-                border: `4px solid ${theme.palette.primary.main}`,
-                position: "relative",
-                zIndex: 2,
-              }}
-            />
-          </motion.div>
-
-          {/* Destello animado (shine effect) */}
-          {!shouldReduceMotion && (
-            <motion.div
-              animate={{
-                x: ["-100%", "100%"],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "50%",
-                height: "100%",
-                background: `linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent)`,
-                zIndex: 1,
-                borderRadius: "50%",
-                opacity: 0.6,
-              }}
-            />
-          )}
-        </Box>
-
-        {/* Contenido con animación stagger avanzada */}
+        {/* Avatar: flotación natural + micro-rotación + escala sutil */}
         <motion.div
-          variants={containerVariants}
+          animate={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: [0, -12, 0],
+                  rotate: [0, 0.8, -0.8, 0],
+                  scale: [1, 1.01, 1],
+                }
+          }
+          transition={
+            shouldReduceMotion
+              ? {}
+              : {
+                  y: {
+                    duration: 4.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                  rotate: {
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                  scale: {
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  },
+                }
+          }
+          style={{ display: "inline-block" }}
+        >
+          <Avatar
+            alt="Jorge Patricio"
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+            sx={{
+              width: { xs: 130, sm: 170, md: 200 },
+              height: { xs: 130, sm: 170, md: 200 },
+              border: `4px solid ${theme.palette.primary.main}`,
+              background: theme.palette.background.paper,
+            }}
+          />
+        </motion.div>
+
+        {/* Contenido con entrada escalonada refinada */}
+        <motion.div
+          variants={container}
           initial="hidden"
-          animate={shouldReduceMotion ? "visible" : "visible"}
+          animate={shouldReduceMotion ? "show" : "show"}
           style={{
-            textAlign: "center",
+            textAlign: { xs: "center", sm: "left" },
             maxWidth: "600px",
             margin: "0 auto",
           }}
         >
-          <motion.div variants={itemVariants}>
+          <motion.div variants={item}>
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -147,14 +116,14 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 color: theme.palette.primary.main,
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
-                lineHeight: 1.2,
+                lineHeight: 1.25,
               }}
             >
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
           </motion.div>
 
-          <motion.div variants={itemVariants}>
+          <motion.div variants={item}>
             <Typography
               variant="h6"
               color="text.secondary"
@@ -165,7 +134,7 @@ export default function Hero({ mode, setMode }) {
             </Typography>
           </motion.div>
 
-          <motion.div variants={itemVariants}>
+          <motion.div variants={item}>
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
@@ -186,7 +155,7 @@ export default function Hero({ mode, setMode }) {
           </motion.div>
 
           {/* Botones */}
-          <motion.div variants={itemVariants}>
+          <motion.div variants={item}>
             <Box
               sx={{
                 display: "flex",
@@ -208,11 +177,10 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-3px)",
-                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
-                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+                    transition: "transform 0.25s, box-shadow 0.25s",
                   },
                 }}
               >
@@ -232,11 +200,10 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-3px)",
-                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
-                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+                    transition: "transform 0.25s, box-shadow 0.25s",
                   },
                 }}
               >
@@ -256,11 +223,10 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "0 4px 14px rgba(59, 130, 246, 0.3)",
                   "&:hover": {
-                    transform: "translateY(-3px)",
-                    boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
-                    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+                    transition: "transform 0.25s, box-shadow 0.25s",
                   },
                 }}
               >
@@ -281,8 +247,8 @@ export default function Hero({ mode, setMode }) {
                   "&:hover": {
                     background: theme.palette.primary.main,
                     color: "#fff",
-                    transform: "scale(1.1)",
-                    transition: "all 0.25s ease",
+                    transform: "scale(1.08)",
+                    transition: "all 0.2s ease",
                   },
                 }}
               >
@@ -294,4 +260,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-        }
+}
