@@ -21,7 +21,7 @@ const estudios = [
 export default function About() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#90caf9" : "#1976d2";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
@@ -35,62 +35,46 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* ================= TÍTULO FORMACIÓN ================= */}
+      {/* Encabezado — ACTUALIZADO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "2.5rem" }}
+        style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 1.2,
+            justifyContent: "center",
+            gap: 1,
             px: 3,
             py: 0.9,
             borderRadius: "999px",
-            border: `1px solid ${
-              isDark
-                ? "rgba(144,202,249,0.35)"
-                : "rgba(25,118,210,0.35)"
-            }`,
-            backdropFilter: "blur(6px)",
             background: isDark
               ? "rgba(144,202,249,0.06)"
               : "rgba(25,118,210,0.06)",
-            boxShadow: isDark
-              ? "0 0 18px rgba(144,202,249,0.15)"
-              : "0 0 18px rgba(25,118,210,0.15)",
+            border: `1px solid ${
+              isDark
+                ? "rgba(144,202,249,0.25)"
+                : "rgba(25,118,210,0.25)"
+            }`,
+            backdropFilter: "blur(6px)",
           }}
         >
-          {/* ICONO SIN FONDO – ANIMADO */}
-          <motion.div
-            animate={{ rotate: [0, 6, -6, 0], scale: [1, 1.12, 1] }}
-            transition={{
-              duration: 3.2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <GraduationCap size={22} color={primaryColor} />
-          </motion.div>
+          {/* Icono SIN fondo */}
+          <GraduationCap size={22} color={primaryColor} />
 
-          {/* TEXTO COMO BADGE */}
           <Typography
             variant="h6"
-            sx={{
-              fontWeight: 700,
-              letterSpacing: "0.4px",
-              color: primaryColor,
-            }}
+            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
             Formación
           </Typography>
         </Box>
       </motion.div>
 
-      {/* ================= GRID DE ESTUDIOS ================= */}
+      {/* Grid de estudios — SIN CAMBIOS */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
