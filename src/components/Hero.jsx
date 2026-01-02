@@ -9,25 +9,18 @@ import { useTheme } from "@mui/material/styles";
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  const glowColor =
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#60a5fa";
-
-  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
+  /* ================= ANIMACIONES ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 16,
-      clipPath: "inset(0 0 100% 0)",
+      y: 14,
       filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
       transition: { duration: 1, ease: easeOutExpo },
     },
@@ -48,7 +41,7 @@ export default function Hero({ mode, setMode }) {
     visible: {
       transition: {
         staggerChildren: 0.14,
-        delayChildren: 1.3,
+        delayChildren: 1.2,
       },
     },
   };
@@ -61,7 +54,6 @@ export default function Hero({ mode, setMode }) {
         id="hero"
         sx={{
           position: "relative",
-          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
@@ -74,13 +66,13 @@ export default function Hero({ mode, setMode }) {
       >
         {/* ================= AVATAR ================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.82, rotateY: -120 }}
+          initial={{ opacity: 0, scale: 0.85, rotateY: -120 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0 }}
           transition={{ duration: 1.6, ease: easeOutExpo }}
-          style={{ perspective: 1200, zIndex: 1 }}
+          style={{ perspective: 1200 }}
         >
           <motion.div
-            animate={{ y: [0, -12, 0], rotateZ: [0, 0.4, 0] }}
+            animate={{ y: [0, -10, 0] }}
             transition={{
               duration: 5,
               repeat: Infinity,
@@ -90,14 +82,17 @@ export default function Hero({ mode, setMode }) {
           >
             <Box
               sx={{
+                position: "relative",
                 borderRadius: "50%",
-                boxShadow: `0 0 24px ${glowColor}`,
-                animation: "pulseGlow 4s ease-in-out infinite",
-                "@keyframes pulseGlow": {
-                  "0%": { boxShadow: `0 0 16px ${glowColor}` },
-                  "50%": { boxShadow: `0 0 36px ${glowColor}` },
-                  "100%": { boxShadow: `0 0 16px ${glowColor}` },
-                },
+                p: 1.5,
+                background:
+                  theme.palette.mode === "dark"
+                    ? "radial-gradient(circle at top, rgba(59,130,246,0.25), transparent 70%)"
+                    : "radial-gradient(circle at top, rgba(96,165,250,0.35), transparent 70%)",
+                boxShadow:
+                  theme.palette.mode === "dark"
+                    ? "0 30px 80px rgba(0,0,0,0.55)"
+                    : "0 30px 80px rgba(0,0,0,0.25)",
               }}
             >
               <Avatar
@@ -106,7 +101,8 @@ export default function Hero({ mode, setMode }) {
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
-                  border: `4px solid ${theme.palette.primary.main}`,
+                  border: `3px solid ${theme.palette.primary.main}`,
+                  backgroundColor: theme.palette.background.paper,
                 }}
               />
             </Box>
@@ -118,14 +114,12 @@ export default function Hero({ mode, setMode }) {
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
-          zIndex={1}
         >
           <motion.div
             variants={textContainer}
             initial="hidden"
             animate="visible"
           >
-            {/* TÍTULO */}
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
@@ -140,7 +134,6 @@ export default function Hero({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* SUBTÍTULO */}
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h6"
@@ -151,14 +144,11 @@ export default function Hero({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* DESCRIPCIÓN */}
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
                   fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
-                  letterSpacing: "0.3px",
-                  color: theme.palette.text.primary,
                   opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                   maxWidth: "520px",
                   mt: 3,
@@ -185,6 +175,7 @@ export default function Hero({ mode, setMode }) {
                 gap: 2,
                 justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
               {[
@@ -200,57 +191,38 @@ export default function Hero({ mode, setMode }) {
                     "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
                 },
                 {
-                  label: "Sasha",
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
+                  label: mode === "light" ? "Modo oscuro" : "Modo claro",
+                  icon: mode === "light" ? <Brightness4 /> : <Brightness7 />,
+                  onClick: () =>
+                    setMode(mode === "light" ? "dark" : "light"),
                 },
               ].map((btn, i) => (
                 <motion.div key={i} variants={fadeCinematic}>
                   <Button
-                    variant="contained"
+                    variant={btn.href ? "contained" : "text"}
                     startIcon={btn.icon}
                     href={btn.href}
                     onClick={btn.onClick}
                     target={btn.href ? "_blank" : undefined}
                     sx={{
-                      borderRadius: "25px",
+                      borderRadius: "14px",
                       textTransform: "none",
                       fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
+                      px: 3,
+                      py: 1.2,
+                      ...(btn.href && {
+                        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      }),
                     }}
                   >
                     {btn.label}
                   </Button>
                 </motion.div>
               ))}
-
-              <motion.div variants={fadeCinematic}>
-                <Button
-                  variant="outlined"
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    minWidth: 48,
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    borderColor: theme.palette.primary.main,
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: theme.palette.primary.main,
-                      color: "#fff",
-                    },
-                  }}
-                >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                </Button>
-              </motion.div>
             </Box>
           </motion.div>
         </Box>
       </Box>
     </>
   );
-}
+                }
