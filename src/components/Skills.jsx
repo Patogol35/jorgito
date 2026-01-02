@@ -103,8 +103,9 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* =========================  
-    FILTROS (MEJORADO UX)
+        
+{/* =========================  
+    FILTROS (ANCHO MEJORADO)
 ========================= */}
 <Box
   sx={{
@@ -114,7 +115,13 @@ export default function Skills() {
     position: "relative",
   }}
 >
-  <Box sx={{ position: "relative", maxWidth: "100%" }}>
+  <Box
+    sx={{
+      position: "relative",
+      width: "100%",
+      maxWidth: 680, // ⬅️ MÁS ANCHO (clave)
+    }}
+  >
     {/* Fade izquierdo */}
     <Box
       sx={{
@@ -222,6 +229,7 @@ export default function Skills() {
     </ToggleButtonGroup>
   </Box>
 </Box>
+
         {/* =========================
         GRID SKILLS
         ========================= */}
