@@ -89,7 +89,7 @@ export default function Hero({ mode, setMode }) {
           <motion.div
             animate={{ y: [0, -12, 0], rotateZ: [0, 0.4, 0] }}
             transition={{
-              duration: 8,
+              duration: 5,
               repeat: Infinity,
               ease: "easeInOut",
               delay: 1.8,
