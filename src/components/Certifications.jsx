@@ -64,7 +64,10 @@ export default function Certifications() {
         color: palette.text.primary,
       }}
     >
-      {/* Encabezado */}
+      {/* =========================
+          TÍTULO CERTIFICACIONES
+          (MISMO DISEÑO QUE ABOUT)
+      ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -76,45 +79,36 @@ export default function Certifications() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            px: 4,
-            py: 1.2,
+            gap: 1,
+            px: 3,
+            py: 0.9,
             borderRadius: "999px",
             background: isDark
-              ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-              : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
+            backdropFilter: "blur(6px)",
           }}
         >
-          {/* Icono con círculo */}
-          <Box
-            sx={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: isDark ? "#1e3a5f" : "#1976d2",
-              mr: 1.2,
-            }}
-          >
-            <WorkspacePremiumIcon sx={{ fontSize: 20, color: "#fff" }} />
-          </Box>
+          {/* Icono SIN fondo */}
+          <WorkspacePremiumIcon
+            sx={{ fontSize: 22, color: primaryColor }}
+          />
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
             Certificaciones
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid de certificaciones */}
+      {/* Grid de certificaciones — SIN CAMBIOS */}
       <Grid container spacing={3} justifyContent="center">
         {certificaciones.map(
           ({ titulo, institucion, año, iconColor, iconType: Icon }, i) => (
