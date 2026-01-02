@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import {
   Container,
@@ -32,8 +32,6 @@ const skills = [
 
 export default function Skills() {
   const [filter, setFilter] = useState("All");
-  const filtersRef = useRef(null);
-
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
@@ -46,30 +44,10 @@ export default function Skills() {
     ? "rgba(255,255,255,0.05)"
     : "rgba(255,255,255,0.8)";
 
-  /* =========================
-     AUTO SCROLL AL SELECCIONAR
-  ========================= */
-  useEffect(() => {
-    if (!filtersRef.current) return;
-
-    const active = filtersRef.current.querySelector(
-      ".MuiToggleButton-root.Mui-selected"
-    );
-
-    active?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }, [filter]);
-
   return (
     <Box
       id="skills"
-      sx={{
-  py: 4,
-  color: theme.palette.text.primary,
-}}
+      sx={{ py: 4, scrollMarginTop: "80px", color: theme.palette.text.primary }}
     >
       <Container>
 
@@ -102,14 +80,18 @@ export default function Skills() {
             }}
           >
             <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography variant="h6" fontWeight="bold" color={primaryColor}>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              color={primaryColor}
+            >
               Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
 
         {/* =========================
-            FILTROS PRO + SCROLL
+            FILTROS (MEJORADOS)
         ========================= */}
         <Box
           display="flex"
@@ -122,26 +104,27 @@ export default function Skills() {
           }}
         >
           <ToggleButtonGroup
-            ref={filtersRef}
             value={filter}
             exclusive
             onChange={(e, val) => val && setFilter(val)}
+            aria-label="Filtros de Skills"
             sx={{
               px: 1,
               py: 0.6,
-              gap: 0.8,
+              gap: 0.6,
+              maxWidth: "100%",
+              flexWrap: "nowrap",
               borderRadius: "999px",
               background: isDark
                 ? "rgba(255,255,255,0.05)"
                 : "rgba(255,255,255,0.75)",
-              backdropFilter: "blur(14px)",
+              backdropFilter: "blur(12px)",
               border: isDark
                 ? "1px solid rgba(255,255,255,0.1)"
                 : "1px solid rgba(0,0,0,0.08)",
               boxShadow: isDark
-                ? "0 6px 18px rgba(0,0,0,0.45)"
-                : "0 6px 18px rgba(0,0,0,0.15)",
-              flexWrap: "nowrap",
+                ? "0 4px 14px rgba(0,0,0,0.4)"
+                : "0 4px 14px rgba(0,0,0,0.12)",
             }}
           >
             {categories.map((cat) => (
@@ -150,20 +133,29 @@ export default function Skills() {
                 value={cat}
                 sx={{
                   whiteSpace: "nowrap",
+                  textTransform: "none",
                   fontWeight: 600,
-                  px: 2.2,
-                  py: 0.7,
+                  px: 2,
+                  py: 0.6,
                   fontSize: "0.8rem",
                   minHeight: "34px",
                   borderRadius: "999px",
                   border: "none",
                   flexShrink: 0,
                   color: theme.palette.text.secondary,
+                  transition: "all 0.25s ease",
 
                   "&.Mui-selected": {
                     background: `linear-gradient(90deg, ${primary}, #6366f1)`,
                     color: "#fff",
-                    boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
+                    boxShadow: "0 3px 8px rgba(0,0,0,0.25)",
+                  },
+
+                  "&:hover": {
+                    background: isDark
+                      ? "rgba(255,255,255,0.08)"
+                      : "rgba(0,0,0,0.05)",
+                    color: theme.palette.text.primary,
                   },
                 }}
               >
@@ -183,6 +175,7 @@ export default function Skills() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   viewport={{ once: true }}
                   whileHover={{ scale: 1.08 }}
@@ -195,6 +188,9 @@ export default function Skills() {
                       borderRadius: "20px",
                       backdropFilter: "blur(12px)",
                       background: cardBg,
+                      boxShadow: isDark
+                        ? "0 8px 20px rgba(0,0,0,0.5)"
+                        : "0 8px 20px rgba(0,0,0,0.1)",
                     }}
                   >
                     <Box
@@ -204,8 +200,11 @@ export default function Skills() {
                       sx={{
                         width: 65,
                         height: 65,
+                        objectFit: "contain",
                         mb: 2,
-                        filter: isDark ? "invert(1) brightness(1.2)" : "none",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none",
                       }}
                     />
                     <Typography fontWeight="bold">
@@ -221,4 +220,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-      }
+}
