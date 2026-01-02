@@ -16,6 +16,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap } from "lucide-react";
 
 /* =========================
    DATA
@@ -37,6 +38,7 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
+
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
@@ -45,6 +47,7 @@ const categoryIcons = {
   Cloud: <CloudQueueIcon fontSize="small" />,
   Tools: <BuildIcon fontSize="small" />,
 };
+
 /* =========================
    COMPONENT
 ========================= */
@@ -53,6 +56,7 @@ export default function Skills() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
+  const primaryColor = primary;
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
@@ -81,123 +85,114 @@ export default function Skills() {
 
   return (
     <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
-      <Container> 
-        
-        
-        {/* Encabezado — ACTUALIZADO */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
-      >
-        <Box
-          sx={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 1,
-            px: 3,
-            py: 0.9,
-            borderRadius: "999px",
-            background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(144,202,249,0.25)"
-                : "rgba(25,118,210,0.25)"
-            }`,
-            backdropFilter: "blur(6px)",
-          }}
-        >
-          {/* Icono SIN fondo */}
-          <GraduationCap size={22} color={primaryColor} />
+      <Container>
 
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-          >
-            Stack Tecnológico 
-          </Typography>
-        </Box>
-      </motion.div>
-
-
-
-        
         {/* =========================
-    FILTROS
-========================= */}
-<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-  <ToggleButtonGroup
-    ref={containerRef}
-    value={filter}
-    exclusive
-    onChange={(e, val) => val && setFilter(val)}
-    sx={{
-      display: "flex",
-      overflowX: "auto",
-      gap: 1.2,
-      px: 2,
-      py: 0.5,
-      "&::-webkit-scrollbar": { display: "none" },
-    }}
-  >
-    {categories.map((cat) => (
-      <ToggleButton
-        key={cat}
-        value={cat}
-        ref={(el) => (buttonRefs.current[cat] = el)}
-        component={motion.button}
-        whileTap={{ scale: 0.92 }}
-        sx={{
-          borderRadius: "999px",
-          px: 2.4,
-          py: 1,
-          fontWeight: 600,
-          fontSize: "0.9rem",
-          textTransform: "none",
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
+            HEADER
+        ========================= */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <GraduationCap size={22} color={primaryColor} />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
+              Stack Tecnológico
+            </Typography>
+          </Box>
+        </motion.div>
 
-          backgroundColor: isDark
-            ? "rgba(255,255,255,0.04)"
-            : "rgba(255,255,255,0.9)",
-          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
-          border: `1px solid ${
-            isDark
-              ? "rgba(255,255,255,0.12)"
-              : "rgba(0,0,0,0.12)"
-          }`,
+        {/* =========================
+            FILTERS
+        ========================= */}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+          <ToggleButtonGroup
+            ref={containerRef}
+            value={filter}
+            exclusive
+            onChange={(e, val) => val && setFilter(val)}
+            sx={{
+              display: "flex",
+              overflowX: "auto",
+              gap: 1.2,
+              px: 2,
+              py: 0.5,
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            {categories.map((cat) => (
+              <ToggleButton
+                key={cat}
+                value={cat}
+                ref={(el) => (buttonRefs.current[cat] = el)}
+                component={motion.button}
+                whileTap={{ scale: 0.92 }}
+                sx={{
+                  borderRadius: "999px",
+                  px: 2.4,
+                  py: 1,
+                  fontWeight: 600,
+                  fontSize: "0.9rem",
+                  textTransform: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  backgroundColor: isDark
+                    ? "rgba(255,255,255,0.04)"
+                    : "rgba(255,255,255,0.9)",
+                  color: isDark
+                    ? "rgba(255,255,255,0.85)"
+                    : "rgba(0,0,0,0.75)",
+                  border: `1px solid ${
+                    isDark
+                      ? "rgba(255,255,255,0.12)"
+                      : "rgba(0,0,0,0.12)"
+                  }`,
+                  "&:hover": {
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.08)"
+                      : "rgba(25,118,210,0.06)",
+                  },
+                  "&.Mui-selected": {
+                    background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                    color: "#fff",
+                    borderColor: "transparent",
+                    boxShadow: isDark
+                      ? "0 6px 16px rgba(0,0,0,0.4)"
+                      : "0 6px 14px rgba(25,118,210,0.35)",
+                  },
+                }}
+              >
+                {categoryIcons[cat]}
+                {cat}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </Box>
 
-          "&:hover": {
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.08)"
-              : "rgba(25,118,210,0.06)",
-          },
-
-          "&.Mui-selected": {
-            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-            color: "#fff",
-            borderColor: "transparent",
-            boxShadow: isDark
-              ? "0 6px 16px rgba(0,0,0,0.4)"
-              : "0 6px 14px rgba(25,118,210,0.35)",
-          },
-
-          "&.Mui-selected:hover": {
-            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-          },
-        }}
-      >
-        {categoryIcons[cat]}
-        {cat}
-      </ToggleButton>
-    ))}
-  </ToggleButtonGroup>
-</Box>
         {/* =========================
             GRID
         ========================= */}
@@ -217,6 +212,25 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
+
+                      /* 🔧 FIX BORDE */
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
+                      boxShadow: isDark
+                        ? "0 0 0 1px rgba(255,255,255,0.05)"
+                        : "0 4px 12px rgba(0,0,0,0.06)",
+                      transition: "all 0.25s ease",
+
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        borderColor: primary,
+                        boxShadow: isDark
+                          ? "0 8px 20px rgba(0,0,0,0.5)"
+                          : "0 8px 20px rgba(0,0,0,0.12)",
+                      },
                     }}
                   >
                     <Box
@@ -228,7 +242,9 @@ export default function Skills() {
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
-                        filter: isDark ? "invert(1)" : "none",
+                        filter: isDark
+                          ? "brightness(0) invert(1)"
+                          : "none",
                       }}
                     />
                     <Typography fontWeight="bold">
