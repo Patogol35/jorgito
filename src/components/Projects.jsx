@@ -11,7 +11,7 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories"; // 📚 Libros
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 // =====================
 // Datos de proyectos
@@ -84,10 +84,7 @@ function ProjectCard({ p, i, palette }) {
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
-          <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: "bold", mt: 1 }}
-          >
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
               href={p.link}
               target="_blank"
@@ -114,7 +111,6 @@ function ProjectCard({ p, i, palette }) {
 export default function Projects() {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
-
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   return (
@@ -126,12 +122,14 @@ export default function Projects() {
         color: palette.text.primary,
       }}
     >
-      {/* Encabezado */}
+      {/* =========================
+          TÍTULO PROYECTOS
+          (MISMO DISEÑO QUE ABOUT)
+      ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        viewport={{ once: false }}
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
@@ -139,45 +137,34 @@ export default function Projects() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            px: 4,
-            py: 1.2,
+            gap: 1,
+            px: 3,
+            py: 0.9,
             borderRadius: "999px",
             background: isDark
-              ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-              : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
+            backdropFilter: "blur(6px)",
           }}
         >
-          {/* Icono con círculo */}
-          <Box
-            sx={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: isDark ? "#1e3a5f" : "#1976d2",
-              mr: 1.2,
-            }}
-          >
-            <WorkOutlineIcon sx={{ fontSize: 20, color: "#fff" }} />
-          </Box>
+          {/* Icono SIN fondo */}
+          <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
             Algunos Proyectos
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid de proyectos */}
+      {/* Grid de proyectos — SIN CAMBIOS */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={p.titulo} p={p} i={i} palette={palette} />
@@ -185,4 +172,4 @@ export default function Projects() {
       </Grid>
     </Box>
   );
-      }
+}
