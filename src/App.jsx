@@ -8,6 +8,7 @@ import {
   Container,
   Fab,
   Tooltip,
+  GlobalStyles,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -36,21 +37,10 @@ function App() {
       createTheme({
         palette: {
           mode,
-          ...(mode === "light"
-            ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
-                text: { primary: "#111" },
-              }
-            : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: { primary: "#ffffff" },
-              }),
+          background: {
+            default: mode === "light" ? "#f5f7fa" : "#121212",
+            paper: mode === "light" ? "#ffffff" : "#1e1e1e",
+          },
         },
       }),
     [mode]
@@ -60,27 +50,25 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box
-        sx={{
-          minHeight: "100vh",
-          overflowX: "hidden",
-          scrollBehavior: "smooth",
+      {/* KEYFRAMES GLOBAL */}
+      <GlobalStyles
+        styles={{
+          "@keyframes borderRun": {
+            to: {
+              strokeDashoffset: 0,
+            },
+          },
         }}
-      >
-        {/* NAVBAR */}
-        <Navbar mode={mode} setMode={setMode} />
+      />
 
-        {/* HERO */}
+      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
+          sx={{ py: 6, px: { xs: 2, md: 6 } }}
         >
           {[
             { id: "about", color: "#2e7d32", Component: About },
@@ -96,32 +84,29 @@ function App() {
               sx={{
                 position: "relative",
                 overflow: "hidden",
-
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 scrollMarginTop: scrollOffset,
-                backdropFilter: "blur(6px)",
 
-                /* Línea izquierda inicial */
+                /* LÍNEA IZQUIERDA BASE */
                 borderLeft: `5px solid ${color}`,
 
-                transition:
-                  "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s",
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
 
                 "&:hover": {
                   transform: "translateY(-6px)",
                   boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
                 },
 
-                /* Activar animación del trazo */
-                "&:hover .animated-border": {
-                  strokeDashoffset: "0",
+                "&:hover .border-svg": {
+                  opacity: 1,
                 },
               }}
             >
-              {/* BORDE SVG ANIMADO */}
+              {/* SVG ANIMADO */}
               <svg
+                className="border-svg"
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
                 style={{
@@ -130,25 +115,25 @@ function App() {
                   width: "100%",
                   height: "100%",
                   pointerEvents: "none",
+                  opacity: 0,
+                  transition: "opacity 0.2s ease",
                 }}
               >
                 <rect
-                  x="1"
-                  y="1"
-                  width="98"
-                  height="98"
+                  x="2"
+                  y="2"
+                  width="96"
+                  height="96"
                   rx="6"
                   ry="6"
                   fill="none"
                   stroke={color}
                   strokeWidth="2"
                   pathLength="1"
-                  className="animated-border"
                   style={{
-                    strokeDasharray: "0.22 0.78",
+                    strokeDasharray: "1",
                     strokeDashoffset: "1",
-                    transition:
-                      "stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1)",
+                    animation: "borderRun 0.9s ease forwards",
                   }}
                 />
               </svg>
@@ -158,17 +143,14 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
-        <Tooltip title="Chatea por WhatsApp" placement="left">
+        <Tooltip title="WhatsApp" placement="left">
           <Fab
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
-              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -176,11 +158,10 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon sx={{ color: "#fff", fontSize: 32 }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
