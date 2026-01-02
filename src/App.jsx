@@ -30,7 +30,7 @@ function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
 
-  // 🔥 Offset correcto para el navbar
+  // Offset exacto para navbar
   const scrollOffset = "96px";
 
   useEffect(() => {
@@ -48,18 +48,14 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
+                text: { primary: "#111" },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
@@ -85,7 +81,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -96,62 +92,63 @@ function App() {
         >
           {sections.map(({ id, color, Component }) => {
             const [ref, isIntersecting] = useOnScreen({
-              threshold: 0,
-              rootMargin: "-80px 0px -40% 0px",
+              threshold: 0.1,
             });
 
             return (
-              <Paper
-                ref={ref}
-                key={id}
-                id={id}
-                elevation={3}
-                sx={{
-                  mb: 4,
-                  p: { xs: 3, md: 6 },
-                  borderRadius: 3,
-                  position: "relative",
-                  scrollMarginTop: scrollOffset,
-                  overflow: "hidden",
+              <Box key={id}>
+                {/* 🔗 ANCLA LIMPIA (SCROLL PERFECTO) */}
+                <Box id={id} sx={{ scrollMarginTop: scrollOffset }} />
 
-                  /* ✨ ANIMACIÓN COMPLETA DE LA CARD */
-                  opacity: isIntersecting ? 1 : 0,
-                  transform: isIntersecting
-                    ? "translateY(0)"
-                    : "translateY(40px)",
-                  transition:
-                    "opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-
-                  "&:hover": {
-                    transform: isIntersecting
-                      ? "translateY(-6px)"
-                      : "translateY(40px)",
-                  },
-                }}
-              >
-                {/* BORDE IZQUIERDO ANIMADO */}
-                <Box
+                <Paper
+                  ref={ref}
+                  elevation={3}
                   sx={{
-                    position: "absolute",
-                    left: 0,
-                    top: 0,
-                    width: "6px",
-                    height: "100%",
-                    backgroundColor: color,
-                    borderRadius: "3px 0 0 3px",
-                    transformOrigin: "top",
-                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
-                    transition:
-                      "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    zIndex: 0,
-                  }}
-                />
+                    mb: 4,
+                    p: { xs: 3, md: 6 },
+                    borderRadius: 3,
+                    position: "relative",
+                    overflow: "hidden",
 
-                {/* CONTENIDO */}
-                <Box sx={{ position: "relative", zIndex: 1 }}>
-                  <Component />
-                </Box>
-              </Paper>
+                    /* ANIMACIÓN */
+                    opacity: isIntersecting ? 1 : 0,
+                    transform: isIntersecting
+                      ? "translateY(0)"
+                      : "translateY(40px)",
+                    transition:
+                      "opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+
+                    "&:hover": {
+                      transform: isIntersecting
+                        ? "translateY(-6px)"
+                        : "translateY(40px)",
+                    },
+                  }}
+                >
+                  {/* BORDE ANIMADO */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      left: 0,
+                      top: 0,
+                      width: "6px",
+                      height: "100%",
+                      backgroundColor: color,
+                      borderRadius: "3px 0 0 3px",
+                      transformOrigin: "top",
+                      transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
+                      transition:
+                        "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                      zIndex: 0,
+                    }}
+                  />
+
+                  {/* CONTENIDO */}
+                  <Box sx={{ position: "relative", zIndex: 1 }}>
+                    <Component />
+                  </Box>
+                </Paper>
+              </Box>
             );
           })}
         </Container>
@@ -159,10 +156,9 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
