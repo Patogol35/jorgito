@@ -234,17 +234,21 @@ export default function Skills() {
   }}
 >
   <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 65,
-      height: 65,
-      mb: 2,
-      objectFit: "contain",
-      filter: "none", // ✅ colores originales en dark y light
-    }}
-  />
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    transition: "transform 0.3s ease, filter 0.3s ease",
+    filter: isDark ? "invert(1) brightness(1.2)" : "none",
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+    },
+  }}
+/>
   <Typography fontWeight="bold">
     {skill.name}
   </Typography>
