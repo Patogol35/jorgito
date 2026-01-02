@@ -94,39 +94,40 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-    FILTROS (ANCHO CONTROLADO + PREMIUM)
+    FILTROS (PRO + AUTO SCROLL)
 ========================= */}
 <Box
   display="flex"
   justifyContent="center"
-  mb={5}
+  mb={6}
   sx={{
     overflowX: "auto",
-    WebkitOverflowScrolling: "touch",
     scrollbarWidth: "none",
     "&::-webkit-scrollbar": { display: "none" },
   }}
 >
   <ToggleButtonGroup
+    ref={filtersRef}
     value={filter}
     exclusive
     onChange={(e, val) => val && setFilter(val)}
     aria-label="Filtros de Skills"
     sx={{
       maxWidth: "100%",
-      px: 0.5,
-      gap: 0.5,
+      px: 1,
+      py: 0.6,
+      gap: 0.8,
       borderRadius: "999px",
       background: isDark
-        ? "rgba(255,255,255,0.04)"
-        : "rgba(255,255,255,0.6)",
-      backdropFilter: "blur(12px)",
+        ? "rgba(255,255,255,0.05)"
+        : "rgba(255,255,255,0.75)",
+      backdropFilter: "blur(14px)",
       border: isDark
-        ? "1px solid rgba(255,255,255,0.08)"
-        : "1px solid rgba(0,0,0,0.06)",
+        ? "1px solid rgba(255,255,255,0.1)"
+        : "1px solid rgba(0,0,0,0.08)",
       boxShadow: isDark
-        ? "0 3px 10px rgba(0,0,0,0.35)"
-        : "0 3px 10px rgba(0,0,0,0.12)",
+        ? "0 6px 18px rgba(0,0,0,0.45)"
+        : "0 6px 18px rgba(0,0,0,0.15)",
       flexWrap: "nowrap",
     }}
   >
@@ -137,11 +138,11 @@ export default function Skills() {
         sx={{
           whiteSpace: "nowrap",
           textTransform: "none",
-          fontWeight: 500,
-          px: 1.6,
-          py: 0.45,
-          fontSize: "0.75rem",
-          minHeight: "28px",
+          fontWeight: 600,
+          px: 2.2,
+          py: 0.7,
+          fontSize: "0.8rem",
+          minHeight: "34px",
           borderRadius: "999px",
           border: "none",
           flexShrink: 0,
@@ -151,7 +152,7 @@ export default function Skills() {
           "&.Mui-selected": {
             background: `linear-gradient(90deg, ${primary}, #6366f1)`,
             color: "#fff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.25)",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.3)",
           },
 
           "&:hover": {
