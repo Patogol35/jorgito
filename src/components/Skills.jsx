@@ -84,7 +84,7 @@ export default function Skills() {
     : "rgba(255,255,255,0.85)";
 
   return (
-    <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
+    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
         {/* =========================
