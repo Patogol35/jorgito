@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -26,6 +26,9 @@ function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
+  const prefersReducedMotion = useRef(
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -38,17 +41,11 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
                 text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
                 text: { primary: "#ffffff" },
               }),
         },
@@ -56,13 +53,28 @@ function App() {
     [mode]
   );
 
-  const sections = [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#8e24aa", Component: Certifications },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-  ];
+  /* =========================
+     ANIMACIÓN POR SCROLL
+  ========================= */
+  useEffect(() => {
+    if (prefersReducedMotion.current) return;
+
+    const items = document.querySelectorAll(".reveal");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,11 +92,18 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {sections.map(({ id, color, Component }) => (
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact },
+          ].map(({ id, color, Component }, index) => (
             <Paper
               key={id}
               id={id}
-              elevation={2}
+              className="reveal"
+              elevation={0}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
@@ -93,71 +112,55 @@ function App() {
                 scrollMarginTop: scrollOffset,
                 overflow: "hidden",
 
-                /* SOMBRA BASE */
-                boxShadow:
-                  mode === "light"
-                    ? "0 10px 26px rgba(0,0,0,0.06)"
-                    : "0 10px 26px rgba(0,0,0,0.55)",
+                /* Estado inicial */
+                opacity: 0,
+                transform: "translateY(32px)",
+                transition: prefersReducedMotion.current
+                  ? "none"
+                  : `opacity 0.6s ease ${index * 0.12}s,
+                     transform 0.6s cubic-bezier(0.22,1,0.36,1) ${index * 0.12}s,
+                     box-shadow 0.3s ease`,
 
-                transition:
-                  "transform 0.3s ease, box-shadow 0.3s ease",
-
-                "&:hover": {
-                  transform: "translateY(-8px)",
-                  boxShadow:
-                    mode === "light"
-                      ? "0 20px 40px rgba(0,0,0,0.14)"
-                      : "0 20px 40px rgba(0,0,0,0.8)",
+                "&.visible": {
+                  opacity: 1,
+                  transform: "translateY(0)",
                 },
 
-                /* 🎨 BORDE + GLOW */
+                /* Sombra premium */
+                boxShadow:
+                  mode === "light"
+                    ? "0 10px 24px rgba(0,0,0,0.06)"
+                    : "0 0 0 1px rgba(255,255,255,0.04), 0 16px 30px rgba(0,0,0,0.85)",
+
+                "&:hover": {
+                  transform: "translateY(-4px) scale(1.01)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 20px 40px rgba(0,0,0,0.12)"
+                      : "0 24px 44px rgba(0,0,0,0.9)",
+                },
+
+                /* Borde izquierdo elegante */
                 "&::before": {
                   content: '""',
                   position: "absolute",
                   left: 0,
                   top: 0,
-                  width: "9px",
+                  width: "6px",
                   height: "100%",
                   background: `linear-gradient(180deg, ${color}, transparent)`,
-                  borderRadius: "3px 0 0 3px",
-                  animation: "borderGrow 0.9s ease forwards",
-                  zIndex: 0,
-                },
-
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  width: "9px",
-                  height: "100%",
-                  background: color,
-                  opacity: mode === "light" ? 0.25 : 0.4,
-                  filter: "blur(10px)",
-                  zIndex: 0,
-                },
-
-                "@keyframes borderGrow": {
-                  from: {
-                    transform: "scaleY(0)",
-                    transformOrigin: "top",
-                  },
-                  to: {
-                    transform: "scaleY(1)",
-                  },
+                  opacity: 0.9,
                 },
               }}
             >
-              <Box sx={{ position: "relative", zIndex: 1 }}>
-                <Component />
-              </Box>
+              <Component />
             </Paper>
           ))}
         </Container>
 
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -167,7 +170,15 @@ function App() {
               right: 16,
               zIndex: 1000,
               bgcolor: "#25D366",
+              animation: prefersReducedMotion.current
+                ? "none"
+                : "pulse 2.6s ease-in-out infinite",
               "&:hover": { bgcolor: "#1ebe5c" },
+
+              "@keyframes pulse": {
+                "0%, 100%": { transform: "scale(1)" },
+                "50%": { transform: "scale(1.08)" },
+              },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
