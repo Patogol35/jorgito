@@ -52,15 +52,6 @@ function App() {
                 text: { primary: "#ffffff" },
               }),
         },
-        components: {
-          MuiPaper: {
-            styleOverrides: {
-              root: {
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-              },
-            },
-          },
-        },
       }),
     [mode]
   );
@@ -74,7 +65,6 @@ function App() {
           minHeight: "100vh",
           overflowX: "hidden",
           scrollBehavior: "smooth",
-          transition: "background-color 0.4s ease",
         }}
       >
         {/* NAVBAR */}
@@ -100,77 +90,87 @@ function App() {
             { id: "contact", color: "#d32f2f", Component: Contact },
           ].map(({ id, color, Component }) => (
             <Paper
-  key={id}
-  id={id}
-  elevation={3}
-  sx={{
-    position: "relative",
-    overflow: "hidden",
+              key={id}
+              id={id}
+              elevation={3}
+              sx={{
+                position: "relative",
+                overflow: "hidden",
 
-    mb: 4,
-    p: { xs: 3, md: 6 },
-    borderRadius: 3,
-    scrollMarginTop: scrollOffset,
-    backdropFilter: "blur(6px)",
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+                scrollMarginTop: scrollOffset,
+                backdropFilter: "blur(6px)",
 
-    /* Línea izquierda fija */
-    borderLeft: `5px solid ${color}`,
+                /* Línea izquierda inicial */
+                borderLeft: `5px solid ${color}`,
 
-    transition: "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s",
+                transition:
+                  "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s",
 
-    /* Marco animado */
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      inset: 0,
-      borderRadius: "inherit",
-      border: `2px solid ${color}`,
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
+                },
 
-      /* Empieza oculto */
-      clipPath: "inset(0 100% 0 0)",
-      transition: "clip-path 0.6s cubic-bezier(.4,0,.2,1)",
-      pointerEvents: "none",
-    },
+                /* Activar animación del trazo */
+                "&:hover .animated-border": {
+                  strokeDashoffset: "0",
+                },
+              }}
+            >
+              {/* BORDE SVG ANIMADO */}
+              <svg
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  pointerEvents: "none",
+                }}
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="98"
+                  height="98"
+                  rx="6"
+                  ry="6"
+                  fill="none"
+                  stroke={color}
+                  strokeWidth="2"
+                  pathLength="1"
+                  className="animated-border"
+                  style={{
+                    strokeDasharray: "0.22 0.78",
+                    strokeDashoffset: "1",
+                    transition:
+                      "stroke-dashoffset 0.8s cubic-bezier(.4,0,.2,1)",
+                  }}
+                />
+              </svg>
 
-    "&:hover": {
-      transform: "translateY(-6px)",
-      boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
-    },
-
-    /* El marco aparece completo */
-    "&:hover::after": {
-      clipPath: "inset(0 0 0 0)",
-    },
-  }}
->
-  <Component />
-</Paper>
+              <Component />
+            </Paper>
           ))}
         </Container>
 
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
               zIndex: 1000,
               bgcolor: "#25D366",
-              animation: "pulse 2.5s infinite",
-              "&:hover": {
-                bgcolor: "#1ebe5c",
-                transform: "scale(1.08)",
-              },
-              "@keyframes pulse": {
-                "0%": { boxShadow: "0 0 0 0 rgba(37,211,102,0.5)" },
-                "70%": { boxShadow: "0 0 0 16px rgba(37,211,102,0)" },
-                "100%": { boxShadow: "0 0 0 0 rgba(37,211,102,0)" },
-              },
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
@@ -180,7 +180,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
