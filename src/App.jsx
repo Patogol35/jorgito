@@ -113,17 +113,20 @@ function App() {
     scrollMarginTop: scrollOffset,
     backdropFilter: "blur(6px)",
 
+    /* Línea izquierda fija */
+    borderLeft: `5px solid ${color}`,
+
     transition: "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s",
 
     /* Marco animado */
-    "&::before": {
+    "&::after": {
       content: '""',
       position: "absolute",
       inset: 0,
       borderRadius: "inherit",
       border: `2px solid ${color}`,
 
-      /* Empieza solo como línea izquierda */
+      /* Empieza oculto */
       clipPath: "inset(0 100% 0 0)",
       transition: "clip-path 0.6s cubic-bezier(.4,0,.2,1)",
       pointerEvents: "none",
@@ -134,8 +137,8 @@ function App() {
       boxShadow: "0 14px 32px rgba(0,0,0,0.18)",
     },
 
-    /* El borde recorre toda la card */
-    "&:hover::before": {
+    /* El marco aparece completo */
+    "&:hover::after": {
       clipPath: "inset(0 0 0 0)",
     },
   }}
