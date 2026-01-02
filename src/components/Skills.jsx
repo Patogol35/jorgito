@@ -83,9 +83,9 @@ export default function Skills() {
     <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
       <Container>
 
-        /* =========================
+        {/* =========================
    HEADER
-========================= */
+========================= */ }
 <motion.div
   initial={{ opacity: 0, scale: 0.8 }}
   whileInView={{ opacity: 1, scale: 1 }}
