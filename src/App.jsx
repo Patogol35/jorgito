@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook
+// Hook personalizado
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -42,29 +42,48 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: { default: "#f5f7fa", paper: "#ffffff" },
-                text: { primary: "#111" },
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
               }
             : {
-                background: { default: "#121212", paper: "#1e1e1e" },
-                text: { primary: "#ffffff" },
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
               }),
-        },
-        typography: {
-          fontFamily: "Inter, Roboto, sans-serif",
         },
       }),
     [mode]
   );
+
+  const sections = [
+    { id: "about", color: "#2e7d32", Component: About },
+    { id: "skills", color: "#fb8c00", Component: Skills },
+    { id: "certifications", color: "#8e24aa", Component: Certifications },
+    { id: "projects", color: "#1976d2", Component: Projects },
+    { id: "contact", color: "#d32f2f", Component: Contact, stable: true },
+  ];
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -73,69 +92,37 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {[
-            { id: "about", color: "#2e7d32", Component: About },
-            { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
-            { id: "projects", color: "#1976d2", Component: Projects },
-            { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({
-              threshold: 0.25,
-            });
-
-            // 🔒 animar SOLO UNA VEZ
-            const [hasAnimated, setHasAnimated] = useState(false);
-
-            useEffect(() => {
-              if (isIntersecting && !hasAnimated) {
-                setHasAnimated(true);
-              }
-            }, [isIntersecting, hasAnimated]);
+          {sections.map(({ id, color, Component, stable }) => {
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
 
             return (
               <Paper
                 ref={ref}
                 key={id}
                 id={id}
-                elevation={6}
+                elevation={3}
                 sx={{
-                  mb: 6,
+                  mb: 4,
                   p: { xs: 3, md: 6 },
-                  borderRadius: 4,
+                  borderRadius: 3,
                   position: "relative",
                   scrollMarginTop: scrollOffset,
                   overflow: "hidden",
-
-                  /* ⛔ NO se toca el tamaño */
-                  display: "block",
-
                   background:
-                    mode === "light"
-                      ? "linear-gradient(180deg, #ffffff, #f9fafc)"
-                      : "linear-gradient(180deg, #1e1e1e, #232323)",
-
-                  transition: "all 0.5s ease",
-                  transform: hasAnimated
-                    ? "translateY(0)"
-                    : "translateY(24px)",
-                  opacity: hasAnimated ? 1 : 0,
-
-                  boxShadow:
-                    mode === "light"
-                      ? "0 8px 24px rgba(0,0,0,0.08)"
-                      : "0 8px 24px rgba(0,0,0,0.5)",
-
-                  "&:hover": {
-                    transform: "translateY(-6px) scale(1.01)",
-                    boxShadow:
-                      mode === "light"
-                        ? "0 20px 40px rgba(0,0,0,0.15)"
-                        : "0 20px 40px rgba(0,0,0,0.7)",
-                  },
+                    theme.palette.mode === "light"
+                      ? "linear-gradient(180deg, #ffffff 0%, #fafafa 100%)"
+                      : "linear-gradient(180deg, #1e1e1e 0%, #161616 100%)",
+                  transition:
+                    "transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease",
+                  "&:hover": stable
+                    ? {}
+                    : {
+                        transform: "translateY(-6px)",
+                        boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
+                      },
                 }}
               >
-                {/* BORDE IZQUIERDO */}
+                {/* BORDE IZQUIERDO ANIMADO */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -143,20 +130,29 @@ function App() {
                     top: 0,
                     width: "6px",
                     height: "100%",
-                    background: `linear-gradient(180deg, ${color}, transparent)`,
-                    borderRadius: "4px 0 0 4px",
+                    backgroundColor: color,
+                    borderRadius: "3px 0 0 3px",
                     transformOrigin: "top",
-                    transform: hasAnimated ? "scaleY(1)" : "scaleY(0)",
+                    transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
                     transition:
-                      "transform 1s cubic-bezier(0.25,0.46,0.45,0.94)",
-                    boxShadow: hasAnimated
-                      ? `0 0 10px ${color}`
-                      : "none",
+                      "transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                     zIndex: 0,
                   }}
                 />
 
-                <Box sx={{ position: "relative", zIndex: 1 }}>
+                {/* CONTENIDO */}
+                <Box
+                  sx={{
+                    position: "relative",
+                    zIndex: 1,
+                    opacity: isIntersecting ? 1 : 0,
+                    transform: isIntersecting
+                      ? "translateY(0)"
+                      : "translateY(16px)",
+                    transition:
+                      "opacity 0.6s ease, transform 0.6s ease",
+                  }}
+                >
                   <Component />
                 </Box>
               </Paper>
@@ -164,22 +160,20 @@ function App() {
           })}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: 20,
-              right: 20,
-              bgcolor: "#25D366",
+              bottom: 16,
+              right: 16,
               zIndex: 1000,
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: "#1ebe5c",
-                transform: "scale(1.05)",
-                boxShadow: "0 0 20px rgba(37,211,102,0.6)",
-              },
+              bgcolor: "#25D366",
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
@@ -189,6 +183,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
