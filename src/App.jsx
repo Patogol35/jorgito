@@ -23,7 +23,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook personalizado
+// Hook
 import useOnScreen from "./hooks/useOnScreen";
 
 function App() {
@@ -42,17 +42,11 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
                 text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
                 text: { primary: "#ffffff" },
               }),
         },
@@ -68,13 +62,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -90,7 +80,11 @@ function App() {
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
           ].map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({ threshold: 0.25 });
+            const [ref, isIntersecting] = useOnScreen({
+              threshold: 0.25,
+            });
+
+            // 🔒 animar SOLO UNA VEZ
             const [hasAnimated, setHasAnimated] = useState(false);
 
             useEffect(() => {
@@ -113,24 +107,18 @@ function App() {
                   scrollMarginTop: scrollOffset,
                   overflow: "hidden",
 
-                  /* 🔥 SOLUCIÓN CONTACT */
-                  minHeight: id === "contact" ? "100vh" : "auto",
-                  display: "flex",
-                  alignItems: "center",
+                  /* ⛔ NO se toca el tamaño */
+                  display: "block",
 
                   background:
-                    id === "contact"
-                      ? mode === "light"
-                        ? "linear-gradient(180deg, #ffffff, #f0f4ff)"
-                        : "linear-gradient(180deg, #1e1e1e, #0f172a)"
-                      : mode === "light"
+                    mode === "light"
                       ? "linear-gradient(180deg, #ffffff, #f9fafc)"
                       : "linear-gradient(180deg, #1e1e1e, #232323)",
 
                   transition: "all 0.5s ease",
                   transform: hasAnimated
                     ? "translateY(0)"
-                    : "translateY(30px)",
+                    : "translateY(24px)",
                   opacity: hasAnimated ? 1 : 0,
 
                   boxShadow:
@@ -159,7 +147,8 @@ function App() {
                     borderRadius: "4px 0 0 4px",
                     transformOrigin: "top",
                     transform: hasAnimated ? "scaleY(1)" : "scaleY(0)",
-                    transition: "transform 1s cubic-bezier(0.25,0.46,0.45,0.94)",
+                    transition:
+                      "transform 1s cubic-bezier(0.25,0.46,0.45,0.94)",
                     boxShadow: hasAnimated
                       ? `0 0 10px ${color}`
                       : "none",
@@ -167,8 +156,7 @@ function App() {
                   }}
                 />
 
-                {/* CONTENIDO */}
-                <Box sx={{ position: "relative", zIndex: 1, width: "100%" }}>
+                <Box sx={{ position: "relative", zIndex: 1 }}>
                   <Component />
                 </Box>
               </Paper>
@@ -176,19 +164,16 @@ function App() {
           })}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 20,
               right: 20,
-              zIndex: 1000,
               bgcolor: "#25D366",
+              zIndex: 1000,
               transition: "all 0.3s ease",
               "&:hover": {
                 bgcolor: "#1ebe5c",
@@ -204,7 +189,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
