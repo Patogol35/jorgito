@@ -9,11 +9,6 @@ import { useTheme } from "@mui/material/styles";
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  const glowColor =
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#60a5fa";
-
   return (
     <>
       <Toolbar />
@@ -27,73 +22,50 @@ export default function Hero({ mode, setMode }) {
           justifyContent: "center",
           gap: { xs: 4, md: 8 },
           pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 2, sm: 3 },
+          pb: { xs: 1.5, sm: 2.5, md: 3 },
           px: { xs: 2, sm: 4, md: 8 },
+          color: theme.palette.text.primary,
         }}
       >
         {/* ================= AVATAR ================= */}
         <motion.div
-          initial={{
-            opacity: 0,
-            rotateY: -90,
-            scale: 0.85,
-          }}
+          initial={{ opacity: 0, rotate: -180, scale: 0.7 }}
           animate={{
             opacity: 1,
-            rotateY: 0,
+            rotate: 0,
             scale: 1,
-            y: [0, -14, 0],
+            y: [0, -15, 0],
           }}
           transition={{
             opacity: { duration: 1 },
-            rotateY: { duration: 1.8, ease: "easeOut" },
-            scale: { duration: 1.2 },
+            rotate: { duration: 1.4, ease: "easeOut" },
+            scale: { duration: 1 },
             y: {
-              duration: 4,
+              duration: 3.5,
               repeat: Infinity,
               ease: "easeInOut",
             },
           }}
-          style={{
-            transformStyle: "preserve-3d",
-          }}
+          style={{ borderRadius: "50%" }}
         >
-          <Box
+          <Avatar
+            alt="Jorge Patricio"
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
             sx={{
-              borderRadius: "50%",
-              display: "inline-flex",
-              boxShadow: `0 0 22px ${glowColor}`,
-              animation: "glow 3.2s ease-in-out infinite",
-              "@keyframes glow": {
-                "0%": { boxShadow: `0 0 18px ${glowColor}` },
-                "50%": { boxShadow: `0 0 32px ${glowColor}` },
-                "100%": { boxShadow: `0 0 18px ${glowColor}` },
-              },
+              width: { xs: 130, sm: 170, md: 200 },
+              height: { xs: 130, sm: 170, md: 200 },
+              border: `4px solid ${theme.palette.primary.main}`,
             }}
-          >
-            <Avatar
-              alt="Jorge Patricio"
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-              sx={{
-                width: { xs: 130, sm: 170, md: 200 },
-                height: { xs: 130, sm: 170, md: 200 },
-                border: `4px solid ${theme.palette.primary.main}`,
-              }}
-            />
-          </Box>
+          />
         </motion.div>
 
         {/* ================= TEXTO ================= */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-        >
-          {/* TÍTULO */}
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
+          {/* Título */}
           <motion.div
-            initial={{ opacity: 0, y: 20, letterSpacing: "2px" }}
-            animate={{ opacity: 1, y: 0, letterSpacing: "0px" }}
-            transition={{ duration: 1, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
             <Typography
               variant="h3"
@@ -108,11 +80,11 @@ export default function Hero({ mode, setMode }) {
             </Typography>
           </motion.div>
 
-          {/* SUBTÍTULO */}
+          {/* Subtítulo */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <Typography
               variant="h6"
@@ -124,22 +96,23 @@ export default function Hero({ mode, setMode }) {
             </Typography>
           </motion.div>
 
-          {/* DESCRIPCIÓN */}
+          {/* Descripción */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
                 lineHeight: 1.9,
                 letterSpacing: "0.3px",
+                fontWeight: 400,
                 color: theme.palette.text.primary,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 maxWidth: "520px",
-                mt: 3,
-                mb: 5,
+                mt: { xs: 3, sm: 3.5 },
+                mb: { xs: 4, sm: 5 },
               }}
             >
               Me apasiona crear tecnología que transforma ideas en realidades
@@ -150,86 +123,146 @@ export default function Hero({ mode, setMode }) {
           </motion.div>
 
           {/* ================= BOTONES ================= */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              justifyContent: { xs: "center", sm: "flex-start" },
-              flexWrap: "wrap",
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.15,
+                  delayChildren: 0.6,
+                },
+              },
             }}
           >
-            <Button
-              variant="contained"
-              startIcon={<DescriptionIcon />}
-              href="/Jorge.CV.pdf"
-              target="_blank"
+            <Box
               sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 4,
-                py: 1.4,
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "none",
+                display: "flex",
+                gap: 2,
+                justifyContent: { xs: "center", sm: "flex-start" },
+                flexWrap: "wrap",
               }}
             >
-              Ver CV
-            </Button>
+              {/* CV */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                <Button
+                  variant="contained"
+                  startIcon={<DescriptionIcon />}
+                  href="/Jorge.CV.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    borderRadius: "25px",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    px: { xs: 3.5, md: 5 },
+                    py: 1.4,
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    boxShadow: "none",
+                    "&:hover": { boxShadow: "none" },
+                  }}
+                >
+                  Ver CV
+                </Button>
+              </motion.div>
 
-            <Button
-              variant="contained"
-              startIcon={<WorkspacePremiumIcon />}
-              href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-              target="_blank"
-              sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 4,
-                py: 1.4,
-                background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                boxShadow: "none",
-              }}
-            >
-              Ver Título
-            </Button>
+              {/* Título */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                <Button
+                  variant="contained"
+                  startIcon={<WorkspacePremiumIcon />}
+                  href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    borderRadius: "25px",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    px: { xs: 3.5, md: 5 },
+                    py: 1.4,
+                    background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
+                    boxShadow: "none",
+                    "&:hover": { boxShadow: "none" },
+                  }}
+                >
+                  Ver Título
+                </Button>
+              </motion.div>
 
-            <Button
-              variant="contained"
-              startIcon={<SmartToyIcon />}
-              onClick={() => window.openSashaChat?.()}
-              sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 4,
-                py: 1.4,
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "none",
-              }}
-            >
-              Sasha
-            </Button>
+              {/* Sasha */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                <Button
+                  variant="contained"
+                  startIcon={<SmartToyIcon />}
+                  onClick={() => window.openSashaChat?.()}
+                  sx={{
+                    borderRadius: "25px",
+                    textTransform: "none",
+                    fontWeight: "bold",
+                    px: { xs: 3.5, md: 5 },
+                    py: 1.4,
+                    minHeight: 48,
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    boxShadow: "none",
+                    "&:hover": {
+                      boxShadow: "none",
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    },
+                  }}
+                >
+                  Sasha
+                </Button>
+              </motion.div>
 
-            <Button
-              variant="outlined"
-              onClick={() => setMode(mode === "light" ? "dark" : "light")}
-              sx={{
-                minWidth: 48,
-                width: 48,
-                height: 48,
-                borderRadius: "50%",
-                borderColor: theme.palette.primary.main,
-                color: theme.palette.primary.main,
-                "&:hover": {
-                  background: theme.palette.primary.main,
-                  color: "#fff",
-                },
-              }}
-            >
-              {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-            </Button>
-          </Box>
+              {/* Modo oscuro */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6 }}
+              >
+                <Button
+                  variant="outlined"
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{
+                    minWidth: 48,
+                    width: 48,
+                    height: 48,
+                    padding: 0,
+                    borderRadius: "50%",
+                    borderColor: theme.palette.primary.main,
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: theme.palette.primary.main,
+                      color: "#fff",
+                    },
+                  }}
+                >
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </Button>
+              </motion.div>
+            </Box>
+          </motion.div>
         </Box>
       </Box>
     </>
