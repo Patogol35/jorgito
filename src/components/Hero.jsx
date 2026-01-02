@@ -1,4 +1,4 @@
-import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
+import { Toolbar, Box, Typography, Button, Avatar, IconButton } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
@@ -9,18 +9,25 @@ import { useTheme } from "@mui/material/styles";
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  /* ================= ANIMACIONES ================= */
+  const glowColor =
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main
+      : "#60a5fa";
+
+  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 14,
+      y: 16,
+      clipPath: "inset(0 0 100% 0)",
       filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
+      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
       transition: { duration: 1, ease: easeOutExpo },
     },
@@ -41,7 +48,7 @@ export default function Hero({ mode, setMode }) {
     visible: {
       transition: {
         staggerChildren: 0.14,
-        delayChildren: 1.2,
+        delayChildren: 1.3,
       },
     },
   };
@@ -54,6 +61,7 @@ export default function Hero({ mode, setMode }) {
         id="hero"
         sx={{
           position: "relative",
+          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
@@ -66,13 +74,13 @@ export default function Hero({ mode, setMode }) {
       >
         {/* ================= AVATAR ================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85, rotateY: -120 }}
+          initial={{ opacity: 0, scale: 0.82, rotateY: -120 }}
           animate={{ opacity: 1, scale: 1, rotateY: 0 }}
           transition={{ duration: 1.6, ease: easeOutExpo }}
-          style={{ perspective: 1200 }}
+          style={{ perspective: 1200, zIndex: 1 }}
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -12, 0], rotateZ: [0, 0.4, 0] }}
             transition={{
               duration: 5,
               repeat: Infinity,
@@ -82,17 +90,14 @@ export default function Hero({ mode, setMode }) {
           >
             <Box
               sx={{
-                position: "relative",
                 borderRadius: "50%",
-                p: 1.5,
-                background:
-                  theme.palette.mode === "dark"
-                    ? "radial-gradient(circle at top, rgba(59,130,246,0.25), transparent 70%)"
-                    : "radial-gradient(circle at top, rgba(96,165,250,0.35), transparent 70%)",
-                boxShadow:
-                  theme.palette.mode === "dark"
-                    ? "0 30px 80px rgba(0,0,0,0.55)"
-                    : "0 30px 80px rgba(0,0,0,0.25)",
+                boxShadow: `0 0 24px ${glowColor}`,
+                animation: "pulseGlow 4s ease-in-out infinite",
+                "@keyframes pulseGlow": {
+                  "0%": { boxShadow: `0 0 16px ${glowColor}` },
+                  "50%": { boxShadow: `0 0 36px ${glowColor}` },
+                  "100%": { boxShadow: `0 0 16px ${glowColor}` },
+                },
               }}
             >
               <Avatar
@@ -101,8 +106,7 @@ export default function Hero({ mode, setMode }) {
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
-                  border: `3px solid ${theme.palette.primary.main}`,
-                  backgroundColor: theme.palette.background.paper,
+                  border: `4px solid ${theme.palette.primary.main}`,
                 }}
               />
             </Box>
@@ -114,6 +118,7 @@ export default function Hero({ mode, setMode }) {
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
+          zIndex={1}
         >
           <motion.div
             variants={textContainer}
@@ -149,6 +154,8 @@ export default function Hero({ mode, setMode }) {
                 sx={{
                   fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
+                  letterSpacing: "0.3px",
+                  color: theme.palette.text.primary,
                   opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                   maxWidth: "520px",
                   mt: 3,
@@ -191,38 +198,53 @@ export default function Hero({ mode, setMode }) {
                     "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
                 },
                 {
-                  label: mode === "light" ? "Modo oscuro" : "Modo claro",
-                  icon: mode === "light" ? <Brightness4 /> : <Brightness7 />,
-                  onClick: () =>
-                    setMode(mode === "light" ? "dark" : "light"),
+                  label: "Sasha",
+                  icon: <SmartToyIcon />,
+                  onClick: () => window.openSashaChat?.(),
                 },
               ].map((btn, i) => (
                 <motion.div key={i} variants={fadeCinematic}>
                   <Button
-                    variant={btn.href ? "contained" : "text"}
+                    variant="contained"
                     startIcon={btn.icon}
                     href={btn.href}
                     onClick={btn.onClick}
                     target={btn.href ? "_blank" : undefined}
                     sx={{
-                      borderRadius: "14px",
+                      borderRadius: "25px",
                       textTransform: "none",
                       fontWeight: "bold",
-                      px: 3,
-                      py: 1.2,
-                      ...(btn.href && {
-                        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      }),
+                      px: 4,
+                      py: 1.4,
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
                   </Button>
                 </motion.div>
               ))}
+
+              {/* TOGGLE DARK / LIGHT SOLO ICONO */}
+              <motion.div variants={fadeCinematic}>
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: "transparent",
+                      transform: "scale(1.15)",
+                    },
+                    transition: "transform 0.2s ease",
+                  }}
+                >
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                </IconButton>
+              </motion.div>
             </Box>
           </motion.div>
         </Box>
       </Box>
     </>
   );
-                }
+}
