@@ -1,37 +1,13 @@
-import { Toolbar, Box, Typography, Button, Avatar, useTheme } from "@mui/material";
+import { Toolbar, Box, Typography, Button, Avatar } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-import { motion, useReducedMotion } from "framer-motion";
-
-// Variantes refinadas
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: [0.33, 1, 0.68, 1], // easeOut personalizado (suave al final)
-    },
-  },
-};
+import { motion } from "framer-motion";
+import { useTheme } from "@mui/material/styles";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
-  const shouldReduceMotion = useReducedMotion();
 
   return (
     <>
@@ -51,39 +27,26 @@ export default function Hero({ mode, setMode }) {
           color: theme.palette.text.primary,
         }}
       >
-        {/* Avatar: flotación natural + micro-rotación + escala sutil */}
+        {/* Avatar animado */}
         <motion.div
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  y: [0, -12, 0],
-                  rotate: [0, 0.8, -0.8, 0],
-                  scale: [1, 1.01, 1],
-                }
-          }
-          transition={
-            shouldReduceMotion
-              ? {}
-              : {
-                  y: {
-                    duration: 4.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
-                  rotate: {
-                    duration: 6,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
-                  scale: {
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  },
-                }
-          }
-          style={{ display: "inline-block" }}
+          initial={{ opacity: 0, rotate: -180, scale: 0.6 }}
+          animate={{
+            opacity: 1,
+            rotate: 0,
+            scale: 1,
+            y: [0, -15, 0],
+          }}
+          transition={{
+            opacity: { duration: 0.8 },
+            rotate: { duration: 0.8, ease: "easeOut" },
+            scale: { duration: 0.8 },
+            y: {
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
+          style={{ borderRadius: "50%" }}
         >
           <Avatar
             alt="Jorge Patricio"
@@ -92,23 +55,21 @@ export default function Hero({ mode, setMode }) {
               width: { xs: 130, sm: 170, md: 200 },
               height: { xs: 130, sm: 170, md: 200 },
               border: `4px solid ${theme.palette.primary.main}`,
-              background: theme.palette.background.paper,
             }}
           />
         </motion.div>
 
-        {/* Contenido con entrada escalonada refinada */}
+        {/* Texto */}
         <motion.div
-          variants={container}
-          initial="hidden"
-          animate={shouldReduceMotion ? "show" : "show"}
-          style={{
-            textAlign: { xs: "center", sm: "left" },
-            maxWidth: "600px",
-            margin: "0 auto",
-          }}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <motion.div variants={item}>
+          <Box
+            textAlign={{ xs: "center", sm: "left" }}
+            maxWidth="600px"
+            mx="auto"
+          >
             <Typography
               variant="h3"
               fontWeight="bold"
@@ -116,14 +77,11 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 color: theme.palette.primary.main,
                 fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
-                lineHeight: 1.25,
               }}
             >
               Hola, soy Jorge Patricio Santamaría Cherrez
             </Typography>
-          </motion.div>
 
-          <motion.div variants={item}>
             <Typography
               variant="h6"
               color="text.secondary"
@@ -132,9 +90,7 @@ export default function Hero({ mode, setMode }) {
             >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
-          </motion.div>
 
-          <motion.div variants={item}>
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
@@ -143,6 +99,7 @@ export default function Hero({ mode, setMode }) {
                 fontWeight: 400,
                 color: theme.palette.text.primary,
                 opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
+                maxWidth: "520px",
                 mt: { xs: 3, sm: 3.5 },
                 mb: { xs: 4, sm: 5 },
               }}
@@ -152,10 +109,8 @@ export default function Hero({ mode, setMode }) {
               desarrollando soluciones digitales seguras, innovadoras y
               orientadas a generar impacto positivo.
             </Typography>
-          </motion.div>
 
-          {/* Botones */}
-          <motion.div variants={item}>
+            {/* Botones */}
             <Box
               sx={{
                 display: "flex",
@@ -177,11 +132,8 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-                    transition: "transform 0.25s, box-shadow 0.25s",
-                  },
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver CV
@@ -200,11 +152,8 @@ export default function Hero({ mode, setMode }) {
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
                   background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-                    transition: "transform 0.25s, box-shadow 0.25s",
-                  },
+                  boxShadow: "none",
+                  "&:hover": { boxShadow: "none" },
                 }}
               >
                 Ver Título
@@ -222,11 +171,12 @@ export default function Hero({ mode, setMode }) {
                   fontWeight: "bold",
                   px: { xs: 3.5, md: 5 },
                   py: 1.4,
+                  minHeight: 48,
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
                   "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
-                    transition: "transform 0.25s, box-shadow 0.25s",
+                    boxShadow: "none",
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                   },
                 }}
               >
@@ -247,15 +197,13 @@ export default function Hero({ mode, setMode }) {
                   "&:hover": {
                     background: theme.palette.primary.main,
                     color: "#fff",
-                    transform: "scale(1.08)",
-                    transition: "all 0.2s ease",
                   },
                 }}
               >
                 {mode === "light" ? <Brightness4 /> : <Brightness7 />}
               </Button>
             </Box>
-          </motion.div>
+          </Box>
         </motion.div>
       </Box>
     </>
