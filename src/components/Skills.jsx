@@ -90,75 +90,82 @@ export default function Skills() {
           </Box>
         </motion.div>
 {/* =========================
-    FILTROS (PRO + SIN SCROLL)
+    FILTROS (HORIZONTAL SCROLL)
 ========================= */}
 <Box
-  display="flex"
-  justifyContent="center"
-  mb={6}
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    mb: 6,
+  }}
 >
-  <ToggleButtonGroup
-    value={filter}
-    exclusive
-    onChange={(e, val) => val && setFilter(val)}
-    aria-label="Filtros de Skills"
+  <Box
     sx={{
-      display: "flex",
-      flexWrap: "wrap",          // 👈 CLAVE: no scroll
-      justifyContent: "center",
-      gap: 1,
-      px: 2,
-      py: 1,
-      maxWidth: "900px",
-      borderRadius: "20px",
-      background: isDark
-        ? "rgba(255,255,255,0.04)"
-        : "rgba(255,255,255,0.85)",
-      backdropFilter: "blur(14px)",
-      border: isDark
-        ? "1px solid rgba(255,255,255,0.12)"
-        : "1px solid rgba(0,0,0,0.08)",
-      boxShadow: isDark
-        ? "0 8px 24px rgba(0,0,0,0.45)"
-        : "0 8px 24px rgba(0,0,0,0.12)",
+      maxWidth: "100%",
+      overflowX: "auto",
+      whiteSpace: "nowrap",
+      px: 1,
+
+      /* ocultar scrollbar */
+      scrollbarWidth: "none",
+      "&::-webkit-scrollbar": {
+        display: "none",
+      },
     }}
   >
-    {categories.map((cat) => (
-      <ToggleButton
-        key={cat}
-        value={cat}
-        sx={{
-          textTransform: "none",
-          fontWeight: 600,
-          px: 2.5,
-          py: 0.8,
-          fontSize: "0.85rem",
-          minHeight: "38px",
-          borderRadius: "14px",
-          border: "none",
-          color: theme.palette.text.secondary,
-          transition: "all 0.25s ease",
-
-          "&.Mui-selected": {
-            background: `linear-gradient(135deg, ${primary}, #6366f1)`,
-            color: "#fff",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
-          },
-
-          "&:hover": {
-            background: isDark
-              ? "rgba(255,255,255,0.08)"
-              : "rgba(0,0,0,0.05)",
+    <ToggleButtonGroup
+      value={filter}
+      exclusive
+      onChange={(e, val) => val && setFilter(val)}
+      aria-label="Filtros de Skills"
+      sx={{
+        display: "inline-flex",
+        gap: 1,
+        px: 1,
+        py: 0.5,
+        borderRadius: "999px",
+        background: isDark
+          ? "rgba(255,255,255,0.04)"
+          : "rgba(255,255,255,0.6)",
+        boxShadow: isDark
+          ? "0 4px 12px rgba(0,0,0,0.35)"
+          : "0 4px 12px rgba(0,0,0,0.12)",
+      }}
+    >
+      {categories.map((cat) => (
+        <ToggleButton
+          key={cat}
+          value={cat}
+          sx={{
+            flexShrink: 0, // 🔥 CLAVE PARA SCROLL
+            textTransform: "none",
+            fontWeight: 600,
+            px: 2,
+            py: 0.7,
+            fontSize: "0.85rem",
+            borderRadius: "999px",
+            border: "none",
             color: theme.palette.text.primary,
-          },
-        }}
-      >
-        {cat}
-      </ToggleButton>
-    ))}
-  </ToggleButtonGroup>
-</Box>
 
+            "&.Mui-selected": {
+              background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
+              color: "#fff",
+            },
+
+            "&:hover": {
+              background: isDark
+                ? "rgba(255,255,255,0.08)"
+                : "rgba(0,0,0,0.05)",
+            },
+          }}
+        >
+          {cat}
+        </ToggleButton>
+      ))}
+    </ToggleButtonGroup>
+  </Box>
+</Box>
+      
         {/* =========================
             GRID DE SKILLS
         ========================= */}
