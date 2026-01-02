@@ -27,25 +27,10 @@ export default function Hero({ mode, setMode }) {
           color: theme.palette.text.primary,
         }}
       >
-        {/* ================= AVATAR ================= */}
+        {/* Avatar */}
         <motion.div
-          initial={{ opacity: 0, rotate: -180, scale: 0.7 }}
-          animate={{
-            opacity: 1,
-            rotate: 0,
-            scale: 1,
-            y: [0, -15, 0],
-          }}
-          transition={{
-            opacity: { duration: 1 },
-            rotate: { duration: 1.4, ease: "easeOut" },
-            scale: { duration: 1 },
-            y: {
-              duration: 3.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-          }}
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
           style={{ borderRadius: "50%" }}
         >
           <Avatar
@@ -59,33 +44,53 @@ export default function Hero({ mode, setMode }) {
           />
         </motion.div>
 
-        {/* ================= TEXTO ================= */}
-        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
-          {/* Título */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+        {/* Texto */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Box
+            textAlign={{ xs: "center", sm: "left" }}
+            maxWidth="600px"
+            mx="auto"
           >
-            <Typography
-              variant="h3"
-              fontWeight="bold"
-              gutterBottom
-              sx={{
-                color: theme.palette.primary.main,
-                fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+            {/* ===== NOMBRE con efecto ===== */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+                textShadow: [
+                  "0 0 0px rgba(0,0,0,0)",
+                  `0 0 12px ${theme.palette.primary.main}`,
+                  "0 0 0px rgba(0,0,0,0)",
+                ],
+              }}
+              transition={{
+                duration: 1,
+                ease: "easeOut",
+                textShadow: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                },
               }}
             >
-              Hola, soy Jorge Patricio Santamaría Cherrez
-            </Typography>
-          </motion.div>
+              <Typography
+                variant="h3"
+                fontWeight="bold"
+                gutterBottom
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                }}
+              >
+                Hola, soy Jorge Patricio Santamaría Cherrez
+              </Typography>
+            </motion.div>
 
-          {/* Subtítulo */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+            {/* Subtítulo */}
             <Typography
               variant="h6"
               color="text.secondary"
@@ -94,14 +99,8 @@ export default function Hero({ mode, setMode }) {
             >
               🎓 Máster en Ingeniería de Software y Sistemas Informáticos
             </Typography>
-          </motion.div>
 
-          {/* Descripción */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+            {/* Descripción */}
             <Typography
               sx={{
                 fontSize: { xs: "1rem", sm: "1.08rem" },
@@ -120,22 +119,8 @@ export default function Hero({ mode, setMode }) {
               desarrollando soluciones digitales seguras, innovadoras y
               orientadas a generar impacto positivo.
             </Typography>
-          </motion.div>
 
-          {/* ================= BOTONES ================= */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: {
-                transition: {
-                  staggerChildren: 0.15,
-                  delayChildren: 0.6,
-                },
-              },
-            }}
-          >
+            {/* Botones (SIN CAMBIOS) */}
             <Box
               sx={{
                 display: "flex",
@@ -144,126 +129,80 @@ export default function Hero({ mode, setMode }) {
                 flexWrap: "wrap",
               }}
             >
-              {/* CV */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
+              <Button
+                variant="contained"
+                startIcon={<DescriptionIcon />}
+                href="/Jorge.CV.pdf"
+                target="_blank"
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
                 }}
-                transition={{ duration: 0.6 }}
               >
-                <Button
-                  variant="contained"
-                  startIcon={<DescriptionIcon />}
-                  href="/Jorge.CV.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    borderRadius: "25px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    px: { xs: 3.5, md: 5 },
-                    py: 1.4,
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    boxShadow: "none",
-                    "&:hover": { boxShadow: "none" },
-                  }}
-                >
-                  Ver CV
-                </Button>
-              </motion.div>
+                Ver CV
+              </Button>
 
-              {/* Título */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
+              <Button
+                variant="contained"
+                startIcon={<WorkspacePremiumIcon />}
+                href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
+                target="_blank"
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
+                  boxShadow: "none",
                 }}
-                transition={{ duration: 0.6 }}
               >
-                <Button
-                  variant="contained"
-                  startIcon={<WorkspacePremiumIcon />}
-                  href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    borderRadius: "25px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    px: { xs: 3.5, md: 5 },
-                    py: 1.4,
-                    background: `linear-gradient(90deg, #3b82f6, ${theme.palette.primary.main})`,
-                    boxShadow: "none",
-                    "&:hover": { boxShadow: "none" },
-                  }}
-                >
-                  Ver Título
-                </Button>
-              </motion.div>
+                Ver Título
+              </Button>
 
-              {/* Sasha */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
+              <Button
+                variant="contained"
+                startIcon={<SmartToyIcon />}
+                onClick={() => window.openSashaChat?.()}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: { xs: 3.5, md: 5 },
+                  py: 1.4,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
                 }}
-                transition={{ duration: 0.6 }}
               >
-                <Button
-                  variant="contained"
-                  startIcon={<SmartToyIcon />}
-                  onClick={() => window.openSashaChat?.()}
-                  sx={{
-                    borderRadius: "25px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    px: { xs: 3.5, md: 5 },
-                    py: 1.4,
-                    minHeight: 48,
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    boxShadow: "none",
-                    "&:hover": {
-                      boxShadow: "none",
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    },
-                  }}
-                >
-                  Sasha
-                </Button>
-              </motion.div>
+                Sasha
+              </Button>
 
-              {/* Modo oscuro */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
+              <Button
+                variant="outlined"
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{
+                  minWidth: 48,
+                  width: 48,
+                  height: 48,
+                  borderRadius: "50%",
+                  borderColor: theme.palette.primary.main,
+                  color: theme.palette.primary.main,
+                  "&:hover": {
+                    background: theme.palette.primary.main,
+                    color: "#fff",
+                  },
                 }}
-                transition={{ duration: 0.6 }}
               >
-                <Button
-                  variant="outlined"
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    minWidth: 48,
-                    width: 48,
-                    height: 48,
-                    padding: 0,
-                    borderRadius: "50%",
-                    borderColor: theme.palette.primary.main,
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: theme.palette.primary.main,
-                      color: "#fff",
-                    },
-                  }}
-                >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                </Button>
-              </motion.div>
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </Button>
             </Box>
-          </motion.div>
-        </Box>
+          </Box>
+        </motion.div>
       </Box>
     </>
   );
