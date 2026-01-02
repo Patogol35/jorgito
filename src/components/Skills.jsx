@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -12,6 +17,9 @@ import {
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 
+/* =========================
+   DATA
+========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
 const skills = [
@@ -29,145 +37,176 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
-
+const categoryIcons = {
+  All: <AllInclusiveIcon fontSize="small" />,
+  Frontend: <CodeIcon fontSize="small" />,
+  Backend: <BuildCircleIcon fontSize="small" />,
+  Database: <StorageIcon fontSize="small" />,
+  Cloud: <CloudQueueIcon fontSize="small" />,
+  Tools: <BuildIcon fontSize="small" />,
+};
+/* =========================
+   COMPONENT
+========================= */
 export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primary = theme.palette.primary.main;
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+
+  const containerRef = useRef(null);
+  const buttonRefs = useRef({});
+
+  useEffect(() => {
+    const activeBtn = buttonRefs.current[filter];
+    const container = containerRef.current;
+
+    if (activeBtn && container) {
+      container.scrollTo({
+        left:
+          activeBtn.offsetLeft -
+          container.offsetWidth / 2 +
+          activeBtn.offsetWidth / 2,
+        behavior: "smooth",
+      });
+    }
+  }, [filter]);
 
   const filteredSkills =
     filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.8)";
+    : "rgba(255,255,255,0.85)";
 
   return (
-    <Box
-      id="skills"
-      sx={{ py: 4, scrollMarginTop: "80px", color: theme.palette.text.primary }}
-    >
+    <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
       <Container>
 
         {/* =========================
-            TÍTULO
+            HEADER
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
+              px: 4,
+              py: 1.2,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
+                ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+                : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
               border: `1px solid ${
                 isDark
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
-              backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Box
+              sx={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
+              }}
+            >
+              <BuildIcon sx={{ color: "#fff", fontSize: 20 }} />
+            </Box>
+
             <Typography
               variant="h6"
-              fontWeight="bold"
-              color={primaryColor}
+              sx={{ fontWeight: "bold", color: primary }}
             >
-              Stack Tecnológico
+              Tecnologías
             </Typography>
           </Box>
         </motion.div>
-{/* =========================
-    FILTROS (HORIZONTAL SCROLL)
-========================= */}
-<Box
-  sx={{
-    display: "flex",
-    justifyContent: "center",
-    mb: 6,
-  }}
->
-  <Box
-    sx={{
-      maxWidth: "100%",
-      overflowX: "auto",
-      whiteSpace: "nowrap",
-      px: 1,
 
-      /* ocultar scrollbar */
-      scrollbarWidth: "none",
-      "&::-webkit-scrollbar": {
-        display: "none",
-      },
+        {/* =========================
+    FILTROS
+========================= */}
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    sx={{
+      display: "flex",
+      overflowX: "auto",
+      gap: 1.2,
+      px: 2,
+      py: 0.5,
+      "&::-webkit-scrollbar": { display: "none" },
     }}
   >
-    <ToggleButtonGroup
-      value={filter}
-      exclusive
-      onChange={(e, val) => val && setFilter(val)}
-      aria-label="Filtros de Skills"
-      sx={{
-        display: "inline-flex",
-        gap: 1,
-        px: 1,
-        py: 0.5,
-        borderRadius: "999px",
-        background: isDark
-          ? "rgba(255,255,255,0.04)"
-          : "rgba(255,255,255,0.6)",
-        boxShadow: isDark
-          ? "0 4px 12px rgba(0,0,0,0.35)"
-          : "0 4px 12px rgba(0,0,0,0.12)",
-      }}
-    >
-      {categories.map((cat) => (
-        <ToggleButton
-          key={cat}
-          value={cat}
-          sx={{
-            flexShrink: 0, // 🔥 CLAVE PARA SCROLL
-            textTransform: "none",
-            fontWeight: 600,
-            px: 2,
-            py: 0.7,
-            fontSize: "0.85rem",
-            borderRadius: "999px",
-            border: "none",
-            color: theme.palette.text.primary,
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.4,
+          py: 1,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
 
-            "&.Mui-selected": {
-              background: `linear-gradient(90deg, ${primary}, #6d28d9)`,
-              color: "#fff",
-            },
+          backgroundColor: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(255,255,255,0.9)",
+          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
+          border: `1px solid ${
+            isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)"
+          }`,
 
-            "&:hover": {
-              background: isDark
-                ? "rgba(255,255,255,0.08)"
-                : "rgba(0,0,0,0.05)",
-            },
-          }}
-        >
-          {cat}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
-  </Box>
+          "&:hover": {
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(25,118,210,0.06)",
+          },
+
+          "&.Mui-selected": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+            color: "#fff",
+            borderColor: "transparent",
+            boxShadow: isDark
+              ? "0 6px 16px rgba(0,0,0,0.4)"
+              : "0 6px 14px rgba(25,118,210,0.35)",
+          },
+
+          "&.Mui-selected:hover": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+          },
+        }}
+      >
+        {categoryIcons[cat]}
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
 </Box>
-      
         {/* =========================
-            GRID DE SKILLS
+            GRID
         ========================= */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
@@ -175,23 +214,16 @@ export default function Skills() {
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  viewport={{ once: true }}
-                  whileHover={{ scale: 1.08 }}
                 >
                   <Paper
-                    elevation={8}
                     sx={{
                       p: 3,
                       textAlign: "center",
-                      borderRadius: "20px",
-                      backdropFilter: "blur(12px)",
+                      borderRadius: "22px",
                       background: cardBg,
-                      boxShadow: isDark
-                        ? "0 8px 20px rgba(0,0,0,0.5)"
-                        : "0 8px 20px rgba(0,0,0,0.1)",
                     }}
                   >
                     <Box
@@ -201,11 +233,9 @@ export default function Skills() {
                       sx={{
                         width: 65,
                         height: 65,
-                        objectFit: "contain",
                         mb: 2,
-                        filter: isDark
-                          ? "invert(1) brightness(1.2)"
-                          : "none",
+                        objectFit: "contain",
+                        filter: isDark ? "invert(1)" : "none",
                       }}
                     />
                     <Typography fontWeight="bold">
