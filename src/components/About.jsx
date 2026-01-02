@@ -21,7 +21,7 @@ const estudios = [
 export default function About() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const primaryColor = isDark ? "#90caf9" : "#1976d2";
 
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
@@ -40,57 +40,50 @@ export default function About() {
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
+        style={{ textAlign: "center", marginBottom: "2.5rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
-            px: 4,
-            py: 1.2,
+            gap: 1.2,
+            px: 3,
+            py: 0.9,
             borderRadius: "999px",
-            background: isDark
-              ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
-              : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
             border: `1px solid ${
               isDark
-                ? "rgba(144,202,249,0.25)"
-                : "rgba(25,118,210,0.25)"
+                ? "rgba(144,202,249,0.35)"
+                : "rgba(25,118,210,0.35)"
             }`,
+            backdropFilter: "blur(6px)",
+            background: isDark
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
+            boxShadow: isDark
+              ? "0 0 18px rgba(144,202,249,0.15)"
+              : "0 0 18px rgba(25,118,210,0.15)",
           }}
         >
-          {/* ICONO MEJORADO */}
+          {/* ICONO SIN FONDO – ANIMADO */}
           <motion.div
-            animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.08, 1] }}
+            animate={{ rotate: [0, 6, -6, 0], scale: [1, 1.12, 1] }}
             transition={{
-              duration: 3.5,
+              duration: 3.2,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           >
-            <Box
-              sx={{
-                width: 34,
-                height: 34,
-                borderRadius: "50%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: isDark ? "#1e3a5f" : "#1976d2",
-                mr: 1.2,
-                boxShadow: isDark
-                  ? "0 0 10px rgba(144,202,249,0.4)"
-                  : "0 0 10px rgba(25,118,210,0.4)",
-              }}
-            >
-              <GraduationCap size={20} color="#fff" />
-            </Box>
+            <GraduationCap size={22} color={primaryColor} />
           </motion.div>
 
+          {/* TEXTO COMO BADGE */}
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            sx={{
+              fontWeight: 700,
+              letterSpacing: "0.4px",
+              color: primaryColor,
+            }}
           >
             Formación
           </Typography>
