@@ -23,7 +23,7 @@ import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
 function App() {
-  const storedMode = localStorage.getItem("themeMode") || "light";
+  const storedMode = localStorage.getItem("themeMode") || "dark";
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
 
