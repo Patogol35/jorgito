@@ -42,17 +42,11 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: {
-                  default: "#f5f7fa",
-                  paper: "#ffffff",
-                },
+                background: { default: "#f5f7fa", paper: "#ffffff" },
                 text: { primary: "#111" },
               }
             : {
-                background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
+                background: { default: "#121212", paper: "#1e1e1e" },
                 text: { primary: "#ffffff" },
               }),
         },
@@ -73,23 +67,16 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
+          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 } }}
         >
           {sections.map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({ threshold: 0.1 });
+            const [ref, isIntersecting] = useOnScreen({ threshold: 0.15 });
 
             return (
               <Paper
@@ -110,12 +97,12 @@ function App() {
                     transform: "translateY(-6px)",
                     boxShadow:
                       mode === "light"
-                        ? "0 18px 36px rgba(0,0,0,0.12)"
-                        : "0 18px 36px rgba(0,0,0,0.45)",
+                        ? "0 20px 40px rgba(0,0,0,0.12)"
+                        : "0 20px 40px rgba(0,0,0,0.5)",
                   },
                 }}
               >
-                {/* BORDE IZQUIERDO ANIMADO */}
+                {/* BORDE IZQUIERDO */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -129,21 +116,36 @@ function App() {
                     transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
                     transition:
                       "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    zIndex: 0,
                   }}
                 />
 
-                {/* CONTENIDO (animación segura) */}
+                {/* OVERLAY */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      mode === "light"
+                        ? "linear-gradient(180deg, transparent, rgba(0,0,0,0.03))"
+                        : "linear-gradient(180deg, transparent, rgba(255,255,255,0.04))",
+                    opacity: 0,
+                    transition: "opacity 0.4s ease",
+                    pointerEvents: "none",
+                    ".MuiPaper-root:hover &": { opacity: 1 },
+                  }}
+                />
+
+                {/* 🎬 CONTENIDO ANIMADO (SEGURO) */}
                 <Box
                   sx={{
                     position: "relative",
                     zIndex: 1,
                     opacity: isIntersecting ? 1 : 0,
                     transform: isIntersecting
-                      ? "none"
-                      : "translateY(16px)",
+                      ? "translateY(0)"
+                      : "translateY(30px)",
                     transition:
-                      "opacity 0.6s ease, transform 0.6s ease",
+                      "opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
                 >
                   <Component />
@@ -153,18 +155,14 @@ function App() {
           })}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
-              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -176,7 +174,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
