@@ -127,7 +127,7 @@ export default function Skills() {
         {/* =========================
             FILTROS
         ========================= */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
           <ToggleButtonGroup
             ref={containerRef}
             value={filter}
@@ -187,7 +187,7 @@ export default function Skills() {
         {/* =========================
             GRID
         ========================= */}
-        <Grid container spacing={4} justifyContent="center">
+        <Grid container spacing={3} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
