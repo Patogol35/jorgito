@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Componentes
+// Tus componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -20,7 +20,7 @@ import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
-import ChatBus from "./components/ChatBot.jsx"; // Asegúrate del nombre correcto (ChatBus vs ChatBot)
+import ChatBot from "./components/ChatBot.jsx"; // Asegúrate del nombre correcto
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -60,44 +60,33 @@ function App() {
     [mode]
   );
 
+  // Animación definida en el componente
+  const animationStyle = `
+    @keyframes scrollLine {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(100%);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+  `;
+
   return (
     <>
-      {/* Animación de la línea al hacer hover */}
-      <style>
-        {`
-          @keyframes slideDownUp {
-            0% {
-              transform: translateY(0);
-            }
-            50% {
-              transform: translateY(100%);
-            }
-            100% {
-              transform: translateY(0);
-            }
-          }
-
-          .animated-border-line {
-            transition: transform 0.3s ease;
-          }
-
-          .hover-trigger:hover .animated-border-line {
-            animation: slideDownUp 1.2s ease-in-out;
-          }
-        `}
-      </style>
+      {/* Inyectamos la animación global (solo una vez) */}
+      <style>{animationStyle}</style>
 
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
         <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-          {/* NAVBAR */}
           <Navbar mode={mode} setMode={setMode} />
-
-          {/* HERO */}
           <Hero mode={mode} setMode={setMode} />
 
-          {/* CONTENIDO */}
           <Container
             maxWidth="lg"
             disableGutters
@@ -112,28 +101,20 @@ function App() {
               { id: "certifications", color: "#8e24aa", Component: Certifications },
               { id: "projects", color: "#1976d2", Component: Projects },
               { id: "contact", color: "#d32f2f", Component: Contact },
-            ].map(({ id, color, Component }) => (
+            ].map(({ id, color, Component }, index) => (
               <Box
                 key={id}
                 id={id}
-                className="hover-trigger"
                 sx={{
                   mb: 4,
                   scrollMarginTop: scrollOffset,
                   position: "relative",
                   borderRadius: 3,
                   overflow: "hidden",
-                  // Estilo para el efecto de elevación al hacer hover
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: theme.shadows[6],
-                  },
                 }}
               >
-                {/* Línea animada a la izquierda */}
+                {/* Línea animada */}
                 <Box
-                  className="animated-border-line"
                   sx={{
                     position: "absolute",
                     left: 0,
@@ -141,11 +122,10 @@ function App() {
                     width: "6px",
                     height: "100%",
                     bgcolor: color,
+                    animation: `scrollLine 2s ease-in-out ${index * 0.2}s forwards`,
                     zIndex: 2,
                   }}
                 />
-
-                {/* Contenido principal sin borde izquierdo */}
                 <Paper
                   elevation={3}
                   sx={{
@@ -163,10 +143,9 @@ function App() {
             ))}
           </Container>
 
-          {/* FOOTER */}
           <Footer />
 
-          {/* BOTÓN FLOTANTE WHATSAPP */}
+          {/* WhatsApp */}
           <Tooltip title="Chatea por WhatsApp" placement="left">
             <Fab
               aria-label="whatsapp"
@@ -186,8 +165,7 @@ function App() {
             </Fab>
           </Tooltip>
 
-          {/* CHATBOT IA PERSONAL */}
-          <ChatBus />
+          <ChatBot />
         </Box>
       </ThemeProvider>
     </>
