@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -25,30 +25,41 @@ import ChatBot from "./components/ChatBot.jsx";
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
-  const scrollOffset = "80px";
+  const [active, setActive] = useState(null);
+  const observers = useRef([]);
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
+
+  useEffect(() => {
+    observers.current.forEach((obs) => obs.disconnect());
+    observers.current = [];
+
+    document.querySelectorAll("[data-section]").forEach((el) => {
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActive(el.dataset.section);
+          }
+        },
+        { threshold: 0.6 }
+      );
+      obs.observe(el);
+      observers.current.push(obs);
+    });
+
+    return () => observers.current.forEach((o) => o.disconnect());
+  }, []);
 
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode,
-          ...(mode === "light"
-            ? {
-                background: {
-                  default: "#eef2f7",
-                  paper: "#ffffff",
-                },
-              }
-            : {
-                background: {
-                  default: "#0d0d0d",
-                  paper: "#1a1a1a",
-                },
-              }),
+          background: {
+            default: mode === "light" ? "#eef2f7" : "#0b0b0b",
+          },
         },
       }),
     [mode]
@@ -66,50 +77,79 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          scrollSnapType: "y mandatory",
+          background:
+            mode === "light"
+              ? "linear-gradient(120deg, #fdfbfb, #ebedee)"
+              : "linear-gradient(120deg, #0f0f0f, #1a1a1a)",
+          backgroundSize: "200% 200%",
+          animation: "bgMove 12s ease infinite",
+          "@keyframes bgMove": {
+            "0%": { backgroundPosition: "0% 50%" },
+            "50%": { backgroundPosition: "100% 50%" },
+            "100%": { backgroundPosition: "0% 50%" },
+          },
+        }}
+      >
         <Navbar mode={mode} setMode={setMode} />
         <Hero mode={mode} setMode={setMode} />
 
-        <Container
-          maxWidth="lg"
-          sx={{ py: 8 }}
-        >
-          {sections.map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={{
-                mb: 6,
-                p: { xs: 4, md: 7 },
-                borderRadius: 4,
-                scrollMarginTop: scrollOffset,
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+          {sections.map(({ id, color, Component }, index) => (
+            <Box key={id}>
+              {/* Separador visual */}
+              {index !== 0 && (
+                <Box
+                  sx={{
+                    height: 40,
+                    background:
+                      mode === "light"
+                        ? "linear-gradient(135deg, transparent 75%, #00000008 75%)"
+                        : "linear-gradient(135deg, transparent 75%, #ffffff10 75%)",
+                  }}
+                />
+              )}
 
-                // 🔥 CAMBIOS QUE SE NOTAN
-                border: `2px solid ${color}`,
-                background:
-                  mode === "light"
-                    ? `${color}08`
-                    : `${color}12`,
+              <Paper
+                data-section={id}
+                scrollSnapAlign="start"
+                elevation={0}
+                sx={{
+                  mb: 8,
+                  p: { xs: 4, md: 7 },
+                  borderRadius: 4,
 
-                boxShadow:
-                  mode === "light"
-                    ? "0 10px 30px rgba(0,0,0,0.15)"
-                    : "0 10px 40px rgba(0,0,0,0.8)",
-
-                transition: "all 0.25s ease",
-
-                "&:hover": {
-                  transform: "scale(1.03)",
-                  boxShadow:
+                  /* GLASSMORPHISM */
+                  background:
                     mode === "light"
-                      ? `0 20px 50px ${color}55`
-                      : `0 25px 60px ${color}88`,
-                },
-              }}
-            >
-              <Component />
-            </Paper>
+                      ? "rgba(255,255,255,0.75)"
+                      : "rgba(30,30,30,0.75)",
+                  backdropFilter: "blur(14px)",
+
+                  border: `1px solid ${color}55`,
+
+                  boxShadow:
+                    active === id
+                      ? `0 0 0 2px ${color}, 0 0 40px ${color}88`
+                      : mode === "light"
+                      ? "0 15px 40px rgba(0,0,0,0.15)"
+                      : "0 20px 60px rgba(0,0,0,0.9)",
+
+                  transform: active === id ? "scale(1.02)" : "scale(1)",
+                  transition: "all 0.35s ease",
+
+                  "&:hover": {
+                    transform: "scale(1.04)",
+                    boxShadow: `0 25px 70px ${color}88`,
+                  },
+                }}
+              >
+                <Component />
+              </Paper>
+            </Box>
           ))}
         </Container>
 
@@ -122,6 +162,7 @@ function App() {
               bottom: 20,
               right: 20,
               bgcolor: "#25D366",
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
