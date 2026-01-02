@@ -35,7 +35,7 @@ export default function About() {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado — MISMO ESTILO QUE CERTIFICACIONES */}
+      {/* ================= TÍTULO FORMACIÓN ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -60,21 +60,33 @@ export default function About() {
             }`,
           }}
         >
-          {/* Icono con círculo */}
-          <Box
-            sx={{
-              width: 34,
-              height: 34,
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: isDark ? "#1e3a5f" : "#1976d2",
-              mr: 1.2,
+          {/* ICONO MEJORADO */}
+          <motion.div
+            animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.08, 1] }}
+            transition={{
+              duration: 3.5,
+              repeat: Infinity,
+              ease: "easeInOut",
             }}
           >
-            <GraduationCap size={20} color="#fff" />
-          </Box>
+            <Box
+              sx={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
+                boxShadow: isDark
+                  ? "0 0 10px rgba(144,202,249,0.4)"
+                  : "0 0 10px rgba(25,118,210,0.4)",
+              }}
+            >
+              <GraduationCap size={20} color="#fff" />
+            </Box>
+          </motion.div>
 
           <Typography
             variant="h6"
@@ -85,7 +97,7 @@ export default function About() {
         </Box>
       </motion.div>
 
-      {/* Grid de estudios */}
+      {/* ================= GRID DE ESTUDIOS ================= */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
@@ -113,4 +125,4 @@ export default function About() {
       </Grid>
     </Box>
   );
-              }
+}
