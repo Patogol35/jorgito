@@ -128,14 +128,9 @@ export default function Skills() {
         {/* =========================
             FILTERS
         ========================= */}
-        <Box
-  sx={{
-    display: "flex",
-    justifyContent: "center",
-    mb: 6,
-  }}
->
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
   <Box
+    ref={containerRef}
     sx={{
       maxWidth: "100%",
       overflowX: "auto",
@@ -143,12 +138,11 @@ export default function Skills() {
     }}
   >
     <ToggleButtonGroup
-      ref={containerRef}
       value={filter}
       exclusive
       onChange={(e, val) => val && setFilter(val)}
       sx={{
-        display: "inline-flex", // 👈 clave
+        display: "inline-flex", // 🔥 clave para centrado real
         gap: 1.2,
         py: 0.5,
       }}
