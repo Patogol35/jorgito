@@ -37,7 +37,6 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
 ];
-
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
@@ -46,7 +45,6 @@ const categoryIcons = {
   Cloud: <CloudQueueIcon fontSize="small" />,
   Tools: <BuildIcon fontSize="small" />,
 };
-
 /* =========================
    COMPONENT
 ========================= */
@@ -86,38 +84,49 @@ export default function Skills() {
       <Container>
 
         {/* =========================
-            HEADER (sin margen inferior)
+            HEADER
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
+              px: 4,
+              py: 1.2,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
+                ? "linear-gradient(135deg, rgba(144,202,249,0.12), rgba(144,202,249,0.04))"
+                : "linear-gradient(135deg, rgba(25,118,210,0.12), rgba(25,118,210,0.04))",
               border: `1px solid ${
                 isDark
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
-              backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ fontSize: 22, color: primary }} />
+            <Box
+              sx={{
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: isDark ? "#1e3a5f" : "#1976d2",
+                mr: 1.2,
+              }}
+            >
+              <BuildIcon sx={{ color: "#fff", fontSize: 20 }} />
+            </Box>
+
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
+              sx={{ fontWeight: "bold", color: primary }}
             >
               Tecnologías
             </Typography>
@@ -125,76 +134,81 @@ export default function Skills() {
         </motion.div>
 
         {/* =========================
-            FILTROS (controlan el spacing)
-        ========================= */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            mt: 4,
-            mb: 3,
-          }}
-        >
-          <ToggleButtonGroup
-            ref={containerRef}
-            value={filter}
-            exclusive
-            onChange={(e, val) => val && setFilter(val)}
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 1.2,
-              px: 2,
-              py: 0.5,
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            {categories.map((cat) => (
-              <ToggleButton
-                key={cat}
-                value={cat}
-                ref={(el) => (buttonRefs.current[cat] = el)}
-                component={motion.button}
-                whileTap={{ scale: 0.92 }}
-                sx={{
-                  borderRadius: "999px",
-                  px: 2.4,
-                  py: 1,
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  textTransform: "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  backgroundColor: isDark
-                    ? "rgba(255,255,255,0.04)"
-                    : "rgba(255,255,255,0.9)",
-                  color: isDark
-                    ? "rgba(255,255,255,0.85)"
-                    : "rgba(0,0,0,0.75)",
-                  border: `1px solid ${
-                    isDark
-                      ? "rgba(255,255,255,0.12)"
-                      : "rgba(0,0,0,0.12)"
-                  }`,
-                  "&.Mui-selected": {
-                    background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                    color: "#fff",
-                    borderColor: "transparent",
-                  },
-                }}
-              >
-                {categoryIcons[cat]}
-                {cat}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
-        </Box>
+    FILTROS
+========================= */}
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+  <ToggleButtonGroup
+    ref={containerRef}
+    value={filter}
+    exclusive
+    onChange={(e, val) => val && setFilter(val)}
+    sx={{
+      display: "flex",
+      overflowX: "auto",
+      gap: 1.2,
+      px: 2,
+      py: 0.5,
+      "&::-webkit-scrollbar": { display: "none" },
+    }}
+  >
+    {categories.map((cat) => (
+      <ToggleButton
+        key={cat}
+        value={cat}
+        ref={(el) => (buttonRefs.current[cat] = el)}
+        component={motion.button}
+        whileTap={{ scale: 0.92 }}
+        sx={{
+          borderRadius: "999px",
+          px: 2.4,
+          py: 1,
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          textTransform: "none",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
 
+          backgroundColor: isDark
+            ? "rgba(255,255,255,0.04)"
+            : "rgba(255,255,255,0.9)",
+          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,0.75)",
+          border: `1px solid ${
+            isDark
+              ? "rgba(255,255,255,0.12)"
+              : "rgba(0,0,0,0.12)"
+          }`,
+
+          "&:hover": {
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(25,118,210,0.06)",
+          },
+
+          "&.Mui-selected": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+            color: "#fff",
+            borderColor: "transparent",
+            boxShadow: isDark
+              ? "0 6px 16px rgba(0,0,0,0.4)"
+              : "0 6px 14px rgba(25,118,210,0.35)",
+          },
+
+          "&.Mui-selected:hover": {
+            background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+          },
+        }}
+      >
+        {categoryIcons[cat]}
+        {cat}
+      </ToggleButton>
+    ))}
+  </ToggleButtonGroup>
+</Box>
         {/* =========================
-            GRID (igual a About)
+            GRID
         ========================= */}
-        <Grid container spacing={3} justifyContent="center">
+        <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
@@ -237,4 +251,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+                }
