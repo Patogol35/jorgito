@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -26,9 +26,6 @@ function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
-  const prefersReducedMotion = useRef(
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -41,54 +38,57 @@ function App() {
           mode,
           ...(mode === "light"
             ? {
-                background: { default: "#f5f7fa", paper: "#ffffff" },
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
                 text: { primary: "#111" },
               }
             : {
-                background: { default: "#121212", paper: "#1e1e1e" },
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
                 text: { primary: "#ffffff" },
               }),
+        },
+        components: {
+          MuiPaper: {
+            styleOverrides: {
+              root: {
+                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+              },
+            },
+          },
         },
       }),
     [mode]
   );
 
-  /* =========================
-     ANIMACIÓN POR SCROLL
-  ========================= */
-  useEffect(() => {
-    if (prefersReducedMotion.current) return;
-
-    const items = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    items.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          overflowX: "hidden",
+          scrollBehavior: "smooth",
+          transition: "background-color 0.4s ease",
+        }}
+      >
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 6,
+            py: 3,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -98,58 +98,22 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }, index) => (
+          ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
-              className="reveal"
-              elevation={0}
+              elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                position: "relative",
+                borderLeft: `10px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-                overflow: "hidden",
-
-                /* Estado inicial */
-                opacity: 0,
-                transform: "translateY(32px)",
-                transition: prefersReducedMotion.current
-                  ? "none"
-                  : `opacity 0.6s ease ${index * 0.12}s,
-                     transform 0.6s cubic-bezier(0.22,1,0.36,1) ${index * 0.12}s,
-                     box-shadow 0.3s ease`,
-
-                "&.visible": {
-                  opacity: 1,
-                  transform: "translateY(0)",
-                },
-
-                /* Sombra premium */
-                boxShadow:
-                  mode === "light"
-                    ? "0 10px 24px rgba(0,0,0,0.06)"
-                    : "0 0 0 1px rgba(255,255,255,0.04), 0 16px 30px rgba(0,0,0,0.85)",
-
+                backdropFilter: "blur(6px)",
+                transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
                 "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  boxShadow:
-                    mode === "light"
-                      ? "0 20px 40px rgba(0,0,0,0.12)"
-                      : "0 24px 44px rgba(0,0,0,0.9)",
-                },
-
-                /* Borde izquierdo elegante */
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  left: 0,
-                  top: 0,
-                  width: "6px",
-                  height: "100%",
-                  background: `linear-gradient(180deg, ${color}, transparent)`,
-                  opacity: 0.9,
+                  transform: "translateY(-6px)",
+                  boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
                 },
               }}
             >
@@ -158,9 +122,10 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
-        {/* WhatsApp */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -170,14 +135,15 @@ function App() {
               right: 16,
               zIndex: 1000,
               bgcolor: "#25D366",
-              animation: prefersReducedMotion.current
-                ? "none"
-                : "pulse 2.6s ease-in-out infinite",
-              "&:hover": { bgcolor: "#1ebe5c" },
-
+              animation: "pulse 2.5s infinite",
+              "&:hover": {
+                bgcolor: "#1ebe5c",
+                transform: "scale(1.08)",
+              },
               "@keyframes pulse": {
-                "0%, 100%": { transform: "scale(1)" },
-                "50%": { transform: "scale(1.08)" },
+                "0%": { boxShadow: "0 0 0 0 rgba(37,211,102,0.5)" },
+                "70%": { boxShadow: "0 0 0 16px rgba(37,211,102,0)" },
+                "100%": { boxShadow: "0 0 0 0 rgba(37,211,102,0)" },
               },
             }}
             onClick={() =>
@@ -188,6 +154,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
