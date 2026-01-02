@@ -1,4 +1,3 @@
-// src/App.jsx
 import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
@@ -10,9 +9,9 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// Componentes
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -23,15 +22,10 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 
-// Hook
-import useOnScreen from "./hooks/useOnScreen";
-
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
   const [mode, setMode] = useState(storedMode);
-
-  // Offset exacto para navbar
-  const scrollOffset = "96px";
+  const scrollOffset = "80px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -62,14 +56,6 @@ function App() {
     [mode]
   );
 
-  const sections = [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#8e24aa", Component: Certifications },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-  ];
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -90,75 +76,72 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {sections.map(({ id, color, Component }) => {
-            const [ref, isIntersecting] = useOnScreen({
-              threshold: 0.1,
-            });
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact },
+          ].map(({ id, color, Component }) => (
+            <Paper
+              key={id}
+              id={id}
+              elevation={2}
+              sx={{
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+                position: "relative",
+                scrollMarginTop: scrollOffset,
+                overflow: "hidden",
 
-            return (
-              <Box key={id}>
-                {/* 🔗 ANCLA LIMPIA (SCROLL PERFECTO) */}
-                <Box id={id} sx={{ scrollMarginTop: scrollOffset }} />
+                /* sombra premium */
+                boxShadow:
+                  mode === "light"
+                    ? "0 10px 24px rgba(0,0,0,0.06)"
+                    : "0 10px 24px rgba(0,0,0,0.5)",
 
-                <Paper
-                  ref={ref}
-                  elevation={3}
-                  sx={{
-                    mb: 4,
-                    p: { xs: 3, md: 6 },
-                    borderRadius: 3,
-                    position: "relative",
-                    overflow: "hidden",
+                transition: "transform 0.25s ease, box-shadow 0.25s ease",
 
-                    /* ANIMACIÓN */
-                    opacity: isIntersecting ? 1 : 0,
-                    transform: isIntersecting
-                      ? "translateY(0)"
-                      : "translateY(40px)",
-                    transition:
-                      "opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 18px 36px rgba(0,0,0,0.12)"
+                      : "0 18px 36px rgba(0,0,0,0.7)",
+                },
 
-                    "&:hover": {
-                      transform: isIntersecting
-                        ? "translateY(-6px)"
-                        : "translateY(40px)",
-                    },
-                  }}
-                >
-                  {/* BORDE ANIMADO */}
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      left: 0,
-                      top: 0,
-                      width: "6px",
-                      height: "100%",
-                      backgroundColor: color,
-                      borderRadius: "3px 0 0 3px",
-                      transformOrigin: "top",
-                      transform: isIntersecting ? "scaleY(1)" : "scaleY(0)",
-                      transition:
-                        "transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                      zIndex: 0,
-                    }}
-                  />
+                /* 🎨 BORDE IZQUIERDO ANIMADO (SOLO VISUAL) */
+                "&::before": {
+                  content: '""',
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                  width: "8px",
+                  height: "100%",
+                  background: `linear-gradient(180deg, ${color}, transparent)`,
+                  borderRadius: "3px 0 0 3px",
+                  animation: "growBorder 0.8s ease forwards",
+                },
 
-                  {/* CONTENIDO */}
-                  <Box sx={{ position: "relative", zIndex: 1 }}>
-                    <Component />
-                  </Box>
-                </Paper>
-              </Box>
-            );
-          })}
+                "@keyframes growBorder": {
+                  from: { transform: "scaleY(0)", transformOrigin: "top" },
+                  to: { transform: "scaleY(1)" },
+                },
+              }}
+            >
+              <Component />
+            </Paper>
+          ))}
         </Container>
 
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
