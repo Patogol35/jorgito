@@ -105,21 +105,20 @@ export default function Skills() {
 
         
 {/* =========================  
-    FILTROS (ANCHO MEJORADO)
+    FILTROS (MÁS ANCHO)
 ========================= */}
 <Box
   sx={{
     display: "flex",
     justifyContent: "center",
     mb: 6,
-    position: "relative",
   }}
 >
   <Box
     sx={{
       position: "relative",
       width: "100%",
-      maxWidth: 680, // ⬅️ MÁS ANCHO (clave)
+      maxWidth: { xs: "100%", sm: 720, md: 900 }, // ⬅️ MUCHO MÁS ANCHO
     }}
   >
     {/* Fade izquierdo */}
@@ -154,81 +153,75 @@ export default function Skills() {
       }}
     />
 
-    <ToggleButtonGroup
+    {/* CONTENEDOR SCROLL */}
+    <Box
       ref={containerRef}
-      value={filter}
-      exclusive
-      onChange={(e, val) => val && setFilter(val)}
       sx={{
-        display: "flex",
         overflowX: "auto",
-        gap: 1.2,
-        px: 4,
+        display: "flex",
+        px: 5,
         py: 0.6,
+        gap: 1.2,
         scrollBehavior: "smooth",
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      {categories.map((cat) => (
-        <ToggleButton
-          key={cat}
-          value={cat}
-          ref={(el) => (buttonRefs.current[cat] = el)}
-          component={motion.button}
-          whileTap={{ scale: 0.92 }}
-          whileHover={{ scale: 1.05 }}
-          sx={{
-            borderRadius: "999px",
-            px: 2.4,
-            py: 1,
-            fontWeight: 600,
-            fontSize: "0.9rem",
-            textTransform: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
+      <ToggleButtonGroup
+        value={filter}
+        exclusive
+        onChange={(e, val) => val && setFilter(val)}
+        sx={{ display: "flex", gap: 1.2 }}
+      >
+        {categories.map((cat) => (
+          <ToggleButton
+            key={cat}
+            value={cat}
+            ref={(el) => (buttonRefs.current[cat] = el)}
+            component={motion.button}
+            whileTap={{ scale: 0.92 }}
+            whileHover={{ scale: 1.05 }}
+            sx={{
+              minWidth: 130, // ⬅️ asegura 3–4 visibles
+              borderRadius: "999px",
+              px: 2.6,
+              py: 1,
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              textTransform: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
 
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.04)"
-              : "rgba(255,255,255,0.9)",
-            color: isDark
-              ? "rgba(255,255,255,0.85)"
-              : "rgba(0,0,0,0.75)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(255,255,255,0.12)"
-                : "rgba(0,0,0,0.12)"
-            }`,
-            transition: "all 0.25s ease",
-
-            "&:hover": {
               backgroundColor: isDark
-                ? "rgba(255,255,255,0.08)"
-                : "rgba(25,118,210,0.06)",
-            },
+                ? "rgba(255,255,255,0.04)"
+                : "rgba(255,255,255,0.9)",
+              color: isDark
+                ? "rgba(255,255,255,0.85)"
+                : "rgba(0,0,0,0.75)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(255,255,255,0.12)"
+                  : "rgba(0,0,0,0.12)"
+              }`,
+              transition: "all 0.25s ease",
 
-            "&.Mui-selected": {
-              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-              color: "#fff",
-              borderColor: "transparent",
-              transform: "scale(1.08)",
-              boxShadow: isDark
-                ? "0 6px 16px rgba(0,0,0,0.4)"
-                : "0 6px 14px rgba(25,118,210,0.35)",
-            },
-
-            "&.Mui-selected:hover": {
-              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-            },
-          }}
-        >
-          {categoryIcons[cat]}
-          {cat}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+              "&.Mui-selected": {
+                background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                color: "#fff",
+                borderColor: "transparent",
+                transform: "scale(1.08)",
+              },
+            }}
+          >
+            {categoryIcons[cat]}
+            {cat}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </Box>
   </Box>
 </Box>
+
 
         {/* =========================
         GRID SKILLS
