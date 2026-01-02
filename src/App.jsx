@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -27,9 +27,30 @@ function App() {
   const [mode, setMode] = useState(storedMode);
   const scrollOffset = "80px";
 
+  const sectionsRef = useRef([]);
+
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
+
+  /* ===== ANIMACIÓN SCROLL ===== */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    sectionsRef.current.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
 
   const theme = useMemo(
     () =>
@@ -56,7 +77,8 @@ function App() {
           MuiPaper: {
             styleOverrides: {
               root: {
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                transition:
+                  "transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s ease",
               },
             },
           },
@@ -88,7 +110,7 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 3,
+            py: 6,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -98,10 +120,11 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
+          ].map(({ id, color, Component }, index) => (
             <Paper
               key={id}
               id={id}
+              ref={(el) => (sectionsRef.current[index] = el)}
               elevation={3}
               sx={{
                 mb: 4,
@@ -109,11 +132,18 @@ function App() {
                 borderRadius: 3,
                 borderLeft: `10px solid ${color}`,
                 scrollMarginTop: scrollOffset,
+
+                /* ANIMACIÓN INICIAL */
+                opacity: 0,
+                transform: "translateY(40px)",
+
                 backdropFilter: "blur(6px)",
-                transition: "all 0.35s cubic-bezier(.4,0,.2,1)",
+                transition:
+                  "all 0.5s cubic-bezier(.4,0,.2,1)",
+
                 "&:hover": {
                   transform: "translateY(-6px)",
-                  boxShadow: "0 12px 30px rgba(0,0,0,0.15)",
+                  boxShadow: "0 16px 40px rgba(0,0,0,0.18)",
                 },
               }}
             >
@@ -125,7 +155,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -142,7 +172,7 @@ function App() {
               },
               "@keyframes pulse": {
                 "0%": { boxShadow: "0 0 0 0 rgba(37,211,102,0.5)" },
-                "70%": { boxShadow: "0 0 0 16px rgba(37,211,102,0)" },
+                "70%": { boxShadow: "0 0 0 18px rgba(37,211,102,0)" },
                 "100%": { boxShadow: "0 0 0 0 rgba(37,211,102,0)" },
               },
             }}
@@ -154,7 +184,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
