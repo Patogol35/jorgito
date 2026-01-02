@@ -9,7 +9,6 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import { motion } from "framer-motion";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -22,8 +21,6 @@ import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
-
-const MotionPaper = motion(Paper);
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "light";
@@ -42,20 +39,14 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f5f7fa",
+                  default: "#eef2f7",
                   paper: "#ffffff",
-                },
-                text: {
-                  primary: "#111",
                 },
               }
             : {
                 background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
-                },
-                text: {
-                  primary: "#ffffff",
+                  default: "#0d0d0d",
+                  paper: "#1a1a1a",
                 },
               }),
         },
@@ -75,88 +66,71 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
+      <Box sx={{ minHeight: "100vh" }}>
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
-          disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
+          sx={{ py: 8 }}
         >
           {sections.map(({ id, color, Component }) => (
-            <MotionPaper
+            <Paper
               key={id}
               id={id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              elevation={3}
+              elevation={0}
               sx={{
-                mb: 4,
-                p: { xs: 3, sm: 4, md: 6 },
-                borderRadius: 3,
+                mb: 6,
+                p: { xs: 4, md: 7 },
+                borderRadius: 4,
                 scrollMarginTop: scrollOffset,
 
-                borderLeft: `6px solid ${color}`,
-
+                // 🔥 CAMBIOS QUE SE NOTAN
+                border: `2px solid ${color}`,
                 background:
                   mode === "light"
-                    ? "linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)"
-                    : "linear-gradient(135deg, #1e1e1e 0%, #252525 100%)",
+                    ? `${color}08`
+                    : `${color}12`,
 
-                transition: "all 0.3s ease",
+                boxShadow:
+                  mode === "light"
+                    ? "0 10px 30px rgba(0,0,0,0.15)"
+                    : "0 10px 40px rgba(0,0,0,0.8)",
+
+                transition: "all 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-6px) scale(1.01)",
+                  transform: "scale(1.03)",
                   boxShadow:
                     mode === "light"
-                      ? "0 20px 40px rgba(0,0,0,0.12)"
-                      : "0 20px 40px rgba(0,0,0,0.6)",
+                      ? `0 20px 50px ${color}55`
+                      : `0 25px 60px ${color}88`,
                 },
-
-                ...(mode === "dark" && {
-                  boxShadow: `0 0 0 1px ${color}40`,
-                }),
               }}
             >
               <Component />
-            </MotionPaper>
+            </Paper>
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
-        <Tooltip title="Chatea por WhatsApp" placement="left">
+        <Tooltip title="WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
-              bottom: 16,
-              right: 16,
-              zIndex: 1000,
+              bottom: 20,
+              right: 20,
               bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon sx={{ color: "#fff" }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
