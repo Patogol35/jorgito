@@ -37,10 +37,10 @@ const skills = [
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-   {
+  {
   name: "Microsoft Office",
   category: "Tools",
-  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftoffice.svg",
+  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoft.svg",
 },
 {
   name: "VirtualBox",
