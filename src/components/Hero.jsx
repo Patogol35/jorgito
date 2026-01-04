@@ -80,45 +80,65 @@ export default function Hero({ mode, setMode }) {
         }}
       >
         {/* ================= AVATAR ================= */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.82, rotateY: -120 }}
-          animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-          transition={{ duration: 1.6, ease: easeOutExpo }}
-          style={{ perspective: 1200, zIndex: 1 }}
-        >
-          <motion.div
-            animate={{ y: [0, -12, 0], rotateZ: [0, 0.4, 0] }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1.8,
-            }}
-          >
-            <Box
-              sx={{
-                borderRadius: "50%",
-                boxShadow: `0 0 24px ${glowColor}`,
-                animation: "pulseGlow 4s ease-in-out infinite",
-                "@keyframes pulseGlow": {
-                  "0%": { boxShadow: `0 0 16px ${glowColor}` },
-                  "50%": { boxShadow: `0 0 36px ${glowColor}` },
-                  "100%": { boxShadow: `0 0 16px ${glowColor}` },
-                },
-              }}
-            >
-              <Avatar
-                alt="Jorge Patricio"
-                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-                sx={{
-                  width: { xs: 130, sm: 170, md: 200 },
-                  height: { xs: 130, sm: 170, md: 200 },
-                  border: `4px solid ${theme.palette.primary.main}`,
-                }}
-              />
-            </Box>
-          </motion.div>
-        </motion.div>
+<motion.div
+  initial={{
+    opacity: 0,
+    scale: 0.9,
+    z: -120,
+    filter: "blur(8px)",
+  }}
+  animate={{
+    opacity: 1,
+    scale: 1,
+    z: 0,
+    filter: "blur(0px)",
+  }}
+  transition={{
+    duration: 1.4,
+    ease: easeOutExpo,
+  }}
+  style={{
+    perspective: 1400,
+    transformStyle: "preserve-3d",
+    zIndex: 1,
+  }}
+>
+  <motion.div
+    animate={{
+      y: [0, -6, 0],
+    }}
+    transition={{
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <Box
+      sx={{
+        borderRadius: "50%",
+        position: "relative",
+        boxShadow: `0 0 18px ${glowColor}`,
+        animation: "softGlow 5s ease-in-out infinite",
+        "@keyframes softGlow": {
+          "0%": { boxShadow: `0 0 14px ${glowColor}` },
+          "50%": { boxShadow: `0 0 28px ${glowColor}` },
+          "100%": { boxShadow: `0 0 14px ${glowColor}` },
+        },
+      }}
+    >
+      <Avatar
+        alt="Jorge Patricio"
+        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+        sx={{
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `3px solid ${theme.palette.primary.main}`,
+          backgroundColor: theme.palette.background.paper,
+        }}
+      />
+    </Box>
+  </motion.div>
+</motion.div>
 
         {/* ================= TEXTO ================= */}
         <Box
