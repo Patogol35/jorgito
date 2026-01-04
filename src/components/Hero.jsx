@@ -85,7 +85,7 @@ export default function Hero({ mode, setMode }) {
     opacity: 0,
     scale: 0.6,
     rotateX: 45,
-    filter: "blur(18px)",
+    filter: "blur(16px)",
   }}
   animate={{
     opacity: 1,
@@ -103,13 +103,17 @@ export default function Hero({ mode, setMode }) {
     zIndex: 1,
   }}
 >
-  {/* Halo de luz */}
+  {/* Halo de luz externo (NO se recorta) */}
   <motion.div
     initial={{ boxShadow: `0 0 0px ${glowColor}` }}
     animate={{ boxShadow: `0 0 60px ${glowColor}` }}
     transition={{ duration: 1.2, delay: 0.4 }}
+    style={{
+      borderRadius: "50%",
+      display: "inline-flex",
+    }}
   >
-    {/* Flotación elegante */}
+    {/* Flotación */}
     <motion.div
       animate={{ y: [0, -14, 0] }}
       transition={{
@@ -119,20 +123,25 @@ export default function Hero({ mode, setMode }) {
         delay: 2,
       }}
     >
+      {/* CONTENEDOR CIRCULAR REAL */}
       <Box
         sx={{
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
           borderRadius: "50%",
-          boxShadow: `0 0 32px ${glowColor}`,
+          overflow: "hidden",            // 🔴 CLAVE
+          clipPath: "circle(50%)",       // 🔴 CLAVE
+          border: `4px solid ${theme.palette.primary.main}`,
+          backgroundColor: theme.palette.background.paper,
+          boxShadow: `0 0 28px ${glowColor}`,
         }}
       >
         <Avatar
           alt="Jorge Patricio"
           src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
           sx={{
-            width: { xs: 130, sm: 170, md: 200 },
-            height: { xs: 130, sm: 170, md: 200 },
-            border: `4px solid ${theme.palette.primary.main}`,
-            backgroundColor: theme.palette.background.paper,
+            width: "100%",
+            height: "100%",
           }}
         />
       </Box>
