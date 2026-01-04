@@ -83,19 +83,24 @@ export default function Hero({ mode, setMode }) {
 
 {/* ================= AVATAR ================= */}
 <motion.div
+  initial="hidden"
+  animate="visible"
   variants={{
-    hidden: fadeCinematic.hidden,
+    hidden: {
+      opacity: 0,
+      y: 16,
+      filter: "blur(6px)",
+    },
     visible: {
-      ...fadeCinematic.visible,
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
       transition: {
         duration: 1,
         ease: easeOutExpo,
-        delay: 0.2, // 🔥 entra primero
       },
     },
   }}
-  initial="hidden"
-  animate="visible"
 >
   <motion.div
     animate={{ y: [0, -15, 0] }}
@@ -109,7 +114,6 @@ export default function Hero({ mode, setMode }) {
         width: { xs: 130, sm: 170, md: 200 },
         height: { xs: 130, sm: 170, md: 200 },
         border: `4px solid ${theme.palette.primary.main}`,
-        boxShadow: `0 0 30px ${glowColor}55`,
       }}
     />
   </motion.div>
