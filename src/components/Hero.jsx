@@ -80,51 +80,73 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR ================= */}
+{/* ================= AVATAR 3D PROFESIONAL ================= */}
 <motion.div
+  style={{ perspective: 1400, zIndex: 1 }}
   initial={{
     opacity: 0,
-    scale: 0.7,
-    rotateY: -140,
-    filter: "blur(12px)",
+    scale: 0.85,
+    rotateX: 18,
+    filter: "blur(10px)",
   }}
   animate={{
     opacity: 1,
     scale: 1,
-    rotateY: 0,
+    rotateX: 0,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1.9,
-    ease: easeOutExpo,
-  }}
-  style={{
-    perspective: 1400,
-    zIndex: 1,
+    duration: 1.6,
+    ease: [0.16, 1, 0.3, 1],
   }}
 >
-  {/* Flotación elegante (como tu original, mejorada) */}
   <motion.div
+    whileHover={{
+      rotateX: -6,
+      rotateY: 8,
+      scale: 1.035,
+    }}
     animate={{ y: [0, -10, 0] }}
     transition={{
-      duration: 6.5,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: 2,
+      y: {
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+      rotateX: { type: "spring", stiffness: 120, damping: 14 },
+      rotateY: { type: "spring", stiffness: 120, damping: 14 },
+      scale: { type: "spring", stiffness: 120, damping: 14 },
+    }}
+    style={{
+      transformStyle: "preserve-3d",
     }}
   >
     <Box
       sx={{
+        position: "relative",
         borderRadius: "50%",
-        padding: "6px",
 
-        /* Glow profesional adaptativo */
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? `0 0 28px ${theme.palette.primary.main}55`
-            : "0 18px 36px rgba(0,0,0,0.18)",
-
-        transition: "box-shadow 0.4s ease",
+        /* Halo 3D profundo */
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          inset: -10,
+          borderRadius: "50%",
+          background: `radial-gradient(circle at top, ${glowColor}, transparent 70%)`,
+          filter: "blur(18px)",
+          opacity: 0.6,
+          zIndex: -1,
+        },
+        "&::after": {
+          content: '""',
+          position: "absolute",
+          inset: -20,
+          borderRadius: "50%",
+          background: `radial-gradient(circle, ${glowColor}, transparent 75%)`,
+          filter: "blur(32px)",
+          opacity: 0.35,
+          zIndex: -2,
+        },
       }}
     >
       <Avatar
@@ -134,7 +156,19 @@ export default function Hero({ mode, setMode }) {
           width: { xs: 130, sm: 170, md: 200 },
           height: { xs: 130, sm: 170, md: 200 },
           border: `4px solid ${theme.palette.primary.main}`,
-          backgroundColor: theme.palette.background.paper,
+          position: "relative",
+
+          /* Micro reflejo premium */
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            borderRadius: "50%",
+            background:
+              "linear-gradient(120deg, rgba(255,255,255,0.28), transparent 60%)",
+            mixBlendMode: "overlay",
+            pointerEvents: "none",
+          },
         }}
       />
     </Box>
