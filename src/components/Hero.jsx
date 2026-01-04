@@ -83,61 +83,58 @@ export default function Hero({ mode, setMode }) {
 
         {/* ================= AVATAR PROFESIONAL ================= */}
 <motion.div
-  initial={{ opacity: 0, scale: 0.85, y: 30, filter: "blur(8px)" }}
+  initial={{
+    opacity: 0,
+    y: 30,
+    scale: 0.96,
+    filter: "blur(6px)",
+  }}
   animate={{
     opacity: 1,
+    y: [0, -15, 0],
     scale: 1,
-    y: [0, -14, 0],
     filter: "blur(0px)",
   }}
   transition={{
-    opacity: { duration: 1.1, ease: "easeOut" },
-    scale: { duration: 1.1, ease: "easeOut" },
+    opacity: { duration: 1 },
+    scale: { duration: 1 },
+    filter: { duration: 1 },
     y: {
-      duration: 4,
+      duration: 3,
       repeat: Infinity,
       ease: "easeInOut",
     },
   }}
-  whileHover={{
-    scale: 1.04,
-  }}
-  style={{
-    borderRadius: "50%",
-  }}
+  style={{ borderRadius: "50%" }}
 >
-  <Box
+  <Avatar
+    alt="Jorge Patricio"
+    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
     sx={{
-      position: "relative",
-      borderRadius: "50%",
-      padding: "6px",
-      background: `radial-gradient(circle at top, ${glowColor}55, transparent 70%)`,
-      boxShadow: `
-        0 0 25px ${glowColor}55,
-        0 0 60px ${glowColor}22
-      `,
-      transition: "box-shadow 0.4s ease",
+      width: { xs: 130, sm: 170, md: 200 },
+      height: { xs: 130, sm: 170, md: 200 },
+
+      /* BORDE PROFESIONAL */
+      border: `2px solid ${theme.palette.primary.main}`,
+
+      /* SOMBRA REAL (no glow) */
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 12px 30px rgba(0,0,0,0.6)"
+          : "0 10px 25px rgba(0,0,0,0.25)",
+
+      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+
       "&:hover": {
-        boxShadow: `
-          0 0 35px ${glowColor}88,
-          0 0 80px ${glowColor}44
-        `,
+        transform: "scale(1.02)",
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0 16px 40px rgba(0,0,0,0.7)"
+            : "0 14px 32px rgba(0,0,0,0.3)",
       },
     }}
-  >
-    <Avatar
-      alt="Jorge Patricio"
-      src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-      sx={{
-        width: { xs: 130, sm: 170, md: 200 },
-        height: { xs: 130, sm: 170, md: 200 },
-        border: `3px solid ${theme.palette.primary.main}`,
-        backgroundColor: theme.palette.background.paper,
-      }}
-    />
-  </Box>
+  />
 </motion.div>
-
 
         
         {/* ================= TEXTO ================= */}
