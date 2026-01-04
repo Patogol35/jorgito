@@ -80,63 +80,74 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR 3D ================= */}
+{/* ================= AVATAR (REINGENIERÍA NUEVA) ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.6,
-    rotateX: 45,
-    rotateY: -35,
-    z: -200,
+    scale: 0.85,
+    rotateY: 28,
+    z: -120,
   }}
   animate={{
     opacity: 1,
     scale: 1,
-    rotateX: 0,
     rotateY: 0,
     z: 0,
   }}
   transition={{
-    duration: 1.8,
-    ease: [0.16, 1, 0.3, 1],
+    duration: 1.4,
+    ease: [0.22, 1, 0.36, 1],
   }}
-  style={{ perspective: 1400, zIndex: 1 }}
+  style={{ perspective: 1600, zIndex: 1 }}
   whileHover={{
-    rotateX: -6,
-    rotateY: 6,
-    scale: 1.04,
+    rotateX: -4,
+    rotateY: 4,
+    scale: 1.03,
   }}
 >
-  {/* Anillo 3D */}
+  {/* Máscara circular + flotación sutil */}
   <motion.div
-    animate={{ rotateZ: 360 }}
-    transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-    style={{
-      position: "absolute",
-      inset: -12,
-      borderRadius: "50%",
-      border: `2px solid ${glowColor}`,
-      filter: "blur(1px)",
-      opacity: 0.55,
-    }}
-  />
-
-  {/* Flotación + Glow */}
-  <motion.div
-    animate={{ y: [0, -12, 0] }}
+    animate={{ y: [0, -6, 0] }}
     transition={{
-      duration: 5,
+      duration: 6,
       repeat: Infinity,
       ease: "easeInOut",
     }}
+    style={{
+      position: "relative",
+      borderRadius: "50%",
+      overflow: "hidden",
+    }}
   >
+    {/* Barrido de luz */}
+    <motion.div
+      initial={{ x: "-120%" }}
+      animate={{ x: "120%" }}
+      transition={{
+        duration: 2.8,
+        ease: "easeInOut",
+        delay: 1.2,
+      }}
+      style={{
+        position: "absolute",
+        inset: 0,
+        background:
+          "linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
+        pointerEvents: "none",
+        zIndex: 2,
+      }}
+    />
+
+    {/* Avatar */}
     <Box
       sx={{
-        position: "relative",
         borderRadius: "50%",
-        background: `linear-gradient(135deg, ${glowColor}, #3b82f6)`,
-        p: "5px",
-        boxShadow: `0 0 40px ${glowColor}`,
+        background: theme.palette.background.paper,
+        p: "4px",
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0 18px 40px rgba(0,0,0,0.6)"
+            : "0 18px 40px rgba(0,0,0,0.25)",
       }}
     >
       <Avatar
@@ -145,7 +156,6 @@ export default function Hero({ mode, setMode }) {
         sx={{
           width: { xs: 130, sm: 170, md: 200 },
           height: { xs: 130, sm: 170, md: 200 },
-          border: `4px solid ${theme.palette.background.paper}`,
         }}
       />
     </Box>
