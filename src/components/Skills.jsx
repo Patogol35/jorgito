@@ -37,11 +37,7 @@ const skills = [
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-  {
-  name: "Microsoft Office",
-  category: "Tools",
-  img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1767551758/ms-office-logo-on-transparent-background-free-vector-removebg-preview_fpj7as.png",
-},
+
 {
   name: "VirtualBox",
   category: "Tools",
