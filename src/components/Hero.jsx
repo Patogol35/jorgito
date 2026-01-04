@@ -81,47 +81,52 @@ export default function Hero({ mode, setMode }) {
       > 
         
         
-        {/* Avatar animado */}
+        {/* ================= AVATAR MONEDA ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    y: 16,
-    clipPath: "inset(0 0 100% 0)",
+    rotateY: -180,
+    scale: 0.85,
     filter: "blur(6px)",
   }}
   animate={{
     opacity: 1,
-    y: [16, 0, -15, 0], // Primero entra, luego flota
-    clipPath: "inset(0 0 0% 0)",
+    rotateY: 0,
+    scale: 1,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1,
-    ease: [0.16, 1, 0.3, 1],
-    y: {
-      duration: 3,
-      times: [0, 0.2, 0.6, 1], // Controla cuándo ocurre cada valor de y
-      ease: "easeInOut",
-      repeat: Infinity,
-      repeatDelay: 0,
-    },
-    opacity: { duration: 1 },
-    clipPath: { duration: 1 },
-    filter: { duration: 1 },
+    duration: 1.8,          // LENTO
+    ease: [0.16, 1, 0.3, 1], // Cinemático
   }}
-  style={{ borderRadius: "50%" }}
+  style={{
+    borderRadius: "50%",
+    transformStyle: "preserve-3d",
+    perspective: 1200,
+  }}
 >
-  <Avatar
-    alt="Jorge Patricio"
-    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-    sx={{
-      width: { xs: 130, sm: 170, md: 200 },
-      height: { xs: 130, sm: 170, md: 200 },
-      border: `4px solid ${theme.palette.primary.main}`,
+  <motion.div
+    animate={{ y: [0, -15, 0] }}
+    transition={{
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: 1.9, // empieza DESPUÉS de la entrada
     }}
-  />
+  >
+    <Avatar
+      alt="Jorge Patricio"
+      src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+      sx={{
+        width: { xs: 130, sm: 170, md: 200 },
+        height: { xs: 130, sm: 170, md: 200 },
+        border: `4px solid ${theme.palette.primary.main}`,
+        boxShadow: `0 0 30px ${theme.palette.primary.main}66`,
+        backfaceVisibility: "hidden",
+      }}
+    />
+  </motion.div>
 </motion.div>
-
 
         
         {/* ================= TEXTO ================= */}
