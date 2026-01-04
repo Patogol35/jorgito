@@ -80,81 +80,22 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR ================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.78 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
-  style={{ display: "flex", justifyContent: "center", zIndex: 1 }}
->
-  <motion.div
-    animate={{ y: [0, -12, 0] }}
-    transition={{
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <Box
-      sx={{
-        position: "relative",
-        width: { xs: 160, sm: 190, md: 210 },
-        height: { xs: 160, sm: 190, md: 210 },
-        borderRadius: "50%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {/* === ANILLO GIRATORIO === */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: "50%",
-          background: `conic-gradient(
-            from 0deg,
-            transparent 0%,
-            ${glowColor} 20%,
-            transparent 40%,
-            ${glowColor} 60%,
-            transparent 80%,
-            ${glowColor} 100%
-          )`,
-          filter: "blur(1px)",
-          opacity: 0.85,
-        }}
-      />
-
-      {/* === AVATAR === */}
-      <Box
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          borderRadius: "50%",
-          boxShadow: `0 0 28px ${glowColor}`,
-        }}
-      >
-        <Avatar
-          alt="Jorge Patricio"
-          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-          sx={{
-            width: { xs: 140, sm: 165, md: 185 },
-            height: { xs: 140, sm: 165, md: 185 },
-          }}
-        />
-      </Box>
-    </Box>
-  </motion.div>
-</motion.div>
-        
-
+{/* Avatar animado */}
+        <motion.div
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          style={{ borderRadius: "50%" }}
+        >
+          <Avatar
+            alt="Jorge Patricio"
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+            sx={{
+              width: { xs: 130, sm: 170, md: 200 },
+              height: { xs: 130, sm: 170, md: 200 },
+              border: `4px solid ${theme.palette.primary.main}`,
+            }}
+          />
+        </motion.div>
         {/* ================= TEXTO ================= */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
