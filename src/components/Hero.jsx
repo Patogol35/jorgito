@@ -82,15 +82,15 @@ export default function Hero({ mode, setMode }) {
 
 {/* ================= AVATAR ================= */}
 <motion.div
-  initial={{ opacity: 0, scale: 0.85 }}
+  initial={{ opacity: 0, scale: 0.78 }}
   animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+  transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
   style={{ display: "flex", justifyContent: "center", zIndex: 1 }}
 >
   <motion.div
-    animate={{ y: [0, -10, 0] }}
+    animate={{ y: [0, -12, 0] }}
     transition={{
-      duration: 5,
+      duration: 6,
       repeat: Infinity,
       ease: "easeInOut",
     }}
@@ -98,27 +98,58 @@ export default function Hero({ mode, setMode }) {
     <Box
       sx={{
         position: "relative",
+        width: { xs: 160, sm: 190, md: 210 },
+        height: { xs: 160, sm: 190, md: 210 },
         borderRadius: "50%",
-        p: 0.6,
-        boxShadow: `0 0 30px ${glowColor}`,
-        animation: "pulseGlow 4s ease-in-out infinite",
-        "@keyframes pulseGlow": {
-          "0%": { boxShadow: `0 0 18px ${glowColor}` },
-          "50%": { boxShadow: `0 0 46px ${glowColor}` },
-          "100%": { boxShadow: `0 0 18px ${glowColor}` },
-        },
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-        sx={{
-          width: { xs: 150, sm: 180, md: 200 },
-          height: { xs: 150, sm: 180, md: 200 },
-          border: `4px solid ${theme.palette.primary.main}`,
-          backgroundColor: theme.palette.background.paper,
+      {/* === ANILLO GIRATORIO === */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          background: `conic-gradient(
+            from 0deg,
+            transparent 0%,
+            ${glowColor} 20%,
+            transparent 40%,
+            ${glowColor} 60%,
+            transparent 80%,
+            ${glowColor} 100%
+          )`,
+          filter: "blur(1px)",
+          opacity: 0.85,
         }}
       />
+
+      {/* === AVATAR === */}
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          borderRadius: "50%",
+          boxShadow: `0 0 28px ${glowColor}`,
+        }}
+      >
+        <Avatar
+          alt="Jorge Patricio"
+          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+          sx={{
+            width: { xs: 140, sm: 165, md: 185 },
+            height: { xs: 140, sm: 165, md: 185 },
+          }}
+        />
+      </Box>
     </Box>
   </motion.div>
 </motion.div>
