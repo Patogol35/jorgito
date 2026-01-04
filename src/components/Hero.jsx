@@ -81,18 +81,18 @@ export default function Hero({ mode, setMode }) {
       >
 
 
-        {/* ================= AVATAR PROFESIONAL ================= */}
+        {/* ================= AVATAR TECNOLÓGICO ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    y: 30,
-    scale: 0.96,
+    scale: 0.94,
+    y: 28,
     filter: "blur(6px)",
   }}
   animate={{
     opacity: 1,
-    y: [0, -15, 0],
     scale: 1,
+    y: [0, -15, 0],
     filter: "blur(0px)",
   }}
   transition={{
@@ -105,32 +105,54 @@ export default function Hero({ mode, setMode }) {
       ease: "easeInOut",
     },
   }}
-  style={{ borderRadius: "50%" }}
+  style={{ position: "relative", borderRadius: "50%" }}
 >
+  {/* ARO TECNOLÓGICO */}
+  <Box
+    sx={{
+      position: "absolute",
+      inset: -6,
+      borderRadius: "50%",
+      background: `conic-gradient(
+        from 180deg,
+        ${theme.palette.primary.main},
+        transparent 35%,
+        ${theme.palette.primary.main}
+      )`,
+      opacity: 0.35,
+      animation: "spin 14s linear infinite",
+      "@keyframes spin": {
+        to: { transform: "rotate(360deg)" },
+      },
+    }}
+  />
+
+  {/* AVATAR */}
   <Avatar
     alt="Jorge Patricio"
     src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
     sx={{
+      position: "relative",
+      zIndex: 1,
       width: { xs: 130, sm: 170, md: 200 },
       height: { xs: 130, sm: 170, md: 200 },
 
-      /* BORDE PROFESIONAL */
-      border: `2px solid ${theme.palette.primary.main}`,
+      /* DOBLE BORDE TECH */
+      border: `1.5px solid ${theme.palette.primary.main}`,
 
-      /* SOMBRA REAL (no glow) */
+      /* Sombra limpia */
       boxShadow:
         theme.palette.mode === "dark"
-          ? "0 12px 30px rgba(0,0,0,0.6)"
-          : "0 10px 25px rgba(0,0,0,0.25)",
+          ? "0 14px 32px rgba(0,0,0,0.65)"
+          : "0 12px 28px rgba(0,0,0,0.28)",
 
-      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      transition: "box-shadow 0.3s ease",
 
       "&:hover": {
-        transform: "scale(1.02)",
         boxShadow:
           theme.palette.mode === "dark"
-            ? "0 16px 40px rgba(0,0,0,0.7)"
-            : "0 14px 32px rgba(0,0,0,0.3)",
+            ? "0 18px 40px rgba(0,0,0,0.75)"
+            : "0 16px 34px rgba(0,0,0,0.35)",
       },
     }}
   />
