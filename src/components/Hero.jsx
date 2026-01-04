@@ -86,7 +86,7 @@ export default function Hero({ mode, setMode }) {
     scale: 0.45,
     rotateX: 55,
     rotateY: -25,
-    filter: "blur(16px)",
+    filter: "blur(14px)",
   }}
   animate={{
     opacity: 1,
@@ -116,25 +116,38 @@ export default function Hero({ mode, setMode }) {
     }}
     style={{ position: "relative" }}
   >
-    {/* ================= ARO DE ESCANEO ================= */}
+    {/* ================= ARO DE ESCANEO PREMIUM ================= */}
     <motion.div
-      initial={{ opacity: 0, scale: 0.85 }}
-      animate={{ opacity: 0.55, scale: 1, rotate: 360 }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 0.45, scale: 1, rotate: 360 }}
       transition={{
-        opacity: { duration: 1, delay: 0.8 },
-        scale: { duration: 1, delay: 0.8 },
+        opacity: { duration: 1, delay: 0.9 },
+        scale: { duration: 1, delay: 0.9 },
         rotate: {
-          duration: 9,
+          duration: 14,          // ⏱ más lento
           repeat: Infinity,
           ease: "linear",
         },
       }}
       style={{
         position: "absolute",
-        inset: -10,
+        inset: -12,
         borderRadius: "50%",
-        border: `2px solid ${glowColor}`,
-        boxShadow: `0 0 18px ${glowColor}`,
+        border: "1.2px solid transparent",
+        background:
+          `conic-gradient(
+            from 0deg,
+            transparent 0deg,
+            ${glowColor} 60deg,
+            transparent 140deg,
+            ${glowColor} 220deg,
+            transparent 360deg
+          )`,
+        WebkitMask:
+          "radial-gradient(farthest-side, transparent calc(100% - 1.2px), #000 0)",
+        mask:
+          "radial-gradient(farthest-side, transparent calc(100% - 1.2px), #000 0)",
+        filter: "blur(0.2px)",
         zIndex: 0,
       }}
     />
