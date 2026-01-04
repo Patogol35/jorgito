@@ -80,82 +80,43 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR (REINGENIERÍA NUEVA) ================= */}
+{/* ================= AVATAR ================= */}
 <motion.div
-  initial={{
-    opacity: 0,
-    scale: 0.85,
-    rotateY: 28,
-    z: -120,
-  }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    rotateY: 0,
-    z: 0,
-  }}
-  transition={{
-    duration: 1.4,
-    ease: [0.22, 1, 0.36, 1],
-  }}
-  style={{ perspective: 1600, zIndex: 1 }}
-  whileHover={{
-    rotateX: -4,
-    rotateY: 4,
-    scale: 1.03,
-  }}
+  initial={{ opacity: 0, scale: 0.85 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+  style={{ display: "flex", justifyContent: "center", zIndex: 1 }}
 >
-  {/* Máscara circular + flotación sutil */}
   <motion.div
-    animate={{ y: [0, -6, 0] }}
+    animate={{ y: [0, -10, 0] }}
     transition={{
-      duration: 6,
+      duration: 5,
       repeat: Infinity,
       ease: "easeInOut",
     }}
-    style={{
-      position: "relative",
-      borderRadius: "50%",
-      overflow: "hidden",
-    }}
   >
-    {/* Barrido de luz */}
-    <motion.div
-      initial={{ x: "-120%" }}
-      animate={{ x: "120%" }}
-      transition={{
-        duration: 2.8,
-        ease: "easeInOut",
-        delay: 1.2,
-      }}
-      style={{
-        position: "absolute",
-        inset: 0,
-        background:
-          "linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%)",
-        pointerEvents: "none",
-        zIndex: 2,
-      }}
-    />
-
-    {/* Avatar */}
     <Box
       sx={{
+        position: "relative",
         borderRadius: "50%",
-        background: theme.palette.background.paper,
-        p: "4px",
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? "0 18px 40px rgba(0,0,0,0.6)"
-            : "0 18px 40px rgba(0,0,0,0.25)",
+        p: 0.6,
+        boxShadow: `0 0 30px ${glowColor}`,
+        animation: "pulseGlow 4s ease-in-out infinite",
+        "@keyframes pulseGlow": {
+          "0%": { boxShadow: `0 0 18px ${glowColor}` },
+          "50%": { boxShadow: `0 0 46px ${glowColor}` },
+          "100%": { boxShadow: `0 0 18px ${glowColor}` },
+        },
       }}
     >
       <Avatar
         alt="Jorge Patricio"
         src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
+          width: { xs: 150, sm: 180, md: 200 },
+          height: { xs: 150, sm: 180, md: 200 },
+          border: `4px solid ${theme.palette.primary.main}`,
+          backgroundColor: theme.palette.background.paper,
         }}
       />
     </Box>
