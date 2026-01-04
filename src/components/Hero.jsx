@@ -81,37 +81,38 @@ export default function Hero({ mode, setMode }) {
       >
 
 
-{/* ================= AVATAR ENTRADA LIMPIA ================= */}
+{/* ================= AVATAR ================= */}
 <motion.div
-  initial={{ opacity: 0, y: -40 }}
-  animate={{ opacity: 1, y: [0, -15, 0] }}
-  transition={{
-    opacity: { duration: 0.4, ease: "easeOut" },
-    y: {
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut",
+  variants={{
+    hidden: fadeCinematic.hidden,
+    visible: {
+      ...fadeCinematic.visible,
+      transition: {
+        duration: 1,
+        ease: easeOutExpo,
+        delay: 0.2, // 🔥 entra primero
+      },
     },
   }}
-  style={{ borderRadius: "50%" }}
+  initial="hidden"
+  animate="visible"
 >
-  <Avatar
-    alt="Jorge Patricio"
-    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-    sx={{
-      width: { xs: 130, sm: 170, md: 200 },
-      height: { xs: 130, sm: 170, md: 200 },
-
-      /* BORDE PROFESIONAL */
-      border: `3px solid ${theme.palette.primary.main}`,
-
-      /* SOMBRA NATURAL */
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 14px 32px rgba(0,0,0,0.6)"
-          : "0 12px 28px rgba(0,0,0,0.25)",
-    }}
-  />
+  <motion.div
+    animate={{ y: [0, -15, 0] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    style={{ borderRadius: "50%" }}
+  >
+    <Avatar
+      alt="Jorge Patricio"
+      src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+      sx={{
+        width: { xs: 130, sm: 170, md: 200 },
+        height: { xs: 130, sm: 170, md: 200 },
+        border: `4px solid ${theme.palette.primary.main}`,
+        boxShadow: `0 0 30px ${glowColor}55`,
+      }}
+    />
+  </motion.div>
 </motion.div>
         
         {/* ================= TEXTO ================= */}
