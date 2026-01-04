@@ -78,46 +78,29 @@ export default function Hero({ mode, setMode }) {
           pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
-      >
-
-
-{/* ================= AVATAR ================= */}
+      > 
+        
+        
+        {/* Avatar animado */}
 <motion.div
+  variants={fadeCinematic}
   initial="hidden"
   animate="visible"
-  variants={{
-    hidden: {
-      opacity: 0,
-      y: 16,
-      filter: "blur(6px)",
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 1,
-        ease: easeOutExpo,
-      },
-    },
-  }}
+  style={{ borderRadius: "50%" }}
 >
-  <motion.div
-    animate={{ y: [0, -15, 0] }}
-    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-    style={{ borderRadius: "50%" }}
-  >
-    <Avatar
-      alt="Jorge Patricio"
-      src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-      sx={{
-        width: { xs: 130, sm: 170, md: 200 },
-        height: { xs: 130, sm: 170, md: 200 },
-        border: `4px solid ${theme.palette.primary.main}`,
-      }}
-    />
-  </motion.div>
+  <Avatar
+    alt="Jorge Patricio"
+    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+    sx={{
+      width: { xs: 130, sm: 170, md: 200 },
+      height: { xs: 130, sm: 170, md: 200 },
+      border: `4px solid ${theme.palette.primary.main}`,
+    }}
+  />
 </motion.div>
+
+
+
         
         {/* ================= TEXTO ================= */}
         <Box
