@@ -81,26 +81,24 @@ export default function Hero({ mode, setMode }) {
       >
 
 
-        {/* ================= AVATAR TECH RENDER ================= */}
+{/* ================= AVATAR CON ENTRADA TIPO MONEDA ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    clipPath: "inset(0 0 100% 0)",
-    filter: "contrast(120%) brightness(0.9)",
+    y: -60,
+    rotateY: 90,
   }}
   animate={{
     opacity: 1,
-    clipPath: "inset(0 0 0% 0)",
     y: [0, -15, 0],
-    filter: "contrast(100%) brightness(1)",
+    rotateY: 0,
   }}
   transition={{
-    clipPath: {
+    opacity: { duration: 0.4 },
+    rotateY: {
       duration: 0.9,
       ease: [0.16, 1, 0.3, 1],
     },
-    opacity: { duration: 0.6 },
-    filter: { duration: 0.6 },
     y: {
       duration: 3,
       repeat: Infinity,
@@ -109,37 +107,28 @@ export default function Hero({ mode, setMode }) {
   }}
   style={{
     borderRadius: "50%",
+    transformStyle: "preserve-3d",
   }}
 >
-  <motion.div
-    initial={{ scale: 1.08 }}
-    animate={{ scale: 1 }}
-    transition={{ duration: 0.6, delay: 0.4 }}
-  >
-    <Avatar
-      alt="Jorge Patricio"
-      src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-      sx={{
-        width: { xs: 130, sm: 170, md: 200 },
-        height: { xs: 130, sm: 170, md: 200 },
+  <Avatar
+    alt="Jorge Patricio"
+    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+    sx={{
+      width: { xs: 130, sm: 170, md: 200 },
+      height: { xs: 130, sm: 170, md: 200 },
 
-        /* BORDE TÉCNICO REAL */
-        border: `2px solid ${theme.palette.primary.main}`,
+      /* BORDE PROFESIONAL */
+      border: `3px solid ${theme.palette.primary.main}`,
 
-        /* PROFUNDIDAD DIGITAL */
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? `
-              0 24px 50px rgba(0,0,0,0.8),
-              inset 0 0 0 1px rgba(255,255,255,0.06)
-            `
-            : `
-              0 18px 36px rgba(0,0,0,0.28),
-              inset 0 0 0 1px rgba(0,0,0,0.04)
-            `,
-      }}
-    />
-  </motion.div>
+      /* SOMBRA REALISTA */
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 16px 36px rgba(0,0,0,0.7)"
+          : "0 14px 30px rgba(0,0,0,0.3)",
+
+      backfaceVisibility: "hidden",
+    }}
+  />
 </motion.div>
         
         {/* ================= TEXTO ================= */}
