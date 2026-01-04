@@ -83,9 +83,32 @@ export default function Hero({ mode, setMode }) {
         
         {/* Avatar animado */}
 <motion.div
-  variants={fadeCinematic}
-  initial="hidden"
-  animate="visible"
+  initial={{
+    opacity: 0,
+    y: 16,
+    clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
+  }}
+  animate={{
+    opacity: 1,
+    y: [16, 0, -15, 0], // Primero entra, luego flota
+    clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
+  }}
+  transition={{
+    duration: 1,
+    ease: [0.16, 1, 0.3, 1],
+    y: {
+      duration: 3,
+      times: [0, 0.2, 0.6, 1], // Controla cuándo ocurre cada valor de y
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatDelay: 0,
+    },
+    opacity: { duration: 1 },
+    clipPath: { duration: 1 },
+    filter: { duration: 1 },
+  }}
   style={{ borderRadius: "50%" }}
 >
   <Avatar
@@ -98,7 +121,6 @@ export default function Hero({ mode, setMode }) {
     }}
   />
 </motion.div>
-
 
 
         
