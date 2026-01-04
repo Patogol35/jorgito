@@ -116,15 +116,15 @@ export default function Hero({ mode, setMode }) {
     }}
     style={{ position: "relative" }}
   >
-    {/* ================= ARO DE ESCANEO PREMIUM ================= */}
+    {/* ================= ARO DE ESCANEO PROFESIONAL ================= */}
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 0.45, scale: 1, rotate: 360 }}
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1, rotate: 360 }}
       transition={{
         opacity: { duration: 1, delay: 0.9 },
         scale: { duration: 1, delay: 0.9 },
         rotate: {
-          duration: 14,          // ⏱ más lento
+          duration: 16,
           repeat: Infinity,
           ease: "linear",
         },
@@ -133,22 +133,42 @@ export default function Hero({ mode, setMode }) {
         position: "absolute",
         inset: -12,
         borderRadius: "50%",
-        border: "1.2px solid transparent",
-        background:
-          `conic-gradient(
-            from 0deg,
-            transparent 0deg,
-            ${glowColor} 60deg,
-            transparent 140deg,
-            ${glowColor} 220deg,
-            transparent 360deg
-          )`,
-        WebkitMask:
-          "radial-gradient(farthest-side, transparent calc(100% - 1.2px), #000 0)",
-        mask:
-          "radial-gradient(farthest-side, transparent calc(100% - 1.2px), #000 0)",
-        filter: "blur(0.2px)",
         zIndex: 0,
+
+        background:
+          theme.palette.mode === "light"
+            ? `
+              conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                rgba(37,99,235,0.55) 70deg,
+                transparent 140deg,
+                rgba(37,99,235,0.35) 210deg,
+                transparent 360deg
+              )
+            `
+            : `
+              conic-gradient(
+                from 0deg,
+                transparent 0deg,
+                ${glowColor} 60deg,
+                transparent 140deg,
+                ${glowColor} 220deg,
+                transparent 360deg
+              )
+            `,
+
+        WebkitMask:
+          "radial-gradient(farthest-side, transparent calc(100% - 1px), #000 0)",
+        mask:
+          "radial-gradient(farthest-side, transparent calc(100% - 1px), #000 0)",
+
+        boxShadow:
+          theme.palette.mode === "light"
+            ? "0 0 6px rgba(0,0,0,0.12)"
+            : "none",
+
+        filter: "blur(0.15px)",
       }}
     />
 
