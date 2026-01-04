@@ -96,7 +96,7 @@ export default function Hero({ mode, setMode }) {
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 4,          // LENTO
+    duration: 3,          // LENTO
     ease: [0.16, 1, 0.3, 1], // Cinemático
   }}
   style={{
