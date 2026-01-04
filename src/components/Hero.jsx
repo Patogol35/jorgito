@@ -79,111 +79,58 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR ================= */}
+
+{/* ================= AVATAR ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.45,
-    rotateX: 55,
-    rotateY: -25,
-    filter: "blur(14px)",
+    scale: 0.75,
+    y: 40,
+    filter: "blur(10px)",
   }}
   animate={{
     opacity: 1,
     scale: 1,
-    rotateX: 0,
-    rotateY: 0,
+    y: 0,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1.8,
+    duration: 1.4,
     ease: easeOutExpo,
   }}
   style={{
-    perspective: 1600,
-    transformStyle: "preserve-3d",
     zIndex: 1,
   }}
 >
-  {/* Flotación sutil */}
+  {/* Flotación MUY sutil */}
   <motion.div
-    animate={{ y: [0, -10, 0] }}
+    animate={{ y: [0, -6, 0] }}
     transition={{
-      duration: 5.5,
+      duration: 6,
       repeat: Infinity,
       ease: "easeInOut",
-      delay: 2.2,
+      delay: 1.6,
     }}
     style={{ position: "relative" }}
   >
-    {/* ================= ARO DE ESCANEO PROFESIONAL ================= */}
-    <motion.div
-      initial={{ opacity: 0, scale: 0.92 }}
-      animate={{ opacity: 1, scale: 1, rotate: 360 }}
-      transition={{
-        opacity: { duration: 1, delay: 0.9 },
-        scale: { duration: 1, delay: 0.9 },
-        rotate: {
-          duration: 16,
-          repeat: Infinity,
-          ease: "linear",
-        },
-      }}
-      style={{
-        position: "absolute",
-        inset: -12,
-        borderRadius: "50%",
-        zIndex: 0,
-
-        background:
-          theme.palette.mode === "light"
-            ? `
-              conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                rgba(37,99,235,0.55) 70deg,
-                transparent 140deg,
-                rgba(37,99,235,0.35) 210deg,
-                transparent 360deg
-              )
-            `
-            : `
-              conic-gradient(
-                from 0deg,
-                transparent 0deg,
-                ${glowColor} 60deg,
-                transparent 140deg,
-                ${glowColor} 220deg,
-                transparent 360deg
-              )
-            `,
-
-        WebkitMask:
-          "radial-gradient(farthest-side, transparent calc(100% - 1px), #000 0)",
-        mask:
-          "radial-gradient(farthest-side, transparent calc(100% - 1px), #000 0)",
-
-        boxShadow:
-          theme.palette.mode === "light"
-            ? "0 0 6px rgba(0,0,0,0.12)"
-            : "none",
-
-        filter: "blur(0.15px)",
-      }}
-    />
-
-    {/* ================= AVATAR ================= */}
     <Box
       sx={{
         width: { xs: 130, sm: 170, md: 200 },
         height: { xs: 130, sm: 170, md: 200 },
         borderRadius: "50%",
         overflow: "hidden",
-        clipPath: "circle(50%)",
-        border: `4px solid ${theme.palette.primary.main}`,
+        border: `3px solid ${
+          theme.palette.mode === "light"
+            ? "rgba(0,0,0,0.12)"     // 📘 elegante en claro
+            : theme.palette.primary.main
+        }`,
         backgroundColor: theme.palette.background.paper,
-        position: "relative",
-        zIndex: 1,
+
+        /* 🎓 Sombra tipo estudio fotográfico */
+        boxShadow:
+          theme.palette.mode === "light"
+            ? "0 14px 40px rgba(0,0,0,0.18)"
+            : `0 0 28px ${theme.palette.primary.main}55`,
       }}
     >
       <Avatar
@@ -197,6 +144,7 @@ export default function Hero({ mode, setMode }) {
     </Box>
   </motion.div>
 </motion.div>
+        
 
         {/* ================= TEXTO ================= */}
         <Box
