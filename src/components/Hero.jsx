@@ -80,22 +80,52 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* Avatar animado */}
-        <motion.div
-          animate={{ y: [0, -15, 0] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          style={{ borderRadius: "50%" }}
-        >
-          <Avatar
-            alt="Jorge Patricio"
-            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-            sx={{
-              width: { xs: 130, sm: 170, md: 200 },
-              height: { xs: 130, sm: 170, md: 200 },
-              border: `4px solid ${theme.palette.primary.main}`,
-            }}
-          />
-        </motion.div>
+{/* Avatar animado con entrada profesional */}
+<motion.div
+  initial={{ 
+    opacity: 0, 
+    scale: 0.7, 
+    y: 40,
+    filter: "blur(8px)",
+    boxShadow: "0 0 0px transparent"
+  }}
+  animate={{ 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    filter: "blur(0px)",
+    boxShadow: `0 10px 30px ${glowColor}40`, // 40 = 25% opacity en hex
+  }}
+  transition={{ 
+    duration: 1.2, 
+    ease: [0.22, 1, 0.36, 1], // easeOutExpo suavizado
+    delay: 0.3,
+  }}
+  whileHover={{ 
+    scale: 1.05,
+    boxShadow: `0 12px 40px ${glowColor}60`,
+    y: -8,
+    transition: { duration: 0.3 }
+  }}
+  style={{
+    borderRadius: "50%",
+    overflow: "visible", // evita que la sombra se corte
+    zIndex: 2,
+  }}
+>
+  <Avatar
+    alt="Jorge Patricio"
+    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+    sx={{
+      width: { xs: 130, sm: 170, md: 200 },
+      height: { xs: 130, sm: 170, md: 200 },
+      border: `4px solid ${theme.palette.primary.main}`,
+      position: "relative",
+      background: theme.palette.background.paper,
+    }}
+  />
+</motion.div>
+        
         {/* ================= TEXTO ================= */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
