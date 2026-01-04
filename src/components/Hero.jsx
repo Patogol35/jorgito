@@ -79,68 +79,64 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR MEJORADO ================= */}
+        {/* ================= AVATAR ================= */}
 <motion.div
-  initial={{ opacity: 0, scale: 0.6, rotateY: -180, filter: 'blur(8px)' }}
-  animate={{ 
-    opacity: 1, 
-    scale: 1, 
-    rotateY: 0, 
-    filter: 'blur(0px)' 
+  initial={{
+    opacity: 0,
+    scale: 0.6,
+    rotateX: 45,
+    filter: "blur(18px)",
   }}
-  transition={{ 
-    duration: 1.4, 
+  animate={{
+    opacity: 1,
+    scale: 1,
+    rotateX: 0,
+    filter: "blur(0px)",
+  }}
+  transition={{
+    duration: 1.6,
     ease: easeOutExpo,
-    delay: 0.3,
   }}
-  style={{ perspective: 1400, zIndex: 1 }}
+  style={{
+    perspective: 1400,
+    transformStyle: "preserve-3d",
+    zIndex: 1,
+  }}
 >
+  {/* Halo de luz */}
   <motion.div
-    animate={{ 
-      y: [0, -10, 0], 
-      rotateZ: [0, 0.6, 0],
-      scale: [1, 1.02, 1],
-    }}
-    transition={{
-      duration: 6,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: 1.5,
-    }}
+    initial={{ boxShadow: `0 0 0px ${glowColor}` }}
+    animate={{ boxShadow: `0 0 60px ${glowColor}` }}
+    transition={{ duration: 1.2, delay: 0.4 }}
   >
-    <Box
-      sx={{
-        borderRadius: "50%",
-        boxShadow: `0 0 28px ${glowColor}`,
-        animation: "pulseGlow 3.8s ease-in-out infinite",
-        "@keyframes pulseGlow": {
-          "0%, 100%": { boxShadow: `0 0 20px ${glowColor}` },
-          "50%": { boxShadow: `0 0 42px ${glowColor}` },
-        },
-        backdropFilter: "blur(4px)", // suaviza el fondo si hay overlay
-        WebkitBackdropFilter: "blur(4px)",
-        padding: "4px", // añade un leve marco interno
-        background: theme.palette.mode === "dark"
-          ? "rgba(255, 255, 255, 0.08)"
-          : "rgba(0, 0, 0, 0.04)",
-        display: "inline-block",
+    {/* Flotación elegante */}
+    <motion.div
+      animate={{ y: [0, -14, 0] }}
+      transition={{
+        duration: 5,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: 2,
       }}
     >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+      <Box
         sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          border: `4px solid ${theme.palette.primary.main}`,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          transition: "transform 0.3s ease",
-          "&:hover": {
-            transform: "scale(1.04)",
-          },
+          borderRadius: "50%",
+          boxShadow: `0 0 32px ${glowColor}`,
         }}
-      />
-    </Box>
+      >
+        <Avatar
+          alt="Jorge Patricio"
+          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+          sx={{
+            width: { xs: 130, sm: 170, md: 200 },
+            height: { xs: 130, sm: 170, md: 200 },
+            border: `4px solid ${theme.palette.primary.main}`,
+            backgroundColor: theme.palette.background.paper,
+          }}
+        />
+      </Box>
+    </motion.div>
   </motion.div>
 </motion.div>
 
