@@ -79,51 +79,51 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR ================= */}
+        {/* ================= AVATAR MEJORADO ================= */}
 <motion.div
-  initial={{
-    opacity: 0,
-    scale: 0.9,
-    z: -120,
-    filter: "blur(8px)",
+  initial={{ opacity: 0, scale: 0.6, rotateY: -180, filter: 'blur(8px)' }}
+  animate={{ 
+    opacity: 1, 
+    scale: 1, 
+    rotateY: 0, 
+    filter: 'blur(0px)' 
   }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    z: 0,
-    filter: "blur(0px)",
-  }}
-  transition={{
-    duration: 1.4,
+  transition={{ 
+    duration: 1.4, 
     ease: easeOutExpo,
+    delay: 0.3,
   }}
-  style={{
-    perspective: 1400,
-    transformStyle: "preserve-3d",
-    zIndex: 1,
-  }}
+  style={{ perspective: 1400, zIndex: 1 }}
 >
   <motion.div
-    animate={{
-      y: [0, -6, 0],
+    animate={{ 
+      y: [0, -10, 0], 
+      rotateZ: [0, 0.6, 0],
+      scale: [1, 1.02, 1],
     }}
     transition={{
       duration: 6,
       repeat: Infinity,
       ease: "easeInOut",
+      delay: 1.5,
     }}
   >
     <Box
       sx={{
         borderRadius: "50%",
-        position: "relative",
-        boxShadow: `0 0 18px ${glowColor}`,
-        animation: "softGlow 5s ease-in-out infinite",
-        "@keyframes softGlow": {
-          "0%": { boxShadow: `0 0 14px ${glowColor}` },
-          "50%": { boxShadow: `0 0 28px ${glowColor}` },
-          "100%": { boxShadow: `0 0 14px ${glowColor}` },
+        boxShadow: `0 0 28px ${glowColor}`,
+        animation: "pulseGlow 3.8s ease-in-out infinite",
+        "@keyframes pulseGlow": {
+          "0%, 100%": { boxShadow: `0 0 20px ${glowColor}` },
+          "50%": { boxShadow: `0 0 42px ${glowColor}` },
         },
+        backdropFilter: "blur(4px)", // suaviza el fondo si hay overlay
+        WebkitBackdropFilter: "blur(4px)",
+        padding: "4px", // añade un leve marco interno
+        background: theme.palette.mode === "dark"
+          ? "rgba(255, 255, 255, 0.08)"
+          : "rgba(0, 0, 0, 0.04)",
+        display: "inline-block",
       }}
     >
       <Avatar
@@ -132,8 +132,12 @@ export default function Hero({ mode, setMode }) {
         sx={{
           width: { xs: 130, sm: 170, md: 200 },
           height: { xs: 130, sm: 170, md: 200 },
-          border: `3px solid ${theme.palette.primary.main}`,
-          backgroundColor: theme.palette.background.paper,
+          border: `4px solid ${theme.palette.primary.main}`,
+          boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+          transition: "transform 0.3s ease",
+          "&:hover": {
+            transform: "scale(1.04)",
+          },
         }}
       />
     </Box>
