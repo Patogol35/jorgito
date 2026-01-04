@@ -40,7 +40,7 @@ const skills = [
   {
   name: "Microsoft Office",
   category: "Tools",
-  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoft.svg",
+  img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1767551758/ms-office-logo-on-transparent-background-free-vector-removebg-preview_fpj7as.png",
 },
 {
   name: "VirtualBox",
