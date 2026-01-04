@@ -80,14 +80,14 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR 3D CINEMATOGRÁFICO ================= */}
+{/* ================= AVATAR 3D ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.7,
+    scale: 0.6,
     rotateX: 45,
-    rotateY: -45,
-    z: -300,
+    rotateY: -35,
+    z: -200,
   }}
   animate={{
     opacity: 1,
@@ -100,92 +100,52 @@ export default function Hero({ mode, setMode }) {
     duration: 1.8,
     ease: [0.16, 1, 0.3, 1],
   }}
-  style={{
-    perspective: 1400,
-    transformStyle: "preserve-3d",
-    zIndex: 2,
+  style={{ perspective: 1400, zIndex: 1 }}
+  whileHover={{
+    rotateX: -6,
+    rotateY: 6,
+    scale: 1.04,
   }}
 >
-  {/* FLOAT + PARALLAX */}
+  {/* Anillo 3D */}
   <motion.div
-    animate={{
-      y: [0, -18, 0],
-      rotateZ: [0, 0.6, 0],
+    animate={{ rotateZ: 360 }}
+    transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+    style={{
+      position: "absolute",
+      inset: -12,
+      borderRadius: "50%",
+      border: `2px solid ${glowColor}`,
+      filter: "blur(1px)",
+      opacity: 0.55,
     }}
+  />
+
+  {/* Flotación + Glow */}
+  <motion.div
+    animate={{ y: [0, -12, 0] }}
     transition={{
-      duration: 6,
+      duration: 5,
       repeat: Infinity,
       ease: "easeInOut",
     }}
-    style={{
-      position: "relative",
-      transformStyle: "preserve-3d",
-    }}
   >
-    {/* HALO EXTERIOR */}
-    <Box
-      sx={{
-        position: "absolute",
-        inset: -28,
-        borderRadius: "50%",
-        background: `radial-gradient(circle, ${glowColor}33 0%, transparent 70%)`,
-        filter: "blur(28px)",
-        animation: "haloPulse 6s ease-in-out infinite",
-        "@keyframes haloPulse": {
-          "0%": { opacity: 0.45 },
-          "50%": { opacity: 0.85 },
-          "100%": { opacity: 0.45 },
-        },
-      }}
-    />
-
-    {/* ORBITA LUMINOSA */}
-    <Box
-      sx={{
-        position: "absolute",
-        inset: -18,
-        borderRadius: "50%",
-        border: `1px solid ${glowColor}55`,
-        animation: "spin 14s linear infinite",
-        "@keyframes spin": {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" },
-        },
-      }}
-    />
-
-    {/* CUERPO AVATAR */}
     <Box
       sx={{
         position: "relative",
         borderRadius: "50%",
-        boxShadow: `
-          0 25px 60px rgba(0,0,0,0.35),
-          0 0 50px ${glowColor}66
-        `,
-        transform: "translateZ(60px)",
+        background: `linear-gradient(135deg, ${glowColor}, #3b82f6)`,
+        p: "5px",
+        boxShadow: `0 0 40px ${glowColor}`,
       }}
     >
       <Avatar
         alt="Jorge Patricio"
         src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: { xs: 140, sm: 180, md: 210 },
-          height: { xs: 140, sm: 180, md: 210 },
-          border: `4px solid ${theme.palette.primary.main}`,
-          background: theme.palette.background.paper,
-        }}
-      />
-
-      {/* REFLEJO DE LUZ */}
-      <Box
-        sx={{
-          position: "absolute",
-          inset: 0,
-          borderRadius: "50%",
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.35), transparent 60%)",
-          pointerEvents: "none",
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `4px solid ${theme.palette.background.paper}`,
         }}
       />
     </Box>
