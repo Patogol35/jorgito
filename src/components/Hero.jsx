@@ -84,61 +84,57 @@ export default function Hero({ mode, setMode }) {
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.75,
-    y: 40,
-    filter: "blur(10px)",
+    scale: 0.7,
+    rotateY: -140,
+    filter: "blur(12px)",
   }}
   animate={{
     opacity: 1,
     scale: 1,
-    y: 0,
+    rotateY: 0,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1.4,
+    duration: 1.9,
     ease: easeOutExpo,
   }}
   style={{
+    perspective: 1400,
     zIndex: 1,
   }}
 >
-  {/* Flotación MUY sutil */}
+  {/* Flotación elegante (como tu original, mejorada) */}
   <motion.div
-    animate={{ y: [0, -6, 0] }}
+    animate={{ y: [0, -10, 0] }}
     transition={{
-      duration: 6,
+      duration: 6.5,
       repeat: Infinity,
       ease: "easeInOut",
-      delay: 1.6,
+      delay: 2,
     }}
-    style={{ position: "relative" }}
   >
     <Box
       sx={{
-        width: { xs: 130, sm: 170, md: 200 },
-        height: { xs: 130, sm: 170, md: 200 },
         borderRadius: "50%",
-        overflow: "hidden",
-        border: `3px solid ${
-          theme.palette.mode === "light"
-            ? "rgba(0,0,0,0.12)"     // 📘 elegante en claro
-            : theme.palette.primary.main
-        }`,
-        backgroundColor: theme.palette.background.paper,
+        padding: "6px",
 
-        /* 🎓 Sombra tipo estudio fotográfico */
+        /* Glow profesional adaptativo */
         boxShadow:
-          theme.palette.mode === "light"
-            ? "0 14px 40px rgba(0,0,0,0.18)"
-            : `0 0 28px ${theme.palette.primary.main}55`,
+          theme.palette.mode === "dark"
+            ? `0 0 28px ${theme.palette.primary.main}55`
+            : "0 18px 36px rgba(0,0,0,0.18)",
+
+        transition: "box-shadow 0.4s ease",
       }}
     >
       <Avatar
         alt="Jorge Patricio"
         src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: "100%",
-          height: "100%",
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `4px solid ${theme.palette.primary.main}`,
+          backgroundColor: theme.palette.background.paper,
         }}
       />
     </Box>
