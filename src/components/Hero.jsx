@@ -78,91 +78,68 @@ export default function Hero({ mode, setMode }) {
           pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
-      >{/* ================= AVATAR ================= */}
+      >
+        {/* ================= AVATAR ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.6,
-    rotateX: 45,
-    filter: {
-      xs: "blur(8px)",   // 📱 menos blur en mobile
-      sm: "blur(14px)",
-    },
+    scale: 0.45,
+    rotateX: 55,
+    rotateY: -25,
+    filter: "blur(16px)",
   }}
   animate={{
     opacity: 1,
     scale: 1,
     rotateX: 0,
+    rotateY: 0,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1.6,
+    duration: 1.8,
     ease: easeOutExpo,
   }}
   style={{
-    perspective: 1400,
+    perspective: 1600,
     transformStyle: "preserve-3d",
     zIndex: 1,
   }}
 >
+  {/* Flotación sutil */}
   <motion.div
-    animate={{ y: [0, -12, 0] }}
+    animate={{ y: [0, -10, 0] }}
     transition={{
-      duration: 5,
+      duration: 5.5,
       repeat: Infinity,
       ease: "easeInOut",
-      delay: 2,
+      delay: 2.2,
     }}
     style={{ position: "relative" }}
   >
-    {/* ================= PARTÍCULAS IA ================= */}
-    {[...Array(8)].map((_, i) => (
-      <motion.span
-        key={i}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{
-          opacity: [0, 0.6, 0],
-          scale: [0, 1, 0],
-          x: Math.random() * 140 - 70,
-          y: Math.random() * 140 - 70,
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          delay: i * 0.6,
-          ease: "easeInOut",
-        }}
-        style={{
-          position: "absolute",
-          width: 4,
-          height: 4,
-          borderRadius: "50%",
-          background: glowColor,
-          filter: "blur(1px)",
-          zIndex: 0,
-        }}
-      />
-    ))}
-
-    {/* ================= ANILLO ESCANEO ================= */}
+    {/* ================= ARO DE ESCANEO ================= */}
     <motion.div
-      animate={{ rotate: 360 }}
+      initial={{ opacity: 0, scale: 0.85 }}
+      animate={{ opacity: 0.55, scale: 1, rotate: 360 }}
       transition={{
-        duration: 10,
-        repeat: Infinity,
-        ease: "linear",
+        opacity: { duration: 1, delay: 0.8 },
+        scale: { duration: 1, delay: 0.8 },
+        rotate: {
+          duration: 9,
+          repeat: Infinity,
+          ease: "linear",
+        },
       }}
       style={{
         position: "absolute",
-        inset: -8,
+        inset: -10,
         borderRadius: "50%",
-        border: `2px dashed ${glowColor}`,
-        opacity: 0.5,
+        border: `2px solid ${glowColor}`,
+        boxShadow: `0 0 18px ${glowColor}`,
         zIndex: 0,
       }}
     />
 
-    {/* ================= AVATAR REAL ================= */}
+    {/* ================= AVATAR ================= */}
     <Box
       sx={{
         width: { xs: 130, sm: 170, md: 200 },
