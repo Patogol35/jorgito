@@ -80,123 +80,112 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR 3D REAL PROFESIONAL ================= */}
+{/* ================= AVATAR 3D CINEMATOGRÁFICO ================= */}
 <motion.div
-  style={{
-    perspective: 1800,
-    zIndex: 2,
-  }}
   initial={{
     opacity: 0,
-    scale: 0.75,
-    rotateX: 25,
-    rotateY: -25,
-    filter: "blur(14px)",
+    scale: 0.7,
+    rotateX: 45,
+    rotateY: -45,
+    z: -300,
   }}
   animate={{
     opacity: 1,
     scale: 1,
     rotateX: 0,
     rotateY: 0,
-    filter: "blur(0px)",
+    z: 0,
   }}
   transition={{
     duration: 1.8,
     ease: [0.16, 1, 0.3, 1],
   }}
+  style={{
+    perspective: 1400,
+    transformStyle: "preserve-3d",
+    zIndex: 2,
+  }}
 >
+  {/* FLOAT + PARALLAX */}
   <motion.div
-    onMouseMove={(e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      e.currentTarget.style.transform = `
-        rotateX(${(-y / 12)}deg)
-        rotateY(${(x / 12)}deg)
-        translateZ(30px)
-      `;
+    animate={{
+      y: [0, -18, 0],
+      rotateZ: [0, 0.6, 0],
     }}
-    onMouseLeave={(e) => {
-      e.currentTarget.style.transform =
-        "rotateX(0deg) rotateY(0deg) translateZ(0px)";
-    }}
-    animate={{ y: [0, -18, 0] }}
     transition={{
-      y: {
-        duration: 5,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
     }}
     style={{
+      position: "relative",
       transformStyle: "preserve-3d",
-      transition: "transform 0.15s ease-out",
     }}
   >
+    {/* HALO EXTERIOR */}
+    <Box
+      sx={{
+        position: "absolute",
+        inset: -28,
+        borderRadius: "50%",
+        background: `radial-gradient(circle, ${glowColor}33 0%, transparent 70%)`,
+        filter: "blur(28px)",
+        animation: "haloPulse 6s ease-in-out infinite",
+        "@keyframes haloPulse": {
+          "0%": { opacity: 0.45 },
+          "50%": { opacity: 0.85 },
+          "100%": { opacity: 0.45 },
+        },
+      }}
+    />
+
+    {/* ORBITA LUMINOSA */}
+    <Box
+      sx={{
+        position: "absolute",
+        inset: -18,
+        borderRadius: "50%",
+        border: `1px solid ${glowColor}55`,
+        animation: "spin 14s linear infinite",
+        "@keyframes spin": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      }}
+    />
+
+    {/* CUERPO AVATAR */}
     <Box
       sx={{
         position: "relative",
         borderRadius: "50%",
-        transform: "translateZ(40px)",
-
-        /* SOMBRA 3D */
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          inset: 30,
-          borderRadius: "50%",
-          background: "rgba(0,0,0,0.45)",
-          filter: "blur(38px)",
-          transform: "translateZ(-80px)",
-          zIndex: -3,
-        },
-
-        /* HALO LUMINOSO PROFUNDO */
-        "&::after": {
-          content: '""',
-          position: "absolute",
-          inset: -28,
-          borderRadius: "50%",
-          background: `
-            radial-gradient(
-              circle at 30% 20%,
-              ${glowColor},
-              transparent 70%
-            )
-          `,
-          filter: "blur(42px)",
-          opacity: 0.85,
-          transform: "translateZ(-40px)",
-          zIndex: -2,
-        },
+        boxShadow: `
+          0 25px 60px rgba(0,0,0,0.35),
+          0 0 50px ${glowColor}66
+        `,
+        transform: "translateZ(60px)",
       }}
     >
       <Avatar
         alt="Jorge Patricio"
         src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: { xs: 150, sm: 190, md: 230 },
-          height: { xs: 150, sm: 190, md: 230 },
-          border: `5px solid ${theme.palette.primary.main}`,
-          position: "relative",
-          transform: "translateZ(60px)",
+          width: { xs: 140, sm: 180, md: 210 },
+          height: { xs: 140, sm: 180, md: 210 },
+          border: `4px solid ${theme.palette.primary.main}`,
+          background: theme.palette.background.paper,
+        }}
+      />
 
-          /* LUZ ESPECULAR DINÁMICA */
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            borderRadius: "50%",
-            background: `
-              radial-gradient(
-                circle at 30% 20%,
-                rgba(255,255,255,0.45),
-                transparent 55%
-              )
-            `,
-            mixBlendMode: "screen",
-            pointerEvents: "none",
-          },
+      {/* REFLEJO DE LUZ */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.35), transparent 60%)",
+          pointerEvents: "none",
         }}
       />
     </Box>
