@@ -81,13 +81,13 @@ export default function Hero({ mode, setMode }) {
       >
 
 
-        {/* ================= AVATAR TECNOLÓGICO ================= */}
+        {/* ================= AVATAR TECNOLÓGICO PRO ================= */}
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.94,
-    y: 28,
-    filter: "blur(6px)",
+    scale: 0.85,
+    y: 60,
+    filter: "blur(12px)",
   }}
   animate={{
     opacity: 1,
@@ -96,63 +96,62 @@ export default function Hero({ mode, setMode }) {
     filter: "blur(0px)",
   }}
   transition={{
-    opacity: { duration: 1 },
-    scale: { duration: 1 },
-    filter: { duration: 1 },
+    opacity: { duration: 0.9 },
+    scale: { duration: 0.9 },
+    filter: { duration: 0.9 },
     y: {
       duration: 3,
       repeat: Infinity,
       ease: "easeInOut",
     },
   }}
-  style={{ position: "relative", borderRadius: "50%" }}
+  style={{
+    borderRadius: "50%",
+    perspective: 800,
+  }}
 >
-  {/* ARO TECNOLÓGICO */}
-  <Box
-    sx={{
-      position: "absolute",
-      inset: -6,
-      borderRadius: "50%",
-      background: `conic-gradient(
-        from 180deg,
-        ${theme.palette.primary.main},
-        transparent 35%,
-        ${theme.palette.primary.main}
-      )`,
-      opacity: 0.35,
-      animation: "spin 14s linear infinite",
-      "@keyframes spin": {
-        to: { transform: "rotate(360deg)" },
-      },
-    }}
-  />
-
-  {/* AVATAR */}
   <Avatar
     alt="Jorge Patricio"
     src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
     sx={{
-      position: "relative",
-      zIndex: 1,
       width: { xs: 130, sm: 170, md: 200 },
       height: { xs: 130, sm: 170, md: 200 },
 
-      /* DOBLE BORDE TECH */
-      border: `1.5px solid ${theme.palette.primary.main}`,
+      /* BORDE TECNOLÓGICO (doble capa) */
+      border: `2px solid ${theme.palette.primary.main}`,
+      outline: `1px solid ${
+        theme.palette.mode === "dark"
+          ? "rgba(255,255,255,0.08)"
+          : "rgba(0,0,0,0.06)"
+      }`,
+      outlineOffset: "-6px",
 
-      /* Sombra limpia */
+      /* ILUMINACIÓN PROFESIONAL */
       boxShadow:
         theme.palette.mode === "dark"
-          ? "0 14px 32px rgba(0,0,0,0.65)"
-          : "0 12px 28px rgba(0,0,0,0.28)",
+          ? `
+            0 22px 45px rgba(0,0,0,0.75),
+            inset 0 1px 0 rgba(255,255,255,0.08)
+          `
+          : `
+            0 18px 36px rgba(0,0,0,0.28),
+            inset 0 1px 0 rgba(255,255,255,0.25)
+          `,
 
-      transition: "box-shadow 0.3s ease",
+      transition: "box-shadow 0.35s ease, transform 0.35s ease",
 
       "&:hover": {
+        transform: "scale(1.025)",
         boxShadow:
           theme.palette.mode === "dark"
-            ? "0 18px 40px rgba(0,0,0,0.75)"
-            : "0 16px 34px rgba(0,0,0,0.35)",
+            ? `
+              0 30px 60px rgba(0,0,0,0.85),
+              inset 0 1px 0 rgba(255,255,255,0.12)
+            `
+            : `
+              0 22px 44px rgba(0,0,0,0.35),
+              inset 0 1px 0 rgba(255,255,255,0.3)
+            `,
       },
     }}
   />
