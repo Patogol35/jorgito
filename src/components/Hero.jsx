@@ -112,7 +112,7 @@ export default function Hero({ mode, setMode }) {
               filter: "blur(0px)",
             }}
             transition={{
-              duration: 4,
+              duration: 2.8,
               ease: easeOutExpo,
             }}
             style={{
