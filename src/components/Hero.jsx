@@ -80,71 +80,93 @@ export default function Hero({ mode, setMode }) {
         }}
       >
 
-{/* ================= AVATAR 3D PROFESIONAL ================= */}
+{/* ================= AVATAR 3D REAL PROFESIONAL ================= */}
 <motion.div
-  style={{ perspective: 1400, zIndex: 1 }}
+  style={{
+    perspective: 1800,
+    zIndex: 2,
+  }}
   initial={{
     opacity: 0,
-    scale: 0.85,
-    rotateX: 18,
-    filter: "blur(10px)",
+    scale: 0.75,
+    rotateX: 25,
+    rotateY: -25,
+    filter: "blur(14px)",
   }}
   animate={{
     opacity: 1,
     scale: 1,
     rotateX: 0,
+    rotateY: 0,
     filter: "blur(0px)",
   }}
   transition={{
-    duration: 1.6,
+    duration: 1.8,
     ease: [0.16, 1, 0.3, 1],
   }}
 >
   <motion.div
-    whileHover={{
-      rotateX: -6,
-      rotateY: 8,
-      scale: 1.035,
+    onMouseMove={(e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      e.currentTarget.style.transform = `
+        rotateX(${(-y / 12)}deg)
+        rotateY(${(x / 12)}deg)
+        translateZ(30px)
+      `;
     }}
-    animate={{ y: [0, -10, 0] }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform =
+        "rotateX(0deg) rotateY(0deg) translateZ(0px)";
+    }}
+    animate={{ y: [0, -18, 0] }}
     transition={{
       y: {
-        duration: 6,
+        duration: 5,
         repeat: Infinity,
         ease: "easeInOut",
       },
-      rotateX: { type: "spring", stiffness: 120, damping: 14 },
-      rotateY: { type: "spring", stiffness: 120, damping: 14 },
-      scale: { type: "spring", stiffness: 120, damping: 14 },
     }}
     style={{
       transformStyle: "preserve-3d",
+      transition: "transform 0.15s ease-out",
     }}
   >
     <Box
       sx={{
         position: "relative",
         borderRadius: "50%",
+        transform: "translateZ(40px)",
 
-        /* Halo 3D profundo */
+        /* SOMBRA 3D */
         "&::before": {
           content: '""',
           position: "absolute",
-          inset: -10,
+          inset: 30,
           borderRadius: "50%",
-          background: `radial-gradient(circle at top, ${glowColor}, transparent 70%)`,
-          filter: "blur(18px)",
-          opacity: 0.6,
-          zIndex: -1,
+          background: "rgba(0,0,0,0.45)",
+          filter: "blur(38px)",
+          transform: "translateZ(-80px)",
+          zIndex: -3,
         },
+
+        /* HALO LUMINOSO PROFUNDO */
         "&::after": {
           content: '""',
           position: "absolute",
-          inset: -20,
+          inset: -28,
           borderRadius: "50%",
-          background: `radial-gradient(circle, ${glowColor}, transparent 75%)`,
-          filter: "blur(32px)",
-          opacity: 0.35,
+          background: `
+            radial-gradient(
+              circle at 30% 20%,
+              ${glowColor},
+              transparent 70%
+            )
+          `,
+          filter: "blur(42px)",
+          opacity: 0.85,
+          transform: "translateZ(-40px)",
           zIndex: -2,
         },
       }}
@@ -153,20 +175,26 @@ export default function Hero({ mode, setMode }) {
         alt="Jorge Patricio"
         src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          border: `4px solid ${theme.palette.primary.main}`,
+          width: { xs: 150, sm: 190, md: 230 },
+          height: { xs: 150, sm: 190, md: 230 },
+          border: `5px solid ${theme.palette.primary.main}`,
           position: "relative",
+          transform: "translateZ(60px)",
 
-          /* Micro reflejo premium */
+          /* LUZ ESPECULAR DINÁMICA */
           "&::after": {
             content: '""',
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
-            background:
-              "linear-gradient(120deg, rgba(255,255,255,0.28), transparent 60%)",
-            mixBlendMode: "overlay",
+            background: `
+              radial-gradient(
+                circle at 30% 20%,
+                rgba(255,255,255,0.45),
+                transparent 55%
+              )
+            `,
+            mixBlendMode: "screen",
             pointerEvents: "none",
           },
         }}
