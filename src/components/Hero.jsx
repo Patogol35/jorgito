@@ -78,14 +78,16 @@ export default function Hero({ mode, setMode }) {
           pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
-      >
-        {/* ================= AVATAR ================= */}
+      >{/* ================= AVATAR ================= */}
 <motion.div
   initial={{
     opacity: 0,
     scale: 0.6,
     rotateX: 45,
-    filter: "blur(16px)",
+    filter: {
+      xs: "blur(8px)",   // 📱 menos blur en mobile
+      sm: "blur(14px)",
+    },
   }}
   animate={{
     opacity: 1,
@@ -103,49 +105,86 @@ export default function Hero({ mode, setMode }) {
     zIndex: 1,
   }}
 >
-  {/* Halo de luz externo (NO se recorta) */}
   <motion.div
-    initial={{ boxShadow: `0 0 0px ${glowColor}` }}
-    animate={{ boxShadow: `0 0 60px ${glowColor}` }}
-    transition={{ duration: 1.2, delay: 0.4 }}
-    style={{
-      borderRadius: "50%",
-      display: "inline-flex",
+    animate={{ y: [0, -12, 0] }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+      delay: 2,
     }}
+    style={{ position: "relative" }}
   >
-    {/* Flotación */}
+    {/* ================= PARTÍCULAS IA ================= */}
+    {[...Array(8)].map((_, i) => (
+      <motion.span
+        key={i}
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{
+          opacity: [0, 0.6, 0],
+          scale: [0, 1, 0],
+          x: Math.random() * 140 - 70,
+          y: Math.random() * 140 - 70,
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          delay: i * 0.6,
+          ease: "easeInOut",
+        }}
+        style={{
+          position: "absolute",
+          width: 4,
+          height: 4,
+          borderRadius: "50%",
+          background: glowColor,
+          filter: "blur(1px)",
+          zIndex: 0,
+        }}
+      />
+    ))}
+
+    {/* ================= ANILLO ESCANEO ================= */}
     <motion.div
-      animate={{ y: [0, -14, 0] }}
+      animate={{ rotate: 360 }}
       transition={{
-        duration: 5,
+        duration: 10,
         repeat: Infinity,
-        ease: "easeInOut",
-        delay: 2,
+        ease: "linear",
+      }}
+      style={{
+        position: "absolute",
+        inset: -8,
+        borderRadius: "50%",
+        border: `2px dashed ${glowColor}`,
+        opacity: 0.5,
+        zIndex: 0,
+      }}
+    />
+
+    {/* ================= AVATAR REAL ================= */}
+    <Box
+      sx={{
+        width: { xs: 130, sm: 170, md: 200 },
+        height: { xs: 130, sm: 170, md: 200 },
+        borderRadius: "50%",
+        overflow: "hidden",
+        clipPath: "circle(50%)",
+        border: `4px solid ${theme.palette.primary.main}`,
+        backgroundColor: theme.palette.background.paper,
+        position: "relative",
+        zIndex: 1,
       }}
     >
-      {/* CONTENEDOR CIRCULAR REAL */}
-      <Box
+      <Avatar
+        alt="Jorge Patricio"
+        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
         sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          borderRadius: "50%",
-          overflow: "hidden",            // 🔴 CLAVE
-          clipPath: "circle(50%)",       // 🔴 CLAVE
-          border: `4px solid ${theme.palette.primary.main}`,
-          backgroundColor: theme.palette.background.paper,
-          boxShadow: `0 0 28px ${glowColor}`,
+          width: "100%",
+          height: "100%",
         }}
-      >
-        <Avatar
-          alt="Jorge Patricio"
-          src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-          sx={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
-      </Box>
-    </motion.div>
+      />
+    </Box>
   </motion.div>
 </motion.div>
 
