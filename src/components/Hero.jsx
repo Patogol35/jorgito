@@ -81,34 +81,19 @@ export default function Hero({ mode, setMode }) {
       >
 
 
-{/* ================= AVATAR CON ENTRADA TIPO MONEDA ================= */}
+{/* ================= AVATAR ENTRADA LIMPIA ================= */}
 <motion.div
-  initial={{
-    opacity: 0,
-    y: -60,
-    rotateY: 90,
-  }}
-  animate={{
-    opacity: 1,
-    y: [0, -15, 0],
-    rotateY: 0,
-  }}
+  initial={{ opacity: 0, y: -40 }}
+  animate={{ opacity: 1, y: [0, -15, 0] }}
   transition={{
-    opacity: { duration: 0.4 },
-    rotateY: {
-      duration: 0.9,
-      ease: [0.16, 1, 0.3, 1],
-    },
+    opacity: { duration: 0.4, ease: "easeOut" },
     y: {
       duration: 3,
       repeat: Infinity,
       ease: "easeInOut",
     },
   }}
-  style={{
-    borderRadius: "50%",
-    transformStyle: "preserve-3d",
-  }}
+  style={{ borderRadius: "50%" }}
 >
   <Avatar
     alt="Jorge Patricio"
@@ -120,13 +105,11 @@ export default function Hero({ mode, setMode }) {
       /* BORDE PROFESIONAL */
       border: `3px solid ${theme.palette.primary.main}`,
 
-      /* SOMBRA REALISTA */
+      /* SOMBRA NATURAL */
       boxShadow:
         theme.palette.mode === "dark"
-          ? "0 16px 36px rgba(0,0,0,0.7)"
-          : "0 14px 30px rgba(0,0,0,0.3)",
-
-      backfaceVisibility: "hidden",
+          ? "0 14px 32px rgba(0,0,0,0.6)"
+          : "0 12px 28px rgba(0,0,0,0.25)",
     }}
   />
 </motion.div>
