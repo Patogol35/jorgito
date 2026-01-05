@@ -159,7 +159,7 @@ export default function Hero({ mode, setMode }) {
                 color="text.secondary"
                 sx={{ fontStyle: "italic" }}
               >
-                🎓 Máster en Ingeniería de Software y Sistemas Informáticos
+                Máster en Ingeniería de Software y Sistemas Informáticos
               </Typography>
             </motion.div>
 
