@@ -93,7 +93,7 @@ export default function Hero({ mode, setMode }) {
     scale: 1,
   }}
   transition={{
-    duration: 3,
+    duration: 2.4,
     ease: [0.25, 0.9, 0.35, 1], // natural cinematic
   }}
   style={{
