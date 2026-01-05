@@ -79,72 +79,60 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR MONEDA PREMIUM ================= */}
+        {/* ============ AVATAR CON GRADIENTE ANIMADO ============ */}
 
 <motion.div
-  initial={{
-    opacity: 0,
-    rotateY: -220,
-    scale: 0.82,
-    filter: "blur(8px)",
-  }}
-  animate={{
-    opacity: 1,
-    rotateY: 0,
-    scale: 1,
-    filter: "blur(0px)",
-  }}
-  transition={{
-    duration: 2.8,
-    ease: [0.22, 1, 0.36, 1], // easeOutExpo-like
-  }}
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 1.2, ease: "easeOut" }}
   style={{
+    position: "relative",
     borderRadius: "50%",
-    transformStyle: "preserve-3d",
-    perspective: 1400,
+    padding: 5,
   }}
 >
+  {/* Gradiente animado */}
   <motion.div
     animate={{
-      y: [0, -18, 0],
-      rotateZ: [0, 1.5, 0],
-      rotateX: [0, 2, 0],
+      backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
     }}
     transition={{
-      duration: 4.5,
+      duration: 6,
       repeat: Infinity,
-      ease: "easeInOut",
+      ease: "linear",
     }}
-  >
-    <motion.div
-      animate={{
-        boxShadow: [
-          `0 0 20px ${theme.palette.primary.main}55`,
-          `0 0 40px ${theme.palette.primary.main}99`,
-          `0 0 20px ${theme.palette.primary.main}55`,
-        ],
-      }}
-      transition={{
-        duration: 3.5,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        borderRadius: "50%",
-      }}
-    >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-        sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          border: `4px solid ${theme.palette.primary.main}`,
-          backfaceVisibility: "hidden",
-        }}
-      />
-    </motion.div>
-  </motion.div>
+    style={{
+      position: "absolute",
+      inset: 0,
+      borderRadius: "50%",
+      background: `
+        linear-gradient(
+          270deg,
+          ${theme.palette.primary.main},
+          ${theme.palette.secondary.main},
+          ${theme.palette.primary.light}
+        )
+      `,
+      backgroundSize: "600% 600%",
+      filter: "blur(6px)",
+      zIndex: 0,
+    }}
+  />
+
+  {/* Avatar limpio y nítido */}
+  <Avatar
+    alt="Jorge Patricio"
+    src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+    sx={{
+      width: { xs: 130, sm: 170, md: 200 },
+      height: { xs: 130, sm: 170, md: 200 },
+      position: "relative",
+      zIndex: 1,
+      border: `4px solid ${theme.palette.background.paper}`,
+      boxShadow: `0 0 18px ${theme.palette.primary.main}55`,
+      backgroundColor: theme.palette.background.paper,
+    }}
+  />
 </motion.div>
 
         {/* ================= TEXTO ================= */}
