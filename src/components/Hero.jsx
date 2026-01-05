@@ -79,53 +79,73 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR MONEDA ================= */}
+        {/* ================= AVATAR MONEDA PREMIUM ================= */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            rotateY: -180,
-            scale: 0.85,
-            filter: "blur(6px)",
-          }}
-          animate={{
-            opacity: 1,
-            rotateY: 0,
-            scale: 1,
-            filter: "blur(0px)",
-          }}
-          transition={{
-            duration: 3,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          style={{
-            borderRadius: "50%",
-            transformStyle: "preserve-3d",
-            perspective: 1200,
-          }}
-        >
-          <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1.9,
-            }}
-          >
-            <Avatar
-              alt="Jorge Patricio"
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
-              sx={{
-                width: { xs: 130, sm: 170, md: 200 },
-                height: { xs: 130, sm: 170, md: 200 },
-                border: 4px solid ${theme.palette.primary.main},
-                boxShadow: 0 0 30px ${theme.palette.primary.main}66,
-                backfaceVisibility: "hidden",
-              }}
-            />
-          </motion.div>
-        </motion.div>
+<motion.div
+  initial={{
+    opacity: 0,
+    rotateY: -220,
+    scale: 0.82,
+    filter: "blur(8px)",
+  }}
+  animate={{
+    opacity: 1,
+    rotateY: 0,
+    scale: 1,
+    filter: "blur(0px)",
+  }}
+  transition={{
+    duration: 2.8,
+    ease: [0.22, 1, 0.36, 1], // easeOutExpo-like
+  }}
+  style={{
+    borderRadius: "50%",
+    transformStyle: "preserve-3d",
+    perspective: 1400,
+  }}
+>
+  <motion.div
+    animate={{
+      y: [0, -18, 0],
+      rotateZ: [0, 1.5, 0],
+      rotateX: [0, 2, 0],
+    }}
+    transition={{
+      duration: 4.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <motion.div
+      animate={{
+        boxShadow: [
+          `0 0 20px ${theme.palette.primary.main}55`,
+          `0 0 40px ${theme.palette.primary.main}99`,
+          `0 0 20px ${theme.palette.primary.main}55`,
+        ],
+      }}
+      transition={{
+        duration: 3.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      style={{
+        borderRadius: "50%",
+      }}
+    >
+      <Avatar
+        alt="Jorge Patricio"
+        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+        sx={{
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `4px solid ${theme.palette.primary.main}`,
+          backfaceVisibility: "hidden",
+        }}
+      />
+    </motion.div>
+  </motion.div>
+</motion.div>
 
         {/* ================= TEXTO ================= */}
         <Box
