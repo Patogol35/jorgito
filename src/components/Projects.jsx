@@ -159,7 +159,7 @@ export default function Projects() {
             variant="h6"
             sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
-            Proyectos Demostrativos 
+            Apps Demostrativas 
           </Typography>
         </Box>
       </motion.div>
