@@ -132,7 +132,7 @@ export default function Hero({ mode, setMode }) {
     >
       <Avatar
         alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1757093856/FB_IMG_1757092624480_hgpu4i.jpg"
+        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
         sx={{
           width: { xs: 130, sm: 170, md: 200 },
           height: { xs: 130, sm: 170, md: 200 },
