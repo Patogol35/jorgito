@@ -98,8 +98,8 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-    ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.85)";
+  ? "rgba(255,255,255,0.08)"
+  : "rgba(255,255,255,0.85)";
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
