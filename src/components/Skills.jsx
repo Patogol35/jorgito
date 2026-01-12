@@ -258,48 +258,29 @@ export default function Skills() {
                     }}
                   >
                   <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
   sx={{
     width: 65,
     height: 65,
     mb: 2,
-    position: "relative",
+    objectFit: "contain",
     transition: "transform 0.3s ease",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
+
+    /* 🔹 NO filtros globales → mantiene colores reales */
+    filter: "none",
+
+    /* 🔹 Solo por si algún SVG oscuro se pierde en dark mode */
+    ...(isDark &&
+      ["Vercel", "Supabase"].includes(skill.name) && {
+        filter: "brightness(1.4)",
+      }),
   }}
->
-  {/* SVG monocromo (modo oscuro) */}
-  {isDark && skill.img.endsWith(".svg") ? (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: primaryColor, // 🔹 color uniforme
-        maskImage: `url(${skill.img})`,
-        WebkitMaskImage: `url(${skill.img})`,
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-      }}
-    />
-  ) : (
-    /* PNG o modo claro */
-    <Box
-      component="img"
-      src={skill.img}
-      alt={skill.name}
-      sx={{
-        width: "100%",
-        height: "100%",
-        objectFit: "contain",
-      }}
-    />
-  )}
-</Box>
+/>
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
