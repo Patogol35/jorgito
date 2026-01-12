@@ -51,9 +51,9 @@ const skills = [
 },
 
   {
-  name: "Linux",
+  name: "Microsoft Office",
   category: "Tools",
-  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linux.svg",
+  img: "https://img.icons8.com/?size=100&id=37619&format=png&color=000000",
 },
 ];
 
