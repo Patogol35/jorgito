@@ -49,10 +49,11 @@ const skills = [
   category: "Tools",
   img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
 },
-{
+
+  {
   name: "Linux",
   category: "Tools",
-  img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
+  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linux.svg",
 },
 ];
 
