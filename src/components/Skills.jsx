@@ -44,7 +44,7 @@ const skills = [
   { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
   { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
-const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
+
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
@@ -241,15 +241,6 @@ export default function Skills() {
       drop-shadow(0 0 0.6px ${primary})
       drop-shadow(0 0 0.6px ${primary})
     `,
-
-    ...(isDark &&
-      invertOnDark.includes(skill.name) && {
-        filter: `
-          invert(1) brightness(1.2)
-          drop-shadow(0 0 0.6px ${primary})
-          drop-shadow(0 0 0.6px ${primary})
-        `,
-      }),
 
     transition: "transform 0.3s ease, filter 0.3s ease",
 
