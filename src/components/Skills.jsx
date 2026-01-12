@@ -98,7 +98,7 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-  ? "linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.085))"
+  ? "linear-gradient(180deg, rgba(255,255,255,0.145), rgba(255,255,255,0.08))"
   : "rgba(255,255,255,0.9)";
 
   
@@ -220,9 +220,7 @@ export default function Skills() {
                       borderRadius: "22px",
                       background: cardBg,
                       
-  border: `1px solid ${
-  isDark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.12)"
-}`,
+  bo
                       border: `1px solid ${
                         isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)"
                       }`,
