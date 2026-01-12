@@ -228,52 +228,40 @@ export default function Skills() {
                     }}
                   >
                 <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
   sx={{
-    width: 76,
-    height: 76,
+    width: 65,
+    height: 65,
     mb: 2,
-    mx: "auto",
-    borderRadius: "18px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    objectFit: "contain",
 
-    background: isDark
-      ? "rgba(255,255,255,0.04)"
-      : "rgba(255,255,255,0.95)",
-
-    border: "1px solid transparent",
-    backgroundImage: `
-      linear-gradient(${isDark ? "#121212" : "#fff"}, ${isDark ? "#121212" : "#fff"}),
-      linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})
+    filter: `
+      drop-shadow(0 0 0.6px ${primary})
+      drop-shadow(0 0 0.6px ${primary})
     `,
-    backgroundOrigin: "border-box",
-    backgroundClip: "content-box, border-box",
 
-    transition: "all 0.35s ease",
+    ...(isDark &&
+      invertOnDark.includes(skill.name) && {
+        filter: `
+          invert(1) brightness(1.2)
+          drop-shadow(0 0 0.6px ${primary})
+          drop-shadow(0 0 0.6px ${primary})
+        `,
+      }),
+
+    transition: "transform 0.3s ease, filter 0.3s ease",
 
     "&:hover": {
-      transform: "translateY(-2px) scale(1.05)",
-      boxShadow: `0 10px 30px ${primary}33`,
+      transform: "scale(1.12)",
+      filter: `
+        drop-shadow(0 0 1.2px ${primary})
+        drop-shadow(0 0 1.2px ${primary})
+      `,
     },
   }}
->
-  <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 44,
-      height: 44,
-      objectFit: "contain",
-      filter:
-        isDark && invertOnDark.includes(skill.name)
-          ? "invert(1) brightness(1.2)"
-          : "none",
-      transition: "transform 0.3s ease",
-    }}
-  />
-</Box>
+/>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
