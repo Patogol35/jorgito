@@ -97,9 +97,9 @@ export default function Skills() {
     [filter]
   );
 
-  background: isDark
-  ? "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))"
-  : "rgba(255,255,255,0.85)",
+  const cardBg = isDark
+  ? "rgba(255,255,255,0.05)"
+  : "rgba(255,255,255,0.85)";
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
