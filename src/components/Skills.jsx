@@ -258,51 +258,26 @@ export default function Skills() {
     },
   }}
 >
-  {/* ICONO */}
   <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
     sx={{
-      width: 70,
-      height: 70,
+      width: 65,
+      height: 65,
       mb: 2,
-      mx: "auto",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: "16px",
+      objectFit: "contain",
+      transition: "transform 0.3s ease",
 
-      /* 🔹 Placa clara SOLO en dark mode y SOLO iconos problemáticos */
-      ...(isDark &&
-        ["AWS", "VirtualBox"].includes(skill.name) && {
-          background: "rgba(255,255,255,0.08)",
-          boxShadow: "0 0 0 1px rgba(255,255,255,0.18)",
-        }),
+      /* 🔹 MISMO COLOR QUE EN MODO CLARO */
+      /* 🔹 SOLO SE ACLARA EN DARK MODE */
+      filter: isDark ? "brightness(1.15)" : "none",
+
+      "&:hover": {
+        transform: "rotate(8deg) scale(1.1)",
+      },
     }}
-  >
-    <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
-  sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-    transition: "transform 0.3s ease",
-
-    /* 🔹 SIN filtros globales */
-    filter: "none",
-
-    /* 🔹 Ajuste SOLO para iconos con bajo contraste */
-    ...(isDark &&
-      ["AWS", "VirtualBox"].includes(skill.name) && {
-        filter: "brightness(1.25) drop-shadow(0 0 2px rgba(255,255,255,0.35))",
-      }),
-
-    "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-    },
-  }}
-/>
+  />
 
   <Typography fontWeight="bold">
     {skill.name}
