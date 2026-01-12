@@ -97,9 +97,9 @@ export default function Skills() {
     [filter]
   );
 
-  const cardBg = isDark
+  background: isDark
   ? "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))"
-  : "rgba(255,255,255,0.85)";
+  : "rgba(255,255,255,0.85)",
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
@@ -236,10 +236,7 @@ export default function Skills() {
     height: 65,
     mb: 2,
     objectFit: "contain",
-    transition: "transform 0.3s ease, filter 0.3s ease",
-    filter: isDark
-      ? "brightness(1.35) contrast(1.25)"
-      : "none",
+    transition: "transform 0.3s ease",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
