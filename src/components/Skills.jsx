@@ -237,11 +237,11 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
 
-    /* Borde elegante siguiendo la forma del icono */
+    /* Color del borde según modo */
     filter: `
       ${isDark ? "brightness(1.15) contrast(1.1)" : ""}
-      drop-shadow(0 0 0.6px ${primary})
-      drop-shadow(0 0 0.6px ${primary})
+      drop-shadow(0 0 0.8px ${isDark ? "#000000" : primary})
+      drop-shadow(0 0 0.8px ${isDark ? "#000000" : primary})
     `,
 
     transition: "transform 0.3s ease, filter 0.3s ease",
@@ -250,8 +250,8 @@ export default function Skills() {
       transform: "scale(1.12)",
       filter: `
         ${isDark ? "brightness(1.25) contrast(1.15)" : ""}
-        drop-shadow(0 0 1.2px ${primary})
-        drop-shadow(0 0 1.2px ${primary})
+        drop-shadow(0 0 1.3px ${isDark ? "#000000" : primary})
+        drop-shadow(0 0 1.3px ${isDark ? "#000000" : primary})
       `,
     },
   }}
