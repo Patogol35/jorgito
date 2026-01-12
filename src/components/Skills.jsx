@@ -227,7 +227,7 @@ export default function Skills() {
                       },
                     }}
                   >
-                    <Box
+                  <Box
   component="img"
   src={skill.img}
   alt={skill.name}
@@ -236,11 +236,7 @@ export default function Skills() {
     height: 65,
     mb: 2,
     objectFit: "contain",
-    transition: "transform 0.3s ease, filter 0.3s ease",
-    filter: isDark
-      ? "brightness(1.3) contrast(1.25)"
-      : "none",
-    mixBlendMode: isDark ? "screen" : "normal",
+    transition: "transform 0.3s ease",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
