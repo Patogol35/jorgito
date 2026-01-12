@@ -44,7 +44,7 @@ const skills = [
   { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
   { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
-const invertOnDark = ["AWS", "MySQL", "npm"];
+const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
