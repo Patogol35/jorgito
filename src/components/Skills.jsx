@@ -49,6 +49,12 @@ const skills = [
   category: "Tools",
   img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
 },
+
+  {
+  name: "AnyDesk",
+  category: "Tools",
+  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
+},
 ];
 
 const categoryIcons = {
