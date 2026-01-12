@@ -237,7 +237,9 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
 
+    /* Borde elegante siguiendo la forma del icono */
     filter: `
+      ${isDark ? "brightness(1.15) contrast(1.1)" : ""}
       drop-shadow(0 0 0.6px ${primary})
       drop-shadow(0 0 0.6px ${primary})
     `,
@@ -247,6 +249,7 @@ export default function Skills() {
     "&:hover": {
       transform: "scale(1.12)",
       filter: `
+        ${isDark ? "brightness(1.25) contrast(1.15)" : ""}
         drop-shadow(0 0 1.2px ${primary})
         drop-shadow(0 0 1.2px ${primary})
       `,
