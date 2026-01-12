@@ -49,12 +49,6 @@ const skills = [
   category: "Tools",
   img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
 },
-
-  {
-  name: "Microsoft Office",
-  category: "Tools",
-  img: "https://img.icons8.com/?size=100&id=37619&format=png&color=000000",
-},
 ];
 
 const categoryIcons = {
