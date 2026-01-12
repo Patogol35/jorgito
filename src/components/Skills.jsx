@@ -57,7 +57,7 @@ const skills = [
 },
 
   {
-  name: "Microsoft Office",
+  name: "MS Office",
   category: "Tools",
   img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png",
 },
