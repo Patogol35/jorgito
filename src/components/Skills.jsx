@@ -55,6 +55,12 @@ const skills = [
   category: "Tools",
   img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
 },
+
+  {
+  name: "AnyDesk",
+  category: "Tools",
+  img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png",
+},
 ];
 
 const categoryIcons = {
