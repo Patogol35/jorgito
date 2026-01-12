@@ -125,10 +125,10 @@ export default function Skills() {
             HEADER (IGUAL A ABOUT)
         ========================= */}
         <motion.div
-  initial={{ opacity: 0, y: 20, scale: 0.85 }}
-  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-  viewport={{ once: true }}
+  initial={{ opacity: 0, scale: 0.85 }}
+  whileInView={{ opacity: 1, scale: 1 }}
   transition={{ duration: 0.45, delay: index * 0.06 }}
+  viewport={{ once: true }}
 >
           <Box
             sx={{
