@@ -228,20 +228,42 @@ export default function Skills() {
                     }}
                   >
                   <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
   sx={{
-    width: 65,
-    height: 65,
+    width: 80,
+    height: 80,
     mb: 2,
-    objectFit: "contain",
-    transition: "transform 0.3s ease",
-    "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-    },
+    mx: "auto",
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    background: isDark
+      ? "radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 70%)"
+      : "radial-gradient(circle, rgba(25,118,210,0.15) 0%, rgba(25,118,210,0.03) 70%)",
+
+    boxShadow: isDark
+      ? "0 0 22px rgba(144,202,249,0.35)"
+      : "0 0 16px rgba(25,118,210,0.25)",
+
+    transition: "all 0.3s ease",
   }}
-/>
+>
+  <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
+    sx={{
+      width: 45,
+      height: 45,
+      objectFit: "contain",
+      transition: "transform 0.3s ease",
+      "&:hover": {
+        transform: "rotate(8deg) scale(1.15)",
+      },
+    }}
+  />
+</Box>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
