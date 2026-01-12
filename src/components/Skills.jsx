@@ -232,33 +232,27 @@ export default function Skills() {
                     }}
                   >
                  <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
   sx={{
-    width: 70,
-    height: 70,
+    width: 65,
+    height: 65,
     mb: 2,
-    mx: "auto",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "14px",
+    objectFit: "contain",
 
-    /* 🔑 AQUÍ SE ARREGLA EL PROBLEMA */
-    background: isDark
-      ? "rgba(0,0,0,0.18)"
-      : "transparent",
+    /* 🔑 SOLO para iconos delicados */
+    filter:
+      isDark && skill.name === "Supabase"
+        ? "brightness(1.4) contrast(1.6)"
+        : "none",
+
+    transition: "transform 0.3s ease",
+    "&:hover": {
+      transform: "rotate(6deg) scale(1.08)",
+    },
   }}
->
-  <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 60,
-      height: 60,
-      objectFit: "contain",
-    }}
-  />
-</Box>
+/>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
