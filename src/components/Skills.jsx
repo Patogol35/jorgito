@@ -98,7 +98,7 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-  ? "linear-gradient(180deg, rgba(255,255,255,0.145), rgba(255,255,255,0.08))"
+  ? "linear-gradient(180deg, rgba(255,255,255,0.17), rgba(255,255,255,0.095))"
   : "rgba(255,255,255,0.9)";
 
   
