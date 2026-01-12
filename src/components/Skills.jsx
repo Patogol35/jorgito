@@ -241,6 +241,12 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
     transition: "transform 0.3s ease",
+
+    /* 🔑 AQUÍ VA EL ARREGLO */
+    filter: isDark
+      ? "drop-shadow(0 0 6px rgba(0,0,0,0.45)) brightness(1.15) contrast(1.2)"
+      : "none",
+
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
