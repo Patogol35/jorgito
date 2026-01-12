@@ -279,26 +279,30 @@ export default function Skills() {
     }}
   >
     <Box
-      component="img"
-      src={skill.img}
-      alt={skill.name}
-      sx={{
-        width: 60,
-        height: 60,
-        objectFit: "contain",
-        transition: "transform 0.3s ease",
-        "&:hover": {
-          transform: "rotate(6deg) scale(1.08)",
-        },
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    transition: "transform 0.3s ease",
 
-        /* 🔹 micro ajuste SOLO si hace falta */
-        ...(isDark &&
-          ["AWS", "VirtualBox"].includes(skill.name) && {
-            filter: "brightness(1.15)",
-          }),
-      }}
-    />
-  </Box>
+    /* 🔹 SIN filtros globales */
+    filter: "none",
+
+    /* 🔹 Ajuste SOLO para iconos con bajo contraste */
+    ...(isDark &&
+      ["AWS", "VirtualBox"].includes(skill.name) && {
+        filter: "brightness(1.25) drop-shadow(0 0 2px rgba(255,255,255,0.35))",
+      }),
+
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+    },
+  }}
+/>
 
   <Typography fontWeight="bold">
     {skill.name}
