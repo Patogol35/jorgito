@@ -1,10 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import { useState, useRef, useEffect, useMemo } from "react";
 import {
   Container,
   Typography,
@@ -15,8 +9,15 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
+
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap } from "lucide-react";
 
 /* =========================
    DATA
@@ -60,144 +61,121 @@ export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primary = theme.palette.primary.main;
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
+  /* Scroll automático al botón activo */
   useEffect(() => {
-    const activeBtn = buttonRefs.current[filter];
+    const btn = buttonRefs.current[filter];
     const container = containerRef.current;
 
-    if (activeBtn && container) {
+    if (btn && container) {
       container.scrollTo({
-        left:
-          activeBtn.offsetLeft -
-          container.offsetWidth / 2 +
-          activeBtn.offsetWidth / 2,
+        left: btn.offsetLeft - container.offsetWidth / 2 + btn.offsetWidth / 2,
         behavior: "smooth",
       });
     }
   }, [filter]);
 
-  const filteredSkills =
-    filter === "All" ? skills : skills.filter((s) => s.category === filter);
+  /* Skills filtrados */
+  const filteredSkills = useMemo(() => {
+    return filter === "All"
+      ? skills
+      : skills.filter((s) => s.category === filter);
+  }, [filter]);
 
   const cardBg = isDark
-    ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.85)";
+    ? "rgba(255,255,255,0.06)"
+    : "rgba(255,255,255,0.92)";
+
+  const primary = theme.palette.primary.main;
+  const primaryLight = theme.palette.primary.light;
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
       <Container>
 
         {/* HEADER */}
-      
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8 }}
-  style={{ textAlign: "center", marginBottom: "3rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      px: 3,
-      py: 0.9,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(144,202,249,0.06)"
-        : "rgba(25,118,210,0.06)",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-      backdropFilter: "blur(6px)",
-    }}
-  >
-    <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-    <Typography
-      variant="h6"
-      sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-    >
-      Stack Tecnológico
-    </Typography>
-  </Box>
-</motion.div>
-
-        {/* FILTERS */}
-        
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8, delay: 0.15 }}
-  viewport={{ once: true }}
->
-  <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-    <Box
-      ref={containerRef}
-      sx={{
-        maxWidth: "100%",
-        overflowX: "auto",
-        "&::-webkit-scrollbar": { display: "none" },
-      }}
-    >
-      <ToggleButtonGroup
-        value={filter}
-        exclusive
-        onChange={(e, val) => val && setFilter(val)}
-        sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
-      >
-        {categories.map((cat) => (
-          <ToggleButton
-            key={cat}
-            value={cat}
-            ref={(el) => (buttonRefs.current[cat] = el)}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+          style={{ textAlign: "center", marginBottom: "3rem" }}
+        >
+          <Box
             sx={{
-              borderRadius: "999px",
-              px: 2.4,
-              py: 1,
-              fontWeight: 600,
-              fontSize: "0.9rem",
-              textTransform: "none",
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
               gap: 1,
-              backgroundColor: isDark
-                ? "rgba(255,255,255,0.04)"
-                : "rgba(255,255,255,0.9)",
-              color: isDark
-                ? "rgba(255,255,255,0.85)"
-                : "rgba(0,0,0,0.75)",
+              px: 3,
+              py: 1,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.08)"
+                : "rgba(25,118,210,0.08)",
               border: `1px solid ${
                 isDark
-                  ? "rgba(255,255,255,0.12)"
-                  : "rgba(0,0,0,0.12)"
+                  ? "rgba(144,202,249,0.3)"
+                  : "rgba(25,118,210,0.3)"
               }`,
-              "&.Mui-selected": {
-                background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                color: "#fff",
-                borderColor: "transparent",
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
             }}
           >
-            {categoryIcons[cat]}
-            {cat}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-    </Box>
-  </Box>
-</motion.div>
+            <BuildIcon sx={{ color: primaryLight }} />
+            <Typography fontWeight="bold" color={primaryLight}>
+              Stack Tecnológico
+            </Typography>
+          </Box>
+        </motion.div>
+
+        {/* FILTERS */}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+          <Box
+            ref={containerRef}
+            sx={{
+              overflowX: "auto",
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            <ToggleButtonGroup
+              aria-label="Filtro de tecnologías"
+              value={filter}
+              exclusive
+              onChange={(_, val) => val && setFilter(val)}
+              sx={{ gap: 1.2 }}
+            >
+              {categories.map((cat) => (
+                <ToggleButton
+                  key={cat}
+                  value={cat}
+                  ref={(el) => (buttonRefs.current[cat] = el)}
+                  sx={{
+                    borderRadius: "999px",
+                    px: 2.5,
+                    py: 1,
+                    fontWeight: 600,
+                    textTransform: "none",
+                    display: "flex",
+                    gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.05)"
+                      : "#fff",
+                    border: "1px solid rgba(0,0,0,0.12)",
+                    "&.Mui-selected": {
+                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                      color: "#fff",
+                      borderColor: "transparent",
+                    },
+                  }}
+                >
+                  {categoryIcons[cat]}
+                  {cat}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </Box>
+        </Box>
 
         {/* GRID */}
         <Grid container spacing={4} justifyContent="center">
@@ -208,7 +186,7 @@ export default function Skills() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  transition={{ duration: 0.35, delay: index * 0.04 }}
                   viewport={{ once: true }}
                 >
                   <Paper
@@ -217,17 +195,10 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      boxShadow: isDark
-                        ? "0 8px 20px rgba(0,0,0,0.5)"
-                        : "0 8px 20px rgba(0,0,0,0.1)",
+                      border: "1px solid rgba(0,0,0,0.12)",
                       transition: "all 0.25s ease",
                       "&:hover": {
-                        transform: "translateY(-4px)",
+                        transform: "translateY(-5px)",
                         borderColor: primary,
                       },
                     }}
@@ -241,12 +212,12 @@ export default function Skills() {
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
-                        transition: "transform 0.3s ease, filter 0.3s ease",
                         filter: isDark
-                          ? "brightness(1.15) contrast(1.1) drop-shadow(0 0 4px rgba(187,222,251,0.45))"
+                          ? "brightness(1.15) drop-shadow(0 0 5px rgba(144,202,249,0.5))"
                           : "none",
+                        transition: "transform 0.3s ease",
                         "&:hover": {
-                          transform: "rotate(8deg) scale(1.1)",
+                          transform: "rotate(6deg) scale(1.1)",
                         },
                       }}
                     />
