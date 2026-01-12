@@ -235,54 +235,51 @@ export default function Skills() {
                 >
 
                   <Paper
-  sx={{
-    p: 3,
-    textAlign: "center",
-    borderRadius: "22px",
-    background: cardBg,
-    border: `1px solid ${
-      isDark
-        ? "rgba(255,255,255,0.15)"
-        : "rgba(0,0,0,0.12)"
-    }`,
-    boxShadow: isDark
-      ? "0 0 0 1px rgba(255,255,255,0.05)"
-      : "0 4px 12px rgba(0,0,0,0.06)",
-    transition: "all 0.25s ease",
-    "&:hover": {
-      transform: "translateY(-4px)",
-      borderColor: primary,
-      boxShadow: isDark
-        ? "0 8px 20px rgba(0,0,0,0.5)"
-        : "0 8px 20px rgba(0,0,0,0.12)",
-    },
-  }}
->
-  <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 65,
-      height: 65,
-      mb: 2,
-      objectFit: "contain",
-      transition: "transform 0.3s ease",
-
-      /* 🔹 MISMO COLOR QUE EN MODO CLARO */
-      /* 🔹 SOLO SE ACLARA EN DARK MODE */
-      filter: isDark ? "brightness(1.15)" : "none",
-
-      "&:hover": {
-        transform: "rotate(8deg) scale(1.1)",
-      },
-    }}
-  />
-
-  <Typography fontWeight="bold">
-    {skill.name}
-  </Typography>
-</Paper>
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      borderRadius: "22px",
+                      background: cardBg,
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
+                      boxShadow: isDark
+                        ? "0 0 0 1px rgba(255,255,255,0.05)"
+                        : "0 4px 12px rgba(0,0,0,0.06)",
+                      transition: "all 0.25s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        borderColor: primary,
+                        boxShadow: isDark
+                          ? "0 8px 20px rgba(0,0,0,0.5)"
+                          : "0 8px 20px rgba(0,0,0,0.12)",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={skill.img}
+                      alt={skill.name}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        transition: "transform 0.3s ease, filter 0.3s ease",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none",
+                        "&:hover": {
+                          transform: "rotate(8deg) scale(1.1)",
+                        },
+                      }}
+                    />
+                    <Typography fontWeight="bold">
+                      {skill.name}
+                    </Typography>
+                  </Paper>
                   
                 </motion.div>
               </Grid>
