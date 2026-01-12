@@ -232,26 +232,33 @@ export default function Skills() {
                     }}
                   >
                  <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
   sx={{
-    width: 65,
-    height: 65,
+    width: 70,
+    height: 70,
     mb: 2,
-    objectFit: "contain",
-    transition: "transform 0.3s ease",
+    mx: "auto",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "14px",
 
-    /* 🔑 AQUÍ VA EL ARREGLO */
-    filter: isDark
-      ? "drop-shadow(0 0 6px rgba(0,0,0,0.45)) brightness(1.15) contrast(1.2)"
-      : "none",
-
-    "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-    },
+    /* 🔑 AQUÍ SE ARREGLA EL PROBLEMA */
+    background: isDark
+      ? "rgba(0,0,0,0.18)"
+      : "transparent",
   }}
-/>
+>
+  <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
+    sx={{
+      width: 60,
+      height: 60,
+      objectFit: "contain",
+    }}
+  />
+</Box>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
