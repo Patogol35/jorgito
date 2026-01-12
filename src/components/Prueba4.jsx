@@ -1408,23 +1408,28 @@ export default function Skills() {
                     }}
                   >
                     <Box
-                      component="img"
-                      src={skill.img}
-                      alt={skill.name}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        transition: "transform 0.3s ease, filter 0.3s ease",
-                        filter: isDark
-                          ? "invert(1) brightness(1.2)"
-                          : "none",
-                        "&:hover": {
-                          transform: "rotate(8deg) scale(1.1)",
-                        },
-                      }}
-                    />
+  component={motion.img}
+  src={skill.img}
+  alt={skill.name}
+  initial={{ opacity: 0, scale: 0.7 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.4, delay: index * 0.05 }}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    filter: isDark
+      ? "brightness(1.15) contrast(1.1) drop-shadow(0 0 4px rgba(187,222,251,0.45))"
+      : "none",
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+      filter: isDark
+        ? "brightness(1.25) drop-shadow(0 0 6px rgba(187,222,251,0.7))"
+        : "none",
+    },
+  }}
+/>
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
