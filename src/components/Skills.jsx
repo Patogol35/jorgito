@@ -55,12 +55,6 @@ const skills = [
   category: "Tools",
   img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
 },
-
-    {
-  name: "Microsoft Office",
-  category: "Tools",
-  img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1767552002/logotipo-de-microsoft-office-con-sombra-vinnytsia-ucrania-mayo-ilustraci%C3%B3n-vectorial-editorial-aislada-sobre-fondo-transparente-217860058_z8duy3.jpg",
-},
 ];
 
 const categoryIcons = {
@@ -252,33 +246,23 @@ export default function Skills() {
                     }}
                   >
                     <Box
-  sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      maxWidth: "100%",
-      maxHeight: "100%",
-      objectFit: "contain",
-      transition: "transform 0.3s ease, filter 0.3s ease",
-      filter: isDark
-        ? "invert(1) brightness(1.2)"
-        : "none",
-      "&:hover": {
-        transform: "rotate(8deg) scale(1.1)",
-      },
-    }}
-  />
-</Box>
+                      component="img"
+                      src={skill.img}
+                      alt={skill.name}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        transition: "transform 0.3s ease, filter 0.3s ease",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none",
+                        "&:hover": {
+                          transform: "rotate(8deg) scale(1.1)",
+                        },
+                      }}
+                    />
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
@@ -292,4 +276,5 @@ export default function Skills() {
       </Container>
     </Box>
   );
-        }
+                    }
+    
