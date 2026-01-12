@@ -239,9 +239,8 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
     transition: "transform 0.3s ease",
-
     "&:hover": {
-      transform: "scale(1.08)",
+      transform: "rotate(8deg) scale(1.1)",
     },
   }}
 />
