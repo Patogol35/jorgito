@@ -258,19 +258,20 @@ export default function Skills() {
                     }}
                   >
                   <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
   sx={{
     width: 65,
     height: 65,
     mb: 2,
-    objectFit: "contain",
+    backgroundColor: isDark ? "#ffffff" : "transparent",
+    maskImage: `url(${skill.img})`,
+    WebkitMaskImage: `url(${skill.img})`,
+    maskRepeat: "no-repeat",
+    WebkitMaskRepeat: "no-repeat",
+    maskSize: "contain",
+    WebkitMaskSize: "contain",
+    maskPosition: "center",
+    WebkitMaskPosition: "center",
     transition: "transform 0.3s ease",
-    filter:
-      isDark && skill.name !== "Linux"
-        ? "invert(1) brightness(1.2)"
-        : "none",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
