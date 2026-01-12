@@ -61,7 +61,11 @@ const skills = [
   category: "Tools",
   img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png",
 },
-
+  {
+  name: "Linux",
+  category: "Tools",
+  img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768239674/linux_6124995_f61lrx.png",
+},
     
 ];
 
