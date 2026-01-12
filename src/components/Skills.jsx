@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 import BuildIcon from "@mui/icons-material/Build";
+import GroupsIcon from "@mui/icons-material/Groups";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
