@@ -233,58 +233,78 @@ export default function Skills() {
                   exit={{ opacity: 0, scale: 0.85 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
+
                   <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      boxShadow: isDark
-                        ? "0 0 0 1px rgba(255,255,255,0.05)"
-                        : "0 4px 12px rgba(0,0,0,0.06)",
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: primary,
-                        boxShadow: isDark
-                          ? "0 8px 20px rgba(0,0,0,0.5)"
-                          : "0 8px 20px rgba(0,0,0,0.12)",
-                      },
-                    }}
-                  >
-                  <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
   sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-    transition: "transform 0.3s ease",
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(0,0,0,0.12)"
+    }`,
+    boxShadow: isDark
+      ? "0 0 0 1px rgba(255,255,255,0.05)"
+      : "0 4px 12px rgba(0,0,0,0.06)",
+    transition: "all 0.25s ease",
     "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
+      transform: "translateY(-4px)",
+      borderColor: primary,
+      boxShadow: isDark
+        ? "0 8px 20px rgba(0,0,0,0.5)"
+        : "0 8px 20px rgba(0,0,0,0.12)",
     },
-
-    /* 🔹 NO filtros globales → mantiene colores reales */
-    filter: "none",
-
-    /* 🔹 Solo por si algún SVG oscuro se pierde en dark mode */
-    ...(isDark &&
-      ["Vercel", "Supabase"].includes(skill.name) && {
-        filter: "brightness(1.4)",
-      }),
   }}
-/>
-                    <Typography fontWeight="bold">
-                      {skill.name}
-                    </Typography>
-                  </Paper>
+>
+  {/* ICONO */}
+  <Box
+    sx={{
+      width: 70,
+      height: 70,
+      mb: 2,
+      mx: "auto",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      borderRadius: "16px",
+
+      /* 🔹 Placa clara SOLO en dark mode y SOLO iconos problemáticos */
+      ...(isDark &&
+        ["AWS", "VirtualBox"].includes(skill.name) && {
+          background: "rgba(255,255,255,0.08)",
+          boxShadow: "0 0 0 1px rgba(255,255,255,0.18)",
+        }),
+    }}
+  >
+    <Box
+      component="img"
+      src={skill.img}
+      alt={skill.name}
+      sx={{
+        width: 60,
+        height: 60,
+        objectFit: "contain",
+        transition: "transform 0.3s ease",
+        "&:hover": {
+          transform: "rotate(6deg) scale(1.08)",
+        },
+
+        /* 🔹 micro ajuste SOLO si hace falta */
+        ...(isDark &&
+          ["AWS", "VirtualBox"].includes(skill.name) && {
+            filter: "brightness(1.15)",
+          }),
+      }}
+    />
+  </Box>
+
+  <Typography fontWeight="bold">
+    {skill.name}
+  </Typography>
+</Paper>
+                  
                 </motion.div>
               </Grid>
             ))}
