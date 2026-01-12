@@ -237,21 +237,21 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
 
-    /* Borde según modo */
+    /* Borde limpio y consistente en ambos modos */
     filter: `
-      ${isDark ? "brightness(1.15) contrast(1.1)" : ""}
-      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : "#000000"})
-      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : "#000000"})
+      ${isDark ? "brightness(1.12) contrast(1.05)" : ""}
+      drop-shadow(0 0 0.9px ${isDark ? "#e5e5e5" : "#1f1f1f"})
+      drop-shadow(0 0 0.9px ${isDark ? "#e5e5e5" : "#1f1f1f"})
     `,
 
     transition: "transform 0.3s ease, filter 0.3s ease",
 
     "&:hover": {
-      transform: "scale(1.12)",
+      transform: "scale(1.1)",
       filter: `
-        ${isDark ? "brightness(1.25) contrast(1.15)" : ""}
-        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : "#000000"})
-        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : "#000000"})
+        ${isDark ? "brightness(1.18) contrast(1.1)" : ""}
+        drop-shadow(0 0 1.3px ${isDark ? "#f5f5f5" : "#000000"})
+        drop-shadow(0 0 1.3px ${isDark ? "#f5f5f5" : "#000000"})
       `,
     },
   }}
