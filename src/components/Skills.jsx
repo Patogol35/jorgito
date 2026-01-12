@@ -220,6 +220,9 @@ export default function Skills() {
                       borderRadius: "22px",
                       background: cardBg,
                       border: `1px solid ${
+  isDark ? "rgba(0,0,0,0.35)" : "rgba(0,0,0,0.12)"
+}`,
+                      border: `1px solid ${
                         isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)"
                       }`,
                       transition: "all 0.25s ease",
