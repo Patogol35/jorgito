@@ -250,20 +250,26 @@ export default function Skills() {
   }}
 >
   <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 45,
-      height: 45,
-      objectFit: "contain",
-      transition: "transform 0.3s ease",
-      "&:hover": {
-        transform: "rotate(8deg) scale(1.15)",
-      },
-    }}
-  />
-</Box>
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    transition: "transform 0.3s ease",
+
+    /* 👇 SOLO PARA DARK MODE */
+    filter: isDark
+      ? "drop-shadow(0 0 6px rgba(255,255,255,0.35)) brightness(1.15)"
+      : "none",
+
+    "&:hover": {
+      transform: "rotate(6deg) scale(1.08)",
+    },
+  }}
+/>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
