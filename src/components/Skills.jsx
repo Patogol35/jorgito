@@ -240,23 +240,9 @@ export default function Skills() {
     height: 65,
     mb: 2,
     objectFit: "contain",
-    transition: "transform 0.3s ease, filter 0.3s ease",
-    padding: isDark ? "10px" : 0,
-    borderRadius: "14px",
-
-    background: isDark
-      ? "rgba(255,255,255,0.08)"
-      : "transparent",
-
-    boxShadow: isDark
-      ? "0 0 18px rgba(144,202,249,0.35)"
-      : "none",
-
+    transition: "transform 0.3s ease",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
-      boxShadow: isDark
-        ? "0 0 26px rgba(144,202,249,0.6)"
-        : "none",
     },
   }}
 />
