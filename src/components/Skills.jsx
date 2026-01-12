@@ -227,29 +227,53 @@ export default function Skills() {
                       },
                     }}
                   >
-                 <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
+                <Box
   sx={{
-    width: 65,
-    height: 65,
+    width: 76,
+    height: 76,
     mb: 2,
-    objectFit: "contain",
+    mx: "auto",
+    borderRadius: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
 
-    /* ✅ la propiedad ES filter */
-    filter:
-      isDark && invertOnDark.includes(skill.name)
-        ? "invert(1) brightness(1.2)"
-        : "none",
+    background: isDark
+      ? "rgba(255,255,255,0.04)"
+      : "rgba(255,255,255,0.95)",
 
-    transition: "transform 0.3s ease, filter 0.3s ease",
+    border: "1px solid transparent",
+    backgroundImage: `
+      linear-gradient(${isDark ? "#121212" : "#fff"}, ${isDark ? "#121212" : "#fff"}),
+      linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})
+    `,
+    backgroundOrigin: "border-box",
+    backgroundClip: "content-box, border-box",
+
+    transition: "all 0.35s ease",
 
     "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
+      transform: "translateY(-2px) scale(1.05)",
+      boxShadow: `0 10px 30px ${primary}33`,
     },
   }}
-/>
+>
+  <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
+    sx={{
+      width: 44,
+      height: 44,
+      objectFit: "contain",
+      filter:
+        isDark && invertOnDark.includes(skill.name)
+          ? "invert(1) brightness(1.2)"
+          : "none",
+      transition: "transform 0.3s ease",
+    }}
+  />
+</Box>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
