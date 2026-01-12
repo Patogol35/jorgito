@@ -98,7 +98,7 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-  ? "rgba(255,255,255,0.08)"
+  ? "rgba(255,255,255,0.06)"
   : "rgba(255,255,255,0.85)";
 
   return (
@@ -228,20 +228,38 @@ export default function Skills() {
                     }}
                   >
                     <Box
-                      component="img"
-                      src={skill.img}
-                      alt={skill.name}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        transition: "transform 0.3s ease",
-                        "&:hover": {
-                          transform: "rotate(8deg) scale(1.1)",
-                        },
-                      }}
-                    />
+  sx={{
+    width: 84,
+    height: 84,
+    mx: "auto",
+    mb: 2,
+    borderRadius: "18px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: isDark
+      ? "linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))"
+      : "transparent",
+  }}
+>
+  <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
+    sx={{
+      width: 60,
+      height: 60,
+      objectFit: "contain",
+      filter: isDark
+        ? "brightness(1.25) contrast(1.2) drop-shadow(0 0 6px rgba(187,222,251,0.45))"
+        : "none",
+      transition: "transform 0.3s ease",
+      "&:hover": {
+        transform: "scale(1.1)",
+      },
+    }}
+  />
+</Box>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
