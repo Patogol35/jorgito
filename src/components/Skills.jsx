@@ -44,7 +44,7 @@ const skills = [
   { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
   { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
-
+const invertOnDark = ["AWS", "MySQL"];
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
@@ -240,7 +240,15 @@ export default function Skills() {
     height: 65,
     mb: 2,
     objectFit: "contain",
-    transition: "transform 0.3s ease",
+
+    /* ✅ la propiedad ES filter */
+    filter:
+      isDark && invertOnDark.includes(skill.name)
+        ? "invert(1) brightness(1.2)"
+        : "none",
+
+    transition: "transform 0.3s ease, filter 0.3s ease",
+
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
     },
