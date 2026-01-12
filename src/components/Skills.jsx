@@ -240,8 +240,8 @@ export default function Skills() {
     /* Borde según modo */
     filter: `
       ${isDark ? "brightness(1.15) contrast(1.1)" : ""}
-      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : primary})
-      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : primary})
+      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : "#000000"})
+      drop-shadow(0 0 0.8px ${isDark ? "#ffffff" : "#000000"})
     `,
 
     transition: "transform 0.3s ease, filter 0.3s ease",
@@ -250,8 +250,8 @@ export default function Skills() {
       transform: "scale(1.12)",
       filter: `
         ${isDark ? "brightness(1.25) contrast(1.15)" : ""}
-        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : primary})
-        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : primary})
+        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : "#000000"})
+        drop-shadow(0 0 1.3px ${isDark ? "#ffffff" : "#000000"})
       `,
     },
   }}
