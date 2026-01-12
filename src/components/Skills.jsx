@@ -98,7 +98,7 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-  ? "rgba(255,255,255,0.05)"
+  ? "rgba(255,255,255,0.08)"
   : "rgba(255,255,255,0.85)";
 
   return (
@@ -227,29 +227,7 @@ export default function Skills() {
                       },
                     }}
                   >
-                  <Box
-  sx={{
-    width: 80,
-    height: 80,
-    mb: 2,
-    mx: "auto",
-    borderRadius: "50%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-
-    background: isDark
-      ? "radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.05) 70%)"
-      : "radial-gradient(circle, rgba(25,118,210,0.15) 0%, rgba(25,118,210,0.03) 70%)",
-
-    boxShadow: isDark
-      ? "0 0 22px rgba(144,202,249,0.35)"
-      : "0 0 16px rgba(25,118,210,0.25)",
-
-    transition: "all 0.3s ease",
-  }}
->
-  <Box
+                 <Box
   component="img"
   src={skill.img}
   alt={skill.name}
@@ -260,13 +238,8 @@ export default function Skills() {
     objectFit: "contain",
     transition: "transform 0.3s ease",
 
-    /* 👇 SOLO PARA DARK MODE */
-    filter: isDark
-      ? "drop-shadow(0 0 6px rgba(255,255,255,0.35)) brightness(1.15)"
-      : "none",
-
     "&:hover": {
-      transform: "rotate(6deg) scale(1.08)",
+      transform: "scale(1.08)",
     },
   }}
 />
