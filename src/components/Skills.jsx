@@ -219,11 +219,7 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
-                      
-  
-                      border: `1px solid ${
-                        isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.12)"
-                      }`,
+                      border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.05)"
                       transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
