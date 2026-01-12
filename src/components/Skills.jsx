@@ -132,64 +132,72 @@ export default function Skills() {
 </motion.div>
 
         {/* FILTERS */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-          <Box
-            ref={containerRef}
+        
+<motion.div
+  initial={{ opacity: 0, scale: 0.8 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8, delay: 0.15 }}
+  viewport={{ once: true }}
+>
+  <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+    <Box
+      ref={containerRef}
+      sx={{
+        maxWidth: "100%",
+        overflowX: "auto",
+        "&::-webkit-scrollbar": { display: "none" },
+      }}
+    >
+      <ToggleButtonGroup
+        value={filter}
+        exclusive
+        onChange={(e, val) => val && setFilter(val)}
+        sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
+      >
+        {categories.map((cat) => (
+          <ToggleButton
+            key={cat}
+            value={cat}
+            ref={(el) => (buttonRefs.current[cat] = el)}
             sx={{
-              maxWidth: "100%",
-              overflowX: "auto",
-              "&::-webkit-scrollbar": { display: "none" },
+              borderRadius: "999px",
+              px: 2.4,
+              py: 1,
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              textTransform: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              backgroundColor: isDark
+                ? "rgba(255,255,255,0.04)"
+                : "rgba(255,255,255,0.9)",
+              color: isDark
+                ? "rgba(255,255,255,0.85)"
+                : "rgba(0,0,0,0.75)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(255,255,255,0.12)"
+                  : "rgba(0,0,0,0.12)"
+              }`,
+              "&.Mui-selected": {
+                background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                color: "#fff",
+                borderColor: "transparent",
+              },
+              "&:active": {
+                transform: "scale(0.95)",
+              },
             }}
           >
-            <ToggleButtonGroup
-              value={filter}
-              exclusive
-              onChange={(e, val) => val && setFilter(val)}
-              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
-            >
-              {categories.map((cat) => (
-                <ToggleButton
-                  key={cat}
-                  value={cat}
-                  ref={(el) => (buttonRefs.current[cat] = el)}
-                  sx={{
-                    borderRadius: "999px",
-                    px: 2.4,
-                    py: 1,
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    textTransform: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    backgroundColor: isDark
-                      ? "rgba(255,255,255,0.04)"
-                      : "rgba(255,255,255,0.9)",
-                    color: isDark
-                      ? "rgba(255,255,255,0.85)"
-                      : "rgba(0,0,0,0.75)",
-                    border: `1px solid ${
-                      isDark
-                        ? "rgba(255,255,255,0.12)"
-                        : "rgba(0,0,0,0.12)"
-                    }`,
-                    "&.Mui-selected": {
-                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                      color: "#fff",
-                      borderColor: "transparent",
-                    },
-                    "&:active": {
-                      transform: "scale(0.95)",
-                    },
-                  }}
-                >
-                  {categoryIcons[cat]}
-                  {cat}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-          </Box>
-        </Box>
+            {categoryIcons[cat]}
+            {cat}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+    </Box>
+  </Box>
+</motion.div>
 
         {/* GRID */}
         <Grid container spacing={4} justifyContent="center">
