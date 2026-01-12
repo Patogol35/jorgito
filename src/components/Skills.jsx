@@ -240,16 +240,9 @@ export default function Skills() {
     height: 65,
     mb: 2,
     objectFit: "contain",
-
-    /* 🔑 SOLO para iconos delicados */
-    filter:
-      isDark && skill.name === "Supabase"
-        ? "brightness(1.4) contrast(1.6)"
-        : "none",
-
     transition: "transform 0.3s ease",
     "&:hover": {
-      transform: "rotate(6deg) scale(1.08)",
+      transform: "rotate(8deg) scale(1.1)",
     },
   }}
 />
