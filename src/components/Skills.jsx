@@ -264,11 +264,7 @@ const primaryColor = primary;
     ))}
   </AnimatePresence>
 </Grid>
-            ))}
-          </AnimatePresence>
-        </Grid>
-
-      </Container>
+           </Container>
     </Box>
   );
 }
