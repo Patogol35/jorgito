@@ -196,75 +196,72 @@ const primaryColor = primary;
 </Box>
 
         {/* =========================
-    GRID
-========================= */}
-<Grid
-  container
-  spacing={4}
-  justifyContent="center"
-  key={filter}   // 🔥 CLAVE REAL
+            GRID
+        ========================= */}
+        <Grid container spacing={4} justifyContent="center">
+          <AnimatePresence>
+            {filteredSkills.map((skill, index) => (
+              <Grid item xs={6} sm={4} md={3} key={skill.name}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                >
+                  <Paper
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+
+    // borde visible (fix anterior)
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(0,0,0,0.12)"
+    }`,
+    boxShadow: isDark
+      ? "0 0 0 1px rgba(255,255,255,0.05)"
+      : "0 4px 12px rgba(0,0,0,0.06)",
+    transition: "all 0.25s ease",
+
+    "&:hover": {
+      transform: "translateY(-4px)",
+      borderColor: primary,
+      boxShadow: isDark
+        ? "0 8px 20px rgba(0,0,0,0.5)"
+        : "0 8px 20px rgba(0,0,0,0.12)",
+    },
+  }}
 >
-  <AnimatePresence>
-    {filteredSkills.map((skill, index) => (
-      <Grid item xs={6} sm={4} md={3} key={skill.name}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.85 }}
-          transition={{ duration: 0.4, delay: index * 0.05 }}
-        >
-          <Paper
-            sx={{
-              p: 3,
-              textAlign: "center",
-              borderRadius: "22px",
-              background: cardBg,
-              border: `1px solid ${
-                isDark
-                  ? "rgba(255,255,255,0.15)"
-                  : "rgba(0,0,0,0.12)"
-              }`,
-              boxShadow: isDark
-                ? "0 0 0 1px rgba(255,255,255,0.05)"
-                : "0 4px 12px rgba(0,0,0,0.06)",
-              transition: "all 0.25s ease",
-              "&:hover": {
-                transform: "translateY(-4px)",
-                borderColor: primary,
-                boxShadow: isDark
-                  ? "0 8px 20px rgba(0,0,0,0.5)"
-                  : "0 8px 20px rgba(0,0,0,0.12)",
-              },
-            }}
-          >
-            <Box
-              component="img"
-              src={skill.img}
-              alt={skill.name}
-              sx={{
-                width: 65,
-                height: 65,
-                mb: 2,
-                objectFit: "contain",
-                transition: "transform 0.3s ease, filter 0.3s ease",
-                filter: isDark
-                  ? "invert(1) brightness(1.2)"
-                  : "none",
-                "&:hover": {
-                  transform: "rotate(8deg) scale(1.1)",
-                },
-              }}
-            />
-            <Typography fontWeight="bold">
-              {skill.name}
-            </Typography>
-          </Paper>
-        </motion.div>
-      </Grid>
-    ))}
-  </AnimatePresence>
-</Grid>
-           </Container>
+  <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    transition: "transform 0.3s ease, filter 0.3s ease",
+    filter: isDark ? "invert(1) brightness(1.2)" : "none",
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+    },
+  }}
+/>
+  <Typography fontWeight="bold">
+    {skill.name}
+  </Typography>
+</Paper>
+                </motion.div>
+              </Grid>
+            ))}
+          </AnimatePresence>
+        </Grid>
+
+      </Container>
     </Box>
   );
 }
