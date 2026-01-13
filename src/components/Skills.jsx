@@ -37,21 +37,6 @@ const skills = [
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-  {
-    name: "VirtualBox",
-    category: "Tools",
-    img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg",
-  },
-  {
-    name: "Git",
-    category: "Tools",
-    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-  },
-  {
-    name: "AnyDesk",
-    category: "Tools",
-    img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
-  },
 ];
 
 const categoryIcons = {
@@ -70,9 +55,8 @@ export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
   const primary = theme.palette.primary.main;
+const primaryColor = primary;
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
@@ -102,7 +86,10 @@ export default function Skills() {
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
-        {/* HEADER */}
+
+        {/* =========================
+            HEADER
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -138,66 +125,74 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* FILTERS */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-          <Box
-            ref={containerRef}
-            sx={{
-              maxWidth: "100%",
-              overflowX: "auto",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-            <ToggleButtonGroup
-              value={filter}
-              exclusive
-              onChange={(e, val) => val && setFilter(val)}
-              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
-            >
-              {categories.map((cat) => (
-                <ToggleButton
-                  key={cat}
-                  value={cat}
-                  ref={(el) => (buttonRefs.current[cat] = el)}
-                  component={motion.button}
-                  whileTap={{ scale: 0.92 }}
-                  sx={{
-                    borderRadius: "999px",
-                    px: 2.4,
-                    py: 1,
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    textTransform: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    backgroundColor: isDark
-                      ? "rgba(255,255,255,0.04)"
-                      : "rgba(255,255,255,0.9)",
-                    color: isDark
-                      ? "rgba(255,255,255,0.85)"
-                      : "rgba(0,0,0,0.75)",
-                    border: `1px solid ${
-                      isDark
-                        ? "rgba(255,255,255,0.12)"
-                        : "rgba(0,0,0,0.12)"
-                    }`,
-                    "&.Mui-selected": {
-                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                      color: "#fff",
-                      borderColor: "transparent",
-                    },
-                  }}
-                >
-                  {categoryIcons[cat]}
-                  {cat}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-          </Box>
-        </Box>
+        {/* =========================
+            FILTERS
+        ========================= */}
+<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+  <Box
+    ref={containerRef}
+    sx={{
+      maxWidth: "100%",
+      overflowX: "auto",
+      "&::-webkit-scrollbar": { display: "none" },
+    }}
+  >
+    <ToggleButtonGroup
+      value={filter}
+      exclusive
+      onChange={(e, val) => val && setFilter(val)}
+      sx={{
+        display: "inline-flex", // 🔥 clave para centrado real
+        gap: 1.2,
+        py: 0.5,
+      }}
+    >
+      {categories.map((cat) => (
+        <ToggleButton
+          key={cat}
+          value={cat}
+          ref={(el) => (buttonRefs.current[cat] = el)}
+          component={motion.button}
+          whileTap={{ scale: 0.92 }}
+          sx={{
+            borderRadius: "999px",
+            px: 2.4,
+            py: 1,
+            fontWeight: 600,
+            fontSize: "0.9rem",
+            textTransform: "none",
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.04)"
+              : "rgba(255,255,255,0.9)",
+            color: isDark
+              ? "rgba(255,255,255,0.85)"
+              : "rgba(0,0,0,0.75)",
+            border: `1px solid ${
+              isDark
+                ? "rgba(255,255,255,0.12)"
+                : "rgba(0,0,0,0.12)"
+            }`,
+            "&.Mui-selected": {
+              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+              color: "#fff",
+              borderColor: "transparent",
+            },
+          }}
+        >
+          {categoryIcons[cat]}
+          {cat}
+        </ToggleButton>
+      ))}
+    </ToggleButtonGroup>
+  </Box>
+</Box>
 
-        {/* GRID */}
+        {/* =========================
+            GRID
+        ========================= */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
@@ -209,57 +204,59 @@ export default function Skills() {
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
                   <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      boxShadow: isDark
-                        ? "0 0 0 1px rgba(255,255,255,0.05)"
-                        : "0 4px 12px rgba(0,0,0,0.06)",
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: primary,
-                        boxShadow: isDark
-                          ? "0 8px 20px rgba(0,0,0,0.5)"
-                          : "0 8px 20px rgba(0,0,0,0.12)",
-                      },
-                    }}
-                  >
-                    <Box
-                      component="img"
-                      src={skill.img}
-                      alt={skill.name}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        transition: "transform 0.3s ease, filter 0.3s ease",
-                        filter: isDark
-                          ? "invert(1) brightness(1.2)"
-                          : "none",
-                        "&:hover": {
-                          transform: "rotate(8deg) scale(1.1)",
-                        },
-                      }}
-                    />
-                    <Typography fontWeight="bold">
-                      {skill.name}
-                    </Typography>
-                  </Paper>
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+
+    // borde visible (fix anterior)
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(0,0,0,0.12)"
+    }`,
+    boxShadow: isDark
+      ? "0 0 0 1px rgba(255,255,255,0.05)"
+      : "0 4px 12px rgba(0,0,0,0.06)",
+    transition: "all 0.25s ease",
+
+    "&:hover": {
+      transform: "translateY(-4px)",
+      borderColor: primary,
+      boxShadow: isDark
+        ? "0 8px 20px rgba(0,0,0,0.5)"
+        : "0 8px 20px rgba(0,0,0,0.12)",
+    },
+  }}
+>
+  <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    transition: "transform 0.3s ease, filter 0.3s ease",
+    filter: isDark ? "invert(1) brightness(1.2)" : "none",
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+    },
+  }}
+/>
+  <Typography fontWeight="bold">
+    {skill.name}
+  </Typography>
+</Paper>
                 </motion.div>
               </Grid>
             ))}
           </AnimatePresence>
         </Grid>
+
       </Container>
     </Box>
   );
-                }
+}
