@@ -122,7 +122,7 @@ const primaryColor = primary;
             }}
           >
             {/* Icono SIN fondo */}
-            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
 
             <Typography
               variant="h6"
