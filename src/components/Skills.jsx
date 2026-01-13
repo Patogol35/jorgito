@@ -1,11 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -16,8 +9,16 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
+
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap } from "lucide-react";
 
 /* =========================
    DATA
@@ -61,8 +62,6 @@ export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primary = theme.palette.primary.main;
-const primaryColor = primary;
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
@@ -94,177 +93,166 @@ const primaryColor = primary;
       <Container>
 
         {/* =========================
-    HEADER
-========================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8 }}
-  style={{ textAlign: "center", marginBottom: "2rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      px: 3,
-      py: 0.9,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(144,202,249,0.06)"
-        : "rgba(25,118,210,0.06)",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-      backdropFilter: "blur(6px)",
-    }}
-  >
-    {/* Icono SIN fondo – MUI */}
-    <WorkspacePremiumIcon
-      sx={{ fontSize: 22, color: theme.palette.primary.main }}
-    />
-
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: "bold",
-        color: theme.palette.primary.main,
-        lineHeight: 1,
-      }}
-    >
-      Stack Tecnológico
-    </Typography>
-  </Box>
-</motion.div>
-
-        {/* =========================
-            FILTERS
+            HEADER
         ========================= */}
-<Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-  <Box
-    ref={containerRef}
-    sx={{
-      maxWidth: "100%",
-      overflowX: "auto",
-      "&::-webkit-scrollbar": { display: "none" },
-    }}
-  >
-    <ToggleButtonGroup
-      value={filter}
-      exclusive
-      onChange={(e, val) => val && setFilter(val)}
-      sx={{
-        display: "inline-flex", // 🔥 clave para centrado real
-        gap: 1.2,
-        py: 0.5,
-      }}
-    >
-      {categories.map((cat) => (
-        <ToggleButton
-          key={cat}
-          value={cat}
-          ref={(el) => (buttonRefs.current[cat] = el)}
-          component={motion.button}
-          whileTap={{ scale: 0.92 }}
-          sx={{
-            borderRadius: "999px",
-            px: 2.4,
-            py: 1,
-            fontWeight: 600,
-            fontSize: "0.9rem",
-            textTransform: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.04)"
-              : "rgba(255,255,255,0.9)",
-            color: isDark
-              ? "rgba(255,255,255,0.85)"
-              : "rgba(0,0,0,0.75)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(255,255,255,0.12)"
-                : "rgba(0,0,0,0.12)"
-            }`,
-            "&.Mui-selected": {
-              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-              color: "#fff",
-              borderColor: "transparent",
-            },
-          }}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
-          {categoryIcons[cat]}
-          {cat}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
-  </Box>
-</Box>
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <WorkspacePremiumIcon
+              sx={{ fontSize: 22, color: theme.palette.primary.main }}
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: theme.palette.primary.main,
+                lineHeight: 1,
+              }}
+            >
+              Stack Tecnológico
+            </Typography>
+          </Box>
+        </motion.div>
 
         {/* =========================
-            GRID
+            FILTERS (ANIMADOS)
+        ========================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+            <Box
+              ref={containerRef}
+              sx={{
+                maxWidth: "100%",
+                overflowX: "auto",
+                "&::-webkit-scrollbar": { display: "none" },
+              }}
+            >
+              <ToggleButtonGroup
+                value={filter}
+                exclusive
+                onChange={(e, val) => val && setFilter(val)}
+                sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
+              >
+                {categories.map((cat) => (
+                  <ToggleButton
+                    key={cat}
+                    value={cat}
+                    ref={(el) => (buttonRefs.current[cat] = el)}
+                    component={motion.button}
+                    whileTap={{ scale: 0.92 }}
+                    sx={{
+                      borderRadius: "999px",
+                      px: 2.4,
+                      py: 1,
+                      fontWeight: 600,
+                      fontSize: "0.9rem",
+                      textTransform: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      backgroundColor: isDark
+                        ? "rgba(255,255,255,0.04)"
+                        : "rgba(255,255,255,0.9)",
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.12)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
+                      "&.Mui-selected": {
+                        background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+                        color: "#fff",
+                        borderColor: "transparent",
+                      },
+                    }}
+                  >
+                    {categoryIcons[cat]}
+                    {cat}
+                  </ToggleButton>
+                ))}
+              </ToggleButtonGroup>
+            </Box>
+          </Box>
+        </motion.div>
+
+        {/* =========================
+            GRID (ANIMADA)
         ========================= */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.85 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
                   <Paper
-  sx={{
-    p: 3,
-    textAlign: "center",
-    borderRadius: "22px",
-    background: cardBg,
-
-    // borde visible (fix anterior)
-    border: `1px solid ${
-      isDark
-        ? "rgba(255,255,255,0.15)"
-        : "rgba(0,0,0,0.12)"
-    }`,
-    boxShadow: isDark
-      ? "0 0 0 1px rgba(255,255,255,0.05)"
-      : "0 4px 12px rgba(0,0,0,0.06)",
-    transition: "all 0.25s ease",
-
-    "&:hover": {
-      transform: "translateY(-4px)",
-      borderColor: primary,
-      boxShadow: isDark
-        ? "0 8px 20px rgba(0,0,0,0.5)"
-        : "0 8px 20px rgba(0,0,0,0.12)",
-    },
-  }}
->
-  <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
-  sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-    transition: "transform 0.3s ease, filter 0.3s ease",
-    filter: isDark ? "invert(1) brightness(1.2)" : "none",
-    "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-    },
-  }}
-/>
-  <Typography fontWeight="bold">
-    {skill.name}
-  </Typography>
-</Paper>
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      borderRadius: "22px",
+                      background: cardBg,
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
+                      transition: "all 0.25s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        borderColor: theme.palette.primary.main,
+                      },
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={skill.img}
+                      alt={skill.name}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        filter: isDark
+                          ? "invert(1) brightness(1.2)"
+                          : "none",
+                        transition: "transform 0.3s ease",
+                        "&:hover": {
+                          transform: "rotate(8deg) scale(1.1)",
+                        },
+                      }}
+                    />
+                    <Typography fontWeight="bold">
+                      {skill.name}
+                    </Typography>
+                  </Paper>
                 </motion.div>
               </Grid>
             ))}
@@ -274,4 +262,4 @@ const primaryColor = primary;
       </Container>
     </Box>
   );
-}
+        }
