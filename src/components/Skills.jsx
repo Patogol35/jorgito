@@ -47,7 +47,7 @@ const skills = [
 
 
 
-const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
+const invertOnDark = [ "VirtualBox"];
 
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
