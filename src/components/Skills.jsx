@@ -93,9 +93,9 @@ const primaryColor = primary;
       <Container>
 
         {/* =========================
-            HEADER
+            HEADER (IGUAL A ABOUT)
         ========================= */}
-      <motion.div
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
@@ -105,7 +105,6 @@ const primaryColor = primary;
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -121,14 +120,12 @@ const primaryColor = primary;
               backdropFilter: "blur(6px)",
             }}
           >
-            {/* Icono SIN fondo */}
-            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-
+            <GraduationCap size={22} color={primaryColor} />
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              Stack Tecnológico 
+              Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
