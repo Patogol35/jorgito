@@ -239,38 +239,64 @@ export default function Skills() {
   }}
 >
                 <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
   sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
+    p: 1.6,
+    borderRadius: "18px",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
 
-    /* Inversión + borde rojo solo en dark mode */
-    filter: isDark
-      ? `
-          ${invertOnDark.includes(skill.name) ? "invert(1) brightness(1.2)" : ""}
-          drop-shadow(0 0 0.9px #ff3b3b)
-          drop-shadow(0 0 0.9px #ff3b3b)
-        `
-      : "none",
+    /* Glass effect solo en dark */
+    background: isDark
+      ? "rgba(255,255,255,0.06)"
+      : "transparent",
+    backdropFilter: isDark ? "blur(6px)" : "none",
 
-    transition: "transform 0.3s ease, filter 0.3s ease",
+    transition: "all 0.35s ease",
 
     "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-      filter: isDark
-        ? `
-            ${invertOnDark.includes(skill.name) ? "invert(1) brightness(1.25)" : ""}
-            drop-shadow(0 0 1.4px #ff3b3b)
-            drop-shadow(0 0 1.4px #ff3b3b)
-          `
-        : "none",
+      background: isDark
+        ? "rgba(255,255,255,0.12)"
+        : "transparent",
+      transform: "translateY(-4px)",
     },
   }}
-/>
+>
+  <Box
+    component="img"
+    src={skill.img}
+    alt={skill.name}
+    sx={{
+      width: 65,
+      height: 65,
+      objectFit: "contain",
+
+      /* Glow elegante + control de contraste */
+      filter: isDark
+        ? `
+            ${invertOnDark.includes(skill.name)
+              ? "invert(1) brightness(1.15)"
+              : ""}
+            drop-shadow(0 0 6px rgba(255,255,255,0.35))
+          `
+        : "none",
+
+      transition: "transform 0.35s ease, filter 0.35s ease",
+
+      "&:hover": {
+        transform: "scale(1.08) rotate(6deg)",
+        filter: isDark
+          ? `
+              ${invertOnDark.includes(skill.name)
+                ? "invert(1) brightness(1.25)"
+                : ""}
+              drop-shadow(0 0 10px rgba(255,255,255,0.55))
+            `
+          : "none",
+      },
+    }}
+  />
+</Box>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
