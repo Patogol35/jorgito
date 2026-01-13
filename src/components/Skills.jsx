@@ -215,23 +215,26 @@ export default function Skills() {
     borderRadius: "22px",
     background: cardBg,
 
-    /* Borde profesional */
+    /* 🔥 BORDES CLAROS Y VISIBLES */
     border: isDark
-      ? "1px solid rgba(255,255,255,0.18)"
-      : "1px solid rgba(0,0,0,0.08)",
+      ? "1.5px solid rgba(255,255,255,0.35)"
+      : "1.5px solid rgba(0,0,0,0.18)",
 
     boxShadow: isDark
-      ? "0 8px 24px rgba(0,0,0,0.35)"
-      : "0 8px 24px rgba(0,0,0,0.08)",
+      ? "0 6px 20px rgba(0,0,0,0.45)"
+      : "0 6px 20px rgba(0,0,0,0.12)",
 
     transition: "all 0.3s ease",
 
     "&:hover": {
       transform: "translateY(-6px)",
-      borderColor: primary,
+
+      /* Hover MUY claro */
+      borderColor: isDark ? "#ffffff" : "#000000",
+
       boxShadow: isDark
-        ? "0 12px 32px rgba(0,0,0,0.5)"
-        : "0 12px 32px rgba(0,0,0,0.15)",
+        ? "0 12px 30px rgba(0,0,0,0.6)"
+        : "0 12px 30px rgba(0,0,0,0.2)",
     },
   }}
 >
