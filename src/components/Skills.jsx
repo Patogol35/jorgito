@@ -199,15 +199,16 @@ const primaryColor = primary;
             GRID
         ========================= */}
         <Grid container spacing={4} justifyContent="center">
-          <AnimatePresence>
+  <AnimatePresence mode="wait">
             {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                >
+  key={`${filter}-${skill.name}`}
+  initial={{ opacity: 0, scale: 0.9 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.85 }}
+  transition={{ duration: 0.4, delay: index * 0.05 }}
+>
                   <Paper
   sx={{
     p: 3,
