@@ -220,29 +220,52 @@ export default function Skills() {
   viewport={{ once: true }}
 >
   <Paper
-    sx={{
-      p: 3,
-      textAlign: "center",
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+
+    /* 🧊 Fondo */
+    background: cardBg,
+    backdropFilter: "blur(10px)",
+
+    /* ✨ BORDE ELEGANTE */
+    border: "1px solid transparent",
+    backgroundClip: "padding-box",
+    position: "relative",
+
+    /* 🔮 Gradiente sutil en el borde */
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: 0,
       borderRadius: "22px",
-      background: cardBg,
-      border: `1px solid ${
-        isDark
-          ? "rgba(255,255,255,0.15)"
-          : "rgba(0,0,0,0.12)"
-      }`,
+      padding: "1px",
+      background: isDark
+        ? "linear-gradient(135deg, rgba(144,202,249,0.5), rgba(255,255,255,0.1))"
+        : "linear-gradient(135deg, rgba(25,118,210,0.4), rgba(255,255,255,0.8))",
+      WebkitMask:
+        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+      WebkitMaskComposite: "xor",
+      pointerEvents: "none",
+    },
+
+    /* 🌫️ Sombra base */
+    boxShadow: isDark
+      ? "0 6px 20px rgba(0,0,0,0.45)"
+      : "0 6px 16px rgba(0,0,0,0.08)",
+
+    transition: "all 0.3s ease",
+
+    /* 🚀 Hover */
+    "&:hover": {
+      transform: "translateY(-6px)",
       boxShadow: isDark
-        ? "0 0 0 1px rgba(255,255,255,0.05)"
-        : "0 4px 12px rgba(0,0,0,0.06)",
-      transition: "all 0.25s ease",
-      "&:hover": {
-        transform: "translateY(-4px)",
-        borderColor: theme.palette.primary.main,
-        boxShadow: isDark
-          ? "0 8px 20px rgba(0,0,0,0.5)"
-          : "0 8px 20px rgba(0,0,0,0.12)",
-      },
-    }}
-  >
+        ? "0 12px 30px rgba(0,0,0,0.6)"
+        : "0 12px 30px rgba(0,0,0,0.15)",
+    },
+  }}
+>
     <Box
   component={motion.img}
   src={skill.img}
