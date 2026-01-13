@@ -61,8 +61,7 @@ const techGlow = {
   "Microsoft Office": "rgba(235,235,235,0.6)",
 };
 
-const glowColor =
-  techGlow[skill.name] || "rgba(255,255,255,0.45)";
+
 
 const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
 
@@ -273,7 +272,7 @@ export default function Skills() {
           ${invertOnDark.includes(skill.name)
             ? "invert(1) brightness(1.15)"
             : ""}
-          drop-shadow(0 0 8px ${glowColor})
+          drop-shadow(0 0 8px ${getGlowColor(skill.name)})
         `
       : "none",
 
@@ -289,7 +288,7 @@ export default function Skills() {
             ${invertOnDark.includes(skill.name)
               ? "invert(1) brightness(1.25)"
               : ""}
-            drop-shadow(0 0 14px ${glowColor})
+            drop-shadow(0 0 14px ${getGlowColor(skill.name)})
           `
         : "none",
       opacity: 1,
