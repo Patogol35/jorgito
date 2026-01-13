@@ -263,7 +263,17 @@ export default function Skills() {
 
     transition: "transform 0.35s ease, filter 0.35s ease",
 
-    
+    "&:hover": {
+      transform: "scale(1.08) rotate(6deg)",
+      filter: isDark
+        ? `
+            ${invertOnDark.includes(skill.name)
+              ? "invert(1) brightness(1.25)"
+              : ""}
+            drop-shadow(0 0 10px rgba(255,255,255,0.55))
+          `
+        : "none",
+    },
   }}
 />
 
