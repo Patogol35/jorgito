@@ -224,25 +224,39 @@ export default function Skills() {
                       },
                     }}
                   >
-                    <Box
-                      component="img"
-                      src={skill.img}
-                      alt={skill.name}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        filter:
-                          isDark && invertOnDark.includes(skill.name)
-                            ? "invert(1) brightness(1.2)"
-                            : "none",
-                        transition: "transform 0.3s ease, filter 0.3s ease",
-                        "&:hover": {
-                          transform: "rotate(8deg) scale(1.1)",
-                        },
-                      }}
-                    />
+                <Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+
+    /* Inversión + borde rojo solo en dark mode */
+    filter: isDark
+      ? `
+          ${invertOnDark.includes(skill.name) ? "invert(1) brightness(1.2)" : ""}
+          drop-shadow(0 0 0.9px #ff3b3b)
+          drop-shadow(0 0 0.9px #ff3b3b)
+        `
+      : "none",
+
+    transition: "transform 0.3s ease, filter 0.3s ease",
+
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+      filter: isDark
+        ? `
+            ${invertOnDark.includes(skill.name) ? "invert(1) brightness(1.25)" : ""}
+            drop-shadow(0 0 1.4px #ff3b3b)
+            drop-shadow(0 0 1.4px #ff3b3b)
+          `
+        : "none",
+    },
+  }}
+/>
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
