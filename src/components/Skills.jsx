@@ -247,13 +247,18 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
+  whileHover={{
+    rotate: 45,        // 👈 mucho más visible
+    scale: 1.25,
+  }}
   whileTap={{
-    rotate: 540,        // 🔄 1 vuelta y media
-    scale: 1.35,        // 🔍 más zoom
+    rotate: 720,       // 👈 2 vueltas completas
+    scale: 1.45,
   }}
   transition={{
-    duration: 0.7,      // más tiempo = más visible
-    ease: "easeInOut",
+    type: "spring",
+    stiffness: 160,
+    damping: 14,
   }}
   sx={{
     width: 65,
