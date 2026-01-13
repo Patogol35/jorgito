@@ -17,7 +17,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-import { BuildIcon } from "lucide-react";
 
 /* =========================
    DATA
