@@ -203,7 +203,7 @@ export default function Skills() {
         <Grid container spacing={3} justifyContent="center" alignItems="stretch">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={3} key={skill.name}>
+              <Grid item xs={6} sm={4} md={4} lg={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
