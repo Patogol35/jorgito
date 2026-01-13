@@ -45,6 +45,24 @@ const skills = [
   { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
 
+const techGlow = {
+  React: "rgba(97,218,251,0.75)",
+  JavaScript: "rgba(247,223,30,0.75)",
+  TypeScript: "rgba(49,120,198,0.75)",
+  Python: "rgba(55,118,171,0.75)",
+  "Spring Boot": "rgba(109,179,63,0.75)",
+  MySQL: "rgba(0,117,143,0.75)",
+  PostgreSQL: "rgba(51,103,145,0.75)",
+  Docker: "rgba(36,150,237,0.75)",
+  NPM: "rgba(203,56,55,0.75)",
+  Elasticsearch: "rgba(254,192,46,0.75)",
+  Postman: "rgba(255,108,55,0.75)",
+  "VirtualBox": "rgba(24,115,235,0.75)",
+  "Microsoft Office": "rgba(235,235,235,0.6)",
+};
+
+
+
 const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
 
 const categoryIcons = {
@@ -239,6 +257,9 @@ export default function Skills() {
   }}
 >
 
+const glowColor =
+  techGlow[skill.name] || "rgba(255,255,255,0.45)";
+
 <Box
   component="img"
   src={skill.img}
@@ -254,22 +275,23 @@ export default function Skills() {
           ${invertOnDark.includes(skill.name)
             ? "invert(1) brightness(1.15)"
             : ""}
-          drop-shadow(0 0 8px rgba(255,255,255,0.45))
+          drop-shadow(0 0 8px ${glowColor})
         `
       : "none",
 
     opacity: isDark ? 0.95 : 1,
 
-    transition: "transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease",
+    transition:
+      "transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease",
 
     "&:hover": {
-      transform: "scale(1.08) rotate(6deg)",
+      transform: "scale(1.1) rotate(6deg)",
       filter: isDark
         ? `
             ${invertOnDark.includes(skill.name)
               ? "invert(1) brightness(1.25)"
               : ""}
-            drop-shadow(0 0 12px rgba(255,255,255,0.65))
+            drop-shadow(0 0 14px ${glowColor})
           `
         : "none",
       opacity: 1,
