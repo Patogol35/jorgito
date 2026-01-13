@@ -216,9 +216,9 @@ export default function Skills() {
                     sx={{
                       p: 3,
                       height: 210,
-                      maxWidth: 300,
-                      width: "100%",
-                      mx: "auto",
+                   width: "100%",
+                  maxWidth: "100%",
+                      
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
