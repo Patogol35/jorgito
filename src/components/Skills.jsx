@@ -222,56 +222,52 @@ export default function Skills() {
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
                   <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      boxShadow: isDark
-                        ? "0 0 0 1px rgba(255,255,255,0.05)"
-                        : "0 4px 12px rgba(0,0,0,0.06)",
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: primary,
-                        boxShadow: isDark
-                          ? "0 8px 20px rgba(0,0,0,0.5)"
-                          : "0 8px 20px rgba(0,0,0,0.12)",
-                      },
-                    }}
-                  >
-                    <Box
-  component={motion.img}
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+
+    // borde visible (fix anterior)
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(0,0,0,0.12)"
+    }`,
+    boxShadow: isDark
+      ? "0 0 0 1px rgba(255,255,255,0.05)"
+      : "0 4px 12px rgba(0,0,0,0.06)",
+    transition: "all 0.25s ease",
+
+    "&:hover": {
+      transform: "translateY(-4px)",
+      borderColor: primary,
+      boxShadow: isDark
+        ? "0 8px 20px rgba(0,0,0,0.5)"
+        : "0 8px 20px rgba(0,0,0,0.12)",
+    },
+  }}
+>
+  <Box
+  component="img"
   src={skill.img}
   alt={skill.name}
-  initial={{ opacity: 0, scale: 0.7 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.4, delay: index * 0.05 }}
   sx={{
     width: 65,
     height: 65,
     mb: 2,
     objectFit: "contain",
-    filter: isDark
-      ? "brightness(1.15) contrast(1.1) drop-shadow(0 0 4px rgba(187,222,251,0.45))"
-      : "none",
+    transition: "transform 0.3s ease, filter 0.3s ease",
+    filter: isDark ? "invert(1) brightness(1.2)" : "none",
     "&:hover": {
       transform: "rotate(8deg) scale(1.1)",
-      filter: isDark
-        ? "brightness(1.25) drop-shadow(0 0 6px rgba(187,222,251,0.7))"
-        : "none",
     },
   }}
 />
-                    <Typography fontWeight="bold">
-                      {skill.name}
-                    </Typography>
-                  </Paper>
+  <Typography fontWeight="bold">
+    {skill.name}
+  </Typography>
+</Paper>
                 </motion.div>
               </Grid>
             ))}
