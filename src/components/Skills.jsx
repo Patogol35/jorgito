@@ -1,4 +1,10 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -10,17 +16,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-
-import BuildIcon from "@mui/icons-material/Build";
-import GroupsIcon from "@mui/icons-material/Groups";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import { GraduationCap } from "lucide-react";
 
 /* =========================
-DATA
+   DATA
 ========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
@@ -38,14 +37,25 @@ const skills = [
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-  { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
-  { name: "Git", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-  { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
-  { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
-  { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
-];
 
-const invertOnDark = ["MySQL"];
+{
+  name: "VirtualBox",
+  category: "Tools",
+  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg",
+},
+
+  {
+  name: "Git",
+  category: "Tools",
+  img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+},
+
+  {
+  name: "AnyDesk",
+  category: "Tools",
+  img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
+},
+];
 
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
@@ -57,24 +67,18 @@ const categoryIcons = {
 };
 
 /* =========================
-ANIMATIONS
-========================= */
-const fadeScale = {
-  initial: { opacity: 0, scale: 0.8 },
-  whileInView: { opacity: 1, scale: 1 },
-  transition: { duration: 0.8 },
-  viewport: { once: true },
-};
-
-/* =========================
-COMPONENT
+   COMPONENT
 ========================= */
 export default function Skills() {
   const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primary = theme.palette.primary.main;
+
+  // 🔹 MISMO color que About
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+
+  // 🔹 Se mantiene para gradientes / hover
+  const primary = theme.palette.primary.main;
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
@@ -94,32 +98,30 @@ export default function Skills() {
     }
   }, [filter]);
 
-  const filteredSkills = useMemo(
-    () => (filter === "All" ? skills : skills.filter(s => s.category === filter)),
-    [filter]
-  );
+  const filteredSkills =
+    filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
-    ? "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))"
-    : "rgba(255,255,255,0.9)";
+    ? "rgba(255,255,255,0.05)"
+    : "rgba(255,255,255,0.85)";
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
-        {/* HEADER */}
+        {/* =========================
+            HEADER (IGUAL A ABOUT)
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -135,7 +137,7 @@ export default function Skills() {
               backdropFilter: "blur(6px)",
             }}
           >
-            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <GraduationCap size={22} color={primaryColor} />
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
@@ -145,130 +147,128 @@ export default function Skills() {
           </Box>
         </motion.div>
 
-        {/* FILTERS */}
-        <motion.div {...fadeScale} transition={{ duration: 0.8, delay: 0.15 }}>
-          <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-            <Box
-              ref={containerRef}
-              sx={{
-                maxWidth: "100%",
-                overflowX: "auto",
-                "&::-webkit-scrollbar": { display: "none" },
-              }}
+        {/* =========================
+            FILTERS
+        ========================= */}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+          <Box
+            ref={containerRef}
+            sx={{
+              maxWidth: "100%",
+              overflowX: "auto",
+              "&::-webkit-scrollbar": { display: "none" },
+            }}
+          >
+            <ToggleButtonGroup
+              value={filter}
+              exclusive
+              onChange={(e, val) => val && setFilter(val)}
+              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
             >
-              <ToggleButtonGroup
-                value={filter}
-                exclusive
-                onChange={(e, val) => val && setFilter(val)}
-                sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
-              >
-                {categories.map(cat => (
-                  <ToggleButton
-                    key={cat}
-                    value={cat}
-                    ref={el => (buttonRefs.current[cat] = el)}
-                    sx={{
-                      borderRadius: "999px",
-                      px: 2.4,
-                      py: 1,
-                      fontWeight: 600,
-                      textTransform: "none",
-                      display: "flex",
-                      gap: 1,
-                      backgroundColor: isDark
-                        ? "rgba(255,255,255,0.04)"
-                        : "rgba(255,255,255,0.9)",
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.12)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      "&.Mui-selected": {
-                        background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                        color: "#fff",
-                        borderColor: "transparent",
-                      },
-                    }}
-                  >
-                    {categoryIcons[cat]}
-                    {cat}
-                  </ToggleButton>
-                ))}
-              </ToggleButtonGroup>
-            </Box>
+              {categories.map((cat) => (
+                <ToggleButton
+                  key={cat}
+                  value={cat}
+                  ref={(el) => (buttonRefs.current[cat] = el)}
+                  component={motion.button}
+                  whileTap={{ scale: 0.92 }}
+                  sx={{
+                    borderRadius: "999px",
+                    px: 2.4,
+                    py: 1,
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                    textTransform: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(255,255,255,0.9)",
+                    color: isDark
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(0,0,0,0.75)",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255,255,255,0.12)"
+                        : "rgba(0,0,0,0.12)"
+                    }`,
+                    "&.Mui-selected": {
+                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                      color: "#fff",
+                      borderColor: "transparent",
+                    },
+                  }}
+                >
+                  {categoryIcons[cat]}
+                  {cat}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
           </Box>
-        </motion.div>
+        </Box>
 
-        {/* GRID */}
-        <Grid container spacing={3} justifyContent="center" alignItems="stretch">
+        {/* =========================
+            GRID
+        ========================= */}
+        <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={4} lg={3} key={skill.name}>
+              <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.85 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  viewport={{ once: true }}
-                  style={{ height: "100%" }}
                 >
                   <Paper
                     sx={{
                       p: 3,
-                      height: 210,
-                   width: "100%",
-                  maxWidth: "100%",
-                      
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
-
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-
-                      border: isDark
-                        ? "1.5px solid rgba(255,255,255,0.35)"
-                        : "1.5px solid rgba(0,0,0,0.18)",
-
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
                       boxShadow: isDark
-                        ? "0 6px 20px rgba(0,0,0,0.45)"
-                        : "0 6px 20px rgba(0,0,0,0.12)",
-
-                      transition: "all 0.3s ease",
-
+                        ? "0 0 0 1px rgba(255,255,255,0.05)"
+                        : "0 4px 12px rgba(0,0,0,0.06)",
+                      transition: "all 0.25s ease",
                       "&:hover": {
-                        transform: "translateY(-6px)",
-                        borderColor: isDark ? "#ffffff" : "#000000",
+                        transform: "translateY(-4px)",
+                        borderColor: primary,
                         boxShadow: isDark
-                          ? "0 12px 30px rgba(0,0,0,0.6)"
-                          : "0 12px 30px rgba(0,0,0,0.2)",
+                          ? "0 8px 20px rgba(0,0,0,0.5)"
+                          : "0 8px 20px rgba(0,0,0,0.12)",
                       },
                     }}
                   >
                     <Box
-                      component="img"
-                      src={skill.img}
-                      alt={skill.name}
-                      sx={{
-                        width: 60,
-                        height: 60,
-                        mb: 2,
-                        objectFit: "contain",
-                        filter: isDark
-                          ? `${invertOnDark.includes(skill.name)
-                              ? "invert(1) brightness(1.15)"
-                              : ""}
-                             drop-shadow(0 0 6px rgba(255,255,255,0.35))`
-                          : "none",
-                        transition: "transform 0.35s ease",
-                        "&:hover": {
-                          transform: "scale(1.08) rotate(5deg)",
-                        },
-                      }}
-                    />
-                    <Typography fontWeight="bold" fontSize={14}>
+  component={motion.img}
+  src={skill.img}
+  alt={skill.name}
+  initial={{ opacity: 0, scale: 0.7 }}
+  animate={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.4, delay: index * 0.05 }}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    filter: isDark
+      ? "brightness(1.15) contrast(1.1) drop-shadow(0 0 4px rgba(187,222,251,0.45))"
+      : "none",
+    "&:hover": {
+      transform: "rotate(8deg) scale(1.1)",
+      filter: isDark
+        ? "brightness(1.25) drop-shadow(0 0 6px rgba(187,222,251,0.7))"
+        : "none",
+    },
+  }}
+/>
+                    <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
                   </Paper>
@@ -281,4 +281,5 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+              }
+                                       
