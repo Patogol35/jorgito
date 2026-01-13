@@ -184,10 +184,10 @@ const primaryColor = isDark ? "#bbdefb" : "#1976d2";
                 : "rgba(0,0,0,0.12)"
             }`,
             "&.Mui-selected": {
-              background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-              color: "#fff",
-              borderColor: "transparent",
-            },
+  background: isDark ? "#bbdefb" : "#1976d2",
+  color: isDark ? "#0d47a1" : "#fff",
+  borderColor: "transparent",
+},
           }}
         >
           {categoryIcons[cat]}
