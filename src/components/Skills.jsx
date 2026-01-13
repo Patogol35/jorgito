@@ -105,7 +105,7 @@ const primaryColor = primary;
     sx={{
       display: "inline-flex",
       alignItems: "center",
-      justifyContent: "center", // 🔥 CLAVE
+      justifyContent: "center",
       gap: 1,
       px: 3,
       py: 0.9,
@@ -121,11 +121,11 @@ const primaryColor = primary;
       backdropFilter: "blur(6px)",
     }}
   >
-    <BuildIcon sx={{ fontSize: 22, color: primary }} />
+    <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
 
     <Typography
       variant="h6"
-      sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
+      sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
     >
       Stack Tecnológico
     </Typography>
