@@ -216,7 +216,7 @@ export default function Skills() {
                     sx={{
                       p: 3,
                       height: 210,
-                      maxWidth: 350,
+                      maxWidth: 300,
                       width: "100%",
                       mx: "auto",
                       textAlign: "center",
