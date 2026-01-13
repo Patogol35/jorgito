@@ -227,7 +227,7 @@ export default function Skills() {
                       },
                     }}
                   >
-                <Box
+              <Box
   component="img"
   src={skill.img}
   alt={skill.name}
@@ -237,28 +237,16 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
 
-    filter: `
-      drop-shadow(0 0 0.6px ${primary})
-      drop-shadow(0 0 0.6px ${primary})
-    `,
-
-    ...(isDark &&
-      invertOnDark.includes(skill.name) && {
-        filter: `
-          invert(1) brightness(1.2)
-          drop-shadow(0 0 0.6px ${primary})
-          drop-shadow(0 0 0.6px ${primary})
-        `,
-      }),
+    /* inversión solo para algunos iconos en dark mode */
+    filter:
+      isDark && invertOnDark.includes(skill.name)
+        ? "invert(1) brightness(1.2)"
+        : "none",
 
     transition: "transform 0.3s ease, filter 0.3s ease",
 
     "&:hover": {
-      transform: "scale(1.12)",
-      filter: `
-        drop-shadow(0 0 1.2px ${primary})
-        drop-shadow(0 0 1.2px ${primary})
-      `,
+      transform: "rotate(8deg) scale(1.1)",
     },
   }}
 />
