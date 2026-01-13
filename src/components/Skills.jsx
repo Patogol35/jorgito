@@ -247,16 +247,17 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
-  variants={{
-    hover: {
-      rotate: 18,
-      scale: 1.15,
-    },
+  whileHover={{
+    rotate: 20,
+    scale: 1.15,
+  }}
+  whileTap={{
+    rotate: 360,
+    scale: 1.2,
   }}
   transition={{
-    type: "spring",
-    stiffness: 220,
-    damping: 12,
+    duration: 0.6,
+    ease: "easeInOut",
   }}
   sx={{
     width: 65,
