@@ -17,9 +17,10 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap } from "lucide-react";
 
 /* =========================
-   DATA
+DATA
 ========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
@@ -54,7 +55,7 @@ const categoryIcons = {
 };
 
 /* =========================
-   COMPONENT
+COMPONENT
 ========================= */
 export default function Skills() {
   const [filter, setFilter] = useState("All");
@@ -91,9 +92,7 @@ export default function Skills() {
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
-        {/* =========================
-            HEADER
-        ========================= */}
+        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -104,6 +103,7 @@ export default function Skills() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -116,22 +116,27 @@ export default function Skills() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
+              backdropFilter: "blur(6px)",
             }}
           >
-            <WorkspacePremiumIcon sx={{ fontSize: 22, color: primary }} />
-            <Typography fontWeight="bold" color={primary}>
+            <WorkspacePremiumIcon
+              sx={{ fontSize: 22, color: primary }}
+            />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
+            >
               Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
 
-        {/* =========================
-            FILTERS
-        ========================= */}
+        {/* FILTERS */}
         <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
           <Box
             ref={containerRef}
             sx={{
+              maxWidth: "100%",
               overflowX: "auto",
               "&::-webkit-scrollbar": { display: "none" },
             }}
@@ -140,7 +145,7 @@ export default function Skills() {
               value={filter}
               exclusive
               onChange={(e, val) => val && setFilter(val)}
-              sx={{ display: "inline-flex", gap: 1.2 }}
+              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
             >
               {categories.map((cat) => (
                 <ToggleButton
@@ -154,11 +159,26 @@ export default function Skills() {
                     px: 2.4,
                     py: 1,
                     fontWeight: 600,
+                    fontSize: "0.9rem",
                     textTransform: "none",
+                    display: "flex",
+                    alignItems: "center",
                     gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(255,255,255,0.9)",
+                    color: isDark
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(0,0,0,0.75)",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255,255,255,0.12)"
+                        : "rgba(0,0,0,0.12)"
+                    }`,
                     "&.Mui-selected": {
                       background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
+                      borderColor: "transparent",
                     },
                   }}
                 >
@@ -170,24 +190,17 @@ export default function Skills() {
           </Box>
         </Box>
 
-        {/* =========================
-            GRID
-        ========================= */}
+        {/* GRID */}
         <Grid container spacing={4} justifyContent="center">
-          <AnimatePresence mode="wait">
-            {filteredSkills.map((skill) => (
-              <Grid
-                item
-                xs={6}
-                sm={4}
-                md={3}
-                key={`${filter}-${skill.name}`} // 🔥 clave del fix
-              >
+          <AnimatePresence>
+            {filteredSkills.map((skill, index) => (
+              <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  key={`${filter}-${skill.name}`}   // 🔥 CLAVE
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.85 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
                   <Paper
                     sx={{
@@ -200,6 +213,9 @@ export default function Skills() {
                           ? "rgba(255,255,255,0.15)"
                           : "rgba(0,0,0,0.12)"
                       }`,
+                      boxShadow: isDark
+                        ? "0 0 0 1px rgba(255,255,255,0.05)"
+                        : "0 4px 12px rgba(0,0,0,0.06)",
                       transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
@@ -216,10 +232,10 @@ export default function Skills() {
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
+                        transition: "transform 0.3s ease, filter 0.3s ease",
                         filter: isDark
                           ? "invert(1) brightness(1.2)"
                           : "none",
-                        transition: "transform 0.3s ease",
                         "&:hover": {
                           transform: "rotate(8deg) scale(1.1)",
                         },
@@ -238,4 +254,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-                  }
+}
