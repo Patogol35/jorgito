@@ -61,7 +61,8 @@ const techGlow = {
   "Microsoft Office": "rgba(235,235,235,0.6)",
 };
 
-
+const glowColor =
+  techGlow[skill.name] || "rgba(255,255,255,0.45)";
 
 const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
 
@@ -256,9 +257,6 @@ export default function Skills() {
     },
   }}
 >
-
-const glowColor =
-  techGlow[skill.name] || "rgba(255,255,255,0.45)";
 
 <Box
   component="img"
