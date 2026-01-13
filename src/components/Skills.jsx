@@ -58,10 +58,9 @@ const categoryIcons = {
 ========================= */
 export default function Skills() {
   const [filter, setFilter] = useState("All");
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const primary = theme.palette.primary.main;
-const primaryColor = primary;
+  const { palette } = useTheme();
+const isDark = palette.mode === "dark";
+const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
