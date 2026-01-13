@@ -45,6 +45,8 @@ const skills = [
   { name: "Linux", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
 
+const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
+
 const categoryIcons = {
   All: <AllInclusiveIcon fontSize="small" />,
   Frontend: <CodeIcon fontSize="small" />,
@@ -98,10 +100,8 @@ export default function Skills() {
   );
 
   const cardBg = isDark
-  ? "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))"
-  : "rgba(255,255,255,0.9)";
-
-  
+    ? "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06))"
+    : "rgba(255,255,255,0.9)";
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
@@ -134,23 +134,18 @@ export default function Skills() {
               backdropFilter: "blur(6px)",
             }}
           >
-            {/* Icono SIN fondo */}
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
-
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              Stack Tecnológico 
+              Stack Tecnológico
             </Typography>
           </Box>
         </motion.div>
 
         {/* FILTERS */}
-        <motion.div
-          {...fadeScale}
-          transition={{ duration: 0.8, delay: 0.15 }}
-        >
+        <motion.div {...fadeScale} transition={{ duration: 0.8, delay: 0.15 }}>
           <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
             <Box
               ref={containerRef}
@@ -219,7 +214,9 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
-                      border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(0,0,0,0.05)",
+                      border: isDark
+                        ? "1px solid rgba(255,255,255,0.12)"
+                        : "1px solid rgba(0,0,0,0.05)",
                       transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
@@ -227,29 +224,25 @@ export default function Skills() {
                       },
                     }}
                   >
-              <Box
-  component="img"
-  src={skill.img}
-  alt={skill.name}
-  sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-
-    /* inversión solo para algunos iconos en dark mode */
-    filter:
-      isDark && invertOnDark.includes(skill.name)
-        ? "invert(1) brightness(1.2)"
-        : "none",
-
-    transition: "transform 0.3s ease, filter 0.3s ease",
-
-    "&:hover": {
-      transform: "rotate(8deg) scale(1.1)",
-    },
-  }}
-/>
+                    <Box
+                      component="img"
+                      src={skill.img}
+                      alt={skill.name}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        filter:
+                          isDark && invertOnDark.includes(skill.name)
+                            ? "invert(1) brightness(1.2)"
+                            : "none",
+                        transition: "transform 0.3s ease, filter 0.3s ease",
+                        "&:hover": {
+                          transform: "rotate(8deg) scale(1.1)",
+                        },
+                      }}
+                    />
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
@@ -261,4 +254,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-                  }
+}
