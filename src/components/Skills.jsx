@@ -209,21 +209,32 @@ export default function Skills() {
                   viewport={{ once: true }}
                 >
                   <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: isDark
-                        ? "1px solid rgba(255,255,255,0.12)"
-                        : "1px solid rgba(0,0,0,0.05)",
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: primary,
-                      },
-                    }}
-                  >
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+
+    /* Borde profesional */
+    border: isDark
+      ? "1px solid rgba(255,255,255,0.18)"
+      : "1px solid rgba(0,0,0,0.08)",
+
+    boxShadow: isDark
+      ? "0 8px 24px rgba(0,0,0,0.35)"
+      : "0 8px 24px rgba(0,0,0,0.08)",
+
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      transform: "translateY(-6px)",
+      borderColor: primary,
+      boxShadow: isDark
+        ? "0 12px 32px rgba(0,0,0,0.5)"
+        : "0 12px 32px rgba(0,0,0,0.15)",
+    },
+  }}
+>
                 <Box
   component="img"
   src={skill.img}
