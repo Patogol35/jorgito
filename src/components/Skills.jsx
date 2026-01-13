@@ -248,14 +248,15 @@ export default function Skills() {
   alt={skill.name}
   initial={{ opacity: 0, rotate: -6 }}
   animate={{ opacity: 1, rotate: 0 }}
-  transition={{ duration: 0.4 }}
   whileHover={{ rotate: 8, scale: 1.1 }}
+  transition={{ duration: 0.4 }}
   sx={{
     width: 65,
     height: 65,
     mb: 2,
     objectFit: "contain",
     filter: isDark ? "invert(1) brightness(1.2)" : "none",
+    cursor: "pointer",
   }}
 />
 
