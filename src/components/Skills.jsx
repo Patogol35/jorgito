@@ -17,7 +17,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap } from "lucide-react";
+import { BuildIcon } from "lucide-react";
 
 /* =========================
    DATA
@@ -97,43 +97,43 @@ const primaryColor = primary;
             TÍTULO CONTACTO (IGUAL A ABOUT)
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 1,
-    px: 3,
-    py: 0.9,
-    borderRadius: "999px",
-    background: isDark
-      ? "rgba(144,202,249,0.06)"
-      : "rgba(25,118,210,0.06)",
-    border: `1px solid ${
-      isDark
-        ? "rgba(144,202,249,0.25)"
-        : "rgba(25,118,210,0.25)"
-    }`,
-    backdropFilter: "blur(6px)",
-  }}
+  initial={{ opacity: 0, scale: 0.8 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8 }}
+  style={{ textAlign: "center", marginBottom: "2rem" }}
 >
-  {/* Icono */}
-  <GraduationCap size={22} color={primaryColor} />
-
-  {/* Texto */}
-  <Typography
-    variant="h6"
-    sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+  <Box
+    sx={{
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 1,
+      px: 3,
+      py: 0.9,
+      borderRadius: "999px",
+      background: isDark
+        ? "rgba(144,202,249,0.06)"
+        : "rgba(25,118,210,0.06)",
+      border: `1px solid ${
+        isDark
+          ? "rgba(144,202,249,0.25)"
+          : "rgba(25,118,210,0.25)"
+      }`,
+      backdropFilter: "blur(6px)",
+    }}
   >
-    Stack Tecnológico
-  </Typography>
-</Box>
-        </motion.div>
+    {/* Icono herramienta */}
+    <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+
+    {/* Texto */}
+    <Typography
+      variant="h6"
+      sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+    >
+      Stack Tecnológico
+    </Typography>
+  </Box>
+</motion.div>
 
         {/* =========================
             FILTERS
