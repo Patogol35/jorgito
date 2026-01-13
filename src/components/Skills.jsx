@@ -123,7 +123,7 @@ const primaryColor = primary;
             }}
           >
             {/* Icono SIN fondo */}
-            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <GraduationCap sx={{ fontSize: 22, color: primaryColor }} />
 
             <GraduationCap
               variant="h6"
