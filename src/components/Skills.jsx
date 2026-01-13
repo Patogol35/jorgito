@@ -247,15 +247,16 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
-  initial={{ opacity: 0, rotate: -8, scale: 0.9 }}
-  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-  whileHover={{
-    rotate: 8,
-    scale: 1.08,
+  variants={{
+    hover: {
+      rotate: 18,
+      scale: 1.15,
+    },
   }}
   transition={{
-    duration: 0.45,
-    ease: "easeOut",
+    type: "spring",
+    stiffness: 220,
+    damping: 12,
   }}
   sx={{
     width: 65,
@@ -263,7 +264,6 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
     filter: isDark ? "invert(1) brightness(1.2)" : "none",
-    transition: "filter 0.3s ease",
   }}
 />
 
