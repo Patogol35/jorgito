@@ -48,20 +48,21 @@ const skills = [
 const techGlow = {
   React: "rgba(97,218,251,0.75)",
   JavaScript: "rgba(247,223,30,0.75)",
-  TypeScript: "rgba(49,120,198,0.75)",
+  
   Python: "rgba(55,118,171,0.75)",
   "Spring Boot": "rgba(109,179,63,0.75)",
   MySQL: "rgba(0,117,143,0.75)",
   PostgreSQL: "rgba(51,103,145,0.75)",
-  Docker: "rgba(36,150,237,0.75)",
-  NPM: "rgba(203,56,55,0.75)",
+  
+  npm: "rgba(203,56,55,0.75)",
   Elasticsearch: "rgba(254,192,46,0.75)",
   Postman: "rgba(255,108,55,0.75)",
   "VirtualBox": "rgba(24,115,235,0.75)",
-  "Microsoft Office": "rgba(235,235,235,0.6)",
+  "MS Office": "rgba(235,235,235,0.6)",
 };
 
-
+const getGlowColor = (name) =>
+  techGlow[name] || "rgba(255,255,255,0.45)";
 
 const invertOnDark = ["AWS", "MySQL", "npm", "VirtualBox"];
 
