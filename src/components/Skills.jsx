@@ -238,65 +238,46 @@ export default function Skills() {
     },
   }}
 >
-                <Box
+
+<Box
+  component="img"
+  src={skill.img}
+  alt={skill.name}
   sx={{
-    p: 1.6,
-    borderRadius: "18px",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
 
-    /* Glass effect solo en dark */
-    background: isDark
-      ? "rgba(255,255,255,0.06)"
-      : "transparent",
-    backdropFilter: isDark ? "blur(6px)" : "none",
+    filter: isDark
+      ? `
+          ${invertOnDark.includes(skill.name)
+            ? "invert(1) brightness(1.15)"
+            : ""}
+          drop-shadow(0 0 8px rgba(255,255,255,0.45))
+        `
+      : "none",
 
-    transition: "all 0.35s ease",
+    opacity: isDark ? 0.95 : 1,
+
+    transition: "transform 0.35s ease, filter 0.35s ease, opacity 0.35s ease",
 
     "&:hover": {
-      background: isDark
-        ? "rgba(255,255,255,0.12)"
-        : "transparent",
-      transform: "translateY(-4px)",
-    },
-  }}
->
-  <Box
-    component="img"
-    src={skill.img}
-    alt={skill.name}
-    sx={{
-      width: 65,
-      height: 65,
-      objectFit: "contain",
-
-      /* Glow elegante + control de contraste */
+      transform: "scale(1.08) rotate(6deg)",
       filter: isDark
         ? `
             ${invertOnDark.includes(skill.name)
-              ? "invert(1) brightness(1.15)"
+              ? "invert(1) brightness(1.25)"
               : ""}
-            drop-shadow(0 0 6px rgba(255,255,255,0.35))
+            drop-shadow(0 0 12px rgba(255,255,255,0.65))
           `
         : "none",
+      opacity: 1,
+    },
+  }}
+/>
 
-      transition: "transform 0.35s ease, filter 0.35s ease",
-
-      "&:hover": {
-        transform: "scale(1.08) rotate(6deg)",
-        filter: isDark
-          ? `
-              ${invertOnDark.includes(skill.name)
-                ? "invert(1) brightness(1.25)"
-                : ""}
-              drop-shadow(0 0 10px rgba(255,255,255,0.55))
-            `
-          : "none",
-      },
-    }}
-  />
-</Box>
+                    
                     <Typography fontWeight="bold">{skill.name}</Typography>
                   </Paper>
                 </motion.div>
