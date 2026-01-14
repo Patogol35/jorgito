@@ -22,8 +22,8 @@ export default function Contact() {
     ? "rgba(255,255,255,0.75)"
     : "rgba(0,0,0,0.7)";
 
-  // 🔹 COLOR UNIFICADO (email + texto)
-  const contactColor = isDark ? "#ffffff" : "#1976d2";
+  // ✅ TEXTO PRINCIPAL (NEGRO FUERTE EN CLARO / BLANCO EN OSCURO)
+  const contactColor = isDark ? "#ffffff" : "#000000";
 
   const socialLinks = [
     {
@@ -97,7 +97,7 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            TEXTO INTRODUCTORIO (MISMO TONO QUE EMAIL)
+            TEXTO INTRODUCTORIO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -107,7 +107,7 @@ export default function Contact() {
           <Typography
             sx={{
               textAlign: "center",
-              color: contactColor, // ✅ MISMO COLOR
+              color: contactColor, // ✅ NEGRO FUERTE / BLANCO
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
@@ -192,7 +192,7 @@ export default function Contact() {
                 transition: "color 0.2s ease",
                 "&:hover": {
                   textDecoration: "underline",
-                  color: isDark ? "#bbdefb" : "#115293",
+                  color: isDark ? "#bbdefb" : "#000000",
                 },
               }}
             >
