@@ -159,7 +159,7 @@ export default function Contact() {
 >
   <SocialLinks
     socialLinks={socialLinks}
-    size="54px"
+    size="58px"
     animated={true}
     spacing={2}
   />
