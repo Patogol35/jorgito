@@ -54,7 +54,6 @@ const categoryIcons = {
   Tools: <BuildIcon fontSize="small" />,
 };
 
-const isMobile = useMediaQuery("(hover: none)");
 
 /* =========================
    COMPONENT
@@ -66,7 +65,8 @@ export default function Skills() {
 
   // 🔥 MISMO COLOR QUE CERTIFICATIONS
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-
+const isMobile = useMediaQuery("(hover: none)");
+  
   const primary = theme.palette.primary.main;
 
   const containerRef = useRef(null);
