@@ -247,28 +247,29 @@ export default function Skills() {
   src={skill.img}
   alt={skill.name}
   whileHover={{
-    scale: 1.08,
-    rotate: 2,
-    y: -3,
+    scale: 1.1,
+    rotate: 5,
+    y: -4,
   }}
   whileTap={{
-    scale: 0.96,
-    rotate: -1,
+    scale: 0.95,
+    rotate: -3,
   }}
   transition={{
     type: "spring",
-    stiffness: 220,
-    damping: 20,
-    mass: 0.8,
+    stiffness: 210,
+    damping: 17,
+    mass: 0.7,
   }}
   sx={{
     width: 65,
     height: 65,
     mb: 2,
     objectFit: "contain",
+    transformOrigin: "50% 55%",
     filter: isDark
-      ? "invert(1) brightness(1.15) drop-shadow(0 0 4px rgba(255,255,255,0.25))"
-      : "drop-shadow(0 2px 4px rgba(0,0,0,0.18))",
+      ? "invert(1) brightness(1.2) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
+      : "drop-shadow(0 2px 5px rgba(0,0,0,0.2))",
     willChange: "transform",
   }}
 />
