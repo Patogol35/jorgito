@@ -41,7 +41,7 @@ const skills = [
   { name: "Git", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
   { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
   { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
-  { name: "Linux", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768392582/tux_kernel_300-removebg-preview_a6om4x.png" },
+  { name: "Linux", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768393747/file_000000006cec720ea61024e7b054235c-removebg-preview_z2abgd.png" },
 ];
 
 const categoryIcons = {
