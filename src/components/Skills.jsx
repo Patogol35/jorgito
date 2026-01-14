@@ -246,29 +246,21 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
-
-  /* Entrada suave */
-  initial={{ opacity: 0, scale: 0.7, y: 12 }}
-  animate={{ opacity: 1, scale: 1, y: 0 }}
-
   whileHover={{
     scale: 1.14,
     rotate: [0, 4, -4, 2.5, 0],
-    y: -6,
+    y: -5,
   }}
-
   whileTap={{
     scale: 0.94,
-    rotate: 180,
+    rotate: 240,
   }}
-
   transition={{
     type: "spring",
-    stiffness: 180,
-    damping: 18,
-    mass: 0.7,
+    stiffness: 130, // ↓ más lento
+    damping: 22,    // ↑ más control
+    mass: 0.9,      // ↑ más peso
   }}
-
   sx={{
     width: 65,
     height: 65,
