@@ -51,16 +51,15 @@ export default function Contact() {
       id="contact"
       sx={{
         py: 4,
-        color: theme.palette.text.primary,
         scrollMarginTop: "80px",
       }}
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO CONTACTO
+            TÍTULO
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
@@ -69,7 +68,6 @@ export default function Contact() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -82,118 +80,78 @@ export default function Contact() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
-              backdropFilter: "blur(6px)",
             }}
           >
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{ fontWeight: 600, color: primaryColor }}
             >
               Redes Sociales
             </Typography>
           </Box>
         </motion.div>
 
-        {/* Redes sociales */}
+        {/* Disponibilidad */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 0.8,
+            mb: 2,
+            color: "text.secondary",
+          }}
+        >
+          <AccessTime sx={{ fontSize: 18 }} />
+          <Typography variant="body2">
+            Respondo en menos de 24h
+          </Typography>
+        </Box>
+
+        {/* Redes */}
         <SocialLinks
           socialLinks={socialLinks}
           size="40px"
-          animated={true}
+          animated
           spacing={2}
         />
 
-        {/* ===== BLOQUE DE CONTACTO UNIFICADO ===== */}
-        <Box
+        {/* Email */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          transition={{ type: "spring", stiffness: 260, damping: 22 }}
+        >
+          <Typography
+            component="a"
+            href="mailto:patogol3535@gmail.com"
+            sx={{
+              display: "block",
+              textAlign: "center",
+              mt: 2,
+              fontWeight: 600,
+              color: "text.primary",
+              textDecoration: "none",
+              "&:hover": { opacity: 0.75 },
+            }}
+          >
+            patogol3535@gmail.com
+          </Typography>
+        </motion.div>
+
+        {/* Cierre */}
+        <Typography
+          variant="body2"
           sx={{
-            mt: 3,
-            px: 3,
-            py: 2.5,
-            borderRadius: "16px",
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.04)"
-              : "rgba(0,0,0,0.04)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(255,255,255,0.12)"
-                : "rgba(0,0,0,0.12)"
-            }`,
+            textAlign: "center",
+            mt: 2,
+            color: "text.secondary",
+            fontSize: "0.9rem",
           }}
         >
-          {/* Disponibilidad */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 0.8,
-              mb: 1.5,
-              color: "text.secondary",
-            }}
-          >
-            <AccessTime sx={{ fontSize: 18 }} />
-            <Typography variant="body2">
-              Respondo en menos de 24h
-            </Typography>
-          </Box>
-
-          {/* Micro copy */}
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "center",
-              mb: 0.6,
-              color: "text.secondary",
-            }}
-          >
-            ¿Prefieres escribir directamente?
-          </Typography>
-
-          {/* Email */}
-          <motion.div whileHover={{ scale: 1.04 }}>
-            <Box sx={{ textAlign: "center", mb: 1.2 }}>
-              <Typography
-                variant="caption"
-                sx={{
-                  display: "block",
-                  mb: 0.4,
-                  color: "text.secondary",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Email de contacto
-              </Typography>
-
-              <Typography
-                component="a"
-                href="mailto:patogol3535@gmail.com"
-                sx={{
-                  fontWeight: 600,
-                  color: "text.primary",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                  "&:hover": { opacity: 0.75 },
-                }}
-              >
-                patogol3535@gmail.com
-              </Typography>
-            </Box>
-          </motion.div>
-
-          {/* Cierre */}
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "center",
-              color: "text.secondary",
-              fontSize: "0.85rem",
-            }}
-          >
-            Elige tu red favorita y escríbeme
-          </Typography>
-        </Box>
+          Elige tu red favorita y escríbeme
+        </Typography>
       </Container>
     </Box>
   );
-}
+                }
