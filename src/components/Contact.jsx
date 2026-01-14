@@ -14,34 +14,29 @@ import React from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const textPrimary = isDark ? "#ffffff" : "#000000";
-  const textSecondary = isDark
-    ? "rgba(255,255,255,0.75)"
-    : "rgba(0,0,0,0.7)";
 
   const socialLinks = [
     {
       icon: <GitHub />,
-      color: isDark ? "#ffffff" : "#181717",
+      color: palette.text.primary,
       href: "https://github.com/Patogol35",
     },
     {
       icon: <LinkedIn />,
-      color: isDark ? "#90caf9" : "#0A66C2",
+      color: "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
       icon: <Facebook />,
-      color: isDark ? "#90caf9" : "#1877F2",
+      color: "#1877F2",
       href: "https://www.facebook.com/share/1C9RgHAPvL/",
     },
     {
       icon: <Instagram />,
-      color: isDark ? "#f48fb1" : "#E4405F",
+      color: "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
   ];
@@ -52,11 +47,12 @@ export default function Contact() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
+        color: palette.text.primary,
       }}
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO (MISMO QUE PROJECTS)
+            TÍTULO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -87,7 +83,7 @@ export default function Contact() {
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{ fontWeight: "bold", color: primaryColor }}
             >
               Redes Sociales
             </Typography>
@@ -100,12 +96,12 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.8 }}
         >
           <Typography
             sx={{
               textAlign: "center",
-              color: textPrimary,
+              color: palette.text.primary,
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
@@ -120,7 +116,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Box
             sx={{
@@ -129,7 +125,7 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: textSecondary,
+              color: palette.text.secondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
@@ -145,7 +141,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8 }}
         >
           <SocialLinks
             socialLinks={socialLinks}
@@ -161,41 +157,39 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.8 }}
         >
           <Box sx={{ textAlign: "center" }}>
             <Typography
               sx={{
-                display: "block",
                 mb: 0.7,
                 fontSize: "14px",
-                color: textSecondary,
+                color: palette.text.secondary,
               }}
             >
               Correo electrónico
             </Typography>
 
             <Box
-  component="a"
-  href="mailto:patogol3535@gmail.com"
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 1,
-    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
-    fontWeight: 600,
-    fontSize: "16px",
-    textDecoration: "none",
-    transition: "color 0.2s ease",
-    "&:hover": {
-      textDecoration: "underline",
-      color: isDark ? "#bbdefb" : "#115293", // hover elegante
-    },
-  }}
->
-  <MailOutline sx={{ fontSize: 20 }} />
-  patogol3535@gmail.com
-</Box>
+              component="a"
+              href="mailto:patogol3535@gmail.com"
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                fontWeight: "bold",
+                fontSize: "16px",
+                color: palette.text.primary,
+                textDecoration: "none",
+                "&:hover": {
+                  color: primaryColor,
+                  textDecoration: "underline",
+                },
+              }}
+            >
+              <MailOutline sx={{ fontSize: 20 }} />
+              patogol3535@gmail.com
+            </Box>
           </Box>
         </motion.div>
       </Container>
