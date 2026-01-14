@@ -14,19 +14,15 @@ import React from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const textPrimary = isDark ? "#ffffff" : "#000000";
-  const textSecondary = isDark
-    ? "rgba(255,255,255,0.75)"
-    : "rgba(0,0,0,0.7)";
 
   const socialLinks = [
     {
       icon: <GitHub />,
-      color: isDark ? "#ffffff" : "#181717",
+      color: palette.text.primary,
       href: "https://github.com/Patogol35",
     },
     {
@@ -52,11 +48,12 @@ export default function Contact() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
+        color: palette.text.primary,
       }}
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO (MISMO QUE PROJECTS)
+            TÍTULO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -105,10 +102,10 @@ export default function Contact() {
           <Typography
             sx={{
               textAlign: "center",
-              color: textPrimary,
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
+              color: palette.text.primary,
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -129,7 +126,7 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: textSecondary,
+              color: palette.text.secondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
@@ -169,36 +166,36 @@ export default function Contact() {
                 display: "block",
                 mb: 0.7,
                 fontSize: "14px",
-                color: textSecondary,
+                color: palette.text.secondary,
               }}
             >
               Correo electrónico
             </Typography>
 
             <Box
-  component="a"
-  href="mailto:patogol3535@gmail.com"
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 1,
-    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
-    fontWeight: 600,
-    fontSize: "16px",
-    textDecoration: "none",
-    transition: "color 0.2s ease",
-    "&:hover": {
-      textDecoration: "underline",
-      color: isDark ? "#bbdefb" : "#115293", // hover elegante
-    },
-  }}
->
-  <MailOutline sx={{ fontSize: 20 }} />
-  patogol3535@gmail.com
-</Box>
+              component="a"
+              href="mailto:patogol3535@gmail.com"
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                color: palette.text.primary,
+                fontWeight: 600,
+                fontSize: "16px",
+                textDecoration: "none",
+                transition: "color 0.2s ease",
+                "&:hover": {
+                  textDecoration: "underline",
+                  color: primaryColor,
+                },
+              }}
+            >
+              <MailOutline sx={{ fontSize: 20 }} />
+              patogol3535@gmail.com
+            </Box>
           </Box>
         </motion.div>
       </Container>
     </Box>
   );
-                }
+}
