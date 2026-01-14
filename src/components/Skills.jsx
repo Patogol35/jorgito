@@ -239,15 +239,17 @@ const isMobile = useMediaQuery("(hover: none)");
 
     transition: "all 0.3s ease",
 
-    "&:hover": {
-      transform: "translateY(-5px)",
-      borderColor: isDark
-        ? "rgba(144,202,249,0.75)"
-        : theme.palette.primary.main,
-      boxShadow: isDark
-        ? "0 10px 26px rgba(0,0,0,0.6)"
-        : "0 10px 26px rgba(0,0,0,0.16)",
-    },
+    "@media (hover: hover)": {
+  "&:hover": {
+    transform: "translateY(-5px)",
+    borderColor: isDark
+      ? "rgba(144,202,249,0.75)"
+      : theme.palette.primary.main,
+    boxShadow: isDark
+      ? "0 10px 26px rgba(0,0,0,0.6)"
+      : "0 10px 26px rgba(0,0,0,0.16)",
+  },
+},
 
     "&:active": {
       transform: "scale(0.97)",
