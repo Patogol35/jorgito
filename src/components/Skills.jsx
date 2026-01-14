@@ -246,31 +246,29 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
-  initial={{ opacity: 0, scale: 0.6, y: 15 }}
-  animate={{ opacity: 1, scale: 1, y: 0 }}
   whileHover={{
-    scale: 1.12,
-    rotate: [0, 3, -3, 2, 0],
-    y: -6,
-    filter: isDark
-      ? "invert(1) brightness(1.35) drop-shadow(0 0 10px rgba(255,255,255,0.45))"
-      : "drop-shadow(0 0 10px rgba(0,0,0,0.35))",
+    scale: 1.14,
+    rotate: [0, 4, -4, 2.5, 0],
+    y: -5,
   }}
   whileTap={{
-    scale: 0.92,
-    rotate: 120,
+    scale: 0.94,
+    rotate: 240,
   }}
   transition={{
     type: "spring",
-    stiffness: 150,
-    damping: 22,
-    mass: 0.85,
+    stiffness: 200,
+    damping: 16,
+    mass: 0.65,
   }}
   sx={{
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
     mb: 2,
     objectFit: "contain",
+    filter: isDark
+      ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
+      : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
     willChange: "transform",
   }}
 />
