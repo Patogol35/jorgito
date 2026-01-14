@@ -176,24 +176,26 @@ export default function Contact() {
             </Typography>
 
             <Box
-              component="a"
-              href="mailto:patogol3535@gmail.com"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-                color: textPrimary,
-                fontWeight: 600,
-                fontSize: "16px",
-                textDecoration: "none",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              <MailOutline sx={{ fontSize: 20 }} />
-              patogol3535@gmail.com
-            </Box>
+  component="a"
+  href="mailto:patogol3535@gmail.com"
+  sx={{
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 1,
+    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
+    fontWeight: 600,
+    fontSize: "16px",
+    textDecoration: "none",
+    transition: "color 0.2s ease",
+    "&:hover": {
+      textDecoration: "underline",
+      color: isDark ? "#bbdefb" : "#115293", // hover elegante
+    },
+  }}
+>
+  <MailOutline sx={{ fontSize: 20 }} />
+  patogol3535@gmail.com
+</Box>
           </Box>
         </motion.div>
       </Container>
