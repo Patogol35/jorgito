@@ -19,13 +19,13 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-// Texto principal → fuerte de verdad
+// Texto principal MUY fuerte
 const textPrimary = isDark ? "#ffffff" : "#000000";
 
-// Texto secundario → más claro, pero todavía MUY legible
+// Texto secundario fuerte pero diferenciado
 const textSecondary = isDark
-  ? "rgba(255,255,255,0.85)" // ← más fuerte que antes
-  : "rgba(0,0,0,0.75)";
+  ? "rgba(255,255,255,0.9)"
+  : "rgba(0,0,0,0.85)";
 
   const socialLinks = [
     {
