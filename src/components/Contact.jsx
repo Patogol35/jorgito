@@ -15,15 +15,10 @@ import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+  const { palette } = theme;
+  const isDark = palette.mode === "dark";
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-
-  // 🔥 Textos fuertes
-  const textPrimary = isDark ? "#ffffff" : "#000000";
-  const textSecondary = isDark
-    ? "rgba(255,255,255,0.95)"
-    : "rgba(0,0,0,0.9)";
 
   const socialLinks = [
     {
@@ -54,11 +49,12 @@ export default function Contact() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
+        color: palette.text.primary,
       }}
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO
+            TÍTULO (MISMO QUE PROJECTS)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -89,11 +85,7 @@ export default function Contact() {
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{
-                fontWeight: "800 !important",
-                color: primaryColor,
-                lineHeight: 1,
-              }}
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
               Redes Sociales
             </Typography>
@@ -101,7 +93,7 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            TEXTO INTRO
+            TEXTO INTRO (subtitle1)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -109,13 +101,11 @@ export default function Contact() {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Typography
+            variant="subtitle1"
             sx={{
               textAlign: "center",
-              color: textPrimary,
+              fontWeight: "bold",
               mb: 2,
-              lineHeight: 1.8,
-              fontSize: "16px",
-              fontWeight: "700 !important",
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -124,7 +114,7 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            DISPONIBILIDAD
+            DISPONIBILIDAD (body2)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -138,16 +128,11 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: textSecondary,
+              color: palette.text.secondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
-            <Typography
-              sx={{
-                fontSize: "14px",
-                fontWeight: "600 !important",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 500 }}>
               Respuesta habitual en menos de 24 horas
             </Typography>
           </Box>
@@ -156,7 +141,7 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* =========================
-            ICONOS CON ANIMACIÓN 🔥
+            ICONOS CON ANIMACIÓN
         ========================= */}
         <motion.div
           initial="hidden"
@@ -166,16 +151,14 @@ export default function Contact() {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: {
-                staggerChildren: 0.15, // 👈 efecto escalonado
-              },
+              transition: { staggerChildren: 0.15 },
             },
           }}
         >
           <SocialLinks
             socialLinks={socialLinks}
             size="38px"
-            animated={true} // 🔥 ACTIVA animación como antes
+            animated={true}
             spacing={2}
           />
         </motion.div>
@@ -183,7 +166,7 @@ export default function Contact() {
         <Divider sx={{ my: 3 }} />
 
         {/* =========================
-            EMAIL
+            EMAIL (subtitle1)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -192,41 +175,38 @@ export default function Contact() {
         >
           <Box sx={{ textAlign: "center" }}>
             <Typography
+              variant="body2"
               sx={{
-                display: "block",
-                mb: 0.7,
-                fontSize: "14px",
-                color: textSecondary,
-                fontWeight: "700 !important",
+                color: palette.text.secondary,
+                fontWeight: "bold",
+                mb: 0.5,
               }}
             >
               Correo electrónico
             </Typography>
 
-            <Box
+            <Typography
               component="a"
               href="mailto:patogol3535@gmail.com"
+              variant="subtitle1"
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 1,
                 color: isDark ? "#ffffff" : "#1976d2",
-                fontWeight: "700 !important",
-                fontSize: "16px",
+                fontWeight: "bold",
                 textDecoration: "none",
-                transition: "color 0.2s ease",
                 "&:hover": {
                   textDecoration: "underline",
-                  color: isDark ? "#bbdefb" : "#115293",
                 },
               }}
             >
-              <MailOutline sx={{ fontSize: 20 }} />
+              <MailOutline />
               patogol3535@gmail.com
-            </Box>
+            </Typography>
           </Box>
         </motion.div>
       </Container>
     </Box>
   );
-              }
+}
