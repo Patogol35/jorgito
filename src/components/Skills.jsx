@@ -6,6 +6,7 @@ import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import BuildCircleIcon from "@mui/icons-material/BuildCircle";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+import { useMediaQuery } from "@mui/material";
 import {
   Container,
   Typography,
@@ -52,6 +53,8 @@ const categoryIcons = {
   Cloud: <CloudQueueIcon fontSize="small" />,
   Tools: <BuildIcon fontSize="small" />,
 };
+
+const isMobile = useMediaQuery("(hover: none)");
 
 /* =========================
    COMPONENT
@@ -259,14 +262,27 @@ export default function Skills() {
   component={motion.img}
   src={skill.img}
   alt={skill.name}
-  whileHover={{
-    rotate: 45,        // 👈 mucho más visible
-    scale: 1.25,
-  }}
-  whileTap={{
-    rotate: 720,       // 👈 2 vueltas completas
-    scale: 1.45,
-  }}
+
+  /* 🖥️ Desktop: hover */
+  whileHover={
+    !isMobile
+      ? {
+          rotate: 45,
+          scale: 1.25,
+        }
+      : undefined
+  }
+
+  /* 📱 Mobile: tap */
+  whileTap={
+    isMobile
+      ? {
+          rotate: 720,
+          scale: 1.45,
+        }
+      : undefined
+  }
+
   transition={{
     type: "spring",
     stiffness: 160,
