@@ -18,12 +18,14 @@ export default function Contact() {
   const isDark = theme.palette.mode === "dark";
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const textSecondary = isDark
-    ? "rgba(255,255,255,0.75)"
-    : "rgba(0,0,0,0.7)";
 
-  // ✅ TEXTO PRINCIPAL (NEGRO FUERTE EN CLARO / BLANCO EN OSCURO)
-  const contactColor = isDark ? "#ffffff" : "#000000";
+// Texto principal fuerte (negro en claro / blanco en oscuro)
+const textPrimary = isDark ? "#ffffff" : "#000000";
+
+// Texto secundario más suave y elegante en ambos modos
+const textSecondary = isDark
+  ? "rgba(255,255,255,0.6)"
+  : "rgba(0,0,0,0.55)";
 
   const socialLinks = [
     {
@@ -58,7 +60,7 @@ export default function Contact() {
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO
+            TÍTULO (MISMO QUE PROJECTS)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -107,11 +109,10 @@ export default function Contact() {
           <Typography
             sx={{
               textAlign: "center",
-              color: contactColor, // ✅ NEGRO FUERTE / BLANCO
+              color: textPrimary,
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
-              fontWeight: 500,
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -179,29 +180,29 @@ export default function Contact() {
             </Typography>
 
             <Box
-              component="a"
-              href="mailto:patogol3535@gmail.com"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-                color: contactColor, // ✅ MISMO TONO
-                fontWeight: 600,
-                fontSize: "16px",
-                textDecoration: "none",
-                transition: "color 0.2s ease",
-                "&:hover": {
-                  textDecoration: "underline",
-                  color: isDark ? "#bbdefb" : "#000000",
-                },
-              }}
-            >
-              <MailOutline sx={{ fontSize: 20 }} />
-              patogol3535@gmail.com
-            </Box>
+  component="a"
+  href="mailto:patogol3535@gmail.com"
+  sx={{
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 1,
+    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
+    fontWeight: 600,
+    fontSize: "16px",
+    textDecoration: "none",
+    transition: "color 0.2s ease",
+    "&:hover": {
+      textDecoration: "underline",
+      color: isDark ? "#bbdefb" : "#115293", // hover elegante
+    },
+  }}
+>
+  <MailOutline sx={{ fontSize: 20 }} />
+  patogol3535@gmail.com
+</Box>
           </Box>
         </motion.div>
       </Container>
     </Box>
   );
-}
+      }
