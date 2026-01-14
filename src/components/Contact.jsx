@@ -16,12 +16,17 @@ import { useTheme } from "@mui/material/styles";
 export default function Contact() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
+
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const textPrimary = isDark ? "#ffffff" : "#000000";
+  const textSecondary = isDark
+    ? "rgba(255,255,255,0.75)"
+    : "rgba(0,0,0,0.7)";
 
   const socialLinks = [
     {
       icon: <GitHub />,
-      color: isDark ? "#fff" : "#181717",
+      color: isDark ? "#ffffff" : "#181717",
       href: "https://github.com/Patogol35",
     },
     {
@@ -45,20 +50,19 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        py: 4, // 🔹 MISMO padding que el código anterior
+        py: 4,
         scrollMarginTop: "80px",
       }}
     >
       <Container maxWidth="sm">
-
         {/* =========================
-            TÍTULO (SIN CAMBIOS VISUALES)
+            TÍTULO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: 0 }} // ❗ no suma espacio
+          style={{ textAlign: "center" }}
         >
           <Box
             sx={{
@@ -66,7 +70,7 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               px: 3,
-              py: 0.9,
+              py: 1,
               borderRadius: "999px",
               background: isDark
                 ? "rgba(144,202,249,0.06)"
@@ -81,26 +85,29 @@ export default function Contact() {
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: 600, color: primaryColor }}
+              sx={{
+                fontWeight: 600,
+                color: primaryColor,
+                fontSize: "18px",
+              }}
             >
               Redes Sociales
             </Typography>
           </Box>
         </motion.div>
 
-        {/* 🔹 MISMA DISTANCIA QUE ANTES */}
         <Box sx={{ mt: 4 }} />
 
         {/* =========================
             TEXTO INTRODUCTORIO
         ========================= */}
         <Typography
-          variant="body2"
           sx={{
             textAlign: "center",
-            color: "text.secondary",
+            color: textPrimary,
             mb: 2,
-            lineHeight: 1.7,
+            lineHeight: 1.8,
+            fontSize: "16px",
           }}
         >
           Puedes contactarme a través de mis redes profesionales o por correo
@@ -115,11 +122,11 @@ export default function Contact() {
             alignItems: "center",
             gap: 1,
             mb: 3,
-            color: "text.secondary",
+            color: textSecondary,
           }}
         >
-          <AccessTime sx={{ fontSize: 16 }} />
-          <Typography variant="caption">
+          <AccessTime sx={{ fontSize: 18 }} />
+          <Typography sx={{ fontSize: "14px" }}>
             Respuesta habitual en menos de 24 horas
           </Typography>
         </Box>
@@ -139,8 +146,12 @@ export default function Contact() {
         {/* Email */}
         <Box sx={{ textAlign: "center" }}>
           <Typography
-            variant="caption"
-            sx={{ color: "text.secondary", display: "block", mb: 0.5 }}
+            sx={{
+              display: "block",
+              mb: 0.7,
+              fontSize: "14px",
+              color: textSecondary,
+            }}
           >
             Correo electrónico
           </Typography>
@@ -152,15 +163,16 @@ export default function Contact() {
               display: "inline-flex",
               alignItems: "center",
               gap: 1,
-              color: primaryColor,
-              fontWeight: 500,
+              color: textPrimary,
+              fontWeight: 600,
+              fontSize: "16px",
               textDecoration: "none",
               "&:hover": {
                 textDecoration: "underline",
               },
             }}
           >
-            <MailOutline sx={{ fontSize: 18 }} />
+            <MailOutline sx={{ fontSize: 20 }} />
             patogol3535@gmail.com
           </Box>
         </Box>
