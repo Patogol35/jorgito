@@ -257,9 +257,9 @@ export default function Skills() {
   }}
   transition={{
     type: "spring",
-    stiffness: 130, // ↓ más lento
-    damping: 22,    // ↑ más control
-    mass: 0.9,      // ↑ más peso
+    stiffness: 200,
+    damping: 16,
+    mass: 0.65,
   }}
   sx={{
     width: 65,
