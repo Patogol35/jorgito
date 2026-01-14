@@ -1,4 +1,4 @@
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Divider, Paper } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
@@ -19,24 +19,40 @@ export default function Contact() {
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const socialLinks = [
-    { icon: <GitHub />, color: isDark ? "#fff" : "#181717", href: "https://github.com/Patogol35" },
-    { icon: <LinkedIn />, color: isDark ? "#90caf9" : "#0A66C2", href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2" },
-    { icon: <Facebook />, color: isDark ? "#90caf9" : "#1877F2", href: "https://www.facebook.com/share/1C9RgHAPvL/" },
-    { icon: <Instagram />, color: isDark ? "#f48fb1" : "#E4405F", href: "https://www.instagram.com/jorge_patricio_26" },
+    {
+      icon: <GitHub />,
+      color: isDark ? "#fff" : "#181717",
+      href: "https://github.com/Patogol35",
+    },
+    {
+      icon: <LinkedIn />,
+      color: isDark ? "#90caf9" : "#0A66C2",
+      href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
+    },
+    {
+      icon: <Facebook />,
+      color: isDark ? "#90caf9" : "#1877F2",
+      href: "https://www.facebook.com/share/1C9RgHAPvL/",
+    },
+    {
+      icon: <Instagram />,
+      color: isDark ? "#f48fb1" : "#E4405F",
+      href: "https://www.instagram.com/jorge_patricio_26",
+    },
   ];
 
   return (
-    <Box id="contact" sx={{ py: 10, scrollMarginTop: "80px" }}>
-      <Container maxWidth="md">
+    <Box id="contact" sx={{ py: 6, scrollMarginTop: "80px" }}>
+      <Container maxWidth="sm">
 
         {/* =========================
-            TÍTULO (NO TOCAR)
+            TÍTULO (NO TOCADO)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "3rem" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
@@ -57,100 +73,108 @@ export default function Contact() {
             }}
           >
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography variant="h6" sx={{ fontWeight: 600, color: primaryColor }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 600, color: primaryColor }}
+            >
               Redes Sociales
             </Typography>
           </Box>
         </motion.div>
 
         {/* =========================
-            CONTENIDO REAL (NO BÁSICO)
+            CONTENIDO PROFESIONAL
         ========================= */}
-        <Box
+        <Paper
+          elevation={isDark ? 0 : 2}
           sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "1.2fr 1fr" },
-            gap: 6,
-            alignItems: "center",
+            p: 3,
+            borderRadius: 3,
+            backgroundColor: isDark
+              ? "rgba(255,255,255,0.03)"
+              : "background.paper",
+            border: isDark ? "1px solid rgba(255,255,255,0.08)" : "none",
           }}
         >
-          {/* Texto / Identidad */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+          {/* Disponibilidad */}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+              mb: 2,
+              color: "text.secondary",
+            }}
           >
-            <Typography
-              variant="h5"
-              sx={{ fontWeight: 700, mb: 1.5 }}
-            >
-              ¿Hablamos?
+            <AccessTime sx={{ fontSize: 18 }} />
+            <Typography variant="body2">
+              Disponible · Respuesta en menos de 24h
             </Typography>
+          </Box>
 
-            <Typography
-              sx={{
-                color: "text.secondary",
-                fontSize: "0.95rem",
-                lineHeight: 1.7,
-                mb: 3,
-              }}
-            >
-              Estoy abierto a oportunidades profesionales, proyectos freelance
-              y colaboraciones técnicas. Puedes contactarme directamente o a
-              través de mis redes.
-            </Typography>
+          <Divider sx={{ mb: 3 }} />
 
+          {/* Redes */}
+          <SocialLinks
+            socialLinks={socialLinks}
+            size="42px"
+            animated
+            spacing={2.2}
+          />
+
+          {/* Email destacado */}
+          <motion.div
+            whileHover={{ scale: 1.04 }}
+            transition={{ type: "spring", stiffness: 220, damping: 20 }}
+          >
             <Box
               sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-                color: "text.secondary",
-                fontSize: "0.85rem",
+                mt: 3,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
-              <AccessTime sx={{ fontSize: 16 }} />
-              Respuesta en menos de 24 horas
+              <Box
+                component="a"
+                href="mailto:patogol3535@gmail.com"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  px: 2.5,
+                  py: 1.2,
+                  borderRadius: 2,
+                  textDecoration: "none",
+                  fontWeight: 600,
+                  color: primaryColor,
+                  border: `1px solid ${primaryColor}`,
+                  transition: "all .25s ease",
+                  "&:hover": {
+                    backgroundColor: primaryColor,
+                    color: "#fff",
+                  },
+                }}
+              >
+                <MailOutline sx={{ fontSize: 20 }} />
+                patogol3535@gmail.com
+              </Box>
             </Box>
           </motion.div>
 
-          {/* Redes */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            style={{ textAlign: "center" }}
+          {/* Texto final */}
+          <Typography
+            variant="body2"
+            sx={{
+              textAlign: "center",
+              mt: 2,
+              color: "text.secondary",
+            }}
           >
-            <SocialLinks
-              socialLinks={socialLinks}
-              size="48px"
-              animated
-              spacing={3}
-            />
-
-            {/* Email identidad */}
-            <Typography
-              component="a"
-              href="mailto:patogol3535@gmail.com"
-              sx={{
-                display: "inline-block",
-                mt: 3,
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                color: primaryColor,
-                textDecoration: "none",
-                borderBottom: `1px solid transparent`,
-                transition: "all .25s ease",
-                "&:hover": {
-                  borderColor: primaryColor,
-                },
-              }}
-            >
-              patogol3535@gmail.com
-            </Typography>
-          </motion.div>
-        </Box>
+            Puedes contactarme por cualquiera de estos medios
+          </Typography>
+        </Paper>
       </Container>
     </Box>
   );
-              }
+            }
