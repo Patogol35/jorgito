@@ -224,38 +224,33 @@ export default function Skills() {
     p: 3,
     textAlign: "center",
     borderRadius: "22px",
-
     background: cardBg,
 
-    /* ✅ BORDE REAL */
     border: "1px solid",
     borderColor: isDark
-      ? "rgba(255,255,255,0.14)"
-      : "rgba(0,0,0,0.12)",
+      ? "rgba(255,255,255,0.22)"
+      : "rgba(0,0,0,0.18)",
 
-    /* 🌫️ Sombra base */
     boxShadow: isDark
       ? "0 4px 14px rgba(0,0,0,0.45)"
       : "0 4px 14px rgba(0,0,0,0.08)",
 
     transition: "all 0.3s ease",
 
-    /* ✨ Interacción */
     "&:hover": {
       transform: "translateY(-5px)",
       borderColor: isDark
-        ? "rgba(144,202,249,0.6)"   // azul suave visible
+        ? "rgba(144,202,249,0.75)"
         : theme.palette.primary.main,
       boxShadow: isDark
         ? "0 10px 26px rgba(0,0,0,0.6)"
         : "0 10px 26px rgba(0,0,0,0.16)",
     },
 
-    /* 📱 Mobile feedback */
     "&:active": {
       transform: "scale(0.97)",
       borderColor: isDark
-        ? "rgba(144,202,249,0.8)"
+        ? "rgba(144,202,249,0.9)"
         : theme.palette.primary.dark,
     },
   }}
