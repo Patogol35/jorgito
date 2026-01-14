@@ -115,6 +115,32 @@ export default function Contact() {
           animated={true}
           spacing={2}
         />
+        {/* Email con hover suave + framer motion */}
+<motion.div
+  whileHover={{ scale: 1.05 }}
+  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+>
+  <Typography
+    variant="body2"
+    component="a"
+    href="mailto:patogol3535@gmail.com"
+    sx={{
+      display: "block",
+      textAlign: "center",
+      mt: 2,
+      fontWeight: 500,
+      color: primaryColor,
+      textDecoration: "none",
+      cursor: "pointer",
+      transition: "opacity 0.25s ease",
+      "&:hover": {
+        opacity: 0.85,
+      },
+    }}
+  >
+    patogol3535@gmail.com
+  </Typography>
+</motion.div>
       </Container>
     </Box>
   );
