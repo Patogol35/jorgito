@@ -96,6 +96,17 @@ export default function Contact() {
             </Typography>
           </Box>
         </motion.div>
+        <Typography
+  variant="body2"
+  sx={{
+    textAlign: "center",
+    mb: 2,
+    color: "text.secondary",
+    fontSize: "0.95rem",
+  }}
+>
+  🕒 Respondo en menos de 24h
+</Typography>
 
         {/* Redes sociales */}
         <SocialLinks
