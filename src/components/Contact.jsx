@@ -42,17 +42,23 @@ export default function Contact() {
   ];
 
   return (
-    <Box id="contact" sx={{ py: 7, scrollMarginTop: "80px" }}>
+    <Box
+      id="contact"
+      sx={{
+        py: 4, // 🔹 MISMO padding que el código anterior
+        scrollMarginTop: "80px",
+      }}
+    >
       <Container maxWidth="sm">
 
         {/* =========================
-            TÍTULO (SIN CAMBIOS)
+            TÍTULO (SIN CAMBIOS VISUALES)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2.5rem" }}
+          style={{ textAlign: "center", marginBottom: 0 }} // ❗ no suma espacio
         >
           <Box
             sx={{
@@ -81,6 +87,9 @@ export default function Contact() {
             </Typography>
           </Box>
         </motion.div>
+
+        {/* 🔹 MISMA DISTANCIA QUE ANTES */}
+        <Box sx={{ mt: 4 }} />
 
         {/* =========================
             TEXTO INTRODUCTORIO
