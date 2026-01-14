@@ -14,29 +14,36 @@ import React from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
-  const { palette } = useTheme();
-  const isDark = palette.mode === "dark";
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const textSecondary = isDark
+    ? "rgba(255,255,255,0.75)"
+    : "rgba(0,0,0,0.7)";
+
+  // 🔹 COLOR UNIFICADO (email + texto)
+  const contactColor = isDark ? "#ffffff" : "#1976d2";
 
   const socialLinks = [
     {
       icon: <GitHub />,
-      color: palette.text.primary,
+      color: isDark ? "#ffffff" : "#181717",
       href: "https://github.com/Patogol35",
     },
     {
       icon: <LinkedIn />,
-      color: "#0A66C2",
+      color: isDark ? "#90caf9" : "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
       icon: <Facebook />,
-      color: "#1877F2",
+      color: isDark ? "#90caf9" : "#1877F2",
       href: "https://www.facebook.com/share/1C9RgHAPvL/",
     },
     {
       icon: <Instagram />,
-      color: "#E4405F",
+      color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
   ];
@@ -47,7 +54,6 @@ export default function Contact() {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: palette.text.primary,
       }}
     >
       <Container maxWidth="sm">
@@ -83,7 +89,7 @@ export default function Contact() {
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor }}
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
               Redes Sociales
             </Typography>
@@ -91,20 +97,21 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            TEXTO INTRODUCTORIO
+            TEXTO INTRODUCTORIO (MISMO TONO QUE EMAIL)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Typography
             sx={{
               textAlign: "center",
-              color: palette.text.primary,
+              color: contactColor, // ✅ MISMO COLOR
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
+              fontWeight: 500,
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -116,7 +123,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Box
             sx={{
@@ -125,7 +132,7 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: palette.text.secondary,
+              color: textSecondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
@@ -141,7 +148,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
         >
           <SocialLinks
             socialLinks={socialLinks}
@@ -157,14 +164,15 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
           <Box sx={{ textAlign: "center" }}>
             <Typography
               sx={{
+                display: "block",
                 mb: 0.7,
                 fontSize: "14px",
-                color: palette.text.secondary,
+                color: textSecondary,
               }}
             >
               Correo electrónico
@@ -177,13 +185,14 @@ export default function Contact() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 1,
-                fontWeight: "bold",
+                color: contactColor, // ✅ MISMO TONO
+                fontWeight: 600,
                 fontSize: "16px",
-                color: palette.text.primary,
                 textDecoration: "none",
+                transition: "color 0.2s ease",
                 "&:hover": {
-                  color: primaryColor,
                   textDecoration: "underline",
+                  color: isDark ? "#bbdefb" : "#115293",
                 },
               }}
             >
