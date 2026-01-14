@@ -225,44 +225,38 @@ export default function Skills() {
     textAlign: "center",
     borderRadius: "22px",
 
-    /* 🧊 Fondo */
     background: cardBg,
-    backdropFilter: "blur(10px)",
 
-    /* ✨ BORDE ELEGANTE */
-    border: "1px solid transparent",
-    backgroundClip: "padding-box",
-    position: "relative",
-
-    /* 🔮 Gradiente sutil en el borde */
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      inset: 0,
-      borderRadius: "22px",
-      padding: "1px",
-      background: isDark
-        ? "linear-gradient(135deg, rgba(144,202,249,0.5), rgba(255,255,255,0.1))"
-        : "linear-gradient(135deg, rgba(25,118,210,0.4), rgba(255,255,255,0.8))",
-      WebkitMask:
-        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-      WebkitMaskComposite: "xor",
-      pointerEvents: "none",
-    },
+    /* ✅ BORDE REAL */
+    border: "1px solid",
+    borderColor: isDark
+      ? "rgba(255,255,255,0.14)"
+      : "rgba(0,0,0,0.12)",
 
     /* 🌫️ Sombra base */
     boxShadow: isDark
-      ? "0 6px 20px rgba(0,0,0,0.45)"
-      : "0 6px 16px rgba(0,0,0,0.08)",
+      ? "0 4px 14px rgba(0,0,0,0.45)"
+      : "0 4px 14px rgba(0,0,0,0.08)",
 
     transition: "all 0.3s ease",
 
-    /* 🚀 Hover */
+    /* ✨ Interacción */
     "&:hover": {
-      transform: "translateY(-6px)",
+      transform: "translateY(-5px)",
+      borderColor: isDark
+        ? "rgba(144,202,249,0.6)"   // azul suave visible
+        : theme.palette.primary.main,
       boxShadow: isDark
-        ? "0 12px 30px rgba(0,0,0,0.6)"
-        : "0 12px 30px rgba(0,0,0,0.15)",
+        ? "0 10px 26px rgba(0,0,0,0.6)"
+        : "0 10px 26px rgba(0,0,0,0.16)",
+    },
+
+    /* 📱 Mobile feedback */
+    "&:active": {
+      transform: "scale(0.97)",
+      borderColor: isDark
+        ? "rgba(144,202,249,0.8)"
+        : theme.palette.primary.dark,
     },
   }}
 >
