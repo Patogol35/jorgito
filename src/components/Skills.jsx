@@ -6,7 +6,6 @@ import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import BuildCircleIcon from "@mui/icons-material/BuildCircle";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
-import { useMediaQuery } from "@mui/material";
 import {
   Container,
   Typography,
@@ -54,7 +53,6 @@ const categoryIcons = {
   Tools: <BuildIcon fontSize="small" />,
 };
 
-
 /* =========================
    COMPONENT
 ========================= */
@@ -65,8 +63,7 @@ export default function Skills() {
 
   // 🔥 MISMO COLOR QUE CERTIFICATIONS
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-const isMobile = useMediaQuery("(hover: none)");
-  
+
   const primary = theme.palette.primary.main;
 
   const containerRef = useRef(null);
@@ -222,75 +219,44 @@ const isMobile = useMediaQuery("(hover: none)");
   viewport={{ once: true }}
 >
   <Paper
-  sx={{
-    p: 3,
-    textAlign: "center",
-    borderRadius: "22px",
-    background: cardBg,
-
-    border: "1px solid",
-    borderColor: isDark
-      ? "rgba(255,255,255,0.22)"
-      : "rgba(0,0,0,0.18)",
-
-    boxShadow: isDark
-      ? "0 4px 14px rgba(0,0,0,0.45)"
-      : "0 4px 14px rgba(0,0,0,0.08)",
-
-    transition: "all 0.3s ease",
-
-    "@media (hover: hover)": {
-  "&:hover": {
-    transform: "translateY(-5px)",
-    borderColor: isDark
-      ? "rgba(144,202,249,0.75)"
-      : theme.palette.primary.main,
-    boxShadow: isDark
-      ? "0 10px 26px rgba(0,0,0,0.6)"
-      : "0 10px 26px rgba(0,0,0,0.16)",
-  },
-},
-
-    "&:active": {
-      transform: "scale(0.97)",
-      borderColor: isDark
-        ? "rgba(144,202,249,0.9)"
-        : theme.palette.primary.dark,
-    },
-  }}
->
+    sx={{
+      p: 3,
+      textAlign: "center",
+      borderRadius: "22px",
+      background: cardBg,
+      border: `1px solid ${
+        isDark
+          ? "rgba(255,255,255,0.15)"
+          : "rgba(0,0,0,0.12)"
+      }`,
+      boxShadow: isDark
+        ? "0 0 0 1px rgba(255,255,255,0.05)"
+        : "0 4px 12px rgba(0,0,0,0.06)",
+      transition: "all 0.25s ease",
+      "&:hover": {
+        transform: "translateY(-4px)",
+        borderColor: theme.palette.primary.main,
+        boxShadow: isDark
+          ? "0 8px 20px rgba(0,0,0,0.5)"
+          : "0 8px 20px rgba(0,0,0,0.12)",
+      },
+    }}
+  >
     <Box
-  component={motion.img}
-  src={skill.img}
-  alt={skill.name}
-
-  variants={{
-    idle: { rotate: 0, scale: 1 },
-    hover: { rotate: 45, scale: 1.25 },
-    tap: { rotate: 720, scale: 1.45 },
-  }}
-
-  initial="idle"
-
-  animate={isMobile ? "idle" : undefined}
-  whileHover={!isMobile ? "hover" : undefined}
-  whileTap={isMobile ? "tap" : undefined}
-
-  transition={{
-    type: "spring",
-    stiffness: 160,
-    damping: 14,
-  }}
-
-  sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-    filter: isDark ? "invert(1) brightness(1.2)" : "none",
-    touchAction: "manipulation", // 🧠 clave extra
-  }}
-/>
+      component={motion.img}
+      src={skill.img}
+      alt={skill.name}
+      initial={{ opacity: 0, rotate: -6 }}
+      animate={{ opacity: 1, rotate: 0 }}
+      transition={{ duration: 0.4 }}
+      sx={{
+        width: 65,
+        height: 65,
+        mb: 2,
+        objectFit: "contain",
+        filter: isDark ? "invert(1) brightness(1.2)" : "none",
+      }}
+    />
 
     <Typography fontWeight="bold">
       {skill.name}
