@@ -242,24 +242,24 @@ export default function Skills() {
       },
     }}
   >
-    <Box
+  <Box
   component={motion.img}
   src={skill.img}
   alt={skill.name}
   whileHover={{
-    scale: 1.18,
-    rotate: [0, 6, -6, 4, 0],
-    y: -6,
+    scale: 1.08,
+    rotate: 2,
+    y: -3,
   }}
   whileTap={{
-    scale: 0.92,
-    rotate: 360,
+    scale: 0.96,
+    rotate: -1,
   }}
   transition={{
     type: "spring",
-    stiffness: 180,
-    damping: 14,
-    mass: 0.6,
+    stiffness: 220,
+    damping: 20,
+    mass: 0.8,
   }}
   sx={{
     width: 65,
@@ -267,8 +267,8 @@ export default function Skills() {
     mb: 2,
     objectFit: "contain",
     filter: isDark
-      ? "invert(1) brightness(1.25) drop-shadow(0 0 6px rgba(255,255,255,0.35))"
-      : "drop-shadow(0 0 6px rgba(0,0,0,0.25))",
+      ? "invert(1) brightness(1.15) drop-shadow(0 0 4px rgba(255,255,255,0.25))"
+      : "drop-shadow(0 2px 4px rgba(0,0,0,0.18))",
     willChange: "transform",
   }}
 />
