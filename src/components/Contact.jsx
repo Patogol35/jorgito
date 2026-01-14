@@ -7,6 +7,7 @@ import {
   MailOutline,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import AccessTime from "@mui/icons-material/AccessTime";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
 import React from "react";
@@ -96,17 +97,24 @@ export default function Contact() {
             </Typography>
           </Box>
         </motion.div>
-        <Typography
-  variant="body2"
+
+
+        {/* Disponibilidad con icono MUI */}
+<Box
   sx={{
-    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 0.8,
     mb: 2,
     color: "text.secondary",
-    fontSize: "0.95rem",
   }}
 >
-  🕒 Respondo en menos de 24h
-</Typography>
+  <AccessTime sx={{ fontSize: 18 }} />
+  <Typography variant="body2" sx={{ fontSize: "0.95rem" }}>
+    Respondo en menos de 24h
+  </Typography>
+</Box>
 
         {/* Redes sociales */}
         <SocialLinks
