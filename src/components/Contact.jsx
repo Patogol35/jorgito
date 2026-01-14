@@ -123,31 +123,55 @@ export default function Contact() {
           animated={true}
           spacing={2}
         />
-        {/* Email con hover suave + framer motion */}
+        {/* Micro copy + Email con jerarquía */}
+<Typography
+  variant="body2"
+  sx={{
+    textAlign: "center",
+    mt: 2,
+    mb: 0.6,
+    color: "text.secondary",
+  }}
+>
+  ¿Prefieres escribir directamente?
+</Typography>
+
 <motion.div
   whileHover={{ scale: 1.05 }}
   transition={{ type: "spring", stiffness: 300, damping: 20 }}
 >
-  <Typography
-    variant="body2"
-    component="a"
-    href="mailto:patogol3535@gmail.com"
-    sx={{
-      display: "block",
-      textAlign: "center",
-      mt: 2,
-      fontWeight: 500,
-      color: primaryColor,
-      textDecoration: "none",
-      cursor: "pointer",
-      transition: "opacity 0.25s ease",
-      "&:hover": {
-        opacity: 0.85,
-      },
-    }}
-  >
-    patogol3535@gmail.com
-  </Typography>
+  <Box sx={{ textAlign: "center" }}>
+    <Typography
+      variant="caption"
+      sx={{
+        display: "block",
+        mb: 0.4,
+        color: "text.secondary",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+      }}
+    >
+      Email de contacto
+    </Typography>
+
+    <Typography
+      variant="body2"
+      component="a"
+      href="mailto:patogol3535@gmail.com"
+      sx={{
+        fontWeight: 600,
+        color: primaryColor,
+        textDecoration: "none",
+        cursor: "pointer",
+        transition: "opacity 0.25s ease",
+        "&:hover": {
+          opacity: 0.85,
+        },
+      }}
+    >
+      patogol3535@gmail.com
+    </Typography>
+  </Box>
 </motion.div>
       </Container>
     </Box>
