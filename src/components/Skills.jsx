@@ -248,7 +248,7 @@ export default function Skills() {
   alt={skill.name}
   whileHover={{
     scale: 1.18,
-    rotate: 8,
+    rotate: 58,
     y: -6,
   }}
   whileTap={{
