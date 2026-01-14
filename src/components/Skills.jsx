@@ -247,13 +247,10 @@ export default function Skills() {
   src={skill.img}
   alt={skill.name}
   whileHover={{
-  scale: 1.18,
-  rotate: 8,
-  y: -6,
-  filter: isDark
-    ? "invert(1) brightness(1.3) drop-shadow(0 0 12px rgba(255,255,255,0.6))"
-    : "drop-shadow(0 0 12px rgba(0,0,0,0.35))",
-}}
+    scale: 1.18,
+    rotate: 8,
+    y: -6,
+  }}
   whileTap={{
     scale: 0.95,
     rotate: -5,
