@@ -14,14 +14,9 @@ import React from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const textPrimary = isDark ? "#ffffff" : "#000000";
-  const textSecondary = isDark
-    ? "rgba(255,255,255,0.75)"
-    : "rgba(0,0,0,0.7)";
 
   const socialLinks = [
     {
@@ -105,7 +100,7 @@ export default function Contact() {
           <Typography
             sx={{
               textAlign: "center",
-              color: textPrimary,
+              color: palette.text.primary,
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
@@ -129,7 +124,7 @@ export default function Contact() {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: textSecondary,
+              color: palette.text.secondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
@@ -169,33 +164,37 @@ export default function Contact() {
                 display: "block",
                 mb: 0.7,
                 fontSize: "14px",
-                color: textSecondary,
+                color: palette.text.secondary,
               }}
             >
               Correo electrónico
             </Typography>
 
             <Box
-  component="a"
-  href="mailto:patogol3535@gmail.com"
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 1,
-    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
-    fontWeight: 600,
-    fontSize: "16px",
-    textDecoration: "none",
-    transition: "color 0.2s ease",
-    "&:hover": {
-      textDecoration: "underline",
-      color: isDark ? "#bbdefb" : "#115293", // hover elegante
-    },
-  }}
->
-  <MailOutline sx={{ fontSize: 20 }} />
-  patogol3535@gmail.com
-</Box>
+              component="a"
+              href="mailto:patogol3535@gmail.com"
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                color: isDark
+                  ? palette.text.primary
+                  : palette.primary.main,
+                fontWeight: 600,
+                fontSize: "16px",
+                textDecoration: "none",
+                transition: "color 0.2s ease",
+                "&:hover": {
+                  textDecoration: "underline",
+                  color: isDark
+                    ? primaryColor
+                    : palette.primary.dark,
+                },
+              }}
+            >
+              <MailOutline sx={{ fontSize: 20 }} />
+              patogol3535@gmail.com
+            </Box>
           </Box>
         </motion.div>
       </Container>
