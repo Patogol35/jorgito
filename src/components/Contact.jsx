@@ -1,4 +1,4 @@
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Divider } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
@@ -47,16 +47,11 @@ export default function Contact() {
   ];
 
   return (
-    <Box
-      id="contact"
-      sx={{
-        py: 4,
-        scrollMarginTop: "80px",
-      }}
-    >
+    <Box id="contact" sx={{ py: 6, scrollMarginTop: "80px" }}>
       <Container maxWidth="sm">
+
         {/* =========================
-            TÍTULO
+            TÍTULO (NO TOCADO)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -92,52 +87,72 @@ export default function Contact() {
           </Box>
         </motion.div>
 
-        {/* Disponibilidad */}
+        {/* =========================
+            CONTENIDO
+        ========================= */}
         <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 0.8,
-            mb: 2,
-            color: "text.secondary",
+            px: { xs: 2, sm: 3 },
+            py: 3,
+            borderRadius: 3,
+            background: isDark
+              ? "rgba(255,255,255,0.03)"
+              : "rgba(0,0,0,0.02)",
+            border: `1px solid ${
+              isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"
+            }`,
           }}
         >
-          <AccessTime sx={{ fontSize: 18 }} />
-          <Typography variant="body2">
-            Respondo en menos de 24h
-          </Typography>
-        </Box>
-
-        {/* Redes */}
-        <SocialLinks
-          socialLinks={socialLinks}
-          size="40px"
-          animated
-          spacing={2}
-        />
-
-        {/* Email */}
-        <motion.div
-          whileHover={{ scale: 1.03 }}
-          transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        >
-          <Typography
-            component="a"
-            href="mailto:patogol3535@gmail.com"
+          {/* Disponibilidad */}
+          <Box
             sx={{
-              display: "block",
-              textAlign: "center",
-              mt: 2,
-              fontWeight: 600,
-              color: "text.primary",
-              textDecoration: "none",
-              "&:hover": { opacity: 0.75 },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+              mb: 2,
+              color: "text.secondary",
             }}
           >
-            patogol3535@gmail.com
-          </Typography>
-        </motion.div>
+            <AccessTime sx={{ fontSize: 18 }} />
+            <Typography variant="body2">
+              Disponible · Respuesta en menos de 24 horas
+            </Typography>
+          </Box>
+
+          <Divider sx={{ mb: 3 }} />
+
+          {/* Redes */}
+          <SocialLinks
+            socialLinks={socialLinks}
+            size="42px"
+            animated
+            spacing={2.5}
+          />
+
+          {/* Email */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.25 }}
+          >
+            <Typography
+              component="a"
+              href="mailto:patogol3535@gmail.com"
+              sx={{
+                display: "block",
+                textAlign: "center",
+                mt: 3,
+                fontWeight: 600,
+                fontSize: "0.95rem",
+                color: primaryColor,
+                textDecoration: "none",
+                "&:hover": { opacity: 0.8 },
+              }}
+            >
+              patogol3535@gmail.com
+            </Typography>
+          </motion.div>
+        </Box>
 
         {/* Cierre */}
         <Typography
@@ -146,12 +161,12 @@ export default function Contact() {
             textAlign: "center",
             mt: 2,
             color: "text.secondary",
-            fontSize: "0.9rem",
+            fontSize: "0.85rem",
           }}
         >
-          Elige tu red favorita y escríbeme
+          Puedes contactarme por cualquiera de estas plataformas
         </Typography>
       </Container>
     </Box>
   );
-                }
+}
