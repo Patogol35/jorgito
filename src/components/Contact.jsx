@@ -19,45 +19,25 @@ export default function Contact() {
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const socialLinks = [
-    {
-      icon: <GitHub />,
-      color: isDark ? "#fff" : "#181717",
-      href: "https://github.com/Patogol35",
-    },
-    {
-      icon: <LinkedIn />,
-      color: isDark ? "#90caf9" : "#0A66C2",
-      href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
-    },
-    {
-      icon: <Facebook />,
-      color: isDark ? "#90caf9" : "#1877F2",
-      href: "https://www.facebook.com/share/1C9RgHAPvL/",
-    },
-    {
-      icon: <Instagram />,
-      color: isDark ? "#f48fb1" : "#E4405F",
-      href: "https://www.instagram.com/jorge_patricio_26",
-    },
-    {
-      icon: <MailOutline />,
-      color: isDark ? "#fff" : "#1976d2",
-      href: "mailto:patogol3535@gmail.com",
-    },
+    { icon: <GitHub />, color: isDark ? "#fff" : "#181717", href: "https://github.com/Patogol35" },
+    { icon: <LinkedIn />, color: isDark ? "#90caf9" : "#0A66C2", href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2" },
+    { icon: <Facebook />, color: isDark ? "#90caf9" : "#1877F2", href: "https://www.facebook.com/share/1C9RgHAPvL/" },
+    { icon: <Instagram />, color: isDark ? "#f48fb1" : "#E4405F", href: "https://www.instagram.com/jorge_patricio_26" },
+    { icon: <MailOutline />, color: primaryColor, href: "mailto:patogol3535@gmail.com" },
   ];
 
   return (
-    <Box id="contact" sx={{ py: 6, scrollMarginTop: "80px" }}>
+    <Box id="contact" sx={{ py: 7, scrollMarginTop: "80px" }}>
       <Container maxWidth="sm">
 
         {/* =========================
-            TÍTULO (NO TOCADO)
+            TÍTULO (NO TOCAR)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          style={{ textAlign: "center", marginBottom: "2.5rem" }}
         >
           <Box
             sx={{
@@ -78,93 +58,98 @@ export default function Contact() {
             }}
           >
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 600, color: primaryColor }}
-            >
+            <Typography variant="h6" sx={{ fontWeight: 600, color: primaryColor }}>
               Redes Sociales
             </Typography>
           </Box>
         </motion.div>
 
         {/* =========================
-            CONTENIDO
+            CONTENIDO PREMIUM
         ========================= */}
         <Box
           sx={{
             px: { xs: 2, sm: 3 },
-            py: 3,
+            py: 3.5,
             borderRadius: 3,
-            background: isDark
-              ? "rgba(255,255,255,0.03)"
-              : "rgba(0,0,0,0.02)",
-            border: `1px solid ${
-              isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"
-            }`,
+            textAlign: "center",
           }}
         >
-          {/* Disponibilidad */}
+          {/* Estado */}
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              display: "inline-flex",
               alignItems: "center",
               gap: 1,
               mb: 2,
+              px: 2,
+              py: 0.6,
+              borderRadius: "999px",
+              fontSize: "0.8rem",
               color: "text.secondary",
+              background: isDark
+                ? "rgba(255,255,255,0.04)"
+                : "rgba(0,0,0,0.04)",
             }}
           >
-            <AccessTime sx={{ fontSize: 18 }} />
+            <AccessTime sx={{ fontSize: 16 }} />
             <Typography variant="body2">
-              Disponible · Respuesta en menos de 24 horas
+              Disponible para proyectos · Respuesta &lt; 24h
             </Typography>
           </Box>
 
-          <Divider sx={{ mb: 3 }} />
+          <Divider sx={{ my: 3 }} />
 
           {/* Redes */}
           <SocialLinks
             socialLinks={socialLinks}
-            size="42px"
+            size="44px"
             animated
-            spacing={2.5}
+            spacing={3}
           />
 
-          {/* Email */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.25 }}
-          >
-            <Typography
+          {/* CTA Email */}
+          <motion.div whileHover={{ y: -1 }} transition={{ duration: 0.2 }}>
+            <Box
               component="a"
               href="mailto:patogol3535@gmail.com"
               sx={{
-                display: "block",
-                textAlign: "center",
-                mt: 3,
-                fontWeight: 600,
-                fontSize: "0.95rem",
+                mt: 4,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                px: 3,
+                py: 1,
+                borderRadius: "999px",
+                border: `1px solid ${primaryColor}`,
                 color: primaryColor,
+                fontWeight: 600,
+                fontSize: "0.9rem",
                 textDecoration: "none",
-                "&:hover": { opacity: 0.8 },
+                transition: "all 0.25s ease",
+                "&:hover": {
+                  background: primaryColor,
+                  color: "#fff",
+                },
               }}
             >
-              patogol3535@gmail.com
-            </Typography>
+              <MailOutline sx={{ fontSize: 18 }} />
+              Contactar por email
+            </Box>
           </motion.div>
         </Box>
 
-        {/* Cierre */}
+        {/* Footer */}
         <Typography
           variant="body2"
           sx={{
             textAlign: "center",
-            mt: 2,
+            mt: 3,
             color: "text.secondary",
-            fontSize: "0.85rem",
+            fontSize: "0.8rem",
           }}
         >
-          Puedes contactarme por cualquiera de estas plataformas
+          Abierto a oportunidades, colaboraciones y proyectos freelance
         </Typography>
       </Container>
     </Box>
