@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Typography, Box, Divider } from "@mui/material";
 import {
   GitHub,
@@ -10,7 +11,6 @@ import {
 import { motion } from "framer-motion";
 import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
-import React from "react";
 import { useTheme } from "@mui/material/styles";
 
 export default function Contact() {
@@ -19,13 +19,11 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-// Texto principal MUY fuerte
-const textPrimary = isDark ? "#ffffff" : "#000000";
-
-// Texto secundario fuerte pero diferenciado
-const textSecondary = isDark
-  ? "rgba(255,255,255,0.9)"
-  : "rgba(0,0,0,0.85)";
+  // 🔥 TEXTOS FORZADOS (contraste real)
+  const textPrimary = isDark ? "#ffffff" : "#000000";
+  const textSecondary = isDark
+    ? "rgba(255,255,255,0.95)"
+    : "rgba(0,0,0,0.9)";
 
   const socialLinks = [
     {
@@ -60,7 +58,7 @@ const textSecondary = isDark
     >
       <Container maxWidth="sm">
         {/* =========================
-            TÍTULO (MISMO QUE PROJECTS)
+            TÍTULO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -91,7 +89,11 @@ const textSecondary = isDark
             <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{
+                fontWeight: "800 !important",
+                color: primaryColor,
+                lineHeight: 1,
+              }}
             >
               Redes Sociales
             </Typography>
@@ -113,6 +115,8 @@ const textSecondary = isDark
               mb: 2,
               lineHeight: 1.8,
               fontSize: "16px",
+              fontWeight: "700 !important",
+              letterSpacing: "0.2px",
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -120,7 +124,9 @@ const textSecondary = isDark
           </Typography>
         </motion.div>
 
-        {/* Disponibilidad */}
+        {/* =========================
+            DISPONIBILIDAD
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -137,7 +143,12 @@ const textSecondary = isDark
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
-            <Typography sx={{ fontSize: "14px" }}>
+            <Typography
+              sx={{
+                fontSize: "14px",
+                fontWeight: "600 !important",
+              }}
+            >
               Respuesta habitual en menos de 24 horas
             </Typography>
           </Box>
@@ -145,7 +156,9 @@ const textSecondary = isDark
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Redes */}
+        {/* =========================
+            REDES
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -161,7 +174,9 @@ const textSecondary = isDark
 
         <Divider sx={{ my: 3 }} />
 
-        {/* Email */}
+        {/* =========================
+            EMAIL
+        ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -174,35 +189,37 @@ const textSecondary = isDark
                 mb: 0.7,
                 fontSize: "14px",
                 color: textSecondary,
+                fontWeight: "700 !important",
+                letterSpacing: "0.3px",
               }}
             >
               Correo electrónico
             </Typography>
 
             <Box
-  component="a"
-  href="mailto:patogol3535@gmail.com"
-  sx={{
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 1,
-    color: isDark ? "#ffffff" : "#1976d2", // ⬅️ CLARO AZUL / OSCURO BLANCO
-    fontWeight: 600,
-    fontSize: "16px",
-    textDecoration: "none",
-    transition: "color 0.2s ease",
-    "&:hover": {
-      textDecoration: "underline",
-      color: isDark ? "#bbdefb" : "#115293", // hover elegante
-    },
-  }}
->
-  <MailOutline sx={{ fontSize: 20 }} />
-  patogol3535@gmail.com
-</Box>
+              component="a"
+              href="mailto:patogol3535@gmail.com"
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 1,
+                color: isDark ? "#ffffff" : "#1976d2",
+                fontWeight: "700 !important",
+                fontSize: "16px",
+                textDecoration: "none",
+                transition: "color 0.2s ease",
+                "&:hover": {
+                  textDecoration: "underline",
+                  color: isDark ? "#bbdefb" : "#115293",
+                },
+              }}
+            >
+              <MailOutline sx={{ fontSize: 20 }} />
+              patogol3535@gmail.com
+            </Box>
           </Box>
         </motion.div>
       </Container>
     </Box>
   );
-      }
+}
