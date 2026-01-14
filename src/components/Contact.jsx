@@ -173,6 +173,18 @@ export default function Contact() {
     </Typography>
   </Box>
 </motion.div>
+
+        <Typography
+  variant="body2"
+  sx={{
+    textAlign: "center",
+    mt: 2.5,
+    color: "text.secondary",
+    fontSize: "0.9rem",
+  }}
+>
+  Elige tu red favorita y escríbeme
+</Typography>
       </Container>
     </Box>
   );
