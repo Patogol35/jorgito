@@ -141,27 +141,29 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* =========================
-            ICONOS CON ANIMACIÓN
-        ========================= */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: { staggerChildren: 0.15 },
-            },
-          }}
-        >
-          <SocialLinks
-            socialLinks={socialLinks}
-            size="38px"
-            animated={true}
-            spacing={2}
-          />
-        </motion.div>
+    ICONOS CON ANIMACIÓN 🔥
+========================= */}
+<motion.div
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={{
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15, // efecto escalonado
+      },
+    },
+  }}
+>
+  <SocialLinks
+    socialLinks={socialLinks}
+    size="38px"
+    animated={true}
+    spacing={2}
+  />
+</motion.div>
 
         <Divider sx={{ my: 3 }} />
 
