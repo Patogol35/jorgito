@@ -124,7 +124,7 @@ export default function Skills() {
               backdropFilter: "blur(6px)",
             }}
           >
-            <WorkspacePremiumIcon
+            <BuildIcon
               sx={{ fontSize: 22, color: primaryColor }}
             />
             <Typography
