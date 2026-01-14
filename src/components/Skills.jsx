@@ -263,37 +263,31 @@ const isMobile = useMediaQuery("(hover: none)");
   src={skill.img}
   alt={skill.name}
 
-  /* 🖥️ Desktop: hover */
-  whileHover={
-    !isMobile
-      ? {
-          rotate: 45,
-          scale: 1.25,
-        }
-      : undefined
-  }
+  variants={{
+    idle: { rotate: 0, scale: 1 },
+    hover: { rotate: 45, scale: 1.25 },
+    tap: { rotate: 720, scale: 1.45 },
+  }}
 
-  /* 📱 Mobile: tap */
-  whileTap={
-    isMobile
-      ? {
-          rotate: 720,
-          scale: 1.45,
-        }
-      : undefined
-  }
+  initial="idle"
+
+  animate={isMobile ? "idle" : undefined}
+  whileHover={!isMobile ? "hover" : undefined}
+  whileTap={isMobile ? "tap" : undefined}
 
   transition={{
     type: "spring",
     stiffness: 160,
     damping: 14,
   }}
+
   sx={{
     width: 65,
     height: 65,
     mb: 2,
     objectFit: "contain",
     filter: isDark ? "invert(1) brightness(1.2)" : "none",
+    touchAction: "manipulation", // 🧠 clave extra
   }}
 />
 
