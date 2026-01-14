@@ -1,4 +1,4 @@
-import { Container, Typography, Box, Divider, Paper } from "@mui/material";
+import { Container, Typography, Box, Divider } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
@@ -42,17 +42,17 @@ export default function Contact() {
   ];
 
   return (
-    <Box id="contact" sx={{ py: 6, scrollMarginTop: "80px" }}>
+    <Box id="contact" sx={{ py: 7, scrollMarginTop: "80px" }}>
       <Container maxWidth="sm">
 
         {/* =========================
-            TÍTULO (NO TOCADO)
+            TÍTULO (SIN CAMBIOS)
         ========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          style={{ textAlign: "center", marginBottom: "2.5rem" }}
         >
           <Box
             sx={{
@@ -83,98 +83,79 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            CONTENIDO PROFESIONAL
+            TEXTO INTRODUCTORIO
         ========================= */}
-        <Paper
-          elevation={isDark ? 0 : 2}
+        <Typography
+          variant="body2"
           sx={{
-            p: 3,
-            borderRadius: 3,
-            backgroundColor: isDark
-              ? "rgba(255,255,255,0.03)"
-              : "background.paper",
-            border: isDark ? "1px solid rgba(255,255,255,0.08)" : "none",
+            textAlign: "center",
+            color: "text.secondary",
+            mb: 2,
+            lineHeight: 1.7,
           }}
         >
-          {/* Disponibilidad */}
+          Puedes contactarme a través de mis redes profesionales o por correo
+          electrónico.
+        </Typography>
+
+        {/* Disponibilidad */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 1,
+            mb: 3,
+            color: "text.secondary",
+          }}
+        >
+          <AccessTime sx={{ fontSize: 16 }} />
+          <Typography variant="caption">
+            Respuesta habitual en menos de 24 horas
+          </Typography>
+        </Box>
+
+        <Divider sx={{ mb: 3 }} />
+
+        {/* Redes */}
+        <SocialLinks
+          socialLinks={socialLinks}
+          size="38px"
+          animated={false}
+          spacing={2}
+        />
+
+        <Divider sx={{ my: 3 }} />
+
+        {/* Email */}
+        <Box sx={{ textAlign: "center" }}>
+          <Typography
+            variant="caption"
+            sx={{ color: "text.secondary", display: "block", mb: 0.5 }}
+          >
+            Correo electrónico
+          </Typography>
+
           <Box
+            component="a"
+            href="mailto:patogol3535@gmail.com"
             sx={{
-              display: "flex",
-              justifyContent: "center",
+              display: "inline-flex",
               alignItems: "center",
               gap: 1,
-              mb: 2,
-              color: "text.secondary",
+              color: primaryColor,
+              fontWeight: 500,
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+              },
             }}
           >
-            <AccessTime sx={{ fontSize: 18 }} />
-            <Typography variant="body2">
-              Disponible · Respuesta en menos de 24h
-            </Typography>
+            <MailOutline sx={{ fontSize: 18 }} />
+            patogol3535@gmail.com
           </Box>
-
-          <Divider sx={{ mb: 3 }} />
-
-          {/* Redes */}
-          <SocialLinks
-            socialLinks={socialLinks}
-            size="42px"
-            animated
-            spacing={2.2}
-          />
-
-          {/* Email destacado */}
-          <motion.div
-            whileHover={{ scale: 1.04 }}
-            transition={{ type: "spring", stiffness: 220, damping: 20 }}
-          >
-            <Box
-              sx={{
-                mt: 3,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box
-                component="a"
-                href="mailto:patogol3535@gmail.com"
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  px: 2.5,
-                  py: 1.2,
-                  borderRadius: 2,
-                  textDecoration: "none",
-                  fontWeight: 600,
-                  color: primaryColor,
-                  border: `1px solid ${primaryColor}`,
-                  transition: "all .25s ease",
-                  "&:hover": {
-                    backgroundColor: primaryColor,
-                    color: "#fff",
-                  },
-                }}
-              >
-                <MailOutline sx={{ fontSize: 20 }} />
-                patogol3535@gmail.com
-              </Box>
-            </Box>
-          </motion.div>
-
-          {/* Texto final */}
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "center",
-              mt: 2,
-              color: "text.secondary",
-            }}
-          >
-            Puedes contactarme por cualquiera de estos medios
-          </Typography>
-        </Paper>
+        </Box>
       </Container>
     </Box>
   );
-            }
+}
