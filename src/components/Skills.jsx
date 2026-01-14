@@ -243,20 +243,29 @@ export default function Skills() {
     }}
   >
     <Box
-      component={motion.img}
-      src={skill.img}
-      alt={skill.name}
-      initial={{ opacity: 0, rotate: -6 }}
-      animate={{ opacity: 1, rotate: 0 }}
-      transition={{ duration: 0.4 }}
-      sx={{
-        width: 65,
-        height: 65,
-        mb: 2,
-        objectFit: "contain",
-        filter: isDark ? "invert(1) brightness(1.2)" : "none",
-      }}
-    />
+  component={motion.img}
+  src={skill.img}
+  alt={skill.name}
+  whileHover={{
+    rotate: 20,
+    scale: 1.15,
+  }}
+  whileTap={{
+    rotate: 360,
+    scale: 1.2,
+  }}
+  transition={{
+    duration: 0.6,
+    ease: "easeInOut",
+  }}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    filter: isDark ? "invert(1) brightness(1.2)" : "none",
+  }}
+/>
 
     <Typography fontWeight="bold">
       {skill.name}
