@@ -19,7 +19,7 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // 🔥 TEXTOS FORZADOS (contraste real)
+  // 🔥 Textos fuertes
   const textPrimary = isDark ? "#ffffff" : "#000000";
   const textSecondary = isDark
     ? "rgba(255,255,255,0.95)"
@@ -101,7 +101,7 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            TEXTO INTRODUCTORIO
+            TEXTO INTRO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -116,7 +116,6 @@ export default function Contact() {
               lineHeight: 1.8,
               fontSize: "16px",
               fontWeight: "700 !important",
-              letterSpacing: "0.2px",
             }}
           >
             Puedes contactarme a través de mis redes profesionales o por correo
@@ -157,17 +156,26 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* =========================
-            REDES
+            ICONOS CON ANIMACIÓN 🔥
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.15, // 👈 efecto escalonado
+              },
+            },
+          }}
         >
           <SocialLinks
             socialLinks={socialLinks}
             size="38px"
-            animated={false}
+            animated={true} // 🔥 ACTIVA animación como antes
             spacing={2}
           />
         </motion.div>
@@ -190,7 +198,6 @@ export default function Contact() {
                 fontSize: "14px",
                 color: textSecondary,
                 fontWeight: "700 !important",
-                letterSpacing: "0.3px",
               }}
             >
               Correo electrónico
@@ -222,4 +229,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-}
+              }
