@@ -242,21 +242,30 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    color: theme.palette.text.primary, // Texto principal adaptativo
+    color: theme.palette.text.primary,
 
+    // 👇 Borde INACTIVO: azul suave en claro, azul más visible en oscuro
     "& fieldset": {
+      borderWidth: "1.5px", // grosor consistente
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(144,202,249,0.45)" // más visible en oscuro
-          : "rgba(0,0,0,0.23)", // estándar en claro
+          ? "rgba(144,202,249,0.45)"
+          : "rgba(96,165,250,0.5)", // azul suave en modo claro (no gris!)
     },
+
+    // 👇 Hover: mismo color, sin cambio brusco
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(144,202,249,0.7)"
+          : "rgba(96,165,250,0.7)",
     },
+
+    // 👇 Focused: azul sólido + sombra sutil, sin doble línea
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      borderWidth: "2px",
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      borderWidth: "1.8px",
+      boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`, // halo suave, no borde interno
     },
 
     // Placeholder
