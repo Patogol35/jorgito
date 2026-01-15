@@ -87,7 +87,6 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-            { id: "form", color: "#00acc1", Component: Form }, // 👈 FORM AL FINAL
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -109,6 +108,37 @@ function App() {
             </Paper>
           ))}
         </Container>
+
+        {/* FORM – SECCIÓN FULL WIDTH TIPO HERO */}
+        <Box
+          id="form"
+          sx={{
+            scrollMarginTop: scrollOffset,
+            py: { xs: 8, md: 12 },
+            px: { xs: 2, sm: 4 },
+            background:
+              mode === "dark"
+                ? "linear-gradient(135deg, #121212, #1e1e1e)"
+                : "linear-gradient(135deg, #f5f7fa, #ffffff)",
+          }}
+        >
+          <Container maxWidth="md">
+            <Paper
+              elevation={6}
+              sx={{
+                p: { xs: 4, md: 6 },
+                borderRadius: 4,
+                textAlign: "center",
+                transition: "all 0.4s ease",
+                "&:hover": {
+                  transform: "translateY(-6px)",
+                },
+              }}
+            >
+              <Form />
+            </Paper>
+          </Container>
+        </Box>
 
         {/* FOOTER */}
         <Footer />
