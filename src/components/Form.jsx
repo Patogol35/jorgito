@@ -60,7 +60,7 @@ export default function Contact() {
   };
 
   return (
-    <Box id="contact" sx={{ py: { xs: 2, md: 6 } }}>
+    <Box id="contact" sx={{ py: { xs: 2, md: 8 } }}>
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
@@ -189,15 +189,20 @@ export default function Contact() {
 
         {/* ================= ALERT CENTRADO ================= */}
         <Snackbar
-          open={success}
-          autoHideDuration={4000}
-          onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "center", horizontal: "center" }}
-        >
-          <Alert severity="success" variant="filled">
-            Mensaje enviado correctamente 🚀
-          </Alert>
-        </Snackbar>
+  open={success}
+  autoHideDuration={4000}
+  onClose={() => setSuccess(false)}
+  sx={{
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  }}
+>
+  <Alert severity="success" variant="filled">
+    Mensaje enviado correctamente 🚀
+  </Alert>
+</Snackbar>
       </Container>
     </Box>
   );
