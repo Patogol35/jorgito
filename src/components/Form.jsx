@@ -196,20 +196,43 @@ export default function Contact() {
 
         {/* ================= ALERT ================= */}
         <Snackbar
-          open={success}
-          autoHideDuration={4000}
-          onClose={() => setSuccess(false)}
-          sx={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <Alert severity="success" variant="filled">
-            Mensaje enviado correctamente 🚀
-          </Alert>
-        </Snackbar>
+  open={success}
+  autoHideDuration={3500}
+  onClose={() => setSuccess(false)}
+  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+  sx={{
+    top: "50% !important",
+    transform: "translateY(-50%)",
+  }}
+>
+  <Alert
+    severity="success"
+    icon={false}
+    sx={{
+      px: 4,
+      py: 2,
+      borderRadius: "18px",
+      fontSize: "1.05rem",
+      fontWeight: 600,
+      color: "#eafff4",
+
+      background:
+        "linear-gradient(135deg, rgba(16,185,129,0.95), rgba(5,150,105,0.95))",
+
+      backdropFilter: "blur(14px)",
+
+      boxShadow: `
+        0 10px 30px rgba(16,185,129,0.45),
+        0 0 22px rgba(16,185,129,0.55)
+      `,
+
+      border: "1px solid rgba(255,255,255,0.25)",
+      textAlign: "center",
+    }}
+  >
+    Mensaje enviado correctamente 🚀
+  </Alert>
+</Snackbar>
       </Container>
     </Box>
   );
