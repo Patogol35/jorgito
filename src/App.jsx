@@ -81,63 +81,51 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
+          {/* SECCIONES CON CARD */}
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          
           ].map(({ id, color, Component }) => (
             <Paper
-  key={id}
-  id={id}
-  elevation={id === "form" ? 6 : 3}
-  sx={{
-    mb: 4,
-    p: { xs: 3, md: 6 },
-    borderRadius: 3,
-    scrollMarginTop: scrollOffset,
-
-    // 👉 SOLO AQUÍ está el cambio importante
-    bgcolor:
-      id === "form"
-        ? (theme) =>
-            theme.palette.mode === "dark"
-              ? "#0f172a"
-              : "#e3f2fd"
-        : "background.paper",
-
-    borderLeft:
-      id === "form" ? "none" : `4px solid ${color}`,
-
-    transition: "all 0.3s ease",
-    "&:hover": {
-      transform: "translateY(-4px)",
-    },
-  }}
->
-  <Component />
-</Paper>
+              key={id}
+              id={id}
+              elevation={3}
+              sx={{
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+                borderLeft: `4px solid ${color}`,
+                scrollMarginTop: scrollOffset,
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                },
+              }}
+            >
+              <Component />
+            </Paper>
           ))}
 
+          {/* FORM SIN CARD (HERO SECTION) */}
           <Box
-  id="form"
-  sx={{
-    mt: 8,
-    py: { xs: 8, md: 12 },
-    px: { xs: 2, md: 6 },
-    borderRadius: 4,
-    scrollMarginTop: scrollOffset,
-
-    bgcolor: (theme) =>
-      theme.palette.mode === "dark"
-        ? "#0b1220"
-        : "#e3f2fd",
-  }}
->
-  <Form />
-</Box>
+            id="form"
+            sx={{
+              mt: 8,
+              py: { xs: 8, md: 12 },
+              px: { xs: 2, md: 6 },
+              borderRadius: 4,
+              scrollMarginTop: scrollOffset,
+              bgcolor: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "#0b1220"
+                  : "#e3f2fd",
+            }}
+          >
+            <Form />
+          </Box>
         </Container>
 
         {/* FOOTER */}
