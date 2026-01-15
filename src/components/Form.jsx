@@ -44,7 +44,7 @@ export default function Form() {
   };
 
   return (
-    <Box id="form" sx={{ py: { xs: 3, md: 6 } }}>
+    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
         {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
         <motion.div
