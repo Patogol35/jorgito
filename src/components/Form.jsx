@@ -242,28 +242,6 @@ const inputStyle = (theme) => ({
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
 
-    // 🔥 TEXTO DEL INPUT (CLAVE)
-    color:
-      theme.palette.mode === "dark"
-        ? "#f8fafc"
-        : "#0f172a",
-
-    "& input::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "#cbd5e1"
-          : "#64748b",
-      opacity: 1,
-    },
-
-    "& textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "#cbd5e1"
-          : "#64748b",
-      opacity: 1,
-    },
-
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
     },
@@ -276,11 +254,29 @@ const inputStyle = (theme) => ({
     },
   },
 
-  // 🔥 LABEL MÁS LEGIBLE (SIN CAMBIAR ESTILO)
+  /* 🔥 TEXTO REAL DEL INPUT (ESTO ES LO QUE FALTABA) */
+  "& .MuiInputBase-input": {
+    color:
+      theme.palette.mode === "dark"
+        ? "#ffffff"
+        : "#0f172a",
+    fontWeight: 500,
+  },
+
+  /* 🔥 PLACEHOLDER */
+  "& .MuiInputBase-input::placeholder": {
+    color:
+      theme.palette.mode === "dark"
+        ? "#e5e7eb"
+        : "#64748b",
+    opacity: 1,
+  },
+
+  /* 🔥 LABEL */
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
-        ? "#e2e8f0"
+        ? "#f1f5f9"
         : "#475569",
   },
 
