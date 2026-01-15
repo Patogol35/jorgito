@@ -71,11 +71,16 @@ export default function Contact() {
           {/* ================= CARD ================= */}
           <Box
   sx={{
+    width: "100%",
+    maxWidth: 720, // 👈 AJUSTA AQUÍ (680–760 recomendado)
+    mx: "auto",
+
     backdropFilter: "blur(16px)",
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.65)"
         : "rgba(255,255,255,0.85)",
+
     borderRadius: 5,
     p: { xs: 4, sm: 5 },
 
@@ -83,12 +88,12 @@ export default function Contact() {
     borderColor:
       theme.palette.mode === "dark"
         ? "rgba(96,165,250,0.25)"
-        : "rgba(59,130,246,0.35)",
+        : "rgba(59,130,246,0.45)",
 
     boxShadow:
       theme.palette.mode === "dark"
         ? `0 0 40px ${theme.palette.primary.main}22`
-        : `0 8px 30px rgba(59,130,246,0.18)`,
+        : `0 12px 32px rgba(59,130,246,0.22)`,
   }}
 >
             {/* ================= TITULO ================= */}
