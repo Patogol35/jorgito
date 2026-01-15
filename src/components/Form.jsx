@@ -70,18 +70,27 @@ export default function Contact() {
         >
           {/* ================= CARD ================= */}
           <Box
-            sx={{
-              backdropFilter: "blur(16px)",
-              background:
-                theme.palette.mode === "dark"
-                  ? "rgba(15,23,42,0.65)"
-                  : "rgba(255,255,255,0.75)",
-              borderRadius: 5,
-              p: { xs: 4, sm: 5 },
-              border: "1px solid rgba(96,165,250,0.25)",
-              boxShadow: `0 0 40px ${theme.palette.primary.main}22`,
-            }}
-          >
+  sx={{
+    backdropFilter: "blur(16px)",
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.65)"
+        : "rgba(255,255,255,0.85)",
+    borderRadius: 5,
+    p: { xs: 4, sm: 5 },
+
+    border: "1px solid",
+    borderColor:
+      theme.palette.mode === "dark"
+        ? "rgba(96,165,250,0.25)"
+        : "rgba(59,130,246,0.35)",
+
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? `0 0 40px ${theme.palette.primary.main}22`
+        : `0 8px 30px rgba(59,130,246,0.18)`,
+  }}
+>
             {/* ================= TITULO ================= */}
             <Typography
               variant="h4"
