@@ -244,28 +244,30 @@ const inputStyle = (theme) => ({
     backdropFilter: "blur(14px)",
     color: theme.palette.text.primary,
 
-    // 👇 Borde INACTIVO: azul suave en claro, azul más visible en oscuro
+    // 👇 Eliminar cualquier posible underline o decoración del texto
+    "& input, & textarea": {
+      textDecoration: "none !important",
+      outline: "none",
+      boxShadow: "none",
+    },
+
     "& fieldset": {
-      borderWidth: "1.5px", // grosor consistente
+      borderWidth: "1.5px",
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(144,202,249,0.45)"
-          : "rgba(96,165,250,0.5)", // azul suave en modo claro (no gris!)
+          : "rgba(96,165,250,0.5)",
     },
-
-    // 👇 Hover: mismo color, sin cambio brusco
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(144,202,249,0.7)"
           : "rgba(96,165,250,0.7)",
     },
-
-    // 👇 Focused: azul sólido + sombra sutil, sin doble línea
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
       borderWidth: "1.8px",
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`, // halo suave, no borde interno
+      boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`,
     },
 
     // Placeholder
