@@ -66,10 +66,7 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
         {/* SECCIONES CON CARD */}
@@ -77,7 +74,8 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 6,
+            pt: 6,
+            pb: 2, // ⬅️ reducimos el padding inferior
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -87,21 +85,19 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          ].map(({ id, color, Component }) => (
+          ].map(({ id, color, Component }, index, arr) => (
             <Paper
               key={id}
               id={id}
               elevation={3}
               sx={{
-                mb: 4,
+                mb: index === arr.length - 1 ? 1 : 4, // ⬅️ menos margen al último
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                },
+                "&:hover": { transform: "translateY(-4px)" },
               }}
             >
               <Component />
@@ -109,19 +105,14 @@ function App() {
           ))}
         </Container>
 
-        {/* FORM SIN CARD - FONDO PRINCIPAL */}
-        <Box
-          sx={{
-            backgroundColor: "background.default",
-          }}
-        >
+        {/* FORM SIN CARD */}
+        <Box sx={{ pt: 2 }}>
           <Form />
         </Box>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -141,7 +132,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
