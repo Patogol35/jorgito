@@ -60,12 +60,13 @@ export default function Contact() {
 
   return (
     <Box
-      id="form"
-      sx={{
-        py: { xs: 10, md: 14 },
-        position: "relative",
-      }}
-    >
+  id="contact"
+  sx={{
+    pt: 3,
+    pb: 3,
+    position: "relative",
+  }}
+>
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
