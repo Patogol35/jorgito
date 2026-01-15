@@ -299,4 +299,4 @@ const inputStyle = (theme) => {
       transition: "background-color 9999s ease-out",
     },
   };
-};);
+};
