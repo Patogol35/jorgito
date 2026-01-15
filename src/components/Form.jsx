@@ -86,7 +86,7 @@ export default function Contact() {
               fontSize: { xs: "2rem", sm: "2.3rem" },
             }}
           >
-            Conectemos
+            Envíame un mensaje directo
           </Typography>
 
           <Typography
@@ -97,7 +97,7 @@ export default function Contact() {
               fontStyle: "italic",
             }}
           >
-            Estoy listo para escuchar tu idea
+            Ponte en contacto conmigo a través de este formulario
           </Typography>
 
           {/* ================= FORM ================= */}
