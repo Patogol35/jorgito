@@ -87,7 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          { id: "form",  Component: Form },
+          
           ].map(({ id, color, Component }) => (
             <Paper
   key={id}
@@ -120,6 +120,24 @@ function App() {
   <Component />
 </Paper>
           ))}
+
+          <Box
+  id="form"
+  sx={{
+    mt: 8,
+    py: { xs: 8, md: 12 },
+    px: { xs: 2, md: 6 },
+    borderRadius: 4,
+    scrollMarginTop: scrollOffset,
+
+    bgcolor: (theme) =>
+      theme.palette.mode === "dark"
+        ? "#0b1220"
+        : "#e3f2fd",
+  }}
+>
+  <Form />
+</Box>
         </Container>
 
         {/* FOOTER */}
