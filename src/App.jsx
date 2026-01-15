@@ -72,7 +72,32 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* FORM – MISMO FONDO QUE HERO */}
+        <Container
+          id="form"
+          maxWidth="md"
+          sx={{
+            mt: -8,               // 🔥 se “pega” visualmente al Hero
+            mb: 8,
+            scrollMarginTop: scrollOffset,
+          }}
+        >
+          <Paper
+            elevation={6}
+            sx={{
+              p: { xs: 4, md: 6 },
+              borderRadius: 4,
+              transition: "all 0.4s ease",
+              "&:hover": {
+                transform: "translateY(-6px)",
+              },
+            }}
+          >
+            <Form />
+          </Paper>
+        </Container>
+
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -108,37 +133,6 @@ function App() {
             </Paper>
           ))}
         </Container>
-
-        {/* FORM – SECCIÓN FULL WIDTH TIPO HERO */}
-        <Box
-          id="form"
-          sx={{
-            scrollMarginTop: scrollOffset,
-            py: { xs: 8, md: 12 },
-            px: { xs: 2, sm: 4 },
-            background:
-              mode === "dark"
-                ? "linear-gradient(135deg, #121212, #1e1e1e)"
-                : "linear-gradient(135deg, #f5f7fa, #ffffff)",
-          }}
-        >
-          <Container maxWidth="md">
-            <Paper
-              elevation={6}
-              sx={{
-                p: { xs: 4, md: 6 },
-                borderRadius: 4,
-                textAlign: "center",
-                transition: "all 0.4s ease",
-                "&:hover": {
-                  transform: "translateY(-6px)",
-                },
-              }}
-            >
-              <Form />
-            </Paper>
-          </Container>
-        </Box>
 
         {/* FOOTER */}
         <Footer />
