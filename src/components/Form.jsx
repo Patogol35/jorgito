@@ -9,6 +9,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
@@ -73,7 +74,7 @@ export default function Form() {
               backdropFilter: "blur(6px)",
             }}
           >
-            <WorkspacePremiumIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <ContactMail sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
