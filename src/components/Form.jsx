@@ -22,22 +22,21 @@ export default function Form() {
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIÓN CINEMÁTICA ================= */
-  const easeOutExpo = [0.16, 1, 0.3, 1];
-
-  const fadeCinematic = {
+  /* ================= HERO ENTRY (MISMO QUE HERO) ================= */
+  const heroFadeUp = {
     hidden: {
       opacity: 0,
-      y: 18,
-      filter: "blur(10px)",
-      clipPath: "inset(0 0 100% 0)",
+      y: 24,
+      filter: "blur(12px)",
     },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      clipPath: "inset(0 0 0% 0)",
-      transition: { duration: 1.05, ease: easeOutExpo },
+      transition: {
+        duration: 0.9,
+        ease: [0.16, 1, 0.3, 1],
+      },
     },
   };
 
@@ -63,52 +62,28 @@ export default function Form() {
     <Box
       id="form"
       sx={{
-        py: { xs: 4, md: 6 },
-        position: "relative",
-        overflow: "hidden",
-
-        /* === HERO-LIKE ATMOSPHERE === */
-        background:
-          theme.palette.mode === "dark"
-            ? `
-              radial-gradient(
-                600px 320px at 50% 0%,
-                ${theme.palette.primary.main}22,
-                transparent 70%
-              )
-            `
-            : `
-              radial-gradient(
-                600px 320px at 50% 0%,
-                #60a5fa33,
-                transparent 70%
-              )
-            `,
+        py: { xs: 6, md: 8 },
       }}
     >
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeCinematic}
+          viewport={{ once: true, margin: "-120px" }}
+          variants={heroFadeUp}
         >
-          {/* ================= TITULO ================= */}
+          {/* ================= TITLE ================= */}
           <Typography
             variant="h3"
-            fontWeight={800}
             textAlign="center"
+            fontWeight={800}
             sx={{
-              color: theme.palette.primary.main,
               mb: 1,
-              fontSize: { xs: "2rem", sm: "2.3rem" },
-              textShadow:
-                theme.palette.mode === "dark"
-                  ? `0 0 22px ${theme.palette.primary.main}55`
-                  : `0 0 14px #60a5fa66`,
+              fontSize: { xs: "2rem", sm: "2.4rem" },
+              color: theme.palette.primary.main,
             }}
           >
-            Envíame un mensaje directo
+            Contáctame
           </Typography>
 
           <Typography
@@ -116,171 +91,108 @@ export default function Form() {
             sx={{
               mb: 4,
               color: "text.secondary",
-              fontStyle: "italic",
             }}
           >
-            Ponte en contacto conmigo a través de este formulario
+            Envíame un mensaje y te responderé pronto
           </Typography>
 
-          {/* ================= GLASS WRAPPER ================= */}
+          {/* ================= FORM ================= */}
           <Box
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
             sx={{
-              p: { xs: 3, sm: 4 },
-              borderRadius: "28px",
-              background:
-                theme.palette.mode === "dark"
-                  ? "rgba(15,23,42,0.55)"
-                  : "rgba(255,255,255,0.55)",
-              backdropFilter: "blur(18px)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? `
-                    0 0 0 1px rgba(255,255,255,0.06),
-                    0 18px 50px rgba(0,0,0,0.65)
-                  `
-                  : `
-                    0 0 0 1px rgba(255,255,255,0.45),
-                    0 18px 50px rgba(37,99,235,0.18)
-                  `,
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
             }}
           >
-            {/* ================= FORM ================= */}
-            <Box
-              component="form"
-              ref={formRef}
-              onSubmit={handleSubmit}
+            <TextField
+              name="from_name"
+              label="Nombre"
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon sx={{ color: "primary.main" }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputStyle(theme)}
+            />
+
+            <TextField
+              name="from_email"
+              label="Correo electrónico"
+              type="email"
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon sx={{ color: "primary.main" }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputStyle(theme)}
+            />
+
+            <TextField
+              name="message"
+              label="Mensaje"
+              multiline
+              rows={4}
+              fullWidth
+              required
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position="start"
+                    sx={{ alignSelf: "flex-start", mt: 1 }}
+                  >
+                    <MessageIcon sx={{ color: "primary.main" }} />
+                  </InputAdornment>
+                ),
+              }}
+              sx={inputStyle(theme)}
+            />
+
+            {/* ================= BUTTON ================= */}
+            <Button
+              type="submit"
+              endIcon={<SendIcon />}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
+                mt: 2,
+                alignSelf: "center",
+                px: 6,
+                py: 1.5,
+                borderRadius: "999px",
+                fontWeight: 700,
+                textTransform: "none",
+                color: "#fff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: `0 6px 16px ${theme.palette.primary.main}55`,
+                "&:hover": {
+                  boxShadow: `0 10px 26px ${theme.palette.primary.main}75`,
+                  transform: "translateY(-2px)",
+                },
+                transition: "all 0.25s ease",
               }}
             >
-              <TextField
-                name="from_name"
-                label="Nombre"
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon
-                        sx={{ color: theme.palette.primary.main }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-
-              <TextField
-                name="from_email"
-                label="Correo electrónico"
-                type="email"
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon
-                        sx={{ color: theme.palette.primary.main }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-
-              <TextField
-                name="message"
-                label="Mensaje"
-                multiline
-                rows={4}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ alignSelf: "flex-start", mt: 1 }}
-                    >
-                      <MessageIcon
-                        sx={{ color: theme.palette.primary.main }}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-
-              {/* ================= BOTÓN HERO ================= */}
-              <Button
-                type="submit"
-                endIcon={<SendIcon />}
-                sx={{
-                  mt: 3,
-                  alignSelf: "center",
-                  px: 6,
-                  py: 1.6,
-                  borderRadius: "999px",
-                  fontWeight: 700,
-                  textTransform: "none",
-                  color: "#fff",
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-                  "&:hover": {
-                    transform: "translateY(-2px) scale(1.02)",
-                    boxShadow: `0 10px 28px ${theme.palette.primary.main}77`,
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  },
-                  transition: "all 0.25s ease",
-                }}
-              >
-                Enviar mensaje
-              </Button>
-            </Box>
+              Enviar mensaje
+            </Button>
           </Box>
         </motion.div>
 
-        {/* ================= ALERT ================= */}
+        {/* ================= SUCCESS ================= */}
         <Snackbar
           open={success}
-          autoHideDuration={3500}
+          autoHideDuration={3000}
           onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
-          }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-          <Alert
-            severity="success"
-            icon={false}
-            sx={{
-              px: 4,
-              py: 2,
-              borderRadius: "18px",
-              fontSize: "1.05rem",
-              fontWeight: 600,
-              textAlign: "center",
-              color:
-                theme.palette.mode === "dark"
-                  ? "#e5e7eb"
-                  : "#eff6ff",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.96))"
-                  : "linear-gradient(135deg, rgba(37,99,235,0.95), rgba(96,165,250,0.95))",
-              backdropFilter: "blur(14px)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 12px 28px rgba(0,0,0,0.65)"
-                  : "0 12px 28px rgba(37,99,235,0.45)",
-              border:
-                theme.palette.mode === "dark"
-                  ? "1px solid rgba(255,255,255,0.08)"
-                  : "1px solid rgba(255,255,255,0.35)",
-            }}
-          >
+          <Alert severity="success" sx={{ borderRadius: 3 }}>
             Mensaje enviado correctamente 🚀
           </Alert>
         </Snackbar>
@@ -289,15 +201,14 @@ export default function Form() {
   );
 }
 
-/* ================= INPUT STYLE ================= */
+/* ================= INPUT STYLE (LIMPIO + HERO) ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
-    backdropFilter: "blur(14px)",
+        ? "rgba(15,23,42,0.45)"
+        : "rgba(255,255,255,0.75)",
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
     },
@@ -306,7 +217,7 @@ const inputStyle = (theme) => ({
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
     },
   },
   "& .MuiInputLabel-root": {
