@@ -110,29 +110,30 @@ function App() {
         </Container>
 
         {/* ===============================
-            SECCIÓN FORM – SIN CARD
-        =============================== */}
-        <Box
-          id="form"
-          sx={{
-            mt: 10,
-            py: { xs: 8, md: 12 },
-            scrollMarginTop: scrollOffset,
-            background:
-              mode === "light"
-                ? "linear-gradient(180deg, #f8fafc, #eef2f7)"
-                : "linear-gradient(180deg, #121212, #0d0d0d)",
-          }}
-        >
-          <Container
-            maxWidth="md"
-            sx={{
-              px: { xs: 2, sm: 4 },
-            }}
-          >
-            <Form />
-          </Container>
-        </Box>
+    SECCIÓN FORM – AJUSTADA
+=============================== */}
+<Box
+  id="form"
+  sx={{
+    mt: 2, // 👈 antes 10
+    pt: { xs: 5, md: 6 }, // espacio solo arriba
+    pb: { xs: 7, md: 9 },
+    scrollMarginTop: scrollOffset,
+    background:
+      mode === "light"
+        ? "linear-gradient(180deg, #ffffff, #f5f7fa)"
+        : "linear-gradient(180deg, #1e1e1e, #121212)",
+  }}
+>
+  <Container
+    maxWidth="md"
+    sx={{
+      px: { xs: 2, sm: 4 },
+    }}
+  >
+    <Form />
+  </Container>
+</Box>
 
         {/* FOOTER */}
         <Footer />
