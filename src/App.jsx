@@ -72,7 +72,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
+        {/* SECCIONES CON CARD */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -87,7 +87,6 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-            { id: "form", color: "#0097a7", Component: Form }, // 👈 NUEVA SECCIÓN
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -109,6 +108,15 @@ function App() {
             </Paper>
           ))}
         </Container>
+
+        {/* FORM SIN CARD - FONDO PRINCIPAL */}
+        <Box
+          sx={{
+            backgroundColor: "background.default",
+          }}
+        >
+          <Form />
+        </Box>
 
         {/* FOOTER */}
         <Footer />
