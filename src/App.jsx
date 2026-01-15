@@ -87,7 +87,8 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-            { id: "form", color: "#00897b", Component: Form },
+          { id: "form", color: "#00897b", Component: Form },
+          
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -96,36 +97,12 @@ function App() {
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
-
-                /* ESQUINAS MÁS PRO */
-                borderRadius: 4,
-
-                /* LÍNEA DE COLOR (NO SE TOCA) */
+                borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
-
-                /* BORDES FINOS ELEGANTES (SIN PISAR LA LÍNEA) */
-                borderTop:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255,255,255,0.08)"
-                    : "1px solid rgba(0,0,0,0.08)",
-                borderRight:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255,255,255,0.08)"
-                    : "1px solid rgba(0,0,0,0.08)",
-                borderBottom:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255,255,255,0.08)"
-                    : "1px solid rgba(0,0,0,0.08)",
-
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
-
                 "&:hover": {
                   transform: "translateY(-4px)",
-                  boxShadow:
-                    theme.palette.mode === "dark"
-                      ? `0 16px 32px ${color}33`
-                      : `0 16px 32px ${color}26`,
                 },
               }}
             >
