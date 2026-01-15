@@ -87,6 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
+          { id: "form", color: "#d32f2f", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -105,31 +106,8 @@ function App() {
               }}
             >
               <Component />
-
-
-              
             </Paper>
           ))}
-
-          {/* ===============================
-    SECCIÓN FORM – SIN FONDO
-=============================== */}
-<Box
-  id="form"
-  sx={{
-    mt: 3, // separación mínima del Contact
-    scrollMarginTop: scrollOffset,
-  }}
->
-  <Container
-    maxWidth="md"
-    sx={{
-      px: { xs: 2, sm: 4 },
-    }}
-  >
-    <Form />
-  </Container>
-</Box>
         </Container>
 
         {/* FOOTER */}
