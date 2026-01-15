@@ -110,19 +110,13 @@ function App() {
         </Container>
 
         {/* ===============================
-    SECCIÓN FORM – AJUSTADA
+    SECCIÓN FORM – SIN FONDO
 =============================== */}
 <Box
   id="form"
   sx={{
-    mt: 2, // 👈 antes 10
-    pt: { xs: 5, md: 6 }, // espacio solo arriba
-    pb: { xs: 7, md: 9 },
+    mt: 3, // separación mínima del Contact
     scrollMarginTop: scrollOffset,
-    background:
-      mode === "light"
-        ? "linear-gradient(180deg, #ffffff, #f5f7fa)"
-        : "linear-gradient(180deg, #1e1e1e, #121212)",
   }}
 >
   <Container
