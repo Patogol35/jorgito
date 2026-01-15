@@ -61,7 +61,7 @@ export default function Contact() {
 
   return (
     <Box id="contact" sx={{ py: { xs: 2, md: 8 } }}>
-      <Container maxWidth="md">
+      <Container maxWidth={false}>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -72,7 +72,7 @@ export default function Contact() {
           <Box
   sx={{
     width: "100%",
-    maxWidth: 820, // 👈 AJUSTA AQUÍ (680–760 recomendado)
+    maxWidth: 780, // 👈 aquí mandas tú
     mx: "auto",
 
     backdropFilter: "blur(16px)",
