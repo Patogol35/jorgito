@@ -109,6 +109,18 @@ function App() {
           ))}
         </Container>
 
+        {/* FORM FINAL – SIN CARD */}
+<Box
+  id="form"
+  sx={{
+    py: 8,
+    px: { xs: 2, sm: 4 },
+    backgroundColor: theme.palette.background.default,
+  }}
+>
+  <Form />
+</Box>
+
         {/* FOOTER */}
         <Footer />
 
