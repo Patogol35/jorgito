@@ -40,7 +40,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f1f3f0", // 👈 fondo claro profesional (NO blanco)
+                  default: "#e6ebf0", // 👈 MÁS notorio y profesional
                   paper: "#ffffff",
                 },
                 text: {
