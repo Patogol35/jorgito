@@ -14,6 +14,7 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -83,7 +84,7 @@ export default function Form() {
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO (AJUSTADO) ================= */}
+        {/* ================= SUBTÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -93,10 +94,8 @@ export default function Form() {
             textAlign="center"
             sx={{
               mb: 4,
-              color: theme.palette.text.primary, // 👈 Más claro y legible
+              color: "text.secondary",
               fontStyle: "italic",
-              fontFamily: theme.typography.h6?.fontFamily || "inherit", // 👈 Mismo tipo de letra que el título
-              opacity: 0.9,
             }}
           >
             Ponte en contacto conmigo a través de este formulario
@@ -242,45 +241,16 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    color: theme.palette.text.primary,
-
-    // 👇 Eliminar cualquier posible underline o decoración del texto
-    "& input, & textarea": {
-      textDecoration: "none !important",
-      outline: "none",
-      boxShadow: "none",
-    },
 
     "& fieldset": {
-      borderWidth: "1.5px",
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(144,202,249,0.45)"
-          : "rgba(96,165,250,0.5)",
+      borderColor: "rgba(96,165,250,0.35)",
     },
     "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(144,202,249,0.7)"
-          : "rgba(96,165,250,0.7)",
+      borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      borderWidth: "1.8px",
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}20`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
-
-    // Placeholder
-    "& input::placeholder, & textarea::placeholder": {
-      color: theme.palette.text.secondary,
-      opacity: 1,
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: theme.palette.text.secondary,
-    fontFamily: theme.typography.h6?.fontFamily || "inherit",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: theme.palette.primary.main,
   },
 });
