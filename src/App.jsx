@@ -72,7 +72,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
+        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -107,6 +107,52 @@ function App() {
               <Component />
             </Paper>
           ))}
+
+          {/* ===============================
+              SECCIÓN FORM – CARD DIFERENTE
+          =============================== */}
+          <Box
+            id="form"
+            sx={{
+              mt: 8,
+              scrollMarginTop: scrollOffset,
+            }}
+          >
+            <Paper
+              elevation={0}
+              sx={{
+                p: { xs: 4, md: 6 },
+                borderRadius: "28px",
+                background:
+                  mode === "light"
+                    ? "linear-gradient(135deg, #ffffff, #f1f5f9)"
+                    : "linear-gradient(135deg, #1e1e1e, #121212)",
+                border:
+                  mode === "light"
+                    ? "1px solid rgba(0,0,0,0.08)"
+                    : "1px solid rgba(255,255,255,0.08)",
+                boxShadow:
+                  mode === "light"
+                    ? "0 20px 40px rgba(0,0,0,0.08)"
+                    : "0 20px 40px rgba(0,0,0,0.6)",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Glow decorativo */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "radial-gradient(circle at top right, rgba(25,118,210,0.25), transparent 60%)",
+                  pointerEvents: "none",
+                }}
+              />
+
+              <Form />
+            </Paper>
+          </Box>
         </Container>
 
         {/* FOOTER */}
@@ -132,7 +178,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
