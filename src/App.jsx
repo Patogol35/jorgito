@@ -77,7 +77,7 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 6,
+            py: { xs: 6, md: 10 },
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -87,21 +87,73 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          { id: "form", color: "#00897b", Component: Form },
+            { id: "form", color: "#00897b", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
-              elevation={3}
+              elevation={0}
               sx={{
-                mb: 4,
+                mb: 5,
                 p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `4px solid ${color}`,
+                borderRadius: 4,
+
+                /* FONDO ELEGANTE */
+                backgroundImage:
+                  mode === "light"
+                    ? "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)"
+                    : "linear-gradient(180deg, #1e1e1e 0%, #181818 100%)",
+
+                /* LÍNEA DE COLOR (SE MANTIENE) */
+                borderLeft: `5px solid ${color}`,
+
+                /* BORDE SUAVE */
+                border:
+                  mode === "light"
+                    ? "1px solid rgba(0,0,0,0.06)"
+                    : "1px solid rgba(255,255,255,0.06)",
+
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
+
+                /* SOMBRA */
+                boxShadow:
+                  mode === "light"
+                    ? "0 10px 30px rgba(0,0,0,0.08)"
+                    : "0 10px 30px rgba(0,0,0,0.45)",
+
+                transition: "all 0.35s ease",
+
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  transform: "translateY(-6px) scale(1.01)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 20px 40px rgba(0,0,0,0.12)"
+                      : "0 20px 40px rgba(0,0,0,0.6)",
+                },
+
+                /* BARRA SUPERIOR DECORATIVA */
+                "&::before": {
+                  content: '""',
+                  display: "block",
+                  width: "60px",
+                  height: "4px",
+                  borderRadius: "2px",
+                  backgroundColor: color,
+                  marginBottom: "24px",
+                },
+
+                /* ANIMACIÓN DE ENTRADA */
+                animation: "fadeUp 0.6s ease both",
+
+                "@keyframes fadeUp": {
+                  from: {
+                    opacity: 0,
+                    transform: "translateY(20px)",
+                  },
+                  to: {
+                    opacity: 1,
+                    transform: "translateY(0)",
+                  },
                 },
               }}
             >
