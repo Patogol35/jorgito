@@ -72,7 +72,7 @@ export default function Contact() {
           <Box
   sx={{
     width: "100%",
-    maxWidth: 720, // 👈 AJUSTA AQUÍ (680–760 recomendado)
+    maxWidth: 820, // 👈 AJUSTA AQUÍ (680–760 recomendado)
     mx: "auto",
 
     backdropFilter: "blur(16px)",
