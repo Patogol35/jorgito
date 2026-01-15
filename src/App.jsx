@@ -105,6 +105,27 @@ function App() {
               }}
             >
               <Component />
+
+
+              {/* ===============================
+    SECCIÓN FORM – SIN FONDO
+=============================== */}
+<Box
+  id="form"
+  sx={{
+    mt: 3, // separación mínima del Contact
+    scrollMarginTop: scrollOffset,
+  }}
+>
+  <Container
+    maxWidth="md"
+    sx={{
+      px: { xs: 2, sm: 4 },
+    }}
+  >
+    <Form />
+  </Container>
+</Box>
             </Paper>
           ))}
         </Container>
