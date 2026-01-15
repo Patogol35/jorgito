@@ -21,6 +21,7 @@ import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
+import Form from "./components/Form.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
