@@ -60,7 +60,7 @@ export default function Contact() {
   };
 
   return (
-    <Box id="contact" sx={{ py: { xs: 8, md: 6 } }}>
+    <Box id="contact" sx={{ py: { xs: 2, md: 6 } }}>
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
