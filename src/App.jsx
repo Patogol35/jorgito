@@ -24,16 +24,16 @@ import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
 /* ===============================
-   VARIANTE DE ANIMACIÓN CARDS
+   ANIMACIÓN CARDS
 ================================ */
 const cardVariants = {
   hidden: {
     opacity: 0,
-    scale: 0.96,
+    y: 30,
   },
   visible: {
     opacity: 1,
-    scale: 1,
+    y: 0,
     transition: {
       duration: 0.6,
       ease: "easeOut",
@@ -61,17 +61,11 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
               }
             : {
                 background: {
                   default: "#0b1220",
                   paper: "#111827",
-                },
-                text: {
-                  primary: "#ffffff",
                 },
               }),
         },
@@ -84,13 +78,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -113,27 +103,26 @@ function App() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
-              style={{ willChange: "transform" }}
             >
               <Paper
                 id={id}
                 elevation={0}
                 sx={(theme) => ({
+                  position: "relative",
                   mb: 4,
                   p: { xs: 3, md: 6 },
                   borderRadius: 3,
                   scrollMarginTop: scrollOffset,
 
-                  /* ===== GLASS PROFESIONAL ===== */
+                  /* ===== GLASS ===== */
                   background:
                     theme.palette.mode === "dark"
-                      ? "rgba(15, 23, 42, 0.65)"
-                      : "rgba(255, 255, 255, 0.75)",
+                      ? "rgba(15,23,42,0.65)"
+                      : "rgba(255,255,255,0.75)",
 
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
 
-                  borderLeft: `4px solid ${color}`,
                   border:
                     theme.palette.mode === "dark"
                       ? "1px solid rgba(255,255,255,0.06)"
@@ -142,15 +131,20 @@ function App() {
                   boxShadow:
                     theme.palette.mode === "dark"
                       ? "0 10px 30px rgba(0,0,0,0.35)"
-                      : "0 12px 32px rgba(0,0,0,0.12)",
+                      : "0 14px 34px rgba(0,0,0,0.12)",
 
-                  transition: "box-shadow 0.3s ease, transform 0.3s ease",
+                  transition: "box-shadow 0.3s ease",
 
-                  "&:hover": {
-                    boxShadow:
-                      theme.palette.mode === "dark"
-                        ? "0 18px 40px rgba(0,0,0,0.45)"
-                        : "0 20px 40px rgba(0,0,0,0.18)",
+                  /* ===== LÍNEA DE COLOR (ELEGANTE) ===== */
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    left: 0,
+                    top: "10%",
+                    height: "80%",
+                    width: "4px",
+                    borderRadius: "999px",
+                    background: color,
                   },
                 })}
               >
@@ -160,18 +154,14 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
-              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -183,7 +173,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
