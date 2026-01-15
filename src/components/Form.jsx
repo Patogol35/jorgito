@@ -163,31 +163,34 @@ export default function Contact() {
 
             {/* ================= BOTÓN SIN FONDO ================= */}
             <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              variant="outlined"
-              sx={{
-                mt: 3,
-                alignSelf: "center",
-                px: 5,
-                py: 1.4,
-                borderRadius: "999px",
-                fontWeight: 700,
-                textTransform: "none",
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                background: "transparent",
-                "&:hover": {
-                  borderColor: theme.palette.primary.main,
-                  boxShadow: `0 0 22px ${theme.palette.primary.main}66`,
-                  transform: "translateY(-1px)",
-                  background: "transparent",
-                },
-                transition: "all 0.25s ease",
-              }}
-            >
-              Enviar mensaje
-            </Button>
+  type="submit"
+  endIcon={<SendIcon />}
+  sx={{
+    mt: 3,
+    alignSelf: "center",
+    px: 6,
+    py: 1.6,
+    borderRadius: "999px",
+    fontWeight: 700,
+    textTransform: "none",
+    color: "#fff",
+
+    /* === MISMO BOTÓN HERO, GLOW LIMPIO === */
+    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+
+    boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+    },
+
+    transition: "all 0.25s ease",
+  }}
+>
+  Enviar mensaje
+</Button>
           </Box>
         </motion.div>
 
