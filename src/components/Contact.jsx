@@ -147,12 +147,7 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* Redes sociales */}
-<SocialLinks
-  socialLinks={socialLinks}
-  size="42px"
-  animated={true}
-  spacing={2}
-/>
+        <SocialLinks socialLinks={socialLinks} size="48px" animated={true} spacing={2} />
 
         <Divider sx={{ my: 3 }} />
 
