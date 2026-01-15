@@ -1,274 +1,164 @@
+import { useState, useMemo, useEffect } from "react";
 import {
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
   Box,
-  Typography,
-  TextField,
-  Button,
+  Paper,
   Container,
-  Snackbar,
-  Alert,
-  InputAdornment,
+  Fab,
+  Tooltip,
 } from "@mui/material";
-import { motion } from "framer-motion";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
-import SendIcon from "@mui/icons-material/Send";
-import PersonIcon from "@mui/icons-material/Person";
-import EmailIcon from "@mui/icons-material/Email";
-import MessageIcon from "@mui/icons-material/Message";
-import { useTheme } from "@mui/material/styles";
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 
-export default function Form() {
-  const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-  const formRef = useRef(null);
-  const [success, setSuccess] = useState(false);
+import Navbar from "./components/Navbar.jsx";
+import Hero from "./components/Hero.jsx";
+import About from "./components/About.jsx";
+import Skills from "./components/Skills.jsx";
+import Certifications from "./components/Certifications.jsx";
+import Projects from "./components/Projects.jsx";
+import Contact from "./components/Contact.jsx";
+import Footer from "./components/Footer.jsx";
+import ChatBot from "./components/ChatBot.jsx";
+import Form from "./components/Form.jsx";
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+function App() {
+  const storedMode = localStorage.getItem("themeMode") || "dark";
+  const [mode, setMode] = useState(storedMode);
+  const scrollOffset = "80px";
 
-    emailjs
-      .sendForm(
-        "service_fd9ejbr",
-        "template_pwsn0sn",
-        formRef.current,
-        "Try7tc29-wnfxyPyf"
-      )
-      .then(() => {
-        setSuccess(true);
-        formRef.current.reset();
-      })
-      .catch(() => alert("Error al enviar el mensaje"));
-  };
+  useEffect(() => {
+    localStorage.setItem("themeMode", mode);
+  }, [mode]);
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          ...(mode === "light"
+            ? {
+                background: {
+                  default: "#f5f7fa",
+                  paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
+                },
+              }
+            : {
+                background: {
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
+                },
+              }),
+        },
+      }),
+    [mode]
+  );
 
   return (
-    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
-      <Container maxWidth="sm">
-        {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-            >
-              Contacto por Email
-            </Typography>
-          </Box>
-        </motion.div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        {/* ================= SUBTÍTULO (MÁS CLARO) ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Typography
-  variant="subtitle1"
-  sx={{
-    textAlign: "center",
-    fontWeight: "bold",
-    mb: 4,
-  }}
->
-  Ponte en contacto conmigo a través de este formulario
-</Typography>
-        </motion.div>
+      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
+        <Navbar mode={mode} setMode={setMode} />
 
-        {/* ================= FORM ================= */}
-        <Box
-          component="form"
-          ref={formRef}
-          onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-        >
-          {[
-            {
-              name: "from_name",
-              label: "Nombre",
-              icon: <PersonIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "from_email",
-              label: "Correo electrónico",
-              type: "email",
-              icon: <EmailIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "message",
-              label: "Mensaje",
-              multiline: true,
-              rows: 4,
-              icon: <MessageIcon sx={{ color: primaryColor }} />,
-            },
-          ].map((field, i) => (
-            <motion.div
-              key={field.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <TextField
-                {...field}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={
-                        field.multiline
-                          ? { alignSelf: "flex-start", mt: 1 }
-                          : {}
-                      }
-                    >
-                      {field.icon}
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-            </motion.div>
-          ))}
+        {/* HERO */}
+        <Hero mode={mode} setMode={setMode} />
 
-          {/* ================= BOTÓN ================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              sx={{
-                mt: 3,
-                px: 6,
-                py: 1.6,
-                borderRadius: "999px",
-                fontWeight: 700,
-                textTransform: "none",
-                color: "#fff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                },
-                transition: "all 0.25s ease",
-              }}
-            >
-              Enviar mensaje
-            </Button>
-          </motion.div>
-        </Box>
-
-        {/* ================= ALERT ================= */}
-        <Snackbar
-          open={success}
-          autoHideDuration={3500}
-          onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        {/* CONTENIDO */}
+        <Container
+          maxWidth="lg"
+          disableGutters
           sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          <Alert
-            severity="success"
-            icon={false}
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact },
+            { id: "form", color: "#00897b", Component: Form },
+          ].map(({ id, color, Component }) => (
+            <Paper
+              key={id}
+              id={id}
+              elevation={2}
+              sx={{
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+
+                /* LÍNEA DE COLOR (IGUAL QUE ANTES) */
+                borderLeft: `4px solid ${color}`,
+
+                /* BORDE MUY SUAVE */
+                border:
+                  mode === "light"
+                    ? "1px solid rgba(0,0,0,0.06)"
+                    : "1px solid rgba(255,255,255,0.06)",
+
+                scrollMarginTop: scrollOffset,
+
+                /* SOMBRA DISCRETA */
+                boxShadow:
+                  mode === "light"
+                    ? "0 6px 18px rgba(0,0,0,0.08)"
+                    : "0 6px 18px rgba(0,0,0,0.45)",
+
+                transition: "transform 0.25s ease, box-shadow 0.25s ease",
+
+                "&:hover": {
+                  transform: "translateY(-3px)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 10px 26px rgba(0,0,0,0.12)"
+                      : "0 10px 26px rgba(0,0,0,0.6)",
+                },
+              }}
+            >
+              <Component />
+            </Paper>
+          ))}
+        </Container>
+
+        {/* FOOTER */}
+        <Footer />
+
+        {/* BOTÓN FLOTANTE WHATSAPP */}
+        <Tooltip title="Chatea por WhatsApp" placement="left">
+          <Fab
+            aria-label="whatsapp"
             sx={{
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              fontWeight: 600,
-              textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
+              position: "fixed",
+              bottom: 16,
+              right: 16,
+              zIndex: 1000,
+              bgcolor: "#25D366",
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
+            onClick={() =>
+              window.open("https://wa.me/593997979099", "_blank")
+            }
           >
-            <strong>¡Mensaje enviado con éxito!</strong>
-            <br />
-            Me pondré en contacto contigo lo antes posible 🚀
-          </Alert>
-        </Snackbar>
-      </Container>
-    </Box>
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+          </Fab>
+        </Tooltip>
+
+        {/* CHATBOT IA PERSONAL */}
+        <ChatBot />
+      </Box>
+    </ThemeProvider>
   );
 }
 
-const inputStyle = (theme) => ({
-  "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
-    background:
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
-    backdropFilter: "blur(14px)",
-
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(241,245,249,0.95)"
-        : "rgba(15,23,42,0.9)",
-
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(226,232,240,0.6)"
-          : "rgba(100,116,139,0.6)",
-    },
-
-    "& fieldset": {
-      borderColor: "rgba(96,165,250,0.35)",
-    },
-    "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
-    },
-  },
-
-  "& .MuiInputLabel-root": {
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(71,85,105,0.8)",
-  },
-});
+export default App;
