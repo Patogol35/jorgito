@@ -17,12 +17,12 @@ import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-export default function Contact() {
+export default function Form() {
   const theme = useTheme();
-  const formRef = useRef();
+  const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIÓN CINEMÁTICA ================= */
+  /* ================= ANIMACIÓN ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -61,9 +61,9 @@ export default function Contact() {
 
   return (
     <Box
-      id="contact"
+      id="form"
       sx={{
-        py: { xs: 1, md: 7 }, // ⬅️ MENOS ESPACIO ARRIBA
+        py: { xs: 3, md: 6 }, // 🔥 MISMO ESPACIADO QUE PAPER
         position: "relative",
       }}
     >
@@ -81,8 +81,7 @@ export default function Contact() {
             textAlign="center"
             sx={{
               color: theme.palette.primary.main,
-              mt:-1,
-              mb: 0.5, // ⬅️ MENOS SEPARACIÓN
+              mb: 1,
               fontSize: { xs: "2rem", sm: "2.3rem" },
             }}
           >
@@ -92,7 +91,7 @@ export default function Contact() {
           <Typography
             textAlign="center"
             sx={{
-              mb: 4, // ⬅️ MÁS COMPACTO
+              mb: 4,
               color: "text.secondary",
               fontStyle: "italic",
             }}
@@ -155,101 +154,86 @@ export default function Contact() {
                     position="start"
                     sx={{ alignSelf: "flex-start", mt: 1 }}
                   >
-                    <MessageIcon sx={{ color: theme.palette.primary.main }} />
+                    <MessageIcon
+                      sx={{ color: theme.palette.primary.main }}
+                    />
                   </InputAdornment>
                 ),
               }}
               sx={inputStyle(theme)}
             />
 
-            {/* ================= BOTÓN SIN FONDO ================= */}
+            {/* ================= BOTÓN ================= */}
             <Button
-  type="submit"
-  endIcon={<SendIcon />}
-  sx={{
-    mt: 3,
-    alignSelf: "center",
-    px: 6,
-    py: 1.6,
-    borderRadius: "999px",
-    fontWeight: 700,
-    textTransform: "none",
-    color: "#fff",
-
-    /* === MISMO BOTÓN HERO, GLOW LIMPIO === */
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-
-    boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-
-    "&:hover": {
-      transform: "translateY(-2px)",
-      boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-    },
-
-    transition: "all 0.25s ease",
-  }}
->
-  Enviar mensaje
-</Button>
+              type="submit"
+              endIcon={<SendIcon />}
+              sx={{
+                mt: 3,
+                alignSelf: "center",
+                px: 6,
+                py: 1.6,
+                borderRadius: "999px",
+                fontWeight: 700,
+                textTransform: "none",
+                color: "#fff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+                "&:hover": {
+                  transform: "translateY(-2px)",
+                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                },
+                transition: "all 0.25s ease",
+              }}
+            >
+              Enviar mensaje
+            </Button>
           </Box>
         </motion.div>
 
         {/* ================= ALERT ================= */}
         <Snackbar
-  open={success}
-  autoHideDuration={3500}
-  onClose={() => setSuccess(false)}
-  anchorOrigin={{ vertical: "top", horizontal: "center" }}
-  sx={{
-    top: "50% !important",
-    transform: "translateY(-50%)",
-  }}
->
-  <Alert
-    severity="success"
-    icon={false}
-    sx={{
-      px: 4,
-      py: 2,
-      borderRadius: "18px",
-      fontSize: "1.05rem",
-      fontWeight: 600,
-      textAlign: "center",
-
-      /* === COLOR SEGÚN MODO === */
-      color:
-        theme.palette.mode === "dark"
-          ? "#e5e7eb"
-          : "#eff6ff",
-
-      background:
-        theme.palette.mode === "dark"
-          ? "linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.96))"
-          : "linear-gradient(135deg, rgba(37,99,235,0.95), rgba(96,165,250,0.95))",
-
-      backdropFilter: "blur(14px)",
-
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? `
-            0 12px 28px rgba(0,0,0,0.65),
-            0 0 22px rgba(255,255,255,0.05)
-          `
-          : `
-            0 12px 28px rgba(37,99,235,0.45),
-            0 0 22px rgba(96,165,250,0.6)
-          `,
-
-      border:
-        theme.palette.mode === "dark"
-          ? "1px solid rgba(255,255,255,0.08)"
-          : "1px solid rgba(255,255,255,0.35)",
-    }}
-  >
-    Mensaje enviado correctamente 🚀
-  </Alert>
-</Snackbar>
+          open={success}
+          autoHideDuration={3500}
+          onClose={() => setSuccess(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{
+            top: "50% !important",
+            transform: "translateY(-50%)",
+          }}
+        >
+          <Alert
+            severity="success"
+            icon={false}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: "18px",
+              fontSize: "1.05rem",
+              fontWeight: 600,
+              textAlign: "center",
+              color:
+                theme.palette.mode === "dark"
+                  ? "#e5e7eb"
+                  : "#eff6ff",
+              background:
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.96))"
+                  : "linear-gradient(135deg, rgba(37,99,235,0.95), rgba(96,165,250,0.95))",
+              backdropFilter: "blur(14px)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 12px 28px rgba(0,0,0,0.65)"
+                  : "0 12px 28px rgba(37,99,235,0.45)",
+              border:
+                theme.palette.mode === "dark"
+                  ? "1px solid rgba(255,255,255,0.08)"
+                  : "1px solid rgba(255,255,255,0.35)",
+            }}
+          >
+            Mensaje enviado correctamente 🚀
+          </Alert>
+        </Snackbar>
       </Container>
     </Box>
   );
