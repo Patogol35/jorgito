@@ -68,7 +68,7 @@ const menuItems = [
 {
   label: "Formulario",
   href: "#form",
-  color: "linear-gradient(135deg, #1565c0, #42a5f5)", // azul
+  color: "linear-gradient(135deg, #00695c, #26a69a)", // teal
   icon: <ContactMailIcon sx={{ color: "#fff" }} />,
 },
 ];
