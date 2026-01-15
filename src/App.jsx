@@ -109,16 +109,19 @@ function App() {
           ))}
         </Container>
 
-      
-{/* FORM FINAL – ALINEADO */}
+      {/* FORM FINAL */}
 <Box
   id="form"
   sx={{
-    mt: { xs: -4, md: -6 }, // ⬅️ CLAVE: compensa py del Container
+    mt: { xs: -4, md: -6 },   // 🔥 compensa el py del Container anterior
+    mb: { xs: 6, md: 10 },    // ✅ MÁS ESPACIO ANTES DEL FOOTER
   }}
 >
   <Form />
 </Box>
+
+{/* FOOTER */}
+<Footer />
 
         {/* FOOTER */}
         <Footer />
