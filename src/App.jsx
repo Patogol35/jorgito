@@ -9,6 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+import { motion } from "framer-motion";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -88,55 +89,66 @@ function App() {
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
             { id: "form", color: "#00897b", Component: Form },
-          ].map(({ id, color, Component }) => (
-            <Paper
+          ].map(({ id, color, Component }, index) => (
+            <motion.div
               key={id}
-              id={id}
-              elevation={0}
-              sx={{
-                position: "relative",
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 4,
-                scrollMarginTop: scrollOffset,
-
-                /* Fondo elegante (glass suave) */
-                background:
-                  theme.palette.mode === "dark"
-                    ? "rgba(30,41,59,0.6)"
-                    : "rgba(255,255,255,0.9)",
-                backdropFilter: "blur(12px)",
-
-                /* Sombra base */
-                boxShadow:
-                  theme.palette.mode === "dark"
-                    ? "0 10px 30px rgba(0,0,0,0.35)"
-                    : "0 10px 30px rgba(0,0,0,0.08)",
-
-                /* Acento lateral moderno */
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  inset: 0,
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.22, 1, 0.36, 1], // easeOutExpo
+              }}
+              viewport={{ once: true, margin: "-80px" }}
+            >
+              <Paper
+                id={id}
+                elevation={0}
+                sx={{
+                  position: "relative",
+                  mb: 4,
+                  p: { xs: 3, md: 6 },
                   borderRadius: 4,
-                  borderLeft: `3px solid ${color}`,
-                  opacity: 0.85,
-                  pointerEvents: "none",
-                },
+                  scrollMarginTop: scrollOffset,
 
-                transition: "all 0.35s ease",
+                  /* Fondo elegante */
+                  background:
+                    theme.palette.mode === "dark"
+                      ? "rgba(30,41,59,0.6)"
+                      : "rgba(255,255,255,0.9)",
+                  backdropFilter: "blur(12px)",
 
-                "&:hover": {
-                  transform: "translateY(-2px)",
+                  /* Sombra base */
                   boxShadow:
                     theme.palette.mode === "dark"
-                      ? `0 20px 50px ${color}22`
-                      : `0 20px 50px ${color}33`,
-                },
-              }}
-            >
-              <Component />
-            </Paper>
+                      ? "0 10px 30px rgba(0,0,0,0.35)"
+                      : "0 10px 30px rgba(0,0,0,0.08)",
+
+                  /* Acento lateral */
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: 0,
+                    borderRadius: 4,
+                    borderLeft: `3px solid ${color}`,
+                    opacity: 0.85,
+                    pointerEvents: "none",
+                  },
+
+                  transition: "all 0.35s ease",
+
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                    boxShadow:
+                      theme.palette.mode === "dark"
+                        ? `0 20px 50px ${color}22`
+                        : `0 20px 50px ${color}33`,
+                  },
+                }}
+              >
+                <Component />
+              </Paper>
+            </motion.div>
           ))}
         </Container>
 
