@@ -81,7 +81,8 @@ export default function Contact() {
             textAlign="center"
             sx={{
               color: theme.palette.primary.main,
-              mb: 0.1, // ⬅️ MENOS SEPARACIÓN
+              mt:-1,
+              mb: 0.5, // ⬅️ MENOS SEPARACIÓN
               fontSize: { xs: "2rem", sm: "2.3rem" },
             }}
           >
@@ -91,7 +92,7 @@ export default function Contact() {
           <Typography
             textAlign="center"
             sx={{
-              mb: 3.5, // ⬅️ MÁS COMPACTO
+              mb: 4, // ⬅️ MÁS COMPACTO
               color: "text.secondary",
               fontStyle: "italic",
             }}
