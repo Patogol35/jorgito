@@ -43,18 +43,14 @@ function App() {
                   default: "#f5f7fa",
                   paper: "#ffffff",
                 },
-                text: {
-                  primary: "#111",
-                },
+                text: { primary: "#111" },
               }
             : {
                 background: {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
+                text: { primary: "#ffffff" },
               }),
         },
       }),
@@ -66,10 +62,7 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
         {/* CONTENIDO */}
@@ -78,7 +71,6 @@ function App() {
           disableGutters
           sx={{
             pt: 6,
-            pb: 0,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -94,42 +86,27 @@ function App() {
               id={id}
               elevation={3}
               sx={{
-                mb: id === "contact" ? 0 : 4,
+                mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                },
               }}
             >
               <Component />
             </Paper>
           ))}
+
+          {/* FORM — MISMO CONTEXTO, MISMO ESPACIADO */}
+          <Box id="form" sx={{ mb: 4 }}>
+            <Form />
+          </Box>
         </Container>
 
-        {/* FORM – MISMA DISTANCIA QUE LAS SECCIONES */}
-        <Box
-          id="form"
-          sx={{
-            mt: 4, // 👈 igual a mb: 4 de las secciones
-            scrollMarginTop: scrollOffset,
-          }}
-        >
-          <Container maxWidth="md" sx={{ px: { xs: 2, sm: 4 } }}>
-            <Form />
-          </Container>
-        </Box>
-
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
@@ -146,7 +123,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
