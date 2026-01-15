@@ -72,31 +72,6 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* FORM – MISMO FONDO QUE HERO */}
-        <Container
-          id="form"
-          maxWidth="md"
-          sx={{
-            mt: -8,               // 🔥 se “pega” visualmente al Hero
-            mb: 8,
-            scrollMarginTop: scrollOffset,
-          }}
-        >
-          <Paper
-            elevation={6}
-            sx={{
-              p: { xs: 4, md: 6 },
-              borderRadius: 4,
-              transition: "all 0.4s ease",
-              "&:hover": {
-                transform: "translateY(-6px)",
-              },
-            }}
-          >
-            <Form />
-          </Paper>
-        </Container>
-
         {/* CONTENIDO */}
         <Container
           maxWidth="lg"
@@ -132,6 +107,18 @@ function App() {
               <Component />
             </Paper>
           ))}
+        </Container>
+
+        {/* FORM – FINAL, LIMPIO, SIN CARD */}
+        <Container
+          id="form"
+          maxWidth="md"
+          sx={{
+            py: 8,
+            scrollMarginTop: scrollOffset,
+          }}
+        >
+          <Form />
         </Container>
 
         {/* FOOTER */}
