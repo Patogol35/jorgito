@@ -63,6 +63,12 @@ const menuItems = [
     color: "linear-gradient(135deg, #c62828, #ef5350)",
     icon: <EmailIcon sx={{ color: "#fff" }} />,
   },
+  {
+    label: "Formulario",
+    href: "#form",
+    color: "linear-gradient(135deg, #6a1b9a, #ab47bc)",
+    icon: <VerifiedIcon sx={{ color: "#fff" }} />,
+  },
 ];
 
 // Variantes animaciones
