@@ -214,20 +214,36 @@ export default function Contact() {
       borderRadius: "18px",
       fontSize: "1.05rem",
       fontWeight: 600,
-      color: "#eafff4",
+      textAlign: "center",
+
+      /* === COLOR SEGÚN MODO === */
+      color:
+        theme.palette.mode === "dark"
+          ? "#e5e7eb"
+          : "#eff6ff",
 
       background:
-        "linear-gradient(135deg, rgba(16,185,129,0.95), rgba(5,150,105,0.95))",
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.96))"
+          : "linear-gradient(135deg, rgba(37,99,235,0.95), rgba(96,165,250,0.95))",
 
       backdropFilter: "blur(14px)",
 
-      boxShadow: `
-        0 10px 30px rgba(16,185,129,0.45),
-        0 0 22px rgba(16,185,129,0.55)
-      `,
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? `
+            0 12px 28px rgba(0,0,0,0.65),
+            0 0 22px rgba(255,255,255,0.05)
+          `
+          : `
+            0 12px 28px rgba(37,99,235,0.45),
+            0 0 22px rgba(96,165,250,0.6)
+          `,
 
-      border: "1px solid rgba(255,255,255,0.25)",
-      textAlign: "center",
+      border:
+        theme.palette.mode === "dark"
+          ? "1px solid rgba(255,255,255,0.08)"
+          : "1px solid rgba(255,255,255,0.35)",
     }}
   >
     Mensaje enviado correctamente 🚀
