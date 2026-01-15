@@ -109,13 +109,12 @@ function App() {
           ))}
         </Container>
 
-        {/* FORM FINAL – SIN CARD */}
+      
+{/* FORM FINAL – ALINEADO */}
 <Box
   id="form"
   sx={{
-    py: 8,
-    px: { xs: 2, sm: 4 },
-    backgroundColor: theme.palette.background.default,
+    mt: { xs: -4, md: -6 }, // ⬅️ CLAVE: compensa py del Container
   }}
 >
   <Form />
