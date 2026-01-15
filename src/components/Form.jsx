@@ -7,6 +7,7 @@ import {
   Snackbar,
   Alert,
   InputAdornment,
+  Divider,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import SendIcon from "@mui/icons-material/Send";
@@ -23,12 +24,11 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
 
   const fadeCinematic = {
-    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 0.8, ease: "easeOut" },
     },
   };
 
@@ -53,15 +53,7 @@ export default function Contact() {
   };
 
   return (
-    <Box
-      id="form"
-      sx={{
-        py: { xs: 10, md: 14 },
-        px: 2,
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
+    <Box id="form" sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
@@ -69,122 +61,116 @@ export default function Contact() {
           viewport={{ once: true }}
           variants={fadeCinematic}
         >
-          <Box
+          {/* TÍTULO */}
+          <Typography
+            variant="h4"
+            fontWeight={700}
+            textAlign="center"
+            sx={{ mb: 1 }}
+          >
+            Contacto
+          </Typography>
+
+          <Typography
+            variant="body1"
+            textAlign="center"
+            color="text.secondary"
+            sx={{ mb: 3 }}
+          >
+            Cuéntame tu idea y hablemos
+          </Typography>
+
+          <Divider
             sx={{
-              p: { xs: 4, sm: 5 },
-              borderRadius: "28px",
-              backdropFilter: "blur(18px)",
-              background:
-                theme.palette.mode === "dark"
-                  ? "rgba(255,255,255,0.03)"
-                  : "rgba(255,255,255,0.75)",
-              border: `1px solid ${theme.palette.primary.main}22`,
-              boxShadow: `0 0 50px ${theme.palette.primary.main}18`,
+              width: 60,
+              mx: "auto",
+              mb: 5,
+              borderColor: theme.palette.primary.main,
+            }}
+          />
+
+          {/* FORM */}
+          <Box
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
             }}
           >
-            <Typography
-              variant="h5"
-              fontWeight={700}
-              textAlign="center"
-              sx={{ color: theme.palette.primary.main, mb: 1 }}
-            >
-              Hablemos de tu proyecto
-            </Typography>
-
-            <Typography
-              variant="body2"
-              textAlign="center"
-              color="text.secondary"
-              sx={{ mb: 4 }}
-            >
-              Cuéntame tu idea y te responderé personalmente
-            </Typography>
-
-            <Box
-              component="form"
-              ref={formRef}
-              onSubmit={handleSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
+            {/* NOMBRE */}
+            <TextField
+              name="from_name"
+              label="Nombre"
+              fullWidth
+              required
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonIcon color="action" />
+                  </InputAdornment>
+                ),
               }}
+            />
+
+            {/* EMAIL */}
+            <TextField
+              name="from_email"
+              label="Correo electrónico"
+              type="email"
+              fullWidth
+              required
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            {/* MENSAJE */}
+            <TextField
+              name="message"
+              label="Mensaje"
+              multiline
+              rows={4}
+              fullWidth
+              required
+              variant="outlined"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment
+                    position="start"
+                    sx={{ alignSelf: "flex-start", mt: 1 }}
+                  >
+                    <MessageIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            {/* BOTÓN */}
+            <Button
+              type="submit"
+              endIcon={<SendIcon />}
+              sx={{
+                mt: 2,
+                alignSelf: "center",
+                px: 6,
+                py: 1.4,
+                borderRadius: "999px",
+                fontWeight: 600,
+                textTransform: "none",
+              }}
+              variant="contained"
             >
-              {/* NOMBRE */}
-              <TextField
-                name="from_name"
-                label="Nombre"
-                fullWidth
-                required
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon color="primary" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              {/* EMAIL */}
-              <TextField
-                name="from_email"
-                label="Correo electrónico"
-                type="email"
-                fullWidth
-                required
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon color="primary" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              {/* MENSAJE */}
-              <TextField
-                name="message"
-                label="Mensaje"
-                multiline
-                rows={4}
-                fullWidth
-                required
-                variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start" sx={{ alignSelf: "flex-start", mt: 1 }}>
-                      <MessageIcon color="primary" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-
-              {/* BOTÓN */}
-              <Button
-                type="submit"
-                endIcon={<SendIcon />}
-                sx={{
-                  mt: 3,
-                  alignSelf: "center",
-                  px: 6,
-                  py: 1.5,
-                  borderRadius: "40px",
-                  fontWeight: 600,
-                  textTransform: "none",
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `0 0 25px ${theme.palette.primary.main}55`,
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: `0 0 35px ${theme.palette.primary.main}88`,
-                  },
-                }}
-                variant="contained"
-              >
-                Enviar mensaje
-              </Button>
-            </Box>
+              Enviar mensaje
+            </Button>
           </Box>
         </motion.div>
 
@@ -202,4 +188,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-                      }
+}
