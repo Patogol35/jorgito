@@ -41,6 +41,7 @@ export default function Contact() {
       color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
+    { icon: <MailOutline />, color: isDark ? "#fff" : "#1976d2", href: "mailto:patogol3535@gmail.com" },
   ];
 
   return (
