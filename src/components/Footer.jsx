@@ -1,6 +1,12 @@
 import { Box, Typography, useTheme } from "@mui/material";
+import { motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
-import { GitHub, LinkedIn, Instagram, MailOutline } from "@mui/icons-material";
+import {
+  GitHub,
+  LinkedIn,
+  Instagram,
+  MailOutline,
+} from "@mui/icons-material";
 
 export default function Footer() {
   const theme = useTheme();
@@ -33,29 +39,53 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        py: 5,
+        position: "relative",
+        pt: 6,
+        pb: 4,
         textAlign: "center",
         background: isDark
-          ? "linear-gradient(180deg, #020617, #000000)"
+          ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
           : "linear-gradient(135deg, #1976d2, #42a5f5)",
         color: "#fff",
-        width: "100%",
       }}
     >
-      {/* Eslogan */}
-      <Typography
-        variant="subtitle2"
+      {/* Línea superior */}
+      <Box
         sx={{
-          mb: 2,
-          fontWeight: 600,
-          color: "rgba(255,255,255,0.9)",
-          letterSpacing: "0.3px",
+          position: "absolute",
+          top: 0,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "120px",
+          height: "2px",
+          borderRadius: "999px",
+          background: isDark
+            ? "linear-gradient(90deg, transparent, #60a5fa, transparent)"
+            : "linear-gradient(90deg, transparent, #ffffff, transparent)",
+          opacity: 0.8,
         }}
-      >
-        Transformando ideas en aplicaciones efectivas
-      </Typography>
+      />
 
-      {/* Íconos sociales */}
+      {/* Eslogan */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Typography
+          variant="subtitle2"
+          sx={{
+            mb: 2.5,
+            fontWeight: 600,
+            letterSpacing: "0.4px",
+            color: "rgba(255,255,255,0.92)",
+          }}
+        >
+          Transformando ideas en aplicaciones efectivas
+        </Typography>
+      </motion.div>
+
+      {/* Redes sociales */}
       <SocialLinks
         socialLinks={socialLinks}
         size="30px"
@@ -76,4 +106,4 @@ export default function Footer() {
       </Typography>
     </Box>
   );
-          }
+}
