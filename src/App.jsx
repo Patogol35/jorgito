@@ -77,7 +77,7 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: { xs: 6, md: 10 },
+            py: 6,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -92,22 +92,16 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={0}
+              elevation={2}
               sx={{
-                mb: 5,
+                mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: 4,
+                borderRadius: 3,
 
-                /* FONDO ELEGANTE */
-                backgroundImage:
-                  mode === "light"
-                    ? "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)"
-                    : "linear-gradient(180deg, #1e1e1e 0%, #181818 100%)",
+                /* LÍNEA DE COLOR (IGUAL QUE ANTES) */
+                borderLeft: `4px solid ${color}`,
 
-                /* LÍNEA DE COLOR (SE MANTIENE) */
-                borderLeft: `5px solid ${color}`,
-
-                /* BORDE SUAVE */
+                /* BORDE MUY SUAVE */
                 border:
                   mode === "light"
                     ? "1px solid rgba(0,0,0,0.06)"
@@ -115,45 +109,20 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
-                /* SOMBRA */
+                /* SOMBRA DISCRETA */
                 boxShadow:
                   mode === "light"
-                    ? "0 10px 30px rgba(0,0,0,0.08)"
-                    : "0 10px 30px rgba(0,0,0,0.45)",
+                    ? "0 6px 18px rgba(0,0,0,0.08)"
+                    : "0 6px 18px rgba(0,0,0,0.45)",
 
-                transition: "all 0.35s ease",
+                transition: "transform 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-6px) scale(1.01)",
+                  transform: "translateY(-3px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 20px 40px rgba(0,0,0,0.12)"
-                      : "0 20px 40px rgba(0,0,0,0.6)",
-                },
-
-                /* BARRA SUPERIOR DECORATIVA */
-                "&::before": {
-                  content: '""',
-                  display: "block",
-                  width: "60px",
-                  height: "4px",
-                  borderRadius: "2px",
-                  backgroundColor: color,
-                  marginBottom: "24px",
-                },
-
-                /* ANIMACIÓN DE ENTRADA */
-                animation: "fadeUp 0.6s ease both",
-
-                "@keyframes fadeUp": {
-                  from: {
-                    opacity: 0,
-                    transform: "translateY(20px)",
-                  },
-                  to: {
-                    opacity: 1,
-                    transform: "translateY(0)",
-                  },
+                      ? "0 10px 26px rgba(0,0,0,0.12)"
+                      : "0 10px 26px rgba(0,0,0,0.6)",
                 },
               }}
             >
