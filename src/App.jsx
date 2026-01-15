@@ -19,9 +19,9 @@ import Skills from "./components/Skills.jsx";
 import Certifications from "./components/Certifications.jsx";
 import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
+import Form from "./components/Form.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
-import Form from "./components/Form.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -87,6 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
+            { id: "form", color: "#0097a7", Component: Form }, // 👈 NUEVA SECCIÓN
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -107,18 +108,6 @@ function App() {
               <Component />
             </Paper>
           ))}
-        </Container>
-
-        {/* FORM – FINAL, LIMPIO, SIN CARD */}
-        <Container
-          id="form"
-          maxWidth="md"
-          sx={{
-            py: 8,
-            scrollMarginTop: scrollOffset,
-          }}
-        >
-          <Form />
         </Container>
 
         {/* FOOTER */}
