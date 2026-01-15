@@ -28,13 +28,15 @@ export default function Form() {
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 20,
-      filter: "blur(10px)",
+      y: 16,
+      filter: "blur(8px)",
+      clipPath: "inset(0 0 100% 0)",
     },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
+      clipPath: "inset(0 0 0% 0)",
       transition: { duration: 1, ease: easeOutExpo },
     },
   };
@@ -61,7 +63,7 @@ export default function Form() {
     <Box
       id="form"
       sx={{
-        py: { xs: 4, md: 7 },
+        py: { xs: 3, md: 6 },
         position: "relative",
       }}
     >
@@ -75,34 +77,32 @@ export default function Form() {
           {/* ================= TITULO ================= */}
           <Typography
             variant="h3"
-            fontWeight={900}
+            fontWeight={800}
             textAlign="center"
             sx={{
               mb: 1,
-              fontSize: { xs: "2.1rem", sm: "2.4rem" },
-              background:
+              fontSize: { xs: "2rem", sm: "2.3rem" },
+              color:
                 theme.palette.mode === "dark"
-                  ? "linear-gradient(90deg, #60a5fa, #a78bfa)"
-                  : "linear-gradient(90deg, #1e3a8a, #2563eb)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+                  ? "#e5e7eb"
+                  : theme.palette.primary.main,
             }}
           >
-            Envíame un mensaje
+            Envíame un mensaje directo
           </Typography>
 
           <Typography
             textAlign="center"
             sx={{
               mb: 4,
-              fontSize: "0.95rem",
+              fontStyle: "italic",
               color:
                 theme.palette.mode === "dark"
-                  ? "rgba(226,232,240,0.75)"
-                  : "rgba(51,65,85,0.75)",
+                  ? "rgba(226,232,240,0.7)"
+                  : "rgba(51,65,85,0.8)",
             }}
           >
-            Respondo rápido y de forma directa
+            Ponte en contacto conmigo a través de este formulario
           </Typography>
 
           {/* ================= FORM ================= */}
@@ -114,21 +114,6 @@ export default function Form() {
               display: "flex",
               flexDirection: "column",
               gap: 3,
-              p: 3,
-              borderRadius: "26px",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(180deg, rgba(2,6,23,0.85), rgba(15,23,42,0.85))"
-                  : "linear-gradient(180deg, rgba(255,255,255,0.85), rgba(248,250,252,0.85))",
-              backdropFilter: "blur(18px)",
-              border:
-                theme.palette.mode === "dark"
-                  ? "1px solid rgba(255,255,255,0.08)"
-                  : "1px solid rgba(15,23,42,0.08)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 30px 60px rgba(0,0,0,0.55)"
-                  : "0 30px 60px rgba(37,99,235,0.18)",
             }}
           >
             <TextField
@@ -139,7 +124,7 @@ export default function Form() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <PersonIcon color="primary" />
+                    <PersonIcon sx={{ color: theme.palette.primary.main }} />
                   </InputAdornment>
                 ),
               }}
@@ -155,7 +140,7 @@ export default function Form() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <EmailIcon color="primary" />
+                    <EmailIcon sx={{ color: theme.palette.primary.main }} />
                   </InputAdornment>
                 ),
               }}
@@ -175,7 +160,7 @@ export default function Form() {
                     position="start"
                     sx={{ alignSelf: "flex-start", mt: 1 }}
                   >
-                    <MessageIcon color="primary" />
+                    <MessageIcon sx={{ color: theme.palette.primary.main }} />
                   </InputAdornment>
                 ),
               }}
@@ -187,29 +172,20 @@ export default function Form() {
               type="submit"
               endIcon={<SendIcon />}
               sx={{
-                mt: 2,
+                mt: 3,
                 alignSelf: "center",
                 px: 6,
                 py: 1.6,
                 borderRadius: "999px",
-                fontWeight: 800,
-                letterSpacing: "0.3px",
+                fontWeight: 700,
                 textTransform: "none",
                 color: "#fff",
-                background:
-                  theme.palette.mode === "dark"
-                    ? "linear-gradient(90deg, #3b82f6, #6366f1)"
-                    : "linear-gradient(90deg, #2563eb, #1e40af)",
-                boxShadow:
-                  theme.palette.mode === "dark"
-                    ? "0 12px 32px rgba(59,130,246,0.45)"
-                    : "0 12px 32px rgba(37,99,235,0.35)",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow:
-                    theme.palette.mode === "dark"
-                      ? "0 18px 40px rgba(59,130,246,0.6)"
-                      : "0 18px 40px rgba(37,99,235,0.5)",
+                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 },
                 transition: "all 0.25s ease",
               }}
@@ -225,6 +201,10 @@ export default function Form() {
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{
+            top: "50% !important",
+            transform: "translateY(-50%)",
+          }}
         >
           <Alert
             severity="success"
@@ -233,11 +213,24 @@ export default function Form() {
               px: 4,
               py: 2,
               borderRadius: "18px",
+              fontSize: "1.05rem",
               fontWeight: 600,
-              color: "#fff",
+              textAlign: "center",
+              color:
+                theme.palette.mode === "dark" ? "#e5e7eb" : "#eff6ff",
               background:
-                "linear-gradient(135deg, #2563eb, #60a5fa)",
-              boxShadow: "0 18px 40px rgba(37,99,235,0.45)",
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, rgba(2,6,23,0.96), rgba(15,23,42,0.96))"
+                  : "linear-gradient(135deg, rgba(37,99,235,0.95), rgba(96,165,250,0.95))",
+              backdropFilter: "blur(14px)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 12px 28px rgba(0,0,0,0.65)"
+                  : "0 12px 28px rgba(37,99,235,0.45)",
+              border:
+                theme.palette.mode === "dark"
+                  ? "1px solid rgba(255,255,255,0.08)"
+                  : "1px solid rgba(255,255,255,0.35)",
             }}
           >
             Mensaje enviado correctamente 🚀
@@ -251,31 +244,34 @@ export default function Form() {
 /* ================= INPUT STYLE ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: "16px",
+    borderRadius: 3,
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(12px)",
+        : "rgba(255,255,255,0.85)",
+    backdropFilter: "blur(14px)",
+    color: theme.palette.text.primary,
     "& fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(148,163,184,0.25)"
-          : "rgba(15,23,42,0.2)",
+          ? "rgba(148,163,184,0.35)"
+          : "rgba(51,65,85,0.25)",
     },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}22`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
   },
   "& .MuiInputLabel-root": {
-    color: theme.palette.text.secondary,
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(226,232,240,0.75)"
+        : "rgba(51,65,85,0.7)",
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: theme.palette.primary.main,
-    fontWeight: 600,
   },
 });
