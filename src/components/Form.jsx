@@ -14,6 +14,7 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -70,7 +71,7 @@ export default function Form() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
-              backdropFilter: "blur(8px)",
+              backdropFilter: "blur(6px)",
             }}
           >
             <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
@@ -112,20 +113,20 @@ export default function Form() {
             {
               name: "from_name",
               label: "Nombre",
-              icon: <PersonIcon sx={{ color: primaryColor }} />,
+              icon: <PersonIcon sx={{ color: theme.palette.primary.main }} />,
             },
             {
               name: "from_email",
               label: "Correo electrónico",
               type: "email",
-              icon: <EmailIcon sx={{ color: primaryColor }} />,
+              icon: <EmailIcon sx={{ color: theme.palette.primary.main }} />,
             },
             {
               name: "message",
               label: "Mensaje",
               multiline: true,
               rows: 4,
-              icon: <MessageIcon sx={{ color: primaryColor }} />,
+              icon: <MessageIcon sx={{ color: theme.palette.primary.main }} />,
             },
           ].map((field, i) => (
             <motion.div
@@ -175,11 +176,12 @@ export default function Form() {
                 fontWeight: 700,
                 textTransform: "none",
                 color: "#fff",
-                background: `linear-gradient(90deg, ${primaryColor}, #3b82f6)`,
-                boxShadow: `0 6px 18px ${primaryColor}55`,
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow: `0 10px 26px ${primaryColor}77`,
+                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 },
                 transition: "all 0.25s ease",
               }}
@@ -210,13 +212,15 @@ export default function Form() {
               fontWeight: 600,
               textAlign: "center",
               fontSize: "0.95rem",
-              color: isDark ? "#dcfce7" : "#14532d",
-              background: isDark
-                ? "linear-gradient(135deg, #064e3b, #022c22)"
-                : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow: isDark
-                ? "0 20px 40px rgba(0,0,0,0.6)"
-                : "0 20px 40px rgba(22,163,74,0.35)",
+              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
+              background:
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, #064e3b, #022c22)"
+                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 20px 40px rgba(0,0,0,0.6)"
+                  : "0 20px 40px rgba(22,163,74,0.35)",
             }}
           >
             <strong>¡Mensaje enviado con éxito!</strong>
@@ -237,7 +241,6 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    transition: "all 0.25s ease",
 
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
