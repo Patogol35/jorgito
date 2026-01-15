@@ -14,7 +14,6 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -47,7 +46,7 @@ export default function Form() {
   return (
     <Box id="form" sx={{ py: { xs: 3, md: 6 } }}>
       <Container maxWidth="sm">
-        {/* ================= TÍTULO ================= */}
+        {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -84,7 +83,7 @@ export default function Form() {
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO ================= */}
+        {/* ================= SUBTÍTULO (MÁS CLARO) ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -94,8 +93,10 @@ export default function Form() {
             textAlign="center"
             sx={{
               mb: 4,
-              color: "text.secondary",
               fontStyle: "italic",
+              color: isDark
+                ? "rgba(226,232,240,0.85)"
+                : "rgba(30,41,59,0.75)",
             }}
           >
             Ponte en contacto conmigo a través de este formulario
@@ -113,20 +114,20 @@ export default function Form() {
             {
               name: "from_name",
               label: "Nombre",
-              icon: <PersonIcon sx={{ color: theme.palette.primary.main }} />,
+              icon: <PersonIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "from_email",
               label: "Correo electrónico",
               type: "email",
-              icon: <EmailIcon sx={{ color: theme.palette.primary.main }} />,
+              icon: <EmailIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "message",
               label: "Mensaje",
               multiline: true,
               rows: 4,
-              icon: <MessageIcon sx={{ color: theme.palette.primary.main }} />,
+              icon: <MessageIcon sx={{ color: primaryColor }} />,
             },
           ].map((field, i) => (
             <motion.div
@@ -242,6 +243,18 @@ const inputStyle = (theme) => ({
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
 
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(241,245,249,0.95)"
+        : "rgba(15,23,42,0.9)",
+
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(226,232,240,0.6)"
+          : "rgba(100,116,139,0.6)",
+    },
+
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
     },
@@ -252,5 +265,12 @@ const inputStyle = (theme) => ({
       borderColor: theme.palette.primary.main,
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
+  },
+
+  "& .MuiInputLabel-root": {
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(226,232,240,0.75)"
+        : "rgba(71,85,105,0.8)",
   },
 });
