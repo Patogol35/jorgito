@@ -40,7 +40,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#eef2f7", // 👈 fondo claro NO blanco
+                  default: "#f1f3f0", // 👈 fondo claro profesional (NO blanco)
                   paper: "#ffffff",
                 },
                 text: {
@@ -49,7 +49,7 @@ function App() {
               }
             : {
                 background: {
-                  default: "#121212", // 👈 oscuro ORIGINAL (sin cambios)
+                  default: "#121212", // 👈 oscuro ORIGINAL
                   paper: "#1e1e1e",
                 },
                 text: {
