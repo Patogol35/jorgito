@@ -110,8 +110,6 @@ function App() {
           ))}
         </Container>
 
-    
-
         {/* FOOTER */}
         <Footer />
 
