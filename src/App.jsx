@@ -72,7 +72,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO PRINCIPAL */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -107,53 +107,32 @@ function App() {
               <Component />
             </Paper>
           ))}
+        </Container>
 
-          {/* ===============================
-              SECCIÓN FORM – CARD DIFERENTE
-          =============================== */}
-          <Box
-            id="form"
+        {/* ===============================
+            SECCIÓN FORM – SIN CARD
+        =============================== */}
+        <Box
+          id="form"
+          sx={{
+            mt: 10,
+            py: { xs: 8, md: 12 },
+            scrollMarginTop: scrollOffset,
+            background:
+              mode === "light"
+                ? "linear-gradient(180deg, #f8fafc, #eef2f7)"
+                : "linear-gradient(180deg, #121212, #0d0d0d)",
+          }}
+        >
+          <Container
+            maxWidth="md"
             sx={{
-              mt: 8,
-              scrollMarginTop: scrollOffset,
+              px: { xs: 2, sm: 4 },
             }}
           >
-            <Paper
-              elevation={0}
-              sx={{
-                p: { xs: 4, md: 6 },
-                borderRadius: "28px",
-                background:
-                  mode === "light"
-                    ? "linear-gradient(135deg, #ffffff, #f1f5f9)"
-                    : "linear-gradient(135deg, #1e1e1e, #121212)",
-                border:
-                  mode === "light"
-                    ? "1px solid rgba(0,0,0,0.08)"
-                    : "1px solid rgba(255,255,255,0.08)",
-                boxShadow:
-                  mode === "light"
-                    ? "0 20px 40px rgba(0,0,0,0.08)"
-                    : "0 20px 40px rgba(0,0,0,0.6)",
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {/* Glow decorativo */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "radial-gradient(circle at top right, rgba(25,118,210,0.25), transparent 60%)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              <Form />
-            </Paper>
-          </Box>
-        </Container>
+            <Form />
+          </Container>
+        </Box>
 
         {/* FOOTER */}
         <Footer />
