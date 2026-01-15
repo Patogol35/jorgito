@@ -90,23 +90,35 @@ function App() {
           { id: "form",  Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
-              key={id}
-              id={id}
-              elevation={3}
-              sx={{
-                mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `4px solid ${color}`,
-                scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                },
-              }}
-            >
-              <Component />
-            </Paper>
+  key={id}
+  id={id}
+  elevation={id === "form" ? 6 : 3}
+  sx={{
+    mb: 4,
+    p: { xs: 3, md: 6 },
+    borderRadius: 3,
+    scrollMarginTop: scrollOffset,
+
+    // 👉 SOLO AQUÍ está el cambio importante
+    bgcolor:
+      id === "form"
+        ? (theme) =>
+            theme.palette.mode === "dark"
+              ? "#0f172a"
+              : "#e3f2fd"
+        : "background.paper",
+
+    borderLeft:
+      id === "form" ? "none" : `4px solid ${color}`,
+
+    transition: "all 0.3s ease",
+    "&:hover": {
+      transform: "translateY(-4px)",
+    },
+  }}
+>
+  <Component />
+</Paper>
           ))}
         </Container>
 
