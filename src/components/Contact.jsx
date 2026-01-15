@@ -150,49 +150,7 @@ export default function Contact() {
         {/* Redes sociales */}
         <SocialLinks socialLinks={socialLinks} size="48px" animated={true} spacing={2} />
 
-        <Divider sx={{ my: 3 }} />
-
-        {/* =========================
-            EMAIL (subtitle1)
-        ========================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-        >
-          <Box sx={{ textAlign: "center" }}>
-            <Typography
-              variant="body2"
-              sx={{
-                color: palette.text.secondary,
-                fontWeight: "bold",
-                mb: 0.5,
-              }}
-            >
-              Correo electrónico
-            </Typography>
-
-            <Typography
-              component="a"
-              href="mailto:patogol3535@gmail.com"
-              variant="subtitle1"
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-                color: isDark ? "#ffffff" : "#1976d2",
-                fontWeight: "bold",
-                textDecoration: "none",
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              <MailOutline />
-              patogol3535@gmail.com
-            </Typography>
-          </Box>
-        </motion.div>
+        
       </Container>
     </Box>
   );
