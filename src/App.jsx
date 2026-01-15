@@ -87,6 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
+          { id: "form", color: "#d32f2f", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -109,16 +110,7 @@ function App() {
           ))}
         </Container>
 
-      {/* FORM FINAL */}
-<Box
-  id="form"
-  sx={{
-    mt: { xs: -4, md: -6 },   // 🔥 compensa el py del Container anterior
-    mb: { xs: 6, md: 10 },    // ✅ MÁS ESPACIO ANTES DEL FOOTER
-  }}
->
-  <Form />
-</Box>
+    
 
         {/* FOOTER */}
         <Footer />
