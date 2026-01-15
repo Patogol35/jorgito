@@ -63,7 +63,7 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        py: { xs: 4, md: 7 }, // ⬅️ MENOS ESPACIO ARRIBA
+        py: { xs: 1, md: 7 }, // ⬅️ MENOS ESPACIO ARRIBA
         position: "relative",
       }}
     >
