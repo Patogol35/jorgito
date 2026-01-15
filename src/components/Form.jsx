@@ -24,12 +24,21 @@ export default function Contact() {
   const formRef = useRef();
   const [success, setSuccess] = useState(false);
 
+  const easeOutExpo = [0.16, 1, 0.3, 1];
+
   const fadeCinematic = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: {
+      opacity: 0,
+      y: 24,
+      filter: "blur(8px)",
+      clipPath: "inset(0 0 100% 0)",
+    },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
+      filter: "blur(0px)",
+      clipPath: "inset(0 0 0% 0)",
+      transition: { duration: 1, ease: easeOutExpo },
     },
   };
 
@@ -55,7 +64,8 @@ export default function Contact() {
       id="form"
       sx={{
         py: { xs: 10, md: 14 },
-        background: `linear-gradient(180deg, ${theme.palette.background.default}, ${theme.palette.action.hover})`,
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <Container maxWidth="sm">
@@ -65,42 +75,47 @@ export default function Contact() {
           viewport={{ once: true }}
           variants={fadeCinematic}
         >
-          {/* CARD */}
+          {/* CARD GLASS */}
           <Paper
             elevation={0}
             sx={{
               p: { xs: 3, md: 5 },
-              borderRadius: 4,
-              background: "rgba(255,255,255,0.75)",
-              backdropFilter: "blur(12px)",
-              boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+              borderRadius: 5,
+              background:
+                theme.palette.mode === "dark"
+                  ? "rgba(15,23,42,0.6)"
+                  : "rgba(255,255,255,0.7)",
+              backdropFilter: "blur(16px)",
+              border: `1px solid ${theme.palette.primary.main}22`,
+              boxShadow: `0 0 30px ${theme.palette.primary.main}22`,
             }}
           >
-            {/* TÍTULO */}
+            {/* TITULO */}
             <Typography
               variant="h4"
               fontWeight={800}
               textAlign="center"
-              sx={{ mb: 1 }}
+              sx={{
+                color: theme.palette.primary.main,
+                mb: 1,
+              }}
             >
-              Hablemos 💬
+              Conectemos
             </Typography>
 
             <Typography
-              variant="body1"
               textAlign="center"
               color="text.secondary"
-              sx={{ mb: 3 }}
+              sx={{ mb: 3, fontStyle: "italic" }}
             >
-              Cuéntame tu idea y la hacemos realidad
+              Estoy listo para escuchar tu idea
             </Typography>
 
             <Divider
               sx={{
-                width: 70,
+                width: 80,
                 mx: "auto",
                 mb: 4,
-                borderBottomWidth: 3,
                 borderColor: theme.palette.primary.main,
               }}
             />
@@ -124,7 +139,7 @@ export default function Contact() {
                     </InputAdornment>
                   ),
                 }}
-                sx={inputStyle}
+                sx={inputStyle(theme)}
               />
 
               <TextField
@@ -140,7 +155,7 @@ export default function Contact() {
                     </InputAdornment>
                   ),
                 }}
-                sx={inputStyle}
+                sx={inputStyle(theme)}
               />
 
               <TextField
@@ -160,27 +175,27 @@ export default function Contact() {
                     </InputAdornment>
                   ),
                 }}
-                sx={inputStyle}
+                sx={inputStyle(theme)}
               />
 
               <Button
                 type="submit"
                 endIcon={<SendIcon />}
-                variant="contained"
                 sx={{
                   mt: 3,
-                  py: 1.5,
+                  py: 1.6,
                   borderRadius: "999px",
                   fontWeight: 700,
                   textTransform: "none",
-                  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                  boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: `0 0 24px ${theme.palette.primary.main}55`,
                   "&:hover": {
                     transform: "translateY(-2px)",
-                    boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
+                    boxShadow: `0 0 36px ${theme.palette.primary.main}88`,
                   },
-                  transition: "all 0.25s ease",
+                  transition: "all 0.3s ease",
                 }}
+                variant="contained"
               >
                 Enviar mensaje
               </Button>
@@ -188,12 +203,11 @@ export default function Contact() {
           </Paper>
         </motion.div>
 
-        {/* ALERTA */}
+        {/* ALERT */}
         <Snackbar
           open={success}
           autoHideDuration={4000}
           onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
           <Alert severity="success" variant="filled">
             Mensaje enviado correctamente 🚀
@@ -204,16 +218,22 @@ export default function Contact() {
   );
 }
 
-const inputStyle = {
+const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
-    backgroundColor: "rgba(255,255,255,0.9)",
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.5)"
+        : "rgba(255,255,255,0.9)",
     transition: "all 0.25s ease",
-    "&:hover": {
-      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    "& fieldset": {
+      borderColor: `${theme.palette.primary.main}33`,
+    },
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused": {
-      boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+      boxShadow: `0 0 18px ${theme.palette.primary.main}55`,
     },
   },
-};
+});
