@@ -22,14 +22,14 @@ export default function Contact() {
   const formRef = useRef();
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIONES (MISMAS QUE HERO) ================= */
+  /* ================= ANIMACIÓN HERO ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 16,
-      filter: "blur(6px)",
+      y: 24,
+      filter: "blur(8px)",
       clipPath: "inset(0 0 100% 0)",
     },
     visible: {
@@ -60,13 +60,7 @@ export default function Contact() {
   };
 
   return (
-    <Box
-      id="contact"
-      sx={{
-        pt: { xs: 6, md: 8 },   // 🔧 menos espacio arriba
-        pb: { xs: 6, md: 8 },   // 🔧 menos espacio abajo
-      }}
-    >
+    <Box id="contact" sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
@@ -77,19 +71,15 @@ export default function Contact() {
           {/* ================= CARD ================= */}
           <Box
             sx={{
-              backdropFilter: "blur(14px)",
+              backdropFilter: "blur(16px)",
               background:
                 theme.palette.mode === "dark"
-                  ? "rgba(15,23,42,0.6)"
-                  : "rgba(255,255,255,0.7)",
+                  ? "rgba(15,23,42,0.65)"
+                  : "rgba(255,255,255,0.75)",
               borderRadius: 5,
               p: { xs: 4, sm: 5 },
-              border: "1px solid",
-              borderColor:
-                theme.palette.mode === "dark"
-                  ? "rgba(96,165,250,0.22)"
-                  : "rgba(59,130,246,0.25)",
-              boxShadow: `0 0 32px ${theme.palette.primary.main}22`,
+              border: "1px solid rgba(96,165,250,0.25)",
+              boxShadow: `0 0 40px ${theme.palette.primary.main}22`,
             }}
           >
             {/* ================= TITULO ================= */}
@@ -104,8 +94,7 @@ export default function Contact() {
 
             <Typography
               textAlign="center"
-              color="text.secondary"
-              sx={{ mb: 4, fontStyle: "italic" }}
+              sx={{ mb: 4, color: "text.secondary" }}
             >
               Estoy listo para escuchar tu idea
             </Typography>
@@ -115,11 +104,7 @@ export default function Contact() {
               component="form"
               ref={formRef}
               onSubmit={handleSubmit}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
-              }}
+              sx={{ display: "flex", flexDirection: "column", gap: 3 }}
             >
               <TextField
                 name="from_name"
@@ -129,7 +114,7 @@ export default function Contact() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <PersonIcon />
+                      <PersonIcon sx={{ color: theme.palette.primary.main }} />
                     </InputAdornment>
                   ),
                 }}
@@ -145,7 +130,7 @@ export default function Contact() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <EmailIcon />
+                      <EmailIcon sx={{ color: theme.palette.primary.main }} />
                     </InputAdornment>
                   ),
                 }}
@@ -165,14 +150,16 @@ export default function Contact() {
                       position="start"
                       sx={{ alignSelf: "flex-start", mt: 1 }}
                     >
-                      <MessageIcon />
+                      <MessageIcon
+                        sx={{ color: theme.palette.primary.main }}
+                      />
                     </InputAdornment>
                   ),
                 }}
                 sx={inputStyle(theme)}
               />
 
-              {/* ================= BOTON (VISIBLE EN DARK) ================= */}
+              {/* ================= BOTÓN ================= */}
               <Button
                 type="submit"
                 endIcon={<SendIcon />}
@@ -186,16 +173,10 @@ export default function Contact() {
                   textTransform: "none",
                   color: "#fff",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `
-                    0 0 18px ${theme.palette.primary.main}88,
-                    0 0 32px ${theme.palette.primary.main}55
-                  `,
+                  boxShadow: `0 0 28px ${theme.palette.primary.main}88`,
                   "&:hover": {
                     transform: "translateY(-2px)",
-                    boxShadow: `
-                      0 0 26px ${theme.palette.primary.main}aa,
-                      0 0 44px ${theme.palette.primary.main}77
-                    `,
+                    boxShadow: `0 0 40px ${theme.palette.primary.main}`,
                   },
                   transition: "all 0.3s ease",
                 }}
@@ -206,11 +187,12 @@ export default function Contact() {
           </Box>
         </motion.div>
 
-        {/* ================= ALERT ================= */}
+        {/* ================= ALERT CENTRADO ================= */}
         <Snackbar
           open={success}
           autoHideDuration={4000}
           onClose={() => setSuccess(false)}
+          anchorOrigin={{ vertical: "center", horizontal: "center" }}
         >
           <Alert severity="success" variant="filled">
             Mensaje enviado correctamente 🚀
@@ -221,29 +203,29 @@ export default function Contact() {
   );
 }
 
-/* ================= INPUT STYLE (FINO, NO PESADO) ================= */
+/* ================= INPUT STYLE (TEXTOS VISIBLES) ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.45)"
-        : "rgba(255,255,255,0.55)",
-    transition: "all 0.25s ease",
+        ? "rgba(15,23,42,0.5)"
+        : "rgba(255,255,255,0.65)",
+    color: theme.palette.text.primary,
     "& fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.3)"
-          : "rgba(59,130,246,0.3)",
+      borderColor: "rgba(96,165,250,0.35)",
     },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
-    "&.Mui-focused": {
-      boxShadow: `0 0 0 1px ${theme.palette.primary.main}`,
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
     },
   },
-  "& label.Mui-focused": {
+  "& .MuiInputLabel-root": {
+    color: theme.palette.text.secondary,
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
     color: theme.palette.primary.main,
   },
 });
