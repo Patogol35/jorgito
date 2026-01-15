@@ -97,23 +97,23 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
 
-                /* ESQUINAS MÁS ELEGANTES */
+                /* ESQUINAS UN POCO MÁS FINAS */
                 borderRadius: 4,
 
-                /* LÍNEA DE COLOR (NO SE TOCA) */
+                /* LÍNEA DE COLOR (NO SE BORRA) */
                 borderLeft: `4px solid ${color}`,
 
-                /* BORDE SUAVE (LO QUE LO HACE PRO) */
+                /* BORDE SUAVE PARA QUITAR EFECTO CAJA */
                 border:
                   theme.palette.mode === "dark"
-                    ? "1px solid rgba(255,255,255,0.08)"
-                    : "1px solid rgba(0,0,0,0.08)",
+                    ? "1px solid rgba(255,255,255,0.07)"
+                    : "1px solid rgba(0,0,0,0.07)",
 
-                /* PROFUNDIDAD LIMPIA */
+                /* SOMBRA MÁS PROFESIONAL */
                 boxShadow:
                   theme.palette.mode === "dark"
-                    ? "0 12px 28px rgba(0,0,0,0.55)"
-                    : "0 12px 28px rgba(0,0,0,0.12)",
+                    ? "0 10px 24px rgba(0,0,0,0.5)"
+                    : "0 10px 24px rgba(0,0,0,0.12)",
 
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
@@ -122,8 +122,8 @@ function App() {
                   transform: "translateY(-4px)",
                   boxShadow:
                     theme.palette.mode === "dark"
-                      ? `0 18px 36px ${color}33`
-                      : `0 18px 36px ${color}22`,
+                      ? `0 16px 32px ${color}30`
+                      : `0 16px 32px ${color}25`,
                 },
               }}
             >
