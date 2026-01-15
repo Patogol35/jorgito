@@ -61,7 +61,7 @@ export default function Contact() {
 
   return (
     <Box id="contact" sx={{ py: { xs: 2, md: 8 } }}>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <motion.div
           initial="hidden"
           whileInView="visible"
