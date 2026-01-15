@@ -26,7 +26,7 @@ import Form from "./components/Form.jsx";
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
   const [mode, setMode] = useState(storedMode);
-  const scrollOffset = "90px";
+  const scrollOffset = "80px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -40,27 +40,22 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#eef2f7", // 👈 fondo claro elegante (NO blanco)
+                  default: "#eef2f7", // 👈 fondo claro NO blanco
                   paper: "#ffffff",
                 },
                 text: {
-                  primary: "#1a1a1a",
-                  secondary: "#4b5563",
+                  primary: "#111",
                 },
               }
             : {
                 background: {
-                  default: "#0f172a",
-                  paper: "#111827",
+                  default: "#121212", // 👈 oscuro ORIGINAL (sin cambios)
+                  paper: "#1e1e1e",
                 },
                 text: {
-                  primary: "#f9fafb",
-                  secondary: "#9ca3af",
+                  primary: "#ffffff",
                 },
               }),
-        },
-        shape: {
-          borderRadius: 14,
         },
       }),
     [mode]
@@ -82,8 +77,8 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 8,
-            px: { xs: 2, sm: 4, md: 6, lg: 8 },
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
           {[
@@ -97,28 +92,16 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={0}
+              elevation={3}
               sx={{
-                mb: 5,
+                mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: 4,
-                background:
-                  mode === "light"
-                    ? "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)"
-                    : "linear-gradient(180deg, #111827 0%, #0f172a 100%)",
-                borderLeft: `6px solid ${color}`, // 👈 línea de color intacta
+                borderRadius: 3,
+                borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-                boxShadow:
-                  mode === "light"
-                    ? "0 12px 30px rgba(0,0,0,0.08)"
-                    : "0 12px 30px rgba(0,0,0,0.5)",
-                transition: "all 0.35s ease",
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow:
-                    mode === "light"
-                      ? "0 18px 40px rgba(0,0,0,0.12)"
-                      : "0 18px 40px rgba(0,0,0,0.7)",
+                  transform: "translateY(-4px)",
                 },
               }}
             >
@@ -130,7 +113,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -146,11 +129,11 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 30, color: "#fff" }} />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
