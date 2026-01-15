@@ -31,12 +31,13 @@ export default function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    emailjs.sendForm(
-  "service_fd9ejbr",
-  "template_pwsn0sn",
-  formRef.current,
-  "Try7tc29-wnfxyPyf"
-);
+    emailjs
+      .sendForm(
+        "service_fd9ejbr",
+        "template_pwsn0sn",
+        formRef.current,
+        "Try7tc29-wnfxyPyf"
+      )
       .then(() => {
         setSuccess(true);
         formRef.current.reset();
@@ -77,7 +78,6 @@ export default function Contact() {
               boxShadow: `0 0 45px ${theme.palette.primary.main}22`,
             }}
           >
-            {/* TÍTULO */}
             <Typography
               variant="h5"
               fontWeight="bold"
@@ -96,7 +96,6 @@ export default function Contact() {
               Escríbeme y te responderé personalmente 🚀
             </Typography>
 
-            {/* FORM */}
             <Box
               component="form"
               ref={formRef}
@@ -156,7 +155,6 @@ export default function Contact() {
           </Box>
         </motion.div>
 
-        {/* SUCCESS */}
         <Snackbar
           open={success}
           autoHideDuration={4000}
@@ -170,4 +168,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-            }
+}
