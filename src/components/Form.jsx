@@ -90,17 +90,15 @@ export default function Form() {
           transition={{ duration: 0.5 }}
         >
           <Typography
-            textAlign="center"
-            sx={{
-              mb: 4,
-              fontStyle: "italic",
-              color: isDark
-                ? "rgba(226,232,240,0.85)"
-                : "rgba(30,41,59,0.75)",
-            }}
-          >
-            Ponte en contacto conmigo a través de este formulario
-          </Typography>
+  variant="subtitle1"
+  sx={{
+    textAlign: "center",
+    fontWeight: "bold",
+    mb: 4,
+  }}
+>
+  Ponte en contacto conmigo a través de este formulario
+</Typography>
         </motion.div>
 
         {/* ================= FORM ================= */}
