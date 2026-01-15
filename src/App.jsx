@@ -107,7 +107,11 @@ function App() {
               <Component />
 
 
-              {/* ===============================
+              
+            </Paper>
+          ))}
+
+          {/* ===============================
     SECCIÓN FORM – SIN FONDO
 =============================== */}
 <Box
@@ -126,8 +130,6 @@ function App() {
     <Form />
   </Container>
 </Box>
-            </Paper>
-          ))}
         </Container>
 
         {/* FOOTER */}
