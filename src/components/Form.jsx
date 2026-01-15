@@ -241,16 +241,33 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
+    color: theme.palette.text.primary, // 👈 Texto principal adaptativo
 
     "& fieldset": {
-      borderColor: "rgba(96,165,250,0.35)",
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(144,202,249,0.4)" // más visible en oscuro
+          : "rgba(0,0,0,0.23)", // estándar MUI en claro
     },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
+      borderWidth: "2px",
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
+
+    // 👇 Estilo del placeholder
+    "&::placeholder": {
+      color: theme.palette.text.secondary,
+      opacity: 1,
+    },
+  },
+  "& .MuiInputLabel-root": {
+    color: theme.palette.text.secondary, // Etiquetas más legibles
+  },
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: theme.palette.primary.main,
   },
 });
