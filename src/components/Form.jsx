@@ -8,6 +8,7 @@ import {
   Alert,
   InputAdornment,
   Divider,
+  Paper,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import SendIcon from "@mui/icons-material/Send";
@@ -24,7 +25,7 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
 
   const fadeCinematic = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
@@ -46,14 +47,17 @@ export default function Contact() {
         setSuccess(true);
         formRef.current.reset();
       })
-      .catch((err) => {
-        console.error(err);
-        alert("Error al enviar el mensaje");
-      });
+      .catch(() => alert("Error al enviar el mensaje"));
   };
 
   return (
-    <Box id="form" sx={{ py: { xs: 8, md: 10 } }}>
+    <Box
+      id="form"
+      sx={{
+        py: { xs: 10, md: 14 },
+        background: `linear-gradient(180deg, ${theme.palette.background.default}, ${theme.palette.action.hover})`,
+      }}
+    >
       <Container maxWidth="sm">
         <motion.div
           initial="hidden"
@@ -61,117 +65,127 @@ export default function Contact() {
           viewport={{ once: true }}
           variants={fadeCinematic}
         >
-          {/* TÍTULO */}
-          <Typography
-            variant="h4"
-            fontWeight={700}
-            textAlign="center"
-            sx={{ mb: 1 }}
-          >
-            Contacto
-          </Typography>
-
-          <Typography
-            variant="body1"
-            textAlign="center"
-            color="text.secondary"
-            sx={{ mb: 3 }}
-          >
-            Cuéntame tu idea y hablemos
-          </Typography>
-
-          <Divider
+          {/* CARD */}
+          <Paper
+            elevation={0}
             sx={{
-              width: 60,
-              mx: "auto",
-              mb: 5,
-              borderColor: theme.palette.primary.main,
-            }}
-          />
-
-          {/* FORM */}
-          <Box
-            component="form"
-            ref={formRef}
-            onSubmit={handleSubmit}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
+              p: { xs: 3, md: 5 },
+              borderRadius: 4,
+              background: "rgba(255,255,255,0.75)",
+              backdropFilter: "blur(12px)",
+              boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
             }}
           >
-            {/* NOMBRE */}
-            <TextField
-              name="from_name"
-              label="Nombre"
-              fullWidth
-              required
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <PersonIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* EMAIL */}
-            <TextField
-              name="from_email"
-              label="Correo electrónico"
-              type="email"
-              fullWidth
-              required
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <EmailIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* MENSAJE */}
-            <TextField
-              name="message"
-              label="Mensaje"
-              multiline
-              rows={4}
-              fullWidth
-              required
-              variant="outlined"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment
-                    position="start"
-                    sx={{ alignSelf: "flex-start", mt: 1 }}
-                  >
-                    <MessageIcon color="action" />
-                  </InputAdornment>
-                ),
-              }}
-            />
-
-            {/* BOTÓN */}
-            <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              sx={{
-                mt: 2,
-                alignSelf: "center",
-                px: 6,
-                py: 1.4,
-                borderRadius: "999px",
-                fontWeight: 600,
-                textTransform: "none",
-              }}
-              variant="contained"
+            {/* TÍTULO */}
+            <Typography
+              variant="h4"
+              fontWeight={800}
+              textAlign="center"
+              sx={{ mb: 1 }}
             >
-              Enviar mensaje
-            </Button>
-          </Box>
+              Hablemos 💬
+            </Typography>
+
+            <Typography
+              variant="body1"
+              textAlign="center"
+              color="text.secondary"
+              sx={{ mb: 3 }}
+            >
+              Cuéntame tu idea y la hacemos realidad
+            </Typography>
+
+            <Divider
+              sx={{
+                width: 70,
+                mx: "auto",
+                mb: 4,
+                borderBottomWidth: 3,
+                borderColor: theme.palette.primary.main,
+              }}
+            />
+
+            {/* FORM */}
+            <Box
+              component="form"
+              ref={formRef}
+              onSubmit={handleSubmit}
+              sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}
+            >
+              <TextField
+                name="from_name"
+                label="Nombre"
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle}
+              />
+
+              <TextField
+                name="from_email"
+                label="Correo electrónico"
+                type="email"
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle}
+              />
+
+              <TextField
+                name="message"
+                label="Mensaje"
+                multiline
+                rows={4}
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={{ alignSelf: "flex-start", mt: 1 }}
+                    >
+                      <MessageIcon />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle}
+              />
+
+              <Button
+                type="submit"
+                endIcon={<SendIcon />}
+                variant="contained"
+                sx={{
+                  mt: 3,
+                  py: 1.5,
+                  borderRadius: "999px",
+                  fontWeight: 700,
+                  textTransform: "none",
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 15px 30px rgba(0,0,0,0.25)",
+                  },
+                  transition: "all 0.25s ease",
+                }}
+              >
+                Enviar mensaje
+              </Button>
+            </Box>
+          </Paper>
         </motion.div>
 
         {/* ALERTA */}
@@ -189,3 +203,17 @@ export default function Contact() {
     </Box>
   );
 }
+
+const inputStyle = {
+  "& .MuiOutlinedInput-root": {
+    borderRadius: 3,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    transition: "all 0.25s ease",
+    "&:hover": {
+      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    },
+    "&.Mui-focused": {
+      boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+    },
+  },
+};
