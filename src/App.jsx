@@ -92,38 +92,38 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={0}
+              elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
+
+                /* ESQUINAS MÁS ELEGANTES */
                 borderRadius: 4,
 
-                /* BORDE ELEGANTE */
-                borderLeft: `3px solid ${color}`,
-                border: theme.palette.mode === "dark"
-                  ? "1px solid rgba(255,255,255,0.06)"
-                  : "1px solid rgba(0,0,0,0.06)",
+                /* LÍNEA DE COLOR (NO SE TOCA) */
+                borderLeft: `4px solid ${color}`,
 
-                /* PROFUNDIDAD */
+                /* BORDE SUAVE (LO QUE LO HACE PRO) */
+                border:
+                  theme.palette.mode === "dark"
+                    ? "1px solid rgba(255,255,255,0.08)"
+                    : "1px solid rgba(0,0,0,0.08)",
+
+                /* PROFUNDIDAD LIMPIA */
                 boxShadow:
                   theme.palette.mode === "dark"
-                    ? "0 20px 40px rgba(0,0,0,0.45)"
-                    : "0 20px 40px rgba(0,0,0,0.12)",
-
-                background:
-                  theme.palette.mode === "dark"
-                    ? "linear-gradient(180deg, #1e1e1e, #1a1a1a)"
-                    : theme.palette.background.paper,
+                    ? "0 12px 28px rgba(0,0,0,0.55)"
+                    : "0 12px 28px rgba(0,0,0,0.12)",
 
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.35s ease",
+                transition: "all 0.3s ease",
 
                 "&:hover": {
-                  transform: "translateY(-6px)",
+                  transform: "translateY(-4px)",
                   boxShadow:
                     theme.palette.mode === "dark"
-                      ? `0 30px 60px ${color}22`
-                      : `0 30px 60px ${color}33`,
+                      ? `0 18px 36px ${color}33`
+                      : `0 18px 36px ${color}22`,
                 },
               }}
             >
