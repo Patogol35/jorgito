@@ -120,9 +120,6 @@ function App() {
   <Form />
 </Box>
 
-{/* FOOTER */}
-<Footer />
-
         {/* FOOTER */}
         <Footer />
 
