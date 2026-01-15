@@ -7,7 +7,6 @@ import {
   Snackbar,
   Alert,
   InputAdornment,
-  CircularProgress,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
@@ -22,15 +21,13 @@ import emailjs from "@emailjs/browser";
 export default function Form() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-  const primaryColor = theme.palette.primary.main;
+  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
 
     emailjs
       .sendForm(
@@ -41,69 +38,66 @@ export default function Form() {
       )
       .then(() => {
         setSuccess(true);
-        setLoading(false);
         formRef.current.reset();
       })
-      .catch(() => {
-        setLoading(false);
-        alert("Error al enviar el mensaje");
-      });
+      .catch(() => alert("Error al enviar el mensaje"));
   };
 
   return (
-    <Box id="form" sx={{ py: { xs: 4, md: 8 } }}>
+    <Box id="form" sx={{ py: { xs: 3, md: 6 } }}>
       <Container maxWidth="sm">
-        {/* ================= BADGE ================= */}
+        {/* ================= TÍTULO ================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          style={{ textAlign: "center", marginBottom: "1.5rem" }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               px: 3,
-              py: 1,
+              py: 0.9,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(96,165,250,0.08)"
-                : "rgba(25,118,210,0.08)",
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
               border: `1px solid ${
                 isDark
-                  ? "rgba(96,165,250,0.25)"
+                  ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
-              backdropFilter: "blur(10px)",
+              backdropFilter: "blur(8px)",
             }}
           >
             <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography sx={{ fontWeight: 700, color: primaryColor }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
               Contacto por Email
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ================= TEXTO ================= */}
+        {/* ================= SUBTÍTULO ================= */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
+          transition={{ duration: 0.5 }}
         >
           <Typography
             textAlign="center"
             sx={{
-              mb: 5,
-              maxWidth: 420,
-              mx: "auto",
+              mb: 4,
               color: "text.secondary",
               fontStyle: "italic",
-              opacity: 0.9,
             }}
           >
-            Ponte en contacto conmigo. Respondo normalmente en menos de 24 horas.
+            Ponte en contacto conmigo a través de este formulario
           </Typography>
         </motion.div>
 
@@ -112,49 +106,38 @@ export default function Form() {
           component="form"
           ref={formRef}
           onSubmit={handleSubmit}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 3,
-          }}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
           {[
             {
               name: "from_name",
               label: "Nombre",
-              icon: <PersonIcon />,
+              icon: <PersonIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "from_email",
               label: "Correo electrónico",
               type: "email",
-              icon: <EmailIcon />,
+              icon: <EmailIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "message",
               label: "Mensaje",
               multiline: true,
               rows: 4,
-              icon: <MessageIcon />,
+              icon: <MessageIcon sx={{ color: primaryColor }} />,
             },
           ].map((field, i) => (
             <motion.div
               key={field.name}
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.12 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TextField
                 {...field}
                 fullWidth
                 required
-                placeholder={`Escribe tu ${field.label.toLowerCase()}`}
-                InputLabelProps={{
-                  sx: {
-                    fontSize: "0.85rem",
-                    color: "text.secondary",
-                  },
-                }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment
@@ -176,53 +159,32 @@ export default function Form() {
 
           {/* ================= BOTÓN ================= */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Button
               type="submit"
-              disabled={loading}
-              endIcon={
-                loading ? (
-                  <CircularProgress size={18} color="inherit" />
-                ) : (
-                  <SendIcon />
-                )
-              }
+              endIcon={<SendIcon />}
               sx={{
-                mt: 4,
-                px: 7,
-                py: 1.7,
+                mt: 3,
+                px: 6,
+                py: 1.6,
                 borderRadius: "999px",
                 fontWeight: 700,
                 textTransform: "none",
                 color: "#fff",
-                position: "relative",
-                overflow: "hidden",
                 background: `linear-gradient(90deg, ${primaryColor}, #3b82f6)`,
-                boxShadow: `0 10px 30px ${primaryColor}55`,
+                boxShadow: `0 6px 18px ${primaryColor}55`,
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow: `0 16px 40px ${primaryColor}77`,
-                },
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  inset: -2,
-                  borderRadius: "999px",
-                  background: `linear-gradient(90deg, transparent, ${primaryColor}55, transparent)`,
-                  opacity: 0,
-                  transition: "opacity 0.3s ease",
-                },
-                "&:hover::after": {
-                  opacity: 1,
+                  boxShadow: `0 10px 26px ${primaryColor}77`,
                 },
                 transition: "all 0.25s ease",
               }}
             >
-              {loading ? "Enviando..." : "Enviar mensaje"}
+              Enviar mensaje
             </Button>
           </motion.div>
         </Box>
@@ -259,7 +221,7 @@ export default function Form() {
           >
             <strong>¡Mensaje enviado con éxito!</strong>
             <br />
-            Me pondré en contacto contigo pronto 🚀
+            Me pondré en contacto contigo lo antes posible 🚀
           </Alert>
         </Snackbar>
       </Container>
@@ -269,12 +231,12 @@ export default function Form() {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 16,
+    borderRadius: 3,
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(16px)",
+        : "rgba(255,255,255,0.7)",
+    backdropFilter: "blur(14px)",
     transition: "all 0.25s ease",
 
     "& fieldset": {
@@ -283,12 +245,9 @@ const inputStyle = (theme) => ({
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
-    "&.Mui-focused": {
-      transform: "scale(1.01)",
-    },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 18px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
   },
 });
