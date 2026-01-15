@@ -22,13 +22,13 @@ export default function Contact() {
   const formRef = useRef();
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIONES ================= */
+  /* ================= ANIMACIONES HERO ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 24,
+      y: 18,
       filter: "blur(8px)",
       clipPath: "inset(0 0 100% 0)",
     },
@@ -38,6 +38,16 @@ export default function Contact() {
       filter: "blur(0px)",
       clipPath: "inset(0 0 0% 0)",
       transition: { duration: 1, ease: easeOutExpo },
+    },
+  };
+
+  const containerStagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.18,
+        delayChildren: 0.4,
+      },
     },
   };
 
@@ -63,141 +73,154 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        pt: { xs: 8, md: 12 },
-        pb: { xs: 8, md: 12 },
+        pt: { xs: 10, md: 14 },
+        pb: { xs: 10, md: 14 },
         position: "relative",
       }}
     >
       <Container maxWidth="sm">
         <motion.div
+          variants={containerStagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={fadeCinematic}
         >
-          {/* ================= CARD ================= */}
-          <Box
-            sx={{
-              backdropFilter: "blur(16px)",
-              background:
-                theme.palette.mode === "dark"
-                  ? "rgba(15,23,42,0.65)"
-                  : "rgba(255,255,255,0.7)",
-              borderRadius: 5,
-              p: { xs: 4, sm: 5 },
-              border: "1px solid",
-              borderColor:
-                theme.palette.mode === "dark"
-                  ? "rgba(96,165,250,0.25)"
-                  : "rgba(59,130,246,0.25)",
-              boxShadow: `0 0 40px ${theme.palette.primary.main}22`,
-            }}
-          >
-            {/* ================= TITULO ================= */}
-            <Typography
-              variant="h4"
-              fontWeight={800}
-              textAlign="center"
-              sx={{ color: theme.palette.primary.main, mb: 1 }}
-            >
-              Conectemos
-            </Typography>
-
-            <Typography
-              textAlign="center"
-              color="text.secondary"
-              sx={{ mb: 4, fontStyle: "italic" }}
-            >
-              Estoy listo para escuchar tu idea
-            </Typography>
-
-            {/* ================= FORM ================= */}
+          {/* ================= CARD GLASS ================= */}
+          <motion.div variants={fadeCinematic}>
             <Box
-              component="form"
-              ref={formRef}
-              onSubmit={handleSubmit}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 3,
+                position: "relative",
+                borderRadius: "28px",
+                p: { xs: 4, sm: 5 },
+                backdropFilter: "blur(18px)",
+                background:
+                  theme.palette.mode === "dark"
+                    ? "linear-gradient(180deg, rgba(15,23,42,0.75), rgba(15,23,42,0.55))"
+                    : "linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65))",
+                border: "1px solid",
+                borderColor:
+                  theme.palette.mode === "dark"
+                    ? "rgba(96,165,250,0.25)"
+                    : "rgba(59,130,246,0.25)",
+                boxShadow: `
+                  0 0 40px ${theme.palette.primary.main}22,
+                  inset 0 0 0 1px rgba(255,255,255,0.04)
+                `,
               }}
             >
-              <TextField
-                name="from_name"
-                label="Nombre"
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
+              {/* ================= TITULO ================= */}
+              <motion.div variants={fadeCinematic}>
+                <Typography
+                  variant="h4"
+                  fontWeight={800}
+                  textAlign="center"
+                  sx={{ color: theme.palette.primary.main, mb: 1 }}
+                >
+                  Conectemos
+                </Typography>
+              </motion.div>
 
-              <TextField
-                name="from_email"
-                label="Correo electrónico"
-                type="email"
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
+              <motion.div variants={fadeCinematic}>
+                <Typography
+                  textAlign="center"
+                  color="text.secondary"
+                  sx={{ mb: 5, fontStyle: "italic" }}
+                >
+                  Estoy listo para escuchar tu idea
+                </Typography>
+              </motion.div>
 
-              <TextField
-                name="message"
-                label="Mensaje"
-                multiline
-                rows={4}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={{ alignSelf: "flex-start", mt: 1 }}
-                    >
-                      <MessageIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-
-              {/* ================= BOTON ================= */}
-              <Button
-                type="submit"
-                endIcon={<SendIcon />}
-                sx={{
-                  mt: 4,
-                  alignSelf: "center",
-                  px: 6,
-                  py: 1.6,
-                  borderRadius: "999px",
-                  fontWeight: 700,
-                  textTransform: "none",
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `0 0 28px ${theme.palette.primary.main}66`,
-                  "&:hover": {
-                    transform: "translateY(-2px)",
-                    boxShadow: `0 0 40px ${theme.palette.primary.main}99`,
-                  },
-                  transition: "all 0.3s ease",
-                }}
+              {/* ================= FORM ================= */}
+              <Box
+                component="form"
+                ref={formRef}
+                onSubmit={handleSubmit}
+                sx={{ display: "flex", flexDirection: "column", gap: 3 }}
               >
-                Enviar mensaje
-              </Button>
+                {[
+                  {
+                    name: "from_name",
+                    label: "Nombre",
+                    icon: <PersonIcon />,
+                  },
+                  {
+                    name: "from_email",
+                    label: "Correo electrónico",
+                    icon: <EmailIcon />,
+                    type: "email",
+                  },
+                ].map((field, i) => (
+                  <motion.div key={i} variants={fadeCinematic}>
+                    <TextField
+                      name={field.name}
+                      label={field.label}
+                      type={field.type}
+                      required
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            {field.icon}
+                          </InputAdornment>
+                        ),
+                      }}
+                      sx={inputStyle(theme)}
+                    />
+                  </motion.div>
+                ))}
+
+                <motion.div variants={fadeCinematic}>
+                  <TextField
+                    name="message"
+                    label="Mensaje"
+                    multiline
+                    rows={4}
+                    required
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment
+                          position="start"
+                          sx={{ alignSelf: "flex-start", mt: 1 }}
+                        >
+                          <MessageIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    sx={inputStyle(theme)}
+                  />
+                </motion.div>
+
+                {/* ================= BOTON ================= */}
+                <motion.div
+                  variants={fadeCinematic}
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  <Button
+                    type="submit"
+                    endIcon={<SendIcon />}
+                    sx={{
+                      mt: 4,
+                      px: 6,
+                      py: 1.6,
+                      borderRadius: "999px",
+                      fontWeight: 700,
+                      textTransform: "none",
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      boxShadow: `0 0 28px ${theme.palette.primary.main}66`,
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: `0 0 42px ${theme.palette.primary.main}99`,
+                      },
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    Enviar mensaje
+                  </Button>
+                </motion.div>
+              </Box>
             </Box>
-          </Box>
+          </motion.div>
         </motion.div>
 
         {/* ================= ALERT ================= */}
@@ -215,14 +238,15 @@ export default function Contact() {
   );
 }
 
-/* ================= INPUT STYLE ================= */
+/* ================= INPUTS PREMIUM ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
+    borderRadius: "18px",
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.45)"
-        : "rgba(255,255,255,0.55)",
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(10px)",
     transition: "all 0.25s ease",
     "& fieldset": {
       borderColor:
@@ -234,7 +258,10 @@ const inputStyle = (theme) => ({
       borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused": {
-      boxShadow: `0 0 20px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 22px ${theme.palette.primary.main}55`,
     },
+  },
+  "& label.Mui-focused": {
+    color: theme.palette.primary.main,
   },
 });
