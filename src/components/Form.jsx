@@ -63,11 +63,28 @@ export default function Form() {
     <Box
       id="form"
       sx={{
-        py: { xs: 3, md: 6 },
+        py: { xs: 4, md: 7 },
         position: "relative",
+        overflow: "hidden",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          inset: 0,
+          background:
+            theme.palette.mode === "dark"
+              ? "radial-gradient(circle at top, rgba(59,130,246,0.12), transparent 70%)"
+              : "radial-gradient(circle at top, rgba(37,99,235,0.08), transparent 70%)",
+          zIndex: 0,
+        },
       }}
     >
-      <Container maxWidth="sm">
+      <Container
+        maxWidth="sm"
+        sx={{
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -80,12 +97,9 @@ export default function Form() {
             fontWeight={800}
             textAlign="center"
             sx={{
+              color: theme.palette.primary.main,
               mb: 1,
-              fontSize: { xs: "2rem", sm: "2.3rem" },
-              color:
-                theme.palette.mode === "dark"
-                  ? "#e5e7eb"
-                  : theme.palette.primary.main,
+              fontSize: { xs: "2rem", sm: "2.4rem" },
             }}
           >
             Envíame un mensaje directo
@@ -95,11 +109,8 @@ export default function Form() {
             textAlign="center"
             sx={{
               mb: 4,
+              color: "text.secondary",
               fontStyle: "italic",
-              color:
-                theme.palette.mode === "dark"
-                  ? "rgba(226,232,240,0.75)"
-                  : "rgba(51,65,85,0.8)",
             }}
           >
             Ponte en contacto conmigo a través de este formulario
@@ -185,7 +196,6 @@ export default function Form() {
                 "&:hover": {
                   transform: "translateY(-2px)",
                   boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 },
                 transition: "all 0.25s ease",
               }}
@@ -241,39 +251,27 @@ export default function Form() {
   );
 }
 
-/* ================= INPUT STYLE (FIX TEXTO) ================= */
+/* ================= INPUT STYLE ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.65)"
-        : "rgba(255,255,255,0.95)",
+        ? "rgba(2,6,23,0.75)"
+        : "rgba(255,255,255,0.85)",
     backdropFilter: "blur(14px)",
-
-    /* TEXTO */
-    color:
-      theme.palette.mode === "dark"
-        ? "#e5e7eb"
-        : "#0f172a",
+    color: theme.palette.text.primary,
 
     "& input, & textarea": {
-      color:
-        theme.palette.mode === "dark"
-          ? "#e5e7eb"
-          : "#0f172a",
-      WebkitTextFillColor:
-        theme.palette.mode === "dark"
-          ? "#e5e7eb"
-          : "#0f172a",
+      color: theme.palette.text.primary,
+      fontWeight: 500,
     },
 
-    /* PLACEHOLDER */
     "& input::placeholder, & textarea::placeholder": {
       color:
         theme.palette.mode === "dark"
           ? "rgba(226,232,240,0.6)"
-          : "rgba(51,65,85,0.6)",
+          : "rgba(55,65,81,0.55)",
       opacity: 1,
     },
 
@@ -281,7 +279,7 @@ const inputStyle = (theme) => ({
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(148,163,184,0.35)"
-          : "rgba(51,65,85,0.25)",
+          : "rgba(37,99,235,0.35)",
     },
 
     "&:hover fieldset": {
@@ -290,33 +288,19 @@ const inputStyle = (theme) => ({
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}33`,
+      boxShadow: `0 0 0 3px ${theme.palette.primary.main}33`,
     },
   },
 
-  /* LABEL */
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.8)"
-        : "rgba(51,65,85,0.8)",
+        ? "rgba(226,232,240,0.7)"
+        : "rgba(55,65,81,0.7)",
+    fontWeight: 500,
   },
 
   "& .MuiInputLabel-root.Mui-focused": {
     color: theme.palette.primary.main,
-    fontWeight: 600,
-  },
-
-  /* AUTOFILL */
-  "& input:-webkit-autofill": {
-    WebkitBoxShadow: `0 0 0 1000px ${
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,1)"
-        : "#ffffff"
-    } inset`,
-    WebkitTextFillColor:
-      theme.palette.mode === "dark"
-        ? "#e5e7eb"
-        : "#0f172a",
   },
 });
