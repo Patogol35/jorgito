@@ -26,7 +26,7 @@ import Form from "./components/Form.jsx";
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
   const [mode, setMode] = useState(storedMode);
-  const scrollOffset = "80px";
+  const scrollOffset = "90px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
@@ -40,22 +40,27 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f5f7fa",
+                  default: "#eef2f7", // 👈 fondo claro elegante (NO blanco)
                   paper: "#ffffff",
                 },
                 text: {
-                  primary: "#111",
+                  primary: "#1a1a1a",
+                  secondary: "#4b5563",
                 },
               }
             : {
                 background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
+                  default: "#0f172a",
+                  paper: "#111827",
                 },
                 text: {
-                  primary: "#ffffff",
+                  primary: "#f9fafb",
+                  secondary: "#9ca3af",
                 },
               }),
+        },
+        shape: {
+          borderRadius: 14,
         },
       }),
     [mode]
@@ -77,8 +82,8 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+            py: 8,
+            px: { xs: 2, sm: 4, md: 6, lg: 8 },
           }}
         >
           {[
@@ -92,37 +97,28 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={2}
+              elevation={0}
               sx={{
-                mb: 4,
+                mb: 5,
                 p: { xs: 3, md: 6 },
-                borderRadius: 3,
-
-                /* LÍNEA DE COLOR (IGUAL QUE ANTES) */
-                borderLeft: `4px solid ${color}`,
-
-                /* BORDE MUY SUAVE */
-                border:
+                borderRadius: 4,
+                background:
                   mode === "light"
-                    ? "1px solid rgba(0,0,0,0.06)"
-                    : "1px solid rgba(255,255,255,0.06)",
-
+                    ? "linear-gradient(180deg, #ffffff 0%, #f9fafb 100%)"
+                    : "linear-gradient(180deg, #111827 0%, #0f172a 100%)",
+                borderLeft: `6px solid ${color}`, // 👈 línea de color intacta
                 scrollMarginTop: scrollOffset,
-
-                /* SOMBRA DISCRETA */
                 boxShadow:
                   mode === "light"
-                    ? "0 6px 18px rgba(0,0,0,0.08)"
-                    : "0 6px 18px rgba(0,0,0,0.45)",
-
-                transition: "transform 0.25s ease, box-shadow 0.25s ease",
-
+                    ? "0 12px 30px rgba(0,0,0,0.08)"
+                    : "0 12px 30px rgba(0,0,0,0.5)",
+                transition: "all 0.35s ease",
                 "&:hover": {
-                  transform: "translateY(-3px)",
+                  transform: "translateY(-6px)",
                   boxShadow:
                     mode === "light"
-                      ? "0 10px 26px rgba(0,0,0,0.12)"
-                      : "0 10px 26px rgba(0,0,0,0.6)",
+                      ? "0 18px 40px rgba(0,0,0,0.12)"
+                      : "0 18px 40px rgba(0,0,0,0.7)",
                 },
               }}
             >
@@ -134,7 +130,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -150,11 +146,11 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon sx={{ fontSize: 30, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
