@@ -74,12 +74,12 @@ export default function Form() {
               backdropFilter: "blur(6px)",
             }}
           >
-            <ContactMail sx={{ fontSize: 22, color: primaryColor }} />
+            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              Contacto
+              Contacto por Email
             </Typography>
           </Box>
         </motion.div>
