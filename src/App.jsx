@@ -77,7 +77,8 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: 6,
+            pt: 6, // mantiene espacio arriba
+            pb: 0, // 👈 evita hueco gigante abajo
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -93,7 +94,7 @@ function App() {
               id={id}
               elevation={3}
               sx={{
-                mb: id === "contact" ? 0 : 4,
+                mb: id === "contact" ? 0 : 4, // 👈 SOLO Contact sin margen
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
@@ -109,25 +110,23 @@ function App() {
           ))}
         </Container>
 
-        {/* ===============================
-    SECCIÓN FORM – SIN FONDO
-=============================== */}
-<Box
-  id="form"
-  sx={{
-    mt: 3, // separación mínima del Contact
-    scrollMarginTop: scrollOffset,
-  }}
->
-  <Container
-    maxWidth="md"
-    sx={{
-      px: { xs: 2, sm: 4 },
-    }}
-  >
-    <Form />
-  </Container>
-</Box>
+        {/* FORM – SIN FONDO, PEGADO */}
+        <Box
+          id="form"
+          sx={{
+            mt: 2,
+            scrollMarginTop: scrollOffset,
+          }}
+        >
+          <Container
+            maxWidth="md"
+            sx={{
+              px: { xs: 2, sm: 4 },
+            }}
+          >
+            <Form />
+          </Container>
+        </Box>
 
         {/* FOOTER */}
         <Footer />
