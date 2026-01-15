@@ -93,7 +93,7 @@ function App() {
               id={id}
               elevation={3}
               sx={{
-                mb: 4,
+                mb: id === "contact" ? 0 : 4
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
