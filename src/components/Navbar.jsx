@@ -23,6 +23,7 @@ import {
   Email as EmailIcon,
 } from "@mui/icons-material";
 import { useEffect, useState, useRef } from "react";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
 import { motion, AnimatePresence } from "framer-motion";
 
 // 📌 Configuración del menú con iconos
@@ -63,12 +64,13 @@ const menuItems = [
     color: "linear-gradient(135deg, #c62828, #ef5350)",
     icon: <EmailIcon sx={{ color: "#fff" }} />,
   },
-  {
-    label: "Formulario",
-    href: "#form",
-    color: "linear-gradient(135deg, #6a1b9a, #ab47bc)",
-    icon: <VerifiedIcon sx={{ color: "#fff" }} />,
-  },
+  
+{
+  label: "Formulario",
+  href: "#form",
+  color: "linear-gradient(135deg, #1565c0, #42a5f5)", // azul
+  icon: <ContactMailIcon sx={{ color: "#fff" }} />,
+},
 ];
 
 // Variantes animaciones
