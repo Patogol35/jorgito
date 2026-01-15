@@ -22,21 +22,21 @@ export default function Form() {
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIÓN (MISMA QUE HERO) ================= */
+  /* ================= ANIMACIÓN ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
       y: 16,
+      filter: "blur(8px)",
       clipPath: "inset(0 0 100% 0)",
-      filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
+      clipPath: "inset(0 0 0% 0)",
       transition: { duration: 1, ease: easeOutExpo },
     },
   };
@@ -63,8 +63,7 @@ export default function Form() {
     <Box
       id="form"
       sx={{
-        pt: { xs: 2, md: 3 },   // ⬅️ SUBE el form
-        pb: { xs: 8, md: 12 },  // ⬅️ MÁS AIRE CON EL FOOTER
+        py: { xs: 3, md: 6 },
         position: "relative",
       }}
     >
@@ -72,7 +71,7 @@ export default function Form() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-120px" }} // 👈 entra igual que Hero
+          viewport={{ once: true }}
           variants={fadeCinematic}
         >
           {/* ================= TITULO ================= */}
@@ -180,6 +179,7 @@ export default function Form() {
                 "&:hover": {
                   transform: "translateY(-2px)",
                   boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 },
                 transition: "all 0.25s ease",
               }}
@@ -254,7 +254,7 @@ const inputStyle = (theme) => ({
     },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`, // ✅ FIX
     },
   },
   "& .MuiInputLabel-root": {
