@@ -233,70 +233,58 @@ export default function Form() {
   );
 }
 
-const inputStyle = (theme) => {
-  const isDark = theme.palette.mode === "dark";
+const inputStyle = (theme) => ({
+  "& .MuiOutlinedInput-root": {
+    borderRadius: 3,
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.7)",
+    backdropFilter: "blur(14px)",
 
-  return {
-    "& .MuiOutlinedInput-root": {
-      borderRadius: 14,
-      background: isDark
-        ? "rgba(15,23,42,0.75)"
-        : "rgba(255,255,255,0.85)",
-      backdropFilter: "blur(16px)",
+    // 🔥 TEXTO DEL INPUT (CLAVE)
+    color:
+      theme.palette.mode === "dark"
+        ? "#f8fafc"
+        : "#0f172a",
 
-      // 👉 TEXTO ESCRITO
-      color: isDark ? "#e5e7eb" : "#0f172a",
-      fontWeight: 500,
-
-      "& input::placeholder": {
-        color: isDark ? "#94a3b8" : "#64748b",
-        opacity: 1,
-      },
-
-      "& textarea::placeholder": {
-        color: isDark ? "#94a3b8" : "#64748b",
-        opacity: 1,
-      },
-
-      "& fieldset": {
-        borderColor: isDark
-          ? "rgba(148,163,184,0.35)"
-          : "rgba(30,64,175,0.25)",
-      },
-
-      "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-
-      "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
-        boxShadow: `0 0 0 2px ${theme.palette.primary.main}33`,
-      },
+    "& input::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "#cbd5e1"
+          : "#64748b",
+      opacity: 1,
     },
 
-    // 👉 LABEL
-    "& .MuiInputLabel-root": {
-      color: isDark ? "#cbd5f5" : "#475569",
-      fontWeight: 500,
+    "& textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "#cbd5e1"
+          : "#64748b",
+      opacity: 1,
     },
 
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: theme.palette.primary.main,
-      fontWeight: 600,
+    "& fieldset": {
+      borderColor: "rgba(96,165,250,0.35)",
     },
+    "&:hover fieldset": {
+      borderColor: theme.palette.primary.main,
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+    },
+  },
 
-    // 👉 ICONOS
-    "& .MuiInputAdornment-root svg": {
-      color: isDark ? "#93c5fd" : theme.palette.primary.main,
-    },
+  // 🔥 LABEL MÁS LEGIBLE (SIN CAMBIAR ESTILO)
+  "& .MuiInputLabel-root": {
+    color:
+      theme.palette.mode === "dark"
+        ? "#e2e8f0"
+        : "#475569",
+  },
 
-    // 👉 AUTOFILL (Chrome fix)
-    "& input:-webkit-autofill": {
-      WebkitBoxShadow: isDark
-        ? "0 0 0 100px rgba(15,23,42,0.9) inset"
-        : "0 0 0 100px #ffffff inset",
-      WebkitTextFillColor: isDark ? "#e5e7eb" : "#0f172a",
-      transition: "background-color 9999s ease-out",
-    },
-  };
-};
+  "& .MuiInputLabel-root.Mui-focused": {
+    color: theme.palette.primary.main,
+  },
+});
