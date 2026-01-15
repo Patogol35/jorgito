@@ -6,9 +6,13 @@ import {
   Container,
   Snackbar,
   Alert,
+  InputAdornment,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import SendIcon from "@mui/icons-material/Send";
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import MessageIcon from "@mui/icons-material/Message";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -19,7 +23,7 @@ export default function Contact() {
   const [success, setSuccess] = useState(false);
 
   const fadeCinematic = {
-    hidden: { opacity: 0, y: 20, filter: "blur(6px)" },
+    hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
     visible: {
       opacity: 1,
       y: 0,
@@ -50,7 +54,7 @@ export default function Contact() {
 
   return (
     <Box
-      id="contact"
+      id="form"
       sx={{
         py: { xs: 10, md: 14 },
         px: 2,
@@ -68,23 +72,23 @@ export default function Contact() {
           <Box
             sx={{
               p: { xs: 4, sm: 5 },
-              borderRadius: "24px",
-              backdropFilter: "blur(16px)",
+              borderRadius: "28px",
+              backdropFilter: "blur(18px)",
               background:
                 theme.palette.mode === "dark"
-                  ? "rgba(255,255,255,0.04)"
-                  : "rgba(255,255,255,0.9)",
-              border: `1px solid ${theme.palette.primary.main}33`,
-              boxShadow: `0 0 45px ${theme.palette.primary.main}22`,
+                  ? "rgba(255,255,255,0.03)"
+                  : "rgba(255,255,255,0.75)",
+              border: `1px solid ${theme.palette.primary.main}22`,
+              boxShadow: `0 0 50px ${theme.palette.primary.main}18`,
             }}
           >
             <Typography
               variant="h5"
-              fontWeight="bold"
+              fontWeight={700}
               textAlign="center"
               sx={{ color: theme.palette.primary.main, mb: 1 }}
             >
-              ¿Tienes una idea en mente?
+              Hablemos de tu proyecto
             </Typography>
 
             <Typography
@@ -93,7 +97,7 @@ export default function Contact() {
               color="text.secondary"
               sx={{ mb: 4 }}
             >
-              Escríbeme y te responderé personalmente 🚀
+              Cuéntame tu idea y te responderé personalmente
             </Typography>
 
             <Box
@@ -103,49 +107,78 @@ export default function Contact() {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 2.5,
+                gap: 3,
               }}
             >
+              {/* NOMBRE */}
               <TextField
                 name="from_name"
                 label="Nombre"
-                variant="standard"
                 fullWidth
                 required
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <PersonIcon color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
+              {/* EMAIL */}
               <TextField
                 name="from_email"
                 label="Correo electrónico"
                 type="email"
-                variant="standard"
                 fullWidth
                 required
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailIcon color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
+              {/* MENSAJE */}
               <TextField
                 name="message"
                 label="Mensaje"
                 multiline
                 rows={4}
-                variant="standard"
                 fullWidth
                 required
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start" sx={{ alignSelf: "flex-start", mt: 1 }}>
+                      <MessageIcon color="primary" />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
+              {/* BOTÓN */}
               <Button
                 type="submit"
                 endIcon={<SendIcon />}
                 sx={{
                   mt: 3,
                   alignSelf: "center",
-                  px: 5,
-                  py: 1.4,
-                  borderRadius: "30px",
-                  fontWeight: "bold",
+                  px: 6,
+                  py: 1.5,
+                  borderRadius: "40px",
+                  fontWeight: 600,
                   textTransform: "none",
                   background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: `0 0 18px ${theme.palette.primary.main}55`,
+                  boxShadow: `0 0 25px ${theme.palette.primary.main}55`,
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                    boxShadow: `0 0 35px ${theme.palette.primary.main}88`,
+                  },
                 }}
                 variant="contained"
               >
@@ -155,6 +188,7 @@ export default function Contact() {
           </Box>
         </motion.div>
 
+        {/* ALERTA */}
         <Snackbar
           open={success}
           autoHideDuration={4000}
@@ -168,4 +202,4 @@ export default function Contact() {
       </Container>
     </Box>
   );
-}
+                      }
