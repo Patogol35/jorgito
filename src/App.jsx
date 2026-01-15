@@ -21,7 +21,7 @@ import Projects from "./components/Projects.jsx";
 import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
-
+import Form from "./components/Form.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -72,7 +72,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
+        {/* CONTENIDO PRINCIPAL */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -109,10 +109,27 @@ function App() {
           ))}
         </Container>
 
+        {/* FORM HERO FINAL 🔥 */}
+        <Box
+          id="form"
+          sx={{
+            py: { xs: 6, md: 10 },
+            px: 2,
+            background:
+              mode === "dark"
+                ? "linear-gradient(135deg, #1e1e1e, #121212)"
+                : "linear-gradient(135deg, #ffffff, #f5f7fa)",
+          }}
+        >
+          <Container maxWidth="md">
+            <Form />
+          </Container>
+        </Box>
+
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -132,7 +149,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
