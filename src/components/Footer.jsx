@@ -39,36 +39,21 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        position: "relative",
         pt: 6,
         pb: 4,
         textAlign: "center",
+        color: "#fff",
         background: isDark
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
           : "linear-gradient(135deg, #1976d2, #42a5f5)",
-        color: "#fff",
+        boxShadow: isDark
+          ? "inset 0 1px 0 rgba(255,255,255,0.04)"
+          : "inset 0 1px 0 rgba(255,255,255,0.2)",
       }}
     >
-      {/* Línea superior */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "120px",
-          height: "2px",
-          borderRadius: "999px",
-          background: isDark
-            ? "linear-gradient(90deg, transparent, #60a5fa, transparent)"
-            : "linear-gradient(90deg, transparent, #ffffff, transparent)",
-          opacity: 0.8,
-        }}
-      />
-
       {/* Eslogan */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
@@ -93,13 +78,14 @@ export default function Footer() {
         spacing={2}
       />
 
-      {/* Legal */}
+      {/* Legal (un poco más claro) */}
       <Typography
         variant="caption"
         sx={{
           display: "block",
           mt: 3,
-          color: "rgba(255,255,255,0.65)",
+          color: "rgba(255,255,255,0.75)", // 👈 más claro y elegante
+          letterSpacing: "0.3px",
         }}
       >
         © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
