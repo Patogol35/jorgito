@@ -10,7 +10,6 @@ import {
   Tooltip,
 } from "@mui/material";
 import { motion } from "framer-motion";
-
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 import Navbar from "./components/Navbar.jsx";
@@ -23,6 +22,24 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
+
+/* ===============================
+   VARIANTE DE ANIMACIÓN CARDS
+================================ */
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    scale: 0.96,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -50,8 +67,8 @@ function App() {
               }
             : {
                 background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
+                  default: "#0b1220",
+                  paper: "#111827",
                 },
                 text: {
                   primary: "#ffffff",
@@ -89,62 +106,53 @@ function App() {
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
             { id: "form", color: "#00897b", Component: Form },
-          ].map(({ id, color, Component }, index) => (
+          ].map(({ id, color, Component }) => (
             <motion.div
               key={id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: index * 0.1,
-                ease: [0.22, 1, 0.36, 1], // easeOutExpo
-              }}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
+              style={{ willChange: "transform" }}
             >
               <Paper
                 id={id}
                 elevation={0}
-                sx={{
-                  position: "relative",
+                sx={(theme) => ({
                   mb: 4,
                   p: { xs: 3, md: 6 },
-                  borderRadius: 4,
+                  borderRadius: 3,
                   scrollMarginTop: scrollOffset,
 
-                  /* Fondo elegante */
+                  /* ===== GLASS PROFESIONAL ===== */
                   background:
                     theme.palette.mode === "dark"
-                      ? "rgba(30,41,59,0.6)"
-                      : "rgba(255,255,255,0.9)",
-                  backdropFilter: "blur(12px)",
+                      ? "rgba(15, 23, 42, 0.65)"
+                      : "rgba(255, 255, 255, 0.75)",
 
-                  /* Sombra base */
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+
+                  borderLeft: `4px solid ${color}`,
+                  border:
+                    theme.palette.mode === "dark"
+                      ? "1px solid rgba(255,255,255,0.06)"
+                      : "1px solid rgba(0,0,0,0.05)",
+
                   boxShadow:
                     theme.palette.mode === "dark"
                       ? "0 10px 30px rgba(0,0,0,0.35)"
-                      : "0 10px 30px rgba(0,0,0,0.08)",
+                      : "0 12px 32px rgba(0,0,0,0.12)",
 
-                  /* Acento lateral */
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    inset: 0,
-                    borderRadius: 4,
-                    borderLeft: `3px solid ${color}`,
-                    opacity: 0.85,
-                    pointerEvents: "none",
-                  },
-
-                  transition: "all 0.35s ease",
+                  transition: "box-shadow 0.3s ease, transform 0.3s ease",
 
                   "&:hover": {
-                    transform: "translateY(-2px)",
                     boxShadow:
                       theme.palette.mode === "dark"
-                        ? `0 20px 50px ${color}22`
-                        : `0 20px 50px ${color}33`,
+                        ? "0 18px 40px rgba(0,0,0,0.45)"
+                        : "0 20px 40px rgba(0,0,0,0.18)",
                   },
-                }}
+                })}
               >
                 <Component />
               </Paper>
@@ -155,7 +163,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -175,7 +183,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
