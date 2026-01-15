@@ -192,15 +192,41 @@ export default function Form() {
 
         {/* ================= ALERT ================= */}
         <Snackbar
-          open={success}
-          autoHideDuration={3500}
-          onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert severity="success" sx={{ fontWeight: 600 }}>
-            Mensaje enviado correctamente 🚀
-          </Alert>
-        </Snackbar>
+  open={success}
+  autoHideDuration={3500}
+  onClose={() => setSuccess(false)}
+  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+  sx={{
+    top: "50% !important",
+    transform: "translateY(-50%)",
+  }}
+>
+  <Alert
+    severity="success"
+    icon={false}
+    sx={{
+      px: 4,
+      py: 2,
+      borderRadius: 3,
+      fontWeight: 600,
+      textAlign: "center",
+      fontSize: "0.95rem",
+      color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
+      background:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #064e3b, #022c22)"
+          : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 20px 40px rgba(0,0,0,0.6)"
+          : "0 20px 40px rgba(22,163,74,0.35)",
+    }}
+  >
+    <strong>¡Mensaje enviado con éxito!</strong>
+    <br />
+    Me pondré en contacto contigo lo antes posible 🚀
+  </Alert>
+</Snackbar>
       </Container>
     </Box>
   );
