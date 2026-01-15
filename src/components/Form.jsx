@@ -22,13 +22,13 @@ export default function Contact() {
   const formRef = useRef();
   const [success, setSuccess] = useState(false);
 
-  /* ================= ANIMACIÓN CINEMÁTICA (MISMA DEL HERO) ================= */
+  /* ================= ANIMACIÓN CINEMÁTICA ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 20,
+      y: 16,
       filter: "blur(8px)",
       clipPath: "inset(0 0 100% 0)",
     },
@@ -63,9 +63,8 @@ export default function Contact() {
     <Box
       id="contact"
       sx={{
-        py: { xs: 6, md: 12 },
+        py: { xs: 4, md: 7 }, // ⬅️ MENOS ESPACIO ARRIBA
         position: "relative",
-        overflow: "hidden",
       }}
     >
       <Container maxWidth="sm">
@@ -75,15 +74,15 @@ export default function Contact() {
           viewport={{ once: true }}
           variants={fadeCinematic}
         >
-          {/* ================= TITULO HERO ================= */}
+          {/* ================= TITULO ================= */}
           <Typography
             variant="h3"
             fontWeight={800}
             textAlign="center"
             sx={{
               color: theme.palette.primary.main,
-              mb: 1,
-              fontSize: { xs: "2rem", sm: "2.4rem" },
+              mb: 0.5, // ⬅️ MENOS SEPARACIÓN
+              fontSize: { xs: "2rem", sm: "2.3rem" },
             }}
           >
             Conectemos
@@ -92,7 +91,7 @@ export default function Contact() {
           <Typography
             textAlign="center"
             sx={{
-              mb: 5,
+              mb: 4, // ⬅️ MÁS COMPACTO
               color: "text.secondary",
               fontStyle: "italic",
             }}
@@ -162,26 +161,29 @@ export default function Contact() {
               sx={inputStyle(theme)}
             />
 
-            {/* ================= BOTÓN HERO ================= */}
+            {/* ================= BOTÓN SIN FONDO ================= */}
             <Button
               type="submit"
               endIcon={<SendIcon />}
+              variant="outlined"
               sx={{
-                mt: 4,
+                mt: 3,
                 alignSelf: "center",
-                px: 6,
-                py: 1.6,
+                px: 5,
+                py: 1.4,
                 borderRadius: "999px",
                 fontWeight: 700,
                 textTransform: "none",
-                color: "#fff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: `0 0 30px ${theme.palette.primary.main}88`,
+                color: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+                background: "transparent",
                 "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: `0 0 45px ${theme.palette.primary.main}`,
+                  borderColor: theme.palette.primary.main,
+                  boxShadow: `0 0 22px ${theme.palette.primary.main}66`,
+                  transform: "translateY(-1px)",
+                  background: "transparent",
                 },
-                transition: "all 0.3s ease",
+                transition: "all 0.25s ease",
               }}
             >
               Enviar mensaje
@@ -210,7 +212,7 @@ export default function Contact() {
   );
 }
 
-/* ================= INPUT STYLE HERO ================= */
+/* ================= INPUT STYLE ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
@@ -219,7 +221,6 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    color: theme.palette.text.primary,
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
     },
