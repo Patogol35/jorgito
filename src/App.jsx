@@ -87,6 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
+            { id: "form", color: "#00acc1", Component: Form }, // 👈 FORM AL FINAL
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -109,27 +110,10 @@ function App() {
           ))}
         </Container>
 
-        {/* FORM HERO FINAL 🔥 */}
-        <Box
-          id="form"
-          sx={{
-            py: { xs: 6, md: 10 },
-            px: 2,
-            background:
-              mode === "dark"
-                ? "linear-gradient(135deg, #1e1e1e, #121212)"
-                : "linear-gradient(135deg, #ffffff, #f5f7fa)",
-          }}
-        >
-          <Container maxWidth="md">
-            <Form />
-          </Container>
-        </Box>
-
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -149,7 +133,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
