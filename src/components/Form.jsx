@@ -98,7 +98,7 @@ export default function Form() {
               fontStyle: "italic",
               color:
                 theme.palette.mode === "dark"
-                  ? "rgba(226,232,240,0.7)"
+                  ? "rgba(226,232,240,0.75)"
                   : "rgba(51,65,85,0.8)",
             }}
           >
@@ -241,37 +241,82 @@ export default function Form() {
   );
 }
 
-/* ================= INPUT STYLE ================= */
+/* ================= INPUT STYLE (FIX TEXTO) ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.85)",
+        ? "rgba(15,23,42,0.65)"
+        : "rgba(255,255,255,0.95)",
     backdropFilter: "blur(14px)",
-    color: theme.palette.text.primary,
+
+    /* TEXTO */
+    color:
+      theme.palette.mode === "dark"
+        ? "#e5e7eb"
+        : "#0f172a",
+
+    "& input, & textarea": {
+      color:
+        theme.palette.mode === "dark"
+          ? "#e5e7eb"
+          : "#0f172a",
+      WebkitTextFillColor:
+        theme.palette.mode === "dark"
+          ? "#e5e7eb"
+          : "#0f172a",
+    },
+
+    /* PLACEHOLDER */
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(226,232,240,0.6)"
+          : "rgba(51,65,85,0.6)",
+      opacity: 1,
+    },
+
     "& fieldset": {
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(148,163,184,0.35)"
           : "rgba(51,65,85,0.25)",
     },
+
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
+
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 0 2px ${theme.palette.primary.main}33`,
     },
   },
+
+  /* LABEL */
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(51,65,85,0.7)",
+        ? "rgba(226,232,240,0.8)"
+        : "rgba(51,65,85,0.8)",
   },
+
   "& .MuiInputLabel-root.Mui-focused": {
     color: theme.palette.primary.main,
+    fontWeight: 600,
+  },
+
+  /* AUTOFILL */
+  "& input:-webkit-autofill": {
+    WebkitBoxShadow: `0 0 0 1000px ${
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,1)"
+        : "#ffffff"
+    } inset`,
+    WebkitTextFillColor:
+      theme.palette.mode === "dark"
+        ? "#e5e7eb"
+        : "#0f172a",
   },
 });
