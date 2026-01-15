@@ -14,7 +14,6 @@ import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -84,7 +83,7 @@ export default function Form() {
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO ================= */}
+        {/* ================= SUBTÍTULO (AJUSTADO) ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -94,8 +93,10 @@ export default function Form() {
             textAlign="center"
             sx={{
               mb: 4,
-              color: "text.secondary",
+              color: theme.palette.text.primary, // 👈 Más claro y legible
               fontStyle: "italic",
+              fontFamily: theme.typography.h6?.fontFamily || "inherit", // 👈 Mismo tipo de letra que el título
+              opacity: 0.9,
             }}
           >
             Ponte en contacto conmigo a través de este formulario
@@ -241,13 +242,13 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    color: theme.palette.text.primary, // 👈 Texto principal adaptativo
+    color: theme.palette.text.primary, // Texto principal adaptativo
 
     "& fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(144,202,249,0.4)" // más visible en oscuro
-          : "rgba(0,0,0,0.23)", // estándar MUI en claro
+          ? "rgba(144,202,249,0.45)" // más visible en oscuro
+          : "rgba(0,0,0,0.23)", // estándar en claro
     },
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
@@ -258,14 +259,15 @@ const inputStyle = (theme) => ({
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
 
-    // 👇 Estilo del placeholder
-    "&::placeholder": {
+    // Placeholder
+    "& input::placeholder, & textarea::placeholder": {
       color: theme.palette.text.secondary,
       opacity: 1,
     },
   },
   "& .MuiInputLabel-root": {
-    color: theme.palette.text.secondary, // Etiquetas más legibles
+    color: theme.palette.text.secondary,
+    fontFamily: theme.typography.h6?.fontFamily || "inherit",
   },
   "& .MuiInputLabel-root.Mui-focused": {
     color: theme.palette.primary.main,
