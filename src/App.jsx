@@ -87,7 +87,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          { id: "form", color: "#d32f2f", Component: Form },
+          { id: "form", color: "#00897b", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
