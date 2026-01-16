@@ -143,7 +143,7 @@ export default function Navbar({ mode, setMode }) {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("#hero");
   const theme = useTheme();
-  const handleScrollTo = useSmoothScroll(0);
+  const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
   useActiveSection(setActive);
