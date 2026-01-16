@@ -40,11 +40,12 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f5f7fa",
+                  default: "#e6eef8", // respaldo si no carga gradiente
                   paper: "#ffffff",
                 },
                 text: {
-                  primary: "#111",
+                  primary: "#0f172a",
+                  secondary: "#334155",
                 },
               }
             : {
@@ -65,7 +66,17 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+      {/* FONDO GENERAL CON GRADIENTE SOLO EN MODO CLARO */}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          overflowX: "hidden",
+          background:
+            mode === "light"
+              ? "linear-gradient(180deg, #eef4fb 0%, #e3edf9 50%, #dde8f5 100%)"
+              : "none",
+        }}
+      >
         {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
 
@@ -87,7 +98,7 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          { id: "form", color: "#00897b", Component: Form, minHeight: "100vh" },
+            { id: "form", color: "#00897b", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -133,7 +144,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
+        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
