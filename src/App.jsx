@@ -63,6 +63,7 @@ function App() {
   const glassCard = (color) => ({
     position: "relative",
     overflow: "hidden",
+
     backgroundColor:
       mode === "light"
         ? alpha("#ffffff", 0.92)
@@ -105,11 +106,10 @@ function App() {
   });
 
   /* =========================
-     FORM CTA CARD (STRONG)
+     FORM CTA CARD
   ========================= */
   const formCard = (color) => ({
     ...glassCard(color),
-
     minHeight: "80vh",
     display: "flex",
     alignItems: "center",
@@ -145,9 +145,13 @@ function App() {
       />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENT */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -159,7 +163,11 @@ function App() {
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            {
+              id: "certifications",
+              color: "#546e7a", // ✅ Blue-Grey premium
+              Component: Certifications,
+            },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
             {
@@ -194,8 +202,10 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -215,6 +225,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
