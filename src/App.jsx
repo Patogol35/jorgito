@@ -42,7 +42,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f5f7fa",
+                  default: "#f4f6fb",
                   paper: "#ffffff",
                 },
               }
@@ -58,45 +58,52 @@ function App() {
   );
 
   /* =========================
-     Premium Glass Card Style
+     Visible Premium Glass Card
   ========================= */
-  const premiumGlassCard = (color) => ({
+  const visibleGlassCard = (color) => ({
     position: "relative",
     overflow: "hidden",
 
+    /* BASE VISIBLE */
     backgroundColor:
       mode === "light"
-        ? alpha("#ffffff", 0.78)
-        : alpha("#1a1d24", 0.78),
-
-    backdropFilter: "blur(12px)",
-    WebkitBackdropFilter: "blur(12px)",
+        ? alpha("#ffffff", 0.92)
+        : alpha("#1a1d24", 0.92),
 
     borderLeft: `6px solid ${color}`,
-    borderTop: `1px solid ${alpha("#fff", mode === "light" ? 0.5 : 0.08)}`,
-    borderRight: `1px solid ${alpha("#fff", mode === "light" ? 0.4 : 0.06)}`,
-    borderBottom: `1px solid ${alpha("#000", mode === "light" ? 0.05 : 0.4)}`,
 
-    /* Animated gradient layer */
-    "&::before": {
+    /* GLASS LAYER */
+    "&::after": {
       content: '""',
       position: "absolute",
       inset: 0,
-      background: `
-        linear-gradient(
-          120deg,
-          ${alpha(color, 0.22)},
-          transparent 45%,
-          ${alpha(color, 0.08)}
-        )
-      `,
-      opacity: 0.35,
-      backgroundSize: "200% 200%",
-      animation: "premiumGradient 24s ease infinite",
+      background:
+        mode === "light"
+          ? "rgba(255,255,255,0.35)"
+          : "rgba(255,255,255,0.04)",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
       zIndex: 0,
     },
 
-    /* Content above gradient */
+    /* GRADIENT LAYER */
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: "-40%",
+      background: `
+        radial-gradient(
+          circle at top left,
+          ${alpha(color, 0.35)},
+          transparent 60%
+        )
+      `,
+      opacity: 0.7,
+      animation: "softMove 26s ease infinite",
+      zIndex: 0,
+    },
+
+    /* CONTENT */
     "& > *": {
       position: "relative",
       zIndex: 1,
@@ -107,25 +114,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* Global animation */}
+      {/* GLOBAL ANIMATION */}
       <GlobalStyles
         styles={{
-          "@keyframes premiumGradient": {
-            "0%": { backgroundPosition: "0% 50%" },
-            "50%": { backgroundPosition: "100% 50%" },
-            "100%": { backgroundPosition: "0% 50%" },
+          "@keyframes softMove": {
+            "0%": { transform: "translate(0, 0)" },
+            "50%": { transform: "translate(40px, 30px)" },
+            "100%": { transform: "translate(0, 0)" },
           },
         }}
       />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENT */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -145,23 +148,20 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={0}
+              elevation={3}
               sx={{
                 mb: 6,
                 p: { xs: 3, md: 6 },
                 borderRadius: "18px",
                 scrollMarginTop: scrollOffset,
 
-                ...premiumGlassCard(color),
+                ...visibleGlassCard(color),
 
-                transition:
-                  "transform 0.45s ease, box-shadow 0.45s ease",
+                transition: "all 0.4s ease",
 
                 "&:hover": {
                   transform: "translateY(-6px)",
-                  boxShadow: `
-                    0 20px 45px ${alpha(color, 0.28)}
-                  `,
+                  boxShadow: `0 18px 40px ${alpha(color, 0.35)}`,
                 },
               }}
             >
@@ -170,10 +170,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -193,7 +191,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
