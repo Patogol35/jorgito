@@ -224,7 +224,7 @@ export default function Form() {
           >
             <strong>¡Mensaje enviado con éxito!</strong>
             <br />
-            Me pondré en contacto contigo lo antes posible 🚀
+            Me pondré en contacto contigo lo antes posible 
           </Alert>
         </Snackbar>
       </Container>
