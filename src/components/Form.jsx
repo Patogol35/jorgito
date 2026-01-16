@@ -16,8 +16,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
-
-const WHATSAPP_NUMBER = "5930997979099"; // ← TU NÚMERO
+import emailjs from "@emailjs/browser";
 
 export default function Form() {
   const theme = useTheme();
@@ -30,78 +29,79 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = new FormData(formRef.current);
-
-    const name = data.get("from_name");
-    const email = data.get("from_email");
-    const message = data.get("message");
-
-    const whatsappText = `
-👋 *Nuevo mensaje desde el portafolio*
-
-👤 *Nombre:* ${name}
-📧 *Correo:* ${email}
-
-💬 *Mensaje:*
-${message}
-    `.trim();
-
-    const encodedText = encodeURIComponent(whatsappText);
-
-    window.open(
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedText}`,
-      "_blank"
-    );
-
-    setSuccess(true);
-    formRef.current.reset();
+    emailjs
+      .sendForm(
+        "service_fd9ejbr",
+        "template_pwsn0sn",
+        formRef.current,
+        "Try7tc29-wnfxyPyf"
+      )
+      .then(() => {
+        setSuccess(true);
+        formRef.current.reset();
+      })
+      .catch(() => alert("Error al enviar el mensaje"));
   };
 
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
-        {/* ===== TÍTULO ===== */}
+        {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               px: 3,
-              py: 1,
+              py: 0.9,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(34,197,94,0.08)"
-                : "rgba(34,197,94,0.12)",
-              border: "1px solid rgba(34,197,94,0.35)",
-              backdropFilter: "blur(8px)",
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
             }}
           >
-            <ContactMailIcon sx={{ color: "#22c55e" }} />
-            <Typography sx={{ fontWeight: 700, color: "#22c55e" }}>
-              Contacto por WhatsApp
+            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
+              Contacto por Email
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ===== SUBTÍTULO ===== */}
-        <Typography
-          variant="subtitle1"
-          sx={{
-            textAlign: "center",
-            fontWeight: 600,
-            mb: 4,
-          }}
+        {/* ================= SUBTÍTULO (MÁS CLARO) ================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          Escríbeme directamente y te responderé lo antes posible
-        </Typography>
+          <Typography
+  variant="subtitle1"
+  sx={{
+    textAlign: "center",
+    fontWeight: "bold",
+    mb: 4,
+  }}
+>
+  Ponte en contacto conmigo a través de este formulario
+</Typography>
+        </motion.div>
 
-        {/* ===== FORM ===== */}
+        {/* ================= FORM ================= */}
         <Box
           component="form"
           ref={formRef}
@@ -132,7 +132,7 @@ ${message}
               key={field.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TextField
                 {...field}
@@ -157,7 +157,7 @@ ${message}
             </motion.div>
           ))}
 
-          {/* ===== BOTÓN ===== */}
+          {/* ================= BOTÓN ================= */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -175,36 +175,56 @@ ${message}
                 fontWeight: 700,
                 textTransform: "none",
                 color: "#fff",
-                background: "linear-gradient(90deg, #22c55e, #16a34a)",
-                boxShadow: "0 10px 26px rgba(34,197,94,0.45)",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
                 "&:hover": {
                   transform: "translateY(-2px)",
-                  boxShadow: "0 14px 32px rgba(34,197,94,0.6)",
+                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 },
                 transition: "all 0.25s ease",
               }}
             >
-              Enviar por WhatsApp
+              Enviar mensaje
             </Button>
           </motion.div>
         </Box>
 
-        {/* ===== ALERT ===== */}
+        {/* ================= ALERT ================= */}
         <Snackbar
           open={success}
-          autoHideDuration={3000}
+          autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{
+            top: "50% !important",
+            transform: "translateY(-50%)",
+          }}
         >
           <Alert
             severity="success"
+            icon={false}
             sx={{
-              fontWeight: 600,
+              px: 4,
+              py: 2,
               borderRadius: 3,
+              fontWeight: 600,
               textAlign: "center",
+              fontSize: "0.95rem",
+              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
+              background:
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, #064e3b, #022c22)"
+                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 20px 40px rgba(0,0,0,0.6)"
+                  : "0 20px 40px rgba(22,163,74,0.35)",
             }}
           >
-            ✅ WhatsApp abierto correctamente
+            <strong>¡Mensaje enviado con éxito!</strong>
+            <br />
+            Me pondré en contacto contigo lo antes posible 🚀
           </Alert>
         </Snackbar>
       </Container>
@@ -220,15 +240,35 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
+
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(241,245,249,0.95)"
+        : "rgba(15,23,42,0.9)",
+
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(226,232,240,0.6)"
+          : "rgba(100,116,139,0.6)",
+    },
+
     "& fieldset": {
-      borderColor: "rgba(34,197,94,0.35)",
+      borderColor: "rgba(96,165,250,0.35)",
     },
     "&:hover fieldset": {
-      borderColor: "#22c55e",
+      borderColor: theme.palette.primary.main,
     },
     "&.Mui-focused fieldset": {
-      borderColor: "#22c55e",
-      boxShadow: "0 0 14px rgba(34,197,94,0.45)",
+      borderColor: theme.palette.primary.main,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
+  },
+
+  "& .MuiInputLabel-root": {
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(226,232,240,0.75)"
+        : "rgba(71,85,105,0.8)",
   },
 });
