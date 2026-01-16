@@ -18,6 +18,7 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import axios from "axios";
 
+/* 🔴 URL REAL DE TU BACKEND */
 const API_URL = "https://form-backend-s31q.onrender.com/api/contact/";
 
 export default function Form() {
@@ -25,6 +26,7 @@ export default function Form() {
   const isDark = theme.palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
 
+  /* ===== ESTADO DEL FORM ===== */
   const [formData, setFormData] = useState({
     from_name: "",
     from_email: "",
@@ -32,17 +34,22 @@ export default function Form() {
   });
 
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  /* ===== HANDLE CHANGE ===== */
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  /* ===== HANDLE SUBMIT (AXIOS → BACKEND) ===== */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
+    setError(false);
 
     try {
       await axios.post(API_URL, formData, {
@@ -52,9 +59,14 @@ export default function Form() {
       });
 
       setSuccess(true);
-      setFormData({ from_name: "", from_email: "", message: "" });
+      setFormData({
+        from_name: "",
+        from_email: "",
+        message: "",
+      });
     } catch (err) {
-      setError("No se pudo enviar el mensaje. Intenta nuevamente.");
+      console.error(err);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -64,7 +76,7 @@ export default function Form() {
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* ===== TÍTULO ===== */}
+        {/* ================= TÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -90,14 +102,29 @@ export default function Form() {
             }}
           >
             <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography sx={{ fontWeight: "bold", color: primaryColor }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor }}
+            >
               Contacto por Email
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ===== FORM ===== */}
-        <Box component="form" onSubmit={handleSubmit} sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        {/* ================= SUBTÍTULO ================= */}
+        <Typography
+          variant="subtitle1"
+          sx={{ textAlign: "center", fontWeight: "bold", mb: 4 }}
+        >
+          Ponte en contacto conmigo a través de este formulario
+        </Typography>
+
+        {/* ================= FORM ================= */}
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
           {[
             {
               name: "from_name",
@@ -145,6 +172,7 @@ export default function Form() {
             </motion.div>
           ))}
 
+          {/* ================= BOTÓN ================= */}
           <Button
             type="submit"
             disabled={loading}
@@ -154,6 +182,7 @@ export default function Form() {
               py: 1.6,
               borderRadius: "999px",
               fontWeight: 700,
+              textTransform: "none",
               color: "#fff",
               background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
             }}
@@ -162,16 +191,26 @@ export default function Form() {
           </Button>
         </Box>
 
-        {/* ===== SUCCESS ===== */}
-        <Snackbar open={success} autoHideDuration={3500} onClose={() => setSuccess(false)}>
+        {/* ================= SUCCESS ================= */}
+        <Snackbar
+          open={success}
+          autoHideDuration={3500}
+          onClose={() => setSuccess(false)}
+        >
           <Alert severity="success">
             ¡Mensaje enviado con éxito! 🚀
           </Alert>
         </Snackbar>
 
-        {/* ===== ERROR ===== */}
-        <Snackbar open={!!error} autoHideDuration={3500} onClose={() => setError("")}>
-          <Alert severity="error">{error}</Alert>
+        {/* ================= ERROR ================= */}
+        <Snackbar
+          open={error}
+          autoHideDuration={3500}
+          onClose={() => setError(false)}
+        >
+          <Alert severity="error">
+            No se pudo enviar el mensaje. Intenta nuevamente.
+          </Alert>
         </Snackbar>
 
       </Container>
@@ -179,6 +218,7 @@ export default function Form() {
   );
 }
 
+/* ================= ESTILOS ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
