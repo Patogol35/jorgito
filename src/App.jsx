@@ -58,13 +58,11 @@ function App() {
   );
 
   /* =========================
-     Visible Premium Glass Card
+     Base Glass Card
   ========================= */
-  const visibleGlassCard = (color) => ({
+  const glassCard = (color) => ({
     position: "relative",
     overflow: "hidden",
-
-    /* BASE VISIBLE */
     backgroundColor:
       mode === "light"
         ? alpha("#ffffff", 0.92)
@@ -72,7 +70,21 @@ function App() {
 
     borderLeft: `6px solid ${color}`,
 
-    /* GLASS LAYER */
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: "-40%",
+      background: `
+        radial-gradient(
+          circle at top left,
+          ${alpha(color, 0.35)},
+          transparent 60%
+        )
+      `,
+      animation: "softMove 26s ease infinite",
+      zIndex: 0,
+    },
+
     "&::after": {
       content: '""',
       position: "absolute",
@@ -86,27 +98,35 @@ function App() {
       zIndex: 0,
     },
 
-    /* GRADIENT LAYER */
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      inset: "-40%",
-      background: `
-        radial-gradient(
-          circle at top left,
-          ${alpha(color, 0.35)},
-          transparent 60%
-        )
-      `,
-      opacity: 0.7,
-      animation: "softMove 26s ease infinite",
-      zIndex: 0,
-    },
-
-    /* CONTENT */
     "& > *": {
       position: "relative",
       zIndex: 1,
+    },
+  });
+
+  /* =========================
+     FORM CTA CARD (STRONG)
+  ========================= */
+  const formCard = (color) => ({
+    ...glassCard(color),
+
+    minHeight: "80vh",
+    display: "flex",
+    alignItems: "center",
+
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: "-50%",
+      background: `
+        radial-gradient(
+          circle at center,
+          ${alpha(color, 0.45)},
+          transparent 65%
+        )
+      `,
+      animation: "softMove 30s ease infinite",
+      zIndex: 0,
     },
   });
 
@@ -114,7 +134,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* GLOBAL ANIMATION */}
       <GlobalStyles
         styles={{
           "@keyframes softMove": {
@@ -143,25 +162,30 @@ function App() {
             { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-            { id: "form", color: "#00897b", Component: Form },
-          ].map(({ id, color, Component }) => (
+            {
+              id: "form",
+              color: "#00897b",
+              Component: Form,
+              isForm: true,
+            },
+          ].map(({ id, color, Component, isForm }) => (
             <Paper
               key={id}
               id={id}
-              elevation={3}
+              elevation={isForm ? 6 : 3}
               sx={{
                 mb: 6,
                 p: { xs: 3, md: 6 },
-                borderRadius: "18px",
+                borderRadius: "20px",
                 scrollMarginTop: scrollOffset,
 
-                ...visibleGlassCard(color),
+                ...(isForm ? formCard(color) : glassCard(color)),
 
-                transition: "all 0.4s ease",
+                transition: "all 0.45s ease",
 
                 "&:hover": {
                   transform: "translateY(-6px)",
-                  boxShadow: `0 18px 40px ${alpha(color, 0.35)}`,
+                  boxShadow: `0 22px 50px ${alpha(color, 0.4)}`,
                 },
               }}
             >
