@@ -41,13 +41,13 @@ const menuItems = [
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Tecnologías",
+    label: "Skills",
     href: "#skills",
     color: "linear-gradient(135deg, #f57c00, #ffb74d)",
     icon: <BuildIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Certificaciones",
+    label: "Certificados",
     href: "#certifications",
     color: "linear-gradient(135deg, #6a1b9a, #ab47bc)",
     icon: <VerifiedIcon sx={{ color: "#fff" }} />,
@@ -67,7 +67,7 @@ const menuItems = [
   
   
 {
-  label: "",
+  label: "Email",
   href: "#form",
   color: "linear-gradient(135deg, #00695c, #26a69a)", // teal
   icon: <ContactMailIcon sx={{ color: "#fff" }} />,
