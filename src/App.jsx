@@ -9,6 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -40,7 +41,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#dbeafe", // respaldo
+                  default: "#dbeafe",
                   paper: "#ffffff",
                 },
                 text: {
@@ -110,9 +111,22 @@ function App() {
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
+
+                // 🎨 FONDO DE LA CARD SEGÚN SU COLOR
+                backgroundColor:
+                  mode === "light"
+                    ? alpha(color, 0.08)
+                    : alpha(color, 0.18),
+
+                backdropFilter: "blur(2px)",
+
                 transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
+                  backgroundColor:
+                    mode === "light"
+                      ? alpha(color, 0.12)
+                      : alpha(color, 0.25),
                 },
               }}
             >
