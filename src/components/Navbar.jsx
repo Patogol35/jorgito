@@ -67,7 +67,7 @@ const menuItems = [
   
   
 {
-  label: "Email",
+  label: "",
   href: "#form",
   color: "linear-gradient(135deg, #00695c, #26a69a)", // teal
   icon: <ContactMailIcon sx={{ color: "#fff" }} />,
