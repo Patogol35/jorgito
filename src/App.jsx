@@ -8,6 +8,7 @@ import {
   Container,
   Fab,
   Tooltip,
+  alpha,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -40,12 +41,8 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#dbeafe",
+                  default: "#f5f7fa",
                   paper: "#ffffff",
-                },
-                text: {
-                  primary: "#0f172a",
-                  secondary: "#334155",
                 },
               }
             : {
@@ -53,70 +50,45 @@ function App() {
                   default: "#121212",
                   paper: "#1e1e1e",
                 },
-                text: {
-                  primary: "#ffffff",
-                },
               }),
         },
       }),
     [mode]
   );
 
-  // 🎨 GRADIENTES SUAVES POR SECCIÓN
-  const sectionGradients = {
-    about:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(46,125,50,0.08), rgba(219,234,254,0.6))"
-        : "linear-gradient(135deg, rgba(46,125,50,0.18), rgba(30,41,59,0.8))",
-
-    skills:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(251,140,0,0.08), rgba(248,250,252,0.9))"
-        : "linear-gradient(135deg, rgba(251,140,0,0.18), rgba(30,41,59,0.85))",
-
-    certifications:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(142,36,170,0.08), rgba(219,234,254,0.6))"
-        : "linear-gradient(135deg, rgba(142,36,170,0.2), rgba(30,41,59,0.85))",
-
-    projects:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(25,118,210,0.08), rgba(241,245,249,0.9))"
-        : "linear-gradient(135deg, rgba(25,118,210,0.2), rgba(30,41,59,0.85))",
-
-    contact:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(211,47,47,0.08), rgba(254,242,242,0.9))"
-        : "linear-gradient(135deg, rgba(211,47,47,0.18), rgba(30,41,59,0.85))",
-
-    form:
-      mode === "light"
-        ? "linear-gradient(135deg, rgba(0,137,123,0.08), rgba(224,242,241,0.9))"
-        : "linear-gradient(135deg, rgba(0,137,123,0.2), rgba(30,41,59,0.85))",
-  };
+  /** =========================
+   *  Gradient helper (PRO)
+   ========================= */
+  const cardGradient = (color) => ({
+    background: `
+      linear-gradient(
+        135deg,
+        ${alpha(color, 0.12)} 0%,
+        ${alpha(color, 0.05)} 35%,
+        ${theme.palette.background.paper} 100%
+      )
+    `,
+  });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO GENERAL */}
-      <Box
-        sx={{
-          minHeight: "100vh",
-          overflowX: "hidden",
-          background:
-            mode === "light"
-              ? "linear-gradient(135deg, #dbeafe 0%, #c7ddf5 40%, #b6d0ee 70%, #aac6e8 100%)"
-              : "none",
-        }}
-      >
+      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 } }}
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
         >
           {[
             { id: "about", color: "#2e7d32", Component: About },
@@ -129,18 +101,20 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={2}
+              elevation={4}
               sx={{
-                mb: 4,
+                mb: 5,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                borderLeft: `4px solid ${color}`,
+                borderLeft: `5px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-                background: sectionGradients[id],
-                backdropFilter: "blur(3px)",
-                transition: "all 0.3s ease",
+
+                ...cardGradient(color),
+
+                transition: "all 0.35s ease",
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  transform: "translateY(-6px)",
+                  boxShadow: `0 20px 40px ${alpha(color, 0.25)}`,
                 },
               }}
             >
@@ -149,14 +123,18 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
+              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -164,10 +142,11 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ color: "#fff", fontSize: 32 }} />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
