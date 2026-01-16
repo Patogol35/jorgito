@@ -8,8 +8,6 @@ import {
   Container,
   Fab,
   Tooltip,
-  alpha,
-  GlobalStyles,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -42,14 +40,20 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f4f6fb",
+                  default: "#f5f7fa",
                   paper: "#ffffff",
+                },
+                text: {
+                  primary: "#111",
                 },
               }
             : {
                 background: {
-                  default: "#0e1014",
-                  paper: "#1a1d24",
+                  default: "#121212",
+                  paper: "#1e1e1e",
+                },
+                text: {
+                  primary: "#ffffff",
                 },
               }),
         },
@@ -57,92 +61,9 @@ function App() {
     [mode]
   );
 
-  /* =========================
-     Base Glass Card
-  ========================= */
-  const glassCard = (color) => ({
-    position: "relative",
-    overflow: "hidden",
-
-    backgroundColor:
-      mode === "light"
-        ? alpha("#ffffff", 0.92)
-        : alpha("#1a1d24", 0.92),
-
-    borderLeft: `6px solid ${color}`,
-
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      inset: "-40%",
-      background: `
-        radial-gradient(
-          circle at top left,
-          ${alpha(color, 0.35)},
-          transparent 60%
-        )
-      `,
-      animation: "softMove 26s ease infinite",
-      zIndex: 0,
-    },
-
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      inset: 0,
-      background:
-        mode === "light"
-          ? "rgba(255,255,255,0.35)"
-          : "rgba(255,255,255,0.04)",
-      backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
-      zIndex: 0,
-    },
-
-    "& > *": {
-      position: "relative",
-      zIndex: 1,
-    },
-  });
-
-  /* =========================
-     FORM CTA CARD
-  ========================= */
-  const formCard = (color) => ({
-    ...glassCard(color),
-    minHeight: "80vh",
-    display: "flex",
-    alignItems: "center",
-
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      inset: "-50%",
-      background: `
-        radial-gradient(
-          circle at center,
-          ${alpha(color, 0.45)},
-          transparent 65%
-        )
-      `,
-      animation: "softMove 30s ease infinite",
-      zIndex: 0,
-    },
-  });
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
-      <GlobalStyles
-        styles={{
-          "@keyframes softMove": {
-            "0%": { transform: "translate(0, 0)" },
-            "50%": { transform: "translate(40px, 30px)" },
-            "100%": { transform: "translate(0, 0)" },
-          },
-        }}
-      />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         {/* NAVBAR */}
@@ -151,7 +72,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENT */}
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -163,37 +84,24 @@ function App() {
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
-            {
-              id: "certifications",
-              color: "#546e7a", // ✅ Blue-Grey premium
-              Component: Certifications,
-            },
+            { id: "certifications", color: "#8e24aa", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-            {
-              id: "form",
-              color: "#00897b",
-              Component: Form,
-              isForm: true,
-            },
-          ].map(({ id, color, Component, isForm }) => (
+          { id: "form", color: "#00897b", Component: Form, minHeight: "100vh" },
+          ].map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
-              elevation={isForm ? 6 : 3}
+              elevation={3}
               sx={{
-                mb: 6,
+                mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: "20px",
+                borderRadius: 3,
+                borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-
-                ...(isForm ? formCard(color) : glassCard(color)),
-
-                transition: "all 0.45s ease",
-
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: `0 22px 50px ${alpha(color, 0.4)}`,
+                  transform: "translateY(-4px)",
                 },
               }}
             >
@@ -205,7 +113,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -225,7 +133,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
+        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
