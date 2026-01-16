@@ -18,7 +18,7 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import axios from "axios";
 
-/* 🔴 URL REAL DE TU BACKEND */
+/* ✅ URL REAL DEL BACKEND EN RENDER */
 const API_URL = "https://form-backend-s31q.onrender.com/api/contact/";
 
 export default function Form() {
@@ -45,18 +45,40 @@ export default function Form() {
     });
   };
 
-  /* ===== HANDLE SUBMIT (AXIOS → BACKEND) ===== */
+  /* ===== HANDLE SUBMIT (AXIOS → DJANGO) ===== */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validación básica front
+    if (
+      !formData.from_name.trim() ||
+      !formData.from_email.trim() ||
+      !formData.message.trim()
+    ) {
+      setError(true);
+      return;
+    }
+
     setLoading(true);
     setError(false);
 
     try {
-      await axios.post(API_URL, formData, {
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        API_URL,
+        {
+          from_name: formData.from_name.trim(),
+          from_email: formData.from_email.trim(),
+          message: formData.message.trim(),
         },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 10000,
+        }
+      );
+
+      console.log("SUCCESS:", response.data);
 
       setSuccess(true);
       setFormData({
@@ -65,7 +87,7 @@ export default function Form() {
         message: "",
       });
     } catch (err) {
-      console.error(err);
+      console.error("ERROR:", err.response?.data || err.message);
       setError(true);
     } finally {
       setLoading(false);
@@ -161,7 +183,11 @@ export default function Form() {
                   startAdornment: (
                     <InputAdornment
                       position="start"
-                      sx={field.multiline ? { alignSelf: "flex-start", mt: 1 } : {}}
+                      sx={
+                        field.multiline
+                          ? { alignSelf: "flex-start", mt: 1 }
+                          : {}
+                      }
                     >
                       {field.icon}
                     </InputAdornment>
