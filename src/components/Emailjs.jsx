@@ -46,3 +46,16 @@
     </table>
   </div>
 </div>
+
+
+
+
+To Email
+patogol3535@gmail.com
+From Name
+{{from_name}}
+From Email
+
+Use Default Email Address
+Reply To
+{{from_email}}
