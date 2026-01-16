@@ -26,8 +26,32 @@ export default function Form() {
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
+  /* ================= WHATSAPP ================= */
+  const sendWhatsApp = (data) => {
+    const phone = "593XXXXXXXXX"; // ← CAMBIA A TU NÚMERO (ECUADOR = 593)
+
+    const text = encodeURIComponent(
+      `Hola Jaime 👋
+
+Nombre: ${data.from_name}
+Email: ${data.from_email}
+
+Mensaje:
+${data.message}`
+    );
+
+    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+  };
+
+  /* ================= SUBMIT ================= */
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = {
+      from_name: formRef.current.from_name.value,
+      from_email: formRef.current.from_email.value,
+      message: formRef.current.message.value,
+    };
 
     emailjs
       .sendForm(
@@ -38,6 +62,7 @@ export default function Form() {
       )
       .then(() => {
         setSuccess(true);
+        sendWhatsApp(formData);
         formRef.current.reset();
       })
       .catch(() => alert("Error al enviar el mensaje"));
@@ -46,7 +71,7 @@ export default function Form() {
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
-        {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
+        {/* ================= TÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -57,7 +82,6 @@ export default function Form() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -76,30 +100,20 @@ export default function Form() {
             <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{ fontWeight: "bold", color: primaryColor }}
             >
-              Contacto por Email
+              Contacto
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO (MÁS CLARO) ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        {/* ================= SUBTÍTULO ================= */}
+        <Typography
+          variant="subtitle1"
+          sx={{ textAlign: "center", fontWeight: "bold", mb: 4 }}
         >
-          <Typography
-  variant="subtitle1"
-  sx={{
-    textAlign: "center",
-    fontWeight: "bold",
-    mb: 4,
-  }}
->
-  Ponte en contacto conmigo a través de este formulario
-</Typography>
-        </motion.div>
+          Ponte en contacto conmigo a través del formulario
+        </Typography>
 
         {/* ================= FORM ================= */}
         <Box
@@ -158,36 +172,27 @@ export default function Form() {
           ))}
 
           {/* ================= BOTÓN ================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
+          <Button
+            type="submit"
+            endIcon={<SendIcon />}
+            sx={{
+              mt: 3,
+              px: 6,
+              py: 1.6,
+              borderRadius: "999px",
+              fontWeight: 700,
+              textTransform: "none",
+              color: "#fff",
+              background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+              boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+              },
+            }}
           >
-            <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              sx={{
-                mt: 3,
-                px: 6,
-                py: 1.6,
-                borderRadius: "999px",
-                fontWeight: 700,
-                textTransform: "none",
-                color: "#fff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                },
-                transition: "all 0.25s ease",
-              }}
-            >
-              Enviar mensaje
-            </Button>
-          </motion.div>
+            Enviar mensaje
+          </Button>
         </Box>
 
         {/* ================= ALERT ================= */}
@@ -196,10 +201,7 @@ export default function Form() {
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
-          }}
+          sx={{ top: "50% !important", transform: "translateY(-50%)" }}
         >
           <Alert
             severity="success"
@@ -210,21 +212,9 @@ export default function Form() {
               borderRadius: 3,
               fontWeight: 600,
               textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
             }}
           >
-            <strong>¡Mensaje enviado con éxito!</strong>
-            <br />
-            Me pondré en contacto contigo lo antes posible 🚀
+            ¡Mensaje enviado con éxito! 🚀
           </Alert>
         </Snackbar>
       </Container>
@@ -232,6 +222,7 @@ export default function Form() {
   );
 }
 
+/* ================= INPUT STYLE ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
@@ -240,19 +231,6 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(241,245,249,0.95)"
-        : "rgba(15,23,42,0.9)",
-
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(226,232,240,0.6)"
-          : "rgba(100,116,139,0.6)",
-    },
-
     "& fieldset": {
       borderColor: "rgba(96,165,250,0.35)",
     },
@@ -263,12 +241,5 @@ const inputStyle = (theme) => ({
       borderColor: theme.palette.primary.main,
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
-  },
-
-  "& .MuiInputLabel-root": {
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(71,85,105,0.8)",
   },
 });
