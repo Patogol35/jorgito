@@ -9,7 +9,6 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -63,6 +62,39 @@ function App() {
     [mode]
   );
 
+  // 🎨 GRADIENTES SUAVES POR SECCIÓN
+  const sectionGradients = {
+    about:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(46,125,50,0.08), rgba(219,234,254,0.6))"
+        : "linear-gradient(135deg, rgba(46,125,50,0.18), rgba(30,41,59,0.8))",
+
+    skills:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(251,140,0,0.08), rgba(248,250,252,0.9))"
+        : "linear-gradient(135deg, rgba(251,140,0,0.18), rgba(30,41,59,0.85))",
+
+    certifications:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(142,36,170,0.08), rgba(219,234,254,0.6))"
+        : "linear-gradient(135deg, rgba(142,36,170,0.2), rgba(30,41,59,0.85))",
+
+    projects:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(25,118,210,0.08), rgba(241,245,249,0.9))"
+        : "linear-gradient(135deg, rgba(25,118,210,0.2), rgba(30,41,59,0.85))",
+
+    contact:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(211,47,47,0.08), rgba(254,242,242,0.9))"
+        : "linear-gradient(135deg, rgba(211,47,47,0.18), rgba(30,41,59,0.85))",
+
+    form:
+      mode === "light"
+        ? "linear-gradient(135deg, rgba(0,137,123,0.08), rgba(224,242,241,0.9))"
+        : "linear-gradient(135deg, rgba(0,137,123,0.2), rgba(30,41,59,0.85))",
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -78,20 +110,13 @@ function App() {
               : "none",
         }}
       >
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
+          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 } }}
         >
           {[
             { id: "about", color: "#2e7d32", Component: About },
@@ -104,29 +129,18 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={3}
+              elevation={2}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
                 scrollMarginTop: scrollOffset,
-
-                // 🎨 FONDO DE LA CARD SEGÚN SU COLOR
-                backgroundColor:
-                  mode === "light"
-                    ? alpha(color, 0.08)
-                    : alpha(color, 0.18),
-
-                backdropFilter: "blur(2px)",
-
+                background: sectionGradients[id],
+                backdropFilter: "blur(3px)",
                 transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
-                  backgroundColor:
-                    mode === "light"
-                      ? alpha(color, 0.12)
-                      : alpha(color, 0.25),
                 },
               }}
             >
@@ -135,18 +149,14 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
-              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -154,11 +164,10 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon sx={{ color: "#fff", fontSize: 32 }} />
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
