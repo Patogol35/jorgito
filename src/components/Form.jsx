@@ -28,7 +28,7 @@ export default function Form() {
 
   /* ================= WHATSAPP ================= */
   const sendWhatsApp = (data) => {
-    const phone = "593XXXXXXXXX"; // ← CAMBIA A TU NÚMERO (ECUADOR = 593)
+    const phone = "593XXXXXXXXX"; // ← TU NÚMERO SIN + NI ESPACIOS
 
     const text = encodeURIComponent(
       `Hola Jaime 👋
@@ -40,14 +40,14 @@ Mensaje:
 ${data.message}`
     );
 
-    window.open(`https://wa.me/${phone}?text=${text}`, "_blank");
+    window.location.href = `https://wa.me/${phone}?text=${text}`;
   };
 
   /* ================= SUBMIT ================= */
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = {
+    const data = {
       from_name: formRef.current.from_name.value,
       from_email: formRef.current.from_email.value,
       message: formRef.current.message.value,
@@ -62,7 +62,7 @@ ${data.message}`
       )
       .then(() => {
         setSuccess(true);
-        sendWhatsApp(formData);
+        sendWhatsApp(data);
         formRef.current.reset();
       })
       .catch(() => alert("Error al enviar el mensaje"));
