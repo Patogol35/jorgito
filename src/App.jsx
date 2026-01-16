@@ -42,14 +42,14 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f4f6fb",
+                  default: "#f5f7fa",
                   paper: "#ffffff",
                 },
               }
             : {
                 background: {
-                  default: "#0f1115",
-                  paper: "#1b1e24",
+                  default: "#0e1014",
+                  paper: "#1a1d24",
                 },
               }),
         },
@@ -57,38 +57,60 @@ function App() {
     [mode]
   );
 
-  /** =========================
-   *  Glass + animated gradient
-   ========================= */
-  const glassCard = (color) => ({
+  /* =========================
+     Premium Glass Card Style
+  ========================= */
+  const premiumGlassCard = (color) => ({
     position: "relative",
     overflow: "hidden",
 
-    background: `
-      linear-gradient(
-        120deg,
-        ${alpha(color, 0.18)},
-        ${alpha(color, 0.06)},
-        ${alpha("#ffffff", mode === "light" ? 0.55 : 0.04)}
-      )
-    `,
-    backgroundSize: "200% 200%",
-    animation: "gradientMove 14s ease infinite",
+    backgroundColor:
+      mode === "light"
+        ? alpha("#ffffff", 0.78)
+        : alpha("#1a1d24", 0.78),
 
-    backdropFilter: "blur(14px)",
-    WebkitBackdropFilter: "blur(14px)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
 
-    border: `1px solid ${alpha("#fff", mode === "light" ? 0.4 : 0.08)}`,
+    borderLeft: `6px solid ${color}`,
+    borderTop: `1px solid ${alpha("#fff", mode === "light" ? 0.5 : 0.08)}`,
+    borderRight: `1px solid ${alpha("#fff", mode === "light" ? 0.4 : 0.06)}`,
+    borderBottom: `1px solid ${alpha("#000", mode === "light" ? 0.05 : 0.4)}`,
+
+    /* Animated gradient layer */
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: 0,
+      background: `
+        linear-gradient(
+          120deg,
+          ${alpha(color, 0.22)},
+          transparent 45%,
+          ${alpha(color, 0.08)}
+        )
+      `,
+      opacity: 0.35,
+      backgroundSize: "200% 200%",
+      animation: "premiumGradient 24s ease infinite",
+      zIndex: 0,
+    },
+
+    /* Content above gradient */
+    "& > *": {
+      position: "relative",
+      zIndex: 1,
+    },
   });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* GLOBAL ANIMATION */}
+      {/* Global animation */}
       <GlobalStyles
         styles={{
-          "@keyframes gradientMove": {
+          "@keyframes premiumGradient": {
             "0%": { backgroundPosition: "0% 50%" },
             "50%": { backgroundPosition: "100% 50%" },
             "100%": { backgroundPosition: "0% 50%" },
@@ -127,18 +149,18 @@ function App() {
               sx={{
                 mb: 6,
                 p: { xs: 3, md: 6 },
-                borderRadius: "20px",
-                borderLeft: `6px solid ${color}`,
+                borderRadius: "18px",
                 scrollMarginTop: scrollOffset,
 
-                ...glassCard(color),
+                ...premiumGlassCard(color),
 
-                transition: "all 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition:
+                  "transform 0.45s ease, box-shadow 0.45s ease",
 
                 "&:hover": {
-                  transform: "translateY(-8px)",
+                  transform: "translateY(-6px)",
                   boxShadow: `
-                    0 25px 60px ${alpha(color, 0.35)}
+                    0 20px 45px ${alpha(color, 0.28)}
                   `,
                 },
               }}
@@ -151,7 +173,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP FLOAT */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
