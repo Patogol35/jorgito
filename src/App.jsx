@@ -9,6 +9,7 @@ import {
   Fab,
   Tooltip,
   alpha,
+  GlobalStyles,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -41,14 +42,14 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f5f7fa",
+                  default: "#f4f6fb",
                   paper: "#ffffff",
                 },
               }
             : {
                 background: {
-                  default: "#121212",
-                  paper: "#1e1e1e",
+                  default: "#0f1115",
+                  paper: "#1b1e24",
                 },
               }),
         },
@@ -57,22 +58,43 @@ function App() {
   );
 
   /** =========================
-   *  Gradient helper (PRO)
+   *  Glass + animated gradient
    ========================= */
-  const cardGradient = (color) => ({
+  const glassCard = (color) => ({
+    position: "relative",
+    overflow: "hidden",
+
     background: `
       linear-gradient(
-        135deg,
-        ${alpha(color, 0.12)} 0%,
-        ${alpha(color, 0.05)} 35%,
-        ${theme.palette.background.paper} 100%
+        120deg,
+        ${alpha(color, 0.18)},
+        ${alpha(color, 0.06)},
+        ${alpha("#ffffff", mode === "light" ? 0.55 : 0.04)}
       )
     `,
+    backgroundSize: "200% 200%",
+    animation: "gradientMove 14s ease infinite",
+
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
+
+    border: `1px solid ${alpha("#fff", mode === "light" ? 0.4 : 0.08)}`,
   });
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
+      {/* GLOBAL ANIMATION */}
+      <GlobalStyles
+        styles={{
+          "@keyframes gradientMove": {
+            "0%": { backgroundPosition: "0% 50%" },
+            "50%": { backgroundPosition: "100% 50%" },
+            "100%": { backgroundPosition: "0% 50%" },
+          },
+        }}
+      />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         {/* NAVBAR */}
@@ -81,7 +103,7 @@ function App() {
         {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
+        {/* CONTENT */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -101,20 +123,23 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={4}
+              elevation={0}
               sx={{
-                mb: 5,
+                mb: 6,
                 p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                borderLeft: `5px solid ${color}`,
+                borderRadius: "20px",
+                borderLeft: `6px solid ${color}`,
                 scrollMarginTop: scrollOffset,
 
-                ...cardGradient(color),
+                ...glassCard(color),
 
-                transition: "all 0.35s ease",
+                transition: "all 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
+
                 "&:hover": {
-                  transform: "translateY(-6px)",
-                  boxShadow: `0 20px 40px ${alpha(color, 0.25)}`,
+                  transform: "translateY(-8px)",
+                  boxShadow: `
+                    0 25px 60px ${alpha(color, 0.35)}
+                  `,
                 },
               }}
             >
@@ -126,7 +151,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* WHATSAPP FLOAT */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
