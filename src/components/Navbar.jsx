@@ -41,7 +41,7 @@ const menuItems = [
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Skills",
+    label: "Tecnologías",
     href: "#skills",
     color: "linear-gradient(135deg, #f57c00, #ffb74d)",
     icon: <BuildIcon sx={{ color: "#fff" }} />,
