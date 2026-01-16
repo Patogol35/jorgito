@@ -40,7 +40,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#e6eef8", // respaldo si no carga gradiente
+                  default: "#dbeafe", // respaldo
                   paper: "#ffffff",
                 },
                 text: {
@@ -66,14 +66,14 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* FONDO GENERAL CON GRADIENTE SOLO EN MODO CLARO */}
+      {/* FONDO GENERAL */}
       <Box
         sx={{
           minHeight: "100vh",
           overflowX: "hidden",
           background:
             mode === "light"
-              ? "linear-gradient(180deg, #eef4fb 0%, #e3edf9 50%, #dde8f5 100%)"
+              ? "linear-gradient(135deg, #dbeafe 0%, #c7ddf5 40%, #b6d0ee 70%, #aac6e8 100%)"
               : "none",
         }}
       >
@@ -124,7 +124,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
+        {/* BOTÓN WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -144,7 +144,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA */}
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
