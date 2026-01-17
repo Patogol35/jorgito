@@ -248,8 +248,8 @@ const inputStyle = (theme) => ({
       fontWeight: 600,
       color:
         theme.palette.mode === "dark"
-          ? "#ffffff"   // 🔥 BLANCO REAL
-          : "#020617",  // 🔥 CASI NEGRO
+          ? "#ffffff"   
+          : "#020617",  
     },
 
     "& textarea": {
