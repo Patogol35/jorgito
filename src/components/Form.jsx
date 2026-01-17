@@ -241,12 +241,6 @@ const inputStyle = (theme) => ({
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
 
-    /* 🔹 Mejora SOLO del texto */
-    fontSize: "0.95rem",
-    fontWeight: 500,
-    letterSpacing: "0.2px",
-    lineHeight: 1.55,
-
     color:
       theme.palette.mode === "dark"
         ? "rgba(241,245,249,0.95)"
@@ -272,23 +266,14 @@ const inputStyle = (theme) => ({
     },
   },
 
-  /* 🔹 Label normal (más fino) */
   "& .MuiInputLabel-root": {
-    fontSize: "0.8rem",
-    fontWeight: 500,
-    letterSpacing: "0.3px",
     color:
       theme.palette.mode === "dark"
         ? "rgba(226,232,240,0.75)"
         : "rgba(71,85,105,0.8)",
   },
 
-  /* 🔹 Label flotante (mismo fondo, texto más elegante) */
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
-    fontSize: "0.75rem",
-    fontWeight: 600,
-    letterSpacing: "0.4px",
-
     backgroundColor:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.9)"
