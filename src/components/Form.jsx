@@ -46,7 +46,8 @@ export default function Form() {
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
-        {/* ================= TÍTULO (SIN CAMBIOS) ================= */}
+
+        {/* ================= TÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -57,7 +58,6 @@ export default function Form() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -76,30 +76,24 @@ export default function Form() {
             <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{ fontWeight: "bold", color: primaryColor }}
             >
               Contacto por Email
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO (MÁS CLARO) ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+        {/* ================= SUBTÍTULO ================= */}
+        <Typography
+          variant="subtitle1"
+          sx={{
+            textAlign: "center",
+            fontWeight: "bold",
+            mb: 4,
+          }}
         >
-          <Typography
-  variant="subtitle1"
-  sx={{
-    textAlign: "center",
-    fontWeight: "bold",
-    mb: 4,
-  }}
->
-  Ponte en contacto conmigo a través de este formulario
-</Typography>
-        </motion.div>
+          Ponte en contacto conmigo a través de este formulario
+        </Typography>
 
         {/* ================= FORM ================= */}
         <Box
@@ -135,63 +129,53 @@ export default function Form() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TextField
-  {...field}
-  fullWidth
-  required
-  variant="outlined"
-  InputLabelProps={{
-    shrink: true,
-  }}
-  InputProps={{
-    startAdornment: (
-      <InputAdornment
-        position="start"
-        sx={
-          field.multiline
-            ? { alignSelf: "flex-start", mt: 1 }
-            : {}
-        }
-      >
-        {field.icon}
-      </InputAdornment>
-    ),
-  }}
-  sx={inputStyle(theme)}
-/>
+                {...field}
+                fullWidth
+                required
+                variant="outlined"
+                InputLabelProps={{ shrink: true }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={
+                        field.multiline
+                          ? { alignSelf: "flex-start", mt: 1 }
+                          : {}
+                      }
+                    >
+                      {field.icon}
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle(theme)}
+              />
             </motion.div>
           ))}
 
           {/* ================= BOTÓN ================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
+          <Button
+            type="submit"
+            endIcon={<SendIcon />}
+            sx={{
+              mt: 3,
+              px: 6,
+              py: 1.6,
+              borderRadius: "999px",
+              fontWeight: 700,
+              textTransform: "none",
+              color: "#fff",
+              background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+              boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
+              "&:hover": {
+                transform: "translateY(-2px)",
+                boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
+              },
+              transition: "all 0.25s ease",
+            }}
           >
-            <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              sx={{
-                mt: 3,
-                px: 6,
-                py: 1.6,
-                borderRadius: "999px",
-                fontWeight: 700,
-                textTransform: "none",
-                color: "#fff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                },
-                transition: "all 0.25s ease",
-              }}
-            >
-              Enviar mensaje
-            </Button>
-          </motion.div>
+            Enviar mensaje
+          </Button>
         </Box>
 
         {/* ================= ALERT ================= */}
@@ -200,35 +184,9 @@ export default function Form() {
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
-          }}
         >
-          <Alert
-            severity="success"
-            icon={false}
-            sx={{
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              fontWeight: 600,
-              textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
-            }}
-          >
-            <strong>¡Mensaje enviado con éxito!</strong>
-            <br />
-            Me pondré en contacto contigo lo antes posible 
+          <Alert severity="success" icon={false}>
+            ¡Mensaje enviado con éxito!
           </Alert>
         </Snackbar>
       </Container>
@@ -244,7 +202,6 @@ const inputStyle = (theme) => ({
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-
     color:
       theme.palette.mode === "dark"
         ? "rgba(241,245,249,0.95)"
@@ -258,10 +215,7 @@ const inputStyle = (theme) => ({
     },
 
     "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
+      borderColor: theme.palette.primary.main,
     },
 
     "&.Mui-focused fieldset": {
@@ -277,8 +231,12 @@ const inputStyle = (theme) => ({
         : "rgba(71,85,105,0.8)",
   },
 
+  /* 🔴 CLAVE: el label tapa el borde */
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
-    
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.7)",
     padding: "0 6px",
     borderRadius: 6,
   },
