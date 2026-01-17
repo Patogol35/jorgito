@@ -254,13 +254,23 @@ const inputStyle = (theme) => ({
     },
 
     "& fieldset": {
-      borderColor: "rgba(96,165,250,0.35)",
-    },
-    "&:hover fieldset": {
   borderColor:
     theme.palette.mode === "dark"
-      ? theme.palette.primary.main   // 👈 dark mode
-      : "#2563eb",                   // 👈 light mode
+      ? "rgba(96,165,250,0.35)"
+      : "rgba(37,99,235,0.85)", // 🔵 mucho más visible
+},
+  "&:hover fieldset": {
+  borderColor:
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main
+      : "#1d4ed8", // blue-700
+},
+
+    "&:hover": {
+  boxShadow:
+    theme.palette.mode === "dark"
+      ? "none"
+      : "0 0 0 2px rgba(37,99,235,0.15)",
 },
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
