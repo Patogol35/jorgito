@@ -248,16 +248,15 @@ const inputStyle = (theme) => ({
         ? "rgba(241,245,249,0.95)"
         : "rgba(15,23,42,0.9)",
 
-    /* ===== BORDE NORMAL ===== */
+    /* ===== BORDE ===== */
     "& fieldset": {
-      borderWidth: "1px", // ← FIX CLAVE
+      borderWidth: "1px",
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(148,163,184,0.7)"
           : "rgba(37,99,235,0.9)",
     },
 
-    /* ===== HOVER ===== */
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
@@ -265,25 +264,27 @@ const inputStyle = (theme) => ({
           : "#1d4ed8",
     },
 
-    /* ===== FOCUS ===== */
     "&.Mui-focused fieldset": {
       borderColor:
         theme.palette.mode === "dark"
           ? "#93c5fd"
           : theme.palette.primary.main,
-
       boxShadow:
         theme.palette.mode === "dark"
           ? "0 0 0 2px rgba(147,197,253,0.35)"
           : `0 0 14px ${theme.palette.primary.main}55`,
     },
 
-    /* ===== EFECTO VISUAL EXTRA SOLO EN DARK ===== */
     "&:hover": {
       boxShadow:
         theme.palette.mode === "dark"
           ? "0 0 0 1px rgba(148,163,184,0.35)"
           : "0 0 0 2px rgba(37,99,235,0.15)",
+    },
+
+    /* ===== FIX REAL DEL NOTCH (LÍNEA FANTASMA) ===== */
+    "& legend": {
+      display: "none",   // ← elimina la línea que cruza el texto
     },
   },
 
@@ -293,5 +294,6 @@ const inputStyle = (theme) => ({
       theme.palette.mode === "dark"
         ? "rgba(226,232,240,0.8)"
         : "rgba(71,85,105,0.85)",
+    background: "transparent", // evita parches feos
   },
 });
