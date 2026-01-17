@@ -238,23 +238,18 @@ const inputStyle = (theme) => ({
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
+        : "rgba(255,255,255,0.75)",
     backdropFilter: "blur(14px)",
 
     outline: "none",
-
-    color:
-      theme.palette.mode === "dark"
-        ? "#f8fafc"
-        : "#0f172a",
 
     "& input": {
       outline: "none",
       fontWeight: 600,
       color:
         theme.palette.mode === "dark"
-          ? "#f8fafc"
-          : "#0f172a",
+          ? "#ffffff"   // 🔥 BLANCO REAL
+          : "#020617",  // 🔥 CASI NEGRO
     },
 
     "& textarea": {
@@ -262,15 +257,15 @@ const inputStyle = (theme) => ({
       fontWeight: 600,
       color:
         theme.palette.mode === "dark"
-          ? "#f8fafc"
-          : "#0f172a",
+          ? "#ffffff"
+          : "#020617",
     },
 
     "& input::placeholder, & textarea::placeholder": {
       color:
         theme.palette.mode === "dark"
-          ? "rgba(226,232,240,0.6)"
-          : "rgba(100,116,139,0.6)",
+          ? "rgba(255,255,255,0.45)"
+          : "rgba(2,6,23,0.45)",
       fontWeight: 400,
     },
 
@@ -297,16 +292,16 @@ const inputStyle = (theme) => ({
     },
 
     "&.Mui-focused fieldset": {
-  borderColor: theme.palette.primary.main,
-  boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
-},
+      borderColor: theme.palette.primary.main,
+      boxShadow: "none",
+    },
   },
 
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(71,85,105,0.8)",
-    fontWeight: 500,
+        ? "rgba(255,255,255,0.85)"
+        : "rgba(2,6,23,0.85)",
+    fontWeight: 600,
   },
 });
