@@ -982,11 +982,13 @@ export default function ChatBot() {
           position: "fixed",
           bottom: 16,
           left: 16,
-          bgcolor: primaryBg,
+          "&:active": {
+  bgcolor: primaryBg,
+},
           color: "#fff",
         }}
       >
-        <SmartToyIcon />
+        <SmartToyIcon sx={{ color: "#fff !important" }} />
       </Fab>
 
       {/* OVERLAY */}
