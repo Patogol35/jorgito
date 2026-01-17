@@ -234,17 +234,18 @@ export default function Form() {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 14,
+    borderRadius: 3,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.45)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(16px)",
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.7)",
+    backdropFilter: "blur(14px)",
 
+    /* 🔹 Mejora SOLO del texto */
     fontSize: "0.95rem",
     fontWeight: 500,
     letterSpacing: "0.2px",
-    lineHeight: 1.6,
+    lineHeight: 1.55,
 
     color:
       theme.palette.mode === "dark"
@@ -254,42 +255,45 @@ const inputStyle = (theme) => ({
     "& fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(148,163,184,0.35)"
-          : "rgba(37,99,235,0.7)",
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
     },
 
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
   },
 
-  /* Label normal */
+  /* 🔹 Label normal (más fino) */
   "& .MuiInputLabel-root": {
-    fontSize: "0.85rem",
+    fontSize: "0.8rem",
     fontWeight: 500,
     letterSpacing: "0.3px",
     color:
       theme.palette.mode === "dark"
-        ? "rgba(203,213,225,0.75)"
+        ? "rgba(226,232,240,0.75)"
         : "rgba(71,85,105,0.8)",
   },
 
-  /* Label flotante (más limpio, sin “bloque”) */
+  /* 🔹 Label flotante (mismo fondo, texto más elegante) */
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
-    backgroundColor: "transparent",
-    padding: 0,
+    fontSize: "0.75rem",
     fontWeight: 600,
-    color: theme.palette.primary.main,
-  },
+    letterSpacing: "0.4px",
 
-  /* Placeholder más fino */
-  "& input::placeholder": {
-    opacity: 0.6,
-    fontWeight: 400,
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.9)"
+        : "rgba(255,255,255,0.95)",
+    padding: "0 6px",
+    borderRadius: 6,
   },
 });
