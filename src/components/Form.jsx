@@ -266,7 +266,6 @@ const inputStyle = (theme) => ({
     },
   },
 
-  /* 🔥 CLAVE: arregla la raya */
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
