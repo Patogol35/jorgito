@@ -484,7 +484,7 @@ function getSmartResponse(message, context) {
       pickNonRepeated(ctx, "PROFILE", [
         `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
         `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-        `Te cuento ☺️ ${PROFILE.name} Jorge es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
+        `Te cuento ☺️ ${PROFILE.name} es ${PROFILE.role} y le apasiona crear soluciones digitales.`,
         `${PROFILE.name} se dedica al desarrollo de soluciones digitales 😊`,
         "Jorge combina creatividad y tecnología ☺️",
         "Jorge es un profesional enfocado en soluciones modernas 💕",
