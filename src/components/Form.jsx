@@ -135,32 +135,25 @@ export default function Form() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TextField
-  {...field}
-  fullWidth
-  required
-
-  InputLabelProps={{
-    shrink: true,
-  }}
-
-  InputProps={{
-    notched: false,
-    startAdornment: (
-      <InputAdornment
-        position="start"
-        sx={
-          field.multiline
-            ? { alignSelf: "flex-start", mt: 1 }
-            : {}
-        }
-      >
-        {field.icon}
-      </InputAdornment>
-    ),
-  }}
-
-  sx={inputStyle(theme)}
-/>
+                {...field}
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={
+                        field.multiline
+                          ? { alignSelf: "flex-start", mt: 1 }
+                          : {}
+                      }
+                    >
+                      {field.icon}
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle(theme)}
+              />
             </motion.div>
           ))}
 
