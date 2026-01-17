@@ -274,10 +274,7 @@ const inputStyle = (theme) => ({
   },
 
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.9)"
-        : "rgba(255,255,255,0.95)",
+    
     padding: "0 6px",
     borderRadius: 6,
   },
