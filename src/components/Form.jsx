@@ -246,42 +246,40 @@ const inputStyle = (theme) => ({
         ? "rgba(241,245,249,0.95)"
         : "rgba(15,23,42,0.9)",
 
-    "& input::placeholder, & textarea::placeholder": {
-      color:
+    "& fieldset": {
+      borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(226,232,240,0.6)"
-          : "rgba(100,116,139,0.6)",
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
     },
 
-    "& fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? "rgba(96,165,250,0.35)"
-      : "rgba(37,99,235,0.85)", // 🔵 mucho más visible
-},
-  "&:hover fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#1d4ed8", // blue-700
-},
+    "&:hover fieldset": {
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
+    },
 
-    "&:hover": {
-  boxShadow:
-    theme.palette.mode === "dark"
-      ? "none"
-      : "0 0 0 2px rgba(37,99,235,0.15)",
-},
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
   },
 
+  /* 🔥 CLAVE: arregla la raya */
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
         ? "rgba(226,232,240,0.75)"
         : "rgba(71,85,105,0.8)",
+  },
+
+  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.9)"
+        : "rgba(255,255,255,0.95)",
+    padding: "0 6px",
+    borderRadius: 6,
   },
 });
