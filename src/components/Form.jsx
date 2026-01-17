@@ -297,9 +297,9 @@ const inputStyle = (theme) => ({
     },
 
     "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
-      boxShadow: "none",
-    },
+  borderColor: theme.palette.primary.main,
+  boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+},
   },
 
   "& .MuiInputLabel-root": {
