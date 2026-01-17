@@ -250,10 +250,10 @@ const inputStyle = (theme) => ({
 
     /* ===== BORDE NORMAL ===== */
     "& fieldset": {
-      borderWidth: "2px",
+      borderWidth: "1px", // ← FIX CLAVE
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(148,163,184,0.6)" // slate-400
+          ? "rgba(148,163,184,0.7)"
           : "rgba(37,99,235,0.9)",
     },
 
@@ -261,7 +261,7 @@ const inputStyle = (theme) => ({
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(147,197,253,0.9)" // blue-300
+          ? "rgba(147,197,253,0.9)"
           : "#1d4ed8",
     },
 
@@ -278,21 +278,12 @@ const inputStyle = (theme) => ({
           : `0 0 14px ${theme.palette.primary.main}55`,
     },
 
-    /* ===== HALO SUAVE ===== */
+    /* ===== EFECTO VISUAL EXTRA SOLO EN DARK ===== */
     "&:hover": {
       boxShadow:
         theme.palette.mode === "dark"
           ? "0 0 0 1px rgba(148,163,184,0.35)"
           : "0 0 0 2px rgba(37,99,235,0.15)",
-    },
-
-    /* ===== FIX NOTCH DEL LABEL ===== */
-    "& legend": {
-      width: 0,
-    },
-
-    "& .MuiOutlinedInput-notchedOutline legend": {
-      display: "none",
     },
   },
 
@@ -302,6 +293,5 @@ const inputStyle = (theme) => ({
       theme.palette.mode === "dark"
         ? "rgba(226,232,240,0.8)"
         : "rgba(71,85,105,0.85)",
-    fontWeight: 500,
   },
 });
