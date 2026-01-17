@@ -241,19 +241,29 @@ const inputStyle = (theme) => ({
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
 
+    outline: "none",
+
     color:
       theme.palette.mode === "dark"
-        ? "rgba(241,245,249,0.95)"
-        : "rgba(15,23,42,0.9)",
-
-    outline: "none", // 🔥 elimina focus ring
+        ? "#f8fafc"
+        : "#0f172a",
 
     "& input": {
       outline: "none",
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#f8fafc"
+          : "#0f172a",
     },
 
     "& textarea": {
       outline: "none",
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#f8fafc"
+          : "#0f172a",
     },
 
     "& input::placeholder, & textarea::placeholder": {
@@ -261,6 +271,7 @@ const inputStyle = (theme) => ({
         theme.palette.mode === "dark"
           ? "rgba(226,232,240,0.6)"
           : "rgba(100,116,139,0.6)",
+      fontWeight: 400,
     },
 
     "& fieldset": {
@@ -278,7 +289,7 @@ const inputStyle = (theme) => ({
     },
 
     "&:hover": {
-      boxShadow: "none", // 🔥 quita halo hover
+      boxShadow: "none",
     },
 
     "&.Mui-focused": {
@@ -296,5 +307,6 @@ const inputStyle = (theme) => ({
       theme.palette.mode === "dark"
         ? "rgba(226,232,240,0.75)"
         : "rgba(71,85,105,0.8)",
+    fontWeight: 500,
   },
 });
