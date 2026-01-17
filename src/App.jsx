@@ -124,9 +124,7 @@ function App() {
               zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
-              "&:active": {
-  color: "#fff",
-              }
+              
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
