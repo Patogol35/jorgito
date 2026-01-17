@@ -977,19 +977,28 @@ export default function ChatBot() {
     <>
       {/* BOTÓN FLOTANTE */}
       <Fab
-        onClick={() => setOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          "&:active": {
-  bgcolor: primaryBg,
-},
-          color: "#fff",
-        }}
-      >
-        <SmartToyIcon sx={{ color: "#fff !important" }} />
-      </Fab>
+  onClick={() => setOpen(true)}
+  sx={{
+    position: "fixed",
+    bottom: 16,
+    left: 16,
+    bgcolor: primaryBg,
+    color: "#fff",
+
+    "&:hover": {
+      bgcolor: primaryBg,
+    },
+    "&:active": {
+      bgcolor: primaryBg,
+      color: "#fff",
+    },
+    "&:focus": {
+      color: "#fff",
+    },
+  }}
+>
+  <SmartToyIcon />
+</Fab>
 
       {/* OVERLAY */}
       {open && (
