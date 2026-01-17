@@ -235,53 +235,62 @@ export default function Form() {
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
+
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
-    backdropFilter: "blur(14px)",
+        ? "rgba(15,23,42,0.6)"
+        : "rgba(255,255,255,0.75)",
+
+    backdropFilter: "blur(12px)",
 
     color:
       theme.palette.mode === "dark"
         ? "rgba(241,245,249,0.95)"
         : "rgba(15,23,42,0.9)",
 
-    "& input::placeholder, & textarea::placeholder": {
-      color:
+    /* ===== BORDE NORMAL ===== */
+    "& fieldset": {
+      borderWidth: "2px",
+      borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(226,232,240,0.6)"
-          : "rgba(100,116,139,0.6)",
+          ? "rgba(148,163,184,0.6)" // slate-400
+          : "rgba(37,99,235,0.9)",
     },
 
-    "& fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? "rgba(96,165,250,0.35)"
-      : "rgba(37,99,235,0.85)", // 🔵 mucho más visible
-},
-  "&:hover fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#1d4ed8", // blue-700
-},
+    /* ===== HOVER ===== */
+    "&:hover fieldset": {
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(147,197,253,0.9)" // blue-300
+          : "#1d4ed8",
+    },
 
-    "&:hover": {
-  boxShadow:
-    theme.palette.mode === "dark"
-      ? "none"
-      : "0 0 0 2px rgba(37,99,235,0.15)",
-},
+    /* ===== FOCUS ===== */
     "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "#93c5fd"
+          : theme.palette.primary.main,
+
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 0 0 2px rgba(147,197,253,0.35)"
+          : `0 0 14px ${theme.palette.primary.main}55`,
+    },
+
+    /* ===== EFECTO VISUAL EXTRA SOLO EN DARK ===== */
+    "&:hover": {
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 0 0 1px rgba(148,163,184,0.35)"
+          : "0 0 0 2px rgba(37,99,235,0.15)",
     },
   },
 
   "& .MuiInputLabel-root": {
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(71,85,105,0.8)",
+        ? "rgba(226,232,240,0.8)"
+        : "rgba(71,85,105,0.85)",
   },
 });
