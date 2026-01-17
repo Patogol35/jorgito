@@ -257,8 +257,11 @@ const inputStyle = (theme) => ({
       borderColor: "rgba(96,165,250,0.35)",
     },
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
-    },
+  borderColor:
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main   // 👈 dark mode
+      : "#2563eb",                   // 👈 light mode
+},
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
       boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
