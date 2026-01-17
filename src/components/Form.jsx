@@ -234,13 +234,12 @@ export default function Form() {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 14,
+    borderRadius: 3,
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
         : "rgba(255,255,255,0.7)",
     backdropFilter: "blur(14px)",
-    transition: "all 0.25s ease",
 
     color:
       theme.palette.mode === "dark"
@@ -252,7 +251,6 @@ const inputStyle = (theme) => ({
         theme.palette.mode === "dark"
           ? "rgba(96,165,250,0.35)"
           : "rgba(37,99,235,0.85)",
-      transition: "all 0.25s ease",
     },
 
     "&:hover fieldset": {
@@ -264,30 +262,24 @@ const inputStyle = (theme) => ({
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
     },
   },
 
-  /* ===== LABEL NORMAL ===== */
+  /* 🔥 CLAVE: arregla la raya */
   "& .MuiInputLabel-root": {
-    fontWeight: 500,
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.7)"
+        ? "rgba(226,232,240,0.75)"
         : "rgba(71,85,105,0.8)",
-    transition: "all 0.25s ease",
   },
 
-  /* ===== LABEL FLOTANTE (APPLE STYLE) ===== */
-  "& .MuiInputLabel-shrink": {
+  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
     backgroundColor:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.92)"
-        : "rgba(255,255,255,0.96)",
+        ? "rgba(15,23,42,0.9)"
+        : "rgba(255,255,255,0.95)",
     padding: "0 6px",
-    borderRadius: 8,
-    transform: "translate(14px, -8px) scale(0.85)",
-    transformOrigin: "top left",
-    backdropFilter: "blur(6px)",
+    borderRadius: 6,
   },
 });
