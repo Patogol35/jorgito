@@ -234,12 +234,13 @@ export default function Form() {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
+    borderRadius: 14,
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
-    backdropFilter: "blur(14px)",
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(18px)",
+    transition: "all 0.25s ease",
 
     color:
       theme.palette.mode === "dark"
@@ -250,36 +251,60 @@ const inputStyle = (theme) => ({
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.85)",
+          : "rgba(37,99,235,0.55)",
+      transition: "all 0.25s ease",
     },
 
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
+          ? "rgba(147,197,253,0.8)"
+          : "#2563eb",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+    },
+
+    "&.Mui-focused": {
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 0 0 1px rgba(147,197,253,0.35)"
+          : "0 0 0 1px rgba(59,130,246,0.35)",
     },
   },
 
-  /* 🔥 CLAVE: arregla la raya */
-  "& .MuiInputLabel-root": {
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
-        : "rgba(71,85,105,0.8)",
+  "& .MuiOutlinedInput-input": {
+    padding: "16px 14px",
+    fontSize: "0.95rem",
+    lineHeight: 1.6,
   },
 
-  "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
+  "& textarea": {
+    padding: "16px 14px",
+    lineHeight: 1.6,
+  },
+
+  "& .MuiInputLabel-root": {
+    fontSize: "0.9rem",
+    fontWeight: 500,
+    letterSpacing: "0.2px",
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(226,232,240,0.65)"
+        : "rgba(71,85,105,0.75)",
+    transition: "all 0.25s ease",
+  },
+
+  "& .MuiInputLabel-shrink": {
+    transform: "translate(14px, -9px) scale(0.85)",
+    transformOrigin: "top left",
     backgroundColor:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.9)"
-        : "rgba(255,255,255,0.95)",
-    padding: "0 6px",
-    borderRadius: 6,
+        ? "rgba(15,23,42,0.92)"
+        : "rgba(255,255,255,0.96)",
+    padding: "0 8px",
+    borderRadius: 10,
+    backdropFilter: "blur(8px)",
   },
 });
