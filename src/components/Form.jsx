@@ -234,12 +234,17 @@ export default function Form() {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
+    borderRadius: 14,
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.7)",
-    backdropFilter: "blur(14px)",
+        ? "rgba(15,23,42,0.45)"
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(16px)",
+
+    fontSize: "0.95rem",
+    fontWeight: 500,
+    letterSpacing: "0.2px",
+    lineHeight: 1.6,
 
     color:
       theme.palette.mode === "dark"
@@ -249,36 +254,42 @@ const inputStyle = (theme) => ({
     "& fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.85)",
+          ? "rgba(148,163,184,0.35)"
+          : "rgba(37,99,235,0.7)",
     },
 
     "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
+      borderColor: theme.palette.primary.main,
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: `0 0 14px ${theme.palette.primary.main}55`,
+      boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
     },
   },
 
+  /* Label normal */
   "& .MuiInputLabel-root": {
+    fontSize: "0.85rem",
+    fontWeight: 500,
+    letterSpacing: "0.3px",
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.75)"
+        ? "rgba(203,213,225,0.75)"
         : "rgba(71,85,105,0.8)",
   },
 
+  /* Label flotante (más limpio, sin “bloque”) */
   "& .MuiInputLabel-root.Mui-focused, & .MuiInputLabel-shrink": {
-    backgroundColor:
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.9)"
-        : "rgba(255,255,255,0.95)",
-    padding: "0 6px",
-    borderRadius: 6,
+    backgroundColor: "transparent",
+    padding: 0,
+    fontWeight: 600,
+    color: theme.palette.primary.main,
+  },
+
+  /* Placeholder más fino */
+  "& input::placeholder": {
+    opacity: 0.6,
+    fontWeight: 400,
   },
 });
