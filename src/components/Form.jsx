@@ -246,6 +246,16 @@ const inputStyle = (theme) => ({
         ? "rgba(241,245,249,0.95)"
         : "rgba(15,23,42,0.9)",
 
+    outline: "none", // 🔥 elimina focus ring
+
+    "& input": {
+      outline: "none",
+    },
+
+    "& textarea": {
+      outline: "none",
+    },
+
     "& input::placeholder, & textarea::placeholder": {
       color:
         theme.palette.mode === "dark"
@@ -254,28 +264,31 @@ const inputStyle = (theme) => ({
     },
 
     "& fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? "rgba(96,165,250,0.35)"
-      : "rgba(37,99,235,0.85)", // 🔵 mucho más visible
-},
-  "&:hover fieldset": {
-  borderColor:
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#1d4ed8", // blue-700
-},
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
+    },
+
+    "&:hover fieldset": {
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
+    },
 
     "&:hover": {
-  boxShadow:
-    theme.palette.mode === "dark"
-      ? "none"
-      : "0 0 0 2px rgba(37,99,235,0.15)",
-},
+      boxShadow: "none", // 🔥 quita halo hover
+    },
+
+    "&.Mui-focused": {
+      outline: "none",
+    },
+
     "&.Mui-focused fieldset": {
-  borderColor: theme.palette.primary.main,
-  boxShadow: "none",
-},
+      borderColor: theme.palette.primary.main,
+      boxShadow: "none",
+    },
   },
 
   "& .MuiInputLabel-root": {
