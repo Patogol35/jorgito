@@ -238,8 +238,8 @@ const inputStyle = (theme) => ({
     background:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(18px)",
+        : "rgba(255,255,255,0.7)",
+    backdropFilter: "blur(14px)",
     transition: "all 0.25s ease",
 
     color:
@@ -251,60 +251,43 @@ const inputStyle = (theme) => ({
       borderColor:
         theme.palette.mode === "dark"
           ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.55)",
+          : "rgba(37,99,235,0.85)",
       transition: "all 0.25s ease",
     },
 
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(147,197,253,0.8)"
-          : "#2563eb",
+          ? theme.palette.primary.main
+          : "#1d4ed8",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-    },
-
-    "&.Mui-focused": {
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 0 0 1px rgba(147,197,253,0.35)"
-          : "0 0 0 1px rgba(59,130,246,0.35)",
+      boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
     },
   },
 
-  "& .MuiOutlinedInput-input": {
-    padding: "16px 14px",
-    fontSize: "0.95rem",
-    lineHeight: 1.6,
-  },
-
-  "& textarea": {
-    padding: "16px 14px",
-    lineHeight: 1.6,
-  },
-
+  /* ===== LABEL NORMAL ===== */
   "& .MuiInputLabel-root": {
-    fontSize: "0.9rem",
     fontWeight: 500,
-    letterSpacing: "0.2px",
     color:
       theme.palette.mode === "dark"
-        ? "rgba(226,232,240,0.65)"
-        : "rgba(71,85,105,0.75)",
+        ? "rgba(226,232,240,0.7)"
+        : "rgba(71,85,105,0.8)",
     transition: "all 0.25s ease",
   },
 
+  /* ===== LABEL FLOTANTE (APPLE STYLE) ===== */
   "& .MuiInputLabel-shrink": {
-    transform: "translate(14px, -9px) scale(0.85)",
-    transformOrigin: "top left",
     backgroundColor:
       theme.palette.mode === "dark"
         ? "rgba(15,23,42,0.92)"
         : "rgba(255,255,255,0.96)",
-    padding: "0 8px",
-    borderRadius: 10,
-    backdropFilter: "blur(8px)",
+    padding: "0 6px",
+    borderRadius: 8,
+    transform: "translate(14px, -8px) scale(0.85)",
+    transformOrigin: "top left",
+    backdropFilter: "blur(6px)",
   },
 });
