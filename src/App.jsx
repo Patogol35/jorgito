@@ -84,7 +84,7 @@ function App() {
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color: "#8e24aa", Component: Certifications },
+            { id: "certifications", color: "#263238", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
           { id: "form", color: "#00897b", Component: Form, minHeight: "100vh" },
