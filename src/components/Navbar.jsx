@@ -49,7 +49,7 @@ const menuItems = [
   {
   label: "Certificados",
   href: "#certifications",
-  color: "linear-gradient(135deg, #9e9e9e, #e0e0e0)",
+  color: "linear-gradient(135deg, #c9a227, #f0d76a)",
   icon: <VerifiedIcon sx={{ color: "#fff" }} />,
   },
   {
