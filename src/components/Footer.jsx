@@ -23,15 +23,28 @@ export default function Footer() {
 
   const socialLinks = useMemo(
     () => [
-      { icon: <GitHub />, href: "https://github.com/Patogol35" },
+      {
+        icon: <GitHub />,
+        color: isDark ? "#bbdefb" : "#ffffff",
+        href: "https://github.com/Patogol35",
+      },
       {
         icon: <LinkedIn />,
+        color: isDark ? "#90caf9" : "#ffffff",
         href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
       },
-      { icon: <Instagram />, href: "https://www.instagram.com/jorge_patricio_26" },
-      { icon: <MailOutline />, href: "mailto:patogol3535@gmail.com" },
+      {
+        icon: <Instagram />,
+        color: isDark ? "#f48fb1" : "#ffffff",
+        href: "https://www.instagram.com/jorge_patricio_26",
+      },
+      {
+        icon: <MailOutline />,
+        color: isDark ? "#bbdefb" : "#ffffff",
+        href: "mailto:patogol3535@gmail.com",
+      },
     ],
-    []
+    [isDark]
   );
 
   return (
@@ -47,8 +60,8 @@ export default function Footer() {
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
           : "linear-gradient(135deg, #1565c0, #42a5f5)",
         boxShadow: isDark
-          ? "inset 0 1px 0 rgba(255,255,255,0.05)"
-          : "inset 0 1px 0 rgba(255,255,255,0.3)",
+          ? "inset 0 1px 0 rgba(255,255,255,0.04)"
+          : "inset 0 1px 0 rgba(255,255,255,0.25)",
         overflow: "hidden",
       }}
     >
@@ -57,26 +70,35 @@ export default function Footer() {
         sx={{
           position: "absolute",
           inset: 0,
-          backdropFilter: "blur(10px)",
+          backdropFilter: "blur(9px)",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.2))",
+            "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2))",
           pointerEvents: "none",
         }}
       />
 
-      <Box sx={{ position: "relative", zIndex: 1, maxWidth: 820, mx: "auto", px: 2 }}>
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 820,
+          mx: "auto",
+          px: 2,
+        }}
+      >
         {/* Nombre */}
         <MotionBox
           initial={{ opacity: 0, y: 6 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
         >
           <Typography
             variant="h6"
             sx={{
               fontWeight: 700,
-              letterSpacing: "1.4px",
+              letterSpacing: "1.5px",
               mb: 1,
+              color: "rgba(255,255,255,0.98)",
             }}
           >
             Jorge Patricio Santamaría Cherrez
@@ -86,13 +108,13 @@ export default function Footer() {
         {/* Línea decorativa */}
         <Box
           sx={{
-            width: 60,
+            width: 58,
             height: 3,
             mx: "auto",
             mb: 2,
             borderRadius: 4,
             background:
-              "linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0.9), rgba(255,255,255,0.3))",
+              "linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.85), rgba(255,255,255,0.25))",
           }}
         />
 
@@ -100,7 +122,7 @@ export default function Footer() {
         <MotionBox
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <Typography
             variant="subtitle1"
@@ -108,7 +130,7 @@ export default function Footer() {
               mb: 2.5,
               fontWeight: 600,
               letterSpacing: "0.45px",
-              opacity: 0.95,
+              color: "rgba(255,255,255,0.95)",
             }}
           >
             Transformando ideas en aplicaciones efectivas
@@ -122,7 +144,6 @@ export default function Footer() {
             size="30px"
             animated
             spacing={2}
-            color="rgba(255,255,255,0.95)"
           />
         </Box>
 
@@ -139,10 +160,24 @@ export default function Footer() {
 
         {/* Créditos */}
         <Stack spacing={0.4}>
-          <Typography variant="caption" sx={{ fontWeight: 500, opacity: 0.9 }}>
+          <Typography
+            variant="caption"
+            sx={{
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "0.35px",
+              fontWeight: 500,
+            }}
+          >
             Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
           </Typography>
-          <Typography variant="caption" sx={{ opacity: 0.7 }}>
+
+          <Typography
+            variant="caption"
+            sx={{
+              color: "rgba(255,255,255,0.7)",
+              letterSpacing: "0.3px",
+            }}
+          >
             © {new Date().getFullYear()} — Todos los derechos reservados
           </Typography>
         </Stack>
