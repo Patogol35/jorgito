@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Divider, Stack } from "@mui/material";
 import { motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
 import {
@@ -39,31 +39,31 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        pt: 6,
+        pt: { xs: 6, md: 8 },
         pb: 4,
         textAlign: "center",
         color: "#fff",
         background: isDark
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
-          : "linear-gradient(135deg, #1976d2, #42a5f5)",
+          : "linear-gradient(135deg, #1565c0, #42a5f5)",
         boxShadow: isDark
           ? "inset 0 1px 0 rgba(255,255,255,0.04)"
-          : "inset 0 1px 0 rgba(255,255,255,0.2)",
+          : "inset 0 1px 0 rgba(255,255,255,0.25)",
       }}
     >
       {/* Eslogan */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <Typography
-          variant="subtitle2"
+          variant="subtitle1"
           sx={{
-            mb: 2.5,
+            mb: 3,
             fontWeight: 600,
-            letterSpacing: "0.4px",
-            color: "rgba(255,255,255,0.92)",
+            letterSpacing: "0.5px",
+            color: "rgba(255,255,255,0.95)",
           }}
         >
           Transformando ideas en aplicaciones efectivas
@@ -74,37 +74,43 @@ export default function Footer() {
       <SocialLinks
         socialLinks={socialLinks}
         size="30px"
-        animated={true}
+        animated
         spacing={2}
       />
 
-
-{/* Créditos del portafolio */}
-<Typography
-  variant="caption"
-  sx={{
-    display: "block",
-    mt: 1.2,
-    color: "rgba(255,255,255,0.88)", // 👈 mucho más clara
-    letterSpacing: "0.3px",
-    fontWeight: 500,
-  }}
->
-  Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
-</Typography>
-
-      
-      <Typography
-        variant="caption"
+      {/* Separador elegante */}
+      <Divider
         sx={{
-          display: "block",
-          mt: 3,
-          color: "rgba(255,255,255,0.75)", 
-          letterSpacing: "0.3px",
+          my: 3,
+          mx: "auto",
+          width: 80,
+          backgroundColor: "rgba(255,255,255,0.25)",
         }}
-      >
-        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
-      </Typography>
+      />
+
+      {/* Créditos */}
+      <Stack spacing={0.8}>
+        <Typography
+          variant="caption"
+          sx={{
+            color: "rgba(255,255,255,0.9)",
+            letterSpacing: "0.35px",
+            fontWeight: 500,
+          }}
+        >
+          Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+        </Typography>
+
+        <Typography
+          variant="caption"
+          sx={{
+            color: "rgba(255,255,255,0.7)",
+            letterSpacing: "0.3px",
+          }}
+        >
+          © {new Date().getFullYear()} — Todos los derechos reservados
+        </Typography>
+      </Stack>
     </Box>
   );
-}
+          }
