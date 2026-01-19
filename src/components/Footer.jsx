@@ -46,8 +46,8 @@ export default function Footer() {
       component="footer"
       sx={{
         position: "relative",
-        pt: { xs: 7, md: 9 },
-        pb: 4,
+        pt: { xs: 5, md: 6 },   // ⬆️ menos padding arriba
+        pb: { xs: 3, md: 3.5 },
         textAlign: "center",
         color: "#fff",
         background: isDark
@@ -59,14 +59,14 @@ export default function Footer() {
         overflow: "hidden",
       }}
     >
-      {/* Fondo refinado (glass + profundidad, sin cambiar colores) */}
+      {/* Glass muy sutil */}
       <Box
         sx={{
           position: "absolute",
           inset: 0,
           backdropFilter: "blur(8px)",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.18))",
+            "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.18))",
           pointerEvents: "none",
         }}
       />
@@ -80,18 +80,18 @@ export default function Footer() {
           px: 2,
         }}
       >
-        {/* Nombre completo */}
+        {/* Nombre */}
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: 6 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <Typography
             variant="h6"
             sx={{
               fontWeight: 700,
-              letterSpacing: "1.4px",
-              mb: 0.6,
+              letterSpacing: "1.5px",
+              mb: 0.8,
               color: "rgba(255,255,255,0.98)",
             }}
           >
@@ -99,32 +99,28 @@ export default function Footer() {
           </Typography>
         </motion.div>
 
-        {/* Línea visual sutil */}
+        {/* Línea decorativa MÁS visible */}
         <Box
           sx={{
-            width: 42,
-            height: 2,
+            width: 56,
+            height: 2.5,
             mx: "auto",
-            mb: 2.5,
+            mb: 2,
             borderRadius: 2,
-            backgroundColor: "rgba(255,255,255,0.35)",
+            backgroundColor: "rgba(255,255,255,0.55)", // 👈 más clara
           }}
         />
 
         {/* Eslogan */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            ease: "easeOut",
-            delay: 0.05,
-          }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
         >
           <Typography
             variant="subtitle1"
             sx={{
-              mb: 3,
+              mb: 2.5,
               fontWeight: 600,
               letterSpacing: "0.45px",
               color: "rgba(255,255,255,0.95)",
@@ -135,7 +131,7 @@ export default function Footer() {
         </motion.div>
 
         {/* Redes */}
-        <Box sx={{ mb: 2.5 }}>
+        <Box sx={{ mb: 2 }}>
           <SocialLinks
             socialLinks={socialLinks}
             size="30px"
@@ -144,19 +140,19 @@ export default function Footer() {
           />
         </Box>
 
-        {/* Divider afinado */}
+        {/* Divider MÁS claro */}
         <Divider
           sx={{
-            my: 3,
+            my: 2.5,
             mx: "auto",
-            width: 64,
-            opacity: 0.55,
-            borderColor: "rgba(255,255,255,0.25)",
+            width: 90,
+            borderBottomWidth: 2,
+            borderColor: "rgba(255,255,255,0.4)", // 👈 ahora sí se ve
           }}
         />
 
         {/* Créditos */}
-        <Stack spacing={0.6}>
+        <Stack spacing={0.5}>
           <Typography
             variant="caption"
             sx={{
