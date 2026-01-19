@@ -2,7 +2,6 @@ import {
   Box,
   Typography,
   useTheme,
-  Divider,
   Stack,
 } from "@mui/material";
 import { motion } from "framer-motion";
@@ -47,6 +46,20 @@ export default function Footer() {
     [isDark]
   );
 
+  const Separator = () => (
+    <Box
+      sx={{
+        width: 120,
+        height: 2,
+        mx: "auto",
+        my: 3,
+        borderRadius: 4,
+        background:
+          "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.85), rgba(255,255,255,0.12))",
+      }}
+    />
+  );
+
   return (
     <Box
       component="footer"
@@ -65,7 +78,7 @@ export default function Footer() {
         overflow: "hidden",
       }}
     >
-      {/* Glass overlay refinado */}
+      {/* Glass overlay */}
       <Box
         sx={{
           position: "absolute",
@@ -106,18 +119,8 @@ export default function Footer() {
           </Typography>
         </MotionBox>
 
-        {/* Línea decorativa más fina */}
-        <Box
-          sx={{
-            width: 64,
-            height: 2,
-            mx: "auto",
-            mb: 2.5,
-            borderRadius: 4,
-            background:
-              "linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.85), rgba(255,255,255,0.15))",
-          }}
-        />
+        {/* Separador */}
+        <Separator />
 
         {/* Eslogan */}
         <MotionBox
@@ -128,7 +131,7 @@ export default function Footer() {
           <Typography
             variant="subtitle1"
             sx={{
-              mb: 3,
+              mb: 2,
               fontWeight: 500,
               letterSpacing: "0.6px",
               color: "rgba(255,255,255,0.92)",
@@ -137,6 +140,9 @@ export default function Footer() {
             Transformando ideas en aplicaciones efectivas
           </Typography>
         </MotionBox>
+
+        {/* Separador */}
+        <Separator />
 
         {/* Redes */}
         <Box sx={{ mb: 3 }}>
@@ -148,16 +154,8 @@ export default function Footer() {
           />
         </Box>
 
-        {/* Divider más elegante */}
-        <Divider
-          sx={{
-            my: 3,
-            mx: "auto",
-            width: 120,
-            borderBottomWidth: 1.5,
-            borderColor: "rgba(255,255,255,0.35)",
-          }}
-        />
+        {/* Separador */}
+        <Separator />
 
         {/* Créditos */}
         <Stack spacing={0.5}>
@@ -185,4 +183,4 @@ export default function Footer() {
       </Box>
     </Box>
   );
-}
+        }
