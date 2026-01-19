@@ -35,6 +35,13 @@ export default function Footer() {
     },
   ];
 
+  const fadeUp = {
+    initial: { opacity: 0, y: 16 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 },
+    viewport: { once: true },
+  };
+
   return (
     <Box
       component="footer"
@@ -52,17 +59,12 @@ export default function Footer() {
           : "inset 0 1px 0 rgba(255,255,255,0.2)",
       }}
     >
-      {/* Eslogan */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        viewport={{ once: true }}
-      >
+      {/* Nombre + eslogan */}
+      <motion.div {...fadeUp}>
         <Typography
           variant="h6"
           sx={{
-            mb: 1,
+            mb: 0.5,
             fontWeight: 700,
             letterSpacing: "0.5px",
           }}
@@ -80,35 +82,25 @@ export default function Footer() {
             lineHeight: 1.6,
           }}
         >
-          Transformando ideas en aplicaciones efectivas, seguras y escalables
+          Transformando ideas en aplicaciones efectivas
         </Typography>
       </motion.div>
 
       {/* Redes sociales */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
-        viewport={{ once: true }}
-      >
+      <motion.div {...fadeUp}>
         <SocialLinks
           socialLinks={socialLinks}
           size="30px"
           animated
-          spacing={2.2}
+          spacing={2}
         />
       </motion.div>
 
       {/* Separador */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true }}
-      >
+      <motion.div {...fadeUp}>
         <Divider
           sx={{
-            my: 3.5,
+            my: 3,
             mx: "auto",
             width: "120px",
             backgroundColor: "rgba(255,255,255,0.25)",
@@ -117,18 +109,13 @@ export default function Footer() {
       </motion.div>
 
       {/* Créditos */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        viewport={{ once: true }}
-      >
+      <motion.div {...fadeUp}>
         <Typography
           variant="caption"
           sx={{
             display: "block",
-            color: "rgba(255,255,255,0.9)",
-            letterSpacing: "0.4px",
+            color: "rgba(255,255,255,0.88)",
+            letterSpacing: "0.3px",
             fontWeight: 500,
           }}
         >
@@ -137,18 +124,13 @@ export default function Footer() {
       </motion.div>
 
       {/* Copyright */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        viewport={{ once: true }}
-      >
+      <motion.div {...fadeUp}>
         <Typography
           variant="caption"
           sx={{
             display: "block",
             mt: 1.5,
-            color: "rgba(255,255,255,0.7)",
+            color: "rgba(255,255,255,0.75)",
             letterSpacing: "0.3px",
           }}
         >
