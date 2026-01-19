@@ -4,10 +4,8 @@ import {
   useTheme,
   Divider,
   Stack,
-  IconButton,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import SocialLinks from "./SocialLinks";
 import {
   GitHub,
@@ -20,29 +18,25 @@ export default function Footer() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const socialLinks = [
     {
       icon: <GitHub />,
-      color: "#d4af37",
+      color: isDark ? "#bbdefb" : "#ffffff",
       href: "https://github.com/Patogol35",
     },
     {
       icon: <LinkedIn />,
-      color: "#d4af37",
+      color: isDark ? "#90caf9" : "#ffffff",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
       icon: <Instagram />,
-      color: "#d4af37",
+      color: isDark ? "#f48fb1" : "#ffffff",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
     {
       icon: <MailOutline />,
-      color: "#d4af37",
+      color: isDark ? "#bbdefb" : "#ffffff",
       href: "mailto:patogol3535@gmail.com",
     },
   ];
@@ -52,59 +46,45 @@ export default function Footer() {
       component="footer"
       sx={{
         position: "relative",
-        pt: { xs: 7, md: 9 },
+        pt: { xs: 6, md: 8 },
         pb: 4,
         textAlign: "center",
         color: "#fff",
-        background: "linear-gradient(180deg, #050505 0%, #000000 100%)",
+        background: isDark
+          ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
+          : "linear-gradient(135deg, #1565c0, #42a5f5)",
+        boxShadow: isDark
+          ? "inset 0 1px 0 rgba(255,255,255,0.04)"
+          : "inset 0 1px 0 rgba(255,255,255,0.25)",
         overflow: "hidden",
       }}
     >
-      {/* Glassmorphism overlay */}
+      {/* Sutil capa glass (muy ligera, no cambia colores) */}
       <Box
         sx={{
           position: "absolute",
           inset: 0,
-          backdropFilter: "blur(12px)",
+          backdropFilter: "blur(6px)",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(0,0,0,0.6))",
-          zIndex: 0,
+            "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.15))",
+          pointerEvents: "none",
         }}
       />
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
-        {/* Logo JP animado */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              letterSpacing: "6px",
-              color: "#d4af37",
-              mb: 2,
-            }}
-          >
-            JP
-          </Typography>
-        </motion.div>
-
         {/* Eslogan */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <Typography
             variant="subtitle1"
             sx={{
               mb: 3,
-              fontWeight: 500,
-              letterSpacing: "0.4px",
-              color: "rgba(255,255,255,0.9)",
+              fontWeight: 600,
+              letterSpacing: "0.5px",
+              color: "rgba(255,255,255,0.95)",
             }}
           >
             Transformando ideas en aplicaciones efectivas
@@ -112,30 +92,34 @@ export default function Footer() {
         </motion.div>
 
         {/* Redes sociales */}
-        <SocialLinks
-          socialLinks={socialLinks}
-          size="30px"
-          animated
-          spacing={2}
-        />
+        <Box sx={{ mb: 2 }}>
+          <SocialLinks
+            socialLinks={socialLinks}
+            size="30px"
+            animated
+            spacing={2}
+          />
+        </Box>
 
-        {/* Divider elegante */}
+        {/* Separador más fino y elegante */}
         <Divider
           sx={{
             my: 3,
             mx: "auto",
-            width: 90,
-            backgroundColor: "rgba(212,175,55,0.4)",
+            width: 72,
+            opacity: 0.6,
+            borderColor: "rgba(255,255,255,0.25)",
           }}
         />
 
         {/* Créditos */}
-        <Stack spacing={0.8}>
+        <Stack spacing={0.7}>
           <Typography
             variant="caption"
             sx={{
-              color: "rgba(255,255,255,0.85)",
-              letterSpacing: "0.3px",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "0.35px",
+              fontWeight: 500,
             }}
           >
             Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
@@ -144,7 +128,7 @@ export default function Footer() {
           <Typography
             variant="caption"
             sx={{
-              color: "rgba(255,255,255,0.65)",
+              color: "rgba(255,255,255,0.7)",
               letterSpacing: "0.3px",
             }}
           >
@@ -152,27 +136,6 @@ export default function Footer() {
           </Typography>
         </Stack>
       </Box>
-
-      {/* Back to top button */}
-      <IconButton
-        onClick={scrollToTop}
-        sx={{
-          position: "absolute",
-          right: 20,
-          bottom: 20,
-          color: "#d4af37",
-          border: "1px solid rgba(212,175,55,0.5)",
-          backdropFilter: "blur(6px)",
-          backgroundColor: "rgba(0,0,0,0.4)",
-          transition: "all 0.3s ease",
-          "&:hover": {
-            backgroundColor: "rgba(212,175,55,0.15)",
-            transform: "translateY(-3px)",
-          },
-        }}
-      >
-        <KeyboardArrowUpIcon />
-      </IconButton>
     </Box>
   );
-          }
+}
