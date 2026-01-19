@@ -59,7 +59,7 @@ export default function Footer() {
         overflow: "hidden",
       }}
     >
-      {/* Sutil capa glass (muy ligera, no cambia colores) */}
+      {/* Capa glass muy sutil */}
       <Box
         sx={{
           position: "absolute",
@@ -72,11 +72,30 @@ export default function Footer() {
       />
 
       <Box sx={{ position: "relative", zIndex: 1 }}>
+        {/* Nombre completo */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              letterSpacing: "1px",
+              mb: 1,
+              color: "rgba(255,255,255,0.98)",
+            }}
+          >
+            Jorge Patricio Santamaría Cherrez
+          </Typography>
+        </motion.div>
+
         {/* Eslogan */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
         >
           <Typography
             variant="subtitle1"
@@ -101,7 +120,7 @@ export default function Footer() {
           />
         </Box>
 
-        {/* Separador más fino y elegante */}
+        {/* Separador */}
         <Divider
           sx={{
             my: 3,
@@ -138,4 +157,4 @@ export default function Footer() {
       </Box>
     </Box>
   );
-}
+            }
