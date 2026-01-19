@@ -51,12 +51,11 @@ export default function Footer() {
           : "inset 0 1px 0 rgba(255,255,255,0.2)",
       }}
     >
-      {/* ESLOGAN CON EFECTO DE ENTRADA */}
+      {/* Eslogan */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
         <Typography
           variant="subtitle2"
@@ -71,40 +70,41 @@ export default function Footer() {
         </Typography>
       </motion.div>
 
-      {/* REDES SOCIALES (animadas) */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-        viewport={{ once: true }}
-      >
-        <SocialLinks
-          socialLinks={socialLinks}
-          size="30px"
-          animated={true}
-          spacing={2}
-        />
-      </motion.div>
+      {/* Redes sociales */}
+      <SocialLinks
+        socialLinks={socialLinks}
+        size="30px"
+        animated={true}
+        spacing={2}
+      />
 
-      {/* TEXTO LEGAL */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        viewport={{ once: true }}
+
+{/* Créditos del portafolio */}
+<Typography
+  variant="caption"
+  sx={{
+    display: "block",
+    mt: 1.2,
+    color: "rgba(255,255,255,0.88)", // 👈 mucho más clara
+    letterSpacing: "0.3px",
+    fontWeight: 500,
+  }}
+>
+  Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+</Typography>
+
+      
+      <Typography
+        variant="caption"
+        sx={{
+          display: "block",
+          mt: 3,
+          color: "rgba(255,255,255,0.75)", 
+          letterSpacing: "0.3px",
+        }}
       >
-        <Typography
-          variant="caption"
-          sx={{
-            display: "block",
-            mt: 3,
-            color: "rgba(255,255,255,0.75)",
-            letterSpacing: "0.3px",
-          }}
-        >
-          © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
-        </Typography>
-      </motion.div>
+        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
+      </Typography>
     </Box>
   );
 }
