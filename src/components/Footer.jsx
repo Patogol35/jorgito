@@ -1,4 +1,4 @@
-import { Box, Typography, Divider, useTheme } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
 import {
@@ -35,101 +35,69 @@ export default function Footer() {
     },
   ];
 
-  const fadeUp = {
-    initial: { opacity: 0, y: 16 },
-    whileInView: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 },
-    viewport: { once: true },
-  };
-
   return (
     <Box
       component="footer"
       sx={{
-        pt: { xs: 6, md: 8 },
+        pt: 6,
         pb: 4,
-        px: 2,
         textAlign: "center",
         color: "#fff",
         background: isDark
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
-          : "linear-gradient(135deg, #1565c0, #42a5f5)",
+          : "linear-gradient(135deg, #1976d2, #42a5f5)",
         boxShadow: isDark
           ? "inset 0 1px 0 rgba(255,255,255,0.04)"
           : "inset 0 1px 0 rgba(255,255,255,0.2)",
       }}
     >
-      {/* Nombre + eslogan */}
-      <motion.div {...fadeUp}>
-        <Typography
-          variant="h6"
-          sx={{
-            mb: 0.5,
-            fontWeight: 700,
-            letterSpacing: "0.5px",
-          }}
-        >
-          Jorge Patricio Santamaría Cherrez
-        </Typography>
-
+      {/* ESLOGAN CON EFECTO DE ENTRADA */}
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true }}
+      >
         <Typography
           variant="subtitle2"
           sx={{
-            mb: 3,
-            color: "rgba(255,255,255,0.85)",
-            maxWidth: 520,
-            mx: "auto",
-            lineHeight: 1.6,
+            mb: 2.5,
+            fontWeight: 600,
+            letterSpacing: "0.4px",
+            color: "rgba(255,255,255,0.92)",
           }}
         >
           Transformando ideas en aplicaciones efectivas
         </Typography>
       </motion.div>
 
-      {/* Redes sociales */}
-      <motion.div {...fadeUp}>
+      {/* REDES SOCIALES (animadas) */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+        viewport={{ once: true }}
+      >
         <SocialLinks
           socialLinks={socialLinks}
           size="30px"
-          animated
+          animated={true}
           spacing={2}
         />
       </motion.div>
 
-      {/* Separador */}
-      <motion.div {...fadeUp}>
-        <Divider
-          sx={{
-            my: 3,
-            mx: "auto",
-            width: "120px",
-            backgroundColor: "rgba(255,255,255,0.25)",
-          }}
-        />
-      </motion.div>
-
-      {/* Créditos */}
-      <motion.div {...fadeUp}>
+      {/* TEXTO LEGAL */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        viewport={{ once: true }}
+      >
         <Typography
           variant="caption"
           sx={{
             display: "block",
-            color: "rgba(255,255,255,0.88)",
-            letterSpacing: "0.3px",
-            fontWeight: 500,
-          }}
-        >
-          Página / portafolio desarrollada por Jorge Patricio Santamaría Cherrez
-        </Typography>
-      </motion.div>
-
-      {/* Copyright */}
-      <motion.div {...fadeUp}>
-        <Typography
-          variant="caption"
-          sx={{
-            display: "block",
-            mt: 1.5,
+            mt: 3,
             color: "rgba(255,255,255,0.75)",
             letterSpacing: "0.3px",
           }}
