@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, Divider, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import SocialLinks from "./SocialLinks";
 import {
@@ -39,13 +39,14 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        pt: 6,
+        pt: { xs: 6, md: 8 },
         pb: 4,
+        px: 2,
         textAlign: "center",
         color: "#fff",
         background: isDark
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
-          : "linear-gradient(135deg, #1976d2, #42a5f5)",
+          : "linear-gradient(135deg, #1565c0, #42a5f5)",
         boxShadow: isDark
           ? "inset 0 1px 0 rgba(255,255,255,0.04)"
           : "inset 0 1px 0 rgba(255,255,255,0.2)",
@@ -53,69 +54,107 @@ export default function Footer() {
     >
       {/* Eslogan */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7 }}
+        viewport={{ once: true }}
       >
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 1,
+            fontWeight: 700,
+            letterSpacing: "0.5px",
+          }}
+        >
+          Jorge Patricio Santamaría Cherrez
+        </Typography>
+
         <Typography
           variant="subtitle2"
           sx={{
-            mb: 2.5,
-            fontWeight: 600,
-            letterSpacing: "0.4px",
-            color: "rgba(255,255,255,0.92)",
+            mb: 3,
+            color: "rgba(255,255,255,0.85)",
+            maxWidth: 520,
+            mx: "auto",
+            lineHeight: 1.6,
           }}
         >
-          Transformando ideas en aplicaciones efectivas
+          Transformando ideas en aplicaciones efectivas, seguras y escalables
         </Typography>
       </motion.div>
 
       {/* Redes sociales */}
-      <SocialLinks
-        socialLinks={socialLinks}
-        size="30px"
-        animated={true}
-        spacing={2}
-      />
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
+        viewport={{ once: true }}
+      >
+        <SocialLinks
+          socialLinks={socialLinks}
+          size="30px"
+          animated
+          spacing={2.2}
+        />
+      </motion.div>
 
-{/* Créditos del portafolio */}
-<motion.div
-  initial={{ opacity: 0, y: 16 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.1 }}
->
-  <Typography
-    variant="caption"
-    sx={{
-      display: "block",
-      mt: 1.2,
-      color: "rgba(255,255,255,0.88)",
-      letterSpacing: "0.3px",
-      fontWeight: 500,
-    }}
-  >
-    Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
-  </Typography>
-</motion.div>
+      {/* Separador */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        <Divider
+          sx={{
+            my: 3.5,
+            mx: "auto",
+            width: "120px",
+            backgroundColor: "rgba(255,255,255,0.25)",
+          }}
+        />
+      </motion.div>
 
-{/* Copyright */}
-<motion.div
-  initial={{ opacity: 0, y: 16 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: 0.2 }}
->
-  <Typography
-    variant="caption"
-    sx={{
-      display: "block",
-      mt: 3,
-      color: "rgba(255,255,255,0.75)",
-      letterSpacing: "0.3px",
-    }}
-  >
-    © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
-  </Typography>
-</motion.div>
+      {/* Créditos */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        viewport={{ once: true }}
+      >
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            color: "rgba(255,255,255,0.9)",
+            letterSpacing: "0.4px",
+            fontWeight: 500,
+          }}
+        >
+          Página / portafolio desarrollada por Jorge Patricio Santamaría Cherrez
+        </Typography>
+      </motion.div>
+
+      {/* Copyright */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4 }}
+        viewport={{ once: true }}
+      >
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            mt: 1.5,
+            color: "rgba(255,255,255,0.7)",
+            letterSpacing: "0.3px",
+          }}
+        >
+          © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
+        </Typography>
+      </motion.div>
     </Box>
   );
 }
