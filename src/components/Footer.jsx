@@ -14,32 +14,35 @@ import {
   MailOutline,
 } from "@mui/icons-material";
 
-const MotionBox = motion(Box);
+const MotionDiv = motion.div;
 
 export default function Footer() {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+  const { palette } = theme;
+  const isDark = palette.mode === "dark";
+
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const socialLinks = useMemo(
     () => [
       {
         icon: <GitHub />,
-        color: isDark ? "#c7d2fe" : "#ffffff",
+        color: isDark ? "#ffffff" : "#181717",
         href: "https://github.com/Patogol35",
       },
       {
         icon: <LinkedIn />,
-        color: isDark ? "#93c5fd" : "#ffffff",
+        color: isDark ? "#90caf9" : "#0A66C2",
         href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
       },
       {
         icon: <Instagram />,
-        color: isDark ? "#f9a8d4" : "#ffffff",
+        color: isDark ? "#f48fb1" : "#E4405F",
         href: "https://www.instagram.com/jorge_patricio_26",
       },
       {
         icon: <MailOutline />,
-        color: isDark ? "#c7d2fe" : "#ffffff",
+        color: isDark ? "#ffffff" : "#1976d2",
         href: "mailto:patogol3535@gmail.com",
       },
     ],
@@ -99,11 +102,11 @@ export default function Footer() {
           px: { xs: 2, sm: 3 },
         }}
       >
-        {/* Nombre */}
-        <MotionBox
-          initial={{ opacity: 0, y: 6 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+        {/* ================= NOMBRE ================= */}
+        <MotionDiv
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
         >
           <Typography
             variant="h6"
@@ -117,16 +120,15 @@ export default function Footer() {
           >
             Jorge Patricio Santamaría Cherrez
           </Typography>
-        </MotionBox>
+        </MotionDiv>
 
-        {/* Separador */}
         <Separator />
 
-        {/* Eslogan */}
-        <MotionBox
-          initial={{ opacity: 0, y: 8 }}
+        {/* ================= ESLOGAN ================= */}
+        <MotionDiv
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Typography
             variant="subtitle1"
@@ -139,47 +141,57 @@ export default function Footer() {
           >
             Transformando ideas en aplicaciones efectivas
           </Typography>
-        </MotionBox>
+        </MotionDiv>
 
-        {/* Separador */}
         <Separator />
 
-        {/* Redes */}
-        <Box sx={{ mb: 3 }}>
-          <SocialLinks
-            socialLinks={socialLinks}
-            size="30px"
-            animated
-            spacing={2.2}
-          />
-        </Box>
+        {/* ================= REDES ================= */}
+        <MotionDiv
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <Box sx={{ mb: 3 }}>
+            <SocialLinks
+              socialLinks={socialLinks}
+              size="30px"
+              animated
+              spacing={2.2}
+            />
+          </Box>
+        </MotionDiv>
 
-        {/* Separador */}
         <Separator />
 
-        {/* Créditos */}
-        <Stack spacing={0.5}>
-          <Typography
-            variant="caption"
-            sx={{
-              color: "rgba(255,255,255,0.9)",
-              letterSpacing: "0.5px",
-              fontWeight: 500,
-            }}
-          >
-            Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
-          </Typography>
+        {/* ================= CRÉDITOS ================= */}
+        <MotionDiv
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <Stack spacing={0.5}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "rgba(255,255,255,0.9)",
+                letterSpacing: "0.5px",
+                fontWeight: 500,
+              }}
+            >
+              Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+            </Typography>
 
-          <Typography
-            variant="caption"
-            sx={{
-              color: "rgba(255,255,255,0.65)",
-              letterSpacing: "0.4px",
-            }}
-          >
-            © {new Date().getFullYear()} — Todos los derechos reservados
-          </Typography>
-        </Stack>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "rgba(255,255,255,0.65)",
+                letterSpacing: "0.4px",
+              }}
+            >
+              © {new Date().getFullYear()} — Todos los derechos reservados
+            </Typography>
+          </Stack>
+        </MotionDiv>
       </Box>
     </Box>
   );
