@@ -3,13 +3,13 @@ import { Container, Typography, Box, Divider } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
-  FacebookRounded,
+  Facebook,
   Instagram,
   MailOutline,
   AccessTime,
-  GroupsRounded,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
 import { useTheme } from "@mui/material/styles";
 
@@ -20,39 +20,28 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  /** Estilo base profesional para iconos */
-  const iconBaseStyle = {
-    fontSize: 24,
-    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
-    transition: "all 0.35s ease",
-  };
-
   const socialLinks = [
     {
-      icon: <GitHub sx={iconBaseStyle} />,
-      color: isDark ? "#ffffff" : "#1f1f1f",
+      icon: <GitHub />,
+      color: isDark ? "#ffffff" : "#181717",
       href: "https://github.com/Patogol35",
     },
     {
-      icon: <LinkedIn sx={iconBaseStyle} />,
+      icon: <LinkedIn />,
       color: isDark ? "#90caf9" : "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
-      icon: <FacebookRounded sx={iconBaseStyle} />,
+      icon: <Facebook />,
       color: isDark ? "#90caf9" : "#1877F2",
       href: "https://www.facebook.com/share/1C9RgHAPvL/",
     },
     {
-      icon: <Instagram sx={iconBaseStyle} />,
+      icon: <Instagram />,
       color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
-    {
-      icon: <MailOutline sx={iconBaseStyle} />,
-      color: isDark ? "#ffffff" : "#1976d2",
-      href: "mailto:patogol3535@gmail.com",
-    },
+    { icon: <MailOutline />, color: isDark ? "#fff" : "#1976d2", href: "mailto:patogol3535@gmail.com" },
   ];
 
   return (
@@ -66,53 +55,55 @@ export default function Contact() {
     >
       <Container maxWidth="sm">
         {/* =========================  
-            TÍTULO  
-        ========================= */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 1.2,
-              px: 3,
-              py: 1,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.08)"
-                : "rgba(25,118,210,0.08)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.3)"
-                  : "rgba(25,118,210,0.3)"
-              }`,
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            <GroupsRounded sx={{ fontSize: 22, color: primaryColor }} />
+        TÍTULO CONTACTO  
+========================= */}
+<motion.div
+  initial={{ opacity: 0, scale: 0.8 }}
+  whileInView={{ opacity: 1, scale: 1 }}
+  transition={{ duration: 0.8 }}
+  style={{ textAlign: "center", marginBottom: "2rem" }}
+>
+  <Box
+    sx={{
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 1,
+      px: 3,
+      py: 0.9,
+      borderRadius: "999px",
+      background: isDark
+        ? "rgba(144,202,249,0.06)"
+        : "rgba(25,118,210,0.06)",
+      border: `1px solid ${
+        isDark
+          ? "rgba(144,202,249,0.25)"
+          : "rgba(25,118,210,0.25)"
+      }`,
+      backdropFilter: "blur(6px)",
+    }}
+  >
+    {/* Icono SIN fondo */}
+    <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
 
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 700,
-                color: primaryColor,
-                letterSpacing: 0.3,
-              }}
-            >
-              Redes Sociales
-            </Typography>
-          </Box>
-        </motion.div>
+    <Typography
+      variant="h6"
+      sx={{
+        fontWeight: "bold",
+        color: primaryColor,
+        lineHeight: 1,
+      }}
+    >
+      Redes Sociales
+    </Typography>
+  </Box>
+</motion.div>
 
         {/* =========================
-            TEXTO
+            TEXTO INTRO (subtitle1)
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
@@ -120,7 +111,7 @@ export default function Contact() {
             variant="subtitle1"
             sx={{
               textAlign: "center",
-              fontWeight: 600,
+              fontWeight: "bold",
               mb: 2,
             }}
           >
@@ -130,10 +121,10 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            DISPONIBILIDAD
+            DISPONIBILIDAD (body2)
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
@@ -156,16 +147,11 @@ export default function Contact() {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* =========================
-            ICONOS SOCIALES
-        ========================= */}
-        <SocialLinks
-          socialLinks={socialLinks}
-          size="52px"
-          animated={true}
-          spacing={2.5}
-        />
+        {/* Redes sociales */}
+        <SocialLinks socialLinks={socialLinks} size="48px" animated={true} spacing={2} />
+
+        
       </Container>
     </Box>
   );
-}
+              }
