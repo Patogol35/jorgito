@@ -3,13 +3,13 @@ import { Container, Typography, Box, Divider } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
-  Facebook,
+  FacebookRounded,
   Instagram,
   MailOutline,
   AccessTime,
+  GroupsRounded,
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
 import { useTheme } from "@mui/material/styles";
 
@@ -20,28 +20,37 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+  const iconStyle = {
+    fontSize: 26,
+    transition: "all 0.3s ease",
+  };
+
   const socialLinks = [
     {
-      icon: <GitHub />,
+      icon: <GitHub sx={{ ...iconStyle }} />,
       color: isDark ? "#ffffff" : "#181717",
       href: "https://github.com/Patogol35",
     },
     {
-      icon: <LinkedIn />,
+      icon: <LinkedIn sx={{ ...iconStyle }} />,
       color: isDark ? "#90caf9" : "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
-      icon: <Facebook />,
+      icon: <FacebookRounded sx={{ ...iconStyle }} />,
       color: isDark ? "#90caf9" : "#1877F2",
       href: "https://www.facebook.com/share/1C9RgHAPvL/",
     },
     {
-      icon: <Instagram />,
+      icon: <Instagram sx={{ ...iconStyle }} />,
       color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
-    { icon: <MailOutline />, color: isDark ? "#fff" : "#1976d2", href: "mailto:patogol3535@gmail.com" },
+    {
+      icon: <MailOutline sx={{ ...iconStyle }} />,
+      color: isDark ? "#ffffff" : "#1976d2",
+      href: "mailto:patogol3535@gmail.com",
+    },
   ];
 
   return (
@@ -55,52 +64,51 @@ export default function Contact() {
     >
       <Container maxWidth="sm">
         {/* =========================  
-        TÍTULO CONTACTO  
-========================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8 }}
-  style={{ textAlign: "center", marginBottom: "2rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      px: 3,
-      py: 0.9,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(144,202,249,0.06)"
-        : "rgba(25,118,210,0.06)",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-      backdropFilter: "blur(6px)",
-    }}
-  >
-    {/* Icono SIN fondo */}
-    <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+            TÍTULO CONTACTO  
+        ========================= */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <GroupsRounded sx={{ fontSize: 22, color: primaryColor }} />
 
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: "bold",
-        color: primaryColor,
-        lineHeight: 1,
-      }}
-    >
-      Redes Sociales
-    </Typography>
-  </Box>
-</motion.div>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: primaryColor,
+                lineHeight: 1,
+              }}
+            >
+              Redes Sociales
+            </Typography>
+          </Box>
+        </motion.div>
 
         {/* =========================
-            TEXTO INTRO (subtitle1)
+            TEXTO INTRO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -121,7 +129,7 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            DISPONIBILIDAD (body2)
+            DISPONIBILIDAD
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -147,10 +155,15 @@ export default function Contact() {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Redes sociales */}
-        <SocialLinks socialLinks={socialLinks} size="48px" animated={true} spacing={2} />
-
-        
+        {/* =========================
+            REDES SOCIALES
+        ========================= */}
+        <SocialLinks
+          socialLinks={socialLinks}
+          size="48px"
+          animated={true}
+          spacing={2}
+        />
       </Container>
     </Box>
   );
