@@ -20,34 +20,36 @@ export default function Contact() {
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const iconStyle = {
-    fontSize: 26,
-    transition: "all 0.3s ease",
+  /** Estilo base profesional para iconos */
+  const iconBaseStyle = {
+    fontSize: 24,
+    filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.15))",
+    transition: "all 0.35s ease",
   };
 
   const socialLinks = [
     {
-      icon: <GitHub sx={{ ...iconStyle }} />,
-      color: isDark ? "#ffffff" : "#181717",
+      icon: <GitHub sx={iconBaseStyle} />,
+      color: isDark ? "#ffffff" : "#1f1f1f",
       href: "https://github.com/Patogol35",
     },
     {
-      icon: <LinkedIn sx={{ ...iconStyle }} />,
+      icon: <LinkedIn sx={iconBaseStyle} />,
       color: isDark ? "#90caf9" : "#0A66C2",
       href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
     },
     {
-      icon: <FacebookRounded sx={{ ...iconStyle }} />,
+      icon: <FacebookRounded sx={iconBaseStyle} />,
       color: isDark ? "#90caf9" : "#1877F2",
       href: "https://www.facebook.com/share/1C9RgHAPvL/",
     },
     {
-      icon: <Instagram sx={{ ...iconStyle }} />,
+      icon: <Instagram sx={iconBaseStyle} />,
       color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
     {
-      icon: <MailOutline sx={{ ...iconStyle }} />,
+      icon: <MailOutline sx={iconBaseStyle} />,
       color: isDark ? "#ffffff" : "#1976d2",
       href: "mailto:patogol3535@gmail.com",
     },
@@ -64,10 +66,10 @@ export default function Contact() {
     >
       <Container maxWidth="sm">
         {/* =========================  
-            TÍTULO CONTACTO  
+            TÍTULO  
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
@@ -76,20 +78,19 @@ export default function Contact() {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
+              gap: 1.2,
               px: 3,
-              py: 0.9,
+              py: 1,
               borderRadius: "999px",
               background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
+                ? "rgba(144,202,249,0.08)"
+                : "rgba(25,118,210,0.08)",
               border: `1px solid ${
                 isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
+                  ? "rgba(144,202,249,0.3)"
+                  : "rgba(25,118,210,0.3)"
               }`,
-              backdropFilter: "blur(6px)",
+              backdropFilter: "blur(8px)",
             }}
           >
             <GroupsRounded sx={{ fontSize: 22, color: primaryColor }} />
@@ -97,9 +98,9 @@ export default function Contact() {
             <Typography
               variant="h6"
               sx={{
-                fontWeight: "bold",
+                fontWeight: 700,
                 color: primaryColor,
-                lineHeight: 1,
+                letterSpacing: 0.3,
               }}
             >
               Redes Sociales
@@ -108,10 +109,10 @@ export default function Contact() {
         </motion.div>
 
         {/* =========================
-            TEXTO INTRO
+            TEXTO
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
@@ -119,7 +120,7 @@ export default function Contact() {
             variant="subtitle1"
             sx={{
               textAlign: "center",
-              fontWeight: "bold",
+              fontWeight: 600,
               mb: 2,
             }}
           >
@@ -132,7 +133,7 @@ export default function Contact() {
             DISPONIBILIDAD
         ========================= */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
@@ -156,13 +157,13 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* =========================
-            REDES SOCIALES
+            ICONOS SOCIALES
         ========================= */}
         <SocialLinks
           socialLinks={socialLinks}
-          size="48px"
+          size="52px"
           animated={true}
-          spacing={2}
+          spacing={2.5}
         />
       </Container>
     </Box>
