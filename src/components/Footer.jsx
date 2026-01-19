@@ -78,33 +78,44 @@ export default function Footer() {
         spacing={2}
       />
 
-
 {/* Créditos del portafolio */}
-<Typography
-  variant="caption"
-  sx={{
-    display: "block",
-    mt: 1.2,
-    color: "rgba(255,255,255,0.88)", // 👈 mucho más clara
-    letterSpacing: "0.3px",
-    fontWeight: 500,
-  }}
+<motion.div
+  initial={{ opacity: 0, y: 16 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: 0.1 }}
 >
-  Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
-</Typography>
+  <Typography
+    variant="caption"
+    sx={{
+      display: "block",
+      mt: 1.2,
+      color: "rgba(255,255,255,0.88)",
+      letterSpacing: "0.3px",
+      fontWeight: 500,
+    }}
+  >
+    Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+  </Typography>
+</motion.div>
 
-      
-      <Typography
-        variant="caption"
-        sx={{
-          display: "block",
-          mt: 3,
-          color: "rgba(255,255,255,0.75)", 
-          letterSpacing: "0.3px",
-        }}
-      >
-        © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
-      </Typography>
+{/* Copyright */}
+<motion.div
+  initial={{ opacity: 0, y: 16 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: 0.2 }}
+>
+  <Typography
+    variant="caption"
+    sx={{
+      display: "block",
+      mt: 3,
+      color: "rgba(255,255,255,0.75)",
+      letterSpacing: "0.3px",
+    }}
+  >
+    © {new Date().getFullYear()} Jorge Patricio. Todos los derechos reservados.
+  </Typography>
+</motion.div>
     </Box>
   );
 }
