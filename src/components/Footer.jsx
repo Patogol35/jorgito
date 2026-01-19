@@ -21,13 +21,11 @@ export default function Footer() {
   const { palette } = theme;
   const isDark = palette.mode === "dark";
 
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-
   const socialLinks = useMemo(
     () => [
       {
         icon: <GitHub />,
-        color: isDark ? "#ffffff" : "#181717",
+        color: isDark ? "#ffffff" : "#0f172a", // visible en claro
         href: "https://github.com/Patogol35",
       },
       {
@@ -42,7 +40,7 @@ export default function Footer() {
       },
       {
         icon: <MailOutline />,
-        color: isDark ? "#ffffff" : "#1976d2",
+        color: isDark ? "#ffffff" : "#1565c0",
         href: "mailto:patogol3535@gmail.com",
       },
     ],
@@ -102,7 +100,7 @@ export default function Footer() {
           px: { xs: 2, sm: 3 },
         }}
       >
-        {/* ================= NOMBRE ================= */}
+        {/* NOMBRE */}
         <MotionDiv
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -124,7 +122,7 @@ export default function Footer() {
 
         <Separator />
 
-        {/* ================= ESLOGAN ================= */}
+        {/* ESLOGAN */}
         <MotionDiv
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -145,7 +143,7 @@ export default function Footer() {
 
         <Separator />
 
-        {/* ================= REDES ================= */}
+        {/* REDES */}
         <MotionDiv
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -163,7 +161,7 @@ export default function Footer() {
 
         <Separator />
 
-        {/* ================= CRÉDITOS ================= */}
+        {/* CRÉDITOS */}
         <MotionDiv
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -195,4 +193,4 @@ export default function Footer() {
       </Box>
     </Box>
   );
-        }
+}
