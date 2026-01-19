@@ -25,26 +25,26 @@ export default function Footer() {
     () => [
       {
         icon: <GitHub />,
-        color: "#ffffff", // blanco en ambos modos
+        color: isDark ? "#ffffff" : "#ffffff", // blanco en claro, igual que antes en oscuro
         href: "https://github.com/Patogol35",
       },
       {
         icon: <LinkedIn />,
-        color: "#ffffff",
+        color: isDark ? "#90caf9" : "#ffffff",
         href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
       },
       {
         icon: <Instagram />,
-        color: "#ffffff",
+        color: isDark ? "#f48fb1" : "#ffffff",
         href: "https://www.instagram.com/jorge_patricio_26",
       },
       {
         icon: <MailOutline />,
-        color: "#ffffff",
+        color: isDark ? "#ffffff" : "#ffffff",
         href: "mailto:patogol3535@gmail.com",
       },
     ],
-    []
+    [isDark]
   );
 
   const Separator = () => (
