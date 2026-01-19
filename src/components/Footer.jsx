@@ -16,7 +16,6 @@ import {
 } from "@mui/icons-material";
 
 const MotionBox = motion(Box);
-const MotionDivider = motion(Divider);
 
 export default function Footer() {
   const theme = useTheme();
@@ -24,15 +23,28 @@ export default function Footer() {
 
   const socialLinks = useMemo(
     () => [
-      { icon: <GitHub />, href: "https://github.com/Patogol35" },
+      {
+        icon: <GitHub />,
+        color: isDark ? "#c7d2fe" : "#ffffff",
+        href: "https://github.com/Patogol35",
+      },
       {
         icon: <LinkedIn />,
+        color: isDark ? "#93c5fd" : "#ffffff",
         href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
       },
-      { icon: <Instagram />, href: "https://www.instagram.com/jorge_patricio_26" },
-      { icon: <MailOutline />, href: "mailto:patogol3535@gmail.com" },
+      {
+        icon: <Instagram />,
+        color: isDark ? "#f9a8d4" : "#ffffff",
+        href: "https://www.instagram.com/jorge_patricio_26",
+      },
+      {
+        icon: <MailOutline />,
+        color: isDark ? "#c7d2fe" : "#ffffff",
+        href: "mailto:patogol3535@gmail.com",
+      },
     ],
-    []
+    [isDark]
   );
 
   return (
@@ -40,27 +52,27 @@ export default function Footer() {
       component="footer"
       sx={{
         position: "relative",
-        pt: { xs: 4.5, md: 6 },
-        pb: { xs: 3, md: 3.5 },
+        pt: { xs: 6, md: 7 },
+        pb: { xs: 3.5, md: 4 },
         textAlign: "center",
         color: "#fff",
         background: isDark
           ? "linear-gradient(180deg, #020617 0%, #000000 100%)"
-          : "linear-gradient(135deg, #1565c0, #42a5f5)",
+          : "linear-gradient(135deg, #0d47a1, #42a5f5)",
         boxShadow: isDark
           ? "inset 0 1px 0 rgba(255,255,255,0.04)"
-          : "inset 0 1px 0 rgba(255,255,255,0.25)",
+          : "inset 0 1px 0 rgba(255,255,255,0.3)",
         overflow: "hidden",
       }}
     >
-      {/* Glass */}
+      {/* Glass overlay refinado */}
       <Box
         sx={{
           position: "absolute",
           inset: 0,
-          backdropFilter: "blur(9px)",
+          backdropFilter: "blur(10px)",
           background:
-            "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(0,0,0,0.2))",
+            "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.25))",
           pointerEvents: "none",
         }}
       />
@@ -69,9 +81,9 @@ export default function Footer() {
         sx={{
           position: "relative",
           zIndex: 1,
-          maxWidth: 820,
+          maxWidth: 900,
           mx: "auto",
-          px: { xs: 1.5, sm: 2 },
+          px: { xs: 2, sm: 3 },
         }}
       >
         {/* Nombre */}
@@ -84,25 +96,26 @@ export default function Footer() {
             variant="h6"
             sx={{
               fontWeight: 700,
-              letterSpacing: "1.4px",
+              letterSpacing: "2px",
               mb: 1,
-              fontSize: { xs: "1rem", sm: "1.15rem" },
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.98)",
             }}
           >
             Jorge Patricio Santamaría Cherrez
           </Typography>
         </MotionBox>
 
-        {/* Línea decorativa */}
+        {/* Línea decorativa más fina */}
         <Box
           sx={{
-            width: 56,
-            height: 3,
+            width: 64,
+            height: 2,
             mx: "auto",
-            mb: 2,
+            mb: 2.5,
             borderRadius: 4,
             background:
-              "linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.85), rgba(255,255,255,0.25))",
+              "linear-gradient(90deg, rgba(255,255,255,0.15), rgba(255,255,255,0.85), rgba(255,255,255,0.15))",
           }}
         />
 
@@ -115,65 +128,56 @@ export default function Footer() {
           <Typography
             variant="subtitle1"
             sx={{
-              mb: 2.2,
-              fontWeight: 600,
-              letterSpacing: "0.45px",
-              fontSize: { xs: "0.9rem", sm: "1rem" },
-              opacity: 0.95,
+              mb: 3,
+              fontWeight: 500,
+              letterSpacing: "0.6px",
+              color: "rgba(255,255,255,0.92)",
             }}
           >
             Transformando ideas en aplicaciones efectivas
           </Typography>
         </MotionBox>
 
-        {/* Redes con hover PRO */}
-        <Box
-          sx={{
-            mb: 2,
-            "& a": {
-              transition: "all 0.25s ease",
-              "&:hover": {
-                transform: "translateY(-4px) scale(1.12)",
-                filter: "drop-shadow(0 6px 14px rgba(255,255,255,0.35))",
-              },
-            },
-          }}
-        >
+        {/* Redes */}
+        <Box sx={{ mb: 3 }}>
           <SocialLinks
             socialLinks={socialLinks}
             size="30px"
             animated
-            spacing={2}
-            color="rgba(255,255,255,0.95)"
+            spacing={2.2}
           />
         </Box>
 
-        {/* Divider animado */}
-        <MotionDivider
-          initial={{ opacity: 0, scaleX: 0 }}
-          whileInView={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+        {/* Divider más elegante */}
+        <Divider
           sx={{
-            my: 2.5,
+            my: 3,
             mx: "auto",
-            width: 100,
-            borderBottomWidth: 2,
-            borderColor: "rgba(255,255,255,0.45)",
-            transformOrigin: "center",
+            width: 120,
+            borderBottomWidth: 1.5,
+            borderColor: "rgba(255,255,255,0.35)",
           }}
         />
 
         {/* Créditos */}
-        <Stack spacing={0.4}>
+        <Stack spacing={0.5}>
           <Typography
             variant="caption"
-            sx={{ fontWeight: 500, opacity: 0.9 }}
+            sx={{
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "0.5px",
+              fontWeight: 500,
+            }}
           >
             Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
           </Typography>
+
           <Typography
             variant="caption"
-            sx={{ opacity: 0.7 }}
+            sx={{
+              color: "rgba(255,255,255,0.65)",
+              letterSpacing: "0.4px",
+            }}
           >
             © {new Date().getFullYear()} — Todos los derechos reservados
           </Typography>
@@ -181,4 +185,4 @@ export default function Footer() {
       </Box>
     </Box>
   );
-            }
+}
