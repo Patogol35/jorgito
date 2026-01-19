@@ -80,17 +80,18 @@ export default function Footer() {
 
 
 {/* Créditos del portafolio */}
-      <Typography
-        variant="caption"
-        sx={{
-          display: "block",
-          mt: 1.2,
-          color: "rgba(255,255,255,0.6)",
-          letterSpacing: "0.25px",
-        }}
-      >
-        Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
-      </Typography>
+<Typography
+  variant="caption"
+  sx={{
+    display: "block",
+    mt: 1.2,
+    color: "rgba(255,255,255,0.88)", // 👈 mucho más clara
+    letterSpacing: "0.3px",
+    fontWeight: 500,
+  }}
+>
+  Página / portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+</Typography>
 
       
       <Typography
