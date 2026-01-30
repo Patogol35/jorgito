@@ -1,10 +1,9 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
 import CloudQueueIcon from "@mui/icons-material/CloudQueue";
 import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
@@ -19,7 +18,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 /* =========================
-DATA
+   DATA
 ========================= */
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
@@ -55,7 +54,7 @@ const categoryIcons = {
 };
 
 /* =========================
-COMPONENT
+   COMPONENT
 ========================= */
 export default function Skills() {
   const [filter, setFilter] = useState("All");
@@ -68,19 +67,6 @@ export default function Skills() {
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
-  /* =========================
-  🔥 PRELOAD ICONS (FIX LAG)
-  ========================= */
-  useEffect(() => {
-    skills.forEach((skill) => {
-      const img = new Image();
-      img.src = skill.img;
-    });
-  }, []);
-
-  /* =========================
-  AUTO SCROLL FILTER
-  ========================= */
   useEffect(() => {
     const activeBtn = buttonRefs.current[filter];
     const container = containerRef.current;
@@ -96,14 +82,8 @@ export default function Skills() {
     }
   }, [filter]);
 
-  /* =========================
-  FILTER (OPTIMIZED)
-  ========================= */
-  const filteredSkills = useMemo(() => {
-    return filter === "All"
-      ? skills
-      : skills.filter((s) => s.category === filter);
-  }, [filter]);
+  const filteredSkills =
+    filter === "All" ? skills : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
@@ -248,23 +228,12 @@ export default function Skills() {
                       },
                     }}
                   >
+                    {/* ICONO SIN ANIMACIÓN */}
                     <Box
-                      component={motion.img}
+                      component="img"
                       src={skill.img}
                       alt={skill.name}
                       loading="lazy"
-                      whileHover={{
-                        scale: 1.14,
-                        rotate: [0, 4, -4, 2.5, 0],
-                        y: -5,
-                      }}
-                      whileTap={{ scale: 0.94, rotate: 240 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 16,
-                        mass: 0.65,
-                      }}
                       sx={{
                         width: 65,
                         height: 65,
@@ -273,7 +242,6 @@ export default function Skills() {
                         filter: isDark
                           ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
                           : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
-                        willChange: "transform",
                       }}
                     />
 
@@ -286,7 +254,8 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
+
       </Container>
     </Box>
   );
-            }
+                }
