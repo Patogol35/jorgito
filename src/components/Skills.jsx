@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material/styles";
 import BuildIcon from "@mui/icons-material/Build";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -13,6 +12,7 @@ import {
   Box,
   ToggleButton,
   ToggleButtonGroup,
+  useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -64,13 +64,17 @@ export default function Skills() {
   const {
     filter,
     setFilter,
-    filteredSkills,
     containerRef,
     buttonRefs,
-  } = useSkillsFilter(skills);
+  } = useSkillsFilter();
 
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
   const primary = theme.palette.primary.main;
+
+  const filteredSkills =
+    filter === "All"
+      ? skills
+      : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
@@ -165,7 +169,13 @@ export default function Skills() {
                 <motion.div
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: index * 0.06 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.06,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
                 >
                   <Paper
                     sx={{
@@ -173,7 +183,7 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
-                      transition: "0.25s",
+                      transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         borderColor: primary,
@@ -184,8 +194,30 @@ export default function Skills() {
                       component={motion.img}
                       src={skill.img}
                       alt={skill.name}
-                      whileHover={{ scale: 1.14 }}
-                      sx={{ width: 65, height: 65, mb: 2 }}
+                      whileHover={{
+                        scale: 1.14,
+                        rotate: [0, 4, -4, 2.5, 0],
+                        y: -5,
+                      }}
+                      whileTap={{
+                        scale: 0.94,
+                        rotate: 240,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 16,
+                        mass: 0.65,
+                      }}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        filter: isDark
+                          ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
+                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                      }}
                     />
                     <Typography fontWeight="bold">
                       {skill.name}
@@ -200,4 +232,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-  }
+                  }
