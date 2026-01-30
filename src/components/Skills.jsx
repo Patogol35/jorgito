@@ -1,4 +1,11 @@
-import { useMemo } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+
 import {
   Container,
   Typography,
@@ -9,41 +16,87 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
+
 import { motion, AnimatePresence } from "framer-motion";
 
-import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+/* =========================
+   DATA
+========================= */
+const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
-import { categories, skills } from "../data/skillsData";
-import { useSkillsFilter } from "../hooks/useSkillsFilter";
+const skills = [
+  { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "Spring", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+  { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "Postgres", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },
+  { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
+  { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
+  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
+  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
+  { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
+  { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
+  { name: "Git", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
+  { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
+  { name: "Ubuntu", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768394423/UbuntuCoF.svg_xjbvw9.png" },
+  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"},
+  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
+];
 
+const categoryIcons = {
+  All: <AllInclusiveIcon fontSize="small" />,
+  Frontend: <CodeIcon fontSize="small" />,
+  Backend: <BuildCircleIcon fontSize="small" />,
+  Database: <StorageIcon fontSize="small" />,
+  Cloud: <CloudQueueIcon fontSize="small" />,
+  Tools: <BuildIcon fontSize="small" />,
+};
+
+/* =========================
+   COMPONENT
+========================= */
 export default function Skills() {
+  const [filter, setFilter] = useState("All");
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
-
-  const { filter, setFilter, containerRef, buttonRefs } =
-    useSkillsFilter();
 
   const primary = theme.palette.primary.main;
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const categoryIcons = {
-    All: <AllInclusiveIcon fontSize="small" />,
-    Frontend: <CodeIcon fontSize="small" />,
-    Backend: <BuildCircleIcon fontSize="small" />,
-    Database: <StorageIcon fontSize="small" />,
-    Cloud: <CloudQueueIcon fontSize="small" />,
-    Tools: <BuildIcon fontSize="small" />,
-  };
+  const containerRef = useRef(null);
+  const buttonRefs = useRef({});
 
-  const filteredSkills = useMemo(() => {
-    if (filter === "All") return skills;
-    return skills.filter((s) => s.category === filter);
+  /* =========================
+     AUTO SCROLL FILTER
+  ========================= */
+  useEffect(() => {
+    const activeBtn = buttonRefs.current[filter];
+    const container = containerRef.current;
+
+    if (!activeBtn || !container) return;
+
+    container.scrollTo({
+      left:
+        activeBtn.offsetLeft -
+        container.offsetWidth / 2 +
+        activeBtn.offsetWidth / 2,
+      behavior: "smooth",
+    });
   }, [filter]);
+
+  /* =========================
+     MEMO FILTER
+  ========================= */
+  const filteredSkills = useMemo(
+    () =>
+      filter === "All"
+        ? skills
+        : skills.filter((s) => s.category === filter),
+    [filter]
+  );
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
@@ -76,10 +129,14 @@ export default function Skills() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
+              backdropFilter: "blur(6px)",
             }}
           >
             <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography fontWeight="bold" color={primaryColor}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor }}
+            >
               Stack Tecnológico
             </Typography>
           </Box>
@@ -99,7 +156,7 @@ export default function Skills() {
               value={filter}
               exclusive
               onChange={(e, val) => val && setFilter(val)}
-              sx={{ gap: 1.2 }}
+              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
             >
               {categories.map((cat) => (
                 <ToggleButton
@@ -115,10 +172,23 @@ export default function Skills() {
                     fontWeight: 600,
                     textTransform: "none",
                     display: "flex",
+                    alignItems: "center",
                     gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(255,255,255,0.9)",
+                    color: isDark
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(0,0,0,0.75)",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255,255,255,0.12)"
+                        : "rgba(0,0,0,0.12)"
+                    }`,
                     "&.Mui-selected": {
                       background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
+                      borderColor: "transparent",
                     },
                   }}
                 >
@@ -141,7 +211,7 @@ export default function Skills() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{
                     duration: 0.45,
-                    delay: index * 0.06,
+                    delay: index * 0.05,
                   }}
                   viewport={{ once: true }}
                 >
@@ -151,6 +221,11 @@ export default function Skills() {
                       textAlign: "center",
                       borderRadius: "22px",
                       background: cardBg,
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
                       transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
@@ -172,7 +247,6 @@ export default function Skills() {
                         type: "spring",
                         stiffness: 200,
                         damping: 16,
-                        mass: 0.65,
                       }}
                       sx={{
                         width: 65,
@@ -180,10 +254,12 @@ export default function Skills() {
                         mb: 2,
                         objectFit: "contain",
                         filter: isDark
-                          ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                          ? "invert(1) brightness(1.22)"
+                          : undefined,
+                        willChange: "transform",
                       }}
                     />
+
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
@@ -193,8 +269,7 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
-
       </Container>
     </Box>
   );
-                         }
+}
