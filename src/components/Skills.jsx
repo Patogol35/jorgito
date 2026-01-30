@@ -10,29 +10,34 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-import BuildIcon from "@mui/icons-material/Build";
 
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
+
+import { categories, skills } from "../data/skillsData";
 import { useSkillsFilter } from "../hooks/useSkillsFilter";
-import { skills, categories, categoryIcons } from "../data/skillsData";
 
 export default function Skills() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  const { filter, setFilter, containerRef, buttonRefs } = useSkillsFilter();
+  const { filter, setFilter, containerRef, buttonRefs } =
+    useSkillsFilter();
 
-  const colors = {
-    primary: theme.palette.primary.main,
-    primaryText: isDark ? "#bbdefb" : "#1976d2",
-    headerBg: isDark
-      ? "rgba(144,202,249,0.06)"
-      : "rgba(25,118,210,0.06)",
-    headerBorder: isDark
-      ? "rgba(144,202,249,0.25)"
-      : "rgba(25,118,210,0.25)",
-    cardBg: isDark
-      ? "rgba(255,255,255,0.05)"
-      : "rgba(255,255,255,0.85)",
+  const primary = theme.palette.primary.main;
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+
+  const categoryIcons = {
+    All: <AllInclusiveIcon fontSize="small" />,
+    Frontend: <CodeIcon fontSize="small" />,
+    Backend: <BuildCircleIcon fontSize="small" />,
+    Database: <StorageIcon fontSize="small" />,
+    Cloud: <CloudQueueIcon fontSize="small" />,
+    Tools: <BuildIcon fontSize="small" />,
   };
 
   const filteredSkills = useMemo(() => {
@@ -40,13 +45,17 @@ export default function Skills() {
     return skills.filter((s) => s.category === filter);
   }, [filter]);
 
+  const cardBg = isDark
+    ? "rgba(255,255,255,0.05)"
+    : "rgba(255,255,255,0.85)";
+
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
         {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
@@ -57,14 +66,20 @@ export default function Skills() {
               alignItems: "center",
               gap: 1,
               px: 3,
-              py: 1,
+              py: 0.9,
               borderRadius: "999px",
-              background: colors.headerBg,
-              border: `1px solid ${colors.headerBorder}`,
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
             }}
           >
-            <BuildIcon sx={{ color: colors.primaryText }} />
-            <Typography fontWeight="bold" color={colors.primaryText}>
+            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Typography fontWeight="bold" color={primaryColor}>
               Stack Tecnológico
             </Typography>
           </Box>
@@ -102,7 +117,7 @@ export default function Skills() {
                     display: "flex",
                     gap: 1,
                     "&.Mui-selected": {
-                      background: `linear-gradient(135deg, ${colors.primary}, ${theme.palette.primary.dark})`,
+                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
                     },
                   }}
@@ -124,7 +139,10 @@ export default function Skills() {
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.06,
+                  }}
                   viewport={{ once: true }}
                 >
                   <Paper
@@ -132,10 +150,11 @@ export default function Skills() {
                       p: 3,
                       textAlign: "center",
                       borderRadius: "22px",
-                      background: colors.cardBg,
+                      background: cardBg,
                       transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
+                        borderColor: primary,
                       },
                     }}
                   >
@@ -143,16 +162,26 @@ export default function Skills() {
                       component={motion.img}
                       src={skill.img}
                       alt={skill.name}
-                      whileHover={{ scale: 1.14, y: -5 }}
-                      transition={{ type: "spring", stiffness: 200, damping: 16 }}
+                      whileHover={{
+                        scale: 1.14,
+                        rotate: [0, 4, -4, 2.5, 0],
+                        y: -5,
+                      }}
+                      whileTap={{ scale: 0.94, rotate: 240 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 16,
+                        mass: 0.65,
+                      }}
                       sx={{
                         width: 65,
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
                         filter: isDark
-                          ? "invert(1) brightness(1.2)"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.25))",
+                          ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
+                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
                       }}
                     />
                     <Typography fontWeight="bold">
@@ -168,4 +197,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-                                   }
+                         }
