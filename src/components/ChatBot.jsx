@@ -362,7 +362,7 @@ function getSmartResponse(message, context) {
 
     HAPPY: (ctx) =>
       pickNonRepeated(ctx, "HAPPY", [
-        "Sí 😊 me siento feliz cuando puedo ayudar.",
+        "Sí 😊 me siento feliz cuando puedo ayudar 💕",
         "Me pone contenta ayudarte 💕",
         "Claro que sí ☺️ disfruto mucho estas conversaciones.",
         "Ayudar siempre me hace feliz 😊",
