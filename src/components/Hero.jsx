@@ -195,10 +195,9 @@ export default function Hero({ mode, setMode }) {
                   mb: 5,
                 }}
               >
-                Me apasiona crear tecnología que transforma ideas en realidades
-                digitales. Mi enfoque está en aportar valor constante,
-                desarrollando soluciones digitales seguras, innovadoras y
-                orientadas a generar impacto positivo.
+                Me apasiona crear tecnología que transforma ideas en realidades digitales.
+Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
+Además, domino herramientas como VirtualBox, AnyDesk, Microsoft Office y NextDNS, lo que me permite gestionar entornos virtuales, soporte remoto, productividad y seguridad digital de forma eficiente.
               </Typography>
             </motion.div>
           </motion.div>
