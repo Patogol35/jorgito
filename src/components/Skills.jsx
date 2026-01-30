@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -56,6 +56,76 @@ const categoryIcons = {
 };
 
 /* =========================
+   SKILL CARD MEMO
+========================= */
+const SkillCard = memo(function SkillCard({ skill, index, isDark, primary, cardBg }) {
+  return (
+    <Grid item xs={6} sm={4} md={3}>
+      <motion.div
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        transition={{
+          duration: 0.4,
+          delay: index * 0.04,
+        }}
+        viewport={{ once: true }}
+      >
+        <Paper
+          sx={{
+            p: 3,
+            textAlign: "center",
+            borderRadius: "22px",
+            background: cardBg,
+            border: `1px solid ${
+              isDark
+                ? "rgba(255,255,255,0.15)"
+                : "rgba(0,0,0,0.12)"
+            }`,
+            transition: "all 0.25s ease",
+            "&:hover": {
+              transform: "translateY(-4px)",
+              borderColor: primary,
+            },
+          }}
+        >
+          <Box
+            component={motion.img}
+            src={skill.img}
+            alt={skill.name}
+            whileHover={{
+              scale: 1.14,
+              rotate: [0, 4, -4, 2, 0],
+              y: -5,
+            }}
+            whileTap={{ scale: 0.95 }}
+            transition={{
+              type: "spring",
+              stiffness: 200,
+              damping: 18,
+            }}
+            sx={{
+              width: 65,
+              height: 65,
+              mb: 2,
+              objectFit: "contain",
+              filter: isDark
+                ? "invert(1) brightness(1.2)"
+                : undefined,
+              willChange: "transform",
+            }}
+          />
+
+          <Typography fontWeight="bold">
+            {skill.name}
+          </Typography>
+        </Paper>
+      </motion.div>
+    </Grid>
+  );
+});
+
+/* =========================
    COMPONENT
 ========================= */
 export default function Skills() {
@@ -69,13 +139,10 @@ export default function Skills() {
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
-  /* =========================
-     AUTO SCROLL FILTER
-  ========================= */
+  /* Scroll centrado */
   useEffect(() => {
     const activeBtn = buttonRefs.current[filter];
     const container = containerRef.current;
-
     if (!activeBtn || !container) return;
 
     container.scrollTo({
@@ -87,16 +154,15 @@ export default function Skills() {
     });
   }, [filter]);
 
-  /* =========================
-     MEMO FILTER
-  ========================= */
-  const filteredSkills = useMemo(
-    () =>
-      filter === "All"
-        ? skills
-        : skills.filter((s) => s.category === filter),
-    [filter]
-  );
+  /* Filtrado optimizado */
+  const filteredSkills = useMemo(() => {
+    if (filter === "All") return skills;
+    return skills.filter((s) => s.category === filter);
+  }, [filter]);
+
+  const handleFilterChange = useCallback((e, val) => {
+    if (val) setFilter(val);
+  }, []);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
@@ -108,9 +174,9 @@ export default function Skills() {
 
         {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
@@ -155,7 +221,7 @@ export default function Skills() {
             <ToggleButtonGroup
               value={filter}
               exclusive
-              onChange={(e, val) => val && setFilter(val)}
+              onChange={handleFilterChange}
               sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
             >
               {categories.map((cat) => (
@@ -164,7 +230,7 @@ export default function Skills() {
                   value={cat}
                   ref={(el) => (buttonRefs.current[cat] = el)}
                   component={motion.button}
-                  whileTap={{ scale: 0.92 }}
+                  whileTap={{ scale: 0.93 }}
                   sx={{
                     borderRadius: "999px",
                     px: 2.4,
@@ -177,9 +243,6 @@ export default function Skills() {
                     backgroundColor: isDark
                       ? "rgba(255,255,255,0.04)"
                       : "rgba(255,255,255,0.9)",
-                    color: isDark
-                      ? "rgba(255,255,255,0.85)"
-                      : "rgba(0,0,0,0.75)",
                     border: `1px solid ${
                       isDark
                         ? "rgba(255,255,255,0.12)"
@@ -204,71 +267,18 @@ export default function Skills() {
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
             {filteredSkills.map((skill, index) => (
-              <Grid item xs={6} sm={4} md={3} key={skill.name}>
-                <motion.div
-                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: index * 0.05,
-                  }}
-                  viewport={{ once: true }}
-                >
-                  <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: primary,
-                      },
-                    }}
-                  >
-                    <Box
-                      component={motion.img}
-                      src={skill.img}
-                      alt={skill.name}
-                      whileHover={{
-                        scale: 1.14,
-                        rotate: [0, 4, -4, 2.5, 0],
-                        y: -5,
-                      }}
-                      whileTap={{ scale: 0.94, rotate: 240 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 16,
-                      }}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        filter: isDark
-                          ? "invert(1) brightness(1.22)"
-                          : undefined,
-                        willChange: "transform",
-                      }}
-                    />
-
-                    <Typography fontWeight="bold">
-                      {skill.name}
-                    </Typography>
-                  </Paper>
-                </motion.div>
-              </Grid>
+              <SkillCard
+                key={skill.name}
+                skill={skill}
+                index={index}
+                isDark={isDark}
+                primary={primary}
+                cardBg={cardBg}
+              />
             ))}
           </AnimatePresence>
         </Grid>
+
       </Container>
     </Box>
   );
