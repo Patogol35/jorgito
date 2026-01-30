@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect } from "react";
 
-export function useSkillsFilter(skills) {
+export function useSkillsFilter() {
   const [filter, setFilter] = useState("All");
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
-  // Scroll automático al botón activo
   useEffect(() => {
     const activeBtn = buttonRefs.current[filter];
     const container = containerRef.current;
@@ -22,17 +21,9 @@ export function useSkillsFilter(skills) {
     }
   }, [filter]);
 
-  // Filtrado optimizado
-  const filteredSkills = useMemo(() => {
-    return filter === "All"
-      ? skills
-      : skills.filter((s) => s.category === filter);
-  }, [filter, skills]);
-
   return {
     filter,
     setFilter,
-    filteredSkills,
     containerRef,
     buttonRefs,
   };
