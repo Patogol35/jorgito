@@ -22,7 +22,7 @@ export function useSkillsFilter(skills) {
     }
   }, [filter]);
 
-  // Skills filtradas (memoizadas)
+  // Filtrado optimizado
   const filteredSkills = useMemo(() => {
     return filter === "All"
       ? skills
@@ -36,4 +36,4 @@ export function useSkillsFilter(skills) {
     containerRef,
     buttonRefs,
   };
-    }
+}
