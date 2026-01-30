@@ -1,4 +1,11 @@
 import { useState, useRef, useEffect, useMemo } from "react";
+import BuildIcon from "@mui/icons-material/Build";
+import CodeIcon from "@mui/icons-material/Code";
+import StorageIcon from "@mui/icons-material/Storage";
+import CloudQueueIcon from "@mui/icons-material/CloudQueue";
+import BuildCircleIcon from "@mui/icons-material/BuildCircle";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 import {
   Container,
   Typography,
@@ -10,14 +17,6 @@ import {
   useTheme,
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Icons
-import BuildIcon from "@mui/icons-material/Build";
-import CodeIcon from "@mui/icons-material/Code";
-import StorageIcon from "@mui/icons-material/Storage";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import BuildCircleIcon from "@mui/icons-material/BuildCircle";
-import AllInclusiveIcon from "@mui/icons-material/AllInclusive";
 
 /* =========================
 DATA
@@ -32,7 +31,6 @@ const skills = [
   { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
   { name: "Postgres", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
   { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },
-  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
   { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
   { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
   { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
@@ -44,6 +42,7 @@ const skills = [
   { name: "MS Office", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768227236/office_732222_wevshn.png" },
   { name: "Ubuntu", category: "Tools", img: "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768394423/UbuntuCoF.svg_xjbvw9.png" },
   { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
 ];
 
 const categoryIcons = {
@@ -63,14 +62,17 @@ export default function Skills() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const primary = theme.palette.primary.main;
+
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
   /* =========================
-  PRELOAD ICONS (FIX LAG)
+  🔥 PRELOAD ICONS (FIX LAG)
   ========================= */
   useEffect(() => {
-    skills.forEach(skill => {
+    skills.forEach((skill) => {
       const img = new Image();
       img.src = skill.img;
     });
@@ -95,22 +97,20 @@ export default function Skills() {
   }, [filter]);
 
   /* =========================
-  FILTERED SKILLS (MEMO)
+  FILTER (OPTIMIZED)
   ========================= */
   const filteredSkills = useMemo(() => {
     return filter === "All"
       ? skills
-      : skills.filter(s => s.category === filter);
+      : skills.filter((s) => s.category === filter);
   }, [filter]);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.9)";
-
-  const primary = theme.palette.primary.main;
+    : "rgba(255,255,255,0.85)";
 
   return (
-    <Box id="skills" sx={{ py: 6, scrollMarginTop: "80px" }}>
+    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
         {/* HEADER */}
@@ -118,7 +118,7 @@ export default function Skills() {
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2.5rem" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
@@ -126,7 +126,7 @@ export default function Skills() {
               alignItems: "center",
               gap: 1,
               px: 3,
-              py: 1,
+              py: 0.9,
               borderRadius: "999px",
               background: isDark
                 ? "rgba(144,202,249,0.06)"
@@ -136,10 +136,14 @@ export default function Skills() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
+              backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ color: primary }} />
-            <Typography fontWeight="bold" color={primary}>
+            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
               Stack Tecnológico
             </Typography>
           </Box>
@@ -150,6 +154,7 @@ export default function Skills() {
           <Box
             ref={containerRef}
             sx={{
+              maxWidth: "100%",
               overflowX: "auto",
               "&::-webkit-scrollbar": { display: "none" },
             }}
@@ -158,25 +163,40 @@ export default function Skills() {
               value={filter}
               exclusive
               onChange={(e, val) => val && setFilter(val)}
-              sx={{ gap: 1 }}
+              sx={{ display: "inline-flex", gap: 1.2, py: 0.5 }}
             >
-              {categories.map(cat => (
+              {categories.map((cat) => (
                 <ToggleButton
                   key={cat}
                   value={cat}
-                  ref={el => (buttonRefs.current[cat] = el)}
+                  ref={(el) => (buttonRefs.current[cat] = el)}
                   component={motion.button}
                   whileTap={{ scale: 0.92 }}
                   sx={{
                     borderRadius: "999px",
-                    px: 2.5,
+                    px: 2.4,
                     py: 1,
-                    gap: 1,
-                    textTransform: "none",
                     fontWeight: 600,
+                    fontSize: "0.9rem",
+                    textTransform: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(255,255,255,0.9)",
+                    color: isDark
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(0,0,0,0.75)",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255,255,255,0.12)"
+                        : "rgba(0,0,0,0.12)"
+                    }`,
                     "&.Mui-selected": {
                       background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
+                      borderColor: "transparent",
                     },
                   }}
                 >
@@ -191,9 +211,19 @@ export default function Skills() {
         {/* GRID */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence>
-            {filteredSkills.map(skill => (
+            {filteredSkills.map((skill, index) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
-                <motion.div layout>
+                <motion.div
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.06,
+                    ease: "easeOut",
+                  }}
+                  viewport={{ once: true }}
+                >
                   <Paper
                     sx={{
                       p: 3,
@@ -205,10 +235,16 @@ export default function Skills() {
                           ? "rgba(255,255,255,0.15)"
                           : "rgba(0,0,0,0.12)"
                       }`,
-                      transition: "all .25s",
+                      boxShadow: isDark
+                        ? "0 0 0 1px rgba(255,255,255,0.05)"
+                        : "0 4px 12px rgba(0,0,0,0.06)",
+                      transition: "all 0.25s ease",
                       "&:hover": {
                         transform: "translateY(-4px)",
-                        borderColor: primary,
+                        borderColor: theme.palette.primary.main,
+                        boxShadow: isDark
+                          ? "0 8px 20px rgba(0,0,0,0.5)"
+                          : "0 8px 20px rgba(0,0,0,0.12)",
                       },
                     }}
                   >
@@ -217,17 +253,30 @@ export default function Skills() {
                       src={skill.img}
                       alt={skill.name}
                       loading="lazy"
-                      whileHover={{ scale: 1.12, y: -5 }}
-                      transition={{ type: "spring", stiffness: 200 }}
+                      whileHover={{
+                        scale: 1.14,
+                        rotate: [0, 4, -4, 2.5, 0],
+                        y: -5,
+                      }}
+                      whileTap={{ scale: 0.94, rotate: 240 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 16,
+                        mass: 0.65,
+                      }}
                       sx={{
                         width: 65,
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
-                        filter: isDark ? "invert(1) brightness(1.2)" : "none",
+                        filter: isDark
+                          ? "invert(1) brightness(1.22) drop-shadow(0 0 5px rgba(255,255,255,0.3))"
+                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
                         willChange: "transform",
                       }}
                     />
+
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
@@ -237,7 +286,6 @@ export default function Skills() {
             ))}
           </AnimatePresence>
         </Grid>
-
       </Container>
     </Box>
   );
