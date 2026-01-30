@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useSkillsFilter } from "@/hooks/useSkillsFilter";
+import { useSkillsFilter } from "../hooks/useSkillsFilter";
 
 /* =========================
    DATA
