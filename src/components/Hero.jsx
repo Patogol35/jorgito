@@ -5,39 +5,29 @@ import {
   Button,
   Avatar,
   IconButton,
-  Stack,
 } from "@mui/material";
-
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import TerminalIcon from "@mui/icons-material/Terminal";
-import ApiIcon from "@mui/icons-material/Api";
-import SecurityIcon from "@mui/icons-material/Security";
-import StorageIcon from "@mui/icons-material/Storage";
-import SupportAgentIcon from "@mui/icons-material/SupportAgent";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
+  /* ================= ANIMACIONES ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
       y: 16,
-      clipPath: "inset(0 0 100% 0)",
       filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
       transition: { duration: 1, ease: easeOutExpo },
     },
@@ -70,6 +60,8 @@ export default function Hero({ mode, setMode }) {
       <Box
         id="hero"
         sx={{
+          position: "relative",
+          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
@@ -84,8 +76,15 @@ export default function Hero({ mode, setMode }) {
         <motion.div
           initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
-          style={{ borderRadius: "50%", perspective: 1300 }}
+          transition={{
+            duration: 2.4,
+            ease: [0.25, 0.9, 0.35, 1],
+          }}
+          style={{
+            borderRadius: "50%",
+            transformStyle: "preserve-3d",
+            perspective: 1300,
+          }}
         >
           <motion.div
             animate={{ y: [0, -12, 0] }}
@@ -98,19 +97,30 @@ export default function Hero({ mode, setMode }) {
                 width: { xs: 130, sm: 170, md: 200 },
                 height: { xs: 130, sm: 170, md: 200 },
                 border: `3px solid ${theme.palette.primary.main}`,
-                boxShadow: `0 0 22px ${theme.palette.primary.main}88`,
+                boxShadow: `0 0 24px ${theme.palette.primary.main}66`,
+                backgroundColor: theme.palette.background.paper,
               }}
             />
           </motion.div>
         </motion.div>
 
         {/* ================= TEXTO ================= */}
-        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
-          <motion.div variants={textContainer} initial="hidden" animate="visible">
+        <Box
+          textAlign={{ xs: "center", sm: "left" }}
+          maxWidth="620px"
+          mx="auto"
+          zIndex={1}
+        >
+          <motion.div
+            variants={textContainer}
+            initial="hidden"
+            animate="visible"
+          >
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
                 fontWeight="bold"
+                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
@@ -124,67 +134,75 @@ export default function Hero({ mode, setMode }) {
               <Typography
                 variant="h6"
                 color="text.secondary"
-                sx={{ fontStyle: "italic", mt: 1 }}
+                sx={{ fontStyle: "italic" }}
               >
-                Ingeniero en Sistemas · Máster en Ingeniería de Software
+                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas
+                Informáticos
               </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
-                  mt: 3,
-                  mb: 3,
+                  fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
+                  color: theme.palette.text.primary,
                   opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
+                  maxWidth: "540px",
+                  mt: 3,
                 }}
               >
-                Desarrollo soluciones digitales{" "}
-                <b>seguras, escalables e innovadoras</b>, transformando ideas en
-                productos reales que generan <b>impacto y valor constante</b>.
+                Me apasiona crear tecnología que transforma ideas en realidades
+                digitales. Desarrollo soluciones seguras, eficientes y
+                orientadas a generar impacto real.
               </Typography>
             </motion.div>
 
-            {/* ================= ICONOS + NOMBRE ================= */}
+            {/* ================= CHIPS DE HERRAMIENTAS ================= */}
             <motion.div variants={fadeCinematic}>
-              <Stack
-                direction="row"
-                spacing={3}
-                justifyContent={{ xs: "center", sm: "flex-start" }}
-                flexWrap="wrap"
-                sx={{ mb: 5 }}
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 1.4,
+                  mt: 4,
+                  justifyContent: { xs: "center", sm: "flex-start" },
+                }}
               >
                 {[
-                  { icon: <TerminalIcon />, name: "Linux" },
-                  { icon: <ApiIcon />, name: "Postman" },
-                  { icon: <StorageIcon />, name: "VirtualBox" },
-                  { icon: <SecurityIcon />, name: "NextDNS" },
-                  { icon: <SupportAgentIcon />, name: "AnyDesk" },
-                  { icon: <DescriptionOutlinedIcon />, name: "Office" },
-                ].map((tech, i) => (
-                  <Box
+                  "Linux",
+                  "VirtualBox",
+                  "Postman",
+                  "NextDNS",
+                  "AnyDesk",
+                  "Microsoft Office",
+                ].map((tool, i) => (
+                  <motion.div
                     key={i}
-                    sx={{
-                      textAlign: "center",
-                      minWidth: 70,
-                      color: theme.palette.primary.main,
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px) scale(1.08)",
-                        color: "#3b82f6",
-                      },
-                    }}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.96 }}
                   >
-                    <Box sx={{ fontSize: 28 }}>{tech.icon}</Box>
-                    <Typography
-                      variant="caption"
-                      sx={{ display: "block", mt: 0.5 }}
+                    <Box
+                      sx={{
+                        px: 2.2,
+                        py: 0.9,
+                        borderRadius: "999px",
+                        fontSize: "0.9rem",
+                        fontWeight: 600,
+                        background:
+                          theme.palette.mode === "dark"
+                            ? "rgba(59,130,246,0.18)"
+                            : "rgba(59,130,246,0.12)",
+                        color: theme.palette.primary.main,
+                        border: `1px solid ${theme.palette.primary.main}33`,
+                        backdropFilter: "blur(6px)",
+                      }}
                     >
-                      {tech.name}
-                    </Typography>
-                  </Box>
+                      {tool}
+                    </Box>
+                  </motion.div>
                 ))}
-              </Stack>
+              </Box>
             </motion.div>
           </motion.div>
 
@@ -198,8 +216,10 @@ export default function Hero({ mode, setMode }) {
               sx={{
                 display: "flex",
                 gap: 2,
-                flexWrap: "wrap",
+                mt: 5,
                 justifyContent: { xs: "center", sm: "flex-start" },
+                flexWrap: "wrap",
+                alignItems: "center",
               }}
             >
               {[
@@ -234,6 +254,7 @@ export default function Hero({ mode, setMode }) {
                       px: 4,
                       py: 1.4,
                       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
@@ -243,10 +264,23 @@ export default function Hero({ mode, setMode }) {
 
               <motion.div variants={fadeCinematic}>
                 <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{ color: theme.palette.primary.main }}
+                  onClick={() =>
+                    setMode(mode === "light" ? "dark" : "light")
+                  }
+                  sx={{
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: "transparent",
+                      transform: "scale(1.15)",
+                    },
+                    transition: "transform 0.2s ease",
+                  }}
                 >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  {mode === "light" ? (
+                    <Brightness4 sx={{ fontSize: 28 }} />
+                  ) : (
+                    <Brightness7 sx={{ fontSize: 28 }} />
+                  )}
                 </IconButton>
               </motion.div>
             </Box>
@@ -255,4 +289,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-            }
+                                       }
