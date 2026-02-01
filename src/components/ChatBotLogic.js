@@ -587,4 +587,4 @@ export function getSmartResponse(message, context) {
 
     // Frases multi-palabra válidas sin nombre
     const validMultiWord = [
-  
+        
