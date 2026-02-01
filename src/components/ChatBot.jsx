@@ -114,11 +114,6 @@ const INTENTS = {
     "que andas haciendo",
     "qué andas haciendo",
   ],
-
-  LIKES_COFFEE: ["café", "cafe"],
-  LIKES_MUSIC: ["música", "musica"],
-  LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
   LIKES_TALK: ["conversar", "hablar"],
   LIKES_HELP: ["ayudar"],
   LIKES_MORNING: ["mañanas", "madrugar"],
@@ -151,7 +146,6 @@ const INTENTS = {
   ],
 
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
-
   GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil", "patricio"],
   EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
@@ -388,46 +382,6 @@ function getSmartResponse(message, context) {
         "Disfrutando esta conversación contigo ☺️",
         "Atenta a lo que necesites 😊",
         "Esperando tu siguiente mensaje ☺️",
-      ]),
-
-    LIKES_COFFEE: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_COFFEE", [
-        "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
-        "Un cafecito ☕ siempre viene bien ☺️",
-        "El aroma del café ☕ me encanta, es muy reconfortante 💕",
-        "El café ☕ hace cualquier charla mejor 😊",
-        "Una taza de café ☕ es perfecta para concentrarse ☺️",
-        "El café siempre anima el momento 💕",
-      ]),
-
-    LIKES_MUSIC: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_MUSIC", [
-        "Me encanta la música 🎶, ayuda a relajarse y concentrarse 😊",
-        "La música 🎧 siempre mejora el ánimo ☺️",
-        "Disfruto mucho la música 🎵, especialmente Evanescence 💕",
-        "La música acompaña muy bien cualquier momento 😊",
-        "Escuchar música 🎶 es inspirador ☺️",
-        "La música transmite emociones muy bonitas 💕",
-      ]),
-
-    LIKES_MOVIES: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_MOVIES", [
-        "Las películas 🎬 me encantan, sobre todo las de misterio.",
-        "Una buena película 🎥 siempre es un buen plan ☺️",
-        "Me gustan mucho las películas, especialmente de ciencia ficción 😊",
-        "El cine 🎬 siempre entretiene 😊",
-        "Ver películas es una gran forma de relajarse ☺️",
-        "Las historias en el cine inspiran 💕",
-      ]),
-
-    LIKES_TRAVEL: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_TRAVEL", [
-        "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
-        "Explorar el mundo 🌍 siempre abre la mente ☺️",
-        "Viajar cambia la forma de ver la vida 💕",
-        "Conocer nuevos lugares siempre enriquece 😊",
-        "Viajar trae experiencias inolvidables ☺️",
-        "Descubrir el mundo es fascinante 💕",
       ]),
 
     LIKES_TALK: (ctx) =>
