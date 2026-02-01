@@ -5,51 +5,46 @@ import {
   Button,
   Avatar,
   IconButton,
+  Grid,
+  Paper,
 } from "@mui/material";
-import DescriptionIcon from "@mui/icons-material/Description";
-import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import {
+  Description,
+  WorkspacePremium,
+  SmartToy,
+  Brightness4,
+  Brightness7,
+  Terminal,
+  Api,
+  Storage,
+  Security,
+  SupportAgent,
+} from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
+
+/* ================= TOOLS ================= */
+const tools = [
+  { label: "Linux", icon: <Terminal /> },
+  { label: "Postman", icon: <Api /> },
+  { label: "VirtualBox", icon: <Storage /> },
+  { label: "NextDNS", icon: <Security /> },
+  { label: "AnyDesk", icon: <SupportAgent /> },
+  { label: "Microsoft Office", icon: <Description /> },
+];
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  /* ================= ANIMACIONES ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
-    hidden: {
-      opacity: 0,
-      y: 16,
-      filter: "blur(6px)",
-    },
+    hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
     visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 1, ease: easeOutExpo },
-    },
-  };
-
-  const textContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.22,
-        delayChildren: 0.6,
-      },
-    },
-  };
-
-  const buttonsContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.14,
-        delayChildren: 1.3,
-      },
+      transition: { duration: 0.9, ease: easeOutExpo },
     },
   };
 
@@ -60,70 +55,49 @@ export default function Hero({ mode, setMode }) {
       <Box
         id="hero"
         sx={{
-          position: "relative",
-          overflow: "hidden",
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
+          flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
           justifyContent: "center",
-          gap: { xs: 4, md: 8 },
-          pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 2, sm: 3 },
-          px: { xs: 2, sm: 4, md: 8 },
+          gap: { xs: 5, md: 8 },
+          px: { xs: 2, md: 8 },
+          pt: { xs: 6, md: 10 },
+          pb: 6,
         }}
       >
         {/* ================= AVATAR ================= */}
         <motion.div
           initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{
-            duration: 2.4,
-            ease: [0.25, 0.9, 0.35, 1],
-          }}
-          style={{
-            borderRadius: "50%",
-            transformStyle: "preserve-3d",
-            perspective: 1300,
-          }}
+          transition={{ duration: 2.2, ease: easeOutExpo }}
         >
-          <motion.div
-            animate={{ y: [0, -12, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Avatar
-              alt="Jorge Patricio"
-              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
-              sx={{
-                width: { xs: 130, sm: 170, md: 200 },
-                height: { xs: 130, sm: 170, md: 200 },
-                border: `3px solid ${theme.palette.primary.main}`,
-                boxShadow: `0 0 24px ${theme.palette.primary.main}66`,
-                backgroundColor: theme.palette.background.paper,
-              }}
-            />
-          </motion.div>
+          <Avatar
+            src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
+            sx={{
+              width: { xs: 140, sm: 180, md: 200 },
+              height: { xs: 140, sm: 180, md: 200 },
+              border: `3px solid ${theme.palette.primary.main}`,
+              boxShadow: `0 0 25px ${theme.palette.primary.main}66`,
+            }}
+          />
         </motion.div>
 
-        {/* ================= TEXTO ================= */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="620px"
-          mx="auto"
-          zIndex={1}
-        >
+        {/* ================= CONTENIDO ================= */}
+        <Box maxWidth="640px">
           <motion.div
-            variants={textContainer}
             initial="hidden"
             animate="visible"
+            variants={{
+              visible: { transition: { staggerChildren: 0.18 } },
+            }}
           >
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
                 fontWeight="bold"
-                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                  fontSize: { xs: "1.9rem", md: "2.6rem" },
                 }}
               >
                 Hola, soy Jorge Patricio Santamaría Cherrez
@@ -133,160 +107,132 @@ export default function Hero({ mode, setMode }) {
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h6"
+                sx={{ mt: 1, fontStyle: "italic" }}
                 color="text.secondary"
-                sx={{ fontStyle: "italic" }}
               >
-                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas
-                Informáticos
+                Ingeniero en Sistemas · Máster en Ingeniería de Software
               </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
-                  color: theme.palette.text.primary,
-                  opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
-                  maxWidth: "540px",
                   mt: 3,
+                  lineHeight: 1.9,
+                  opacity: 0.9,
                 }}
               >
                 Me apasiona crear tecnología que transforma ideas en realidades
-                digitales. Desarrollo soluciones seguras, eficientes y
+                digitales. Desarrollo soluciones seguras, escalables y
                 orientadas a generar impacto real.
               </Typography>
             </motion.div>
 
-            {/* ================= CHIPS DE HERRAMIENTAS ================= */}
+            {/* ================= TOOLS GRID ================= */}
+            <motion.div variants={fadeCinematic}>
+              <Typography
+                sx={{
+                  mt: 4,
+                  mb: 2,
+                  fontWeight: 600,
+                  color: theme.palette.text.secondary,
+                }}
+              >
+                🛠 Herramientas principales
+              </Typography>
+
+              <Grid container spacing={2}>
+                {tools.map((tool, i) => (
+                  <Grid item xs={6} sm={4} key={tool.label}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <Paper
+                        elevation={0}
+                        sx={{
+                          p: 2,
+                          height: "100%",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: 1,
+                          borderRadius: 3,
+                          backdropFilter: "blur(10px)",
+                          background:
+                            theme.palette.mode === "dark"
+                              ? "rgba(15,23,42,0.55)"
+                              : "rgba(241,245,249,0.8)",
+                          border: `1px solid ${theme.palette.primary.main}33`,
+                          transition: "all 0.35s ease",
+                          "&:hover": {
+                            transform: "translateY(-6px) scale(1.03)",
+                            boxShadow: `0 12px 30px ${theme.palette.primary.main}33`,
+                          },
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            color: theme.palette.primary.main,
+                            fontSize: 34,
+                          }}
+                        >
+                          {tool.icon}
+                        </Box>
+                        <Typography fontWeight={500}>
+                          {tool.label}
+                        </Typography>
+                      </Paper>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </Grid>
+            </motion.div>
+
+            {/* ================= BOTONES ================= */}
             <motion.div variants={fadeCinematic}>
               <Box
                 sx={{
+                  mt: 5,
                   display: "flex",
+                  gap: 2,
                   flexWrap: "wrap",
-                  gap: 1.4,
-                  mt: 4,
-                  justifyContent: { xs: "center", sm: "flex-start" },
+                  alignItems: "center",
                 }}
               >
-                {[
-                  "Linux",
-                  "VirtualBox",
-                  "Postman",
-                  "NextDNS",
-                  "AnyDesk",
-                  "Microsoft Office",
-                ].map((tool, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.08 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    <Box
-                      sx={{
-                        px: 2.2,
-                        py: 0.9,
-                        borderRadius: "999px",
-                        fontSize: "0.9rem",
-                        fontWeight: 600,
-                        background:
-                          theme.palette.mode === "dark"
-                            ? "rgba(59,130,246,0.18)"
-                            : "rgba(59,130,246,0.12)",
-                        color: theme.palette.primary.main,
-                        border: `1px solid ${theme.palette.primary.main}33`,
-                        backdropFilter: "blur(6px)",
-                      }}
-                    >
-                      {tool}
-                    </Box>
-                  </motion.div>
-                ))}
-              </Box>
-            </motion.div>
-          </motion.div>
+                <Button
+                  variant="contained"
+                  startIcon={<Description />}
+                  href="/Jorge.CV.pdf"
+                  target="_blank"
+                  sx={{ borderRadius: 25, px: 4 }}
+                >
+                  Ver CV
+                </Button>
 
-          {/* ================= BOTONES ================= */}
-          <motion.div
-            variants={buttonsContainer}
-            initial="hidden"
-            animate="visible"
-          >
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                mt: 5,
-                justifyContent: { xs: "center", sm: "flex-start" },
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              {[
-                {
-                  label: "Ver CV",
-                  icon: <DescriptionIcon />,
-                  href: "/Jorge.CV.pdf",
-                },
-                {
-                  label: "Ver Título",
-                  icon: <WorkspacePremiumIcon />,
-                  href:
-                    "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
-                },
-                {
-                  label: "Sasha",
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                },
-              ].map((btn, i) => (
-                <motion.div key={i} variants={fadeCinematic}>
-                  <Button
-                    variant="contained"
-                    startIcon={btn.icon}
-                    href={btn.href}
-                    onClick={btn.onClick}
-                    target={btn.href ? "_blank" : undefined}
-                    sx={{
-                      borderRadius: "25px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
-                    }}
-                  >
-                    {btn.label}
-                  </Button>
-                </motion.div>
-              ))}
+                <Button
+                  variant="contained"
+                  startIcon={<WorkspacePremium />}
+                  href="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg"
+                  target="_blank"
+                  sx={{ borderRadius: 25, px: 4 }}
+                >
+                  Ver Título
+                </Button>
 
-              <motion.div variants={fadeCinematic}>
                 <IconButton
                   onClick={() =>
                     setMode(mode === "light" ? "dark" : "light")
                   }
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                    transition: "transform 0.2s ease",
-                  }}
                 >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 </IconButton>
-              </motion.div>
-            </Box>
+              </Box>
+            </motion.div>
           </motion.div>
         </Box>
       </Box>
     </>
   );
-                                       }
+}
