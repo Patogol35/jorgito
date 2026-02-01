@@ -74,9 +74,7 @@ const PROFILE = {
     "Git",
     "Linux",
   ],
-
-  const PROFILE = {
-  ...
+  
   tools: [
     "Git",
     "NextDNS",
@@ -87,7 +85,7 @@ const PROFILE = {
     "Vercel",
     "Microsoft Office",
   ],
-};
+  
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
