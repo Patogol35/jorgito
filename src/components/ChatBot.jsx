@@ -3,19 +3,41 @@ import {
   Box,
   Fab,
   Paper,
+  TextField,
   Typography,
+  IconButton,
+  Chip,
+  Stack,
+  Tooltip,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { SmartToyIcon } from "@mui/icons-material";
 
-import ChatHeader from './ChatHeader';
-import ChatSuggestions from './ChatSuggestions';
-import ChatMessage from './ChatMessage';
-import ChatInput from './ChatInput';
-import { getSmartResponse, followUp } from './ChatBotLogic';
-import { SUGGESTIONS, delay } from './ChatBotConstants';
+import SmartToyIcon from "@mui/icons-material/SmartToy";
+import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
 
+import { 
+  SUGGESTIONS,
+  WHATSAPP_URL 
+} from './ChatBot.constants';
+
+import { getSmartResponse, followUp } from './ChatBot.logic';
+import {
+  FabButton,
+  Overlay,
+  ChatPaper,
+  HeaderBox,
+  SuggestionsBox,
+  MessagesBox,
+  MessageBubble,
+  InputBox
+} from './ChatBot.styles';
+
+/* =========================
+COMPONENTE
+========================= */
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -54,11 +76,7 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
-  const handleClear = useCallback(() => {
-    setMessages([initialMessage]);
-  }, [initialMessage]);
-
-  const handleSendMessage = useCallback((text) => {
+  const sendMessage = useCallback((text) => {
     if (!text.trim()) return;
 
     setMessages((m) => [...m, { from: "user", text }]);
@@ -86,7 +104,7 @@ export default function ChatBot() {
           awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
         };
       });
-    }, delay());
+    }, Math.floor(Math.random() * 500) + 400);
   }, []);
 
   return (
@@ -116,67 +134,99 @@ export default function ChatBot() {
       </Fab>
 
       {/* OVERLAY */}
-      {open && (
-        <Box
-          onClick={() => setOpen(false)}
-          sx={{
-            position: "fixed",
-            inset: 0,
-            zIndex: (theme) => theme.zIndex.modal + 1,
-          }}
-        />
-      )}
+      {open && <Overlay onClick={() => setOpen(false)} />}
 
       {/* CHAT */}
       {open && (
-        <Paper
-          onClick={(e) => e.stopPropagation()}
-          sx={{
-            position: "fixed",
-            zIndex: (theme) => theme.zIndex.modal + 2,
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-            ...(isLandscape
-              ? {
-                  inset: "72px 0 10px 0",
-                  margin: "0 auto",
-                  width: "100%",
-                  maxWidth: 640,
-                }
-              : {
-                  bottom: 90,
-                  left: 16,
-                  width: 360,
-                  height: 520,
-                }),
-          }}
-        >
+        <ChatPaper isLandscape={isLandscape}>
           {/* HEADER */}
-          <ChatHeader 
-            primaryBg={primaryBg} 
-            onClear={handleClear} 
-            onClose={() => setOpen(false)} 
-          />
+          <HeaderBox primaryBg={primaryBg}>
+            <Box display="flex" alignItems="center" gap={1}>
+              <SmartToyIcon fontSize="small" />
+              <Typography fontWeight="bold">Sasha</Typography>
+            </Box>
+
+            <Box>
+              <IconButton
+                size="small"
+                sx={{ color: "#fff" }}
+                onClick={() => setMessages([initialMessage])}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                size="small"
+                sx={{ color: "#fff" }}
+                onClick={() => setOpen(false)}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          </HeaderBox>
 
           {/* SUGERENCIAS */}
-          <ChatSuggestions 
-            suggestions={SUGGESTIONS} 
-            onSuggestionClick={handleSendMessage} 
-            isLandscape={isLandscape} 
-          />
+          <SuggestionsBox isLandscape={isLandscape}>
+            {isLandscape ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  overflowX: "auto",
+                  whiteSpace: "nowrap",
+                  pb: 1,
+                }}
+              >
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                    sx={{ flexShrink: 0 }}
+                  />
+                ))}
+              </Box>
+            ) : (
+              <Stack direction="row" flexWrap="wrap" gap={1}>
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                  />
+                ))}
+              </Stack>
+            )}
+          </SuggestionsBox>
 
           {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
-            {messages.map((m, i) => (
-              <ChatMessage 
-                key={i} 
-                message={m} 
-                isDark={isDark} 
-                theme={theme} 
-                isLandscape={isLandscape} 
-              />
-            ))}
+          <MessagesBox>
+            {messages.map((m, i) => {
+              const isUser = m.from === "user";
+
+              return (
+                <Box
+                  key={i}
+                  sx={{
+                    display: "flex",
+                    justifyContent: isUser ? "flex-end" : "flex-start",
+                    mb: 1,
+                  }}
+                >
+                  <MessageBubble isUser={isUser} isDark={isDark}>
+                    <Typography
+                      sx={{
+                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
+                        lineHeight: isLandscape ? 1.4 : 1.5,
+                      }}
+                    >
+                      {m.text}
+                    </Typography>
+                  </MessageBubble>
+                </Box>
+              );
+            })}
 
             {typing && (
               <Typography
@@ -188,16 +238,29 @@ export default function ChatBot() {
             )}
 
             <div ref={bottomRef} />
-          </Box>
+          </MessagesBox>
 
           {/* INPUT */}
-          <ChatInput 
-            input={input} 
-            onInputChange={setInput} 
-            onSendMessage={() => handleSendMessage(input)} 
-          />
-        </Paper>
+          <InputBox>
+            <TextField
+              fullWidth
+              size="small"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage(input);
+                }
+              }}
+              placeholder="Escribe tu mensaje…"
+            />
+            <IconButton onClick={() => sendMessage(input)}>
+              <SendIcon sx={{ color: "#03A9F4" }} />
+            </IconButton>
+          </InputBox>
+        </ChatPaper>
       )}
     </>
   );
-      }
+}
