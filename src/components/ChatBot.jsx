@@ -3,47 +3,62 @@ import {
   Box,
   Fab,
   Paper,
-  TextField,
   Typography,
-  IconButton,
-  Chip,
-  Stack,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import SmartToyIcon from "@mui/icons-material/SmartToy";
-import SendIcon from "@mui/icons-material/Send";
-import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { SmartToyIcon } from "@mui/icons-material";
 
-import { SUGGESTIONS } from "./config";
-import { delay } from "./utils";
-import { getSmartResponse } from "./engine";
+import ChatHeader from './ChatHeader';
+import ChatSuggestions from './ChatSuggestions';
+import ChatMessage from './ChatMessage';
+import ChatInput from './ChatInput';
+import { getSmartResponse, followUp } from './ChatBotLogic';
+import { SUGGESTIONS, delay } from './ChatBotConstants';
 
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isLandscape = useMediaQuery("(orientation: landscape)");
 
+  const primaryBg = useMemo(
+    () => (isDark ? "#000" : theme.palette.primary.main),
+    [isDark, theme]
+  );
+
   const bottomRef = useRef(null);
+
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({});
-  const [messages, setMessages] = useState([
-    {
+
+  const initialMessage = useMemo(
+    () => ({
       from: "bot",
       text:
         "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
         "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    },
-  ]);
+    }),
+    []
+  );
+
+  const [messages, setMessages] = useState([initialMessage]);
+
+  useEffect(() => {
+    window.openSashaChat = () => setOpen(true);
+    window.closeSashaChat = () => setOpen(false);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
-  const sendMessage = useCallback((text) => {
+  const handleClear = useCallback(() => {
+    setMessages([initialMessage]);
+  }, [initialMessage]);
+
+  const handleSendMessage = useCallback((text) => {
     if (!text.trim()) return;
 
     setMessages((m) => [...m, { from: "user", text }]);
@@ -53,74 +68,136 @@ export default function ChatBot() {
     setTimeout(() => {
       setContext((prev) => {
         const res = getSmartResponse(text, prev);
+        const follow = followUp(res.intent);
 
-        setMessages((m) => [...m, { from: "bot", text: res.text }]);
+        setMessages((m) => [
+          ...m,
+          { from: "bot", text: res.text },
+          ...(!res.fromFollowUp && follow
+            ? [{ from: "bot", text: follow }]
+            : []),
+        ]);
+
         setTyping(false);
 
-        return prev;
+        return {
+          ...prev,
+          awaiting: res.action || null,
+          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+        };
       });
     }, delay());
   }, []);
 
   return (
     <>
+      {/* BOTÓN FLOTANTE */}
       <Fab
         onClick={() => setOpen(true)}
-        sx={{ position: "fixed", bottom: 16, left: 16 }}
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          left: 16,
+          bgcolor: primaryBg,
+          color: "#fff",
+          "&:hover": {
+            bgcolor: primaryBg,
+          },
+          "&:active": {
+            bgcolor: primaryBg,
+            color: "#fff",
+          },
+          "&:focus": {
+            color: "#fff",
+          },
+        }}
       >
         <SmartToyIcon />
       </Fab>
 
+      {/* OVERLAY */}
       {open && (
-        <Paper
+        <Box
+          onClick={() => setOpen(false)}
           sx={{
             position: "fixed",
-            bottom: 90,
-            left: 16,
-            width: 360,
-            height: 520,
+            inset: 0,
+            zIndex: (theme) => theme.zIndex.modal + 1,
+          }}
+        />
+      )}
+
+      {/* CHAT */}
+      {open && (
+        <Paper
+          onClick={(e) => e.stopPropagation()}
+          sx={{
+            position: "fixed",
+            zIndex: (theme) => theme.zIndex.modal + 2,
             display: "flex",
             flexDirection: "column",
+            overflow: "hidden",
+            ...(isLandscape
+              ? {
+                  inset: "72px 0 10px 0",
+                  margin: "0 auto",
+                  width: "100%",
+                  maxWidth: 640,
+                }
+              : {
+                  bottom: 90,
+                  left: 16,
+                  width: 360,
+                  height: 520,
+                }),
           }}
         >
-          <Box sx={{ p: 1, bgcolor: "primary.main", color: "#fff" }}>
-            Sasha
-            <IconButton onClick={() => setOpen(false)}>
-              <CloseIcon sx={{ color: "#fff" }} />
-            </IconButton>
-          </Box>
+          {/* HEADER */}
+          <ChatHeader 
+            primaryBg={primaryBg} 
+            onClear={handleClear} 
+            onClose={() => setOpen(false)} 
+          />
 
-          <Box sx={{ p: 1 }}>
-            <Stack direction="row" flexWrap="wrap" gap={1}>
-              {SUGGESTIONS.map((q) => (
-                <Chip key={q} label={q} onClick={() => sendMessage(q)} />
-              ))}
-            </Stack>
-          </Box>
+          {/* SUGERENCIAS */}
+          <ChatSuggestions 
+            suggestions={SUGGESTIONS} 
+            onSuggestionClick={handleSendMessage} 
+            isLandscape={isLandscape} 
+          />
 
+          {/* MENSAJES */}
           <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((m, i) => (
-              <Typography key={i}>{m.text}</Typography>
+              <ChatMessage 
+                key={i} 
+                message={m} 
+                isDark={isDark} 
+                theme={theme} 
+                isLandscape={isLandscape} 
+              />
             ))}
-            {typing && <Typography>Sasha está escribiendo…</Typography>}
+
+            {typing && (
+              <Typography
+                variant="caption"
+                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+              >
+                Sasha está escribiendo…
+              </Typography>
+            )}
+
             <div ref={bottomRef} />
           </Box>
 
-          <Box sx={{ p: 1, display: "flex" }}>
-            <TextField
-              fullWidth
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") sendMessage(input);
-              }}
-            />
-            <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon />
-            </IconButton>
-          </Box>
+          {/* INPUT */}
+          <ChatInput 
+            input={input} 
+            onInputChange={setInput} 
+            onSendMessage={() => handleSendMessage(input)} 
+          />
         </Paper>
       )}
     </>
   );
-}
+      }
