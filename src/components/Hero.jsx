@@ -5,23 +5,27 @@ import {
   Button,
   Avatar,
   IconButton,
+  Stack,
+  Tooltip,
 } from "@mui/material";
+
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import ApiIcon from "@mui/icons-material/Api";
+import SecurityIcon from "@mui/icons-material/Security";
+import StorageIcon from "@mui/icons-material/Storage";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  const glowColor =
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#60a5fa";
-
-  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -79,85 +83,38 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR MONEDA PULIDA ================= */}
-
-<motion.div
-  initial={{
-    opacity: 0,
-    rotateY: -180,
-    scale: 0.9,
-  }}
-  animate={{
-    opacity: 1,
-    rotateY: 0,
-    scale: 1,
-  }}
-  transition={{
-    duration: 2.4,
-    ease: [0.25, 0.9, 0.35, 1], // natural cinematic
-  }}
-  style={{
-    borderRadius: "50%",
-    transformStyle: "preserve-3d",
-    perspective: 1300,
-  }}
->
-  <motion.div
-    animate={{
-      y: [0, -12, 0],
-      rotateX: [0, 1.2, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <motion.div
-      animate={{
-        boxShadow: [
-          `0 0 18px ${theme.palette.primary.main}55`,
-          `0 0 28px ${theme.palette.primary.main}88`,
-          `0 0 18px ${theme.palette.primary.main}55`,
-        ],
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        borderRadius: "50%",
-      }}
-    >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
-        sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          border: `3px solid ${theme.palette.primary.main}`,
-          boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
-          backfaceVisibility: "hidden",
-          backgroundColor: theme.palette.background.paper,
-        }}
-      />
-    </motion.div>
-  </motion.div>
-</motion.div>
+        {/* ================= AVATAR ================= */}
+        <motion.div
+          initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
+          animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
+          style={{ borderRadius: "50%", perspective: 1300 }}
+        >
+          <motion.div
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Avatar
+              alt="Jorge Patricio"
+              src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
+              sx={{
+                width: { xs: 130, sm: 170, md: 200 },
+                height: { xs: 130, sm: 170, md: 200 },
+                border: `3px solid ${theme.palette.primary.main}`,
+                boxShadow: `0 0 22px ${theme.palette.primary.main}88`,
+                backgroundColor: theme.palette.background.paper,
+              }}
+            />
+          </motion.div>
+        </motion.div>
 
         {/* ================= TEXTO ================= */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
-          zIndex={1}
         >
-          <motion.div
-            variants={textContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
@@ -178,7 +135,7 @@ export default function Hero({ mode, setMode }) {
                 color="text.secondary"
                 sx={{ fontStyle: "italic" }}
               >
-                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos
+                Ingeniero en Sistemas · Máster en Ingeniería de Software
               </Typography>
             </motion.div>
 
@@ -187,18 +144,50 @@ export default function Hero({ mode, setMode }) {
                 sx={{
                   fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
-                  letterSpacing: "0.3px",
-                  color: theme.palette.text.primary,
-                  opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
-                  maxWidth: "520px",
                   mt: 3,
-                  mb: 5,
+                  mb: 3,
+                  opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 }}
               >
-                Me apasiona crear tecnología que transforma ideas en realidades digitales.
-Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
-Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs (Postman), virtualización de entornos (VirtualBox), seguridad y control de red (NextDNS), soporte y administración remota (AnyDesk), productividad y documentación técnica (Microsoft Office)
+                Desarrollo soluciones digitales{" "}
+                <b>seguras, escalables e innovadoras</b>, transformando ideas en
+                productos reales que generan <b>impacto y valor constante</b>.
               </Typography>
+            </motion.div>
+
+            {/* ================= ICONOS ================= */}
+            <motion.div variants={fadeCinematic}>
+              <Stack
+                direction="row"
+                spacing={2.2}
+                justifyContent={{ xs: "center", sm: "flex-start" }}
+                sx={{ mb: 5 }}
+              >
+                {[
+                  { icon: <TerminalIcon />, label: "Linux / Desarrollo" },
+                  { icon: <ApiIcon />, label: "APIs / Postman" },
+                  { icon: <StorageIcon />, label: "Virtualización" },
+                  { icon: <SecurityIcon />, label: "Seguridad / NextDNS" },
+                  { icon: <SupportAgentIcon />, label: "Soporte remoto" },
+                  { icon: <DescriptionOutlinedIcon />, label: "Documentación" },
+                ].map((item, i) => (
+                  <Tooltip title={item.label} key={i} arrow>
+                    <Box
+                      sx={{
+                        color: theme.palette.primary.main,
+                        fontSize: 28,
+                        transition: "all 0.25s ease",
+                        "&:hover": {
+                          transform: "translateY(-4px) scale(1.15)",
+                          color: "#3b82f6",
+                        },
+                      }}
+                    >
+                      {item.icon}
+                    </Box>
+                  </Tooltip>
+                ))}
+              </Stack>
             </motion.div>
           </motion.div>
 
@@ -212,9 +201,8 @@ Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs 
               sx={{
                 display: "flex",
                 gap: 2,
-                justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
-                alignItems: "center",
+                justifyContent: { xs: "center", sm: "flex-start" },
               }}
             >
               {[
@@ -262,18 +250,10 @@ Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs 
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   sx={{
                     color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                    transition: "transform 0.2s ease",
+                    "&:hover": { transform: "scale(1.15)" },
                   }}
                 >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 </IconButton>
               </motion.div>
             </Box>
@@ -282,4 +262,4 @@ Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs 
       </Box>
     </>
   );
-}
+                }
