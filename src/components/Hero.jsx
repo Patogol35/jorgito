@@ -197,7 +197,7 @@ export default function Hero({ mode, setMode }) {
               >
                 Me apasiona crear tecnología que transforma ideas en realidades digitales.
 Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
-Además, domino herramientas como VirtualBox, AnyDesk, Microsoft Office y NextDNS, lo que me permite gestionar entornos virtuales, soporte remoto, productividad y seguridad digital de forma eficiente.
+Trabajo con entornos virtualizados, soporte remoto y prácticas de seguridad digital, utilizando herramientas clave del ecosistema tecnológico actual.
               </Typography>
             </motion.div>
           </motion.div>
