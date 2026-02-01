@@ -74,6 +74,20 @@ const PROFILE = {
     "Git",
     "Linux",
   ],
+
+  const PROFILE = {
+  ...
+  tools: [
+    "Git",
+    "NextDNS",
+    "Postman",
+    "Virtualbox",
+    "Linux",
+    "AnyDesk",
+    "Vercel",
+    "Microsoft Office",
+  ],
+};
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
@@ -96,6 +110,7 @@ const SUGGESTIONS = [
   "¿Cómo puedo contactar a Jorge?",
   "¿Quién te creó?",
   "Sus libros favoritos?",
+  "¿Qué herramientas técnicas domina?",
 ];
 
 /* =========================
@@ -103,6 +118,14 @@ INTENCIONES
 ========================= */
 const INTENTS = {
   GRA: ["Gracias"],
+  
+  TOOLS : [
+  "herramientas",
+  "tools",
+  "herramientas técnicas",
+  "qué herramientas usas",
+  "qué herramientas dominas",
+],
 
   WHAT_DOING: [
     "que haces",
@@ -308,6 +331,15 @@ function getSmartResponse(message, context) {
     `Para contactar a Jorge, solo haz clic aquí: ${WHATSAPP_URL} ✨`,
     `¡Fácil! Comunícate con Jorge por WhatsApp: ${WHATSAPP_URL} 😊`,
     `Jorge te atiende por WhatsApp: ${WHATSAPP_URL} ☺️`,
+  ]),
+
+    TOOLS: (ctx) =>
+  pickNonRepeated(ctx, "TOOLS", [
+    `Jorge domina herramientas técnicas como ${PROFILE.tools.join(", ")} 😊`,
+    `En su día a día Jorge trabaja con herramientas como ${PROFILE.tools.join(", ")} 💻`,
+    `Para desarrollar soluciones eficientes, Jorge utiliza ${PROFILE.tools.join(", ")} ☺️`,
+    `Jorge se apoya en herramientas modernas como ${PROFILE.tools.join(", ")} 🚀`,
+    `Estas son algunas de las herramientas técnicas que Jorge domina: ${PROFILE.tools.join(", ")} 💕`,
   ]),
 
     GREETING: (ctx) =>
