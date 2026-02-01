@@ -6,7 +6,6 @@ import {
   Avatar,
   IconButton,
   Stack,
-  Tooltip,
 } from "@mui/material";
 
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -71,8 +70,6 @@ export default function Hero({ mode, setMode }) {
       <Box
         id="hero"
         sx={{
-          position: "relative",
-          overflow: "hidden",
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
@@ -102,24 +99,18 @@ export default function Hero({ mode, setMode }) {
                 height: { xs: 130, sm: 170, md: 200 },
                 border: `3px solid ${theme.palette.primary.main}`,
                 boxShadow: `0 0 22px ${theme.palette.primary.main}88`,
-                backgroundColor: theme.palette.background.paper,
               }}
             />
           </motion.div>
         </motion.div>
 
         {/* ================= TEXTO ================= */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-        >
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
           <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
                 fontWeight="bold"
-                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
@@ -133,7 +124,7 @@ export default function Hero({ mode, setMode }) {
               <Typography
                 variant="h6"
                 color="text.secondary"
-                sx={{ fontStyle: "italic" }}
+                sx={{ fontStyle: "italic", mt: 1 }}
               >
                 Ingeniero en Sistemas · Máster en Ingeniería de Software
               </Typography>
@@ -142,10 +133,9 @@ export default function Hero({ mode, setMode }) {
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
                   mt: 3,
                   mb: 3,
+                  lineHeight: 1.9,
                   opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                 }}
               >
@@ -155,37 +145,44 @@ export default function Hero({ mode, setMode }) {
               </Typography>
             </motion.div>
 
-            {/* ================= ICONOS ================= */}
+            {/* ================= ICONOS + NOMBRE ================= */}
             <motion.div variants={fadeCinematic}>
               <Stack
                 direction="row"
-                spacing={2.2}
+                spacing={3}
                 justifyContent={{ xs: "center", sm: "flex-start" }}
+                flexWrap="wrap"
                 sx={{ mb: 5 }}
               >
                 {[
-                  { icon: <TerminalIcon />, label: "Linux / Desarrollo" },
-                  { icon: <ApiIcon />, label: "APIs / Postman" },
-                  { icon: <StorageIcon />, label: "Virtualización" },
-                  { icon: <SecurityIcon />, label: "Seguridad / NextDNS" },
-                  { icon: <SupportAgentIcon />, label: "Soporte remoto" },
-                  { icon: <DescriptionOutlinedIcon />, label: "Documentación" },
-                ].map((item, i) => (
-                  <Tooltip title={item.label} key={i} arrow>
-                    <Box
-                      sx={{
-                        color: theme.palette.primary.main,
-                        fontSize: 28,
-                        transition: "all 0.25s ease",
-                        "&:hover": {
-                          transform: "translateY(-4px) scale(1.15)",
-                          color: "#3b82f6",
-                        },
-                      }}
+                  { icon: <TerminalIcon />, name: "Linux" },
+                  { icon: <ApiIcon />, name: "Postman" },
+                  { icon: <StorageIcon />, name: "VirtualBox" },
+                  { icon: <SecurityIcon />, name: "NextDNS" },
+                  { icon: <SupportAgentIcon />, name: "AnyDesk" },
+                  { icon: <DescriptionOutlinedIcon />, name: "Office" },
+                ].map((tech, i) => (
+                  <Box
+                    key={i}
+                    sx={{
+                      textAlign: "center",
+                      minWidth: 70,
+                      color: theme.palette.primary.main,
+                      transition: "all 0.25s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px) scale(1.08)",
+                        color: "#3b82f6",
+                      },
+                    }}
+                  >
+                    <Box sx={{ fontSize: 28 }}>{tech.icon}</Box>
+                    <Typography
+                      variant="caption"
+                      sx={{ display: "block", mt: 0.5 }}
                     >
-                      {item.icon}
-                    </Box>
-                  </Tooltip>
+                      {tech.name}
+                    </Typography>
+                  </Box>
                 ))}
               </Stack>
             </motion.div>
@@ -237,7 +234,6 @@ export default function Hero({ mode, setMode }) {
                       px: 4,
                       py: 1.4,
                       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
@@ -248,10 +244,7 @@ export default function Hero({ mode, setMode }) {
               <motion.div variants={fadeCinematic}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": { transform: "scale(1.15)" },
-                  }}
+                  sx={{ color: theme.palette.primary.main }}
                 >
                   {mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 </IconButton>
@@ -262,4 +255,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-                }
+            }
