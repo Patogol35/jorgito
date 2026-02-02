@@ -9,23 +9,19 @@ import {
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import {
-  Brightness4,
-  Brightness7,
-  Terminal,
-  Api,
-  Storage,
-  Security,
-  SupportAgent,
-  Description,
-} from "@mui/icons-material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
 export default function Hero({ mode, setMode }) {
   const theme = useTheme();
 
-  /* ================= ANIMACIONES ================= */
+  const glowColor =
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main
+      : "#60a5fa";
+
+  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -83,46 +79,72 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR ================= */}
-        <motion.div
-          initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
-          animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
-          style={{
-            borderRadius: "50%",
-            transformStyle: "preserve-3d",
-            perspective: 1300,
-          }}
-        >
-          <motion.div
-            animate={{ y: [0, -12, 0], rotateX: [0, 1.2, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <motion.div
-              animate={{
-                boxShadow: [
-                  `0 0 18px ${theme.palette.primary.main}55`,
-                  `0 0 28px ${theme.palette.primary.main}88`,
-                  `0 0 18px ${theme.palette.primary.main}55`,
-                ],
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-              style={{ borderRadius: "50%" }}
-            >
-              <Avatar
-                alt="Jorge Patricio"
-                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
-                sx={{
-                  width: { xs: 130, sm: 170, md: 200 },
-                  height: { xs: 130, sm: 170, md: 200 },
-                  border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
-                  backgroundColor: theme.palette.background.paper,
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+        {/* ================= AVATAR MONEDA PULIDA ================= */}
+
+<motion.div
+  initial={{
+    opacity: 0,
+    rotateY: -180,
+    scale: 0.9,
+  }}
+  animate={{
+    opacity: 1,
+    rotateY: 0,
+    scale: 1,
+  }}
+  transition={{
+    duration: 2.4,
+    ease: [0.25, 0.9, 0.35, 1], // natural cinematic
+  }}
+  style={{
+    borderRadius: "50%",
+    transformStyle: "preserve-3d",
+    perspective: 1300,
+  }}
+>
+  <motion.div
+    animate={{
+      y: [0, -12, 0],
+      rotateX: [0, 1.2, 0],
+    }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+  >
+    <motion.div
+      animate={{
+        boxShadow: [
+          `0 0 18px ${theme.palette.primary.main}55`,
+          `0 0 28px ${theme.palette.primary.main}88`,
+          `0 0 18px ${theme.palette.primary.main}55`,
+        ],
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      style={{
+        borderRadius: "50%",
+      }}
+    >
+      <Avatar
+        alt="Jorge Patricio"
+        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
+        sx={{
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `3px solid ${theme.palette.primary.main}`,
+          boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
+          backfaceVisibility: "hidden",
+          backgroundColor: theme.palette.background.paper,
+        }}
+      />
+    </motion.div>
+  </motion.div>
+</motion.div>
 
         {/* ================= TEXTO ================= */}
         <Box
@@ -140,6 +162,7 @@ export default function Hero({ mode, setMode }) {
               <Typography
                 variant="h3"
                 fontWeight="bold"
+                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
@@ -155,12 +178,10 @@ export default function Hero({ mode, setMode }) {
                 color="text.secondary"
                 sx={{ fontStyle: "italic" }}
               >
-                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas
-                Informáticos
+                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos
               </Typography>
             </motion.div>
 
-            {/* ================= DESCRIPCIÓN ================= */}
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
@@ -171,72 +192,13 @@ export default function Hero({ mode, setMode }) {
                   opacity: theme.palette.mode === "dark" ? 0.85 : 0.9,
                   maxWidth: "520px",
                   mt: 3,
+                  mb: 5,
                 }}
               >
-                Me apasiona crear tecnología que transforma ideas en realidades
-                digitales. Mi enfoque está en aportar valor constante,
-                desarrollando soluciones digitales seguras, innovadoras y
-                orientadas a generar un impacto positivo.
+                Me apasiona crear tecnología que transforma ideas en realidades digitales.
+Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
+Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs (Postman), virtualización de entornos (VirtualBox), seguridad y control de red (NextDNS), soporte y administración remota (AnyDesk), productividad y documentación técnica (Microsoft Office)
               </Typography>
-
-              {/* ================= HERRAMIENTAS (OPCIÓN 3) ================= */}
-              <Box sx={{ mt: 3 }}>
-                {[
-                  {
-                    title: "Desarrollo y sistemas",
-                    icon: <Terminal fontSize="small" />,
-                    items: "Linux",
-                  },
-                  {
-                    title: "APIs y validación",
-                    icon: <Api fontSize="small" />,
-                    items: "Postman",
-                  },
-                  {
-                    title: "Virtualización",
-                    icon: <Storage fontSize="small" />,
-                    items: "VirtualBox",
-                  },
-                  {
-                    title: "Seguridad y red",
-                    icon: <Security fontSize="small" />,
-                    items: "NextDNS",
-                  },
-                  {
-                    title: "Soporte remoto",
-                    icon: <SupportAgent fontSize="small" />,
-                    items: "AnyDesk",
-                  },
-                  {
-                    title: "Productividad y documentación",
-                    icon: <Description fontSize="small" />,
-                    items: "Microsoft Office",
-                  },
-                ].map((tool, i) => (
-                  <motion.div
-                    key={tool.title}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.15 * i }}
-                  >
-                    <Typography
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                        mt: 1.2,
-                        fontSize: "0.95rem",
-                        color: theme.palette.text.secondary,
-                      }}
-                    >
-                      <Box sx={{ color: theme.palette.primary.main }}>
-                        {tool.icon}
-                      </Box>
-                      <strong>{tool.title}:</strong> {tool.items}
-                    </Typography>
-                  </motion.div>
-                ))}
-              </Box>
             </motion.div>
           </motion.div>
 
@@ -253,7 +215,6 @@ export default function Hero({ mode, setMode }) {
                 justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
                 alignItems: "center",
-                mt: 5,
               }}
             >
               {[
@@ -298,15 +259,14 @@ export default function Hero({ mode, setMode }) {
 
               <motion.div variants={fadeCinematic}>
                 <IconButton
-                  onClick={() =>
-                    setMode(mode === "light" ? "dark" : "light")
-                  }
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   sx={{
                     color: theme.palette.primary.main,
                     "&:hover": {
                       background: "transparent",
                       transform: "scale(1.15)",
                     },
+                    transition: "transform 0.2s ease",
                   }}
                 >
                   {mode === "light" ? (
@@ -322,4 +282,4 @@ export default function Hero({ mode, setMode }) {
       </Box>
     </>
   );
-}
+              }
