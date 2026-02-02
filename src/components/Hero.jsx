@@ -197,7 +197,7 @@ export default function Hero({ mode, setMode }) {
               >
                 Me apasiona crear tecnología que transforma ideas en realidades digitales.
 Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
-Trabajo con herramientas para desarrollo (Linux), pruebas y validación de APIs (Postman), virtualización de entornos (VirtualBox), seguridad y control de red (NextDNS), soporte y administración remota (AnyDesk), productividad y documentación técnica (Microsoft Office)
+También tengo experiencia con herramientas de desarrollo en Linux, testing de APIs (Postman), virtualización (VirtualBox), seguridad de red (NextDNS), soporte remoto (AnyDesk) y documentación técnica (Microsoft Office).
               </Typography>
             </motion.div>
           </motion.div>
