@@ -175,7 +175,7 @@ export default function Hero({ mode, setMode }) {
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h6"
-                color="text.secondary"
+                color="text.primary"
                 sx={{ fontStyle: "italic" }}
               >
                 Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos
@@ -189,11 +189,6 @@ export default function Hero({ mode, setMode }) {
                   lineHeight: 1.9,
                   letterSpacing: "0.3px",
                   color: theme.palette.text.primary,
-
-                  textShadow:
-  theme.palette.mode === "dark"
-    ? "0 0 1px rgba(255,255,255,0.25)"
-    : "none",
           
                   maxWidth: "520px",
                   mt: 3,
