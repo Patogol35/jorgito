@@ -59,12 +59,7 @@ const proyectos = [
     color: "#10b981",
     icon: QrCode2Icon,
   },
-  {
-    titulo: "Mis Libros Favoritos",
-    link: "https://mislibrosfavoritos.vercel.app/",
-    color: "#8b5cf6",
-    icon: AutoStoriesIcon,
-  },
+  
 ];
 
 // =====================
