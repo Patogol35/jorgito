@@ -189,6 +189,11 @@ export default function Hero({ mode, setMode }) {
                   lineHeight: 1.9,
                   letterSpacing: "0.3px",
                   color: theme.palette.text.primary,
+
+                  textShadow:
+  theme.palette.mode === "dark"
+    ? "0 0 1px rgba(255,255,255,0.25)"
+    : "none",
           
                   maxWidth: "520px",
                   mt: 3,
