@@ -159,9 +159,9 @@ export default function Form() {
 
           {/* ================= BOTÓN ================= */}
           <motion.div
-  variants={fadeCinematic}
-  initial="hidden"
-  whileInView="visible"
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.4 }}
   style={{ display: "flex", justifyContent: "center", marginTop: 24 }}
 >
   <Button
@@ -176,13 +176,11 @@ export default function Form() {
       color: "#fff",
       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
       boxShadow: "none",
-
       "&:hover": {
         background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
         boxShadow: `0 0 18px ${theme.palette.primary.main}88`,
         transform: "translateY(-1px)",
       },
-
       transition: "all 0.25s ease",
     }}
   >
