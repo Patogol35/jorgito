@@ -39,8 +39,8 @@ function App() {
         palette: {
           mode,
           background: {
-            // ⬅️ Fondo general (no negro puro)
-            default: mode === "dark" ? "#0a0a0a" : "#ffffff",
+            // 🎯 Fondo general
+            default: mode === "dark" ? "#0b0b0b" : "#ffffff",
             paper: mode === "dark" ? "#121212" : "#ffffff",
           },
           text: {
@@ -51,7 +51,6 @@ function App() {
     [mode]
   );
 
-  // 🎚️ Intensidad fondo cards en light
   const CARD_BG_ALPHA = 0.035;
 
   const sections = [
@@ -68,21 +67,10 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
-        <Container
-          maxWidth="lg"
-          disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
-        >
+        <Container maxWidth="lg" disableGutters sx={{ py: 6 }}>
           {sections.map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -92,15 +80,19 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                backgroundImage: "none",
 
-                /* 🎨 Fondo cards (CONTRASTE REAL) */
+                /* 🎨 Cards claramente más claras */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
-                    : "#1a1a1a",
+                    : "#242424",
 
-                /* 🧱 Bordes */
+                /* 🧠 Separación visual PRO */
+                boxShadow:
+                  mode === "dark"
+                    ? "inset 0 0 0 1px rgba(255,255,255,0.06)"
+                    : "none",
+
                 border: `1.5px solid ${
                   mode === "light"
                     ? "rgba(0,0,0,0.85)"
@@ -110,16 +102,15 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animaciones */
                 transition:
                   "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
                   borderLeftWidth: "7px",
                   boxShadow:
-                    mode === "light"
-                      ? "0 14px 32px rgba(0,0,0,0.16)"
-                      : "0 14px 32px rgba(0,0,0,0.8)",
+                    mode === "dark"
+                      ? "inset 0 0 0 1px rgba(255,255,255,0.1), 0 12px 28px rgba(0,0,0,0.9)"
+                      : "0 14px 32px rgba(0,0,0,0.16)",
                 },
               }}
             >
@@ -128,18 +119,14 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
               right: 16,
-              zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
@@ -151,7 +138,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
