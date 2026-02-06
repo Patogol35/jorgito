@@ -95,24 +95,26 @@ function App() {
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
 
-                /* 🧱 Bordes */
+                /* 🧱 Bordes elegantes */
                 border: `1.5px solid ${
                   mode === "light"
-                    ? "rgba(0,0,0,0.15)"
-                    : "rgba(255,255,255,0.15)"
+                    ? "rgba(0,0,0,0.85)"   // negro en light
+                    : "rgba(255,255,255,0.85)" // blanco en dark
                 }`,
-                borderLeft: `5px solid ${color}`, // 🔒 ancho fijo
+
+                /* 🎯 Línea izquierda de color (FIJA) */
+                borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animación SOLO sombra */
+                /* 🎞️ Hover solo sombra */
                 transition: "box-shadow 0.25s ease",
 
                 "&:hover": {
                   boxShadow:
                     mode === "light"
-                      ? "0 12px 28px rgba(0,0,0,0.14)"
-                      : "0 12px 28px rgba(0,0,0,0.75)",
+                      ? "0 14px 30px rgba(0,0,0,0.18)"
+                      : "0 14px 30px rgba(0,0,0,0.85)",
                 },
               }}
             >
