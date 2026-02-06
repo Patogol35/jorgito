@@ -23,8 +23,8 @@ import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
-/* util para convertir hex a rgba */
-const hexToRgba = (hex, alpha = 0.06) => {
+/* util hex → rgba */
+const hexToRgba = (hex, alpha = 0.05) => {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
@@ -92,17 +92,17 @@ function App() {
             <Paper
               key={id}
               id={id}
-              elevation={2}
+              elevation={3}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                /* FONDO PROFESIONAL CON TINTE */
+                /* 👇 SOLO LIGHT MODE */
                 backgroundColor:
                   mode === "light"
                     ? hexToRgba(color, 0.05)
-                    : hexToRgba(color, 0.08),
+                    : theme.palette.background.paper,
 
                 /* BORDES */
                 border: `1px solid ${borderColor}`,
@@ -128,7 +128,7 @@ function App() {
         {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN WHATSAPP */}
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
