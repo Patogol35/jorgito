@@ -50,7 +50,7 @@ function App() {
     [mode]
   );
 
-  // 🎚️ Intensidad del fondo de las cards (MENOR = más suave)
+  // 🎚️ Intensidad fondo cards en light
   const CARD_BG_ALPHA = 0.035;
 
   const sections = [
@@ -93,23 +93,23 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                /* 🎨 Fondo SOLO en light mode */
+                /* 🎨 Fondo cards */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
-                    : theme.palette.background.paper,
+                    : alpha("#ffffff", 0.045),
 
-                /* 🧱 Bordes como los tenías */
+                /* 🧱 Bordes */
                 border: `1.5px solid ${
-  mode === "light"
-    ? "rgba(0,0,0,0.85)"
-    : "rgba(255,255,255,0.85)"
-}`,
+                  mode === "light"
+                    ? "rgba(0,0,0,0.85)"
+                    : "rgba(255,255,255,0.85)"
+                }`,
                 borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animación SOLO del borde izquierdo */
+                /* 🎞️ Animaciones */
                 transition:
                   "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
@@ -118,7 +118,7 @@ function App() {
                   boxShadow:
                     mode === "light"
                       ? "0 14px 32px rgba(0,0,0,0.16)"
-                      : "0 14px 32px rgba(255,255,255,0.08)",
+                      : "0 14px 32px rgba(255,255,255,0.10)",
                 },
               }}
             >
