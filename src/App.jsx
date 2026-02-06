@@ -65,13 +65,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -89,16 +85,15 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-                backgroundImage: "none",
 
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
 
-                /* 🧱 Bordes firmes */
+                /* 🧱 Bordes */
                 border: `2px solid ${
                   mode === "light"
-                    ? "rgba(0,0,0,0.85)"     // negro en light
-                    : "rgba(255,255,255,0.85)" // blanco en dark
+                    ? "rgba(0,0,0,0.85)"
+                    : "rgba(255,255,255,0.85)"
                 }`,
 
                 /* 🎯 Línea izquierda fija */
@@ -106,18 +101,11 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animación limpia (SIN SOMBRAS) */
-                transition:
-                  "transform 0.3s cubic-bezier(.2,.8,.2,1), background-image 0.3s ease",
+                /* 🎞️ Solo movimiento, sin efectos visuales */
+                transition: "transform 0.25s ease",
 
                 "&:hover": {
                   transform: "translateY(-4px)",
-
-                  /* ✨ Highlight interno sutil */
-                  backgroundImage:
-                    mode === "light"
-                      ? "linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0))"
-                      : "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0))",
                 },
               }}
             >
@@ -126,10 +114,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -149,7 +135,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
