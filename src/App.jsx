@@ -98,8 +98,8 @@ function App() {
                 /* 🧱 Bordes elegantes */
                 border: `2.5px solid ${
                   mode === "light"
-                    ? "rgba(0,0,0,0.85)"   // negro en light
-                    : "rgba(255,255,255,0.85)" // blanco en dark
+                    ? "rgba(0,0,0,0.85)"
+                    : "rgba(255,255,255,0.85)"
                 }`,
 
                 /* 🎯 Línea izquierda de color (FIJA) */
@@ -107,14 +107,23 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Hover solo sombra */
-                transition: "box-shadow 0.25s ease",
+                /* 🎞️ Animaciones */
+                transition:
+                  "box-shadow 0.25s ease, transform 0.25s ease",
 
                 "&:hover": {
+                  transform: "translateY(-2px)",
+
                   boxShadow:
                     mode === "light"
-                      ? "0 14px 30px rgba(0,0,0,0.18)"
-                      : "0 14px 30px rgba(0,0,0,0.85)",
+                      ? "0 16px 36px rgba(0,0,0,0.18)"
+                      : "0 16px 36px rgba(0,0,0,0.85)",
+
+                  /* ✨ highlight interno */
+                  backgroundImage:
+                    mode === "light"
+                      ? "linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0))"
+                      : "linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0))",
                 },
               }}
             >
