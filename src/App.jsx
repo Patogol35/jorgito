@@ -94,11 +94,10 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                /* 🎨 Fondo cards (CONTRASTE REAL) */
                 backgroundColor:
-                  mode === "light"
-                    ? alpha(color, CARD_BG_ALPHA)
-                    : "#1a1a1a",
+  mode === "light"
+    ? alpha(color, CARD_BG_ALPHA)
+    : "#222222",
 
                 /* 🧱 Bordes */
                 border: `1.5px solid ${
