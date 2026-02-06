@@ -77,7 +77,10 @@ function App() {
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8 } }}
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
@@ -90,23 +93,19 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                // 🎨 Fondo SOLO en light mode
+                /* 🎨 Fondo SOLO en light mode */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
                     : theme.palette.background.paper,
 
-                // 🧱 Bordes
-                border: `1px solid ${
-                  mode === "light"
-                    ? "rgba(0,0,0,0.08)"
-                    : "rgba(255,255,255,0.12)"
-                }`,
-                borderLeft: `4px solid ${color}`,
+                /* 🧱 Bordes como los tenías */
+                border: `1px solid ${mode === "light" ? "#000" : "#fff"}`,
+                borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
-                // 🎞️ Animación elegante
+                /* 🎞️ Animación SOLO del borde izquierdo */
                 transition:
                   "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
