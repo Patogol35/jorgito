@@ -50,8 +50,11 @@ function App() {
     [mode]
   );
 
-  // 🎚️ Intensidad del fondo de las cards (MENOR = más suave)
+  // 🎚️ Intensidad del fondo de las cards en light
   const CARD_BG_ALPHA = 0.035;
+
+  // 🎚️ Diferencia de las cards respecto al fondo en dark
+  const CARD_DARK_ALPHA = 0.04;
 
   const sections = [
     { id: "about", color: "#2e7d32", Component: About },
@@ -93,18 +96,18 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                /* 🎨 Fondo SOLO en light mode */
+                /* 🎨 Fondo de las cards */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
-                    : theme.palette.background.paper,
+                    : alpha("#ffffff", CARD_DARK_ALPHA),
 
-                /* 🧱 Bordes como los tenías */
+                /* 🧱 Bordes elegantes */
                 border: `1.5px solid ${
-                 mode === "light"
-                 ? "rgba(0,0,0,0.85)"
-             : "rgba(255,255,255,0.85)"
-             }`,
+                  mode === "light"
+                    ? "rgba(0,0,0,0.85)"
+                    : "rgba(255,255,255,0.85)"
+                }`,
                 borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
