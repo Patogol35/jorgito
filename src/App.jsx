@@ -9,7 +9,6 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import { alpha } from "@mui/material/styles";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -50,7 +49,7 @@ function App() {
     [mode]
   );
 
-  // 🎨 Color único para cards en modo claro
+  // 🎨 Color único cards modo claro
   const LIGHT_CARD_BG = "#f7f9fc";
 
   const sections = [
@@ -102,20 +101,18 @@ function App() {
                     ? "rgba(0,0,0,0.15)"
                     : "rgba(255,255,255,0.15)"
                 }`,
-                borderLeft: `5px solid ${color}`,
+                borderLeft: `5px solid ${color}`, // 🔒 ancho fijo
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animaciones */
-                transition:
-                  "border-left-width 0.25s ease, box-shadow 0.25s ease",
+                /* 🎞️ Animación SOLO sombra */
+                transition: "box-shadow 0.25s ease",
 
                 "&:hover": {
-                  borderLeftWidth: "7px",
                   boxShadow:
                     mode === "light"
-                      ? "0 14px 32px rgba(0,0,0,0.16)"
-                      : "0 14px 32px rgba(0,0,0,0.8)",
+                      ? "0 12px 28px rgba(0,0,0,0.14)"
+                      : "0 12px 28px rgba(0,0,0,0.75)",
                 },
               }}
             >
