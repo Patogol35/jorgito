@@ -96,7 +96,7 @@ function App() {
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
 
                 /* 🧱 Bordes elegantes */
-                border: `2px solid ${
+                border: `3px solid ${
                   mode === "light"
                     ? "rgba(0,0,0,0.85)"   // negro en light
                     : "rgba(255,255,255,0.85)" // blanco en dark
