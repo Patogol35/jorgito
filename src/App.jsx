@@ -9,6 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -22,14 +23,6 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-
-/* util hex → rgba */
-const hexToRgba = (hex, alpha = 0.05) => {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -73,13 +66,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -98,25 +87,28 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                /* 👇 SOLO LIGHT MODE */
+                /* 🎨 SOLO LIGHT MODE */
                 backgroundColor:
                   mode === "light"
-                    ? hexToRgba(color, 0.05)
+                    ? alpha(color, 0.05)
                     : theme.palette.background.paper,
 
-                /* BORDES */
                 border: `1px solid ${borderColor}`,
-                borderLeft: `5px solid ${color}`,
+                borderLeft: `4px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.35s ease",
+
+                /* 🎬 Transiciones finas */
+                transition:
+                  "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  borderLeftWidth: "8px",
+
                   boxShadow:
                     mode === "light"
-                      ? "0 14px 32px rgba(0,0,0,0.18)"
-                      : "0 14px 32px rgba(255,255,255,0.08)",
+                      ? `0 8px 28px ${alpha(color, 0.25)}`
+                      : `0 8px 28px ${alpha(color, 0.15)}`,
                 },
               }}
             >
@@ -125,10 +117,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -148,7 +138,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
