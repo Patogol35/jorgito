@@ -94,14 +94,14 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                // LÍNEA DE COLOR (INTACTA)
+                // LÍNEA DE COLOR (NO SE TOCA)
                 borderLeft: `4px solid ${color}`,
 
-                // BORDE CLARAMENTE VISIBLE (SIN ROMPER DISEÑO)
+                // BORDE VISIBLE SEGÚN MODO
                 outline:
                   mode === "dark"
-                    ? "2px solid rgba(255,255,255,0.25)"
-                    : "2px solid rgba(0,0,0,0.18)",
+                    ? "2px solid #ffffff"
+                    : "2px solid #000000",
                 outlineOffset: "-2px",
 
                 scrollMarginTop: scrollOffset,
