@@ -94,10 +94,10 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                // LÍNEA DE COLOR (NO SE TOCA)
-                borderLeft: `4px solid ${color}`,
+                // ✅ LÍNEA DE COLOR (MISMO COLOR, MÁS ANCHA PARA NO SER PINTADA)
+                borderLeft: `6px solid ${color}`,
 
-                // BORDE VISIBLE SEGÚN MODO
+                // ✅ BORDE GENERAL (BLANCO EN DARK / NEGRO EN LIGHT)
                 outline:
                   mode === "dark"
                     ? "2px solid #ffffff"
