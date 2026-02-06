@@ -9,6 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
+import { alpha } from "@mui/material/styles";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
@@ -22,14 +23,6 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-
-/* util hex → rgba */
-const hexToRgba = (hex, alpha = 0.03) => {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -46,8 +39,8 @@ function App() {
         palette: {
           mode,
           background: {
-            default: mode === "dark" ? "#121212" : "#f5f7fa",
-            paper: mode === "dark" ? "#1e1e1e" : "#ffffff",
+            default: mode === "dark" ? "#000000" : "#ffffff",
+            paper: mode === "dark" ? "#111111" : "#ffffff",
           },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -57,7 +50,8 @@ function App() {
     [mode]
   );
 
-  const borderColor = mode === "light" ? "#000" : "#fff";
+  // 🎚️ Intensidad del fondo de las cards (MENOR = más suave)
+  const CARD_BG_ALPHA = 0.035;
 
   const sections = [
     { id: "about", color: "#2e7d32", Component: About },
@@ -83,39 +77,44 @@ function App() {
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
-          }}
+          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8 } }}
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
-              elevation={3}
+              elevation={0}
               sx={{
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
+                backgroundImage: "none",
 
-                /* 👇 SOLO LIGHT MODE */
+                // 🎨 Fondo SOLO en light mode
                 backgroundColor:
                   mode === "light"
-                    ? hexToRgba(color, 0.05)
+                    ? alpha(color, CARD_BG_ALPHA)
                     : theme.palette.background.paper,
 
-                /* BORDES */
-                border: `1px solid ${borderColor}`,
-                borderLeft: `5px solid ${color}`,
+                // 🧱 Bordes
+                border: `1px solid ${
+                  mode === "light"
+                    ? "rgba(0,0,0,0.08)"
+                    : "rgba(255,255,255,0.12)"
+                }`,
+                borderLeft: `4px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.35s ease",
+
+                // 🎞️ Animación elegante
+                transition:
+                  "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  borderLeftWidth: "7px",
                   boxShadow:
                     mode === "light"
-                      ? "0 14px 32px rgba(0,0,0,0.18)"
+                      ? "0 14px 32px rgba(0,0,0,0.16)"
                       : "0 14px 32px rgba(255,255,255,0.08)",
                 },
               }}
