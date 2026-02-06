@@ -39,7 +39,6 @@ function App() {
         palette: {
           mode,
           background: {
-            // ⬅️ Fondo general (no negro puro)
             default: mode === "dark" ? "#0a0a0a" : "#ffffff",
             paper: mode === "dark" ? "#121212" : "#ffffff",
           },
@@ -51,8 +50,8 @@ function App() {
     [mode]
   );
 
-  // 🎚️ Intensidad fondo cards en light
-  const CARD_BG_ALPHA = 0.035;
+  // 🎨 Color único para cards en modo claro
+  const LIGHT_CARD_BG = "#f7f9fc";
 
   const sections = [
     { id: "about", color: "#2e7d32", Component: About },
@@ -95,15 +94,13 @@ function App() {
                 backgroundImage: "none",
 
                 backgroundColor:
-  mode === "light"
-    ? alpha(color, CARD_BG_ALPHA)
-    : "#222222",
+                  mode === "light" ? LIGHT_CARD_BG : "#222222",
 
                 /* 🧱 Bordes */
                 border: `1.5px solid ${
                   mode === "light"
-                    ? "rgba(0,0,0,0.85)"
-                    : "rgba(255,255,255,0.85)"
+                    ? "rgba(0,0,0,0.15)"
+                    : "rgba(255,255,255,0.15)"
                 }`,
                 borderLeft: `5px solid ${color}`,
 
