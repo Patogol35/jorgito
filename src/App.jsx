@@ -66,13 +66,9 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
-
-        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
-        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -98,15 +94,15 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                // 👉 LÍNEA DE COLOR (NO SE TOCA)
+                // LÍNEA DE COLOR (INTACTA)
                 borderLeft: `4px solid ${color}`,
 
-                // 👉 BORDE VISIBLE SIN DAÑAR DISEÑO
+                // BORDE CLARAMENTE VISIBLE (SIN ROMPER DISEÑO)
                 outline:
                   mode === "dark"
-                    ? "1px solid rgba(255,255,255,0.16)"
-                    : "1px solid rgba(0,0,0,0.12)",
-                outlineOffset: "-1px",
+                    ? "2px solid rgba(255,255,255,0.25)"
+                    : "2px solid rgba(0,0,0,0.18)",
+                outlineOffset: "-2px",
 
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
@@ -120,10 +116,8 @@ function App() {
           ))}
         </Container>
 
-        {/* FOOTER */}
         <Footer />
 
-        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -143,7 +137,6 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT IA PERSONAL */}
         <ChatBot />
       </Box>
     </ThemeProvider>
