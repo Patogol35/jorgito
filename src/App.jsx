@@ -44,7 +44,7 @@ function App() {
                   paper: "#ffffff",
                 },
                 text: {
-                  primary: "#111",
+                  primary: "#111111",
                 },
               }
             : {
@@ -94,18 +94,16 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                // ✅ LÍNEA DE COLOR (MISMO COLOR, MÁS ANCHA PARA NO SER PINTADA)
+                /* 🔵 Línea de color (solo color, sin borde) */
                 borderLeft: `6px solid ${color}`,
 
-                // ✅ BORDE GENERAL (BLANCO EN DARK / NEGRO EN LIGHT)
-                outline:
-                  mode === "dark"
-                    ? "2px solid #ffffff"
-                    : "2px solid #000000",
-                outlineOffset: "-2px",
+                /* ⬜⬛ Borde general visible */
+                border: "2px solid",
+                borderColor:
+                  mode === "dark" ? "#ffffff" : "#000000",
 
                 scrollMarginTop: scrollOffset,
-                transition: "all 0.3s ease",
+                transition: "transform 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
                 },
@@ -118,6 +116,7 @@ function App() {
 
         <Footer />
 
+        {/* WhatsApp FAB */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -133,7 +132,7 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#ffffff" }} />
           </Fab>
         </Tooltip>
 
