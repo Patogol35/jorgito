@@ -96,29 +96,20 @@ function App() {
                     ? "rgba(0,0,0,0.85)"
                     : "rgba(255,255,255,0.85)"
                 }`,
+
+                /* 🎯 Línea izquierda fija */
                 borderLeft: `4px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
-                /* 🎞️ Animación PRO */
+                /* 🎞️ Animación PRO (sin sombra) */
                 transition:
-                  "box-shadow 0.35s cubic-bezier(.2,.8,.2,1), transform 0.35s cubic-bezier(.2,.8,.2,1), background-image 0.35s ease",
+                  "transform 0.35s cubic-bezier(.2,.8,.2,1), background-image 0.35s ease",
 
                 "&:hover": {
-                  transform: "translateY(-4px) rotateX(0.3deg)",
+                  transform: "translateY(-4px)",
 
-                  boxShadow:
-                    mode === "light"
-                      ? `
-                        0 22px 48px rgba(0,0,0,0.22),
-                        0 8px 16px rgba(0,0,0,0.12)
-                      `
-                      : `
-                        0 24px 52px rgba(0,0,0,0.9),
-                        inset 0 1px 0 rgba(255,255,255,0.08)
-                      `,
-
-                  /* ✨ Luz interna profesional */
+                  /* ✨ Highlight interno */
                   backgroundImage:
                     mode === "light"
                       ? "linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0))"
