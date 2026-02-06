@@ -50,8 +50,8 @@ function App() {
     [mode]
   );
 
+  // 🎚️ Intensidad del fondo de las cards (MENOR = más suave)
   const CARD_BG_ALPHA = 0.035;
-  const DARK_CARD_BG = "#151515"; // 👈 CLAVE
 
   const sections = [
     { id: "about", color: "#2e7d32", Component: About },
@@ -67,13 +67,20 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
-          sx={{ py: 6, px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 } }}
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
@@ -86,22 +93,23 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                // 🎨 Fondo cards (AHORA SÍ SE DIFERENCIA)
+                /* 🎨 Fondo SOLO en light mode */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
-                    : DARK_CARD_BG,
+                    : theme.palette.background.paper,
 
-                // 🧱 Bordes
+                /* 🧱 Bordes como los tenías */
                 border: `1.5px solid ${
-                  mode === "light"
-                    ? "rgba(0,0,0,0.85)"
-                    : "rgba(255,255,255,0.85)"
-                }`,
+  mode === "light"
+    ? "rgba(0,0,0,0.85)"
+    : "rgba(255,255,255,0.85)"
+}`,
                 borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
+                /* 🎞️ Animación SOLO del borde izquierdo */
                 transition:
                   "border-left-width 0.25s ease, box-shadow 0.25s ease",
 
@@ -119,8 +127,10 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
+        {/* WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -140,6 +150,7 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT */}
         <ChatBot />
       </Box>
     </ThemeProvider>
