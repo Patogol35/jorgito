@@ -39,8 +39,9 @@ function App() {
         palette: {
           mode,
           background: {
-            default: mode === "dark" ? "#000000" : "#ffffff",
-            paper: mode === "dark" ? "#111111" : "#ffffff",
+            // ⬅️ Fondo general (no negro puro)
+            default: mode === "dark" ? "#0a0a0a" : "#ffffff",
+            paper: mode === "dark" ? "#121212" : "#ffffff",
           },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -93,11 +94,11 @@ function App() {
                 borderRadius: 3,
                 backgroundImage: "none",
 
-                /* 🎨 Fondo cards */
+                /* 🎨 Fondo cards (CONTRASTE REAL) */
                 backgroundColor:
                   mode === "light"
                     ? alpha(color, CARD_BG_ALPHA)
-                    : alpha("#ffffff", 0.045),
+                    : "#1a1a1a",
 
                 /* 🧱 Bordes */
                 border: `1.5px solid ${
@@ -118,7 +119,7 @@ function App() {
                   boxShadow:
                     mode === "light"
                       ? "0 14px 32px rgba(0,0,0,0.16)"
-                      : "0 14px 32px rgba(255,255,255,0.10)",
+                      : "0 14px 32px rgba(0,0,0,0.8)",
                 },
               }}
             >
