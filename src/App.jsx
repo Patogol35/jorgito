@@ -103,7 +103,7 @@ function App() {
                 }`,
 
                 /* 🎯 Línea izquierda de color (FIJA) */
-                borderLeft: `5px solid ${color}`,
+                borderLeft: `4px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
 
