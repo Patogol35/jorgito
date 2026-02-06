@@ -84,10 +84,10 @@ function App() {
           {[
             { id: "about", color: "#2e7d32", Component: About },
             { id: "skills", color: "#fb8c00", Component: Skills },
-            { id: "certifications", color:"#C0A660", Component: Certifications },
+            { id: "certifications", color: "#C0A660", Component: Certifications },
             { id: "projects", color: "#1976d2", Component: Projects },
             { id: "contact", color: "#d32f2f", Component: Contact },
-          { id: "form", color: "#00897b", Component: Form},
+            { id: "form", color: "#00897b", Component: Form },
           ].map(({ id, color, Component }) => (
             <Paper
               key={id}
@@ -98,10 +98,19 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
                 borderLeft: `4px solid ${color}`,
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow:
+                  mode === "dark"
+                    ? "0 0 0 1px rgba(255,255,255,0.05)"
+                    : "0 0 0 1px rgba(0,0,0,0.06)",
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-4px)",
+                  boxShadow:
+                    mode === "dark"
+                      ? "0 0 0 1px rgba(255,255,255,0.12)"
+                      : "0 0 0 1px rgba(0,0,0,0.12)",
                 },
               }}
             >
@@ -124,7 +133,6 @@ function App() {
               zIndex: 1000,
               bgcolor: "#25D366",
               "&:hover": { bgcolor: "#1ebe5c" },
-              
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
