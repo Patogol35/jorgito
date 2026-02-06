@@ -4,6 +4,7 @@ import {
   createTheme,
   CssBaseline,
   Box,
+  Paper,
   Container,
   Fab,
   Tooltip,
@@ -21,7 +22,6 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-import CardWrapper from "./components/CardWrapper.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
@@ -40,7 +40,7 @@ function App() {
           ...(mode === "light"
             ? {
                 background: {
-                  default: "#f4f6f8",
+                  default: "#f5f7fa",
                   paper: "#ffffff",
                 },
                 text: {
@@ -49,7 +49,7 @@ function App() {
               }
             : {
                 background: {
-                  default: "#0f1115",
+                  default: "#121212",
                   paper: "#1e1e1e",
                 },
                 text: {
@@ -61,14 +61,7 @@ function App() {
     [mode]
   );
 
-  const sections = [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#C0A660", Component: Certifications },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-    { id: "form", color: "#00897b", Component: Form },
-  ];
+  const borderColor = mode === "light" ? "#000" : "#fff";
 
   return (
     <ThemeProvider theme={theme}>
@@ -90,23 +83,48 @@ function App() {
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
-          {sections.map(({ id, color, Component }) => (
-            <CardWrapper
+          {[
+            { id: "about", color: "#2e7d32", Component: About },
+            { id: "skills", color: "#fb8c00", Component: Skills },
+            { id: "certifications", color: "#C0A660", Component: Certifications },
+            { id: "projects", color: "#1976d2", Component: Projects },
+            { id: "contact", color: "#d32f2f", Component: Contact },
+            { id: "form", color: "#00897b", Component: Form },
+          ].map(({ id, color, Component }) => (
+            <Paper
               key={id}
               id={id}
-              color={color}
-              mode={mode}
-              scrollOffset={scrollOffset}
+              elevation={3}
+              sx={{
+                mb: 4,
+                p: { xs: 3, md: 6 },
+                borderRadius: 3,
+
+                /* BORDES */
+                border: `1px solid ${borderColor}`,
+                borderLeft: `4px solid ${color}`,
+
+                scrollMarginTop: scrollOffset,
+                transition: "all 0.3s ease",
+
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 12px 30px rgba(0,0,0,0.15)"
+                      : "0 12px 30px rgba(255,255,255,0.08)",
+                },
+              }}
             >
               <Component />
-            </CardWrapper>
+            </Paper>
           ))}
         </Container>
 
         {/* FOOTER */}
         <Footer />
 
-        {/* WHATSAPP */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -126,7 +144,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* CHATBOT */}
+        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
