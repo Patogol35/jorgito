@@ -100,7 +100,11 @@ function App() {
                     : theme.palette.background.paper,
 
                 /* 🧱 Bordes como los tenías */
-                border: `1px solid ${mode === "light" ? "#000" : "#fff"}`,
+                border: `1.5px solid ${
+                 mode === "light"
+                 ? "rgba(0,0,0,0.85)"
+             : "rgba(255,255,255,0.85)"
+             }`,
                 borderLeft: `5px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
