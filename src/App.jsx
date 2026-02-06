@@ -44,7 +44,7 @@ function App() {
                   paper: "#ffffff",
                 },
                 text: {
-                  primary: "#111111",
+                  primary: "#111",
                 },
               }
             : {
@@ -61,14 +61,20 @@ function App() {
     [mode]
   );
 
+  const borderColor = mode === "light" ? "#000" : "#fff";
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* NAVBAR */}
         <Navbar mode={mode} setMode={setMode} />
+
+        {/* HERO */}
         <Hero mode={mode} setMode={setMode} />
 
+        {/* CONTENIDO */}
         <Container
           maxWidth="lg"
           disableGutters
@@ -94,18 +100,19 @@ function App() {
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
 
-                /* 🔵 Línea de color (solo color, sin borde) */
-                borderLeft: `6px solid ${color}`,
-
-                /* ⬜⬛ Borde general visible */
-                border: "2px solid",
-                borderColor:
-                  mode === "dark" ? "#ffffff" : "#000000",
+                /* BORDES */
+                border: `1px solid ${borderColor}`,
+                borderLeft: `4px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
-                transition: "transform 0.3s ease",
+                transition: "all 0.3s ease",
+
                 "&:hover": {
                   transform: "translateY(-4px)",
+                  boxShadow:
+                    mode === "light"
+                      ? "0 12px 30px rgba(0,0,0,0.15)"
+                      : "0 12px 30px rgba(255,255,255,0.08)",
                 },
               }}
             >
@@ -114,9 +121,10 @@ function App() {
           ))}
         </Container>
 
+        {/* FOOTER */}
         <Footer />
 
-        {/* WhatsApp FAB */}
+        {/* BOTÓN FLOTANTE WHATSAPP */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -132,10 +140,11 @@ function App() {
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#ffffff" }} />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
+        {/* CHATBOT IA */}
         <ChatBot />
       </Box>
     </ThemeProvider>
