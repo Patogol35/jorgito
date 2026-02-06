@@ -24,7 +24,7 @@ import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
 /* util hex → rgba */
-const hexToRgba = (hex, alpha = 0.05) => {
+const hexToRgba = (hex, alpha = 0.03) => {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
