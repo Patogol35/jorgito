@@ -158,36 +158,35 @@ export default function Form() {
           ))}
 
           {/* ================= BOTÓN ================= */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Button
-              type="submit"
-              endIcon={<SendIcon />}
-              sx={{
-                mt: 3,
-                px: 6,
-                py: 1.6,
-                borderRadius: "999px",
-                fontWeight: 700,
-                textTransform: "none",
-                color: "#fff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: `0 6px 18px ${theme.palette.primary.main}55`,
-                "&:hover": {
-                  transform: "translateY(-2px)",
-                  boxShadow: `0 10px 26px ${theme.palette.primary.main}77`,
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                },
-                transition: "all 0.25s ease",
-              }}
-            >
-              Enviar mensaje
-            </Button>
-          </motion.div>
+          {/* ================= BOTÓN (MISMO DISEÑO HERO) ================= */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.4 }}
+  style={{ display: "flex", justifyContent: "center" }}
+>
+  <Button
+    type="submit"
+    startIcon={<SendIcon />}
+    sx={{
+      borderRadius: "25px",
+      textTransform: "none",
+      fontWeight: "bold",
+      px: 5,
+      py: 1.4,
+      color: "#fff",
+      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+      boxShadow: "none",
+      "&:hover": {
+        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+        transform: "scale(1.04)",
+      },
+      transition: "transform 0.2s ease",
+    }}
+  >
+    Enviar mensaje
+  </Button>
+</motion.div>
         </Box>
 
         {/* ================= ALERT ================= */}
