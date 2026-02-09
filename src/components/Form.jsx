@@ -174,7 +174,10 @@ export default function Form() {
       fontWeight: "bold",
       px: 5,
       py: 1.4,
-      color: "#020617",
+      color:
+  theme.palette.mode === "light"
+    ? "#ffffff"
+    : "#020617",
       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
       boxShadow: "none",
       "&:hover": {
