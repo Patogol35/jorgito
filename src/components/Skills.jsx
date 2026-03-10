@@ -100,18 +100,17 @@ export default function Skills() {
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
-        {/* HEADER */}
-
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               px: 3,
               py: 0.9,
@@ -124,13 +123,15 @@ export default function Skills() {
                   ? "rgba(144,202,249,0.25)"
                   : "rgba(25,118,210,0.25)"
               }`,
+              backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-
+            <BuildIcon
+              sx={{ fontSize: 22, color: primaryColor }}
+            />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor }}
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
               Stack Tecnológico
             </Typography>
