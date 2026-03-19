@@ -12,6 +12,9 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
+// 🔥 IMPORTA LAS TRADUCCIONES
+import { translations } from "./i18n";
+
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -24,11 +27,15 @@ import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
 function App() {
+  // 🌙 THEME
   const storedMode = localStorage.getItem("themeMode") || "dark";
-  const storedLang = localStorage.getItem("lang") || "es";
-
   const [mode, setMode] = useState(storedMode);
+
+  // 🌍 LANGUAGE
+  const storedLang = localStorage.getItem("lang") || "es";
   const [lang, setLang] = useState(storedLang);
+
+  const t = translations[lang]; // 🔥 acceso a traducciones
 
   const scrollOffset = "80px";
 
@@ -73,6 +80,7 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+        {/* 🔥 PASAS LANG Y SETLANG */}
         <Navbar
           mode={mode}
           setMode={setMode}
@@ -80,12 +88,8 @@ function App() {
           setLang={setLang}
         />
 
-        <Hero
-          mode={mode}
-          setMode={setMode}
-          lang={lang}
-          setLang={setLang}
-        />
+        {/* 🔥 PASAS t */}
+        <Hero t={t.hero} />
 
         <Container
           maxWidth="lg"
@@ -119,7 +123,8 @@ function App() {
                 },
               }}
             >
-              <Component lang={lang} />
+              {/* 🔥 PASAS t DINÁMICO */}
+              <Component t={t[id]} />
             </Paper>
           ))}
         </Container>
@@ -128,6 +133,7 @@ function App() {
 
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
+            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
