@@ -1,3 +1,23 @@
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Container,
+  Snackbar,
+  Alert,
+  InputAdornment,
+} from "@mui/material";
+import { motion } from "framer-motion";
+import ContactMailIcon from "@mui/icons-material/ContactMail";
+import SendIcon from "@mui/icons-material/Send";
+import PersonIcon from "@mui/icons-material/Person";
+import EmailIcon from "@mui/icons-material/Email";
+import MessageIcon from "@mui/icons-material/Message";
+import { useTheme } from "@mui/material/styles";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+
 export default function Form({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -5,6 +25,21 @@ export default function Form({ t }) {
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
+
+  // 🔥 FALLBACK (CLAVE para evitar pantalla blanca)
+  const formText = t?.form || {
+    title: "Contacto por Email",
+    subtitle: "Ponte en contacto conmigo a través de este formulario",
+    fields: {
+      name: "Nombre",
+      email: "Correo electrónico",
+      message: "Mensaje",
+    },
+    button: "Enviar mensaje",
+    success: "¡Mensaje enviado con éxito!",
+    successMsg: "Me pondré en contacto contigo lo antes posible",
+    error: "Error al enviar el mensaje",
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,12 +55,13 @@ export default function Form({ t }) {
         setSuccess(true);
         formRef.current.reset();
       })
-      .catch(() => alert(t.form.error)); // 🔥 i18n
+      .catch(() => alert(formText.error)); // 🔥 seguro
   };
 
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
+
         {/* ================= TÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -58,7 +94,7 @@ export default function Form({ t }) {
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              {t.form.title}
+              {formText.title}
             </Typography>
           </Box>
         </motion.div>
@@ -77,7 +113,7 @@ export default function Form({ t }) {
               mb: 4,
             }}
           >
-            {t.form.subtitle}
+            {formText.subtitle}
           </Typography>
         </motion.div>
 
@@ -91,18 +127,18 @@ export default function Form({ t }) {
           {[
             {
               name: "from_name",
-              label: t.form.fields.name,
+              label: formText.fields.name,
               icon: <PersonIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "from_email",
-              label: t.form.fields.email,
+              label: formText.fields.email,
               type: "email",
               icon: <EmailIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "message",
-              label: t.form.fields.message,
+              label: formText.fields.message,
               multiline: true,
               rows: 4,
               icon: <MessageIcon sx={{ color: primaryColor }} />,
@@ -166,7 +202,7 @@ export default function Form({ t }) {
                 transition: "transform 0.2s ease",
               }}
             >
-              {t.form.button}
+              {formText.button}
             </Button>
           </motion.div>
         </Box>
@@ -203,12 +239,86 @@ export default function Form({ t }) {
                   : "0 20px 40px rgba(22,163,74,0.35)",
             }}
           >
-            <strong>{t.form.success}</strong>
+            <strong>{formText.success}</strong>
             <br />
-            {t.form.successMsg}
+            {formText.successMsg}
           </Alert>
         </Snackbar>
       </Container>
     </Box>
   );
 }
+
+const inputStyle = (theme) => ({
+  "& .MuiOutlinedInput-root": {
+    borderRadius: 3,
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(14px)",
+
+    outline: "none",
+
+    "& input": {
+      outline: "none",
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#ffffff"
+          : "#020617",
+    },
+
+    "& textarea": {
+      outline: "none",
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#ffffff"
+          : "#020617",
+    },
+
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(255,255,255,0.45)"
+          : "rgba(2,6,23,0.45)",
+      fontWeight: 400,
+    },
+
+    "& fieldset": {
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
+    },
+
+    "&:hover fieldset": {
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
+    },
+
+    "&:hover": {
+      boxShadow: "none",
+    },
+
+    "&.Mui-focused": {
+      outline: "none",
+    },
+
+    "&.Mui-focused fieldset": {
+      borderColor: theme.palette.primary.main,
+      boxShadow: "none",
+    },
+  },
+
+  "& .MuiInputLabel-root": {
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.85)"
+        : "rgba(2,6,23,0.85)",
+    fontWeight: 600,
+  },
+});
