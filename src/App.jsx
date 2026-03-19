@@ -156,10 +156,12 @@ function App() {
 <Tooltip title="Cambiar idioma" placement="left">
   <Fab
     aria-label="idioma"
+    disableRipple // 🔥 CLAVE
+    disableFocusRipple // 🔥 MÁS LIMPIO
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={{
       position: "fixed",
-      top: 90, // 👈 debajo del navbar
+      top: 90,
       right: 16,
       zIndex: 1200,
       bgcolor: theme.palette.primary.main,
@@ -173,7 +175,10 @@ function App() {
         bgcolor: theme.palette.primary.dark,
         transform: "scale(1.08)",
       },
-      transition: "all 0.25s ease",
+      "&:active": {
+        transform: "scale(0.95)", // 👈 feedback limpio sin ripple
+      },
+      transition: "all 0.2s ease",
     }}
   >
     {lang === "es" ? "EN" : "ES"}
