@@ -239,27 +239,75 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 
               {/* 🌍 IDIOMA (NO ROMPE DISEÑO) */}
               <motion.div variants={fadeCinematic}>
-                <Button
-                  onClick={() => setLang(lang === "es" ? "en" : "es")}
-                  sx={{
-                    borderRadius: "25px",
-                    textTransform: "none",
-                    fontWeight: "bold",
-                    px: 2.5,
-                    py: 1.2,
-                    minWidth: "unset",
-                    border: `1px solid ${theme.palette.primary.main}`,
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.1)",
-                    },
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  {lang === "es" ? "EN" : "ES"}
-                </Button>
-              </motion.div>
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      borderRadius: "30px",
+      border: `1px solid ${theme.palette.primary.main}`,
+      overflow: "hidden",
+      backdropFilter: "blur(6px)",
+    }}
+  >
+    {/* ES */}
+    <Button
+      onClick={() => setLang("es")}
+      sx={{
+        minWidth: "50px",
+        px: 2,
+        py: 1,
+        borderRadius: 0,
+        fontWeight: "bold",
+        color:
+          lang === "es"
+            ? "#fff"
+            : theme.palette.primary.main,
+        background:
+          lang === "es"
+            ? `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`
+            : "transparent",
+        transition: "all 0.25s ease",
+        "&:hover": {
+          background:
+            lang === "es"
+              ? `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`
+              : "rgba(255,255,255,0.08)",
+        },
+      }}
+    >
+      ES
+    </Button>
+
+    {/* EN */}
+    <Button
+      onClick={() => setLang("en")}
+      sx={{
+        minWidth: "50px",
+        px: 2,
+        py: 1,
+        borderRadius: 0,
+        fontWeight: "bold",
+        color:
+          lang === "en"
+            ? "#fff"
+            : theme.palette.primary.main,
+        background:
+          lang === "en"
+            ? `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`
+            : "transparent",
+        transition: "all 0.25s ease",
+        "&:hover": {
+          background:
+            lang === "en"
+              ? `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`
+              : "rgba(255,255,255,0.08)",
+        },
+      }}
+    >
+      EN
+    </Button>
+  </Box>
+</motion.div>
             </Box>
           </motion.div>
         </Box>
