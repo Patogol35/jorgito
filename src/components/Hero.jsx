@@ -242,7 +242,8 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
   <IconButton
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={{
-      position: "relative",
+      width: 48, // 👈 mismo peso visual
+      height: 48,
       color: theme.palette.primary.main,
       "&:hover": {
         background: "transparent",
@@ -251,30 +252,16 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       transition: "transform 0.2s ease",
     }}
   >
-    <Typography
+    <Box
       sx={{
         fontWeight: 700,
-        fontSize: "0.9rem",
+        fontSize: "1rem", // 👈 más grande
         letterSpacing: "1px",
-        position: "relative",
+        lineHeight: 1,
       }}
     >
       {lang === "es" ? "EN" : "ES"}
-
-      {/* Glow elegante */}
-      <Box
-        sx={{
-          position: "absolute",
-          inset: 0,
-          filter: "blur(6px)",
-          opacity: 0.25,
-          color: theme.palette.primary.main,
-          zIndex: -1,
-        }}
-      >
-        {lang === "es" ? "EN" : "ES"}
-      </Box>
-    </Typography>
+    </Box>
   </IconButton>
 </motion.div>
             </Box>
