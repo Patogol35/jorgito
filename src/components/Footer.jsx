@@ -16,7 +16,7 @@ import {
 
 const MotionDiv = motion.div;
 
-export default function Footer() {
+export default function Footer({ t }) {
   const theme = useTheme();
   const { palette } = theme;
   const isDark = palette.mode === "dark";
@@ -25,7 +25,7 @@ export default function Footer() {
     () => [
       {
         icon: <GitHub />,
-        color: isDark ? "#ffffff" : "#ffffff", // blanco en claro, igual que antes en oscuro
+        color: isDark ? "#ffffff" : "#ffffff",
         href: "https://github.com/Patogol35",
       },
       {
@@ -137,7 +137,7 @@ export default function Footer() {
               color: "rgba(255,255,255,0.92)",
             }}
           >
-            Transformando ideas en aplicaciones efectivas
+            {t.footer.slogan}
           </Typography>
         </MotionDiv>
 
@@ -176,7 +176,7 @@ export default function Footer() {
                 fontWeight: 500,
               }}
             >
-              Portafolio desarrollado por Jorge Patricio Santamaría Cherrez
+              {t.footer.credit}
             </Typography>
 
             <Typography
@@ -186,11 +186,11 @@ export default function Footer() {
                 letterSpacing: "0.4px",
               }}
             >
-              © {new Date().getFullYear()} — Todos los derechos reservados
+              © {new Date().getFullYear()} — {t.footer.rights}
             </Typography>
           </Stack>
         </MotionDiv>
       </Box>
     </Box>
   );
-          }
+}
