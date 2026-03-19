@@ -238,11 +238,13 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
               </motion.div>
 
               {/* 🌍 IDIOMA (NO ROMPE DISEÑO) */}
-              <motion.div variants={fadeCinematic}>
+              <motion.div variants={fadeCinematic} whileTap={{ scale: 1 }}>
   <IconButton
     onClick={() => setLang(lang === "es" ? "en" : "es")}
+    component={motion.button}
+    whileTap={{ scale: 0.9 }} // 👈 igual que el de modo
     sx={{
-      width: 48, // 👈 mismo peso visual
+      width: 48,
       height: 48,
       color: theme.palette.primary.main,
       "&:hover": {
@@ -255,7 +257,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     <Box
       sx={{
         fontWeight: 700,
-        fontSize: "1rem", // 👈 más grande
+        fontSize: "1rem",
         letterSpacing: "1px",
         lineHeight: 1,
       }}
