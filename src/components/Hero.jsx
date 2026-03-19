@@ -9,16 +9,19 @@ import {
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import LanguageIcon from "@mui/icons-material/Language";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { translations } from "../i18n";
 
-export default function Hero({ mode, setMode, lang, setLang }) {
+export default function Hero({ mode, setMode }) {
   const theme = useTheme();
-  const t = translations[lang];
 
+  const glowColor =
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main
+      : "#60a5fa";
+
+  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -76,17 +79,39 @@ export default function Hero({ mode, setMode, lang, setLang }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
+        {/* ================= AVATAR MONEDA PULIDA ================= */}
 
-{/* ================= AVATAR (SIN CAMBIOS) ================= */}
 <motion.div
-  initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
-  animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-  transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
-  style={{ borderRadius: "50%", transformStyle: "preserve-3d", perspective: 1300 }}
+  initial={{
+    opacity: 0,
+    rotateY: -180,
+    scale: 0.9,
+  }}
+  animate={{
+    opacity: 1,
+    rotateY: 0,
+    scale: 1,
+  }}
+  transition={{
+    duration: 2.4,
+    ease: [0.25, 0.9, 0.35, 1], // natural cinematic
+  }}
+  style={{
+    borderRadius: "50%",
+    transformStyle: "preserve-3d",
+    perspective: 1300,
+  }}
 >
   <motion.div
-    animate={{ y: [0, -12, 0], rotateX: [0, 1.2, 0] }}
-    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+    animate={{
+      y: [0, -12, 0],
+      rotateX: [0, 1.2, 0],
+    }}
+    transition={{
+      duration: 5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
   >
     <motion.div
       animate={{
@@ -96,8 +121,14 @@ export default function Hero({ mode, setMode, lang, setLang }) {
           `0 0 18px ${theme.palette.primary.main}55`,
         ],
       }}
-      transition={{ duration: 4, repeat: Infinity }}
-      style={{ borderRadius: "50%" }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      style={{
+        borderRadius: "50%",
+      }}
     >
       <Avatar
         alt="Jorge Patricio"
@@ -107,6 +138,8 @@ export default function Hero({ mode, setMode, lang, setLang }) {
           height: { xs: 130, sm: 170, md: 200 },
           border: `3px solid ${theme.palette.primary.main}`,
           boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
+          backfaceVisibility: "hidden",
+          backgroundColor: theme.palette.background.paper,
         }}
       />
     </motion.div>
@@ -118,9 +151,13 @@ export default function Hero({ mode, setMode, lang, setLang }) {
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
+          zIndex={1}
         >
-          <motion.div variants={textContainer} initial="hidden" animate="visible">
-
+          <motion.div
+            variants={textContainer}
+            initial="hidden"
+            animate="visible"
+          >
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
@@ -131,13 +168,17 @@ export default function Hero({ mode, setMode, lang, setLang }) {
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
-                {t.hero.title}
+                Hola, soy Jorge Patricio Santamaría Cherrez
               </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
-                {t.hero.subtitle}
+              <Typography
+                variant="h6"
+                color="text.primary"
+                sx={{ fontStyle: "italic" }}
+              >
+                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos
               </Typography>
             </motion.div>
 
@@ -146,40 +187,50 @@ export default function Hero({ mode, setMode, lang, setLang }) {
                 sx={{
                   fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
+                  letterSpacing: "0.3px",
+                  color: theme.palette.text.primary,
+          
+                  maxWidth: "520px",
                   mt: 3,
                   mb: 5,
                 }}
               >
-                {t.hero.description}
+                Me apasiona crear tecnología que transforma ideas en realidades digitales.
+Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
+Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, seguridad de red, soporte remoto y documentación técnica.
               </Typography>
             </motion.div>
-
           </motion.div>
 
           {/* ================= BOTONES ================= */}
-          <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
+          <motion.div
+            variants={buttonsContainer}
+            initial="hidden"
+            animate="visible"
+          >
             <Box
               sx={{
                 display: "flex",
                 gap: 2,
+                justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
                 alignItems: "center",
               }}
             >
-
               {[
                 {
-                  label: t.hero.buttons.cv,
+                  label: "Ver CV",
                   icon: <DescriptionIcon />,
                   href: "/Jorge.CV.pdf",
                 },
                 {
-                  label: t.hero.buttons.title,
+                  label: "Ver Título",
                   icon: <WorkspacePremiumIcon />,
-                  href: "https://res.cloudinary.com/...",
+                  href:
+                    "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
                 },
                 {
-                  label: t.hero.buttons.ai,
+                  label: "Sasha",
                   icon: <SmartToyIcon />,
                   onClick: () => window.openSashaChat?.(),
                 },
@@ -193,10 +244,12 @@ export default function Hero({ mode, setMode, lang, setLang }) {
                     target={btn.href ? "_blank" : undefined}
                     sx={{
                       borderRadius: "25px",
+                      textTransform: "none",
                       fontWeight: "bold",
                       px: 4,
                       py: 1.4,
                       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
@@ -204,33 +257,29 @@ export default function Hero({ mode, setMode, lang, setLang }) {
                 </motion.div>
               ))}
 
-              {/* 🌐 BOTÓN IDIOMA (INTEGRADO SIN ROMPER DISEÑO) */}
               <motion.div variants={fadeCinematic}>
-                <Button
-                  variant="outlined"
-                  startIcon={<LanguageIcon />}
-                  onClick={() => setLang(lang === "es" ? "en" : "es")}
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   sx={{
-                    borderRadius: "25px",
-                    px: 3,
-                    fontWeight: "bold",
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: "transparent",
+                      transform: "scale(1.15)",
+                    },
+                    transition: "transform 0.2s ease",
                   }}
                 >
-                  {lang === "es" ? "EN" : "ES"}
-                </Button>
-              </motion.div>
-
-              {/* 🌙 DARK MODE */}
-              <motion.div variants={fadeCinematic}>
-                <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+                  {mode === "light" ? (
+                    <Brightness4 sx={{ fontSize: 28 }} />
+                  ) : (
+                    <Brightness7 sx={{ fontSize: 28 }} />
+                  )}
                 </IconButton>
               </motion.div>
-
             </Box>
           </motion.div>
         </Box>
       </Box>
     </>
   );
-}
+                    }
