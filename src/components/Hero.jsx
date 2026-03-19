@@ -13,7 +13,7 @@ import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
-export default function Hero({ mode, setMode, t }) {
+export default function Hero({ mode, setMode, t, lang, setLang }) {
   const theme = useTheme();
 
   const glowColor =
@@ -21,6 +21,7 @@ export default function Hero({ mode, setMode, t }) {
       ? theme.palette.primary.main
       : "#60a5fa";
 
+  /* ================= ANIMACIONES ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -78,7 +79,7 @@ export default function Hero({ mode, setMode, t }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* AVATAR */}
+        {/* ================= AVATAR ================= */}
         <motion.div
           initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
@@ -124,7 +125,7 @@ export default function Hero({ mode, setMode, t }) {
           </motion.div>
         </motion.div>
 
-        {/* TEXTO */}
+        {/* ================= TEXTO ================= */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
@@ -174,7 +175,7 @@ export default function Hero({ mode, setMode, t }) {
             </motion.div>
           </motion.div>
 
-          {/* BOTONES */}
+          {/* ================= BOTONES ================= */}
           <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
             <Box
               sx={{
@@ -225,24 +226,46 @@ export default function Hero({ mode, setMode, t }) {
                 </motion.div>
               ))}
 
+              {/* 🌍 IDIOMA + 🌙 TEMA */}
               <motion.div variants={fadeCinematic}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                    transition: "transform 0.2s ease",
-                  }}
-                >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
-                </IconButton>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  
+                  <Button
+                    onClick={() => setLang(lang === "es" ? "en" : "es")}
+                    sx={{
+                      borderRadius: "20px",
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      px: 2,
+                      color: theme.palette.primary.main,
+                      border: `1px solid ${theme.palette.primary.main}`,
+                      "&:hover": {
+                        backgroundColor: theme.palette.action.hover,
+                      },
+                    }}
+                  >
+                    {lang === "es" ? "EN 🇺🇸" : "ES 🇪🇸"}
+                  </Button>
+
+                  <IconButton
+                    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                    sx={{
+                      color: theme.palette.primary.main,
+                      "&:hover": {
+                        background: "transparent",
+                        transform: "scale(1.15)",
+                      },
+                      transition: "transform 0.2s ease",
+                    }}
+                  >
+                    {mode === "light" ? (
+                      <Brightness4 sx={{ fontSize: 28 }} />
+                    ) : (
+                      <Brightness7 sx={{ fontSize: 28 }} />
+                    )}
+                  </IconButton>
+
+                </Box>
               </motion.div>
             </Box>
           </motion.div>
@@ -250,4 +273,4 @@ export default function Hero({ mode, setMode, t }) {
       </Box>
     </>
   );
-}
+            }
