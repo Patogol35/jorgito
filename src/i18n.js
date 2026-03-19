@@ -13,6 +13,55 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
         ai: "Sasha",
       },
     },
+
+    about: {
+      title: "Formación",
+      studies: [
+        {
+          titulo: "Máster en Ingeniería de Software y Sistemas Informáticos",
+          institucion: "Universidad Internacional de La Rioja, España",
+          detalle: "Nota TFM: 9 | Promedio final: 8.68",
+        },
+        {
+          titulo: "Ingeniero en Sistemas",
+          institucion: "Universidad Indoamérica, Ecuador",
+          detalle: "Nota Tesis: 9.50 | Promedio final: 9",
+        },
+      ],
+    },
+
+    skills: {
+      title: "Stack Tecnológico",
+      categories: {
+        All: "Todos",
+        Frontend: "Frontend",
+        Backend: "Backend",
+        Database: "Base de Datos",
+        Cloud: "Cloud",
+        Tools: "Herramientas",
+      },
+    },
+
+    contact: {
+      title: "Redes Sociales",
+      subtitle:
+        "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
+      availability: "Respuesta habitual en menos de 24 horas",
+    },
+
+    form: {
+      title: "Contacto por Email",
+      subtitle: "Ponte en contacto conmigo a través de este formulario",
+      fields: {
+        name: "Nombre",
+        email: "Correo electrónico",
+        message: "Mensaje",
+      },
+      button: "Enviar mensaje",
+      success: "¡Mensaje enviado con éxito!",
+      successMsg: "Me pondré en contacto contigo lo antes posible",
+      error: "Error al enviar el mensaje",
+    },
   },
 
   en: {
@@ -29,112 +78,56 @@ I am also skilled in development tools, API testing, virtualization, network sec
         ai: "Sasha",
       },
     },
-  },
-};
 
-
-
-about: {
-  title: "Formación",
-  studies: [
-    {
-      titulo: "Máster en Ingeniería de Software y Sistemas Informáticos",
-      institucion: "Universidad Internacional de La Rioja, España",
-      detalle: "Nota TFM: 9 | Promedio final: 8.68",
+    about: {
+      title: "Education",
+      studies: [
+        {
+          titulo:
+            "Master's in Software Engineering and Computer Systems",
+          institucion:
+            "International University of La Rioja, Spain",
+          detalle: "Final Project Grade: 9 | Final Average: 8.68",
+        },
+        {
+          titulo: "Systems Engineer",
+          institucion: "Indoamérica University, Ecuador",
+          detalle: "Thesis Grade: 9.50 | Final Average: 9",
+        },
+      ],
     },
-    {
-      titulo: "Ingeniero en Sistemas",
-      institucion: "Universidad Indoamérica, Ecuador",
-      detalle: "Nota Tesis: 9.50 | Promedio final: 9",
+
+    skills: {
+      title: "Tech Stack",
+      categories: {
+        All: "All",
+        Frontend: "Frontend",
+        Backend: "Backend",
+        Database: "Database",
+        Cloud: "Cloud",
+        Tools: "Tools",
+      },
     },
-  ],
-},
 
-about: {
-  title: "Education",
-  studies: [
-    {
-      titulo:
-        "Master's in Software Engineering and Computer Systems",
-      institucion:
-        "International University of La Rioja, Spain",
-      detalle: "Final Project Grade: 9 | Final Average: 8.68",
+    contact: {
+      title: "Social Media",
+      subtitle:
+        "You can contact me through my professional networks or via email.",
+      availability: "Typical response within 24 hours",
     },
-    {
-      titulo: "Systems Engineer",
-      institucion: "Indoamérica University, Ecuador",
-      detalle: "Thesis Grade: 9.50 | Final Average: 9",
-    },
-  ],
-},
-
-
-skills: {
-  title: "Stack Tecnológico",
-  categories: {
-    All: "Todos",
-    Frontend: "Frontend",
-    Backend: "Backend",
-    Database: "Base de Datos",
-    Cloud: "Cloud",
-    Tools: "Herramientas",
-  },
-},
-
-
-      skills: {
-  title: "Tech Stack",
-  categories: {
-    All: "All",
-    Frontend: "Frontend",
-    Backend: "Backend",
-    Database: "Database",
-    Cloud: "Cloud",
-    Tools: "Tools",
-  },
-},
-
-contact: {
-  title: "Redes Sociales",
-  subtitle:
-    "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
-  availability: "Respuesta habitual en menos de 24 horas",
-},
-
-
-      contact: {
-  title: "Social Media",
-  subtitle:
-    "You can contact me through my professional networks or via email.",
-  availability: "Typical response within 24 hours",
-},
-
-
-      form: {
-  title: "Contacto por Email",
-  subtitle: "Ponte en contacto conmigo a través de este formulario",
-  fields: {
-    name: "Nombre",
-    email: "Correo electrónico",
-    message: "Mensaje",
-  },
-  button: "Enviar mensaje",
-  success: "¡Mensaje enviado con éxito!",
-  successMsg: "Me pondré en contacto contigo lo antes posible",
-  error: "Error al enviar el mensaje",
-},
 
     form: {
-  title: "Contact via Email",
-  subtitle: "Get in touch with me through this form",
-  fields: {
-    name: "Name",
-    email: "Email",
-    message: "Message",
+      title: "Contact via Email",
+      subtitle: "Get in touch with me through this form",
+      fields: {
+        name: "Name",
+        email: "Email",
+        message: "Message",
+      },
+      button: "Send message",
+      success: "Message sent successfully!",
+      successMsg: "I will get back to you as soon as possible",
+      error: "Error sending message",
+    },
   },
-  button: "Send message",
-  success: "Message sent successfully!",
-  successMsg: "I will get back to you as soon as possible",
-  error: "Error sending message",
-},
-      
+};
