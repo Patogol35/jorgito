@@ -270,6 +270,70 @@ export default function Navbar({ mode, setMode, t }) {
               </IconButton>
             </Box>
 
+
+
+            {/* 🌙 MODO */}
+              <motion.div variants={fadeCinematic}>
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: "transparent",
+                      transform: "scale(1.15)",
+                    },
+                    transition: "transform 0.2s ease",
+                  }}
+                >
+                  {mode === "light" ? (
+                    <Brightness4 sx={{ fontSize: 28 }} />
+                  ) : (
+                    <Brightness7 sx={{ fontSize: 28 }} />
+                  )}
+                </IconButton>
+              </motion.div>
+
+              {/* 🌍 IDIOMA (NO ROMPE DISEÑO) */}
+              <motion.div variants={fadeCinematic}>
+  <IconButton
+    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    sx={{
+      position: "relative",
+      color: theme.palette.primary.main,
+      "&:hover": {
+        background: "transparent",
+        transform: "scale(1.15)",
+      },
+      transition: "transform 0.2s ease",
+    }}
+  >
+    <Typography
+      sx={{
+        fontWeight: 700,
+        fontSize: "0.9rem",
+        letterSpacing: "1px",
+        position: "relative",
+      }}
+    >
+      {lang === "es" ? "EN" : "ES"}
+
+      {/* Glow elegante */}
+      <Box
+        sx={{
+          position: "absolute",
+          inset: 0,
+          filter: "blur(6px)",
+          opacity: 0.25,
+          color: theme.palette.primary.main,
+          zIndex: -1,
+        }}
+      >
+        {lang === "es" ? "EN" : "ES"}
+      </Box>
+    </Typography>
+  </IconButton>
+</motion.div>
+
             {/* Botón menú móvil con animación */}
 <IconButton
   sx={{ display: { xs: "block", lg: "none" }, color: "#fff" }}
