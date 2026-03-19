@@ -12,9 +12,6 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-// 🔥 IMPORTA LAS TRADUCCIONES
-import { translations } from "./i18n";
-
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -27,25 +24,13 @@ import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
 function App() {
-  // 🌙 THEME
   const storedMode = localStorage.getItem("themeMode") || "dark";
   const [mode, setMode] = useState(storedMode);
-
-  // 🌍 LANGUAGE
-  const storedLang = localStorage.getItem("lang") || "es";
-  const [lang, setLang] = useState(storedLang);
-
-  const t = translations[lang]; // 🔥 acceso a traducciones
-
   const scrollOffset = "80px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
-
-  useEffect(() => {
-    localStorage.setItem("lang", lang);
-  }, [lang]);
 
   const theme = useMemo(
     () =>
@@ -80,16 +65,8 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* 🔥 PASAS LANG Y SETLANG */}
-        <Navbar
-          mode={mode}
-          setMode={setMode}
-          lang={lang}
-          setLang={setLang}
-        />
-
-        {/* 🔥 PASAS t */}
-        <Hero t={t.hero} />
+        <Navbar mode={mode} setMode={setMode} />
+        <Hero mode={mode} setMode={setMode} />
 
         <Container
           maxWidth="lg"
@@ -108,23 +85,31 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
+
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
+
+                /* 🧱 Bordes */
                 border: `2px solid ${
                   mode === "light"
                     ? "rgba(0,0,0,0.85)"
                     : "rgba(255,255,255,0.85)"
                 }`,
+
+                /* 🎯 Línea izquierda fija */
                 borderLeft: `4px solid ${color}`,
+
                 scrollMarginTop: scrollOffset,
+
+                /* 🎞️ Solo movimiento, sin efectos visuales */
                 transition: "transform 0.25s ease",
+
                 "&:hover": {
                   transform: "translateY(-4px)",
                 },
               }}
             >
-              {/* 🔥 PASAS t DINÁMICO */}
-              <Component t={t[id]} />
+              <Component />
             </Paper>
           ))}
         </Container>
