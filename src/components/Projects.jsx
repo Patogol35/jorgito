@@ -11,59 +11,9 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 
 // =====================
-// Datos de proyectos
-// =====================
-const proyectos = [
-  {
-    titulo: "App para ver el clima",
-    link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
-    color: "#1976d2",
-    icon: WbSunnyIcon,
-  },
-  {
-    titulo: "E-commerce Full Stack (React + Django)",
-    link: "https://ecommerce-jorge-patricio.vercel.app/",
-    color: "#9333ea",
-    icon: ShoppingCartIcon,
-  },
-  {
-    titulo: "Explorador de películas",
-    link: "https://movie-explorer-jorge-patricio.vercel.app/",
-    color: "#16a34a",
-    icon: MovieIcon,
-  },
-  {
-    titulo: "Quiz educativo de Ambato y Ecuador",
-    link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-    color: "#e11d48",
-    icon: QuizIcon,
-  },
-  {
-    titulo: "Calculadora Científica",
-    link: "https://calculadorajorgepatricio.vercel.app/",
-    color: "#f59e0b",
-    icon: FunctionsIcon,
-  },
-  {
-    titulo: "Reloj Global",
-    link: "https://reloj-jorgepatricio.vercel.app/",
-    color: "#0ea5e9",
-    icon: AccessTimeIcon,
-  },
-  {
-    titulo: "App para Crear y Escanear Códigos QR",
-    link: "https://jorgepatricio-codigo-qr.vercel.app/",
-    color: "#10b981",
-    icon: QrCode2Icon,
-  },
-  
-];
-
-// =====================
-// Tarjeta individual
+// Tarjeta individual (NO TOCAR)
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
@@ -103,10 +53,42 @@ function ProjectCard({ p, i, palette }) {
 // =====================
 // Componente principal
 // =====================
-export default function Projects() {
+export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+
+  /* 🔥 textos desde i18n */
+  const proyectosText = t.projects.items;
+
+  /* 🔥 tus colores originales */
+  const colors = [
+    "#1976d2",
+    "#9333ea",
+    "#16a34a",
+    "#e11d48",
+    "#f59e0b",
+    "#0ea5e9",
+    "#10b981",
+  ];
+
+  /* 🔥 tus iconos originales */
+  const icons = [
+    WbSunnyIcon,
+    ShoppingCartIcon,
+    MovieIcon,
+    QuizIcon,
+    FunctionsIcon,
+    AccessTimeIcon,
+    QrCode2Icon,
+  ];
+
+  /* 🔥 construimos proyectos SIN romper nada */
+  const proyectos = proyectosText.map((item, i) => ({
+    ...item,
+    color: colors[i],
+    icon: icons[i],
+  }));
 
   return (
     <Box
@@ -118,8 +100,7 @@ export default function Projects() {
       }}
     >
       {/* =========================
-          TÍTULO PROYECTOS
-          (MISMO DISEÑO QUE ABOUT)
+          TÍTULO
       ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -147,22 +128,21 @@ export default function Projects() {
             backdropFilter: "blur(6px)",
           }}
         >
-          {/* Icono SIN fondo */}
           <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
 
           <Typography
             variant="h6"
             sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
-            Apps Demostrativas 
+            {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid de proyectos — SIN CAMBIOS */}
+      {/* Grid — SIN CAMBIOS */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard key={p.titulo} p={p} i={i} palette={palette} />
+          <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
       </Grid>
     </Box>
