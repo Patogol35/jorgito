@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+  import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -23,32 +23,33 @@ import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
 
-/* 🔥 SOLO ESTO SE AGREGA */
 import { translations } from "./i18n";
 
 function App() {
-  const storedMode = localStorage.getItem("themeMode") || "dark";
+  /* ✅ MEJOR: lazy init (evita lecturas repetidas) */
+  const [mode, setMode] = useState(() =>
+    localStorage.getItem("themeMode") || "dark"
+  );
 
-  /* 🔥 NUEVO: idioma */
-  const storedLang = localStorage.getItem("lang") || "es";
-
-  const [mode, setMode] = useState(storedMode);
-  const [lang, setLang] = useState(storedLang);
+  const [lang, setLang] = useState(() =>
+    localStorage.getItem("lang") || "es"
+  );
 
   const scrollOffset = "80px";
 
+  /* ✅ Persistencia */
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
 
-  /* 🔥 NUEVO */
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  /* 🔥 NUEVO */
-  const t = translations[lang];
+  /* ✅ Seguridad extra */
+  const t = translations[lang] || translations["es"];
 
+  /* ✅ Memo del theme (ya lo tenías bien) */
   const theme = useMemo(
     () =>
       createTheme({
@@ -68,21 +69,24 @@ function App() {
 
   const LIGHT_CARD_BG = "#f7f9fc";
 
-  const sections = [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#C0A660", Component: Certifications },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-    { id: "form", color: "#00897b", Component: Form },
-  ];
+  /* ✅ MEMO: evita recrear en cada render */
+  const sections = useMemo(
+    () => [
+      { id: "about", color: "#2e7d32", Component: About },
+      { id: "skills", color: "#fb8c00", Component: Skills },
+      { id: "certifications", color: "#C0A660", Component: Certifications },
+      { id: "projects", color: "#1976d2", Component: Projects },
+      { id: "contact", color: "#d32f2f", Component: Contact },
+      { id: "form", color: "#00897b", Component: Form },
+    ],
+    []
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        {/* 🔥 SOLO SE PASAN PROPS */}
         <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
 
         <Hero
@@ -125,7 +129,6 @@ function App() {
                 },
               }}
             >
-              {/* 🔥 SOLO ESTO */}
               <Component t={t} />
             </Paper>
           ))}
@@ -152,49 +155,39 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* 🌍 BOTÓN IDIOMA FLOTANTE ARRIBA */}
-<Tooltip title="Cambiar idioma" placement="left">
-  <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    elevation={0} // 🔥 quita elevación
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={{
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
-
-      bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
-      color: "#fff",
-
-      width: 52,
-      height: 52,
-
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-
-      boxShadow: "none", // 🔥 quita sombra
-      border: "none", // 🔥 evita borde
-
-      "&:hover": {
-        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
-        boxShadow: "none", // 🔥 evita sombra hover
-      },
-      "&:active": {
-        boxShadow: "none",
-      },
-      "&:focus": {
-        boxShadow: "none",
-      },
-    }}
-  >
-    {lang === "es" ? "EN" : "ES"}
-  </Fab>
-</Tooltip>
+        <Tooltip title="Cambiar idioma" placement="left">
+          <Fab
+            aria-label="idioma"
+            disableRipple
+            disableFocusRipple
+            disableTouchRipple
+            elevation={0}
+            onClick={() => setLang(lang === "es" ? "en" : "es")}
+            sx={{
+              position: "fixed",
+              top: 90,
+              right: 16,
+              zIndex: 1200,
+              bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+              color: "#fff",
+              width: 52,
+              height: 52,
+              fontWeight: 800,
+              fontSize: "1rem",
+              letterSpacing: "1px",
+              boxShadow: "none",
+              border: "none",
+              "&:hover": {
+                bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+                boxShadow: "none",
+              },
+              "&:active": { boxShadow: "none" },
+              "&:focus": { boxShadow: "none" },
+            }}
+          >
+            {lang === "es" ? "EN" : "ES"}
+          </Fab>
+        </Tooltip>
 
         <ChatBot />
       </Box>
