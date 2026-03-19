@@ -42,6 +42,77 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       },
     },
 
+    certifications: {
+      title: "Certificaciones",
+      items: [
+        {
+          titulo: "Curso de React.js",
+          institucion: "Platzi",
+          año: 2025,
+        },
+        {
+          titulo: "React & TypeScript - The Practical Guide",
+          institucion: "Udemy",
+          año: 2024,
+        },
+        {
+          titulo:
+            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+          institucion: "Universidad Internacional de la Rioja",
+          año: 2023,
+        },
+        {
+          titulo: "Curso de Python",
+          institucion: "Platzi",
+          año: 2025,
+        },
+        {
+          titulo: "Data Analysis with Python",
+          institucion: "freeCodeCamp",
+          año: 2024,
+        },
+        {
+          titulo: "Fundamentos de la Inteligencia Artificial",
+          institucion: "IBM",
+          año: 2025,
+        },
+      ],
+    },
+
+    projects: {
+      title: "Apps Demostrativas",
+      items: [
+        {
+          titulo: "App para ver el clima",
+          link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
+        },
+        {
+          titulo: "E-commerce Full Stack (React + Django)",
+          link: "https://ecommerce-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Explorador de películas",
+          link: "https://movie-explorer-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Quiz educativo de Ambato y Ecuador",
+          link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Calculadora Científica",
+          link: "https://calculadorajorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Reloj Global",
+          link: "https://reloj-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "App para Crear y Escanear Códigos QR",
+          link: "https://jorgepatricio-codigo-qr.vercel.app/",
+        },
+      ],
+    },
+
     contact: {
       title: "Redes Sociales",
       subtitle:
@@ -109,6 +180,77 @@ I am also skilled in development tools, API testing, virtualization, network sec
       },
     },
 
+    certifications: {
+      title: "Certifications",
+      items: [
+        {
+          titulo: "React.js Course",
+          institucion: "Platzi",
+          año: 2025,
+        },
+        {
+          titulo: "React & TypeScript - The Practical Guide",
+          institucion: "Udemy",
+          año: 2024,
+        },
+        {
+          titulo:
+            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
+          institucion: "International University of La Rioja",
+          año: 2023,
+        },
+        {
+          titulo: "Python Course",
+          institucion: "Platzi",
+          año: 2025,
+        },
+        {
+          titulo: "Data Analysis with Python",
+          institucion: "freeCodeCamp",
+          año: 2024,
+        },
+        {
+          titulo: "Fundamentals of Artificial Intelligence",
+          institucion: "IBM",
+          año: 2025,
+        },
+      ],
+    },
+
+    projects: {
+      title: "Demo Applications",
+      items: [
+        {
+          titulo: "Weather App",
+          link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
+        },
+        {
+          titulo: "Full Stack E-commerce (React + Django)",
+          link: "https://ecommerce-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Movie Explorer",
+          link: "https://movie-explorer-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Educational Quiz (Ambato & Ecuador)",
+          link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Scientific Calculator",
+          link: "https://calculadorajorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Global Clock",
+          link: "https://reloj-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "QR Code Generator & Scanner",
+          link: "https://jorgepatricio-codigo-qr.vercel.app/",
+        },
+      ],
+    },
+
     contact: {
       title: "Social Media",
       subtitle:
@@ -129,5 +271,3 @@ I am also skilled in development tools, API testing, virtualization, network sec
       successMsg: "I will get back to you as soon as possible",
       error: "Error sending message",
     },
-  },
-};
