@@ -131,7 +131,7 @@ function App() {
           ))}
         </Container>
 
-        <Footer />
+        <Footer t={t} />
 
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
