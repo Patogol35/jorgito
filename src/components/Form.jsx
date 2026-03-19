@@ -1,32 +1,7 @@
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Container,
-  Snackbar,
-  Alert,
-  InputAdornment,
-} from "@mui/material";
-import { motion } from "framer-motion";
-import ContactMailIcon from "@mui/icons-material/ContactMail";
-import SendIcon from "@mui/icons-material/Send";
-import PersonIcon from "@mui/icons-material/Person";
-import EmailIcon from "@mui/icons-material/Email";
-import MessageIcon from "@mui/icons-material/Message";
-import { useTheme } from "@mui/material/styles";
-import { useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
-
-// 👇 IMPORTANTE
-import { useTranslation } from "../i18n"; // ajusta ruta si es necesario
-
-export default function Form() {
+export default function Form({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
-
-  const { t } = useTranslation(); // 👈 idioma
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
@@ -45,7 +20,7 @@ export default function Form() {
         setSuccess(true);
         formRef.current.reset();
       })
-      .catch(() => alert(t("form.error"))); // 👈 idioma
+      .catch(() => alert(t.form.error)); // 🔥 i18n
   };
 
   return (
@@ -83,7 +58,7 @@ export default function Form() {
               variant="h6"
               sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              {t("form.title")}
+              {t.form.title}
             </Typography>
           </Box>
         </motion.div>
@@ -102,7 +77,7 @@ export default function Form() {
               mb: 4,
             }}
           >
-            {t("form.subtitle")}
+            {t.form.subtitle}
           </Typography>
         </motion.div>
 
@@ -116,18 +91,18 @@ export default function Form() {
           {[
             {
               name: "from_name",
-              label: t("form.fields.name"),
+              label: t.form.fields.name,
               icon: <PersonIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "from_email",
-              label: t("form.fields.email"),
+              label: t.form.fields.email,
               type: "email",
               icon: <EmailIcon sx={{ color: primaryColor }} />,
             },
             {
               name: "message",
-              label: t("form.fields.message"),
+              label: t.form.fields.message,
               multiline: true,
               rows: 4,
               icon: <MessageIcon sx={{ color: primaryColor }} />,
@@ -191,7 +166,7 @@ export default function Form() {
                 transition: "transform 0.2s ease",
               }}
             >
-              {t("form.button")}
+              {t.form.button}
             </Button>
           </motion.div>
         </Box>
@@ -228,12 +203,12 @@ export default function Form() {
                   : "0 20px 40px rgba(22,163,74,0.35)",
             }}
           >
-            <strong>{t("form.success")}</strong>
+            <strong>{t.form.success}</strong>
             <br />
-            {t("form.successMsg")}
+            {t.form.successMsg}
           </Alert>
         </Snackbar>
       </Container>
     </Box>
   );
-              }
+}
