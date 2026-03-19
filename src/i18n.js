@@ -158,7 +158,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     hero: {
       title: "Hi, I'm Jorge Patricio Santamaría Cherrez",
       subtitle:
-        "Systems Engineer · Master's in Software Engineering and Computer Systems",
+        "Systems Engineer · Master's in Software Engineering and Information Systems",
       description: `I am passionate about creating technology that transforms ideas into digital realities.
 My focus is on delivering constant value by building secure, innovative digital solutions that generate positive impact.
 I am also skilled in development tools, API testing, virtualization, network security, remote support, and technical documentation.`,
