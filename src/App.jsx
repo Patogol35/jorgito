@@ -152,6 +152,34 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* 🌍 BOTÓN IDIOMA FLOTANTE ARRIBA */}
+<Tooltip title="Cambiar idioma" placement="left">
+  <Fab
+    aria-label="idioma"
+    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    sx={{
+      position: "fixed",
+      top: 90, // 👈 debajo del navbar
+      right: 16,
+      zIndex: 1200,
+      bgcolor: theme.palette.primary.main,
+      color: "#fff",
+      width: 50,
+      height: 50,
+      fontWeight: "bold",
+      fontSize: "0.9rem",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+      "&:hover": {
+        bgcolor: theme.palette.primary.dark,
+        transform: "scale(1.08)",
+      },
+      transition: "all 0.25s ease",
+    }}
+  >
+    {lang === "es" ? "EN" : "ES"}
+  </Fab>
+</Tooltip>
+
         <ChatBot />
       </Box>
     </ThemeProvider>
