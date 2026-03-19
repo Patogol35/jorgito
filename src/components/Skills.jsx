@@ -202,7 +202,7 @@ export default function Skills({ t }) {
                   }}
                 >
                   {categoryIcons[cat]}
-{t.skills.categories[cat]}
+{cat}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
