@@ -174,7 +174,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       studies: [
         {
           titulo:
-            "Master's in Software Engineering and Computer Systems",
+            "Master's in Software Engineering and Information Systems",
           institucion:
             "International University of La Rioja, Spain",
           detalle: "Final Project Grade: 9 | Final Average: 8.68",
