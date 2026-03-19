@@ -160,7 +160,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       subtitle:
         "Systems Engineer · Master's in Software Engineering and Information Systems",
       description: `I am passionate about creating technology that transforms ideas into digital realities.
-My focus is on delivering efficient results by building secure, innovative digital solutions that generate positive impact.
+My focus is on delivering efficient results by building secure, innovative digital solutions that generate a positive impact.
 I am also skilled in development tools, API testing, virtualization, network security, remote support, and technical documentation.`,
       buttons: {
         cv: "View CV",
