@@ -243,22 +243,30 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={{
       position: "relative",
-      color: theme.palette.primary.main,
-      fontWeight: "bold",
-      fontSize: "0.9rem",
-      width: 42,
-      height: 42,
+      width: 44,
+      height: 44,
       borderRadius: "50%",
-      border: `1px solid ${theme.palette.primary.main}`,
-      backdropFilter: "blur(6px)",
+      color: theme.palette.primary.main,
+      backdropFilter: "blur(8px)",
+      background: "rgba(255,255,255,0.06)",
+      boxShadow: `0 0 10px ${theme.palette.primary.main}33`,
       transition: "all 0.25s ease",
       "&:hover": {
         transform: "scale(1.15)",
-        background: "rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.12)",
+        boxShadow: `0 0 18px ${theme.palette.primary.main}66`,
       },
     }}
   >
-    {lang === "es" ? "EN" : "ES"}
+    <Typography
+      sx={{
+        fontWeight: "bold",
+        fontSize: "0.85rem",
+        letterSpacing: "1px",
+      }}
+    >
+      {lang === "es" ? "EN" : "ES"}
+    </Typography>
   </IconButton>
 </motion.div>
             </Box>
