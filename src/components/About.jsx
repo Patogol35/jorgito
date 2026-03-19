@@ -11,8 +11,11 @@ export default function About({ t }) {
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
-  /* 🔥 usamos datos de i18n pero SIN tocar estructura */
+  /* 🔥 textos desde i18n */
   const estudios = t.about.studies;
+
+  /* 🔥 COLORES ORIGINALES (NO SE TOCAN) */
+  const iconColors = ["#1976d2", "#9333ea"];
 
   return (
     <Box
@@ -70,7 +73,8 @@ export default function About({ t }) {
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
-                <GraduationCap size={28} color={est.iconColor} />
+                {/* 🔥 AQUÍ ESTÁ EL FIX */}
+                <GraduationCap size={28} color={iconColors[i]} />
 
                 <Typography variant="subtitle1" sx={subtitleStyle}>
                   {est.titulo}
@@ -90,4 +94,4 @@ export default function About({ t }) {
       </Grid>
     </Box>
   );
-              }
+}
