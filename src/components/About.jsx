@@ -11,7 +11,7 @@ export default function About({ t }) {
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
-  /* 🔥 SOLO CAMBIO: usamos traducciones */
+  /* 🔥 usamos datos de i18n pero SIN tocar estructura */
   const estudios = t.about.studies;
 
   return (
@@ -23,7 +23,6 @@ export default function About({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* Encabezado */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -61,7 +60,6 @@ export default function About({ t }) {
         </Box>
       </motion.div>
 
-      {/* Grid */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
@@ -92,4 +90,4 @@ export default function About({ t }) {
       </Grid>
     </Box>
   );
-}
+              }
