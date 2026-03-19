@@ -13,7 +13,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
 import { useTheme } from "@mui/material/styles";
 
-export default function Contact() {
+export default function Contact({ t }) {
   const theme = useTheme();
   const { palette } = theme;
   const isDark = palette.mode === "dark";
@@ -41,7 +41,11 @@ export default function Contact() {
       color: isDark ? "#f48fb1" : "#E4405F",
       href: "https://www.instagram.com/jorge_patricio_26",
     },
-    { icon: <MailOutline />, color: isDark ? "#fff" : "#1976d2", href: "mailto:patogol3535@gmail.com" },
+    {
+      icon: <MailOutline />,
+      color: isDark ? "#fff" : "#1976d2",
+      href: "mailto:patogol3535@gmail.com",
+    },
   ];
 
   return (
@@ -57,50 +61,49 @@ export default function Contact() {
         {/* =========================  
         TÍTULO CONTACTO  
 ========================= */}
-<motion.div
-  initial={{ opacity: 0, scale: 0.8 }}
-  whileInView={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.8 }}
-  style={{ textAlign: "center", marginBottom: "2rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      px: 3,
-      py: 0.9,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(144,202,249,0.06)"
-        : "rgba(25,118,210,0.06)",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-      backdropFilter: "blur(6px)",
-    }}
-  >
-    {/* Icono SIN fondo */}
-    <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
 
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: "bold",
-        color: primaryColor,
-        lineHeight: 1,
-      }}
-    >
-      Redes Sociales
-    </Typography>
-  </Box>
-</motion.div>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: primaryColor,
+                lineHeight: 1,
+              }}
+            >
+              {t.contact.title}
+            </Typography>
+          </Box>
+        </motion.div>
 
         {/* =========================
-            TEXTO INTRO (subtitle1)
+            TEXTO INTRO
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -115,13 +118,12 @@ export default function Contact() {
               mb: 2,
             }}
           >
-            Puedes contactarme a través de mis redes profesionales o por correo
-            electrónico.
+            {t.contact.subtitle}
           </Typography>
         </motion.div>
 
         {/* =========================
-            DISPONIBILIDAD (body2)
+            DISPONIBILIDAD
         ========================= */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -140,7 +142,7 @@ export default function Contact() {
           >
             <AccessTime sx={{ fontSize: 18 }} />
             <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              Respuesta habitual en menos de 24 horas
+              {t.contact.availability}
             </Typography>
           </Box>
         </motion.div>
@@ -148,10 +150,13 @@ export default function Contact() {
         <Divider sx={{ mb: 3 }} />
 
         {/* Redes sociales */}
-        <SocialLinks socialLinks={socialLinks} size="48px" animated={true} spacing={2} />
-
-        
+        <SocialLinks
+          socialLinks={socialLinks}
+          size="48px"
+          animated={true}
+          spacing={2}
+        />
       </Container>
     </Box>
   );
-              }
+        }
