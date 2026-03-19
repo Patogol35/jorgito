@@ -13,7 +13,7 @@ import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 
-export default function Hero({ mode, setMode }) {
+export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
 
   const glowColor =
@@ -21,7 +21,6 @@ export default function Hero({ mode, setMode }) {
       ? theme.palette.primary.main
       : "#60a5fa";
 
-  /* ================= ANIMACIONES CINEMATOGRÁFICAS ================= */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -79,85 +78,61 @@ export default function Hero({ mode, setMode }) {
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
-        {/* ================= AVATAR MONEDA PULIDA ================= */}
+        {/* AVATAR */}
+        <motion.div
+          initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
+          animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
+          style={{
+            borderRadius: "50%",
+            transformStyle: "preserve-3d",
+            perspective: 1300,
+          }}
+        >
+          <motion.div
+            animate={{ y: [0, -12, 0], rotateX: [0, 1.2, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.div
+              animate={{
+                boxShadow: [
+                  `0 0 18px ${theme.palette.primary.main}55`,
+                  `0 0 28px ${theme.palette.primary.main}88`,
+                  `0 0 18px ${theme.palette.primary.main}55`,
+                ],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              style={{ borderRadius: "50%" }}
+            >
+              <Avatar
+                alt="Jorge Patricio"
+                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
+                sx={{
+                  width: { xs: 130, sm: 170, md: 200 },
+                  height: { xs: 130, sm: 170, md: 200 },
+                  border: `3px solid ${theme.palette.primary.main}`,
+                  boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
+                  backfaceVisibility: "hidden",
+                  backgroundColor: theme.palette.background.paper,
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
-<motion.div
-  initial={{
-    opacity: 0,
-    rotateY: -180,
-    scale: 0.9,
-  }}
-  animate={{
-    opacity: 1,
-    rotateY: 0,
-    scale: 1,
-  }}
-  transition={{
-    duration: 2.4,
-    ease: [0.25, 0.9, 0.35, 1], // natural cinematic
-  }}
-  style={{
-    borderRadius: "50%",
-    transformStyle: "preserve-3d",
-    perspective: 1300,
-  }}
->
-  <motion.div
-    animate={{
-      y: [0, -12, 0],
-      rotateX: [0, 1.2, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  >
-    <motion.div
-      animate={{
-        boxShadow: [
-          `0 0 18px ${theme.palette.primary.main}55`,
-          `0 0 28px ${theme.palette.primary.main}88`,
-          `0 0 18px ${theme.palette.primary.main}55`,
-        ],
-      }}
-      transition={{
-        duration: 4,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        borderRadius: "50%",
-      }}
-    >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
-        sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
-          border: `3px solid ${theme.palette.primary.main}`,
-          boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
-          backfaceVisibility: "hidden",
-          backgroundColor: theme.palette.background.paper,
-        }}
-      />
-    </motion.div>
-  </motion.div>
-</motion.div>
-
-        {/* ================= TEXTO ================= */}
+        {/* TEXTO */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
           zIndex={1}
         >
-          <motion.div
-            variants={textContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div variants={textContainer} initial="hidden" animate="visible">
+            
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
@@ -168,7 +143,7 @@ export default function Hero({ mode, setMode }) {
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
-                Hola, soy Jorge Patricio Santamaría Cherrez
+                {t.title}
               </Typography>
             </motion.div>
 
@@ -178,7 +153,7 @@ export default function Hero({ mode, setMode }) {
                 color="text.primary"
                 sx={{ fontStyle: "italic" }}
               >
-                Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos
+                {t.subtitle}
               </Typography>
             </motion.div>
 
@@ -189,25 +164,18 @@ export default function Hero({ mode, setMode }) {
                   lineHeight: 1.9,
                   letterSpacing: "0.3px",
                   color: theme.palette.text.primary,
-          
                   maxWidth: "520px",
                   mt: 3,
                   mb: 5,
                 }}
               >
-                Me apasiona crear tecnología que transforma ideas en realidades digitales.
-Mi enfoque está en aportar valor constante, desarrollando soluciones digitales seguras, innovadoras y orientadas a generar un impacto positivo.
-Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, seguridad de red, soporte remoto y documentación técnica.
+                {t.description}
               </Typography>
             </motion.div>
           </motion.div>
 
-          {/* ================= BOTONES ================= */}
-          <motion.div
-            variants={buttonsContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          {/* BOTONES */}
+          <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
             <Box
               sx={{
                 display: "flex",
@@ -219,18 +187,18 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
             >
               {[
                 {
-                  label: "Ver CV",
+                  label: t.buttons.cv,
                   icon: <DescriptionIcon />,
                   href: "/Jorge.CV.pdf",
                 },
                 {
-                  label: "Ver Título",
+                  label: t.buttons.title,
                   icon: <WorkspacePremiumIcon />,
                   href:
                     "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
                 },
                 {
-                  label: "Sasha",
+                  label: t.buttons.ai,
                   icon: <SmartToyIcon />,
                   onClick: () => window.openSashaChat?.(),
                 },
@@ -282,4 +250,4 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       </Box>
     </>
   );
-                    }
+}
