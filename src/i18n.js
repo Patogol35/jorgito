@@ -271,3 +271,5 @@ I am also skilled in development tools, API testing, virtualization, network sec
       successMsg: "I will get back to you as soon as possible",
       error: "Error sending message",
     },
+
+  };
