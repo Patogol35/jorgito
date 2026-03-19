@@ -27,51 +27,50 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import { motion, AnimatePresence } from "framer-motion";
 
 // 📌 Configuración del menú con iconos
-const menuItems = [
+const getMenuItems = (t) => [
   {
-    label: "Sobre mí",
+    label: t.menu.about,
     href: "#hero",
     color: "linear-gradient(135deg, #0288d1, #26c6da)",
     icon: <PersonIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Educación",
+    label: t.menu.education,
     href: "#about",
     color: "linear-gradient(135deg, #2e7d32, #66bb6a)",
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Tecnologías",
+    label: t.menu.skills,
     href: "#skills",
     color: "linear-gradient(135deg, #f57c00, #ffb74d)",
     icon: <BuildIcon sx={{ color: "#fff" }} />,
   },
   {
-  label: "Certificados",
-  href: "#certifications",
-  color: "linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), linear-gradient(135deg, #CBB26A, #B59A5A)",
-  icon: <VerifiedIcon sx={{ color: "#fff" }} />,
+    label: t.menu.certifications,
+    href: "#certifications",
+    color:
+      "linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), linear-gradient(135deg, #CBB26A, #B59A5A)",
+    icon: <VerifiedIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Proyectos",
+    label: t.menu.projects,
     href: "#projects",
     color: "linear-gradient(135deg, #0288d1, #03a9f4)",
     icon: <WorkIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: "Contacto",
+    label: t.menu.contact,
     href: "#contact",
     color: "linear-gradient(135deg, #c62828, #ef5350)",
     icon: <EmailIcon sx={{ color: "#fff" }} />,
   },
-  
-  
-{
-  label: "Email",
-  href: "#form",
-  color: "linear-gradient(135deg, #00695c, #26a69a)", // teal
-  icon: <ContactMailIcon sx={{ color: "#fff" }} />,
-},
+  {
+    label: t.menu.email,
+    href: "#form",
+    color: "linear-gradient(135deg, #00695c, #26a69a)",
+    icon: <ContactMailIcon sx={{ color: "#fff" }} />,
+  },
 ];
 
 // Variantes animaciones
@@ -102,7 +101,7 @@ function useSmoothScroll(offset = -70) {
 }
 
 // 📌 Hook: detectar sección activa
-function useActiveSection(setActive) {
+function useActiveSection(menuItems, setActive) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) =>
@@ -119,7 +118,7 @@ function useActiveSection(setActive) {
 
     sections.forEach((s) => observer.observe(s));
     return () => sections.forEach((s) => observer.unobserve(s));
-  }, [setActive]);
+  }, [menuItems, setActive]);
 }
 
 // 📌 Hook: bloquear scroll al abrir menú
@@ -138,15 +137,16 @@ function useLockBodyScroll(isLocked, menuRef) {
   }, [isLocked, menuRef]);
 }
 
-export default function Navbar({ mode, setMode }) {
+export default function Navbar({ mode, setMode, t }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("#hero");
   const theme = useTheme();
+  const menuItems = getMenuItems(t);
   const handleScrollTo = useSmoothScroll(-70);
   const menuRef = useRef(null);
 
-  useActiveSection(setActive);
+  useActiveSection(menuItems, setActive);
   useLockBodyScroll(open, menuRef);
 
   // 🎯 Navbar cambia con scroll
