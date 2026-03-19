@@ -30,18 +30,6 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       ],
     },
 
-    footer: {
-  slogan: "Transformando ideas en aplicaciones efectivas",
-  credit: "Portafolio desarrollado por Jorge Patricio Santamaría Cherrez",
-  rights: "Todos los derechos reservados",
-},
-footer: {
-  slogan: "Transforming ideas into effective applications",
-  credit: "Portfolio developed by Jorge Patricio Santamaría Cherrez",
-  rights: "All rights reserved",
-},
-    
-
     skills: {
       title: "Stack Tecnológico",
       categories: {
@@ -144,6 +132,13 @@ footer: {
       success: "¡Mensaje enviado con éxito!",
       successMsg: "Me pondré en contacto contigo lo antes posible",
       error: "Error al enviar el mensaje",
+    },
+
+    footer: {
+      slogan: "Transformando ideas en aplicaciones efectivas",
+      credit:
+        "Portafolio desarrollado por Jorge Patricio Santamaría Cherrez",
+      rights: "Todos los derechos reservados",
     },
   },
 
@@ -284,6 +279,11 @@ I am also skilled in development tools, API testing, virtualization, network sec
       error: "Error sending message",
     },
 
-  }, 
-
-}; 
+    footer: {
+      slogan: "Transforming ideas into effective applications",
+      credit:
+        "Portfolio developed by Jorge Patricio Santamaría Cherrez",
+      rights: "All rights reserved",
+    },
+  },
+};
