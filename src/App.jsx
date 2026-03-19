@@ -165,23 +165,29 @@ function App() {
       top: 90,
       right: 16,
       zIndex: 1200,
-      bgcolor: theme.palette.primary.main,
-      color: "#fff",
-      width: 50,
-      height: 50,
-      fontWeight: "bold",
-      fontSize: "0.9rem",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
 
-      // ❌ eliminar TODOS los efectos
+      // 🔥 COLORES PRO
+      bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+      color: "#fff",
+
+      width: 52,
+      height: 52,
+
+      fontWeight: 800,
+      fontSize: "1rem",
+      letterSpacing: "1px",
+
+      boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+
+      // ❌ sin efectos raros
       "&:hover": {
-        bgcolor: theme.palette.primary.main,
+        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
       },
       "&:active": {
-        bgcolor: theme.palette.primary.main,
+        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
       },
       "&:focus": {
-        bgcolor: theme.palette.primary.main,
+        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
       },
     }}
   >
