@@ -156,8 +156,9 @@ function App() {
 <Tooltip title="Cambiar idioma" placement="left">
   <Fab
     aria-label="idioma"
-    disableRipple // 🔥 CLAVE
-    disableFocusRipple // 🔥 MÁS LIMPIO
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={{
       position: "fixed",
@@ -171,14 +172,17 @@ function App() {
       fontWeight: "bold",
       fontSize: "0.9rem",
       boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+
+      // ❌ eliminar TODOS los efectos
       "&:hover": {
-        bgcolor: theme.palette.primary.dark,
-        transform: "scale(1.08)",
+        bgcolor: theme.palette.primary.main,
       },
       "&:active": {
-        transform: "scale(0.95)", // 👈 feedback limpio sin ripple
+        bgcolor: theme.palette.primary.main,
       },
-      transition: "all 0.2s ease",
+      "&:focus": {
+        bgcolor: theme.palette.primary.main,
+      },
     }}
   >
     {lang === "es" ? "EN" : "ES"}
