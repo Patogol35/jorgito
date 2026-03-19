@@ -25,12 +25,20 @@ import Form from "./components/Form.jsx";
 
 function App() {
   const storedMode = localStorage.getItem("themeMode") || "dark";
+  const storedLang = localStorage.getItem("lang") || "es";
+
   const [mode, setMode] = useState(storedMode);
+  const [lang, setLang] = useState(storedLang);
+
   const scrollOffset = "80px";
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
+
+  useEffect(() => {
+    localStorage.setItem("lang", lang);
+  }, [lang]);
 
   const theme = useMemo(
     () =>
@@ -65,8 +73,19 @@ function App() {
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        <Navbar mode={mode} setMode={setMode} />
-        <Hero mode={mode} setMode={setMode} />
+        <Navbar
+          mode={mode}
+          setMode={setMode}
+          lang={lang}
+          setLang={setLang}
+        />
+
+        <Hero
+          mode={mode}
+          setMode={setMode}
+          lang={lang}
+          setLang={setLang}
+        />
 
         <Container
           maxWidth="lg"
@@ -85,31 +104,22 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 6 },
                 borderRadius: 3,
-
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
-
-                /* 🧱 Bordes */
                 border: `2px solid ${
                   mode === "light"
                     ? "rgba(0,0,0,0.85)"
                     : "rgba(255,255,255,0.85)"
                 }`,
-
-                /* 🎯 Línea izquierda fija */
                 borderLeft: `4px solid ${color}`,
-
                 scrollMarginTop: scrollOffset,
-
-                /* 🎞️ Solo movimiento, sin efectos visuales */
                 transition: "transform 0.25s ease",
-
                 "&:hover": {
                   transform: "translateY(-4px)",
                 },
               }}
             >
-              <Component />
+              <Component lang={lang} />
             </Paper>
           ))}
         </Container>
@@ -118,7 +128,6 @@ function App() {
 
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
