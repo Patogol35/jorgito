@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-
 import BuildIcon from "@mui/icons-material/Build";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -22,7 +20,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 /* =========================
-   DATA (NO SE TOCA)
+   DATA
 ========================= */
 
 const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
@@ -63,9 +61,7 @@ const categoryIcons = {
    COMPONENT
 ========================= */
 
-export default function Skills() {
-
-  const { t } = useTranslation();
+export default function Skills({ t }) {
 
   const [filter, setFilter] = useState("All");
 
@@ -104,11 +100,46 @@ export default function Skills() {
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
-        {/* 🔥 SOLO ESTO CAMBIA */}
-        <Typography variant="h4" align="center" mb={4}>
-          {t("skills.title")}
-        </Typography>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
 
+            {/* 🔥 ÚNICO CAMBIO */}
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
+              {t.skills.title}
+            </Typography>
+
+          </Box>
+        </motion.div>
+
+        {/* FILTERS */}
         <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
           <Box
             ref={containerRef}
@@ -135,23 +166,107 @@ export default function Skills() {
                   ref={(el) => (buttonRefs.current[cat] = el)}
                   component={motion.button}
                   whileTap={{ scale: 0.92 }}
+                  sx={{
+                    borderRadius: "999px",
+                    px: 2.4,
+                    py: 1,
+                    fontWeight: 600,
+                    fontSize: "0.9rem",
+                    textTransform: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    backgroundColor: isDark
+                      ? "rgba(255,255,255,0.04)"
+                      : "rgba(255,255,255,0.9)",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255,255,255,0.12)"
+                        : "rgba(0,0,0,0.12)"
+                    }`,
+                    "&.Mui-selected": {
+                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                      color: "#fff",
+                      borderColor: "transparent",
+                    },
+                  }}
                 >
                   {categoryIcons[cat]}
-                  {t(`skills.categories.${cat}`)}
+                  {cat}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
           </Box>
         </Box>
 
+        {/* GRID */}
         <Grid container spacing={4} justifyContent="center">
           <AnimatePresence mode="popLayout">
             {filteredSkills.map((skill) => (
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
-                <Paper sx={{ p: 3, textAlign: "center" }}>
-                  <Box component="img" src={skill.img} alt={skill.name} />
-                  <Typography>{skill.name}</Typography>
-                </Paper>
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{
+                    duration: 0.35,
+                    ease: "easeOut",
+                  }}
+                >
+                  <Paper
+                    sx={{
+                      p: 3,
+                      textAlign: "center",
+                      borderRadius: "22px",
+                      background: cardBg,
+                      border: `1px solid ${
+                        isDark
+                          ? "rgba(255,255,255,0.15)"
+                          : "rgba(0,0,0,0.12)"
+                      }`,
+                      transition: "all 0.25s ease",
+                      "&:hover": {
+                        transform: "translateY(-4px)",
+                        borderColor: theme.palette.primary.main,
+                      },
+                    }}
+                  >
+                    <Box
+                      component={motion.img}
+                      src={skill.img}
+                      alt={skill.name}
+                      whileHover={{
+                        scale: 1.12,
+                        rotate: [0, 3, -3, 2, 0],
+                        y: -4,
+                      }}
+                      whileTap={{
+                        scale: 0.94,
+                        rotate: 180,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 16,
+                      }}
+                      sx={{
+                        width: 65,
+                        height: 65,
+                        mb: 2,
+                        objectFit: "contain",
+                        filter: isDark
+                          ? "invert(1) brightness(1.22)"
+                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                      }}
+                    />
+
+                    <Typography fontWeight="bold">
+                      {skill.name}
+                    </Typography>
+
+                  </Paper>
+                </motion.div>
               </Grid>
             ))}
           </AnimatePresence>
@@ -160,4 +275,4 @@ export default function Skills() {
       </Container>
     </Box>
   );
-}
+                              }
