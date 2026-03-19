@@ -23,7 +23,14 @@ import { motion, AnimatePresence } from "framer-motion";
    DATA
 ========================= */
 
-const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
+const categories = [
+  "All",
+  "Frontend",
+  "Backend",
+  "Database",
+  "Cloud",
+  "Tools",
+];
 
 const skills = [
   { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
@@ -126,21 +133,22 @@ export default function Skills({ t }) {
               backdropFilter: "blur(6px)",
             }}
           >
-            <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-            {/* 🔥 ÚNICO CAMBIO */}
+            <BuildIcon
+              sx={{ fontSize: 22, color: primaryColor }}
+            />
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-            >
-              {t.skills.title}
-            </Typography>
-
+  variant="h6"
+  sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+>
+  {t.skills.title}
+</Typography>
           </Box>
         </motion.div>
 
         {/* FILTERS */}
+
         <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+
           <Box
             ref={containerRef}
             sx={{
@@ -149,6 +157,7 @@ export default function Skills({ t }) {
               "&::-webkit-scrollbar": { display: "none" },
             }}
           >
+
             <ToggleButtonGroup
               value={filter}
               exclusive
@@ -159,6 +168,7 @@ export default function Skills({ t }) {
                 py: 0.5,
               }}
             >
+
               {categories.map((cat) => (
                 <ToggleButton
                   key={cat}
@@ -192,18 +202,24 @@ export default function Skills({ t }) {
                   }}
                 >
                   {categoryIcons[cat]}
-                  {cat}
+{t.skills.categories[cat]}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
+
           </Box>
         </Box>
 
         {/* GRID */}
+
         <Grid container spacing={4} justifyContent="center">
+
           <AnimatePresence mode="popLayout">
+
             {filteredSkills.map((skill) => (
+
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
+
                 <motion.div
                   layout
                   initial={{ opacity: 0, y: 20, scale: 0.96 }}
@@ -214,6 +230,7 @@ export default function Skills({ t }) {
                     ease: "easeOut",
                   }}
                 >
+
                   <Paper
                     sx={{
                       p: 3,
@@ -232,6 +249,7 @@ export default function Skills({ t }) {
                       },
                     }}
                   >
+
                     <Box
                       component={motion.img}
                       src={skill.img}
@@ -266,13 +284,18 @@ export default function Skills({ t }) {
                     </Typography>
 
                   </Paper>
+
                 </motion.div>
+
               </Grid>
+
             ))}
+
           </AnimatePresence>
+
         </Grid>
 
       </Container>
     </Box>
   );
-                              }
+}
