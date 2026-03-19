@@ -30,6 +30,18 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       ],
     },
 
+    menu: {
+  about: "Sobre mí",
+  education: "Educación",
+  skills: "Tecnologías",
+  certifications: "Certificados",
+  projects: "Proyectos",
+  contact: "Contacto",
+  email: "Email",
+},
+
+    
+
     skills: {
       title: "Stack Tecnológico",
       categories: {
@@ -278,6 +290,16 @@ I am also skilled in development tools, API testing, virtualization, network sec
       successMsg: "I will get back to you as soon as possible",
       error: "Error sending message",
     },
+
+    menu: {
+  about: "About me",
+  education: "Education",
+  skills: "Technologies",
+  certifications: "Certifications",
+  projects: "Projects",
+  contact: "Contact",
+  email: "Email",
+},
 
     footer: {
       slogan: "Transforming ideas into effective applications",
