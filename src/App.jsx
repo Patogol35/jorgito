@@ -83,7 +83,7 @@ function App() {
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         {/* 🔥 SOLO SE PASAN PROPS */}
-        <Navbar mode={mode} setMode={setMode} />
+        <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
 
         <Hero
           mode={mode}
