@@ -159,6 +159,7 @@ function App() {
     disableRipple
     disableFocusRipple
     disableTouchRipple
+    elevation={0} // 🔥 quita elevación
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={{
       position: "fixed",
@@ -166,7 +167,6 @@ function App() {
       right: 16,
       zIndex: 1200,
 
-      // 🔥 COLORES PRO
       bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
       color: "#fff",
 
@@ -177,17 +177,18 @@ function App() {
       fontSize: "1rem",
       letterSpacing: "1px",
 
-      boxShadow: "0 4px 14px rgba(0,0,0,0.4)",
+      boxShadow: "none", // 🔥 quita sombra
+      border: "none", // 🔥 evita borde
 
-      // ❌ sin efectos raros
       "&:hover": {
         bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+        boxShadow: "none", // 🔥 evita sombra hover
       },
       "&:active": {
-        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+        boxShadow: "none",
       },
       "&:focus": {
-        bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+        boxShadow: "none",
       },
     }}
   >
