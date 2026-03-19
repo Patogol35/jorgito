@@ -21,11 +21,18 @@ export default function Footer({ t }) {
   const { palette } = theme;
   const isDark = palette.mode === "dark";
 
+  /* 🛡️ FALLBACK (evita pantalla blanca SIEMPRE) */
+  const footerText = t?.footer || {
+    slogan: "Transformando ideas en aplicaciones efectivas",
+    credit: "Portafolio desarrollado por Jorge Patricio Santamaría Cherrez",
+    rights: "Todos los derechos reservados",
+  };
+
   const socialLinks = useMemo(
     () => [
       {
         icon: <GitHub />,
-        color: isDark ? "#ffffff" : "#ffffff",
+        color: "#ffffff",
         href: "https://github.com/Patogol35",
       },
       {
@@ -40,7 +47,7 @@ export default function Footer({ t }) {
       },
       {
         icon: <MailOutline />,
-        color: isDark ? "#ffffff" : "#ffffff",
+        color: "#ffffff",
         href: "mailto:patogol3535@gmail.com",
       },
     ],
@@ -137,7 +144,7 @@ export default function Footer({ t }) {
               color: "rgba(255,255,255,0.92)",
             }}
           >
-            {t.footer.slogan}
+            {footerText.slogan}
           </Typography>
         </MotionDiv>
 
@@ -176,7 +183,7 @@ export default function Footer({ t }) {
                 fontWeight: 500,
               }}
             >
-              {t.footer.credit}
+              {footerText.credit}
             </Typography>
 
             <Typography
@@ -186,7 +193,7 @@ export default function Footer({ t }) {
                 letterSpacing: "0.4px",
               }}
             >
-              © {new Date().getFullYear()} — {t.footer.rights}
+              © {new Date().getFullYear()} — {footerText.rights}
             </Typography>
           </Stack>
         </MotionDiv>
