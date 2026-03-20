@@ -933,7 +933,7 @@ saveMemory(ctx, { user: text, intent });
 /* =========================
 COMPONENTE
 ========================= */
-export default function ChatBot() {
+export default function ChatBot({ t, lang }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isLandscape = useMediaQuery("(orientation: landscape)");
