@@ -37,9 +37,12 @@ export const replies = {
 
   FAREWELL: (ctx) =>
     randomReply([
-      `¡Hasta luego${ctx.userName ? `, ${ctx.userName}` : ""}! 👋 Fue un gusto ayudarte.`,
-      `¡Nos vemos${ctx.userName ? `, ${ctx.userName}` : ""}! 😊`,
-      `¡Hasta pronto${ctx.userName ? `, ${ctx.userName}` : ""}! ✨`,
+      "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
+        "¡Hasta luego! 💕 Fue un gusto hablar contigo.",
+        "Cuídate mucho 👋 aquí estaré cuando quieras volver ☺️",
+        "Te espero pronto 😊 ¡Que tengas un lindo día!",
+        "¡Chao! 💕 pásala súper.",
+        "Nos vemos pronto 😊✨",
     ]),
 
   PROFILE: () =>
