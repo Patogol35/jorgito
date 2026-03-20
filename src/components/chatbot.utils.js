@@ -66,29 +66,25 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
-  // ✅ Si menciona Jorge → OK
+  // ✅ Si menciona explícitamente un nombre válido → OK
   if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
     return true;
   }
 
-  // 🔥 Detectar palabras tipo nombre (simples)
-  const words = normalizedText.split(" ");
+  // 🔥 Detectar si el usuario menciona "de alguien"
+  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
 
-  const possibleName = words.find(
-    (w) =>
-      w.length > 2 &&
-      !OWNER_KEYWORDS.some((k) => normalize(k) === w) &&
-      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(w)
-  );
+  if (nameMatch) {
+    const name = nameMatch[1];
 
-  // ❌ Si encuentra un nombre que NO es Jorge → bloquear
-  if (
-    possibleName &&
-    !OWNER_NAMES.some((name) =>
-      normalize(name).includes(possibleName)
-    )
-  ) {
-    return false;
+    // ❌ Si menciona un nombre que NO es Jorge → bloquear
+    if (
+      !OWNER_NAMES.some((n) =>
+        normalize(n).includes(name)
+      )
+    ) {
+      return false;
+    }
   }
 
   // ✅ Frases válidas
@@ -100,7 +96,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords
+  // ✅ Keywords generales
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
