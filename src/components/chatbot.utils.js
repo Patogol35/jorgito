@@ -14,13 +14,13 @@ export const normalize = (str = "") =>
 
 export const delay = () => 500 + Math.floor(Math.random() * 700);
 
-// CORRECCIÓN: includesAny ahora busca palabras/frases completas
+// ✅ CORREGIDO
 export const includesAny = (text, words = []) => {
-  const normalizedText = ` ${normalize(text)} `; // agrega espacios al inicio y fin
+  const normalizedText = ` ${normalize(text)} `;
 
   return words.some((word) => {
     const normalizedWord = ` ${normalize(word)} `;
-    return normalizedText.includes(normalizedWord); // busca coincidencias exactas
+    return normalizedText.includes(normalizedWord);
   });
 };
 
