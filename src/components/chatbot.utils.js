@@ -63,7 +63,7 @@ export const isValidFarewell = (text) => {
   return exactFarewells.includes(t);
 };
 
-const isAboutOwner = (text) => {
+export const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const t = text.toLowerCase().trim();
 
