@@ -56,6 +56,16 @@ export const detectIntent = (text) => {
     return "EDUCATION";
   }
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
+  if (
+  t.includes("quien te creo") ||
+  t.includes("quién te creó") ||
+  t.includes("quien te hizo") ||
+  t.includes("quién te hizo") ||
+  t.includes("quien te programo") ||
+  t.includes("quién te programó")
+) {
+  return "CREATOR";
+  }
   if (t.includes("contratar")) return "MOTIVATION";
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
   if (isValidFarewell(t)) return "FAREWELL";
