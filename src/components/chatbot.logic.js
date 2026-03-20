@@ -41,7 +41,6 @@ export const detectIntent = (text) => {
     return "PROFILE";
   }
 
-  // ✅ FIX CREATOR (sin tildes)
   if (
     t.includes("quien te creo") ||
     t.includes("quien te hizo") ||
@@ -232,7 +231,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  // ✅ NUEVO FLUJO CORRECTO
+  // 🔥 INTENT
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
 
@@ -258,8 +257,24 @@ export const getSmartResponse = (message, ctx = {}) => {
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
-  return {
+  const response = {
     text: replyText || UNKNOWN_REPLY,
     intent,
   };
+
+  // ✅ FOLLOW UP FUNCIONANDO
+  const next = followUp(intent);
+
+  if (next) {
+    ctx.awaitingFollowUp =
+      intent === "PROFILE"
+        ? "EXPERIENCE"
+        : intent === "EXPERIENCE"
+        ? "SKILLS"
+        : null;
+
+    response.text += `\n\n${next}`;
+  }
+
+  return response;
 };
