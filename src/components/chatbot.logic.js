@@ -99,11 +99,10 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
 const handleContactIntent = (text, ctx) => {
   const normalizedText = normalize(text);
 
-  // ✅ CASO 1: menciona a Jorge
   if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     ctx.awaiting = "CONTACT_CONFIRM";
     return {
-      text: replies.CONTACT(), // 🔥 AQUÍ EL FIX
+      text: replies.CONTACT(),
       action: "CONTACT_CONFIRM",
       intent: "CONTACT",
     };
@@ -137,10 +136,9 @@ const handleContactIntent = (text, ctx) => {
     };
   }
 
-  // ✅ CASO 2: contacto normal
   ctx.awaiting = "CONTACT_CONFIRM";
   return {
-    text: replies.CONTACT(), // 🔥 AQUÍ EL FIX
+    text: replies.CONTACT(),
     action: "CONTACT_CONFIRM",
     intent: "CONTACT",
   };
@@ -152,6 +150,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   const randomReply = (options) =>
     options[Math.floor(Math.random() * options.length)];
 
+  // Nombre del bot
   const nameResponse = handleNamedPattern({
     text,
     regex:
@@ -170,6 +169,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   if (nameResponse) return nameResponse;
 
+  // Saludo
   const greetingResponse = handleNamedPattern({
     text,
     regex:
@@ -183,6 +183,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (greetingResponse) return greetingResponse;
 
+  // Gracias
   const thanksResponse = handleNamedPattern({
     text,
     regex: /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i,
@@ -195,6 +196,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (thanksResponse) return thanksResponse;
 
+  // Estado
   const moodResponse = handleNamedPattern({
     text,
     regex:
@@ -208,10 +210,11 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (moodResponse) return moodResponse;
 
+  // Qué hace
   const doingResponse = handleNamedPattern({
     text,
     regex:
-      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i,
+      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.WHAT_DOING(ctx),
       intent: "WHAT_DOING",
@@ -221,9 +224,9 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (doingResponse) return doingResponse;
 
+  // Guardar nombre usuario
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
-
     ctx.userName = name;
     saveMemory(ctx, { type: "user_name", value: name });
 
@@ -233,6 +236,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // Despedida
   if (isValidFarewell(text)) {
     return {
       text: replies.FAREWELL(ctx),
@@ -240,6 +244,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // Confirmación contacto
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
@@ -259,7 +264,34 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  if (!isAboutOwner(text)) {
+  // FOLLOW UP (🔥 FIX PRINCIPAL)
+  if (ctx.awaitingFollowUp) {
+    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      };
+    }
+
+    if (includesAny(text, NO_WORDS)) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+  }
+
+  // 🔥 FIX: permitir "sí" sin bloquear
+  if (!isAboutOwner(text) && !ctx.awaitingFollowUp) {
     return {
       text: replies.UNKNOWN(),
       intent: "UNKNOWN",
@@ -278,8 +310,14 @@ export const getSmartResponse = (message, ctx = {}) => {
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
+  // 🔥 FIX FOLLOW-UP
+  const next = followUp(intent);
+  if (next) {
+    ctx.awaitingFollowUp = intent;
+  }
+
   return {
-    text: replyText || UNKNOWN_REPLY,
+    text: next ? `${replyText}\n\n${next}` : replyText,
     intent,
   };
 };
