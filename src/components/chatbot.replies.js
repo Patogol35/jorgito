@@ -6,9 +6,12 @@ const randomReply = (options) =>
 export const replies = {
   GREETING: (ctx) =>
     randomReply([
-      `¡Hola${ctx.userName ? `, ${ctx.userName}` : ""}! 😊 Soy Sasha, la asistente virtual de Jorge. ¿Quieres conocer su perfil, experiencia o proyectos?`,
-      `¡Hola${ctx.userName ? `, ${ctx.userName}` : ""}! 👋 Soy Sasha. Puedo contarte sobre Jorge, su experiencia o los proyectos en los que ha trabajado.`,
-      `¡Bienvenido${ctx.userName ? `, ${ctx.userName}` : ""}! ✨ Soy Sasha, la asistente virtual de Jorge. ¿Te gustaría saber más sobre su perfil profesional?`,
+      "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
+        "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
+        "Hola 😊 Soy Sasha, ¿en qué puedo ayudarte hoy?",
+        "¡Bienvenido! 👋 Soy Sasha y con gusto te ayudo.",
+        "Hola ✨ estoy aquí para ayudarte a conocer más sobre Jorge.",
+        "¡Hola! 😊 Qué gusto verte por aquí.",
     ]),
 
   GRA: () =>
@@ -33,9 +36,12 @@ export const replies = {
 
   WHAT_DOING: () =>
     randomReply([
-      "Estoy aquí ayudando a responder preguntas sobre Jorge Patricio 😊",
-      "Estoy lista para contarte sobre Jorge, su experiencia y sus proyectos 💻",
-      "Estoy aquí para ayudarte a conocer mejor el perfil profesional de Jorge 😄",
+      "Estoy aquí contigo 😊 lista para ayudarte.",
+        "Ahora mismo charlando contigo 💕",
+        "Pensando en cómo ayudarte mejor 💭✨",
+        "Disfrutando esta conversación contigo ☺️",
+        "Atenta a lo que necesites 😊",
+        "Esperando tu siguiente mensaje ☺️",
     ]),
 
   FAREWELL: (ctx) =>
