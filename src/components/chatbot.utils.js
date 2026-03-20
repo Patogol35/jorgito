@@ -66,26 +66,30 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
-  // ✅ Si menciona explícitamente un nombre válido → OK
-  if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
-    return true;
+  // 🔥 Detectar nombres en el texto
+  const words = normalizedText.split(" ");
+
+  const hasOwnerName = OWNER_NAMES.some((name) =>
+    normalizedText.includes(normalize(name))
+  );
+
+  const hasOtherName = words.some(
+    (word) =>
+      word.length > 2 &&
+      !OWNER_NAMES.some((name) =>
+        normalize(name).includes(word)
+      ) &&
+      !OWNER_KEYWORDS.includes(word) &&
+      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(word)
+  );
+
+  // ❌ Si hay otro nombre → bloquear
+  if (hasOtherName && !hasOwnerName) {
+    return false;
   }
 
-  // 🔥 Detectar si el usuario menciona "de alguien"
-  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
-
-  if (nameMatch) {
-    const name = nameMatch[1];
-
-    // ❌ Si menciona un nombre que NO es Jorge → bloquear
-    if (
-      !OWNER_NAMES.some((n) =>
-        normalize(n).includes(name)
-      )
-    ) {
-      return false;
-    }
-  }
+  // ✅ Si menciona Jorge → OK
+  if (hasOwnerName) return true;
 
   // ✅ Frases válidas
   if (
@@ -96,7 +100,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords generales
+  // ✅ Keywords (solo si no hay nombres raros)
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
