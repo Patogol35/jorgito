@@ -30,6 +30,12 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       ],
     },
 
+    chatbot: {
+  welcome: "Hola 👋 Soy Sasha, la asistente virtual de Jorge. Puedes preguntarme sobre su perfil, experiencia o proyectos.",
+  placeholder: "Escribe tu mensaje...",
+  send: "Enviar",
+    }
+
     menu: {
   about: "Sobre mí",
   education: "Educación",
@@ -300,6 +306,12 @@ I am also skilled in development tools, API testing, virtualization, network sec
   contact: "Contact",
   email: "Email",
 },
+
+          chatbot: {
+  welcome: "Hi 👋 I'm Sasha, Jorge's virtual assistant. You can ask me about his profile, experience or projects.",
+  placeholder: "Type your message...",
+  send: "Send",
+          }
 
     footer: {
       slogan: "Transforming ideas into effective applications",
