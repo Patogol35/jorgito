@@ -29,9 +29,8 @@ export const PROFILE = {
     "Material UI",
   ],
   education: [
-    "formación en desarrollo web",
-    "máster en tecnologías",
-  ],
+  "Máster en Ingeniería de Software y Sistemas Informáticos por la Universidad UNIR",
+],
   projects: [
     "sistemas web",
     "landing pages",
