@@ -57,14 +57,7 @@ export const detectIntent = (text) => {
   }
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
   if (t.includes("contratar")) return "MOTIVATION";
-  if (
-  t.includes("quien te creo") ||
-  t.includes("quién te creó") ||
-  t.includes("desarrollada") ||
-  t.includes("creada") ||
-  t.includes("quien te desarrollo") ||
-  t.includes("quién te desarrolló")
-) {
+  {
   return "CREATOR";
   }
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
