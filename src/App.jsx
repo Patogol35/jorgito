@@ -1,4 +1,4 @@
-  import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -189,7 +189,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        <ChatBot />
+        <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
   );
