@@ -37,6 +37,8 @@ export const detectIntent = (text) => {
   if (
     t.includes("quien es") ||
     t.includes("quién es") ||
+    t.includes("háblame") ||
+    t.includes("hablame") ||
     OWNER_NAMES.some((name) => t.includes(name))
   ) {
     return "PROFILE";
