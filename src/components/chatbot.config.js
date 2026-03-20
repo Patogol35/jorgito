@@ -31,7 +31,7 @@ export const PROFILE = {
     "Linux",
     ],
   education: [
-    "Máster en Ingeniería de Software y Sistemas Informáticos por la Universidad Internacional de la Rioja (UNIR)",
+    "Máster en Ingeniería de Software y Sistemas Informáticos – Universidad Internacional de La Rioja (UNIR), España",
   ],
   projects: [
     "Aulas virtuales",
