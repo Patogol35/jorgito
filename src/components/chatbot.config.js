@@ -34,10 +34,10 @@ export const PROFILE = {
     "Máster en Ingeniería de Software y Sistemas Informáticos por la Universidad Internacional de la Rioja (UNIR)",
   ],
   projects: [
-    "sistemas web",
-    "landing pages",
-    "aplicaciones full stack",
-    "interfaces responsivas",
+    "Aulas virtuales",
+    "Tiendas online Full Stack",
+    "Aplicaciones Frontend",
+    "Aplicaciones React conectadas a APIs REST",
   ],
   books: [
     "Dan Brown",
