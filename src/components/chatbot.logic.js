@@ -111,6 +111,16 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return "BOOK";
   }
 
+  if (
+  normalizedText.includes("creo") ||
+  normalizedText.includes("creó") ||
+  normalizedText.includes("hizo") ||
+  normalizedText.includes("programo") ||
+  normalizedText.includes("programó")
+) {
+  return "CREATOR";
+  }
+
   return currentIntent;
 };
 
