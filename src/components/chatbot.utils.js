@@ -66,25 +66,36 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
-  // 🔥 Detectar nombres en el texto
+  // ✅ Permitir contacto SIEMPRE (aunque no diga Jorge)
+  if (
+    normalizedText.includes("contact") ||
+    normalizedText.includes("whatsapp")
+  ) {
+    return true;
+  }
+
   const words = normalizedText.split(" ");
 
   const hasOwnerName = OWNER_NAMES.some((name) =>
     normalizedText.includes(normalize(name))
   );
 
-  const hasOtherName = words.some(
-    (word) =>
-      word.length > 2 &&
-      !OWNER_NAMES.some((name) =>
-        normalize(name).includes(word)
-      ) &&
-      !OWNER_KEYWORDS.includes(word) &&
-      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(word)
+  const possibleName = words.find(
+    (w) =>
+      w.length > 2 &&
+      !OWNER_KEYWORDS.some((k) => normalize(k) === w) &&
+      !VALID_OWNER_PHRASES.some((p) => normalize(p).includes(w)) &&
+      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(w)
   );
 
-  // ❌ Si hay otro nombre → bloquear
-  if (hasOtherName && !hasOwnerName) {
+  // ❌ Si detecta otro nombre y no es Jorge → bloquear
+  if (
+    possibleName &&
+    !OWNER_NAMES.some((name) =>
+      normalize(name).includes(possibleName)
+    ) &&
+    !hasOwnerName
+  ) {
     return false;
   }
 
@@ -100,7 +111,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords (solo si no hay nombres raros)
+  // ✅ Keywords generales
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
