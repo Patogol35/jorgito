@@ -41,6 +41,16 @@ export const detectIntent = (text) => {
   ) {
     return "PROFILE";
   }
+
+  if (
+    t.includes("quien te creó") ||
+    t.includes("quien te creo") ||
+    t.includes("quien te desarrolló") ||
+    t.includes("creada") ||
+    t.includes("desarrollada")
+  ) {
+    return "CREATOR";
+    }
   if (t.includes("experiencia")) return "EXPERIENCE";
   if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("stack")) {
     return "SKILLS";
@@ -55,15 +65,7 @@ export const detectIntent = (text) => {
   ) {
     return "EDUCATION";
   }
-  if (
-    t.includes("quien te creó") ||
-    t.includes("quien te creo") ||
-    t.includes("quien te desarrolló") ||
-    t.includes("creada") ||
-    t.includes("desarrollada")
-  ) {
-    return "CREATOR";
-    }
+  
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
   if (t.includes("contratar")) return "MOTIVATION";
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
@@ -310,23 +312,37 @@ export const getSmartResponse = (message, ctx = {}) => {
   }
 
   let intent = detectIntent(text);
-  intent = adjustIntentIfJorgeMentioned(text, intent);
+intent = adjustIntentIfJorgeMentioned(text, intent);
 
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
-  }
+// ✅ 1. Permitir intents libres (CLAVE)
+const freeIntents = ["CREATOR", "GREETING", "GRA", "MOOD"];
 
-  saveMemory(ctx, { user: text, intent });
-
-  if (intent === "CONTACT") {
-    return handleContactIntent(message, ctx);
-  }
-
-  const reply = replies[intent];
-  const replyText = typeof reply === "function" ? reply(ctx) : reply;
-
+if (!isAboutOwner(text) && !freeIntents.includes(intent)) {
   return {
-    text: replyText || UNKNOWN_REPLY,
-    intent,
+    text: replies.UNKNOWN(),
+    intent: "UNKNOWN",
   };
+}
+
+// ✅ 2. Validaciones adicionales
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = "UNKNOWN";
+}
+
+// ✅ 3. Guardar memoria
+saveMemory(ctx, { user: text, intent });
+
+// ✅ 4. Manejo especial de contacto
+if (intent === "CONTACT") {
+  return handleContactIntent(message, ctx);
+}
+
+// ✅ 5. Respuesta normal
+const reply = replies[intent];
+const replyText = typeof reply === "function" ? reply(ctx) : reply;
+
+return {
+  text: replyText || UNKNOWN_REPLY,
+  intent,
+};
 };
