@@ -24,8 +24,8 @@ const UNKNOWN_RESPONSE = {
 export const followUp = (intent) => {
   const map = {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
-    EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
-    SKILLS: "¿Quieres que te muestre algunos proyectos?",
+EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
+SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
   };
 
   return map[intent] || null;
