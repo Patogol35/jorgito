@@ -6,7 +6,9 @@ import {
   OWNER_ONLY_REPLY,
   PROFILE,
 } from "./chatbot.config";
+
 import { replies } from "./chatbot.replies";
+
 import {
   normalize,
   includesAny,
@@ -21,6 +23,9 @@ const UNKNOWN_RESPONSE = {
   intent: "UNKNOWN",
 };
 
+/* =========================
+   FOLLOW UP
+========================= */
 export const followUp = (intent) => {
   const map = {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
@@ -31,9 +36,29 @@ export const followUp = (intent) => {
   return map[intent] || null;
 };
 
+/* =========================
+   INTENT MAP (NUEVO)
+========================= */
+const INTENT_KEYWORDS = [
+  { intent: "EXPERIENCE", keywords: ["experiencia"] },
+  { intent: "SKILLS", keywords: ["tecnolog", "habilidad", "stack"] },
+  { intent: "PROJECTS", keywords: ["proyecto"] },
+  {
+    intent: "EDUCATION",
+    keywords: ["estudio", "master", "máster", "formacion", "formación"],
+  },
+  { intent: "CONTACT", keywords: ["contact", "whatsapp"] },
+  { intent: "MOTIVATION", keywords: ["contratar"] },
+  { intent: "BOOK", keywords: ["libro", "dan brown"] },
+];
+
+/* =========================
+   DETECT INTENT
+========================= */
 export const detectIntent = (text) => {
   const t = normalize(text);
 
+  // PROFILE (mantengo lógica original)
   if (
     t.includes("quien es") ||
     t.includes("quién es") ||
@@ -42,117 +67,61 @@ export const detectIntent = (text) => {
     return "PROFILE";
   }
 
-  if (t.includes("experiencia")) return "EXPERIENCE";
-
+  // CREATOR (mejorado pero equivalente)
   if (
-    t.includes("tecnolog") ||
-    t.includes("habilidad") ||
-    t.includes("stack")
-  ) {
-    return "SKILLS";
-  }
-
-  if (t.includes("proyecto")) return "PROJECTS";
-
-  if (
-    t.includes("estudio") ||
-    t.includes("master") ||
-    t.includes("máster") ||
-    t.includes("formacion") ||
-    t.includes("formación")
-  ) {
-    return "EDUCATION";
-  }
-
-  if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
-
-  // 🔥 CREATOR MEJORADO
-  if (
-    t.includes("quien te creo") ||
-    t.includes("quién te creó") ||
-    t.includes("quien te hizo") ||
-    t.includes("quién te hizo") ||
-    t.includes("quien te programo") ||
-    t.includes("quién te programó") ||
-    t.includes("quien te desarrollo") ||
-    t.includes("quién te desarrolló") ||
-    t.includes("quien te desarrolló")
+    includesAny(t, [
+      "quien te creo",
+      "quién te creó",
+      "quien te hizo",
+      "quién te hizo",
+      "quien te programo",
+      "quién te programó",
+      "quien te desarrollo",
+      "quién te desarrolló",
+    ])
   ) {
     return "CREATOR";
   }
 
-  if (t.includes("contratar")) return "MOTIVATION";
-  if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
+  // MAP dinámico
+  for (const item of INTENT_KEYWORDS) {
+    if (includesAny(t, item.keywords)) {
+      return item.intent;
+    }
+  }
 
   if (isValidFarewell(t)) return "FAREWELL";
 
   return "UNKNOWN";
 };
 
+/* =========================
+   AJUSTE POR CONTEXTO
+========================= */
 const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
-  const normalizedText = normalize(text);
+  const t = normalize(text);
 
-  if (!OWNER_NAMES.some((name) => normalizedText.includes(name))) {
+  if (!OWNER_NAMES.some((name) => t.includes(name))) {
     return currentIntent;
   }
 
-  if (
-    normalizedText.includes("contact") ||
-    normalizedText.includes("whatsapp")
-  ) {
-    return "CONTACT";
-  }
+  // reutilizamos el mismo sistema
+  const detected = detectIntent(text);
 
-  if (normalizedText.includes("tecnolog")) return "SKILLS";
-  if (normalizedText.includes("experiencia")) return "EXPERIENCE";
-
-  if (
-    normalizedText.includes("estudio") ||
-    normalizedText.includes("master") ||
-    normalizedText.includes("máster") ||
-    normalizedText.includes("formacion") ||
-    normalizedText.includes("formación")
-  ) {
-    return "EDUCATION";
-  }
-
-  if (normalizedText.includes("proyecto")) return "PROJECTS";
-  if (normalizedText.includes("contratar")) return "MOTIVATION";
-
-  if (
-    normalizedText.includes("stack") ||
-    normalizedText.includes("full stack")
-  ) {
-    return "STACK";
-  }
-
-  if (
-    normalizedText.includes("libro") ||
-    normalizedText.includes("dan brown")
-  ) {
-    return "BOOK";
-  }
-
-  // 🔥 CREATOR con Jorge mencionado
-  if (
-    normalizedText.includes("creo") ||
-    normalizedText.includes("creó") ||
-    normalizedText.includes("hizo") ||
-    normalizedText.includes("programo") ||
-    normalizedText.includes("programó") ||
-    normalizedText.includes("desarrollo") ||
-    normalizedText.includes("desarrolló")
-  ) {
-    return "CREATOR";
+  if (detected !== "UNKNOWN") {
+    return detected;
   }
 
   return currentIntent;
 };
 
+/* =========================
+   CONTACT
+========================= */
 const handleContactIntent = (text, ctx) => {
-  const normalizedText = normalize(text);
+  const t = normalize(text);
 
-  if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
+  if (OWNER_NAMES.some((name) => t.includes(name))) {
     ctx.awaiting = "CONTACT_CONFIRM";
     return {
       text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
@@ -162,6 +131,7 @@ const handleContactIntent = (text, ctx) => {
   }
 
   let otherName = null;
+
   const patterns = [
     /contactar\s+a\s+(\w+)/i,
     /contactar\s+(\w+)/i,
@@ -198,17 +168,20 @@ const handleContactIntent = (text, ctx) => {
   };
 };
 
+/* =========================
+   MAIN
+========================= */
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
   const randomReply = (options) =>
     options[Math.floor(Math.random() * options.length)];
 
-  // BOT NAME
+  /* ===== BOT NAME ===== */
   const nameResponse = handleNamedPattern({
     text,
     regex:
-      /^(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
+      /(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)/i,
     onValid: () => ({
       text: randomReply([
         `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
@@ -223,11 +196,10 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   if (nameResponse) return nameResponse;
 
-  // GREETING
+  /* ===== GREETING ===== */
   const greetingResponse = handleNamedPattern({
     text,
-    regex:
-      /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex: /(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)/i,
     onValid: () => ({
       text: replies.GREETING(ctx),
       intent: "GREETING",
@@ -235,12 +207,13 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (greetingResponse) return greetingResponse;
 
-  // GRACIAS
+  /* ===== GRACIAS ===== */
   const thanksResponse = handleNamedPattern({
     text,
-    regex: /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex: /(gracias|muchas gracias)/i,
     onValid: () => ({
       text: replies.GRA(ctx),
       intent: "GRA",
@@ -248,12 +221,13 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (thanksResponse) return thanksResponse;
 
-  // MOOD
+  /* ===== MOOD ===== */
   const moodResponse = handleNamedPattern({
     text,
-    regex: /^(como estas|cómo estás|estas bien|estás bien)/i,
+    regex: /(como estas|cómo estás|estas bien|estás bien)/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
@@ -261,12 +235,13 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (moodResponse) return moodResponse;
 
-  // WHAT DOING
+  /* ===== WHAT DOING ===== */
   const doingResponse = handleNamedPattern({
     text,
-    regex: /^(que haces|qué haces|que estas haciendo)/i,
+    regex: /(que haces|qué haces|que estas haciendo)/i,
     onValid: () => ({
       text: replies.WHAT_DOING(ctx),
       intent: "WHAT_DOING",
@@ -274,9 +249,10 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (doingResponse) return doingResponse;
 
-  // NOMBRE USUARIO
+  /* ===== USER NAME ===== */
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
 
@@ -289,6 +265,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  /* ===== FAREWELL ===== */
   if (isValidFarewell(text)) {
     return {
       text: replies.FAREWELL(ctx),
@@ -296,7 +273,9 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  // 🔥 PRIORIDAD 1: FOLLOW-UP
+  /* =========================
+     FOLLOW UP
+  ========================= */
   if (ctx.awaitingFollowUp) {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       const intentFollow = ctx.awaitingFollowUp;
@@ -312,8 +291,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
       return {
         text: chainReplies[intentFollow],
-        intent:
-          intentFollow === "SKILLS" ? "PROJECTS" : intentFollow,
+        intent: intentFollow === "SKILLS" ? "PROJECTS" : intentFollow,
         fromFollowUp: true,
       };
     }
@@ -328,7 +306,9 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
-  // 🔥 PRIORIDAD 2: CONTACTO
+  /* =========================
+     CONTACT FLOW
+  ========================= */
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
@@ -348,7 +328,9 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  // 🔥 INTENT PRINCIPAL
+  /* =========================
+     INTENT
+  ========================= */
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
 
@@ -359,10 +341,6 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
-  }
-
   saveMemory(ctx, { user: text, intent });
 
   if (intent === "CONTACT") {
@@ -370,8 +348,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   }
 
   const reply = replies[intent];
-  const replyText =
-    typeof reply === "function" ? reply(ctx) : reply;
+  const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
   return {
     text: replyText || UNKNOWN_REPLY,
