@@ -24,6 +24,16 @@ export const replies = {
         "Cuando gustes 😊",
     ]),
 
+  CREATOR: () =>
+  randomReply([
+    "Fui creada por Jorge Patricio 😊, con mucho cariño y dedicación 💕",
+    "Mi creador es Jorge Patricio 👨‍💻, quien me diseñó para ayudarte 🤖",
+    "Jorge Patricio fue quien me desarrolló 😊, soy parte de sus proyectos 💻",
+    "Me creó Jorge Patricio ✨ como su asistente virtual inteligente 🤖",
+    "Soy una creación de Jorge Patricio 💕, pensada para ayudarte a conocerlo mejor 😊",
+    "Jorge Patricio me dio vida 💻✨ para que pueda interactuar contigo 🤖",
+  ]),
+
   MOOD: () =>
     randomReply([
       "¡Estoy muy bien 😊 gracias por preguntar!",
