@@ -27,15 +27,11 @@ const WHATSAPP_URL =
 UTILIDADES
 ========================= */
 const delay = () => Math.floor(Math.random() * 500) + 400;
-const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-const YES_WORDS = ["sí", "si", "claro", "ok", "dale", "okey"];
-const NO_WORDS = ["no", "ahora no", "luego"];
 
 /* =========================
 COMPONENTE
 ========================= */
-export default function ChatBot({ t, lang }) {
+export default function ChatBot({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const isLandscape = useMediaQuery("(orientation: landscape)");
@@ -50,11 +46,10 @@ export default function ChatBot({ t, lang }) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({});
   const [messages, setMessages] = useState([]);
 
   /* =========================
-  INIT MENSAJE
+  MENSAJE INICIAL (IDIOMA)
   ========================= */
   useEffect(() => {
     setMessages([
@@ -66,32 +61,33 @@ export default function ChatBot({ t, lang }) {
   }, [t]);
 
   useEffect(() => {
-    window.openSashaChat = () => setOpen(true);
-    window.closeSashaChat = () => setOpen(false);
-  }, []);
-
-  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
   /* =========================
-  RESPUESTA SIMPLE (NO TOCO TU IA)
+  RESPUESTA SIMPLE (puedes conectar tu IA aquí)
   ========================= */
-  const sendMessage = useCallback((text) => {
-    if (!text.trim()) return;
+  const sendMessage = useCallback(
+    (text) => {
+      if (!text.trim()) return;
 
-    setMessages((m) => [...m, { from: "user", text }]);
-    setInput("");
-    setTyping(true);
+      setMessages((m) => [...m, { from: "user", text }]);
+      setInput("");
+      setTyping(true);
 
-    setTimeout(() => {
-      // 🔥 AQUÍ PUEDES SEGUIR USANDO TU getSmartResponse SIN CAMBIOS
-      const response = "Respuesta generada por tu IA aquí 😊";
-
-      setMessages((m) => [...m, { from: "bot", text: response }]);
-      setTyping(false);
-    }, delay());
-  }, []);
+      setTimeout(() => {
+        setMessages((m) => [
+          ...m,
+          {
+            from: "bot",
+            text: t.chatbot.defaultResponse,
+          },
+        ]);
+        setTyping(false);
+      }, delay());
+    },
+    [t]
+  );
 
   return (
     <>
@@ -114,12 +110,23 @@ export default function ChatBot({ t, lang }) {
         <Paper
           sx={{
             position: "fixed",
-            bottom: 90,
-            left: 16,
-            width: 360,
-            height: 520,
+            zIndex: 1300,
             display: "flex",
             flexDirection: "column",
+            overflow: "hidden",
+            ...(isLandscape
+              ? {
+                  inset: "72px 0 10px 0",
+                  margin: "0 auto",
+                  width: "100%",
+                  maxWidth: 640,
+                }
+              : {
+                  bottom: 90,
+                  left: 16,
+                  width: 360,
+                  height: 520,
+                }),
           }}
         >
           {/* HEADER */}
@@ -160,7 +167,7 @@ export default function ChatBot({ t, lang }) {
             </Box>
           </Box>
 
-          {/* SUGERENCIAS */}
+          {/* SUGERENCIAS DINÁMICAS */}
           <Box sx={{ p: 1 }}>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {t.chatbot.suggestions.map((q) => (
@@ -225,12 +232,10 @@ export default function ChatBot({ t, lang }) {
               placeholder={t.chatbot.placeholder}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  e.preventDefault();
                   sendMessage(input);
                 }
               }}
             />
-
             <IconButton onClick={() => sendMessage(input)}>
               <SendIcon />
             </IconButton>
