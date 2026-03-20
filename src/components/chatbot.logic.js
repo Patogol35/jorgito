@@ -34,7 +34,11 @@ export const followUp = (intent) => {
 export const detectIntent = (text) => {
   const t = normalize(text);
 
-  if (t.includes("quien es") || t.includes("quién es") || t.includes("jorge")) {
+  if (
+    t.includes("quien es") ||
+    t.includes("quién es") ||
+    OWNER_NAMES.some((name) => t.includes(name))
+  ) {
     return "PROFILE";
   }
   if (t.includes("experiencia")) return "EXPERIENCE";
@@ -62,7 +66,7 @@ export const detectIntent = (text) => {
 const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
   const normalizedText = normalize(text);
 
-  if (!normalizedText.includes("jorge")) {
+  if (!OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     return currentIntent;
   }
 
