@@ -104,6 +104,8 @@ export const OWNER_KEYWORDS = [
   "full",
   "contactar",
   "contacto",
+  "hablame",
+  "háblame",
   "whatsapp",
   "academica",
   "académica",
