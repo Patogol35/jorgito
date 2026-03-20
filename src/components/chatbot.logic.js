@@ -6,7 +6,9 @@ import {
   OWNER_ONLY_REPLY,
   PROFILE,
 } from "./chatbot.config";
+
 import { replies } from "./chatbot.replies";
+
 import {
   normalize,
   includesAny,
@@ -24,8 +26,8 @@ const UNKNOWN_RESPONSE = {
 export const followUp = (intent) => {
   const map = {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
-EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
-SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
+    EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
+    SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
   };
 
   return map[intent] || null;
@@ -41,11 +43,19 @@ export const detectIntent = (text) => {
   ) {
     return "PROFILE";
   }
+
   if (t.includes("experiencia")) return "EXPERIENCE";
-  if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("stack")) {
+
+  if (
+    t.includes("tecnolog") ||
+    t.includes("habilidad") ||
+    t.includes("stack")
+  ) {
     return "SKILLS";
   }
+
   if (t.includes("proyecto")) return "PROJECTS";
+
   if (
     t.includes("estudio") ||
     t.includes("master") ||
@@ -55,9 +65,13 @@ export const detectIntent = (text) => {
   ) {
     return "EDUCATION";
   }
+
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
+
   if (t.includes("contratar")) return "MOTIVATION";
+
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
+
   if (isValidFarewell(t)) return "FAREWELL";
 
   return "UNKNOWN";
@@ -70,15 +84,17 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return currentIntent;
   }
 
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+  if (
+    normalizedText.includes("contact") ||
+    normalizedText.includes("whatsapp")
+  ) {
     return "CONTACT";
   }
-  if (normalizedText.includes("tecnolog")) {
-    return "SKILLS";
-  }
-  if (normalizedText.includes("experiencia")) {
-    return "EXPERIENCE";
-  }
+
+  if (normalizedText.includes("tecnolog")) return "SKILLS";
+
+  if (normalizedText.includes("experiencia")) return "EXPERIENCE";
+
   if (
     normalizedText.includes("estudio") ||
     normalizedText.includes("master") ||
@@ -88,16 +104,22 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
   ) {
     return "EDUCATION";
   }
-  if (normalizedText.includes("proyecto")) {
-    return "PROJECTS";
-  }
-  if (normalizedText.includes("contratar")) {
-    return "MOTIVATION";
-  }
-  if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+
+  if (normalizedText.includes("proyecto")) return "PROJECTS";
+
+  if (normalizedText.includes("contratar")) return "MOTIVATION";
+
+  if (
+    normalizedText.includes("stack") ||
+    normalizedText.includes("full stack")
+  ) {
     return "STACK";
   }
-  if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+
+  if (
+    normalizedText.includes("libro") ||
+    normalizedText.includes("dan brown")
+  ) {
     return "BOOK";
   }
 
@@ -107,8 +129,10 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
 const handleContactIntent = (text, ctx) => {
   const normalizedText = normalize(text);
 
+  // Detectar si menciona a Jorge directamente
   if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     ctx.awaiting = "CONTACT_CONFIRM";
+
     return {
       text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
@@ -116,7 +140,9 @@ const handleContactIntent = (text, ctx) => {
     };
   }
 
+  // Detectar otros nombres
   let otherName = null;
+
   const patterns = [
     /contactar\s+a\s+(\w+)/i,
     /contactar\s+(\w+)/i,
@@ -132,6 +158,7 @@ const handleContactIntent = (text, ctx) => {
     }
   }
 
+  // Si pregunta por otra persona → bloquear
   if (
     otherName &&
     !OWNER_NAMES.some(
@@ -145,6 +172,7 @@ const handleContactIntent = (text, ctx) => {
   }
 
   ctx.awaiting = "CONTACT_CONFIRM";
+
   return {
     text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
     action: "CONTACT_CONFIRM",
@@ -155,8 +183,10 @@ const handleContactIntent = (text, ctx) => {
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
-  const randomReply = (options) => options[Math.floor(Math.random() * options.length)];
+  const randomReply = (options) =>
+    options[Math.floor(Math.random() * options.length)];
 
+  // 🔹 Nombre del bot
   const nameResponse = handleNamedPattern({
     text,
     regex:
@@ -165,7 +195,7 @@ export const getSmartResponse = (message, ctx = {}) => {
       text: randomReply([
         `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
         `Soy Sasha 👋, la asistente de Jorge Patricio.`,
-        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`
+        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`,
       ]),
       intent: "BOT_NAME",
     }),
@@ -175,8 +205,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   if (nameResponse) return nameResponse;
 
-  
-
+  // 🔹 Saludo
   const greetingResponse = handleNamedPattern({
     text,
     regex:
@@ -188,8 +217,10 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (greetingResponse) return greetingResponse;
 
+  // 🔹 Gracias
   const thanksResponse = handleNamedPattern({
     text,
     regex: /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i,
@@ -200,11 +231,14 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (thanksResponse) return thanksResponse;
 
+  // 🔹 Estado
   const moodResponse = handleNamedPattern({
     text,
-    regex: /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex:
+      /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
@@ -212,8 +246,10 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (moodResponse) return moodResponse;
 
+  // 🔹 Qué hace
   const doingResponse = handleNamedPattern({
     text,
     regex:
@@ -225,12 +261,17 @@ export const getSmartResponse = (message, ctx = {}) => {
     fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
+
   if (doingResponse) return doingResponse;
 
-  if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
-    const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
+  // 🔹 Guardar nombre usuario
+  if (/^(me llamo|soy|mi nombre es)\s+/i.test(message)) {
+    const name = message
+      .replace(/^(me llamo|soy|mi nombre es)/i, "")
+      .trim();
 
     ctx.userName = name;
+
     saveMemory(ctx, { type: "user_name", value: name });
 
     return {
@@ -239,6 +280,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // 🔹 Despedida
   if (isValidFarewell(text)) {
     return {
       text: replies.FAREWELL(ctx),
@@ -246,9 +288,11 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // 🔹 Confirmación WhatsApp
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
+
       return {
         text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
         intent: "CONTACT_OPENED",
@@ -258,6 +302,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
     if (includesAny(text, NO_WORDS)) {
       ctx.awaiting = null;
+
       return {
         text: "Está bien 😊 Avísame si luego deseas contactarlo.",
         intent: "CONTACT_CANCEL",
@@ -265,6 +310,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
+  // 🔹 Follow up
   if (ctx.awaitingFollowUp) {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       const intent = ctx.awaitingFollowUp;
@@ -285,6 +331,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
     if (includesAny(text, NO_WORDS)) {
       ctx.awaitingFollowUp = null;
+
       return {
         text: "Está bien 😊 ¿En qué más puedo ayudarte?",
       };
@@ -293,11 +340,12 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
+  // 🔹 Si no es sobre Jorge → bloquear
   if (!isAboutOwner(text)) {
-  return {
-    text: replies.UNKNOWN(),
-    intent: "UNKNOWN",
-  };
+    return {
+      text: replies.UNKNOWN(),
+      intent: "UNKNOWN",
+    };
   }
 
   let intent = detectIntent(text);
