@@ -951,14 +951,12 @@ export default function ChatBot({ t, lang }) {
   const [context, setContext] = useState({});
 
   const initialMessage = useMemo(
-    () => ({
-      from: "bot",
-      text:
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    }),
-    []
-  );
+  () => ({
+    from: "bot",
+    text: t.chatbot.welcome,
+  }),
+  [t]
+);
 
   const [messages, setMessages] = useState([initialMessage]);
 
