@@ -69,11 +69,14 @@ export const replies = {
 
   EDUCATION: () =>
     randomReply([
-      `Su formación incluye ${PROFILE.education.join(", ")}.`,
-      `En cuanto a estudios, cuenta con ${PROFILE.education.join(", ")}.`,
-      `Su preparación académica abarca ${PROFILE.education.join(", ")}.`,
-      `Jorge tiene formación en ${PROFILE.education.join(", ")}.`,
-      `Académicamente, Jorge cuenta con ${PROFILE.education.join(", ")}.`,
+      `Jorge cuenta con un ${PROFILE.education.join(", ")}. 😊`,
+      `Jorge tiene formación académica sólida: ${PROFILE.education.join(", ")}.☺️`,
+      `Jorge se formó profesionalmente con un ${PROFILE.education.join(", ")}. 💕`,
+      `Jorge posee estudios enfocados en tecnología 😊`,
+      `Académicamente, Jorge cuenta con un ${PROFILE.education.join(", ")}.☺️`,
+
+        `La formación académica de Jorge respalda su perfil profesional, el cuenta con un: ${PROFILE.education} 💻`,
+      
     ]),
 
   PROJECTS: () =>
