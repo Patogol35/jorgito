@@ -71,19 +71,20 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // 🔥 Detectar si el usuario menciona "de alguien"
-  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
+  // 🔥 Detectar nombres después de palabras clave
+  const namePattern = normalizedText.match(
+    /(proyectos|experiencia|perfil|sobre|de)\s+([a-z]+)/
+  );
 
-  if (nameMatch) {
-    const name = nameMatch[1];
+  if (namePattern) {
+    const name = namePattern[2];
 
-    // ❌ Si menciona un nombre que NO es Jorge → bloquear
-    if (
-      !OWNER_NAMES.some((n) =>
-        normalize(n).includes(name)
-      )
-    ) {
-      return false;
+    const isValidName = OWNER_NAMES.some(
+      (n) => normalize(n) === name
+    );
+
+    if (!isValidName) {
+      return false; // ❌ Bloquea nombres inválidos
     }
   }
 
