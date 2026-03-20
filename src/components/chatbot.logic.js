@@ -37,7 +37,7 @@ export const followUp = (intent) => {
 };
 
 /* =========================
-   INTENT MAP (NUEVO)
+   INTENT MAP
 ========================= */
 const INTENT_KEYWORDS = [
   { intent: "EXPERIENCE", keywords: ["experiencia"] },
@@ -58,7 +58,6 @@ const INTENT_KEYWORDS = [
 export const detectIntent = (text) => {
   const t = normalize(text);
 
-  // PROFILE (mantengo lógica original)
   if (
     t.includes("quien es") ||
     t.includes("quién es") ||
@@ -67,7 +66,6 @@ export const detectIntent = (text) => {
     return "PROFILE";
   }
 
-  // CREATOR (mejorado pero equivalente)
   if (
     includesAny(t, [
       "quien te creo",
@@ -83,7 +81,6 @@ export const detectIntent = (text) => {
     return "CREATOR";
   }
 
-  // MAP dinámico
   for (const item of INTENT_KEYWORDS) {
     if (includesAny(t, item.keywords)) {
       return item.intent;
@@ -105,7 +102,6 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return currentIntent;
   }
 
-  // reutilizamos el mismo sistema
   const detected = detectIntent(text);
 
   if (detected !== "UNKNOWN") {
@@ -273,9 +269,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  /* =========================
-     FOLLOW UP
-  ========================= */
+  /* ===== FOLLOW UP ===== */
   if (ctx.awaitingFollowUp) {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       const intentFollow = ctx.awaitingFollowUp;
@@ -306,9 +300,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
-  /* =========================
-     CONTACT FLOW
-  ========================= */
+  /* ===== CONTACT FLOW ===== */
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
@@ -328,13 +320,16 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  /* =========================
-     INTENT
-  ========================= */
+  /* ===== INTENT ===== */
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
 
-  if (!isAboutOwner(text) && intent !== "CREATOR") {
+  // 🔥 FIX IMPORTANTE (NO rompe nada)
+  if (
+    !isAboutOwner(text) &&
+    intent !== "CREATOR" &&
+    intent !== "CONTACT"
+  ) {
     return {
       text: replies.UNKNOWN(),
       intent: "UNKNOWN",
