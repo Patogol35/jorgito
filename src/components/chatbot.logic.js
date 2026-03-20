@@ -153,14 +153,13 @@ const handleContactIntent = (text, ctx) => {
   const normalizedText = normalize(text);
 
   if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
-    ctx.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      action: "CONTACT_CONFIRM",
-      intent: "CONTACT",
-    };
+  ctx.awaiting = "CONTACT_CONFIRM";
+  return {
+    text: replies.CONTACT(),
+    action: "CONTACT_CONFIRM",
+    intent: "CONTACT",
+  };
   }
-
   let otherName = null;
   const patterns = [
     /contactar\s+a\s+(\w+)/i,
@@ -191,11 +190,11 @@ const handleContactIntent = (text, ctx) => {
 
   ctx.awaiting = "CONTACT_CONFIRM";
 
-  return {
-    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-    action: "CONTACT_CONFIRM",
-    intent: "CONTACT",
-  };
+return {
+  text: replies.CONTACT(),
+  action: "CONTACT_CONFIRM",
+  intent: "CONTACT",
+};
 };
 
 export const getSmartResponse = (message, ctx = {}) => {
