@@ -23,9 +23,12 @@ export const replies = {
 
   MOOD: () =>
     randomReply([
-      "¡Estoy muy bien! 😊 Gracias por preguntar.",
-      "¡Muy bien y con energía! 😄",
-      "¡Excelente! ✨ Siempre lista para ayudarte.",
+      "¡Estoy muy bien 😊 gracias por preguntar!",
+        "Todo va muy bien ☺️ y me alegra ayudarte.",
+        "Me siento genial 💕 sobre todo cuando converso contigo.",
+        "Muy bien 😊 lista para ayudarte.",
+        "Con muy buen ánimo ☺️",
+        "Excelente 😊 gracias por notarlo.",
     ]),
 
   WHAT_DOING: () =>
