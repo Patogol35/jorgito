@@ -343,3 +343,4 @@ return {
   text: replyText || UNKNOWN_REPLY,
   intent,
 };
+};
