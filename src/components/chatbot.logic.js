@@ -313,31 +313,33 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
-  if (!isAboutOwner(text) && intent !== "CREATOR") {
+  let intent = detectIntent(text);
+
+// 👇 primero ajustas
+intent = adjustIntentIfJorgeMentioned(text, intent);
+
+// 👇 luego validas owner (con excepción para CREATOR)
+if (!isAboutOwner(text) && intent !== "CREATOR") {
   return {
     text: replies.UNKNOWN(),
     intent: "UNKNOWN",
   };
-  }
+}
 
-  let intent = detectIntent(text);
-  intent = adjustIntentIfJorgeMentioned(text, intent);
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = "UNKNOWN";
+}
 
-  if (intent === "FAREWELL" && !isValidFarewell(text)) {
-    intent = "UNKNOWN";
-  }
+saveMemory(ctx, { user: text, intent });
 
-  saveMemory(ctx, { user: text, intent });
+if (intent === "CONTACT") {
+  return handleContactIntent(message, ctx);
+}
 
-  if (intent === "CONTACT") {
-    return handleContactIntent(message, ctx);
-  }
+const reply = replies[intent];
+const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
-  const reply = replies[intent];
-  const replyText = typeof reply === "function" ? reply(ctx) : reply;
-
-  return {
-    text: replyText || UNKNOWN_REPLY,
-    intent,
-  };
+return {
+  text: replyText || UNKNOWN_REPLY,
+  intent,
 };
