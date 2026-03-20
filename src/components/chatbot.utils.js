@@ -63,45 +63,49 @@ export const isValidFarewell = (text) => {
   return exactFarewells.includes(t);
 };
 
-export const isAboutOwner = (text) => {
-  const validNames = ["jorge", "patricio", "jorge patricio"];
-  const t = text.toLowerCase().trim();
+export const isAboutOwner = (input) => {
+  const normalizedText = normalize(input);
 
-  const words = t.split(/\s+/).filter(Boolean);
-
-  // 🔍 Detectar "de alguien"
-  const matchDe = t.match(/\bde\s+([a-z\s]+)/);
-  if (matchDe) {
-    const name = matchDe[1].trim();
-    return validNames.includes(name);
+  // ✅ Si menciona explícitamente un nombre válido → OK
+  if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
+    return true;
   }
 
-  // 🔍 Detectar si hay nombres inválidos
-  const hasInvalidName = words.some((word) => {
-    // ignorar palabras cortas
-    if (word.length <= 2) return false;
+  // 🔥 Detectar si el usuario menciona "de alguien"
+  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
 
-    // ignorar keywords conocidas
-    if ([
-      "proyectos","proyecto","experiencia","formacion","formación",
-      "educacion","educación","perfil","stack","habilidades",
-      "tecnologias","tecnología","tecnologias","tecnologías",
-      "contacto","contactar","whatsapp","estudios","libros",
-      "full","fullstack","desarrollador","ingeniero","master","máster",
-      "mi","mis","tu","tus","sus"
-    ].includes(word)) return false;
+  if (nameMatch) {
+    const name = nameMatch[1];
 
-    // ignorar nombres válidos
-    if (validNames.some(n => n.includes(word))) return false;
+    // ❌ Si menciona un nombre que NO es Jorge → bloquear
+    if (
+      !OWNER_NAMES.some((n) =>
+        normalize(n).includes(name)
+      )
+    ) {
+      return false;
+    }
+  }
 
-    // 🚨 cualquier otra palabra → posible nombre inválido
+  // ✅ Frases válidas
+  if (
+    VALID_OWNER_PHRASES.some((phrase) =>
+      normalizedText.includes(normalize(phrase))
+    )
+  ) {
     return true;
-  });
+  }
 
-  if (hasInvalidName) return false;
+  // ✅ Keywords generales
+  if (
+    OWNER_KEYWORDS.some((keyword) =>
+      normalizedText.includes(normalize(keyword))
+    )
+  ) {
+    return true;
+  }
 
-  // ✅ Permitir frases normales (keywords)
-  return true;
+  return false;
 };
 export const saveMemory = (ctx, entry) => {
   const memory = Array.isArray(ctx.memory) ? ctx.memory : [];
