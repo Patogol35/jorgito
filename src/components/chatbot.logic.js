@@ -6,9 +6,7 @@ import {
   OWNER_ONLY_REPLY,
   PROFILE,
 } from "./chatbot.config";
-
 import { replies } from "./chatbot.replies";
-
 import {
   normalize,
   includesAny,
@@ -18,98 +16,110 @@ import {
   saveMemory,
 } from "./chatbot.utils";
 
-// --------------------
-// FOLLOW UP
-// --------------------
+const UNKNOWN_RESPONSE = {
+  text: UNKNOWN_REPLY,
+  intent: "UNKNOWN",
+};
+
 export const followUp = (intent) => {
   const map = {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
-    EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
-    SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
+EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
+SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
   };
 
   return map[intent] || null;
 };
 
-// --------------------
-// DETECT INTENT (FIX CONTACT)
-// --------------------
 export const detectIntent = (text) => {
   const t = normalize(text);
 
   if (
     t.includes("quien es") ||
+    t.includes("quién es") ||
     OWNER_NAMES.some((name) => t.includes(name))
-  ) return "PROFILE";
-
-  if (includesAny(t, ["experiencia"])) return "EXPERIENCE";
-
-  if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("skill"))
+  ) {
+    return "PROFILE";
+  }
+  if (t.includes("experiencia")) return "EXPERIENCE";
+  if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("stack")) {
     return "SKILLS";
-
-  if (t.includes("stack")) return "STACK";
-
+  }
   if (t.includes("proyecto")) return "PROJECTS";
-
   if (
-    includesAny(t, ["estudio", "master", "formacion"])
-  ) return "EDUCATION";
-
-  // 🔥 FIX CLAVE
-  if (t.includes("contact") || t.includes("whatsapp"))
-    return "CONTACT";
-
+    t.includes("estudio") ||
+    t.includes("master") ||
+    t.includes("máster") ||
+    t.includes("formacion") ||
+    t.includes("formación")
+  ) {
+    return "EDUCATION";
+  }
+  if (
+    t.includes("quien te creó") ||
+    t.includes("quien te creo") ||
+    t.includes("quien te desarrolló") ||
+    t.includes("creada") ||
+    t.includes("desarrollada")
+  ) {
+    return "CREATOR";
+    }
+  if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
   if (t.includes("contratar")) return "MOTIVATION";
-
-  if (includesAny(t, ["libro", "dan brown"])) return "BOOK";
-
+  if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
   if (isValidFarewell(t)) return "FAREWELL";
 
   return "UNKNOWN";
 };
 
-// --------------------
-// AJUSTE POR NOMBRE
-// --------------------
 const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
-  const t = normalize(text);
+  const normalizedText = normalize(text);
 
-  if (!OWNER_NAMES.some((name) => t.includes(name))) {
+  if (!OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     return currentIntent;
   }
 
-  // 🔥 FIX CLAVE
-  if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
-
-  if (t.includes("tecnolog")) return "SKILLS";
-  if (t.includes("experiencia")) return "EXPERIENCE";
-  if (includesAny(t, ["estudio", "master", "formacion"])) return "EDUCATION";
-  if (t.includes("proyecto")) return "PROJECTS";
-  if (t.includes("contratar")) return "MOTIVATION";
-  if (t.includes("stack")) return "STACK";
-  if (includesAny(t, ["libro", "dan brown"])) return "BOOK";
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+    return "CONTACT";
+  }
+  if (normalizedText.includes("tecnolog")) {
+    return "SKILLS";
+  }
+  if (normalizedText.includes("experiencia")) {
+    return "EXPERIENCE";
+  }
+  if (
+    normalizedText.includes("estudio") ||
+    normalizedText.includes("master") ||
+    normalizedText.includes("máster") ||
+    normalizedText.includes("formacion") ||
+    normalizedText.includes("formación")
+  ) {
+    return "EDUCATION";
+  }
+  if (normalizedText.includes("proyecto")) {
+    return "PROJECTS";
+  }
+  if (normalizedText.includes("contratar")) {
+    return "MOTIVATION";
+  }
+  if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+    return "STACK";
+  }
+  if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+    return "BOOK";
+  }
 
   return currentIntent;
 };
 
-// --------------------
-// CONTACT (FIX LOOP)
-// --------------------
 const handleContactIntent = (text, ctx) => {
-  const t = normalize(text);
+  const normalizedText = normalize(text);
 
-  // 🔥 EVITA LOOP
-  if (ctx.awaiting === "CONTACT_CONFIRM") {
-    return {
-      text: "😊 Solo necesito que me confirmes si deseas abrir WhatsApp.",
-      intent: "CONTACT_PENDING",
-    };
-  }
-
-  if (OWNER_NAMES.some((name) => t.includes(name))) {
+  if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     ctx.awaiting = "CONTACT_CONFIRM";
     return {
-      text: replies.CONTACT(),
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
       intent: "CONTACT",
     };
@@ -144,79 +154,88 @@ const handleContactIntent = (text, ctx) => {
   }
 
   ctx.awaiting = "CONTACT_CONFIRM";
-
   return {
-    text: replies.CONTACT(),
+    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
     action: "CONTACT_CONFIRM",
     intent: "CONTACT",
   };
 };
 
-// --------------------
-// MAIN
-// --------------------
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
-  const randomReply = (options) =>
-    options[Math.floor(Math.random() * options.length)];
+  const randomReply = (options) => options[Math.floor(Math.random() * options.length)];
 
-  // ---------------- NAME BOT
   const nameResponse = handleNamedPattern({
     text,
-    regex: /^(como te llamas|cual es tu nombre|cuál es tu nombre|quien eres)/i,
+    regex:
+      /^(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: randomReply([
         `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
         `Soy Sasha 👋, la asistente de Jorge Patricio.`,
+        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`
       ]),
       intent: "BOT_NAME",
     }),
     fallbackResponse: null,
     botName: BOT_NAME,
   });
+
   if (nameResponse) return nameResponse;
 
-  // ---------------- GREETING
+  
+
   const greetingResponse = handleNamedPattern({
     text,
-    regex: /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)/i,
+    regex:
+      /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.GREETING(ctx),
       intent: "GREETING",
     }),
-    fallbackResponse: null,
+    fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
   if (greetingResponse) return greetingResponse;
 
-  // ---------------- THANKS
   const thanksResponse = handleNamedPattern({
     text,
-    regex: /^(gracias|muchas gracias)/i,
+    regex: /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.GRA(ctx),
       intent: "GRA",
     }),
-    fallbackResponse: null,
+    fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
   if (thanksResponse) return thanksResponse;
 
-  // ---------------- MOOD
   const moodResponse = handleNamedPattern({
     text,
-    regex: /^(como estas|cómo estás)/i,
+    regex: /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
     }),
-    fallbackResponse: null,
+    fallbackResponse: UNKNOWN_RESPONSE,
     botName: BOT_NAME,
   });
   if (moodResponse) return moodResponse;
 
-  // ---------------- USER NAME
+  const doingResponse = handleNamedPattern({
+    text,
+    regex:
+      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    onValid: () => ({
+      text: replies.WHAT_DOING(ctx),
+      intent: "WHAT_DOING",
+    }),
+    fallbackResponse: UNKNOWN_RESPONSE,
+    botName: BOT_NAME,
+  });
+  if (doingResponse) return doingResponse;
+
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
 
@@ -229,7 +248,13 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  // ---------------- CONTACT CONFIRM
+  if (isValidFarewell(text)) {
+    return {
+      text: replies.FAREWELL(ctx),
+      intent: "FAREWELL",
+    };
+  }
+
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
@@ -249,7 +274,6 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  // ---------------- FOLLOW UP FLOW
   if (ctx.awaitingFollowUp) {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       const intent = ctx.awaitingFollowUp;
@@ -264,6 +288,7 @@ export const getSmartResponse = (message, ctx = {}) => {
       return {
         text: chainReplies[intent],
         intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
       };
     }
 
@@ -277,34 +302,31 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
-  // ---------------- INTENT
+  if (!isAboutOwner(text)) {
+  return {
+    text: replies.UNKNOWN(),
+    intent: "UNKNOWN",
+  };
+  }
+
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
 
+  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+    intent = "UNKNOWN";
+  }
+
   saveMemory(ctx, { user: text, intent });
 
-  // ---------------- CONTACT
   if (intent === "CONTACT") {
     return handleContactIntent(message, ctx);
   }
 
-  // ---------------- REPLY
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
-  // ---------------- FOLLOW UP (FIX DUPLICADO)
-  const follow = followUp(intent);
-
-  if (follow && ctx.awaitingFollowUp !== intent) {
-    ctx.awaitingFollowUp = intent;
-    return {
-      text: `${replyText}\n\n${follow}`,
-      intent,
-    };
-  }
-
   return {
-    text: replyText || replies.UNKNOWN(),
+    text: replyText || UNKNOWN_REPLY,
     intent,
   };
 };
