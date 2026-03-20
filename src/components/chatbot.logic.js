@@ -34,11 +34,8 @@ export const followUp = (intent) => {
 export const detectIntent = (text) => {
   const t = normalize(text);
 
-  // prioridad: intenciones más específicas primero
   if (t.includes("contratar")) return "MOTIVATION";
-
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
-
   if (t.includes("proyecto")) return "PROJECTS";
 
   if (
@@ -96,20 +93,16 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return currentIntent;
   }
 
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp"))
     return "CONTACT";
-  }
 
   if (
     normalizedText.includes("tecnolog") ||
     normalizedText.includes("stack")
-  ) {
+  )
     return "STACK";
-  }
 
-  if (normalizedText.includes("experiencia")) {
-    return "EXPERIENCE";
-  }
+  if (normalizedText.includes("experiencia")) return "EXPERIENCE";
 
   if (
     normalizedText.includes("estudio") ||
@@ -117,21 +110,15 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     normalizedText.includes("máster") ||
     normalizedText.includes("formacion") ||
     normalizedText.includes("formación")
-  ) {
+  )
     return "EDUCATION";
-  }
 
-  if (normalizedText.includes("proyecto")) {
-    return "PROJECTS";
-  }
+  if (normalizedText.includes("proyecto")) return "PROJECTS";
 
-  if (normalizedText.includes("contratar")) {
-    return "MOTIVATION";
-  }
+  if (normalizedText.includes("contratar")) return "MOTIVATION";
 
-  if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+  if (normalizedText.includes("libro") || normalizedText.includes("dan brown"))
     return "BOOK";
-  }
 
   return currentIntent;
 };
@@ -148,35 +135,8 @@ const handleContactIntent = (text, ctx) => {
     };
   }
 
-  let otherName = null;
-  const patterns = [
-    /contactar\s+a\s+(\w+)/i,
-    /contactar\s+(\w+)/i,
-    /contacto\s+de\s+(\w+)/i,
-    /contacto\s+(\w+)/i,
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) {
-      otherName = normalize(match[1]);
-      break;
-    }
-  }
-
-  if (
-    otherName &&
-    !OWNER_NAMES.some(
-      (name) => otherName.includes(name) || name.includes(otherName)
-    )
-  ) {
-    return {
-      text: OWNER_ONLY_REPLY,
-      intent: "UNKNOWN",
-    };
-  }
-
   ctx.awaiting = "CONTACT_CONFIRM";
+
   return {
     text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
     action: "CONTACT_CONFIRM",
@@ -235,7 +195,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   const moodResponse = handleNamedPattern({
     text,
-    regex: /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex: /^(como estas|cómo estás|estas bien|estás bien)/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
@@ -248,7 +208,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   const doingResponse = handleNamedPattern({
     text,
     regex:
-      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás)(\s+[a-zA-Záéíóúñ]+)?$/i,
+      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás)/i,
     onValid: () => ({
       text: replies.WHAT_DOING(ctx),
       intent: "WHAT_DOING",
@@ -277,6 +237,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // Confirmación WhatsApp
   if (ctx.awaiting === "CONTACT_CONFIRM") {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       ctx.awaiting = null;
@@ -292,6 +253,32 @@ export const getSmartResponse = (message, ctx = {}) => {
       return {
         text: "Está bien 😊 Avísame si luego deseas contactarlo.",
         intent: "CONTACT_CANCEL",
+      };
+    }
+  }
+
+  // FOLLOW UPS (aquí estaba el problema)
+  if (ctx.awaitingFollowUp) {
+    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        STACK: `Estas tecnologías se aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent,
+      };
+    }
+
+    if (includesAny(text, NO_WORDS)) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
       };
     }
   }
@@ -314,6 +301,16 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
+
+  // ACTIVAR FOLLOW UP
+  const next = followUp(intent);
+  if (next) {
+    ctx.awaitingFollowUp = intent;
+    return {
+      text: `${replyText}\n\n${next}`,
+      intent,
+    };
+  }
 
   return {
     text: replyText || UNKNOWN_REPLY,
