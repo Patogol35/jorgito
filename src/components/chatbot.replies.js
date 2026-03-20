@@ -13,9 +13,12 @@ export const replies = {
 
   GRA: () =>
     randomReply([
-      "¡Con gusto! 😊 Si quieres, también puedo contarte sobre Jorge.",
-      "¡Para eso estoy! 😄 Si deseas, puedo mostrarte más información sobre Jorge.",
-      "¡Encantada de ayudarte! ✨ También puedo hablarte de la experiencia o proyectos de Jorge.",
+      "Un placer 😊",
+        "De nada 😌",
+        "Siempre es un gusto ayudar 😊",
+        "Para eso estoy ☺️",
+        "¡Con mucho cariño! 💕",
+        "Cuando gustes 😊",
     ]),
 
   MOOD: () =>
