@@ -66,7 +66,7 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
-  // ✅ Permitir contacto SIEMPRE (aunque no diga Jorge)
+  // ✅ Permitir contacto SIEMPRE
   if (
     normalizedText.includes("contact") ||
     normalizedText.includes("whatsapp")
@@ -74,35 +74,32 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  const words = normalizedText.split(" ");
+  // 🔥 Detectar si menciona otro nombre tipo "de luis"
+  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
 
-  const hasOwnerName = OWNER_NAMES.some((name) =>
-    normalizedText.includes(normalize(name))
-  );
+  if (nameMatch) {
+    const name = nameMatch[1];
 
-  const possibleName = words.find(
-    (w) =>
-      w.length > 2 &&
-      !OWNER_KEYWORDS.some((k) => normalize(k) === w) &&
-      !VALID_OWNER_PHRASES.some((p) => normalize(p).includes(w)) &&
-      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(w)
-  );
-
-  // ❌ Si detecta otro nombre y no es Jorge → bloquear
-  if (
-    possibleName &&
-    !OWNER_NAMES.some((name) =>
-      normalize(name).includes(possibleName)
-    ) &&
-    !hasOwnerName
-  ) {
-    return false;
+    // ❌ Si NO es Jorge → bloquear
+    if (
+      !OWNER_NAMES.some((n) =>
+        normalize(n).includes(name)
+      )
+    ) {
+      return false;
+    }
   }
 
   // ✅ Si menciona Jorge → OK
-  if (hasOwnerName) return true;
+  if (
+    OWNER_NAMES.some((name) =>
+      normalizedText.includes(normalize(name))
+    )
+  ) {
+    return true;
+  }
 
-  // ✅ Frases válidas
+  // ✅ Frases válidas (MUY IMPORTANTE para tus casos)
   if (
     VALID_OWNER_PHRASES.some((phrase) =>
       normalizedText.includes(normalize(phrase))
@@ -111,7 +108,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords generales
+  // ✅ Keywords (proyectos, tecnologías, etc.)
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
