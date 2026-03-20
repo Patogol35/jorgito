@@ -249,6 +249,20 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (thanksResponse) return thanksResponse;
 
+  // MUCHO GUSTO
+const niceToMeetYouResponse = handleNamedPattern({
+  text,
+  regex: /^(mucho gusto|un gusto|encantado|encantada)(\s+[a-zA-Záéíóúñ]+)?$/i,
+  onValid: () => ({
+    text: replies.NICE_TO_MEET_YOU(),
+    intent: "NICE_TO_MEET_YOU",
+  }),
+  fallbackResponse: UNKNOWN_RESPONSE,
+  botName: BOT_NAME,
+});
+
+if (niceToMeetYouResponse) return niceToMeetYouResponse;
+
   // MOOD
   const moodResponse = handleNamedPattern({
     text,
