@@ -1197,23 +1197,23 @@ export default function ChatBot({ t, lang }) {
 
           {/* INPUT */}
           <Box sx={{ display: "flex", p: 1 }}>
-            <TextField
-              fullWidth
-              size="small"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  sendMessage(input);
-                }
-              }}
-              placeholder="Escribe tu mensaje…"
-            />
-            <IconButton onClick={() => sendMessage(input)}>
-              <SendIcon sx={{ color: "#03A9F4" }} />
-            </IconButton>
-          </Box>
+  <TextField
+    fullWidth
+    size="small"
+    value={input}
+    onChange={(e) => setInput(e.target.value)}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage(input);
+      }
+    }}
+    placeholder={t.chatbot.placeholder}  // 👈 SOLO cambias esto
+  />
+  <IconButton onClick={() => sendMessage(input)}>
+    <SendIcon sx={{ color: "#03A9F4" }} />
+  </IconButton>
+</Box>
         </Paper>
       )}
     </>
