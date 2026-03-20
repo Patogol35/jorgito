@@ -54,9 +54,14 @@ export const replies = {
 
   EXPERIENCE: () =>
     randomReply([
-      `Tiene experiencia en ${PROFILE.experience.join(", ")}.`,
-      `Su experiencia incluye ${PROFILE.experience.join(", ")}.`,
-      `Ha trabajado en áreas como ${PROFILE.experience.join(", ")}.`,
+    
+      `Su experiencia incluye ${PROFILE.experience.join(", ")}. 😊`,
+       `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
+        `Jorge ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
+        `Jorge cuenta con experiencia en ${PROFILE.experience.join(", ")} 💻`,
+        "Jorge tiene experiencia práctica en proyectos reales 😊",
+        "Jorge ha aplicado sus conocimientos en distintos entornos tecnológicos☺️",
+        
     ]),
 
   SKILLS: () =>
