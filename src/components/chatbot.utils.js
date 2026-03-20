@@ -65,7 +65,6 @@ export const isValidFarewell = (text) => {
 
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
-  const words = normalizedText.split(" ");
 
   // ✅ Permitir contacto siempre
   if (
@@ -75,31 +74,49 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // 🔥 Detectar si hay nombres NO permitidos
-  const hasOtherName = words.some(
-    (word) =>
-      word.length > 2 &&
-      !OWNER_NAMES.some((name) =>
-        normalize(name).includes(word)
-      ) &&
-      !OWNER_KEYWORDS.some((k) => normalize(k) === word) &&
-      !VALID_OWNER_PHRASES.some((p) =>
-        normalize(p).includes(word)
-      ) &&
-      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(word)
+  // 🔥 Detectar estructuras con nombres (tipo "de luis", "para luis", etc.)
+  const nameMatch = normalizedText.match(
+    /(de|para|sobre|acerca de)\s+([a-z]+)/i
   );
 
-  const hasOwnerName = OWNER_NAMES.some((name) =>
-    normalizedText.includes(normalize(name))
-  );
+  if (nameMatch) {
+    const name = nameMatch[2];
 
-  // ❌ Si hay otro nombre y NO es Jorge → bloquear
-  if (hasOtherName && !hasOwnerName) {
+    // ❌ Si NO es Jorge → bloquear
+    if (
+      !OWNER_NAMES.some((n) =>
+        normalize(n).includes(name)
+      )
+    ) {
+      return false;
+    }
+  }
+
+  // 🔥 Caso: "proyectos luis" (nombre al final)
+  const words = normalizedText.split(" ");
+  const lastWord = words[words.length - 1];
+
+  if (
+    lastWord &&
+    lastWord.length > 2 &&
+    !OWNER_NAMES.some((n) =>
+      normalize(n).includes(lastWord)
+    ) &&
+    !OWNER_KEYWORDS.some((k) =>
+      normalize(k) === lastWord
+    )
+  ) {
     return false;
   }
 
-  // ✅ Si menciona Jorge → OK
-  if (hasOwnerName) return true;
+  // ✅ Si menciona Jorge
+  if (
+    OWNER_NAMES.some((name) =>
+      normalizedText.includes(normalize(name))
+    )
+  ) {
+    return true;
+  }
 
   // ✅ Frases válidas
   if (
@@ -110,7 +127,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords
+  // ✅ Keywords (CLAVE para que funcione tu caso)
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
