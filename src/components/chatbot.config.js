@@ -82,6 +82,8 @@ export const OWNER_KEYWORDS = [
   "educacion", "educación", "máster", "master",
   "libros", "libro", "full stack", "desarrollador",
   "ingeniero", "full", "contactar", "contacto", "whatsapp",
+  "academica", "académica",
+  "formacion academica", "formación académica",
 ];
 
 export const VALID_OWNER_PHRASES = [
@@ -109,4 +111,12 @@ export const VALID_OWNER_PHRASES = [
   "proyectos ha hecho",
   "cuéntame sobre",
   "cuentame sobre",
+  "su formación académica",
+  "su formacion academica",
+  "formación académica",
+  "formacion academica",
+  "su educación",
+  "su educacion",
+  "educación",
+  "educacion",
 ];
