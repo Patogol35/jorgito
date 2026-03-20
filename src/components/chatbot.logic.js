@@ -24,8 +24,8 @@ const UNKNOWN_RESPONSE = {
 export const followUp = (intent) => {
   const map = {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
-    EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
-    SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
+EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
+SKILLS: "¿Quieres ver en qué proyectos se aplican estas tecnologías?",
   };
 
   return map[intent] || null;
@@ -36,36 +36,25 @@ export const detectIntent = (text) => {
 
   if (
     t.includes("quien es") ||
+    t.includes("quién es") ||
     OWNER_NAMES.some((name) => t.includes(name))
   ) {
     return "PROFILE";
   }
-
-  if (
-    t.includes("quien te creo") ||
-    t.includes("quien te hizo") ||
-    t.includes("quien te desarrollo") ||
-    t.includes("creador")
-  ) {
-    return "CREATOR";
-  }
-
   if (t.includes("experiencia")) return "EXPERIENCE";
-
   if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("stack")) {
     return "SKILLS";
   }
-
   if (t.includes("proyecto")) return "PROJECTS";
-
   if (
     t.includes("estudio") ||
     t.includes("master") ||
-    t.includes("formacion")
+    t.includes("máster") ||
+    t.includes("formacion") ||
+    t.includes("formación")
   ) {
     return "EDUCATION";
   }
-
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
   if (t.includes("contratar")) return "MOTIVATION";
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
@@ -84,21 +73,33 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     return "CONTACT";
   }
-  if (normalizedText.includes("tecnolog")) return "SKILLS";
-  if (normalizedText.includes("experiencia")) return "EXPERIENCE";
-
+  if (normalizedText.includes("tecnolog")) {
+    return "SKILLS";
+  }
+  if (normalizedText.includes("experiencia")) {
+    return "EXPERIENCE";
+  }
   if (
     normalizedText.includes("estudio") ||
     normalizedText.includes("master") ||
-    normalizedText.includes("formacion")
+    normalizedText.includes("máster") ||
+    normalizedText.includes("formacion") ||
+    normalizedText.includes("formación")
   ) {
     return "EDUCATION";
   }
-
-  if (normalizedText.includes("proyecto")) return "PROJECTS";
-  if (normalizedText.includes("contratar")) return "MOTIVATION";
-  if (normalizedText.includes("stack")) return "STACK";
-  if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) return "BOOK";
+  if (normalizedText.includes("proyecto")) {
+    return "PROJECTS";
+  }
+  if (normalizedText.includes("contratar")) {
+    return "MOTIVATION";
+  }
+  if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+    return "STACK";
+  }
+  if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+    return "BOOK";
+  }
 
   return currentIntent;
 };
@@ -154,18 +155,17 @@ const handleContactIntent = (text, ctx) => {
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
-  const randomReply = (options) =>
-    options[Math.floor(Math.random() * options.length)];
+  const randomReply = (options) => options[Math.floor(Math.random() * options.length)];
 
   const nameResponse = handleNamedPattern({
     text,
     regex:
-      /^(como te llamas|cual es tu nombre|dime tu nombre|quien eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
+      /^(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: randomReply([
         `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
         `Soy Sasha 👋, la asistente de Jorge Patricio.`,
-        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`,
+        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`
       ]),
       intent: "BOT_NAME",
     }),
@@ -174,6 +174,8 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
 
   if (nameResponse) return nameResponse;
+
+  
 
   const greetingResponse = handleNamedPattern({
     text,
@@ -202,7 +204,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   const moodResponse = handleNamedPattern({
     text,
-    regex: /^(como estas|estas bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex: /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
@@ -211,6 +213,19 @@ export const getSmartResponse = (message, ctx = {}) => {
     botName: BOT_NAME,
   });
   if (moodResponse) return moodResponse;
+
+  const doingResponse = handleNamedPattern({
+    text,
+    regex:
+      /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    onValid: () => ({
+      text: replies.WHAT_DOING(ctx),
+      intent: "WHAT_DOING",
+    }),
+    fallbackResponse: UNKNOWN_RESPONSE,
+    botName: BOT_NAME,
+  });
+  if (doingResponse) return doingResponse;
 
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
@@ -231,18 +246,62 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
-  // 🔥 INTENT
+  if (ctx.awaiting === "CONTACT_CONFIRM") {
+    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+      ctx.awaiting = null;
+      return {
+        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+        intent: "CONTACT_OPENED",
+        action: "OPEN_WHATSAPP",
+      };
+    }
+
+    if (includesAny(text, NO_WORDS)) {
+      ctx.awaiting = null;
+      return {
+        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+        intent: "CONTACT_CANCEL",
+      };
+    }
+  }
+
+  if (ctx.awaitingFollowUp) {
+    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+
+    if (includesAny(text, NO_WORDS)) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+
+    ctx.awaitingFollowUp = null;
+  }
+
+  if (!isAboutOwner(text)) {
+  return {
+    text: replies.UNKNOWN(),
+    intent: "UNKNOWN",
+  };
+  }
+
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
-
-  const freeIntents = ["CREATOR", "GREETING", "GRA", "MOOD"];
-
-  if (!isAboutOwner(text) && !freeIntents.includes(intent)) {
-    return {
-      text: replies.UNKNOWN(),
-      intent: "UNKNOWN",
-    };
-  }
 
   if (intent === "FAREWELL" && !isValidFarewell(text)) {
     intent = "UNKNOWN";
@@ -257,24 +316,8 @@ export const getSmartResponse = (message, ctx = {}) => {
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
-  const response = {
+  return {
     text: replyText || UNKNOWN_REPLY,
     intent,
   };
-
-  // ✅ FOLLOW UP FUNCIONANDO
-  const next = followUp(intent);
-
-  if (next) {
-    ctx.awaitingFollowUp =
-      intent === "PROFILE"
-        ? "EXPERIENCE"
-        : intent === "EXPERIENCE"
-        ? "SKILLS"
-        : null;
-
-    response.text += `\n\n${next}`;
-  }
-
-  return response;
 };
