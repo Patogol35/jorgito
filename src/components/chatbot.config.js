@@ -30,7 +30,7 @@ export const PROFILE = {
   ],
   education: [
     "formación en desarrollo web",
-    "máster en tecnologías (ajústalo a lo real si quieres)",
+    "máster en tecnologías",
   ],
   projects: [
     "sistemas web",
