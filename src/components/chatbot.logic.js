@@ -101,16 +101,7 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return "STACK";
   }
 
-  if (
-  t.includes("quien te creo") ||
-  t.includes("quién te creó") ||
-  t.includes("quien te hizo") ||
-  t.includes("quién te hizo") ||
-  t.includes("quien te desarrollo") ||
-  t.includes("quién te desarrolló")
-) {
-  return "CREATORSASHA";
-}
+  
   if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     return "BOOK";
   }
