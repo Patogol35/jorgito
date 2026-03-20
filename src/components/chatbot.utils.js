@@ -71,21 +71,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // 🔥 Detectar si el usuario menciona "de alguien"
-  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
-
-  if (nameMatch) {
-    const name = nameMatch[1];
-
-    // ❌ Si menciona un nombre que NO es Jorge → bloquear
-    if (
-      !OWNER_NAMES.some((n) =>
-        normalize(n).includes(name)
-      )
-    ) {
-      return false;
-    }
-  }
+  
 
   // ✅ Frases válidas
   if (
