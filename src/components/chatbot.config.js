@@ -1,6 +1,6 @@
 export const BOT_NAME = "sasha";
 
-export const WHATSAPP_URL = "https://wa.me/TUNUMERO"; // <-- cámbialo
+export const WHATSAPP_URL = "https://wa.me/593997979099";
 
 export const UNKNOWN_REPLY =
   "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊";
