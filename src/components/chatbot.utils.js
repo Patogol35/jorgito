@@ -66,10 +66,29 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
+  // 🔥 Detectar si hay un nombre propio (palabra tipo nombre)
+  const words = normalizedText.split(" ");
+
+  const possibleName = words.find(
+    (w) => w.length > 2 && /^[a-z]+$/.test(w)
+  );
+
+  // ✅ Si menciona un nombre que NO es Jorge → bloquear
+  if (
+    possibleName &&
+    !OWNER_NAMES.some((name) =>
+      normalize(name).includes(possibleName)
+    )
+  ) {
+    return false;
+  }
+
+  // ✅ Si menciona Jorge → OK
   if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
     return true;
   }
 
+  // ✅ Frases válidas
   if (
     VALID_OWNER_PHRASES.some((phrase) =>
       normalizedText.includes(normalize(phrase))
@@ -78,6 +97,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
+  // ✅ Keywords SOLO si no hay nombre extraño
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
@@ -88,7 +108,6 @@ export const isAboutOwner = (input) => {
 
   return false;
 };
-
 export const saveMemory = (ctx, entry) => {
   const memory = Array.isArray(ctx.memory) ? ctx.memory : [];
   const nextMemory = [...memory, { ...entry, at: Date.now() }].slice(-20);
