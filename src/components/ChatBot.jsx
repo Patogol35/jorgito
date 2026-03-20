@@ -1086,7 +1086,14 @@ export default function ChatBot({ t, lang }) {
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
+                onClick={() =>
+  setMessages([
+    {
+      from: "bot",
+      text: t.chatbot.welcome,
+    },
+  ])
+}
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
