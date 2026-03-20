@@ -313,7 +313,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     ctx.awaitingFollowUp = null;
   }
 
-  if (!isAboutOwner(text)) {
+  if (!isAboutOwner(text) && intent !== "CREATOR") {
   return {
     text: replies.UNKNOWN(),
     intent: "UNKNOWN",
