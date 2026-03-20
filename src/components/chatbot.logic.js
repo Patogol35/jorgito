@@ -73,8 +73,12 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     return "CONTACT";
   }
-  if (normalizedText.includes("tecnolog")) return "SKILLS";
-  if (normalizedText.includes("experiencia")) return "EXPERIENCE";
+  if (normalizedText.includes("tecnolog")) {
+    return "SKILLS";
+  }
+  if (normalizedText.includes("experiencia")) {
+    return "EXPERIENCE";
+  }
   if (
     normalizedText.includes("estudio") ||
     normalizedText.includes("master") ||
@@ -84,8 +88,12 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
   ) {
     return "EDUCATION";
   }
-  if (normalizedText.includes("proyecto")) return "PROJECTS";
-  if (normalizedText.includes("contratar")) return "MOTIVATION";
+  if (normalizedText.includes("proyecto")) {
+    return "PROJECTS";
+  }
+  if (normalizedText.includes("contratar")) {
+    return "MOTIVATION";
+  }
   if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
     return "STACK";
   }
@@ -99,11 +107,10 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
 const handleContactIntent = (text, ctx) => {
   const normalizedText = normalize(text);
 
-  // ✅ CASO 1: menciona a Jorge
   if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
     ctx.awaiting = "CONTACT_CONFIRM";
     return {
-      text: replies.CONTACT(), // 🔥 AQUÍ EL FIX
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
       action: "CONTACT_CONFIRM",
       intent: "CONTACT",
     };
@@ -137,10 +144,9 @@ const handleContactIntent = (text, ctx) => {
     };
   }
 
-  // ✅ CASO 2: contacto normal
   ctx.awaiting = "CONTACT_CONFIRM";
   return {
-    text: replies.CONTACT(), // 🔥 AQUÍ EL FIX
+    text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
     action: "CONTACT_CONFIRM",
     intent: "CONTACT",
   };
@@ -149,8 +155,7 @@ const handleContactIntent = (text, ctx) => {
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
-  const randomReply = (options) =>
-    options[Math.floor(Math.random() * options.length)];
+  const randomReply = (options) => options[Math.floor(Math.random() * options.length)];
 
   const nameResponse = handleNamedPattern({
     text,
@@ -160,7 +165,7 @@ export const getSmartResponse = (message, ctx = {}) => {
       text: randomReply([
         `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
         `Soy Sasha 👋, la asistente de Jorge Patricio.`,
-        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`,
+        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`
       ]),
       intent: "BOT_NAME",
     }),
@@ -169,6 +174,8 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
 
   if (nameResponse) return nameResponse;
+
+  
 
   const greetingResponse = handleNamedPattern({
     text,
@@ -197,8 +204,7 @@ export const getSmartResponse = (message, ctx = {}) => {
 
   const moodResponse = handleNamedPattern({
     text,
-    regex:
-      /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    regex: /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i,
     onValid: () => ({
       text: replies.MOOD(ctx),
       intent: "MOOD",
@@ -259,15 +265,47 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
+  if (ctx.awaitingFollowUp) {
+    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+
+    if (includesAny(text, NO_WORDS)) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+
+    ctx.awaitingFollowUp = null;
+  }
+
   if (!isAboutOwner(text)) {
-    return {
-      text: replies.UNKNOWN(),
-      intent: "UNKNOWN",
-    };
+  return {
+    text: replies.UNKNOWN(),
+    intent: "UNKNOWN",
+  };
   }
 
   let intent = detectIntent(text);
   intent = adjustIntentIfJorgeMentioned(text, intent);
+
+  if (intent === "FAREWELL" && !isValidFarewell(text)) {
+    intent = "UNKNOWN";
+  }
 
   saveMemory(ctx, { user: text, intent });
 
