@@ -61,7 +61,7 @@ export const detectIntent = (text) => {
     ])
   ) return "EDUCATION";
 
-  if (includesAny(t, ["contact", "whatsapp"])) return "CONTACT";
+  if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
 
   if (includesAny(t, ["contratar"])) return "MOTIVATION";
 
