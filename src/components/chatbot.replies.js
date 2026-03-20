@@ -95,7 +95,7 @@ export const replies = {
     randomReply([
       
       `Académicamente, Jorge cuenta con un ${PROFILE.education.join(", ")}.`,
-        `Jorge cuenta con un ${PROFILE.education} 😊`,
+        `Jorge cuenta con un ${PROFILE.education.join} 😊`,
         `Jorge tiene formación académica sólida: ${PROFILE.education.join} ☺️`,
         `Jorge se formó profesionalmente con un ${PROFILE.education.join} 💕`,
         `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education.join} ☺️`,
