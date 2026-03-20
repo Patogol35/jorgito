@@ -65,8 +65,9 @@ export const isValidFarewell = (text) => {
 
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
+  const words = normalizedText.split(" ");
 
-  // ✅ Permitir contacto SIEMPRE
+  // ✅ Permitir contacto siempre
   if (
     normalizedText.includes("contact") ||
     normalizedText.includes("whatsapp")
@@ -74,32 +75,33 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // 🔥 Detectar si menciona otro nombre tipo "de luis"
-  const nameMatch = normalizedText.match(/de\s+([a-z]+)/);
+  // 🔥 Detectar si hay nombres NO permitidos
+  const hasOtherName = words.some(
+    (word) =>
+      word.length > 2 &&
+      !OWNER_NAMES.some((name) =>
+        normalize(name).includes(word)
+      ) &&
+      !OWNER_KEYWORDS.some((k) => normalize(k) === word) &&
+      !VALID_OWNER_PHRASES.some((p) =>
+        normalize(p).includes(word)
+      ) &&
+      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(word)
+  );
 
-  if (nameMatch) {
-    const name = nameMatch[1];
+  const hasOwnerName = OWNER_NAMES.some((name) =>
+    normalizedText.includes(normalize(name))
+  );
 
-    // ❌ Si NO es Jorge → bloquear
-    if (
-      !OWNER_NAMES.some((n) =>
-        normalize(n).includes(name)
-      )
-    ) {
-      return false;
-    }
+  // ❌ Si hay otro nombre y NO es Jorge → bloquear
+  if (hasOtherName && !hasOwnerName) {
+    return false;
   }
 
   // ✅ Si menciona Jorge → OK
-  if (
-    OWNER_NAMES.some((name) =>
-      normalizedText.includes(normalize(name))
-    )
-  ) {
-    return true;
-  }
+  if (hasOwnerName) return true;
 
-  // ✅ Frases válidas (MUY IMPORTANTE para tus casos)
+  // ✅ Frases válidas
   if (
     VALID_OWNER_PHRASES.some((phrase) =>
       normalizedText.includes(normalize(phrase))
@@ -108,7 +110,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords (proyectos, tecnologías, etc.)
+  // ✅ Keywords
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
