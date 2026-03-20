@@ -294,10 +294,10 @@ export const getSmartResponse = (message, ctx = {}) => {
   }
 
   if (!isAboutOwner(text)) {
-    return {
-      text: OWNER_ONLY_REPLY,
-      intent: "UNKNOWN",
-    };
+  return {
+    text: replies.UNKNOWN(),
+    intent: "UNKNOWN",
+  };
   }
 
   let intent = detectIntent(text);
