@@ -29,7 +29,7 @@ export const PROFILE = {
     "Material UI",
   ],
   education: [
-  "Máster en Ingeniería de Software y Sistemas Informáticos por la Universidad UNIR",
+  "Máster en Ingeniería de Software y Sistemas Informáticos por la Universidad Internacional de la Rioja, UNIR",
 ],
   projects: [
     "sistemas web",
@@ -49,6 +49,7 @@ export const SUGGESTIONS = [
   "¿Qué tecnologías maneja?",
   "¿Qué proyectos ha hecho?",
   "¿Cómo contactarlo?",
+  "Su Formación Académica",
 ];
 
 export const YES_WORDS = [
