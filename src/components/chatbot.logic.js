@@ -155,20 +155,25 @@ const handleContactIntent = (text, ctx) => {
 export const getSmartResponse = (message, ctx = {}) => {
   const text = normalize(message);
 
-  // Manejar preguntas sobre el nombre del asistente
-const nameResponse = handleNamedPattern({
-  text,
-  regex:
-    /^(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
-  onValid: () => ({
-    text: `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio. ¿Quieres conocer su perfil, experiencia o proyectos?`,
-    intent: "BOT_NAME",
-  }),
-  fallbackResponse: null,
-  botName: BOT_NAME,
-});
+  const randomReply = (options) => options[Math.floor(Math.random() * options.length)];
 
-if (nameResponse) return nameResponse;
+  const nameResponse = handleNamedPattern({
+    text,
+    regex:
+      /^(como te llamas|cual es tu nombre|cuál es tu nombre|dime tu nombre|quien eres|quién eres)(\s+[a-zA-Záéíóúñ]+)?$/i,
+    onValid: () => ({
+      text: randomReply([
+        `Me llamo Sasha 😊, soy la asistente virtual de Jorge Patricio.`,
+        `Soy Sasha 👋, la asistente de Jorge Patricio.`,
+        `Hola! Soy Sasha ✨, asistente virtual de Jorge.`
+      ]),
+      intent: "BOT_NAME",
+    }),
+    fallbackResponse: null,
+    botName: BOT_NAME,
+  });
+
+  if (nameResponse) return nameResponse;
 
   
 
