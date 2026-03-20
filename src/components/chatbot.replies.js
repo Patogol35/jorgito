@@ -20,9 +20,9 @@ export const replies = {
 
   MOOD: () =>
     randomReply([
-      "¡Estoy muy bien! 😊 Gracias por preguntar. Lista para contarte sobre Jorge.",
-      "¡Muy bien y con energía! 😄 Preparada para ayudarte con información sobre Jorge.",
-      "¡Excelente! ✨ Siempre lista para hablarte sobre el perfil de Jorge.",
+      "¡Estoy muy bien! 😊 Gracias por preguntar.",
+      "¡Muy bien y con energía! 😄",
+      "¡Excelente! ✨ Siempre lista para ayudarte.",
     ]),
 
   WHAT_DOING: () =>
@@ -35,8 +35,8 @@ export const replies = {
   FAREWELL: (ctx) =>
     randomReply([
       `¡Hasta luego${ctx.userName ? `, ${ctx.userName}` : ""}! 👋 Fue un gusto ayudarte.`,
-      `¡Nos vemos${ctx.userName ? `, ${ctx.userName}` : ""}! 😊 Si quieres saber más sobre Jorge, aquí estaré.`,
-      `¡Hasta pronto${ctx.userName ? `, ${ctx.userName}` : ""}! ✨ Fue un placer ayudarte con información sobre Jorge.`,
+      `¡Nos vemos${ctx.userName ? `, ${ctx.userName}` : ""}! 😊`,
+      `¡Hasta pronto${ctx.userName ? `, ${ctx.userName}` : ""}! ✨`,
     ]),
 
   PROFILE: () =>
@@ -70,13 +70,8 @@ export const replies = {
   EDUCATION: () =>
     randomReply([
       `Jorge cuenta con un ${PROFILE.education.join(", ")}. 😊`,
-      `Jorge tiene formación académica sólida: ${PROFILE.education.join(", ")}.☺️`,
-      `Jorge se formó profesionalmente con un ${PROFILE.education.join(", ")}. 💕`,
-      `Jorge posee estudios enfocados en tecnología 😊`,
-      `Académicamente, Jorge cuenta con un ${PROFILE.education.join(", ")}.☺️`,
-
-        `La formación académica de Jorge respalda su perfil profesional, el cuenta con un: ${PROFILE.education} 💻`,
-      
+      `Jorge tiene formación académica sólida: ${PROFILE.education.join(", ")}.`,
+      `Académicamente, Jorge cuenta con un ${PROFILE.education.join(", ")}.`,
     ]),
 
   PROJECTS: () =>
@@ -95,9 +90,9 @@ export const replies = {
 
   MOTIVATION: () =>
     randomReply([
-      "Podrías contratarlo porque combina experiencia técnica, enfoque práctico y capacidad para crear soluciones modernas y funcionales.",
-      "Es una buena opción porque une conocimientos full stack, visión práctica y enfoque en resultados reales.",
-      "Destaca por su experiencia, adaptabilidad y habilidad para crear soluciones web modernas, útiles y bien estructuradas.",
+      "Podrías contratarlo porque combina experiencia técnica, enfoque práctico y capacidad para crear soluciones modernas.",
+      "Es una buena opción porque une conocimientos full stack y enfoque en resultados.",
+      "Destaca por su experiencia y habilidad para crear soluciones modernas.",
     ]),
 
   CONTACT: () =>
@@ -110,7 +105,7 @@ export const replies = {
   UNKNOWN: () =>
     randomReply([
       "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      "No logré entenderlo del todo 😅, pero sí puedo contarte sobre Jorge, su experiencia o proyectos.",
-      "Ups, no capté bien tu mensaje 🤔. Pero si quieres, puedo hablarte sobre Jorge Patricio.",
+      "No logré entenderlo del todo 😅.",
+      "Ups, no capté bien tu mensaje 🤔.",
     ]),
 };
