@@ -43,6 +43,14 @@ export const replies = {
       "Con muy buen ánimo ☺️",
       "Excelente 😊 gracias por notarlo.",
     ]),
+  NICE_TO_MEET_YOU: () =>
+  randomReply([
+    "¡El gusto es mío! 😊",
+    "¡Encantada de conocerte! 💕",
+    "El gusto es mío ☺️ ¿En qué puedo ayudarte?",
+    "¡Qué gusto! 😊 Estoy aquí para ayudarte",
+    "Encantada 😊 ¿Qué deseas saber?",
+  ]),
 
   WHAT_DOING: () =>
     randomReply([
