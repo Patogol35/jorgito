@@ -12,9 +12,9 @@ export const PROFILE = {
   name: "Jorge Patricio",
   role: "Desarrollador Full Stack",
   experience: [
-    "desarrollador web",
-    "desarrollador full stack",
-    "creación de interfaces modernas",
+    "Desarrollador de aulas virtuales",
+    "Desarrollo de aplicaciones web Full Stack",
+    "Creación de APIs REST seguras y escalables",
   ],
   stack: [
   "React",
