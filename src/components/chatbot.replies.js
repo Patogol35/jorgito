@@ -69,9 +69,13 @@ export const replies = {
 
   SKILLS: () =>
     randomReply([
-      `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      `Domina herramientas y tecnologías como ${PROFILE.stack.join(", ")}.`,
-      `Su perfil técnico incluye ${PROFILE.stack.join(", ")}.`,
+
+      `Jorge Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
+        `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
+        `Jorge domina tecnologías actuales como ${PROFILE.stack.join(", ")} 💻`,
+        `Jorge maneja herramientas modernas del desarrollo web como ${PROFILE.stack.join(", ")} 😊`,
+        `Jorge tiene habilidades técnicas bien definidas y domina tecnologías como ${PROFILE.stack.join(", ")}  ☺️` ,
+        `Jorge aplica buenas prácticas en sus proyectos, usa tecnología como ${PROFILE.stack.join(", ")} 💕`,
     ]),
 
   STACK: () =>
@@ -83,30 +87,45 @@ export const replies = {
 
   EDUCATION: () =>
     randomReply([
-      `Jorge cuenta con un ${PROFILE.education.join(", ")}. 😊`,
-      `Jorge tiene formación académica sólida: ${PROFILE.education.join(", ")}.`,
+      
       `Académicamente, Jorge cuenta con un ${PROFILE.education.join(", ")}.`,
+        `Jorge cuenta con un ${PROFILE.education} 😊`,
+        `Jorge tiene formación académica sólida: ${PROFILE.education.join} ☺️`,
+        `Jorge se formó profesionalmente con un ${PROFILE.education.join} 💕`,
+        `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education.join} ☺️`,
+        `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education.join} 💻`,
     ]),
 
   PROJECTS: () =>
     randomReply([
-      `Ha trabajado en ${PROFILE.projects.join(", ")}.`,
-      `Entre sus proyectos destacan ${PROFILE.projects.join(", ")}.`,
-      `Tiene experiencia desarrollando ${PROFILE.projects.join(", ")}.`,
+    
+      `Tiene experiencia desarrollando ${PROFILE.projects.join(", ")}.💕`,
+      `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+        `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
+        `Jorge Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
+        "Jorge ha creado proyectos funcionales y modernos 😊",
+        "Jorge participa activamente en el desarrollo de aplicaciones ☺️",
+        
     ]),
 
   BOOK: () =>
     randomReply([
-      `Entre sus gustos están ${PROFILE.books.join(", ")}.`,
-      `Le interesan temas como ${PROFILE.books.join(", ")}.`,
-      `Dentro de sus preferencias están ${PROFILE.books.join(", ")}.`,
+      "A Jorge le encantan los libros de misterio 📚, sobre todo los de Dan Brown 😊",
+        "Jorge disfruta leer novelas de misterio y suspenso 📖✨",
+        "Los libros de Dan Brown son los favoritos de Jorge 📚 ideales si te gusta el misterio.",
+        "A Jorge le gusta mucho el suspenso literario 😊",
+        "La lectura es una de sus pasiones, Jorge tiene muchos libros favoritos, los que destacan son los de misterios ☺️",
+        "A Jorge siempre le llaman la atención los libros de misterio  💕",
     ]),
 
   MOTIVATION: () =>
     randomReply([
-      "Podrías contratarlo porque combina experiencia técnica, enfoque práctico y capacidad para crear soluciones modernas.",
-      "Es una buena opción porque une conocimientos full stack y enfoque en resultados.",
-      "Destaca por su experiencia y habilidad para crear soluciones modernas.",
+      "Porque Jorge combina formación sólida, experiencia real y un enfoque muy práctico 😊",
+        "Porque Jorge es responsable, profesional y apasionado por lo que hace ☺️",
+        "Porque Jorge crea soluciones con calidad, compromiso y dedicación 💕",
+        "Porque Jorge siempre busca hacer las cosas bien 😊",
+        "Porque Jorge se compromete con cada proyecto ☺️",
+        "Porque Jorge aporta valor real a cada trabajo 💕",
     ]),
 
   CONTACT: () =>
