@@ -66,30 +66,30 @@ export const isValidFarewell = (text) => {
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
 
-  // 🔥 Detectar nombres en el texto
-  const words = normalizedText.split(" ");
-
-  const hasOwnerName = OWNER_NAMES.some((name) =>
-    normalizedText.includes(normalize(name))
-  );
-
-  const hasOtherName = words.some(
-    (word) =>
-      word.length > 2 &&
-      !OWNER_NAMES.some((name) =>
-        normalize(name).includes(word)
-      ) &&
-      !OWNER_KEYWORDS.includes(word) &&
-      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(word)
-  );
-
-  // ❌ Si hay otro nombre → bloquear
-  if (hasOtherName && !hasOwnerName) {
-    return false;
+  // ✅ Si menciona Jorge → OK
+  if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
+    return true;
   }
 
-  // ✅ Si menciona Jorge → OK
-  if (hasOwnerName) return true;
+  // 🔥 Detectar palabras tipo nombre (simples)
+  const words = normalizedText.split(" ");
+
+  const possibleName = words.find(
+    (w) =>
+      w.length > 2 &&
+      !OWNER_KEYWORDS.some((k) => normalize(k) === w) &&
+      !["quien", "que", "como", "cuando", "donde", "por", "para"].includes(w)
+  );
+
+  // ❌ Si encuentra un nombre que NO es Jorge → bloquear
+  if (
+    possibleName &&
+    !OWNER_NAMES.some((name) =>
+      normalize(name).includes(possibleName)
+    )
+  ) {
+    return false;
+  }
 
   // ✅ Frases válidas
   if (
@@ -100,7 +100,7 @@ export const isAboutOwner = (input) => {
     return true;
   }
 
-  // ✅ Keywords (solo si no hay nombres raros)
+  // ✅ Keywords
   if (
     OWNER_KEYWORDS.some((keyword) =>
       normalizedText.includes(normalize(keyword))
