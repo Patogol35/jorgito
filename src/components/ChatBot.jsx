@@ -950,15 +950,16 @@ export default function ChatBot({ t, lang }) {
   const [typing, setTyping] = useState(false);
   const [context, setContext] = useState({});
 
-  const initialMessage = useMemo(
-  () => ({
-    from: "bot",
-    text: t.chatbot.welcome,
-  }),
-  [t]
-);
+  useEffect(() => {
+  setMessages([
+    {
+      from: "bot",
+      text: t.chatbot.welcome,
+    },
+  ]);
+}, [t]);
 
-  const [messages, setMessages] = useState([initialMessage]);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     window.openSashaChat = () => setOpen(true);
