@@ -21,7 +21,7 @@ export const includesAny = (text, words = []) => {
 
 export const isForBot = (rawName = "", botName = BOT_NAME) => {
   const name = normalize(rawName.trim());
-  return !name || name === botName;
+  return !name || name === normalize(botName);
 };
 
 export const handleNamedPattern = ({
@@ -60,25 +60,24 @@ export const isValidFarewell = (text) => {
 
 export const isAboutOwner = (input) => {
   const normalizedText = normalize(input);
-  const words = normalizedText.split(/\s+/).filter(Boolean);
 
-  if (OWNER_NAMES.some((name) => normalizedText.includes(name))) {
+  if (OWNER_NAMES.some((name) => normalizedText.includes(normalize(name)))) {
     return true;
   }
 
-  const hasSensitiveKeyword = OWNER_KEYWORDS.some((kw) =>
-    normalizedText.includes(kw)
-  );
-
-  if (!hasSensitiveKeyword) {
+  if (
+    VALID_OWNER_PHRASES.some((phrase) =>
+      normalizedText.includes(normalize(phrase))
+    )
+  ) {
     return true;
   }
 
-  if (VALID_OWNER_PHRASES.some((phrase) => normalizedText.includes(phrase))) {
-    return true;
-  }
-
-  if (words.length === 1) {
+  if (
+    OWNER_KEYWORDS.some((keyword) =>
+      normalizedText.includes(normalize(keyword))
+    )
+  ) {
     return true;
   }
 
