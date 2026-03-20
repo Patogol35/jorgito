@@ -5,6 +5,7 @@ import {
   UNKNOWN_REPLY,
   OWNER_ONLY_REPLY,
   PROFILE,
+  YES_WORDS,
 } from "./chatbot.config";
 import { replies } from "./chatbot.replies";
 import {
@@ -26,6 +27,8 @@ export const followUp = (intent) => {
     PROFILE: "¿Quieres que también te cuente sobre su experiencia?",
     EXPERIENCE: "¿Quieres saber qué tecnologías utiliza?",
     SKILLS: "¿Quieres que te muestre algunos proyectos?",
+    EDUCATION: "¿Quieres que también te cuente sobre su experiencia?",
+    PROJECTS: "¿Quieres saber qué tecnologías utiliza?",
   };
 
   return map[intent] || null;
@@ -34,30 +37,70 @@ export const followUp = (intent) => {
 export const detectIntent = (text) => {
   const t = normalize(text);
 
+  // PERFIL
   if (
     t.includes("quien es") ||
     t.includes("quién es") ||
+    t.includes("quien eres") ||
+    t.includes("quién eres") ||
     OWNER_NAMES.some((name) => t.includes(name))
   ) {
-    return "PROFILE";
+    // Si solo dice "jorge" o "patricio", se toma como perfil
+    if (
+      t === "jorge" ||
+      t === "patricio" ||
+      t === "jorge patricio" ||
+      t.includes("quien")
+    ) {
+      return "PROFILE";
+    }
   }
+
+  // EXPERIENCIA
   if (t.includes("experiencia")) return "EXPERIENCE";
-  if (t.includes("tecnolog") || t.includes("habilidad") || t.includes("stack")) {
+
+  // TECNOLOGÍAS / HABILIDADES / STACK
+  if (
+    t.includes("tecnolog") ||
+    t.includes("habilidad") ||
+    t.includes("stack") ||
+    t.includes("tecnologias maneja") ||
+    t.includes("tecnologías maneja") ||
+    t.includes("tecnologias utiliza") ||
+    t.includes("tecnologías utiliza")
+  ) {
     return "SKILLS";
   }
+
+  // PROYECTOS
   if (t.includes("proyecto")) return "PROJECTS";
+
+  // EDUCACIÓN / FORMACIÓN
   if (
     t.includes("estudio") ||
+    t.includes("estudios") ||
     t.includes("master") ||
     t.includes("máster") ||
     t.includes("formacion") ||
-    t.includes("formación")
+    t.includes("formación") ||
+    t.includes("educacion") ||
+    t.includes("educación") ||
+    t.includes("academica") ||
+    t.includes("académica")
   ) {
     return "EDUCATION";
   }
+
+  // CONTACTO
   if (t.includes("contact") || t.includes("whatsapp")) return "CONTACT";
+
+  // MOTIVACIÓN / CONTRATAR
   if (t.includes("contratar")) return "MOTIVATION";
+
+  // LIBROS
   if (t.includes("libro") || t.includes("dan brown")) return "BOOK";
+
+  // DESPEDIDA
   if (isValidFarewell(t)) return "FAREWELL";
 
   return "UNKNOWN";
@@ -70,33 +113,56 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     return currentIntent;
   }
 
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+  if (
+    normalizedText.includes("contact") ||
+    normalizedText.includes("whatsapp")
+  ) {
     return "CONTACT";
   }
-  if (normalizedText.includes("tecnolog")) {
+
+  if (
+    normalizedText.includes("tecnolog") ||
+    normalizedText.includes("habilidad") ||
+    normalizedText.includes("stack")
+  ) {
     return "SKILLS";
   }
+
   if (normalizedText.includes("experiencia")) {
     return "EXPERIENCE";
   }
+
   if (
     normalizedText.includes("estudio") ||
+    normalizedText.includes("estudios") ||
     normalizedText.includes("master") ||
     normalizedText.includes("máster") ||
     normalizedText.includes("formacion") ||
-    normalizedText.includes("formación")
+    normalizedText.includes("formación") ||
+    normalizedText.includes("educacion") ||
+    normalizedText.includes("educación") ||
+    normalizedText.includes("academica") ||
+    normalizedText.includes("académica")
   ) {
     return "EDUCATION";
   }
+
   if (normalizedText.includes("proyecto")) {
     return "PROJECTS";
   }
+
   if (normalizedText.includes("contratar")) {
     return "MOTIVATION";
   }
-  if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
-    return "STACK";
+
+  // 🔥 AQUÍ estaba el bug: antes devolvía "STACK"
+  if (
+    normalizedText.includes("stack") ||
+    normalizedText.includes("full stack")
+  ) {
+    return "SKILLS";
   }
+
   if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     return "BOOK";
   }
@@ -205,6 +271,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (doingResponse) return doingResponse;
 
+  // Guardar nombre del usuario
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
 
@@ -217,6 +284,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // Despedida
   if (isValidFarewell(text)) {
     return {
       text: replies.FAREWELL(ctx),
@@ -224,8 +292,9 @@ export const getSmartResponse = (message, ctx = {}) => {
     };
   }
 
+  // Confirmación de contacto
   if (ctx.awaiting === "CONTACT_CONFIRM") {
-    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+    if (includesAny(text, YES_WORDS)) {
       ctx.awaiting = null;
       return {
         text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
@@ -241,22 +310,33 @@ export const getSmartResponse = (message, ctx = {}) => {
         intent: "CONTACT_CANCEL",
       };
     }
+
+    // Si responde otra cosa mientras espera confirmación
+    ctx.awaiting = null;
   }
 
+  // Follow-up inteligente
   if (ctx.awaitingFollowUp) {
-    if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
+    if (includesAny(text, YES_WORDS)) {
       const intent = ctx.awaitingFollowUp;
       ctx.awaitingFollowUp = null;
 
       const chainReplies = {
         PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
         EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+        SKILLS: `Ha desarrollado proyectos como ${PROFILE.projects.join(", ")}.`,
+        EDUCATION: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        PROJECTS: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
       };
 
       return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        text: chainReplies[intent] || UNKNOWN_REPLY,
+        intent:
+          intent === "SKILLS"
+            ? "PROJECTS"
+            : intent === "PROJECTS"
+            ? "SKILLS"
+            : intent,
         fromFollowUp: true,
       };
     }
@@ -265,12 +345,16 @@ export const getSmartResponse = (message, ctx = {}) => {
       ctx.awaitingFollowUp = null;
       return {
         text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+        intent: "FOLLOWUP_CANCEL",
       };
     }
 
+    // 🔥 IMPORTANTE:
+    // Si escribió otra pregunta real, NO cancelamos con "Está bien..."
     ctx.awaitingFollowUp = null;
   }
 
+  // Validar que sea sobre Jorge
   if (!isAboutOwner(text)) {
     return {
       text: OWNER_ONLY_REPLY,
