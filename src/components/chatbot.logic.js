@@ -150,7 +150,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   const randomReply = (options) =>
     options[Math.floor(Math.random() * options.length)];
 
-  // Nombre del bot
+  // Nombre
   const nameResponse = handleNamedPattern({
     text,
     regex:
@@ -224,7 +224,7 @@ export const getSmartResponse = (message, ctx = {}) => {
   });
   if (doingResponse) return doingResponse;
 
-  // Guardar nombre usuario
+  // Nombre usuario
   if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
     const name = message.replace(/^(me llamo|soy|mi nombre es)/i, "").trim();
     ctx.userName = name;
@@ -264,7 +264,7 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  // FOLLOW UP (🔥 FIX PRINCIPAL)
+  // FOLLOW UP (respuesta a "sí")
   if (ctx.awaitingFollowUp) {
     if (includesAny(text, ["si", "sí", "claro", "ok", "dale"])) {
       const intent = ctx.awaitingFollowUp;
@@ -290,7 +290,6 @@ export const getSmartResponse = (message, ctx = {}) => {
     }
   }
 
-  // 🔥 FIX: permitir "sí" sin bloquear
   if (!isAboutOwner(text) && !ctx.awaitingFollowUp) {
     return {
       text: replies.UNKNOWN(),
@@ -310,14 +309,20 @@ export const getSmartResponse = (message, ctx = {}) => {
   const reply = replies[intent];
   const replyText = typeof reply === "function" ? reply(ctx) : reply;
 
-  // 🔥 FIX FOLLOW-UP
-  const next = followUp(intent);
-  if (next) {
-    ctx.awaitingFollowUp = intent;
+  let finalText = replyText;
+
+  // ✅ SOLO agrega follow-up si NO hay uno activo
+  if (!ctx.awaitingFollowUp) {
+    const next = followUp(intent);
+
+    if (next) {
+      ctx.awaitingFollowUp = intent;
+      finalText = `${replyText}\n\n${next}`;
+    }
   }
 
   return {
-    text: next ? `${replyText}\n\n${next}` : replyText,
+    text: finalText,
     intent,
   };
 };
