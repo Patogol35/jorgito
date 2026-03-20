@@ -67,15 +67,14 @@ export const replies = {
       `Trabaja habitualmente con ${PROFILE.stack.join(", ")}.`,
     ]),
 
-  EDUCATION: (ctx) =>
-      pickNonRepeated(ctx, "EDUCATION", [
-        `Jorge cuenta con un ${PROFILE.education} 😊`,
-        `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
-        `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
-        "Jorge posee estudios enfocados en tecnología 😊",
-        `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
-        `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
-      ]),
+  EDUCATION: () =>
+    randomReply([
+      `Su formación incluye ${PROFILE.education.join(", ")}.`,
+      `En cuanto a estudios, cuenta con ${PROFILE.education.join(", ")}.`,
+      `Su preparación académica abarca ${PROFILE.education.join(", ")}.`,
+      `Jorge tiene formación en ${PROFILE.education.join(", ")}.`,
+      `Académicamente, Jorge cuenta con ${PROFILE.education.join(", ")}.`,
+    ]),
 
   PROJECTS: () =>
     randomReply([
