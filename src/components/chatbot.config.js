@@ -196,3 +196,56 @@ export const detectIntent = (msg) => {
   }
   return max ? best : "UNKNOWN";
 };
+
+/* =========================
+FOLLOW UP
+========================= */
+export const followUp = (intent) =>
+  ({
+    PROFILE: "¿Quieres conocer su experiencia profesional?",
+    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?",
+    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?",
+    PROJECTS: null,
+  }[intent] || null);
+
+export const isValidFarewell = (text) => {
+  const t = normalize(text);
+
+  const valid = [
+    "chao",
+    "chau",
+    "bye",
+    "adios",
+    "hasta luego",
+    "chao sasha",
+    "bye sasha",
+    "adios sasha",
+  ];
+
+  return valid.includes(t);
+};
+
+/* =========================
+REPETICIÓN
+========================= */
+export const pickNonRepeated = (ctx = {}, intent, options) => {
+  if (!ctx.usedReplies) ctx.usedReplies = {};
+  if (!ctx.usedReplies[intent]) ctx.usedReplies[intent] = [];
+
+  const unused = options.filter(
+    (opt) => !ctx.usedReplies[intent].includes(opt)
+  );
+
+  const choice = unused.length
+    ? randomPick(unused)
+    : randomPick(options);
+
+  ctx.usedReplies[intent].push(choice);
+
+  if (ctx.usedReplies[intent].length >= options.length) {
+    ctx.usedReplies[intent] = [];
+  }
+
+  return choice;
+};
+
