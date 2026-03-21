@@ -835,54 +835,66 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
-      /* =========================
-  🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
-  ========================= */
-  if (intent === "CONTACT") {
-    const normalizedText = text.toLowerCase();
-    const validNames = ["jorge", "patricio", "jorge patricio"];
+      //* =========================
+🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
+========================= */
+if (intent === "CONTACT") {
+  const normalizedText = text.toLowerCase();
+  const validNames = ["jorge", "patricio", "jorge patricio"];
 
-    // Si menciona tu nombre → permitir
-    if (validNames.some(name => normalizedText.includes(name))) {
+  // ✅ Si menciona tu nombre → permitir
+  if (validNames.some(name => normalizedText.includes(name))) {
+    return {
+      text: CONTACT(ctx),
+      intent,
+    };
+  }
+
+  // 🔍 Extraer posibles nombres
+  let otherName = null;
+
+  const patterns = [
+    /contactar\s+a\s+(\w+)/i,
+    /contactar\s+(\w+)/i,
+    /contacto\s+de\s+(\w+)/i,
+    /contacto\s+(\w+)/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) {
+      otherName = normalize(match[1]);
+      break;
+    }
+  }
+
+  // ❌ Si es otra persona → bloquear
+  if (
+    otherName &&
+    !validNames.some(
+      name => otherName.includes(name) || name.includes(otherName)
+    )
+  ) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
+
+  // ✅ Si no especifica nombre → asumir que eres tú
   return {
     text: CONTACT(ctx),
     intent,
   };
-    }
+}
 
-    // Extraer posibles nombres después de "contactar"
-    // Patrones: "contactar a [nombre]", "contactar [nombre]", "contacto de [nombre]"
-    let otherName = null;
-
-    // Buscar con regex que ignore mayúsculas y capture el nombre
-    const patterns = [
-      /contactar\s+a\s+(\w+)/i,
-      /contactar\s+(\w+)/i,
-      /contacto\s+de\s+(\w+)/i,
-      /contacto\s+(\w+)/i,
-    ];
-
-    for (const pattern of patterns) {
-      const match = text.match(pattern);
-      if (match) {
-        otherName = normalize(match[1]);
-        break;
-      }
-    }
-
-    // Si encontramos un nombre y NO es el tuyo → bloquear
-    if (otherName && !validNames.some(name => otherName.includes(name) || name.includes(otherName))) {
-      return {
-        text: "Solo tengo información sobre Jorge Patricio 🙂",
-        intent: "UNKNOWN",
-      };
-    }
-
-    // Si no hay nombre explícito → asumir que es sobre ti (ej: "contactar")
-    return {
-  text: CONTACT(ctx),
-  intent,
-}; }
+/* =========================
+🟡 FALLBACK (MUY IMPORTANTE)
+========================= */
+return {
+  text: "No entendí 🤔 ¿Puedes reformular?",
+  intent: "UNKNOWN",
+};
 
   // =========================
   // 🧠 RESPUESTA NORMAL
