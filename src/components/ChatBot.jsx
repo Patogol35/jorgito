@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   Box,
@@ -692,6 +691,29 @@ function getSmartResponse(message, context) {
   }
 
   /* =========================
+  🔵 CONFIRMACIÓN WHATSAPP
+  ========================= */
+  if (ctx.awaiting === "CONTACT_CONFIRM") {
+    if (YES_WORDS.includes(text)) {
+      ctx.awaiting = null;
+      window.open(WHATSAPP_URL, "_blank");
+
+      return {
+        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+        intent: "CONTACT_OPENED",
+      };
+    }
+
+    if (NO_WORDS.includes(text)) {
+      ctx.awaiting = null;
+      return {
+        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+        intent: "CONTACT_CANCEL",
+      };
+    }
+  }
+
+  /* =========================
   FOLLOW UPS
   ========================= */
   if (ctx.awaitingFollowUp) {
@@ -794,20 +816,21 @@ const isAboutOwner = (text) => {
 };
 
   // 🔒 Bloquear si NO es sobre ti
-if (!isAboutOwner(text)) {
-  return {
-    text: "Solo tengo información sobre Jorge Patricio 🙂",
-    intent: "UNKNOWN",
-  };
-}
+  if (!isAboutOwner(text)) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
 
-/* =========================
-🟢 DETECTAR INTENT (SOBRE JORGE)
-========================= */
+ /* =========================
+  🟢 DETECTAR INTENT (SOBRE JORGE)
+  ========================= */
 let intent = detectIntent(text);
 
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
 const normalizedText = text.toLowerCase();
-
 if (normalizedText.includes("jorge")) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
@@ -826,6 +849,7 @@ if (normalizedText.includes("jorge")) {
   } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
+  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
@@ -833,58 +857,59 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
+      /* =========================
+  🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
+  ========================= */
+  if (intent === "CONTACT") {
+    const normalizedText = text.toLowerCase();
+    const validNames = ["jorge", "patricio", "jorge patricio"];
 
-/* =========================
-🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
-========================= */
-if (intent === "CONTACT") {
-  const validNames = ["jorge", "patricio", "jorge patricio"];
+    // Si menciona tu nombre → permitir
+    if (validNames.some(name => normalizedText.includes(name))) {
+      ctx.awaiting = "CONTACT_CONFIRM";
+      return {
+        text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+        action: "CONTACT_CONFIRM",
+        intent,
+      };
+    }
 
-  // ✅ Si menciona tu nombre → permitir
-  if (validNames.some(name => normalizedText.includes(name))) {
+    // Extraer posibles nombres después de "contactar"
+    // Patrones: "contactar a [nombre]", "contactar [nombre]", "contacto de [nombre]"
+    let otherName = null;
+
+    // Buscar con regex que ignore mayúsculas y capture el nombre
+    const patterns = [
+      /contactar\s+a\s+(\w+)/i,
+      /contactar\s+(\w+)/i,
+      /contacto\s+de\s+(\w+)/i,
+      /contacto\s+(\w+)/i,
+    ];
+
+    for (const pattern of patterns) {
+      const match = text.match(pattern);
+      if (match) {
+        otherName = normalize(match[1]);
+        break;
+      }
+    }
+
+    // Si encontramos un nombre y NO es el tuyo → bloquear
+    if (otherName && !validNames.some(name => otherName.includes(name) || name.includes(otherName))) {
+      return {
+        text: "Solo tengo información sobre Jorge Patricio 🙂",
+        intent: "UNKNOWN",
+      };
+    }
+
+    // Si no hay nombre explícito → asumir que es sobre ti (ej: "contactar")
+    ctx.awaiting = "CONTACT_CONFIRM";
     return {
-      text: CONTACT(ctx),
+      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
+      action: "CONTACT_CONFIRM",
       intent,
     };
   }
-
-  // 🔍 Extraer posibles nombres
-  let otherName = null;
-
-  const patterns = [
-    /contactar\s+a\s+(\w+)/i,
-    /contactar\s+(\w+)/i,
-    /contacto\s+de\s+(\w+)/i,
-    /contacto\s+(\w+)/i,
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) {
-      otherName = normalize(match[1]);
-      break;
-    }
-  }
-
-  // ❌ Si es otra persona → bloquear
-  if (
-    otherName &&
-    !validNames.some(
-      name => otherName.includes(name) || name.includes(otherName)
-    )
-  ) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
-
-  // ✅ Caso normal
-  return {
-    text: CONTACT(ctx),
-    intent,
-  };
-}
 
   // =========================
   // 🧠 RESPUESTA NORMAL
@@ -1195,4 +1220,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+}                            
