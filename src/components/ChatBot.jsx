@@ -794,21 +794,20 @@ const isAboutOwner = (text) => {
 };
 
   // 🔒 Bloquear si NO es sobre ti
-  if (!isAboutOwner(text)) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
+if (!isAboutOwner(text)) {
+  return {
+    text: "Solo tengo información sobre Jorge Patricio 🙂",
+    intent: "UNKNOWN",
+  };
+}
 
- /* =========================
-  🟢 DETECTAR INTENT (SOBRE JORGE)
-  ========================= */
+/* =========================
+🟢 DETECTAR INTENT (SOBRE JORGE)
+========================= */
 let intent = detectIntent(text);
 
-// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-// priorizar la intención técnica/sensible sobre PROFILE
 const normalizedText = text.toLowerCase();
+
 if (normalizedText.includes("jorge")) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
@@ -827,7 +826,6 @@ if (normalizedText.includes("jorge")) {
   } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
-  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
@@ -835,11 +833,11 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
-      /* =========================
+
+/* =========================
 🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
 ========================= */
 if (intent === "CONTACT") {
-  const normalizedText = text.toLowerCase();
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
   // ✅ Si menciona tu nombre → permitir
@@ -881,7 +879,7 @@ if (intent === "CONTACT") {
     };
   }
 
-  // ✅ Si no especifica nombre → asumir que eres tú
+  // ✅ Caso normal
   return {
     text: CONTACT(ctx),
     intent,
@@ -889,11 +887,21 @@ if (intent === "CONTACT") {
 }
 
 /* =========================
-🟡 FALLBACK (MUY IMPORTANTE)
+🧠 RESPUESTA NORMAL
 ========================= */
+let replyText;
+
+if (typeof replies[intent] === "function") {
+  replyText = replies[intent]?.(ctx);
+} else {
+  replyText = replies[intent];
+}
+
 return {
-  text: "No entendí 🤔 ¿Puedes reformular?",
-  intent: "UNKNOWN",
+  text:
+    replyText ||
+    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+  intent,
 };
 
   // =========================
