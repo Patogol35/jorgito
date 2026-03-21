@@ -598,9 +598,9 @@ function getSmartResponse(message, context) {
     }
 
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
 
   /* =========================
@@ -621,9 +621,9 @@ function getSmartResponse(message, context) {
     }
 
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
 
   /* =========================
@@ -644,9 +644,9 @@ function getSmartResponse(message, context) {
     }
 
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
 
       /* =========================
@@ -667,9 +667,9 @@ function getSmartResponse(message, context) {
     }
 
     return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
 
   /* =========================
