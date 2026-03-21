@@ -311,6 +311,15 @@ function getSmartResponse(message, context) {
         "Cuando gustes 😊",
       ]),
 
+    UNKNOWN: (ctx) =>
+  pickNonRepeated(ctx, "UNKNOWN", [
+    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
+    "Hmm 🤔 no entendí muy bien, pero puedo contarte sobre Jorge si quieres",
+    "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información de Jorge",
+    "No me quedó claro 🤔 ¿Quieres saber sobre la experiencia o proyectos de Jorge?",
+    "Lo siento 😅 no entendí eso, pero puedo ayudarte con el perfil de Jorge 😊",
+  ]),
+
     FAREWELL: (ctx) =>
       pickNonRepeated(ctx, "FAREWELL", [
         "¡Gracias por visitar el portafolio de Jorge 😊! Regresa cuando quieras 👋",
@@ -922,19 +931,21 @@ if (intent === "CONTACT") {
   // =========================
   let replyText;
 
-  if (typeof replies[intent] === "function") {
-    replyText = replies[intent](ctx);
-  } else {
-    replyText = replies[intent];
-  }
-
-  return {
-    text:
-      replyText ||
-      "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-    intent,
-  };
+if (typeof replies[intent] === "function") {
+  replyText = replies[intent](ctx);
+} else {
+  replyText = replies[intent];
 }
+
+if (!replyText) {
+  replyText = replies.UNKNOWN(ctx);
+  intent = "UNKNOWN";
+}
+
+return {
+  text: replyText,
+  intent,
+};
 
 /* =========================
 COMPONENTE
