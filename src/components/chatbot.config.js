@@ -1,23 +1,47 @@
-export const BOT_NAME = "sasha";
+/* =========================
+CONFIG
+========================= */
+export const WHATSAPP_URL =
+  "https://wa.me/593997979099?text=Hola%20Jorge%20,%20vi%20tu%20portafolio";
 
-export const WHATSAPP_URL = "https://wa.me/593997979099";
+/* =========================
+UTILIDADES
+========================= */
+export const delay = () => Math.floor(Math.random() * 500) + 400;
+export const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-export const UNKNOWN_REPLY =
-  "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊";
+export const YES_WORDS = ["sí", "si", "claro", "ok", "dale", "okey"];
+export const NO_WORDS = ["no", "ahora no", "luego"];
 
-export const OWNER_ONLY_REPLY =
-  "Solo tengo información sobre Jorge Patricio 🙂";
+/* =========================
+MEMORIA
+========================= */
+export const MEMORY_LIMIT = 10;
 
+export const saveMemory = (ctx, data) => {
+  const memory = [...(ctx.memory || [])];
+  memory.push(data);
+  if (memory.length > MEMORY_LIMIT) memory.shift();
+  ctx.memory = memory;
+};
+
+/* =========================
+PERFIL
+========================= */
 export const PROFILE = {
-  name: "Jorge Patricio",
-  role: "Desarrollador Full Stack",
+  name: "Jorge Patricio Santamaría Cherrez",
+  role: "Ingeniero de Software y Desarrollador Full Stack",
+  description:
+    "Especializado en el desarrollo de aplicaciones web modernas, seguras y escalables, aplicando buenas prácticas y arquitectura limpia.",
+  education:
+    "Máster en Ingeniería de Software y Sistemas Informáticos – Universidad Internacional de La Rioja (UNIR), España",
   experience: [
     "Desarrollador de aulas virtuales",
     "Desarrollo de aplicaciones web Full Stack",
     "Creación de APIs REST seguras y escalables",
   ],
   stack: [
-  "React",
+    "React",
     "Vercel",
     "Postman",
     "Vite",
@@ -29,137 +53,146 @@ export const PROFILE = {
     "AWS",
     "Git",
     "Linux",
-    ],
-  education: [
-    "Máster en Ingeniería de Software y Sistemas Informáticos – Universidad Internacional de La Rioja (UNIR), España",
   ],
+  
+  tools: [
+    "Git",
+    "NextDNS",
+    "Postman",
+    "Virtualbox",
+    "Linux",
+    "AnyDesk",
+    "Vercel",
+    "Microsoft Office",
+  ],
+  
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
     "Aplicaciones Frontend",
     "Aplicaciones React conectadas a APIs REST",
   ],
-  books: [
-    "Dan Brown",
-    "libros de tecnología",
-  ],
 };
 
+/* =========================
+SUGERENCIAS
+========================= */
 export const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué experiencia tiene?",
-  "¿Qué tecnologías maneja?",
-  "¿Qué proyectos ha hecho?",
-  "¿Cómo contactarlo?",
-  "¿Cuál es su formación académica?",
+  "¿Qué estudios tiene?",
+  "¿En qué tecnologías trabaja?",
+  "¿Es Full Stack?",
+  "Cuéntame sobre sus proyectos",
+  "¿Por qué contratar a Jorge?",
+  "¿Cómo puedo contactar a Jorge?",
+  "¿Quién te creó?",
+  "Sus libros favoritos?",
+  "¿Qué herramientas técnicas domina?",
 ];
 
-export const YES_WORDS = [
-  "si",
-  "sí",
-  "claro",
-  "ok",
-  "dale",
-  "por supuesto",
-  "abrelo",
-  "ábrelo",
-];
+/* =========================
+INTENCIONES
+========================= */
+export const INTENTS = {
+  GRA: ["Gracias"],
+  
+  TOOLS : [
+  "herramientas",
+  "tools",
+  "herramientas técnicas",
+  "qué herramientas usas",
+  "qué herramientas dominas",
+],
 
-export const NO_WORDS = [
-  "no",
-  "no gracias",
-  "luego",
-  "después",
-  "despues",
-  "mejor no",
-];
+  WHAT_DOING: [
+    "que haces",
+    "qué haces",
+    "que estas haciendo",
+    "qué estás haciendo",
+    "en que estas",
+    "en qué estás",
+    "que andas haciendo",
+    "qué andas haciendo",
+  ],
 
-export const OWNER_NAMES = ["jorge", "patricio", "jorge patricio"];
+  LIKES_MUSIC: ["música", "musica"],
+  LIKES_MOVIES: ["películas", "peliculas"],
+  LIKES_TALK: ["conversar", "hablar"],
+  LIKES_HELP: ["ayudar"],
+  LIKES_MORNING: ["mañanas", "madrugar"],
+  LIKES_NIGHT: ["noche"],
 
-export const OWNER_KEYWORDS = [
-  "tecnologia",
-  "tecnologias",
-  "tecnologías",
-  "experiencia",
-  "estudios",
-  "perfil",
-  "contratar",
-  "proyectos",
-  "stack",
-  "habilidades",
-  "lenguajes",
-  "quien es",
-  "quién es",
-  "formacion",
-  "formación",
-  "educacion",
-  "educación",
-  "máster",
-  "master",
-  "libros",
-  "libro",
-  "full stack",
-  "desarrollador",
-  "ingeniero",
-  "full",
-  "contactar",
-  "contacto",
-  "hablame",
-  "háblame",
-  "whatsapp",
-  "academica",
-  "académica",
-  "formacion academica",
-  "formación académica",
-  "tecnologias maneja",
-  "tecnologías maneja",
-  "tecnologias utiliza",
-  "tecnologías utiliza",
-];
+  BORED: ["aburr"],
+  TIRED: ["cans"],
+  FRIENDS: ["amigos"],
+  FUNNY: ["reír", "reir"],
+  NICE: ["simpática", "simpatica"],
+  LISTEN: ["escuchar"],
+  EMOTIONS: ["emociones", "sentir"],
+  SILENCE: ["silencio"],
+  PEOPLE: ["gente", "personas"],
 
-export const VALID_OWNER_PHRASES = [
-  "full stack",
-  "libros favoritos",
-  "máster en",
-  "proyectos realizados",
-  "experiencia profesional",
-  "qué estudios",
-  "que estudios",
-  "qué experiencia",
-  "que experiencia",
-  "qué tecnologías",
-  "que tecnologias",
-  "qué tecnologías maneja",
-  "que tecnologias maneja",
-  "qué tecnologías utiliza",
-  "que tecnologias utiliza",
-  "qué habilidades tiene",
-  "que habilidades tiene",
-  "qué stack usa",
-  "que stack usa",
-  "tecnologías trabaja",
-  "es full stack",
-  "por qué contratar",
-  "como contactar",
-  "cómo contactar",
-  "quién te creó",
-  "quien te creo",
-  "sus libros",
-  "estudios tiene",
-  "qué estudios tiene",
-  "que estudios tiene",
-  "experiencia tiene",
-  "proyectos ha hecho",
-  "cuéntame sobre",
-  "cuentame sobre",
-  "su formación académica",
-  "su formacion academica",
-  "formación académica",
-  "formacion academica",
-  "cuál es su formación académica",
-  "cual es su formacion academica",
-  "su educación",
-  "su educacion",
-  "educación",
-  "educacion",
-];
+  MOOD: ["cómo estás", "como estas", "estás bien"],
+  HAPPY: ["feliz"],
+
+  NAME: ["cómo te llamas", "como te llamas", "tu nombre"],
+  HUMAN: ["eres humana", "eres humano", "robot"],
+  ASSISTANT: ["quién eres", "quien eres", "sasha"],
+  CREATOR: ["quién te creó", "quien te creo", "quien te hizo"],
+  BOOK: ["sus libros favoritos", "libros favoritos", "libros"],
+
+  HELP: [
+    "qué puedes hacer",
+    "que puedes hacer",
+    "buenas tardes",
+    "buenas noches",
+  ],
+
+  FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
+
+  GREETING: ["hola", "buenas", "buenos días"],
+  PROFILE: ["jorge", "perfil", "patricio"],
+  EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
+  EXPERIENCE: ["experiencia"],
+  SKILLS: ["tecnologías", "lenguajes", "habilidades","tecnología"],
+  STACK: ["full stack"],
+  PROJECTS: ["proyectos", "proyecto"],
+  MOTIVATION: ["contratar"],
+  CONTACT: ["contactar", "whatsapp", "contacto"],
+};
+
+/* =========================
+NORMALIZACIÓN
+========================= */
+export const normalize = (t = "") =>
+  t
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+/* =========================
+DETECT INTENT
+========================= */
+export const detectIntent = (msg) => {
+  const text = normalize(msg);
+  let best = "UNKNOWN";
+  let max = 0;
+
+  for (const intent in INTENTS) {
+    let score = 0;
+    for (const word of INTENTS[intent]) {
+      if (text.includes(normalize(word))) {
+        score += word.length > 4 ? 2 : 1;
+      }
+    }
+    if (score > max) {
+      max = score;
+      best = intent;
+    }
+  }
+  return max ? best : "UNKNOWN";
+};
