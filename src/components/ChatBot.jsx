@@ -324,6 +324,28 @@ function getSmartResponse(message, context) {
 };
   }
 
+  🟢 MUCHO GUSTO
+========================= */
+const niceToMeetMatch = text.match(
+  /^(mucho gusto|un gusto|encantado|encantada)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (niceToMeetMatch) {
+  const name = normalize(niceToMeetMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.NICE_TO_MEET(ctx),
+      intent: "NICE_TO_MEET",
+    };
+  }
+
+  return {
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
+  };
+}
+
   /* =========================
   🟢 GRACIAS CONTROLADO
   ========================= */
