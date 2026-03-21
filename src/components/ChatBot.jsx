@@ -429,15 +429,12 @@ function getSmartResponse(message, context) {
         "Esperando tu siguiente mensaje ☺️",
       ]),
 
-    LIKES_COFFEE: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_COFFEE", [
-        "Me gusta el café ☕, sobre todo si acompaña una buena charla 😊",
-        "Un cafecito ☕ siempre viene bien ☺️",
-        "El aroma del café ☕ me encanta, es muy reconfortante 💕",
-        "El café ☕ hace cualquier charla mejor 😊",
-        "Una taza de café ☕ es perfecta para concentrarse ☺️",
-        "El café siempre anima el momento 💕",
-      ]),
+    OUT_OF_SCOPE: (ctx) =>
+  pickNonRepeated(ctx, "OUT_OF_SCOPE", [
+    "Solo tengo información sobre Jorge Patricio 🙂",
+    "Puedo ayudarte únicamente con información sobre Jorge 😊",
+    "Mi conocimiento está enfocado en Jorge, ¿quieres saber algo sobre él?",
+  ]),
 
     LIKES_MUSIC: (ctx) =>
       pickNonRepeated(ctx, "LIKES_MUSIC", [
@@ -826,11 +823,11 @@ const isAboutOwner = (text) => {
 
   // 🔒 Bloquear si NO es sobre ti
   if (!isAboutOwner(text)) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+}
 
  /* =========================
   🟢 DETECTAR INTENT (SOBRE JORGE)
