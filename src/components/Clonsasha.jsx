@@ -345,52 +345,6 @@ function getSmartResponse(message, context) {
     };
   }
 
-  /* =========================
-  🟢 GRACIAS CONTROLADO
-  ========================= */
-  const thanksMatch = text.match(
-    /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (thanksMatch) {
-    const name = normalize(thanksMatch[2]?.trim() || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.GRA(ctx),
-        intent: "GRA",
-      };
-    }
-
-    return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
-  }
-
-  /* =========================
-  🟢 ESTADO DE ÁNIMO
-  ========================= */
-  const moodMatch = text.match(
-    /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
-
-  if (moodMatch) {
-    const name = normalize(moodMatch[2] || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.MOOD(ctx),
-        intent: "MOOD",
-      };
-    }
-
-    return {
-      text: "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-      intent: "UNKNOWN",
-    };
-  }
-
       /* =========================
   🟢 QUÉ ESTÁ HACIENDO
   ========================= */
