@@ -17,24 +17,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  WHATSAPP_URL,
-  delay,
-  randomPick,
-  YES_WORDS,
-  NO_WORDS,
-  MEMORY_LIMIT,
-  saveMemory,
-  PROFILE,
-  SUGGESTIONS,
-  INTENTS,
-  normalize,
-  detectIntent,
-  followUp,
-  isValidFarewell,
-  pickNonRepeated,
-} from "./chatbot.config";
-
+import { delay, SUGGESTIONS, followUp } from "./chatbot.config";
 import { getSmartResponse } from "./getSmartResponse";
 
 /* =========================
