@@ -324,7 +324,8 @@ function getSmartResponse(message, context) {
 };
   }
 
-  🟢 MUCHO GUSTO
+  /* =========================
+🟢 MUCHO GUSTO
 ========================= */
 const niceToMeetMatch = text.match(
   /^(mucho gusto|un gusto|encantado|encantada)(\s+[a-zA-Záéíóúñ]+)?$/i
