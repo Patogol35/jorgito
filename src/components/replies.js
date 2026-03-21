@@ -1,4 +1,4 @@
-export const replies = {
+export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
     GRA: (ctx) =>
       pickNonRepeated(ctx, "GRA", [
         "Un placer 😊",
@@ -265,4 +265,4 @@ export const replies = {
         "Porque Jorge se compromete con cada proyecto ☺️",
         "Porque Jorge aporta valor real a cada trabajo 💕",
       ]),
-  };
+  });
