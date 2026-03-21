@@ -867,12 +867,10 @@ saveMemory(ctx, { user: text, intent });
 
     // Si menciona tu nombre → permitir
     if (validNames.some(name => normalizedText.includes(name))) {
-      ctx.awaiting = "CONTACT_CONFIRM";
-      return {
-        text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-        action: "CONTACT_CONFIRM",
-        intent,
-      };
+  return {
+    text: CONTACT(ctx),
+    intent,
+  };
     }
 
     // Extraer posibles nombres después de "contactar"
@@ -904,13 +902,10 @@ saveMemory(ctx, { user: text, intent });
     }
 
     // Si no hay nombre explícito → asumir que es sobre ti (ej: "contactar")
-    ctx.awaiting = "CONTACT_CONFIRM";
     return {
-      text: "📱 Puedes contactarlo por WhatsApp.\n\n¿Quieres que lo abra ahora?",
-      action: "CONTACT_CONFIRM",
-      intent,
-    };
-  }
+  text: CONTACT(ctx),
+  intent,
+};
 
   // =========================
   // 🧠 RESPUESTA NORMAL
