@@ -835,7 +835,7 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
-      //* =========================
+      /* =========================
 🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
 ========================= */
 if (intent === "CONTACT") {
