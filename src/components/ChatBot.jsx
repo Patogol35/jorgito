@@ -905,7 +905,7 @@ saveMemory(ctx, { user: text, intent });
     return {
   text: CONTACT(ctx),
   intent,
-};
+}; }
 
   // =========================
   // 🧠 RESPUESTA NORMAL
