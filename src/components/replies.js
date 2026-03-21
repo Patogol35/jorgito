@@ -9,6 +9,14 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
         "Cuando gustes 😊",
       ]),
 
+    NICE_TO_MEET: (ctx) =>
+  pickNonRepeated(ctx, "NICE_TO_MEET", [
+    "¡El gusto es mío! 😊 ¿En qué puedo ayudarte?",
+    "¡Mucho gusto! 👋 Soy Sasha, ¿en qué te ayudo?",
+    "Encantada 😊 ¿Qué deseas saber sobre Jorge?",
+    "¡Un placer saludarte! 😄 ¿Cómo puedo ayudarte hoy?",
+  ]),
+
     UNKNOWN: (ctx) =>
   pickNonRepeated(ctx, "UNKNOWN", [
     "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
