@@ -136,10 +136,8 @@ const INTENTS = {
     "qué andas haciendo",
   ],
 
-  LIKES_COFFEE: ["café", "cafe"],
   LIKES_MUSIC: ["música", "musica"],
   LIKES_MOVIES: ["películas", "peliculas"],
-  LIKES_TRAVEL: ["viajar"],
   LIKES_TALK: ["conversar", "hablar"],
   LIKES_HELP: ["ayudar"],
   LIKES_MORNING: ["mañanas", "madrugar"],
@@ -456,15 +454,7 @@ function getSmartResponse(message, context) {
         "Las historias en el cine inspiran 💕",
       ]),
 
-    LIKES_TRAVEL: (ctx) =>
-      pickNonRepeated(ctx, "LIKES_TRAVEL", [
-        "Viajar ✈️ es maravilloso, conocer nuevos lugares inspira mucho 😊",
-        "Explorar el mundo 🌍 siempre abre la mente ☺️",
-        "Viajar cambia la forma de ver la vida 💕",
-        "Conocer nuevos lugares siempre enriquece 😊",
-        "Viajar trae experiencias inolvidables ☺️",
-        "Descubrir el mundo es fascinante 💕",
-      ]),
+    
 
     LIKES_TALK: (ctx) =>
       pickNonRepeated(ctx, "LIKES_TALK", [
