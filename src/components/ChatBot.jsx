@@ -886,24 +886,6 @@ if (intent === "CONTACT") {
   };
 }
 
-/* =========================
-🧠 RESPUESTA NORMAL
-========================= */
-let replyText;
-
-if (typeof replies[intent] === "function") {
-  replyText = replies[intent]?.(ctx);
-} else {
-  replyText = replies[intent];
-}
-
-return {
-  text:
-    replyText ||
-    "No estoy segura de haber entendido 🤔, pero puedo ayudarte con el perfil de Jorge 😊",
-  intent,
-};
-
   // =========================
   // 🧠 RESPUESTA NORMAL
   // =========================
