@@ -58,26 +58,20 @@ const PROFILE = {
   experience: [
     "Desarrollador de aulas virtuales",
     "Desarrollo de aplicaciones web Full Stack",
-    "Creación de APIs REST seguras y escalables",
   ],
   stack: [
     "React",
     "Vercel",
-    "Postman",
     ],
   
   tools: [
     "Git",
     "NextDNS",
-    "Postman",
-  
   ],
   
   projects: [
     "Aulas virtuales",
     "Tiendas online Full Stack",
-    "Aplicaciones Frontend",
-    "Aplicaciones React conectadas a APIs REST",
   ],
 };
 
@@ -87,7 +81,6 @@ SUGERENCIAS
 const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué experiencia tiene?",
-  "¿Qué estudios tiene?",
 ];
 
 /* =========================
@@ -138,7 +131,6 @@ const detectIntent = (msg) => {
   const text = normalize(msg);
   let best = "UNKNOWN";
   let max = 0;
-
   for (const intent in INTENTS) {
     let score = 0;
     for (const word of INTENTS[intent]) {
@@ -269,8 +261,7 @@ function getSmartResponse(message, context) {
 
     WHAT_DOING: (ctx) =>
       pickNonRepeated(ctx, "WHAT_DOING", [
-        "Estoy aquí contigo 😊 lista para ayudarte.",
-        "Ahora mismo charlando contigo 💕",
+        "Estoy aquí contigo 😊 lista para ayudarte."
         
       ]),
 
@@ -290,22 +281,16 @@ function getSmartResponse(message, context) {
     EDUCATION: (ctx) =>
       pickNonRepeated(ctx, "EDUCATION", [
         `Jorge cuenta con un ${PROFILE.education} 😊`,
-        `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
-        
       ]),
 
     EXPERIENCE: (ctx) =>
       pickNonRepeated(ctx, "EXPERIENCE", [
         `Jorge tiene experiencia como ${PROFILE.experience.join(", ")} 😊`,
-        `Jorge ha trabajado en áreas como ${PROFILE.experience.join(", ")} ☺️`,
-      
       ]),
 
     SKILLS: (ctx) =>
       pickNonRepeated(ctx, "SKILLS", [
         `Jorge Trabaja con tecnologías como ${PROFILE.stack.join(", ")} 😊`,
-        `Jorge utiliza herramientas modernas como ${PROFILE.stack.join(", ")} ☺️`,
-        
       ]),
 
     PROJECTS: (ctx) =>
@@ -318,7 +303,6 @@ function getSmartResponse(message, context) {
     MOTIVATION: (ctx) =>
       pickNonRepeated(ctx, "MOTIVATION", [
         "Porque Jorge combina formación sólida, experiencia real y un enfoque muy práctico 😊",
-        
       ]),
   };
 
@@ -489,22 +473,6 @@ const isAboutOwner = (text) => {
     "que estudios",
     "qué experiencia",
     "que experiencia",
-    "qué tecnologías",
-    "que tecnologias",
-    "tecnologías trabaja",
-    "es full stack",
-    "por qué contratar",
-    "como contactar",
-    "cómo contactar",
-    "quién te creó",
-    "quien te creo",
-    "sus libros",
-    "estudios tiene",
-    "experiencia tiene",
-    "tecnologías trabaja",
-    "proyectos ha hecho",
-    "cuéntame sobre",
-    "cuentame sobre"
   ];
 
   if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
@@ -551,10 +519,7 @@ if (normalizedText.includes("jorge")) {
     intent = "MOTIVATION";
   } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
     intent = "STACK";
-  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
-    intent = "BOOK";
   }
-  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
