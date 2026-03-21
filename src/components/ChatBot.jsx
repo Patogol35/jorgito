@@ -692,29 +692,6 @@ function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🔵 CONFIRMACIÓN WHATSAPP
-  ========================= */
-  if (ctx.awaiting === "CONTACT_CONFIRM") {
-    if (YES_WORDS.includes(text)) {
-      ctx.awaiting = null;
-      window.open(WHATSAPP_URL, "_blank");
-
-      return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-        intent: "CONTACT_OPENED",
-      };
-    }
-
-    if (NO_WORDS.includes(text)) {
-      ctx.awaiting = null;
-      return {
-        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-        intent: "CONTACT_CANCEL",
-      };
-    }
-  }
-
-  /* =========================
   FOLLOW UPS
   ========================= */
   if (ctx.awaitingFollowUp) {
