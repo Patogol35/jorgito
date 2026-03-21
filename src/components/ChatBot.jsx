@@ -323,12 +323,12 @@ function getSmartResponse(message, context) {
 
     CONTACT: (ctx) =>
   pickNonRepeated(ctx, "CONTACT", [
-    `¡Claro! Puedes contactar a Jorge directamente por WhatsApp: ${WHATSAPP_URL} 😊`,
-    `Jorge está disponible en WhatsApp para atender tus consultas: ${WHATSAPP_URL} ☺️`,
-    `Puedes escribirle a Jorge por WhatsApp aquí: ${WHATSAPP_URL} 💕`,
-    `Para contactar a Jorge, solo haz clic aquí: ${WHATSAPP_URL} ✨`,
-    `¡Fácil! Comunícate con Jorge por WhatsApp: ${WHATSAPP_URL} 😊`,
-    `Jorge te atiende por WhatsApp: ${WHATSAPP_URL} ☺️`,
+    "¡Claro! 😊 Puedes escribirle por WhatsApp.",
+    "Jorge está disponible en WhatsApp ☺️",
+    "Puedes contactarlo fácilmente por WhatsApp 💬",
+    "Te puedo conectar con Jorge por WhatsApp 😊",
+    "Escríbele por WhatsApp y te responderá pronto ✨",
+    "Puedes hablar con Jorge directamente por WhatsApp ☺️",
   ]),
 
     TOOLS: (ctx) =>
