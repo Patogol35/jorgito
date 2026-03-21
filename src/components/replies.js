@@ -1,4 +1,4 @@
-const replies = {
+export const replies = {
     GRA: (ctx) =>
       pickNonRepeated(ctx, "GRA", [
         "Un placer 😊",
