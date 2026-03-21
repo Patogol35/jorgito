@@ -1,18 +1,12 @@
 import { createReplies } from "./replies";
 import {
   WHATSAPP_URL,
-  delay,
-  randomPick,
   YES_WORDS,
   NO_WORDS,
-  MEMORY_LIMIT,
   saveMemory,
   PROFILE,
-  SUGGESTIONS,
-  INTENTS,
   normalize,
   detectIntent,
-  followUp,
   isValidFarewell,
   pickNonRepeated,
 } from "./chatbot.config";
