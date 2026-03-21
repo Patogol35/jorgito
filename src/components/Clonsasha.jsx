@@ -101,7 +101,6 @@ WHAT_DOING: [
 
   ASSISTANT: ["quién eres", "quien eres", "sasha"],
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
-  GREETING: ["hola", "buenas", "buenos días"],
   PROFILE: ["jorge", "perfil", "patricio"],
   EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
   EXPERIENCE: ["experiencia"],
@@ -241,41 +240,29 @@ function getSmartResponse(message, context) {
 
     TOOLS: (ctx) =>
   pickNonRepeated(ctx, "TOOLS", [
-    `Jorge domina herramientas técnicas como ${PROFILE.tools.join(", ")} 😊`,
-    
+    `Jorge domina herramientas técnicas como ${PROFILE.tools.join(", ")} 😊`, 
   ]),
-
-    GREETING: (ctx) =>
-      pickNonRepeated(ctx, "GREETING", [
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge 😊",
-        "¡Hola! ☺️ Me llamo Sasha y estoy aquí para ayudarte 💕",
-    
-      ]),
 
     ASSISTANT: (ctx) =>
       pickNonRepeated(ctx, "ASSISTANT", [
         "Soy Sasha 🤖, la asistente virtual de Jorge 😊",
         "Me llamo Sasha ☺️ y estoy aquí para ayudarte.",
-        
       ]),
 
     WHAT_DOING: (ctx) =>
       pickNonRepeated(ctx, "WHAT_DOING", [
-        "Estoy aquí contigo 😊 lista para ayudarte."
-        
+        "Estoy aquí contigo 😊 lista para ayudarte." 
       ]),
 
   STACK: (ctx) =>
       pickNonRepeated(ctx, "STACK", [
         "Sí 😊 Jorge es Full Stack, le gusta trabajar tanto en frontend como en backend.",
-      
       ]),
 
     PROFILE: (ctx) =>
       pickNonRepeated(ctx, "PROFILE", [
         `${PROFILE.name} es ${PROFILE.role}. ${PROFILE.description}`,
         `Jorge es ${PROFILE.role} 😊 ${PROFILE.description}`,
-        
       ]),
 
     EDUCATION: (ctx) =>
@@ -296,8 +283,7 @@ function getSmartResponse(message, context) {
     PROJECTS: (ctx) =>
       pickNonRepeated(ctx, "PROJECTS", [
         `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-        `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
-        
+        `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`, 
       ]),
 
     MOTIVATION: (ctx) =>
@@ -501,8 +487,7 @@ const isAboutOwner = (text) => {
   ========================= */
 let intent = detectIntent(text);
 
-// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-// priorizar la intención técnica/sensible sobre PROFILE
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica
 const normalizedText = text.toLowerCase();
 if (normalizedText.includes("jorge")) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
