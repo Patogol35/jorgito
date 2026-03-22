@@ -41,40 +41,6 @@ export function getSmartResponse(message, context) {
   }
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
-  /* =========================
-🔥 PRIORIDAD MÁXIMA: FOLLOW UP RESPUESTA
-========================= */
-if (ctx.awaitingFollowUp) {
-  const isYes = YES_WORDS.some(word => text.includes(word));
-  const isNo = NO_WORDS.some(word => text.includes(word));
-  const isThanks = text.includes("gracias");
-
-  if (isYes) {
-    const intent = ctx.awaitingFollowUp;
-    ctx.awaitingFollowUp = null;
-
-    const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-    };
-
-    return {
-      text: isThanks
-        ? `Perfecto 😊 ${chainReplies[intent]} ¡Gracias a ti! 🙌`
-        : chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
-  }
-
-  if (isNo) {
-    ctx.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-}
 
   /* =========================
   🟢 SALUDO CORRECTO
@@ -129,21 +95,21 @@ if (niceToMeetMatch) {
     /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
   );
 
-  if (thanksMatch && !ctx.awaitingFollowUp) {
-  const name = normalize(thanksMatch[2]?.trim() || "");
+  if (thanksMatch) {
+    const name = normalize(thanksMatch[2]?.trim() || "");
 
-  if (!name || name === BOT_NAME) {
+    if (!name || name === BOT_NAME) {
+      return {
+        text: replies.GRA(ctx),
+        intent: "GRA",
+      };
+    }
+
     return {
-      text: replies.GRA(ctx),
-      intent: "GRA",
-    };
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
-
-  return {
-    text: replies.UNKNOWN(ctx),
-    intent: "UNKNOWN",
-  };
-}
 
   /* =========================
   🟢 ESTADO DE ÁNIMO
@@ -239,6 +205,37 @@ if (niceToMeetMatch) {
         intent: "CONTACT_CANCEL",
       };
     }
+  }
+
+  /* =========================
+  FOLLOW UPS
+  ========================= */
+  if (ctx.awaitingFollowUp) {
+    if (YES_WORDS.some((word) => text.includes(word))) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+
+    if (NO_WORDS.some((word) => text.includes(word))) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+
+    ctx.awaitingFollowUp = null;
   }
 
   /* =========================
