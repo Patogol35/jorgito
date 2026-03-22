@@ -184,59 +184,73 @@ if (niceToMeetMatch) {
     };
   }
 
-  /* =========================
-  🔵 CONFIRMACIÓN WHATSAPP
-  ========================= */
-  if (ctx.awaiting === "CONTACT_CONFIRM") {
-    if (YES_WORDS.includes(text)) {
-      ctx.awaiting = null;
-      window.open(WHATSAPP_URL, "_blank");
+/* =========================
+🔵 CONFIRMACIÓN WHATSAPP
+========================= */
+if (ctx.awaiting === "CONTACT_CONFIRM") {
+  const cleanText = text; // ya viene normalizado
 
-      return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-        intent: "CONTACT_OPENED",
-      };
-    }
+  if (YES_WORDS.includes(cleanText)) {
+    ctx.awaiting = null;
+    window.open(WHATSAPP_URL, "_blank");
 
-    if (NO_WORDS.includes(text)) {
-      ctx.awaiting = null;
-      return {
-        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-        intent: "CONTACT_CANCEL",
-      };
-    }
+    return {
+      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+      intent: "CONTACT_OPENED",
+    };
   }
 
+  if (NO_WORDS.includes(cleanText)) {
+    ctx.awaiting = null;
+    return {
+      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+      intent: "CONTACT_CANCEL",
+    };
+  }
+
+  // 🔴 Si escribe algo como "si juan" → ignorar confirmación
+  return {
+    text: "Por favor responde solo con 'sí' u 'ok' 😊",
+    intent: "CONFIRMATION_REQUIRED",
+  };
+}
+
   /* =========================
-  FOLLOW UPS
-  ========================= */
-  if (ctx.awaitingFollowUp) {
-    if (YES_WORDS.some((word) => text.includes(word))) {
-      const intent = ctx.awaitingFollowUp;
-      ctx.awaitingFollowUp = null;
+FOLLOW UPS
+========================= */
+if (ctx.awaitingFollowUp) {
+  const cleanText = text;
 
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-      };
-
-      return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-
-    if (NO_WORDS.some((word) => text.includes(word))) {
-      ctx.awaitingFollowUp = null;
-      return {
-        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-      };
-    }
-
+  if (YES_WORDS.includes(cleanText)) {
+    const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
+
+    const chainReplies = {
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
+
+    return {
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
   }
+
+  if (NO_WORDS.includes(cleanText)) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  // 🔴 Bloquea respuestas como "si juan"
+  return {
+    text: "Respóndeme solo con 'sí' u 'ok' 😊",
+    intent: "FOLLOWUP_CONFIRM_REQUIRED",
+  };
+}
 
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
