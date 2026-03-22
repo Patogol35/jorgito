@@ -145,21 +145,21 @@ if (niceToMeetMatch) {
     /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
   );
 
-  if (thanksMatch) {
-    const name = normalize(thanksMatch[2]?.trim() || "");
+  if (thanksMatch && !ctx.awaitingFollowUp) {
+  const name = normalize(thanksMatch[2]?.trim() || "");
 
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.GRA(ctx),
-        intent: "GRA",
-      };
-    }
-
+  if (!name || name === BOT_NAME) {
     return {
-  text: replies.UNKNOWN(ctx),
-  intent: "UNKNOWN",
-};
+      text: replies.GRA(ctx),
+      intent: "GRA",
+    };
   }
+
+  return {
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
+  };
+}
 
   /* =========================
   🟢 ESTADO DE ÁNIMO
