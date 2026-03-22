@@ -18,15 +18,7 @@ export function getSmartResponse(message, context) {
   const text = normalize(message);
 
   // 🔑 Clonar contexto para evitar mutaciones
-  const ctx = {
-    ...context,
-    memory: context.memory ? [...context.memory] : [],
-    usedReplies: context.usedReplies
-      ? Object.fromEntries(
-          Object.entries(context.usedReplies).map(([k, v]) => [k, [...v]])
-        )
-      : {},
-  };
+  const ctx = context;
 
   // 🔑 Constantes al inicio
   const BOT_NAME = "sasha";
