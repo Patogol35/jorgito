@@ -215,13 +215,21 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
   };
 }
 
-  /* =========================
-FOLLOW UPS
-========================= */
+
+  
+  
 if (ctx.awaitingFollowUp) {
   const cleanText = text;
 
-  if (YES_WORDS.includes(cleanText)) {
+  const isValidYes =
+    YES_WORDS.includes(cleanText) &&
+    cleanText.split(" ").length === 1;
+
+  const isValidNo =
+    NO_WORDS.includes(cleanText) &&
+    cleanText.split(" ").length === 1;
+
+  if (isValidYes) {
     const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
 
@@ -238,20 +246,18 @@ if (ctx.awaitingFollowUp) {
     };
   }
 
-  if (NO_WORDS.includes(cleanText)) {
+  if (isValidNo) {
     ctx.awaitingFollowUp = null;
     return {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
     };
   }
 
-  // 🔴 Bloquea respuestas como "si juan"
   return {
     text: "Respóndeme solo con 'sí' u 'ok' 😊",
     intent: "FOLLOWUP_CONFIRM_REQUIRED",
   };
 }
-
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
