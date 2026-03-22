@@ -211,7 +211,7 @@ if (niceToMeetMatch) {
   FOLLOW UPS
   ========================= */
   if (ctx.awaitingFollowUp) {
-    if (YES_WORDS.some((word) => text.includes(word)) || /^(ok|okay|claro|dale|perfecto|obvio|listo|va|de una)(\s+gracias)?$/i.test(text)) {
+    if (YES_WORDS.some((word) => text.includes(word))) {
       const intent = ctx.awaitingFollowUp;
       ctx.awaitingFollowUp = null;
 
