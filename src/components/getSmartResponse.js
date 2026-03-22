@@ -33,12 +33,29 @@ export function getSmartResponse(message, context) {
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
   // se cancela el follow-up y se responde normalmente
-  if (ctx.awaitingFollowUp) {
-    const directIntent = detectIntent(message);
-    if (directIntent !== "UNKNOWN") {
-      ctx.awaitingFollowUp = null;
-    }
+// 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta real,
+// se cancela el follow-up y se responde normalmente
+if (ctx.awaitingFollowUp) {
+  const directIntent = detectIntent(message);
+
+  const isYesReply =
+    YES_WORDS.includes(text) || /^(si|sí)(\s+gracias)?$/i.test(text);
+
+  const isNoReply =
+    NO_WORDS.includes(text) || /^(no)(\s+gracias)?$/i.test(text);
+
+  const isPureThanks =
+    /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
+
+  if (
+    directIntent !== "UNKNOWN" &&
+    !isYesReply &&
+    !isNoReply &&
+    !isPureThanks
+  ) {
+    ctx.awaitingFollowUp = null;
   }
+}
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
 
@@ -88,17 +105,7 @@ if (niceToMeetMatch) {
   };
 }
 
-  /* =========================
-🟢 GRACIAS CONTROLADO
-========================= */
-const isPureThanks = /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
-
-if (isPureThanks) {
-  return {
-    text: replies.GRA(ctx),
-    intent: "GRA",
-  };
-}
+  
 
   /* =========================
   🟢 ESTADO DE ÁNIMO
@@ -231,6 +238,18 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
+
+  /* =========================
+🟢 GRACIAS CONTROLADO
+========================= */
+const isPureThanks = /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
+
+if (isPureThanks) {
+  return {
+    text: replies.GRA(ctx),
+    intent: "GRA",
+  };
+}
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
