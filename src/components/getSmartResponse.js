@@ -206,10 +206,11 @@ if (niceToMeetMatch) {
   /* ========================= FOLLOW UPS ========================= */
 if (ctx.awaitingFollowUp) {
   const isYesReply =
-    YES_WORDS.includes(text) || /^(si|sí)(\s+gracias)?$/i.test(text);
+
+    YES_WORDS.includes(text) || /^(si|sí|ok|okay|claro|dale|perfecto|obvio)(\s+gracias)?$/i.test(text);
 
   const isNoReply =
-    NO_WORDS.includes(text) || /^(no)(\s+gracias)?$/i.test(text);
+    NO_WORDS.includes(text) || /^(no|nop|ahorita no)(\s+gracias)?$/i.test(text);
 
   if (isYesReply) {
     const intent = ctx.awaitingFollowUp;
