@@ -18,7 +18,15 @@ export function getSmartResponse(message, context) {
   const text = normalize(message);
 
   // 🔑 Clonar contexto para evitar mutaciones
-  const ctx = context;
+  const ctx = {
+    ...context,
+    memory: context.memory ? [...context.memory] : [],
+    usedReplies: context.usedReplies
+      ? Object.fromEntries(
+          Object.entries(context.usedReplies).map(([k, v]) => [k, [...v]])
+        )
+      : {},
+  };
 
   // 🔑 Constantes al inicio
   const BOT_NAME = "sasha";
@@ -199,7 +207,7 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
   }
 }
 
-  /* =========================
+/* =========================
 FOLLOW UPS
 ========================= */
 if (ctx.awaitingFollowUp) {
@@ -207,17 +215,20 @@ if (ctx.awaitingFollowUp) {
     const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
 
+    // 🔥 Usar el MISMO sistema de replies (no texto fijo)
     const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      PROFILE: () => replies.EXPERIENCE(ctx),
+      EXPERIENCE: () => replies.SKILLS(ctx),
+      SKILLS: () => replies.PROJECTS(ctx),
     };
 
-    return {
-      text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
+    if (chainReplies[intent]) {
+      return {
+        text: chainReplies[intent](),
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
   }
 
   if (NO_WORDS.includes(text)) {
@@ -227,6 +238,7 @@ if (ctx.awaitingFollowUp) {
     };
   }
 
+  // Si responde otra cosa, se cancela el follow-up
   ctx.awaitingFollowUp = null;
 }
 
