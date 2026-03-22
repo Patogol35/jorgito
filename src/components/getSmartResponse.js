@@ -89,27 +89,16 @@ if (niceToMeetMatch) {
 }
 
   /* =========================
-  🟢 GRACIAS CONTROLADO
-  ========================= */
-  const thanksMatch = text.match(
-    /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
-  );
+🟢 GRACIAS CONTROLADO
+========================= */
+const isPureThanks = /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
 
-  if (thanksMatch) {
-    const name = normalize(thanksMatch[2]?.trim() || "");
-
-    if (!name || name === BOT_NAME) {
-      return {
-        text: replies.GRA(ctx),
-        intent: "GRA",
-      };
-    }
-
-    return {
-  text: replies.UNKNOWN(ctx),
-  intent: "UNKNOWN",
-};
-  }
+if (isPureThanks) {
+  return {
+    text: replies.GRA(ctx),
+    intent: "GRA",
+  };
+}
 
   /* =========================
   🟢 ESTADO DE ÁNIMO
@@ -207,36 +196,40 @@ if (niceToMeetMatch) {
     }
   }
 
-  /* =========================
-  FOLLOW UPS
-  ========================= */
-  if (ctx.awaitingFollowUp) {
-    if (YES_WORDS.some((word) => text.includes(word))) {
-      const intent = ctx.awaitingFollowUp;
-      ctx.awaitingFollowUp = null;
+  /* ========================= FOLLOW UPS ========================= */
+if (ctx.awaitingFollowUp) {
+  const isYesReply =
+    YES_WORDS.includes(text) || /^(si|sí)(\s+gracias)?$/i.test(text);
 
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-      };
+  const isNoReply =
+    NO_WORDS.includes(text) || /^(no)(\s+gracias)?$/i.test(text);
 
-      return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-
-    if (NO_WORDS.some((word) => text.includes(word))) {
-      ctx.awaitingFollowUp = null;
-      return {
-        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-      };
-    }
-
+  if (isYesReply) {
+    const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
+
+    const chainReplies = {
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
+
+    return {
+      text: chainReplies[intent],
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
   }
+
+  if (isNoReply) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  ctx.awaitingFollowUp = null;
+}
 
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
