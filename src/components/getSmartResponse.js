@@ -42,36 +42,55 @@ export function getSmartResponse(message, context) {
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
     /* =========================
-  FOLLOW UPS
-  ========================= */
-  if (ctx.awaitingFollowUp) {
-    if (YES_WORDS.some((word) => text.includes(word))) {
-      const intent = ctx.awaitingFollowUp;
-      ctx.awaitingFollowUp = null;
+FOLLOW UPS
+========================= */
+if (ctx.awaitingFollowUp) {
+  const isYes = YES_WORDS.some((word) => text.includes(word));
+  const isNo = NO_WORDS.some((word) => text.includes(word));
+  const isThanks = text.includes("gracias");
 
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-      };
-
-      return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-
-    if (NO_WORDS.some((word) => text.includes(word))) {
-      ctx.awaitingFollowUp = null;
-      return {
-        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-      };
-    }
-
+  // 👉 RESPUESTA AFIRMATIVA (sí, ok, dale, etc.)
+  if (isYes) {
+    const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
+
+    const chainReplies = {
+      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+    };
+
+    const reply = chainReplies[intent];
+
+    return {
+      text: isThanks
+        ? `Perfecto 😊 ${reply} ¡Gracias a ti! 🙌`
+        : reply,
+      intent: intent === "SKILLS" ? "PROJECTS" : intent,
+      fromFollowUp: true,
+    };
   }
-  
+
+  // 👉 RESPUESTA NEGATIVA
+  if (isNo) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  // 👉 SI SOLO DICE "GRACIAS" (sin sí)
+  if (isThanks) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Para eso estoy 😊",
+      intent: "GRA",
+    };
+  }
+
+  // 👉 CUALQUIER OTRA COSA
+  ctx.awaitingFollowUp = null;
+}
 
   /* =========================
   🟢 SALUDO CORRECTO
