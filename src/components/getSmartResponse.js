@@ -41,6 +41,37 @@ export function getSmartResponse(message, context) {
   }
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
+    /* =========================
+  FOLLOW UPS
+  ========================= */
+  if (ctx.awaitingFollowUp) {
+    if (YES_WORDS.some((word) => text.includes(word))) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
+
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+
+    if (NO_WORDS.some((word) => text.includes(word))) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+
+    ctx.awaitingFollowUp = null;
+  }
+  
 
   /* =========================
   🟢 SALUDO CORRECTO
@@ -205,37 +236,6 @@ if (niceToMeetMatch) {
         intent: "CONTACT_CANCEL",
       };
     }
-  }
-
-  /* =========================
-  FOLLOW UPS
-  ========================= */
-  if (ctx.awaitingFollowUp) {
-    if (YES_WORDS.some((word) => text.includes(word))) {
-      const intent = ctx.awaitingFollowUp;
-      ctx.awaitingFollowUp = null;
-
-      const chainReplies = {
-        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-      };
-
-      return {
-        text: chainReplies[intent],
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-
-    if (NO_WORDS.some((word) => text.includes(word))) {
-      ctx.awaitingFollowUp = null;
-      return {
-        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-      };
-    }
-
-    ctx.awaitingFollowUp = null;
   }
 
   /* =========================
