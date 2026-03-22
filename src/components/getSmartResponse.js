@@ -33,29 +33,12 @@ export function getSmartResponse(message, context) {
 
   // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
   // se cancela el follow-up y se responde normalmente
-// 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta real,
-// se cancela el follow-up y se responde normalmente
-if (ctx.awaitingFollowUp) {
-  const directIntent = detectIntent(message);
-
-  const isYesReply =
-    YES_WORDS.includes(text) || /^(si|sí)(\s+gracias)?$/i.test(text);
-
-  const isNoReply =
-    NO_WORDS.includes(text) || /^(no)(\s+gracias)?$/i.test(text);
-
-  const isPureThanks =
-    /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
-
-  if (
-    directIntent !== "UNKNOWN" &&
-    !isYesReply &&
-    !isNoReply &&
-    !isPureThanks
-  ) {
-    ctx.awaitingFollowUp = null;
+  if (ctx.awaitingFollowUp) {
+    const directIntent = detectIntent(message);
+    if (directIntent !== "UNKNOWN") {
+      ctx.awaitingFollowUp = null;
+    }
   }
-}
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
 
@@ -105,7 +88,28 @@ if (niceToMeetMatch) {
   };
 }
 
-  
+  /* =========================
+  🟢 GRACIAS CONTROLADO
+  ========================= */
+  const thanksMatch = text.match(
+    /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+  );
+
+  if (thanksMatch) {
+    const name = normalize(thanksMatch[2]?.trim() || "");
+
+    if (!name || name === BOT_NAME) {
+      return {
+        text: replies.GRA(ctx),
+        intent: "GRA",
+      };
+    }
+
+    return {
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
+  }
 
   /* =========================
   🟢 ESTADO DE ÁNIMO
@@ -203,54 +207,37 @@ if (niceToMeetMatch) {
     }
   }
 
-  /* ========================= FOLLOW UPS ========================= */
-if (ctx.awaitingFollowUp) {
-  const isYesReply =
-
-    YES_WORDS.includes(text) || /^(si|sí|ok|okay|claro|dale|perfecto|obvio)(\s+gracias)?$/i.test(text);
-
-  const isNoReply =
-    NO_WORDS.includes(text) || /^(no|nop|ahorita no)(\s+gracias)?$/i.test(text);
-
-  if (isYesReply) {
-    const intent = ctx.awaitingFollowUp;
-    ctx.awaitingFollowUp = null;
-
-    const chainReplies = {
-      PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
-      EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
-      SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
-    };
-
-    return {
-      text: chainReplies[intent],
-      intent: intent === "SKILLS" ? "PROJECTS" : intent,
-      fromFollowUp: true,
-    };
-  }
-
-  if (isNoReply) {
-    ctx.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-
-  ctx.awaitingFollowUp = null;
-}
-
-
   /* =========================
-🟢 GRACIAS CONTROLADO
-========================= */
-const isPureThanks = /^(gracias|muchas gracias|gracias sasha|muchas gracias sasha)$/i.test(text);
+  FOLLOW UPS
+  ========================= */
+  if (ctx.awaitingFollowUp) {
+    if (YES_WORDS.some((word) => text.includes(word)) || /^(ok|okay|claro|dale|perfecto|obvio|listo|va|de una)(\s+gracias)?$/i.test(text)) {
+      const intent = ctx.awaitingFollowUp;
+      ctx.awaitingFollowUp = null;
 
-if (isPureThanks) {
-  return {
-    text: replies.GRA(ctx),
-    intent: "GRA",
-  };
-}
+      const chainReplies = {
+        PROFILE: `Tiene experiencia como ${PROFILE.experience.join(", ")}.`,
+        EXPERIENCE: `Trabaja con tecnologías como ${PROFILE.stack.join(", ")}.`,
+        SKILLS: `Estas tecnologías aplican en ${PROFILE.projects.join(", ")}.`,
+      };
+
+      return {
+        text: chainReplies[intent],
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+
+    if (NO_WORDS.some((word) => text.includes(word))) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+      };
+    }
+
+    ctx.awaitingFollowUp = null;
+  }
+
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
