@@ -88,7 +88,6 @@ export const SUGGESTIONS = [
   "¿Cómo puedo contactar a Jorge?",
   "¿Quién te creó?",
   "Sus libros favoritos?",
-  "¿Qué herramientas técnicas domina?",
 ];
 
 /* =========================
