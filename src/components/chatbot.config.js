@@ -185,7 +185,8 @@ export const detectIntent = (msg) => {
   for (const intent in INTENTS) {
     let score = 0;
     for (const word of INTENTS[intent]) {
-      if (text.includes(normalize(word))) {
+      const words = text.split(" ");
+if (words.includes(normalize(word))) {
         score += word.length > 4 ? 2 : 1;
       }
     }
