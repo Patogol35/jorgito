@@ -201,7 +201,8 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
         "Me llamo Sasha ☺️ y fui creada por Jorge para ayudarte.",
         "Jorge me diseñó para ayudarte 😊",
         "Fui creada como asistente virtual de Jorge ☺️",
-        "Mi propósito es apoyar el perfil de Jorge 💕",
+          "Formo parte de los proyectos de Jorge 😊, él me creó para ayudarte y mostrar su trabajo.",
+"Jorge me creó con mucha dedicación y cariño 💕 para brindarte la mejor experiencia posible.",
       ]),
 
     STACK: (ctx) =>
