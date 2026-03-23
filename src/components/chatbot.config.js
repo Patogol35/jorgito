@@ -179,21 +179,37 @@ DETECT INTENT
 ========================= */
 export const detectIntent = (msg) => {
   const text = normalize(msg);
+  const words = text.split(" ");
+
   let best = "UNKNOWN";
   let max = 0;
 
   for (const intent in INTENTS) {
     let score = 0;
+
     for (const word of INTENTS[intent]) {
-      if (text.includes(normalize(word))) {
-        score += word.length > 4 ? 2 : 1;
+      const w = normalize(word);
+
+      // 👉 si es frase (tiene espacio)
+      if (w.includes(" ")) {
+        if (text.includes(w)) {
+          score += 2;
+        }
+      } 
+      // 👉 si es palabra
+      else {
+        if (words.includes(w)) {
+          score += 1;
+        }
       }
     }
+
     if (score > max) {
       max = score;
       best = intent;
     }
   }
+
   return max ? best : "UNKNOWN";
 };
 
