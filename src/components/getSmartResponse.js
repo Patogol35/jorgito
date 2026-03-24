@@ -242,6 +242,38 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
+
+  
+/* =========================
+🔴 BLOQUEO DE NOMBRES AJENOS
+========================= */
+const validNames = ["jorge", "patricio", "jorge patricio"];
+
+const nameMatch = text.match(
+  /(de|sobre|a)\s+([a-zA-Záéíóúñ]+)/i
+);
+
+if (nameMatch) {
+  const detectedName = normalize(nameMatch[2]);
+
+  if (
+    detectedName &&
+    !validNames.some(
+      name =>
+        detectedName.includes(name) ||
+        name.includes(detectedName)
+    )
+  ) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
+}
+
+
+  
+
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
