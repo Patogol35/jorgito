@@ -219,7 +219,7 @@ export const followUp = (intent) =>
   ({
     PROFILE: "¿Quieres conocer su experiencia profesional?\n👉 Responde \"si\" u \"ok\"",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?\n👉 Responde \"si\" u \"ok\"",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?\n👉 Responde \"si\" u \"ok\"",
+    SKILLS: "¿Quieres conocer los proyectos en los que ha trabajado Jorge?\n👉 Responde \"si\" u \"ok\"",
     PROJECTS: null,
   }[intent] || null);
 
