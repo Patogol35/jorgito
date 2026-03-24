@@ -256,14 +256,14 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
       ]),
 
     PROJECTS: (ctx) =>
-      pickNonRepeated(ctx, "PROJECTS", [
-        `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
-        `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
-        `Jorge Desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
-        "Jorge ha creado proyectos funcionales y modernos 😊",
-        "Jorge participa activamente en el desarrollo de aplicaciones ☺️",
-        "Sus proyectos reflejan su experiencia 💕",
-      ]),
+  pickNonRepeated(ctx, "PROJECTS", [
+    `Jorge ha trabajado en ${PROFILE.projects.join(", ")} 😊`,
+    `Jorge participa en proyectos como ${PROFILE.projects.join(", ")} ☺️`,
+    `Jorge desarrolla proyectos relacionados con ${PROFILE.projects.join(", ")} 💻`,
+    `Entre los proyectos de Jorge se encuentran ${PROFILE.projects.join(", ")} 🚀`,
+    `Jorge cuenta con experiencia en proyectos como ${PROFILE.projects.join(", ")} 👨‍💻`,
+    `Algunos de los proyectos en los que Jorge ha trabajado son ${PROFILE.projects.join(", ")} 🔧`,
+  ]),
 
     MOTIVATION: (ctx) =>
       pickNonRepeated(ctx, "MOTIVATION", [
