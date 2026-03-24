@@ -245,16 +245,15 @@ if (ctx.awaitingFollowUp) {
 
   
 /* =========================
-🔴 BLOQUEO DE NOMBRES AJENOS
+🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
 ========================= */
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-const nameMatch = text.match(
-  /(de|sobre|a)\s+([a-zA-Záéíóúñ]+)/i
-);
+// Buscar específicamente "de + nombre" al FINAL
+const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
 
 if (nameMatch) {
-  const detectedName = normalize(nameMatch[2]);
+  const detectedName = normalize(nameMatch[1]);
 
   if (
     detectedName &&
