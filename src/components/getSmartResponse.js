@@ -264,7 +264,7 @@ if (nameMatch) {
     )
   ) {
     return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      text: replies.UNKNOWN(ctx),
       intent: "UNKNOWN",
     };
   }
