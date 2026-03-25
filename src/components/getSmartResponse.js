@@ -305,19 +305,8 @@ const normalizedText = text
   ];
 
   // 🔹 Keywords sensibles
-  const sensitiveKeywords = [
-    "tecnologia","tecnologias","tecnologías",
-    "experiencia","estudios","perfil","contratar",
-    "proyectos","stack","habilidades","lenguajes",
-    "quien es","quién es","formacion","formación",
-    "educacion","educación","máster","master",
-    "libros","libro","full stack","desarrollador",
-    "ingeniero","full","contactar","contacto","whatsapp"
-  ];
-
-  const hasSensitive = sensitiveKeywords.some(kw =>
-    normalizedText.includes(kw)
-  );
+  const hasSensitive =
+  /tecnolog|experien|estudi|formacion|educacion|master|universidad|proyecto|habilidad|stack|contact|libro|desarrollador|ingeniero|contratar/.test(normalizedText);
 
   // 🟢 Detectar si menciona tu nombre
   const hasOwnerName = validNames.some(name =>
