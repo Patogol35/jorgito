@@ -345,26 +345,26 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
+// 🧠 LÓGICA FINAL (FIX PRO)
+// =========================
 
-  // 🔴 Detectar si hablan de OTRA persona (estructura)
-const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
-
-// 🔴 Detectar nombre al final tipo "tecnologias luis"
-const lastWord = words[words.length - 1];
-
-const isOtherNameAtEnd =
-  commonNames.includes(lastWord) &&
-  !validNames.includes(lastWord);
+// 🔴 Detectar si hay OTRO nombre en cualquier parte
+const hasOtherName = words.some(word =>
+  commonNames.includes(word) && !validNames.includes(word)
+);
 
 // 🟢 Si menciona tu nombre → permitir
 if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
-if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
+// 🔴 Si hay OTRO nombre + pregunta sensible → bloquear
+if (hasOtherName && hasSensitive) {
+  return false;
+}
+
+// 🟡 OPCIONAL (RECOMENDADO): bloquear nombres raros tipo "ghgh"
+if (hasWeirdName && hasSensitive) {
   return false;
 }
 
