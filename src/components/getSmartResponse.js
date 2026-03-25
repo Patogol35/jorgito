@@ -302,15 +302,6 @@ const isAboutOwner = (text) => {
     "ingeniero", "stack","full","contactar", "contacto","whatsapp"
   ];
 
-  const hasUnknownName = words.some(word =>
-  !validNames.includes(word) &&
-  !commonNames.includes(word) &&
-  !sensitiveKeywords.includes(word) && // 🔥 importante
-  word.length > 3
-);
-
-  
-
   const hasSensitive = sensitiveKeywords.some(kw =>
     normalizedText.includes(kw)
   );
@@ -343,23 +334,18 @@ const isAboutOwner = (text) => {
   ];
 
   // 🟢 Si menciona a Jorge → permitir todo
-if (hasOwnerName) {
-  return true;
-}
+  if (hasOwnerName) {
+    return true;
+  }
 
-// 🔴 Si hay nombre desconocido en contexto sensible → bloquear
-if (hasUnknownName && hasSensitive) {
-  return false;
-}
-
-// 🔴 Si hay otro nombre → bloquear
-if (hasOtherName) {
-  return false;
-}
+  // 🔴 Si hay otro nombre → bloquear
+  if (hasOtherName) {
+    return false;
+  }
 
   // 🟢 Si no es sensible → permitir
-  if (!hasSensitive && !hasOtherName) {
-  return true;
+  if (!hasSensitive) {
+    return true;
   }
 
   // 🟡 Frases válidas sin nombre
@@ -370,7 +356,7 @@ if (hasOtherName) {
   }
 
   // 🟢 Permitir si es una sola palabra
-if (words.length === 1 && !hasOtherName) {
+if (words.length === 1) {
   return true;
 }
 
@@ -389,7 +375,7 @@ const isImplicitQuestion = implicitOwnerQuestions.some(word =>
   normalizedText.includes(word)
 );
 
-if (isImplicitQuestion && !hasOtherName) {
+if (isImplicitQuestion) {
   return true;
 }
 
