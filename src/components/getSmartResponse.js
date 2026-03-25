@@ -263,10 +263,14 @@ const isAboutOwner = (text) => {
   "quiero","necesito","podrias","podrías","me","puedes",
   "puede","explicame","explícame","informacion","información",
 
-  // 🔥 NUEVO (IMPORTANTE)
+  // 🔥 preguntas
   "que","qué","cual","cuál","como","cómo",
   "donde","dónde","cuando","cuándo",
-  "quien","quién","por","para"
+  "quien","quién","por","para",
+
+  // 🔥 pronombres (CLAVE)
+  "su","sus","mi","mis","tu","tus",
+  "nuestro","nuestra","nuestros","nuestras"
 ];
 
   // 🔹 Nombres comunes
