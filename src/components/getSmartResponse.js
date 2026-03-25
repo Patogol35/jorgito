@@ -243,15 +243,41 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO
 ========================= */
 const isAboutOwner = (text) => {
-  const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  if (validNames.some(name => normalizedText.includes(name))) {
-    return true;
-  }
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
+
+  // 🔹 Lista de nombres comunes (puedes ampliarla)
+  const commonNames = [
+    "luis", "carlos", "ana", "maria", "jose", "juan",
+    "andres", "diego", "sofia", "valentina", "daniel",
+    "camila", "miguel", "fernando", "alex", "pedro",
+    "alejandro", "manuel", "david", "sergio", "rafael",
+    "adrian", "ricardo", "marcos", "oscar", "alberto",
+    "roberto", "ivan", "hugo", "enrique", "samuel",
+    "emilio", "gabriel", "esteban", "victor", "martin",
+    "ignacio", "julio", "cesar", "tomas", "felipe",
+    "cristian", "edgar", "ramon", "armando",
+    "laura", "paula", "andrea", "elena", "lucia",
+    "isabella", "martina", "daniela", "gabriela",
+    "adriana", "carolina", "patricia", "veronica",
+    "alejandra", "rosa", "carmen", "silvia",
+    "beatriz", "raquel", "noelia", "natalia",
+    "claudia", "monica", "diana", "pilar"
+  ];
+
+  const hasOwnerName = validNames.some(name =>
+    normalizedText.includes(name)
+  );
+
+  const hasOtherName = words.some(word =>
+    commonNames.includes(word) && !validNames.includes(word)
+  );
 
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
@@ -263,15 +289,10 @@ const isAboutOwner = (text) => {
     "ingeniero", "stack","full","contactar", "contacto","whatsapp"
   ];
 
-  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
-  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
-  const wordCount = words.length;
+  const hasSensitive = sensitiveKeywords.some(kw =>
+    normalizedText.includes(kw)
+  );
 
-  if (!hasSensitive) {
-    return true;
-  }
-
-  // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
     "full stack",
     "libros favoritos",
@@ -294,30 +315,39 @@ const isAboutOwner = (text) => {
     "sus libros",
     "estudios tiene",
     "experiencia tiene",
-    "tecnologías trabaja",
     "proyectos ha hecho",
     "cuéntame sobre",
     "cuentame sobre"
   ];
 
-  // 🔥 NUEVA PROTECCIÓN
-  const hasOtherName = /\b(?!jorge\b|patricio\b)[a-záéíóúñ]{3,}\b/i.test(normalizedText);
-
-  if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
-    // ❌ Si hay otro nombre → bloquear
-    if (hasOtherName) {
-      return false;
-    }
-
+  // 🟢 Si menciona a Jorge → permitir todo
+  if (hasOwnerName) {
     return true;
   }
 
-  // Permitir si es 1 palabra
-  if (wordCount === 1) {
+  // 🔴 Si hay otro nombre → bloquear
+  if (hasOtherName) {
+    return false;
+  }
+
+  // 🟢 Si no es sensible → permitir
+  if (!hasSensitive) {
     return true;
   }
 
-  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
+  // 🟡 Frases válidas sin nombre
+  if (validMultiWord.some(phrase =>
+    normalizedText.includes(phrase)
+  )) {
+    return true;
+  }
+
+  // 🟢 Permitir si es una sola palabra
+  if (words.length === 1) {
+    return true;
+  }
+
+  // 🔴 Bloquear todo lo demás
   return false;
 };
 
