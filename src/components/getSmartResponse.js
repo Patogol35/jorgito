@@ -337,18 +337,24 @@ const normalizedText = text
 // 🔴 Detectar estructuras tipo: de alguien, para alguien, sobre alguien
 const isAskingAboutOtherPerson = /\b(de|del|para|sobre|acerca de)\s+([a-z]+)/.test(normalizedText);
 
+// 🔥 Separar keywords en palabras individuales
+const keywordWords = sensitiveKeywords
+  .map(k => k.split(" "))
+  .flat()
+  .map(w => w.toLowerCase());
+
 // 🔤 Palabras válidas del sistema (NO nombres)
 const safeWords = [
   ...stopWords,
   ...intentWords,
   ...validNames,
-  ...sensitiveKeywords.map(k => k.split(" ")).flat()
+  ...keywordWords
 ];
 
 // 🔴 Detectar posibles nombres en cualquier parte
 const possibleNames = words.filter(word => {
   return (
-    word.length > 2 &&
+    word.length > 3 && // 🔥 CAMBIO CLAVE
     !safeWords.includes(word)
   );
 });
