@@ -427,10 +427,7 @@ saveMemory(ctx, { user: text, intent });
       /* =========================
 🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
 ========================= */
-if (
-  intent === "CONTACT" &&
-  (text.includes("contact") || text.includes("whatsapp"))
-) {
+if (intent === "CONTACT") {
   const normalizedText = text.toLowerCase();
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
