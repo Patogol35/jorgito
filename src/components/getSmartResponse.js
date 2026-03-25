@@ -245,37 +245,34 @@ if (ctx.awaitingFollowUp) {
 
   
 /* =========================
-🔴 BLOQUEO DE NOMBRES AJENOS (MEJORADO PRO)
+🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
 ========================= */
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// 🔥 Palabras que NO son nombres (para evitar falsos positivos)
-const ignoreWords = ["su", "sus", "el", "la", "los", "las"];
-
-const nameMatch = text.match(/\b(de|a|sobre)\s+([a-zA-Záéíóúñ]+)/i);
+// Buscar específicamente "de + nombre" al FINAL
+const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
 
 if (nameMatch) {
-  const detectedName = normalize(nameMatch[2]);
+  const detectedName = normalize(nameMatch[1]);
 
-  // ✅ Ignorar palabras vacías tipo "su", "la", etc.
-  if (!ignoreWords.includes(detectedName)) {
-    if (
-      detectedName &&
-      !validNames.some(
-        name =>
-          detectedName.includes(name) ||
-          name.includes(detectedName)
-      )
-    ) {
-      return {
-        text: replies.OUT_OF_SCOPE(ctx),
-        intent: "OUT_OF_SCOPE",
-      };
-    }
+  if (
+    detectedName &&
+    !validNames.some(
+      name =>
+        detectedName.includes(name) ||
+        name.includes(detectedName)
+    )
+  ) {
+    return {
+      text: replies.UNKNOWN(ctx),
+      intent: "UNKNOWN",
+    };
   }
 }
 
-/* =========================
+  
+
+  /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
 const isAboutOwner = (text) => {
@@ -352,72 +349,9 @@ const isAboutOwner = (text) => {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-  }
-
-
-
-  
-
-/* =========================
-🟢 DETECTAR INTENT (SOBRE JORGE)
-========================= */
-let intent = detectIntent(text);
-
-const normalizedText = text.toLowerCase();
-
-// 🧠 Detectar si menciona al dueño
-const isOwner =
-  normalizedText.includes("jorge patricio") ||
-  normalizedText.includes("jorge") ||
-  normalizedText.includes("patricio");
-
-// 🔥 FIX: si no hay intención pero sí nombre → PROFILE
-if (intent === "UNKNOWN" && isOwner) {
-  intent = "PROFILE";
 }
 
-// 🔁 Ajuste: priorizar intención técnica si menciona al dueño
-if (isOwner) {
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
-    intent = "CONTACT";
-  } else if (normalizedText.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (normalizedText.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (
-    normalizedText.includes("estudio") ||
-    normalizedText.includes("máster") ||
-    normalizedText.includes("formación")
-  ) {
-    intent = "EDUCATION";
-  } else if (normalizedText.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (normalizedText.includes("contratar")) {
-    intent = "MOTIVATION";
-  } else if (
-    normalizedText.includes("stack") ||
-    normalizedText.includes("full stack")
-  ) {
-    intent = "STACK";
-  } else if (
-    normalizedText.includes("libro") ||
-    normalizedText.includes("dan brown")
-  ) {
-    intent = "BOOK";
-  }
-  // Si no cumple nada → se respeta intent original
-}
-
-// 🔒 Validación final de despedida
-if (intent === "FAREWELL" && !isValidFarewell(text)) {
-  intent = "UNKNOWN";
-}
-
-// 💾 Guardar en memoria
-saveMemory(ctx, { user: text, intent });
-      /
-
-  /* =========================
+ /* =========================
   🟢 DETECTAR INTENT (SOBRE JORGE)
   ========================= */
 let intent = detectIntent(text);
@@ -451,6 +385,65 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
+      /* =========================
+🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
+========================= */
+if (intent === "CONTACT") {
+  const normalizedText = text.toLowerCase();
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  // 🔹 Generar mensaje dinámico
+  const contactMessage = replies.CONTACT(ctx);
+
+  // Si menciona tu nombre → permitir
+  if (validNames.some(name => normalizedText.includes(name))) {
+    ctx.awaiting = "CONTACT_CONFIRM";
+    return {
+      text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
+      action: "CONTACT_CONFIRM",
+      intent,
+    };
+  }
+
+  // Extraer posibles nombres después de "contactar"
+  let otherName = null;
+
+  const patterns = [
+    /contactar\s+a\s+(\w+)/i,
+    /contactar\s+(\w+)/i,
+    /contacto\s+de\s+(\w+)/i,
+    /contacto\s+(\w+)/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) {
+      otherName = normalize(match[1]);
+      break;
+    }
+  }
+
+  // Bloquear si no es Jorge
+  if (
+    otherName &&
+    !validNames.some(
+      name => otherName.includes(name) || name.includes(otherName)
+    )
+  ) {
+    return {
+      text: "Solo tengo información sobre Jorge Patricio 🙂",
+      intent: "UNKNOWN",
+    };
+  }
+
+  // Si no hay nombre → asumir que es sobre Jorge
+  ctx.awaiting = "CONTACT_CONFIRM";
+  return {
+    text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
+    action: "CONTACT_CONFIRM",
+    intent,
+  };
+                                     }
 
   // =========================
   // 🧠 RESPUESTA NORMAL
