@@ -427,23 +427,23 @@ if (intent === "UNKNOWN") {
 
 // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
 // priorizar la intención técnica/sensible sobre PROFILE
-const normalizedText = text.toLowerCase();
-if (normalizedText.includes("jorge")) {
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+const normalizedText2 = text.toLowerCase();
+if (normalizedText2.includes("jorge")) {
+  if (normalizedText2.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
-  } else if (normalizedText.includes("tecnolog")) {
+  } else if (normalizedText2.includes("tecnolog")) {
     intent = "SKILLS";
-  } else if (normalizedText.includes("experiencia")) {
+  } else if (normalizedText2.includes("experiencia")) {
     intent = "EXPERIENCE";
-  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
+  } else if (normalizedText2.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
     intent = "EDUCATION";
-  } else if (normalizedText.includes("proyecto")) {
+  } else if (normalizedText2.includes("proyecto")) {
     intent = "PROJECTS";
-  } else if (normalizedText.includes("contratar")) {
+  } else if (normalizedText2.includes("contratar")) {
     intent = "MOTIVATION";
-  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+  } else if (normalizedText2.includes("stack") || normalizedText.includes("full stack")) {
     intent = "STACK";
-  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+  } else if (normalizedText2.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
   // Si ninguna condición se cumple, se respeta la intención detectada originalmente
