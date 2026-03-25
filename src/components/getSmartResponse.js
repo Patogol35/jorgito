@@ -268,6 +268,7 @@ const isAboutOwner = (text) => {
     "hablame","háblame","cuentame","cuéntame","dime","decime",
     "quiero","necesito","podrias","podrías","me","puedes",
     "puede","explicame","explícame","informacion","información",
+    "trabaja","trabajar","tiene","usan","usa","maneja","utiliza","en",
 
     // preguntas
     "que","qué","cual","cuál","como","cómo",
@@ -365,8 +366,8 @@ const isAboutOwner = (text) => {
   }
 
   // 🟡 Bloquear SOLO si hay varios nombres raros (fix bug “donde estudio”)
-  if (hasWeirdName && hasSensitive) {
-    return false;
+  if (hasSensitive && (hasOtherName || (hasWeirdName && !hasOwnerName))) {
+  return false;
   }
 
   // 🟢 Todo lo demás → asumir Jorge
