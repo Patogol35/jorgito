@@ -392,7 +392,10 @@ if (!isAboutOwner(text)) {
 ========================= */
 let intent = detectIntent(text);
 
-const normalizedText = text.toLowerCase();
+const normalizedText = text
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
 
 // 🟢 Detectar si menciona tu nombre
 const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
