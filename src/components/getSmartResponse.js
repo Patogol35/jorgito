@@ -303,6 +303,15 @@ const isAboutOwner = (text) => {
 
     // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
+
+    "sus tecnologias",
+"sus tecnologías",
+"la tecnologia",
+"la tecnología",
+"habla de sus tecnologias",
+"habla de sus tecnologías",
+"hablame de sus tecnologias",
+"háblame de sus tecnologías",
     "su experiencia",
 "la experiencia",
 "habla de su experiencia",
