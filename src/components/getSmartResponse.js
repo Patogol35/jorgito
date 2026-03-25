@@ -363,9 +363,10 @@ const isAboutOwner = (text) => {
 ========================= */
 if (!isAboutOwner(text)) {
   return {
-    text: "Solo tengo información sobre Jorge Patricio 😊",
+    text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
+
 }
 
 /* =========================
