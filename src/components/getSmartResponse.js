@@ -325,6 +325,15 @@ const isAboutOwner = (text) => {
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
+
+  // 🔥 FIX CLAVE (permite lenguaje natural)
+if (
+  normalizedText.includes("tecnolog") ||
+  normalizedText.includes("experiencia") ||
+  normalizedText.includes("proyecto")
+) {
+  return true;
+}
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
   const wordCount = words.length;
 
