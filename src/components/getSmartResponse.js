@@ -370,7 +370,23 @@ let intent = detectIntent(text);
 
 const normalizedText = text.toLowerCase();
 
-if (normalizedText.includes("jorge") || normalizedText.includes("patricio")) {
+// 🟢 Detectar si menciona tu nombre
+const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
+  .some(name => normalizedText.includes(name));
+
+// 🟢 Detectar intención general de perfil
+const isGeneralProfileQuery = [
+  "quien es","quién es","hablame","háblame",
+  "cuentame","cuéntame","dime","sobre"
+].some(word => normalizedText.includes(word));
+
+// 🔥 FIX CLAVE
+if (hasOwnerName && isGeneralProfileQuery) {
+  intent = "PROFILE";
+}
+
+// 🔁 Tu lógica actual (se mantiene)
+if (hasOwnerName) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
   } else if (normalizedText.includes("tecnolog")) {
