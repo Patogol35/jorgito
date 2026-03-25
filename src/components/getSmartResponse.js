@@ -281,7 +281,7 @@ const isAboutOwner = (text) => {
   "esther","fatima","gloria","helena","irene",
   "jimena","karla","liliana","mariana","nerea",
   "olga","priscila","rocio","susana","teresa",
-  "ursula","victoria","wanda","ximena","yolanda","zoe"
+  "ursula","victoria","wanda","ximena","yolanda","zoe", "samanta"
 ];
 
   const hasOwnerName = validNames.some(name =>
