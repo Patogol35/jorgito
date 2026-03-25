@@ -304,6 +304,16 @@ const normalizedText = text
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
+  const sensitiveKeywords = [
+  "tecnologia","tecnologias","tecnologías",
+  "experiencia","estudios","perfil","contratar",
+  "proyectos","stack","habilidades","lenguajes",
+  "quien es","quién es","formacion","formación",
+  "educacion","educación","máster","master",
+  "libros","libro","full stack","desarrollador",
+  "ingeniero","full","contactar","contacto","whatsapp"
+];
+
   // 🔹 Keywords sensibles
   const hasSensitive =
   /tecnolog|experien|estudi|formacion|educacion|master|universidad|proyecto|habilidad|stack|contact|libro|desarrollador|ingeniero|contratar/.test(normalizedText);
