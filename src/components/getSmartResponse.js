@@ -365,7 +365,7 @@ const isAboutOwner = (text) => {
   }
 
   // 🟡 Bloquear SOLO si hay varios nombres raros (fix bug “donde estudio”)
-  if (hasWeirdName && hasSensitive && possibleNames.length >= 2) {
+  if (hasWeirdName && hasSensitive) {
     return false;
   }
 
