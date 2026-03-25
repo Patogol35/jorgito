@@ -308,6 +308,13 @@ if (!isAboutOwner(text)) {
  /* =========================
   🟢 DETECTAR INTENT (SOBRE JORGE)
   ========================= */
+
+  if (["jorge", "jorge patricio", "patricio"].includes(text)) {
+  return {
+    text: replies.PROFILE(ctx),
+    intent: "PROFILE",
+  };
+  }
 let intent = detectIntent(text);
 
 // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
