@@ -242,7 +242,7 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
-  /* =========================
+/* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
 const isAboutOwner = (text) => {
@@ -271,7 +271,7 @@ const isAboutOwner = (text) => {
     return true;
   }
 
-    // Frases multi-palabra válidas sin nombre
+  // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
     "full stack",
     "libros favoritos",
@@ -300,7 +300,15 @@ const isAboutOwner = (text) => {
     "cuentame sobre"
   ];
 
+  // 🔥 NUEVA PROTECCIÓN
+  const hasOtherName = /\b(?!jorge\b|patricio\b)[a-záéíóúñ]{3,}\b/i.test(normalizedText);
+
   if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
+    // ❌ Si hay otro nombre → bloquear
+    if (hasOtherName) {
+      return false;
+    }
+
     return true;
   }
 
@@ -313,8 +321,8 @@ const isAboutOwner = (text) => {
   return false;
 };
 
-  // 🔒 Bloquear si NO es sobre ti
-  if (!isAboutOwner(text)) {
+// 🔒 Bloquear si NO es sobre ti
+if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
