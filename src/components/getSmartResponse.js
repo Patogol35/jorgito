@@ -273,6 +273,13 @@ const isAboutOwner = (text) => {
 
     // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
+    "acerca de su",
+"dime acerca de",
+"dime sobre",
+"háblame de",
+"hablame de",
+"sobre su experiencia",
+"sobre su perfil"
     "full stack",
     "libros favoritos",
     "máster en",
@@ -325,6 +332,26 @@ const isAboutOwner = (text) => {
   🟢 DETECTAR INTENT (SOBRE JORGE)
   ========================= */
 let intent = detectIntent(text);
+  const normalizedText = text.toLowerCase();
+
+// 🔥 CONTEXTO IMPLÍCITO (SU, ACERCA DE, SOBRE)
+if (
+  normalizedText.includes("su ") ||
+  normalizedText.includes("acerca de") ||
+  normalizedText.includes("sobre")
+) {
+  if (normalizedText.includes("experiencia")) {
+    intent = "EXPERIENCE";
+  } else if (normalizedText.includes("tecnolog")) {
+    intent = "SKILLS";
+  } else if (normalizedText.includes("estudio") || normalizedText.includes("formación")) {
+    intent = "EDUCATION";
+  } else if (normalizedText.includes("proyecto")) {
+    intent = "PROJECTS";
+  } else if (normalizedText.includes("perfil")) {
+    intent = "PROFILE";
+  }
+  }
 
 // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
 // priorizar la intención técnica/sensible sobre PROFILE
