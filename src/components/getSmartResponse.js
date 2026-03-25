@@ -328,21 +328,7 @@ const normalizedText = text
   const normalizeWord = (word) =>
     word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // 🔴 Detectar nombres raros (tipo ghgh)
-  const possibleNames = words.filter(word => {
-    const clean = normalizeWord(word);
-
-    return (
-      clean.length > 2 &&
-      !stopWords.includes(clean) &&
-      !intentWords.includes(clean) &&
-      !validNames.includes(clean) &&
-      !commonNames.includes(clean) &&
-      !sensitiveKeywords.some(kw => clean.includes(kw))
-    );
-  });
-
-  const hasWeirdName = possibleNames.length > 0;
+  
 
   // =========================
 // 🧠 LÓGICA FINAL
