@@ -249,9 +249,34 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  if (validNames.some(name => normalizedText.includes(name))) {
-    return true;
+  // 🔴 BLOQUEAR SI MENCIONA OTRO NOMBRE
+const nameMatch = normalizedText.match(/\b(de|a)\s+([a-záéíóúñ]+)\b/);
+
+if (nameMatch) {
+  const detectedName = nameMatch[2];
+
+  const isValid = validNames.some(name =>
+    name.includes(detectedName)
+  );
+
+  if (!isValid) {
+    return false;
   }
+}
+
+// ✅ Si menciona nombres válidos
+if (validNames.some(name => normalizedText.includes(name))) {
+  return true;
+}
+
+// 🔥 CONTEXTO IMPLÍCITO (SIN NOMBRE)
+if (
+  normalizedText.includes("su ") ||
+  normalizedText.includes("acerca de") ||
+  normalizedText.includes("sobre")
+) {
+  return true;
+}
 
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
