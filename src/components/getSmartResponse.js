@@ -326,14 +326,7 @@ const isAboutOwner = (text) => {
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
 
-  // 🔥 FIX CLAVE (permite lenguaje natural)
-if (
-  normalizedText.includes("tecnolog") ||
-  normalizedText.includes("experiencia") ||
-  normalizedText.includes("proyecto")
-) {
-  return true;
-}
+  
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
   const wordCount = words.length;
 
@@ -412,38 +405,25 @@ if (
   ========================= */
 let intent = detectIntent(text);
 
-  // 🔥 FIX: detectar intención por palabras clave
-if (intent === "UNKNOWN") {
-  const normalizedText = text.toLowerCase();
-
-  if (normalizedText.includes("tecnolog")) {
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
+const normalizedText = text.toLowerCase();
+if (normalizedText.includes("jorge")) {
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+    intent = "CONTACT";
+  } else if (normalizedText.includes("tecnolog")) {
     intent = "SKILLS";
   } else if (normalizedText.includes("experiencia")) {
     intent = "EXPERIENCE";
+  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
+    intent = "EDUCATION";
   } else if (normalizedText.includes("proyecto")) {
     intent = "PROJECTS";
-  }
-}
-
-// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-// priorizar la intención técnica/sensible sobre PROFILE
-const normalizedText2 = text.toLowerCase();
-if (normalizedText2.includes("jorge")) {
-  if (normalizedText2.includes("contact") || normalizedText.includes("whatsapp")) {
-    intent = "CONTACT";
-  } else if (normalizedText2.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (normalizedText2.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (normalizedText2.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
-    intent = "EDUCATION";
-  } else if (normalizedText2.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (normalizedText2.includes("contratar")) {
+  } else if (normalizedText.includes("contratar")) {
     intent = "MOTIVATION";
-  } else if (normalizedText2.includes("stack") || normalizedText.includes("full stack")) {
+  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
     intent = "STACK";
-  } else if (normalizedText2.includes("libro") || normalizedText.includes("dan brown")) {
+  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
   // Si ninguna condición se cumple, se respeta la intención detectada originalmente
