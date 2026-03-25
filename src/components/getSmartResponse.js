@@ -292,6 +292,12 @@ const isAboutOwner = (text) => {
     commonNames.includes(word) && !validNames.includes(word)
   );
 
+  const hasUnknownName = words.some(word =>
+  !validNames.includes(word) &&
+  !commonNames.includes(word) &&
+  word.length > 2
+);
+
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
     "experiencia", "estudios", "perfil", "contratar",
@@ -334,14 +340,19 @@ const isAboutOwner = (text) => {
   ];
 
   // 🟢 Si menciona a Jorge → permitir todo
-  if (hasOwnerName) {
-    return true;
-  }
+if (hasOwnerName) {
+  return true;
+}
 
-  // 🔴 Si hay otro nombre → bloquear
-  if (hasOtherName) {
-    return false;
-  }
+// 🔴 Si hay nombre desconocido → bloquear
+if (hasUnknownName && hasSensitive) {
+  return false;
+}
+
+// 🔴 Si hay otro nombre → bloquear
+if (hasOtherName) {
+  return false;
+}
 
   // 🟢 Si no es sensible → permitir
   if (!hasSensitive && !hasOtherName) {
