@@ -345,10 +345,10 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
+// 🧠 LÓGICA FINAL
+// =========================
 
-  // 🔴 Detectar estructuras tipo: de alguien, para alguien, sobre alguien
+// 🔴 Detectar estructuras tipo: de alguien, para alguien, sobre alguien
 const isAskingAboutOtherPerson = /\b(de|del|para|sobre|acerca de)\s+([a-z]+)/.test(normalizedText);
 
 // 🔤 Palabras válidas del sistema (NO nombres)
