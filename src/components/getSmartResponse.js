@@ -412,6 +412,19 @@ if (
   ========================= */
 let intent = detectIntent(text);
 
+  // 🔥 FIX: detectar intención por palabras clave
+if (intent === "UNKNOWN") {
+  const normalizedText = text.toLowerCase();
+
+  if (normalizedText.includes("tecnolog")) {
+    intent = "SKILLS";
+  } else if (normalizedText.includes("experiencia")) {
+    intent = "EXPERIENCE";
+  } else if (normalizedText.includes("proyecto")) {
+    intent = "PROJECTS";
+  }
+}
+
 // 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
 // priorizar la intención técnica/sensible sobre PROFILE
 const normalizedText = text.toLowerCase();
