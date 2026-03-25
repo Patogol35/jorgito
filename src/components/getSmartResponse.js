@@ -268,15 +268,18 @@ if (nameMatch) {
   }
 }
 
-  
 
-  /* =========================
+
+  
+  
+/* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
 const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
+  // ✅ Si menciona el nombre → permitir
   if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
@@ -288,18 +291,22 @@ const isAboutOwner = (text) => {
     "quien es", "quién es", "formacion", "formación",
     "educacion", "educación", "máster", "master",
     "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
+    "ingeniero", "stack", "full", "contactar", "contacto", "whatsapp"
   ];
 
-  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
+  const hasSensitive = sensitiveKeywords.some(kw =>
+    normalizedText.includes(kw)
+  );
+
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
   const wordCount = words.length;
 
+  // ✅ Si NO es sensible → permitir
   if (!hasSensitive) {
     return true;
   }
 
-    // Frases multi-palabra válidas sin nombre
+  // ✅ Frases válidas sin nombre
   const validMultiWord = [
     "full stack",
     "libros favoritos",
@@ -322,7 +329,6 @@ const isAboutOwner = (text) => {
     "sus libros",
     "estudios tiene",
     "experiencia tiene",
-    "tecnologías trabaja",
     "proyectos ha hecho",
     "cuéntame sobre",
     "cuentame sobre"
@@ -332,25 +338,31 @@ const isAboutOwner = (text) => {
     return true;
   }
 
-  // Permitir si es 1 palabra
-if (wordCount === 1) {
-  return true;
-}
+  // ✅ Permitir si es 1 palabra
+  if (wordCount === 1) {
+    return true;
+  }
 
-// ✅ PERMITIR frases sensibles aunque no tengan nombre
-if (hasSensitive) {
-  return true;
-}
+  // 🔥 FIX CLAVE
+  if (hasSensitive) {
+    return true;
+  }
 
-return false;
+  return false;
+};
 
   // 🔒 Bloquear si NO es sobre ti
-  if (!isAboutOwner(text)) {
+if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-}
+    }
+
+
+
+
+  
 
 /* =========================
 🟢 DETECTAR INTENT (SOBRE JORGE)
