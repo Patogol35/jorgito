@@ -312,12 +312,14 @@ const normalizedText = text
     "quien es","quién es","formacion","formación",
     "educacion","educación","máster","master",
     "libros","libro","full stack","desarrollador",
-    "ingeniero","full","contactar","contacto","whatsapp"
+    "ingeniero","full","contactar","contacto","whatsapp",
+    "estudio","estudios","estudiar","estudio","estudio","estudio",
+"educacion","educación","formacion","formación",
+"máster","master"
   ];
 
-  const hasSensitive = sensitiveKeywords.some(kw =>
-    normalizedText.includes(kw)
-  );
+  const hasSensitive =
+  /tecnolog|experienc|estudi|educa|formacion|master|perfil|proyecto|habilidad|stack|lenguaje|contact|whatsapp|contratar|libro/.test(normalizedText);
 
   // 🟢 Detectar si menciona tu nombre
   const hasOwnerName = validNames.some(name =>
