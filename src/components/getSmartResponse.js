@@ -244,16 +244,14 @@ if (ctx.awaitingFollowUp) {
 
 
   
-/* =========================
-🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
-========================= */
+// 🔴 BLOQUEO DE NOMBRES AJENOS (MEJORADO)
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// Buscar específicamente "de + nombre" al FINAL
-const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
+// Detectar cualquier nombre después de "de", "a", etc.
+const nameMatch = text.match(/\b(de|a|sobre)\s+([a-zA-Záéíóúñ]+)/i);
 
 if (nameMatch) {
-  const detectedName = normalize(nameMatch[1]);
+  const detectedName = normalize(nameMatch[2]);
 
   if (
     detectedName &&
@@ -264,8 +262,8 @@ if (nameMatch) {
     )
   ) {
     return {
-      text: replies.UNKNOWN(ctx),
-      intent: "UNKNOWN",
+      text: replies.OUT_OF_SCOPE(ctx),
+      intent: "OUT_OF_SCOPE",
     };
   }
 }
