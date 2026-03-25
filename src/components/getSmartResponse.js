@@ -328,15 +328,24 @@ if (!isAboutOwner(text)) {
   }
 let intent = detectIntent(text);
 
-// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-// priorizar la intención técnica/sensible sobre PROFILE
-const normalizedText = text.toLowerCase();
-if (normalizedText.includes("jorge")) {
+  const normalizedText = text.toLowerCase();
+
+const isImplicitOwnerQuery =
+  normalizedText.includes("jorge") ||
+  normalizedText.includes("su ") ||
+  normalizedText.includes("sus ") ||
+  normalizedText.includes(" es ") ||
+  normalizedText.startsWith("es ") ||
+  normalizedText.includes("tiene") ||
+  normalizedText.includes("trabaja") ||
+  normalizedText.includes("usa");
+
+if (isImplicitOwnerQuery) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
-  } else if (normalizedText.includes("tecnolog")) {
+  } else if (normalizedText.includes("tecnolog") || normalizedText.includes("usa")) {
     intent = "SKILLS";
-  } else if (normalizedText.includes("experiencia")) {
+  } else if (normalizedText.includes("experiencia") || normalizedText.includes("tiene experiencia")) {
     intent = "EXPERIENCE";
   } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
     intent = "EDUCATION";
@@ -349,7 +358,6 @@ if (normalizedText.includes("jorge")) {
   } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
-  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
