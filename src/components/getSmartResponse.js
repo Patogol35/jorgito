@@ -242,111 +242,58 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
-  /* =========================
-🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
-========================= */
-const isAboutOwner = (text) => {
-  const validNames = ["jorge", "patricio", "jorge patricio"];
-  const normalizedText = text.toLowerCase().trim();
+  const isAboutOwner = (text) => {
+  const validNames = ["jorge patricio", "jorge", "patricio"];
+  const normalizedText = normalize(text);
 
-  // 🔴 BLOQUEAR SI MENCIONA OTRO NOMBRE
-const nameMatch = normalizedText.match(/\b(de|a)\s+([a-záéíóúñ]+)\b/);
-
-if (nameMatch) {
-  const detectedName = nameMatch[2];
-
-  const isValid = validNames.some(name =>
-    name.includes(detectedName)
-  );
-
-  if (!isValid) {
-    return false;
+  // 1) Si contiene nombre válido → permitir
+  if (validNames.some((name) => normalizedText.includes(name))) {
+    return true;
   }
-}
 
-// ✅ Si menciona nombres válidos
-if (validNames.some(name => normalizedText.includes(name))) {
-  return true;
-}
-
-// 🔥 CONTEXTO IMPLÍCITO (SIN NOMBRE)
-if (
-  normalizedText.includes("su ") ||
-  normalizedText.includes("acerca de") ||
-  normalizedText.includes("sobre")
-) {
-  return true;
-}
-
-  const sensitiveKeywords = [
-    "tecnologia", "tecnologias", "tecnologías",
-    "experiencia", "estudios", "perfil", "contratar",
-    "proyectos", "stack", "habilidades", "lenguajes",
-    "quien es", "quién es", "formacion", "formación",
-    "educacion", "educación", "máster", "master",
-    "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
+  // 2) Detectar si menciona OTRO nombre después de patrones comunes
+  const otherNamePatterns = [
+    /\b(?:de|a|sobre|acerca de|contactar a|contacto de|contratar a)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
+    /\b(?:quien es|quién es)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
   ];
 
-  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
-  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
-  const wordCount = words.length;
+  for (const pattern of otherNamePatterns) {
+    const match = text.match(pattern);
+    if (match) {
+      const possibleName = normalize(match[1]);
 
-  if (!hasSensitive) {
-    return true;
+      // Si el nombre detectado NO es uno válido → bloquear
+      if (!validNames.some((name) => possibleName.includes(name) || name.includes(possibleName))) {
+        return false;
+      }
+    }
   }
 
-    // Frases multi-palabra válidas sin nombre
-  const validMultiWord = [
-    "acerca de su",
-"dime acerca de",
-"dime sobre",
-"háblame de",
-"hablame de",
-"sobre su experiencia",
-"sobre su perfil",
-    "full stack",
-    "libros favoritos",
-    "máster en",
-    "proyectos realizados",
-    "experiencia profesional",
-    "qué estudios",
-    "que estudios",
-    "qué experiencia",
-    "que experiencia",
-    "qué tecnologías",
-    "que tecnologias",
-    "tecnologías trabaja",
-    "es full stack",
-    "por qué contratar",
-    "como contactar",
-    "cómo contactar",
-    "quién te creó",
-    "quien te creo",
-    "sus libros",
-    "estudios tiene",
-    "experiencia tiene",
-    "tecnologías trabaja",
-    "proyectos ha hecho",
-    "cuéntame sobre",
-    "cuentame sobre"
+  // 3) Si no hay nombre explícito, permitir si parece claramente sobre Jorge
+  const ownerKeywords = [
+    "jorge", "patricio",
+    "su experiencia", "sus proyectos", "sus estudios", "sus tecnologias", "sus tecnologías",
+    "su perfil", "su stack", "sus habilidades", "sus libros",
+    "su contacto", "su whatsapp", "contactarlo", "contacto", "whatsapp",
+    "experiencia", "proyectos", "estudios", "tecnologias", "tecnologías",
+    "perfil", "habilidades", "stack", "full stack", "desarrollador",
+    "ingeniero", "formacion", "formación", "master", "máster",
+    "contratar", "libros", "quien te creo", "quién te creó",
+    "cuentame sobre", "cuéntame sobre", "dime acerca de"
   ];
 
-  if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
+  const hasOwnerContext = ownerKeywords.some((kw) => normalizedText.includes(kw));
+
+  if (hasOwnerContext) {
     return true;
   }
 
-  // Permitir si es 1 palabra
-  if (wordCount === 1) {
-    return true;
-  }
-
-  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
-  return false;
+  // 4) Si no parece sobre Jorge → permitir solo mensajes generales
+  return true;
 };
 
-  // 🔒 Bloquear si NO es sobre ti
-  if (!isAboutOwner(text)) {
+  // 🔒 Bloquear si NO es sobre Jorge
+if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
@@ -354,65 +301,32 @@ if (
 }
 
  /* =========================
-🟢 DETECTAR INTENT (SOBRE JORGE)
-========================= */
+  🟢 DETECTAR INTENT (SOBRE JORGE)
+  ========================= */
 let intent = detectIntent(text);
+
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
 const normalizedText = text.toLowerCase();
-
-// 🔥 CONTEXTO IMPLÍCITO (SU, ACERCA DE, SOBRE)
-if (
-  normalizedText.includes("su ") ||
-  normalizedText.includes("acerca de") ||
-  normalizedText.includes("sobre")
-) {
-  if (normalizedText.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (normalizedText.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (
-    normalizedText.includes("estudio") ||
-    normalizedText.includes("formación")
-  ) {
-    intent = "EDUCATION";
-  } else if (normalizedText.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (normalizedText.includes("perfil")) {
-    intent = "PROFILE";
-  }
-}
-
-// 🔁 Ajuste con nombre "jorge"
 if (normalizedText.includes("jorge")) {
-  if (
-    normalizedText.includes("contact") ||
-    normalizedText.includes("whatsapp")
-  ) {
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
   } else if (normalizedText.includes("tecnolog")) {
     intent = "SKILLS";
   } else if (normalizedText.includes("experiencia")) {
     intent = "EXPERIENCE";
-  } else if (
-    normalizedText.includes("estudio") ||
-    normalizedText.includes("máster") ||
-    normalizedText.includes("formación")
-  ) {
+  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
     intent = "EDUCATION";
   } else if (normalizedText.includes("proyecto")) {
     intent = "PROJECTS";
   } else if (normalizedText.includes("contratar")) {
     intent = "MOTIVATION";
-  } else if (
-    normalizedText.includes("stack") ||
-    normalizedText.includes("full stack")
-  ) {
+  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
     intent = "STACK";
-  } else if (
-    normalizedText.includes("libro") ||
-    normalizedText.includes("dan brown")
-  ) {
+  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
+  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
@@ -420,10 +334,6 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
-
-
-
-  
       /* =========================
 🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
 ========================= */
