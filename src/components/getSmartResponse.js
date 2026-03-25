@@ -250,106 +250,52 @@ const isAboutOwner = (text) => {
   const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // quitar tildes
-    .replace(/[¿?¡!.,]/g, "") // quitar signos
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
     .trim();
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
-  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
-
-  // 🔹 Stop words
-  const stopWords = [
-    "de","la","el","los","las","un","una","sobre","que","del","a","en","y","con"
-  ];
-
-  // 🔹 Palabras de intención
-  const intentWords = [
-    "hablame","háblame","cuentame","cuéntame","dime","decime",
-    "quiero","necesito","podrias","podrías","me","puedes",
-    "puede","explicame","explícame","informacion","información",
-    "trabaja","trabajar","tiene","usan","usa","maneja","utiliza","en",
-
-    // preguntas
-    "que","qué","cual","cuál","como","cómo",
-    "donde","dónde","cuando","cuándo",
-    "quien","quién","por","para",
-
-    // pronombres
-    "su","sus","mi","mis","tu","tus",
-    "nuestro","nuestra","nuestros","nuestras"
-  ];
-
-  // 🔹 Nombres comunes
   const commonNames = [
-    "luis","carlos","jose","juan","andres","diego","daniel","christian",
-    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
-    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
-    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
-    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
-    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
-    "sebastian","mateo","nicolas","lucas","francisco","antonio",
-    "jorge","raul","guillermo","alvaro","bruno","dario","fabian",
-    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
-    "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias",
-
-    "ana","maria","sofia","valentina","daniela","camila","laura",
-    "paula","andrea","elena","lucia","isabella","martina","gabriela",
-    "adriana","carolina","patricia","veronica","alejandra","rosa",
-    "carmen","silvia","beatriz","raquel","noelia","natalia",
-    "claudia","monica","diana","pilar","luisa","renata","emilia",
-    "juliana","antonella","valeria","ximena","yesenia","zulema",
-    "amanda","bianca","catalina","dolores","esther","fatima",
-    "gloria","helena","irene","jimena","karla","liliana","mariana",
-    "nerea","olga","priscila","rocio","susana","teresa","ursula",
-    "victoria","wanda","ximena","yolanda","zoe","samanta"
+    "luis","carlos","jose","juan","andres","diego","daniel","miguel",
+    "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
+    "ana","maria","sofia","valentina","camila","laura","paula"
   ];
 
-  // 🔹 Keywords sensibles (se mantienen porque se usan en filtros internos)
-  const sensitiveKeywords = [
-    "tecnologia","tecnologias","tecnologías",
-    "experiencia","estudios","perfil","contratar",
-    "proyectos","stack","habilidades","lenguajes",
-    "quien es","quién es","formacion","formación",
-    "educacion","educación","máster","master",
-    "libros","libro","full stack","desarrollador",
-    "ingeniero","full","contactar","contacto","whatsapp"
+  // 🔥 intención profesional
+  const intentKeywords = [
+    "tecnolog","experien","estudi","formacion","educacion",
+    "master","universidad","proyecto","habilidad","stack",
+    "contact","libro","desarrollador","ingeniero","trabaja",
+    "usa","utiliza","maneja","sabe","conoce"
   ];
 
-  // 🔥 NUEVA detección robusta
-  const hasSensitive =
-    /tecnolog|experien|estudi|formacion|educacion|master|universidad|proyecto|habilidad|stack|contact|libro|desarrollador|ingeniero|contratar/.test(normalizedText);
+  const hasIntent = intentKeywords.some(k =>
+    normalizedText.includes(k)
+  );
 
-  // 🟢 Detectar si menciona tu nombre
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
-  // 🔤 Normalizar palabra
-  const normalizeWord = (word) =>
-    word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  // 🔴 Detectar nombres raros (MEJORADO)
-  const possibleNames = words.filter(word => {
-    const clean = normalizeWord(word);
-
-    return (
-      clean.length > 3 && // 🔥 FIX CLAVE
-      !stopWords.includes(clean) &&
-      !intentWords.includes(clean) &&
-      !validNames.includes(clean) &&
-      !commonNames.includes(clean) &&
-      !sensitiveKeywords.some(kw => clean.includes(kw))
-    );
-  });
-
-  const hasWeirdName = possibleNames.length > 0;
-
-  // 🔴 Detectar si hay OTRO nombre
-  const hasOtherName = words.some(word =>
-    commonNames.includes(word) && !validNames.includes(word)
+  const hasOtherName = commonNames.some(name =>
+    normalizedText.includes(name) && !validNames.includes(name)
   );
+
+  // 🔴 Si menciona otro nombre → bloquear
+  if (hasOtherName) return false;
+
+  // 🟢 Si menciona Jorge → permitir
+  if (hasOwnerName) return true;
+
+  // 🟢 Si parece pregunta profesional → asumir Jorge
+  if (hasIntent) return true;
+
+  // 🟡 fallback (no bloquear de más)
+  return true;
+};
+  
+  
 
   // =========================
   // 🧠 LÓGICA FINAL
