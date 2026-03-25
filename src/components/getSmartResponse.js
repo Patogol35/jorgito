@@ -295,7 +295,8 @@ const isAboutOwner = (text) => {
   const hasUnknownName = words.some(word =>
   !validNames.includes(word) &&
   !commonNames.includes(word) &&
-  word.length > 2
+  !sensitiveKeywords.includes(word) && // 🔥 importante
+  word.length > 3
 );
 
   const sensitiveKeywords = [
@@ -344,7 +345,7 @@ if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Si hay nombre desconocido → bloquear
+// 🔴 Si hay nombre desconocido en contexto sensible → bloquear
 if (hasUnknownName && hasSensitive) {
   return false;
 }
