@@ -319,7 +319,7 @@ const normalizedText = text
   ];
 
   const hasSensitive =
-  /tecnolog|experienc|estudi|educa|formacion|master|perfil|proyecto|habilidad|stack|lenguaje|contact|whatsapp|contratar|libro/.test(normalizedText);
+  /tecnolog|experienc|estudi|educa|formaci|master|perfil|proyecto|habilidad|stack|lenguaje|contact|whatsapp|contratar|libro/.test(normalizedText);
 
   // 🟢 Detectar si menciona tu nombre
   const hasOwnerName = validNames.some(name =>
