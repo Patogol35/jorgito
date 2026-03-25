@@ -362,7 +362,7 @@ if (isAskingAboutOtherPerson && hasSensitive) {
 }
 
 // 🟢 Todo lo demás → asumir Jorge
-return true;
+return true; };
 
 /* =========================
 🔒 BLOQUEO GLOBAL
