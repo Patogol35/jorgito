@@ -344,8 +344,8 @@ const isAboutOwner = (text) => {
   }
 
   // 🟢 Si no es sensible → permitir
-  if (!hasSensitive) {
-    return true;
+  if (!hasSensitive && !hasOtherName) {
+  return true;
   }
 
   // 🟡 Frases válidas sin nombre
@@ -356,7 +356,7 @@ const isAboutOwner = (text) => {
   }
 
   // 🟢 Permitir si es una sola palabra
-if (words.length === 1) {
+if (words.length === 1 && !hasOtherName) {
   return true;
 }
 
@@ -375,7 +375,7 @@ const isImplicitQuestion = implicitOwnerQuestions.some(word =>
   normalizedText.includes(word)
 );
 
-if (isImplicitQuestion) {
+if (isImplicitQuestion && !hasOtherName) {
   return true;
 }
 
