@@ -345,31 +345,28 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
+// 🧠 LÓGICA FINAL (PRO)
+// =========================
 
-  // 🔴 Detectar si hablan de OTRA persona (estructura)
-const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
-
-// 🔴 Detectar nombre al final tipo "tecnologias luis"
-const lastWord = words[words.length - 1];
-
-const isOtherNameAtEnd =
-  commonNames.includes(lastWord) &&
-  !validNames.includes(lastWord);
-
-// 🟢 Si menciona tu nombre → permitir
+// 🟢 Si menciona tu nombre → permitir SIEMPRE
 if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
-if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
+// 🔴 Detectar cualquier otro nombre en la frase
+const hasOtherName =
+  words.some(word =>
+    commonNames.includes(word) && !validNames.includes(word)
+  ) || hasWeirdName;
+
+// 🔴 BLOQUEO: si hay intención sensible + otro nombre → bloquear
+if (hasSensitive && hasOtherName) {
   return false;
 }
 
-// 🟢 Todo lo demás → asumir Jorge
-return true; };
+// 🟢 Todo lo demás → asumir que habla de Jorge
+return true;
+};
 
 /* =========================
 🔒 BLOQUEO GLOBAL
