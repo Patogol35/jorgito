@@ -243,7 +243,7 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS: NIVEL PRO
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX FINAL)
 ========================= */
 const isAboutOwner = (text) => {
   const normalizedText = text.toLowerCase().trim();
@@ -252,153 +252,108 @@ const isAboutOwner = (text) => {
 
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
 
-  // 🔹 Lista de nombres comunes (puedes ampliarla)
+  // 🔹 Stop words (para no detectar basura como nombres)
+  const stopWords = [
+    "de","la","el","los","las","un","una","sobre","que","del","a","en","y","con"
+  ];
+
+  // 🔹 Lista de nombres comunes
   const commonNames = [
-  // 🔵 Masculinos
-  "luis","carlos","jose","juan","andres","diego","daniel", "christian", "gay",
-  "camilo","miguel","fernando","alex","pedro","alejandro",
-  "manuel","david","sergio","rafael","adrian","ricardo",
-  "marcos","oscar","alberto","roberto","ivan","hugo",
-  "enrique","samuel","emilio","gabriel","esteban",
-  "victor","martin","ignacio","julio","cesar","tomas",
-  "felipe","cristian","edgar","ramon","armando",
-  "leonardo","sebastian","mateo","nicolas","lucas",
-  "francisco","antonio","jorge","raul","guillermo",
-  "alvaro","bruno","dario","fabian","gonzalo",
-  "hector","joaquin","lorenzo","maximiliano","nahuel",
-  "orlando","pablo","renato","salvador","santiago",
-  "teodoro","ulises","valentin","walter","xavier","yago","zacarias",
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "jorge","raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias",
 
-  // 🔴 Femeninos
-  "ana","maria","sofia","valentina","daniela","camila",
-  "laura","paula","andrea","elena","lucia","isabella",
-  "martina","gabriela","adriana","carolina","patricia",
-  "veronica","alejandra","rosa","carmen","silvia",
-  "beatriz","raquel","noelia","natalia","claudia",
-  "monica","diana","pilar","luisa","renata","emilia",
-  "juliana","antonella","valeria","ximena","yesenia",
-  "zulema","amanda","bianca","catalina","dolores",
-  "esther","fatima","gloria","helena","irene",
-  "jimena","karla","liliana","mariana","nerea",
-  "olga","priscila","rocio","susana","teresa",
-  "ursula","victoria","wanda","ximena","yolanda","zoe", "samanta"
-];
-
-  const hasOwnerName = validNames.some(name =>
-    normalizedText.includes(name)
-  );
-
-  const hasOtherName = words.some(word =>
-    commonNames.includes(word) && !validNames.includes(word)
-  );
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
 
   const sensitiveKeywords = [
-    "tecnologia", "tecnologias", "tecnologías",
-    "experiencia", "estudios", "perfil", "contratar",
-    "proyectos", "stack", "habilidades", "lenguajes",
-    "quien es", "quién es", "formacion", "formación",
-    "educacion", "educación", "máster", "master",
-    "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
+    "tecnologia","tecnologias","tecnologías",
+    "experiencia","estudios","perfil","contratar",
+    "proyectos","stack","habilidades","lenguajes",
+    "quien es","quién es","formacion","formación",
+    "educacion","educación","máster","master",
+    "libros","libro","full stack","desarrollador",
+    "ingeniero","full","contactar","contacto","whatsapp"
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw =>
     normalizedText.includes(kw)
   );
 
-  const validMultiWord = [
-    "full stack",
-    "libros favoritos",
-    "máster en",
-    "proyectos realizados",
-    "experiencia profesional",
-    "qué estudios",
-    "que estudios",
-    "qué experiencia",
-    "que experiencia",
-    "qué tecnologías",
-    "que tecnologias",
-    "tecnologías trabaja",
-    "es full stack",
-    "por qué contratar",
-    "como contactar",
-    "cómo contactar",
-    "quién te creó",
-    "quien te creo",
-    "sus libros",
-    "estudios tiene",
-    "experiencia tiene",
-    "proyectos ha hecho",
-    "cuéntame sobre",
-    "cuentame sobre"
-  ];
+  // 🟢 Detectar si menciona tu nombre
+  const hasOwnerName = validNames.some(name =>
+    normalizedText.includes(name)
+  );
 
-  // 🟢 Si menciona a Jorge → permitir todo
+  // 🔴 Detectar nombres raros tipo "ghgh", "asdasd"
+  const possibleNames = words.filter(word =>
+    word.length > 2 &&
+    !stopWords.includes(word) &&
+    !validNames.includes(word) &&
+    !commonNames.includes(word) &&
+    !sensitiveKeywords.some(kw => word.includes(kw))
+  );
+
+  const hasWeirdName = possibleNames.length > 0;
+
+  // =========================
+  // 🧠 LÓGICA FINAL
+  // =========================
+
+  // 🟢 Si menciona tu nombre → permitir
   if (hasOwnerName) {
     return true;
   }
 
-  // 🔴 Si hay otro nombre → bloquear
-  if (hasOtherName) {
+  // 🔴 Si hay nombre raro + tema sensible → bloquear
+  if (hasWeirdName && hasSensitive) {
     return false;
   }
 
-  // 🟢 Si no es sensible → permitir
-  if (!hasSensitive) {
+  // 🟢 Si NO hay nombre raro → asumir que es Jorge
+  if (!hasWeirdName) {
     return true;
   }
 
-  // 🟡 Frases válidas sin nombre
-  if (validMultiWord.some(phrase =>
-    normalizedText.includes(phrase)
-  )) {
-    return true;
-  }
+  // 🔴 Fallback
+  return false;
+};
 
-  // 🟢 Permitir si es una sola palabra
-if (words.length === 1) {
-  return true;
-}
-
-// 🔥 NUEVO
-const implicitOwnerQuestions = [
-  "experiencia",
-  "estudios",
-  "tecnologias",
-  "habilidades",
-  "proyectos",
-  "perfil",
-  "stack"
-];
-
-const isImplicitQuestion = implicitOwnerQuestions.some(word =>
-  normalizedText.includes(word)
-);
-
-if (isImplicitQuestion) {
-  return true;
-}
-
-// 🔴 Bloquear todo lo demás
-return false; }
-
-// 🔒 Bloquear si NO es sobre ti
+/* =========================
+🔒 BLOQUEO GLOBAL
+========================= */
 if (!isAboutOwner(text)) {
   return {
-    text: replies.OUT_OF_SCOPE(ctx),
+    text: "Solo tengo información sobre Jorge Patricio 😊",
     intent: "OUT_OF_SCOPE",
   };
 }
 
- /* =========================
-  🟢 DETECTAR INTENT (SOBRE JORGE)
-  ========================= */
+/* =========================
+🟢 DETECTAR INTENT
+========================= */
 let intent = detectIntent(text);
 
-// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
-// priorizar la intención técnica/sensible sobre PROFILE
 const normalizedText = text.toLowerCase();
-if (normalizedText.includes("jorge")) {
+
+if (normalizedText.includes("jorge") || normalizedText.includes("patricio")) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
   } else if (normalizedText.includes("tecnolog")) {
@@ -413,10 +368,9 @@ if (normalizedText.includes("jorge")) {
     intent = "MOTIVATION";
   } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
     intent = "STACK";
-  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+  } else if (normalizedText.includes("libro")) {
     intent = "BOOK";
   }
-  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
@@ -424,70 +378,25 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 }
 
 saveMemory(ctx, { user: text, intent });
-      /* =========================
-🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
+
+/* =========================
+🟢 CONTACTO
 ========================= */
 if (intent === "CONTACT") {
-  const normalizedText = text.toLowerCase();
-  const validNames = ["jorge", "patricio", "jorge patricio"];
-
-  // 🔹 Generar mensaje dinámico
   const contactMessage = replies.CONTACT(ctx);
 
-  // Si menciona tu nombre → permitir
-  if (validNames.some(name => normalizedText.includes(name))) {
-    ctx.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
-      action: "CONTACT_CONFIRM",
-      intent,
-    };
-  }
-
-  // Extraer posibles nombres después de "contactar"
-  let otherName = null;
-
-  const patterns = [
-    /contactar\s+a\s+(\w+)/i,
-    /contactar\s+(\w+)/i,
-    /contacto\s+de\s+(\w+)/i,
-    /contacto\s+(\w+)/i,
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) {
-      otherName = normalize(match[1]);
-      break;
-    }
-  }
-
-  // Bloquear si no es Jorge
-  if (
-    otherName &&
-    !validNames.some(
-      name => otherName.includes(name) || name.includes(otherName)
-    )
-  ) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
-
-  // Si no hay nombre → asumir que es sobre Jorge
   ctx.awaiting = "CONTACT_CONFIRM";
   return {
     text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
     action: "CONTACT_CONFIRM",
     intent,
   };
-                                     }
+}
 
-  // =========================
-  // 🧠 RESPUESTA NORMAL
-  // =========================
-  let replyText;
+/* =========================
+🧠 RESPUESTA NORMAL
+========================= */
+let replyText;
 
 if (typeof replies[intent] === "function") {
   replyText = replies[intent](ctx);
@@ -503,4 +412,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
