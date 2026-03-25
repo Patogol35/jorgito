@@ -367,7 +367,7 @@ if (isImplicitQuestion) {
 }
 
 // 🔴 Bloquear todo lo demás
-return false;
+return false; }
 
 // 🔒 Bloquear si NO es sobre ti
 if (!isAboutOwner(text)) {
