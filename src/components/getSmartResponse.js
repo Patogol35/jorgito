@@ -292,13 +292,6 @@ const isAboutOwner = (text) => {
     commonNames.includes(word) && !validNames.includes(word)
   );
 
-  const hasUnknownName = words.some(word =>
-  !validNames.includes(word) &&
-  !commonNames.includes(word) &&
-  !sensitiveKeywords.includes(word) && // 🔥 importante
-  word.length > 3
-);
-
   const sensitiveKeywords = [
     "tecnologia", "tecnologias", "tecnologías",
     "experiencia", "estudios", "perfil", "contratar",
@@ -308,6 +301,15 @@ const isAboutOwner = (text) => {
     "libros", "libro", "full stack", "desarrollador",
     "ingeniero", "stack","full","contactar", "contacto","whatsapp"
   ];
+
+  const hasUnknownName = words.some(word =>
+  !validNames.includes(word) &&
+  !commonNames.includes(word) &&
+  !sensitiveKeywords.includes(word) && // 🔥 importante
+  word.length > 3
+);
+
+  
 
   const hasSensitive = sensitiveKeywords.some(kw =>
     normalizedText.includes(kw)
