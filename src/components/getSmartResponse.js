@@ -247,13 +247,17 @@ if (ctx.awaitingFollowUp) {
 // 🔴 BLOQUEO DE NOMBRES AJENOS (MEJORADO)
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// Detectar cualquier nombre después de "de", "a", etc.
+// 🔥 Palabras que NO son nombres
+const ignoreWords = ["su", "sus", "el", "la", "los", "las"];
+
 const nameMatch = text.match(/\b(de|a|sobre)\s+([a-zA-Záéíóúñ]+)/i);
 
 if (nameMatch) {
   const detectedName = normalize(nameMatch[2]);
 
-  if (
+  if (ignoreWords.includes(detectedName)) {
+    // ✅ ignorar palabras como "su", "la", etc.
+  } else if (
     detectedName &&
     !validNames.some(
       name =>
@@ -338,26 +342,45 @@ const isAboutOwner = (text) => {
     return true;
   }
 
+  // ✅ Permitir frases incompletas tipo "habla de..."
+  const incompletePatterns = [
+    "habla de",
+    "hablame de",
+    "háblame de",
+    "cuentame de",
+    "cuéntame de",
+    "informacion de",
+    "información de"
+  ];
+
+  if (incompletePatterns.some(p => normalizedText.startsWith(p))) {
+    return true;
+  }
+
+  // ✅ Permitir si termina en "de"
+  if (normalizedText.endsWith(" de")) {
+    return true;
+  }
+
   // ✅ Permitir si es 1 palabra
   if (wordCount === 1) {
     return true;
   }
 
-  // 🔥 FIX CLAVE
+  // 🔥 FIX FINAL: permitir frases sensibles sin nombre
   if (hasSensitive) {
     return true;
   }
 
   return false;
 };
-
   // 🔒 Bloquear si NO es sobre ti
 if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-    }
+}
 
 
 
