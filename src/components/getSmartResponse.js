@@ -395,30 +395,28 @@ const isGeneralProfileQuery = [
   "cuentame","cuéntame","dime","sobre"
 ].some(word => normalizedText.includes(word));
 
-// 🔥 FIX CLAVE
+// 🔥 PERFIL GENERAL
 if (hasOwnerName && isGeneralProfileQuery) {
   intent = "PROFILE";
 }
 
-// 🔁 Tu lógica actual (se mantiene)
-if (hasOwnerName) {
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
-    intent = "CONTACT";
-  } else if (normalizedText.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (normalizedText.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
-    intent = "EDUCATION";
-  } else if (normalizedText.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (normalizedText.includes("contratar")) {
-    intent = "MOTIVATION";
-  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
-    intent = "STACK";
-  } else if (normalizedText.includes("libro")) {
-    intent = "BOOK";
-  }
+// 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE (REEMPLAZA EL IF ANTERIOR)
+if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+  intent = "CONTACT";
+} else if (normalizedText.includes("tecnolog")) {
+  intent = "SKILLS";
+} else if (normalizedText.includes("experiencia")) {
+  intent = "EXPERIENCE";
+} else if (normalizedText.includes("estudio") || normalizedText.includes("master") || normalizedText.includes("formacion")) {
+  intent = "EDUCATION";
+} else if (normalizedText.includes("proyecto")) {
+  intent = "PROJECTS";
+} else if (normalizedText.includes("contratar")) {
+  intent = "MOTIVATION";
+} else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+  intent = "STACK";
+} else if (normalizedText.includes("libro")) {
+  intent = "BOOK";
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
