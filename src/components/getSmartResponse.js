@@ -254,11 +254,14 @@ if (ctx.awaitingFollowUp) {
 const validNames = ["jorge", "patricio", "jorge patricio"];
 const ignoredWords = ["su", "sus", "la", "el", "los", "las", "mi", "tu"];
 
-// 🟢 1. Detectar "de + nombre"
-const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
+// 🔥 Normalizar y separar palabras correctamente
+const words = text.trim().split(/\s+/);
 
-if (nameMatch) {
-  const detectedName = normalize(nameMatch[1]);
+// 🟢 1. Detectar SOLO "de + nombre" al final real
+const lastTwoWords = words.slice(-2);
+
+if (lastTwoWords[0] === "de") {
+  const detectedName = normalize(lastTwoWords[1]);
 
   if (
     detectedName &&
@@ -276,8 +279,7 @@ if (nameMatch) {
   }
 }
 
-// 🟢 2. Detectar nombre suelto al final
-const words = text.split(" ");
+// 🟢 2. Detectar nombre suelto al final (ej: "tecnologías luis")
 const lastWord = normalize(words[words.length - 1]);
 
 if (
@@ -295,7 +297,7 @@ if (
       intent: "UNKNOWN",
     };
   }
-}
+  }
 
   
 
