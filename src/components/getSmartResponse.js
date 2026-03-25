@@ -345,40 +345,26 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-// 🧠 LÓGICA FINAL
-// =========================
+  // 🧠 LÓGICA FINAL
+  // =========================
 
-// 🔴 Detectar estructuras tipo: de alguien, para alguien, sobre alguien
-const isAskingAboutOtherPerson = /\b(de|del|para|sobre|acerca de)\s+([a-z]+)/.test(normalizedText);
+  // 🔴 Detectar si hablan de OTRA persona (estructura)
+const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
 
-// 🔤 Palabras válidas del sistema (NO nombres)
-const safeWords = [
-  ...stopWords,
-  ...intentWords,
-  ...validNames,
-  ...sensitiveKeywords.map(k => k.split(" ")).flat()
-];
+// 🔴 Detectar nombre al final tipo "tecnologias luis"
+const lastWord = words[words.length - 1];
 
-// 🔴 Detectar posibles nombres en cualquier parte
-const possibleNames = words.filter(word => {
-  return (
-    word.length > 2 &&
-    !safeWords.includes(word)
-  );
-});
-
-// 🔴 Detectar si hay nombre que NO es tuyo
-const hasOtherNameAnywhere = possibleNames.some(word =>
-  !validNames.includes(word)
-);
+const isOtherNameAtEnd =
+  commonNames.includes(lastWord) &&
+  !validNames.includes(lastWord);
 
 // 🟢 Si menciona tu nombre → permitir
 if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Si es tema sensible + detecta otro nombre → bloquear
-if (hasSensitive && (isAskingAboutOtherPerson || hasOtherNameAnywhere)) {
+// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
+if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
   return false;
 }
 
