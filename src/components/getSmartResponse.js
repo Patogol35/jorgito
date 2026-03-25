@@ -382,6 +382,8 @@ if (
     "proyectos ha hecho",
     "cuéntame sobre",
     "cuentame sobre"
+
+    "dime sobre sus tecnologías"
   ];
 
   if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
