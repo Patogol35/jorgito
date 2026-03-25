@@ -246,7 +246,12 @@ if (ctx.awaitingFollowUp) {
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 const isAboutOwner = (text) => {
-  const normalizedText = text.toLowerCase().trim();
+const normalizedText = text
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "") // quitar tildes
+  .replace(/[¿?¡!.,]/g, "") // 🔥 quitar signos
+  .trim();
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
