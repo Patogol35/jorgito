@@ -243,7 +243,7 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX FINAL)
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 const isAboutOwner = (text) => {
   const normalizedText = text.toLowerCase().trim();
@@ -252,12 +252,19 @@ const isAboutOwner = (text) => {
 
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
 
-  // 🔹 Stop words (para no detectar basura como nombres)
+  // 🔹 Stop words
   const stopWords = [
     "de","la","el","los","las","un","una","sobre","que","del","a","en","y","con"
   ];
 
-  // 🔹 Lista de nombres comunes
+  // 🔹 Palabras de intención (NO son nombres)
+  const intentWords = [
+    "hablame","háblame","cuentame","cuéntame","dime","decime",
+    "quiero","necesito","podrias","podrías","me","puedes",
+    "puede","explicame","explícame","informacion","información"
+  ];
+
+  // 🔹 Nombres comunes
   const commonNames = [
     "luis","carlos","jose","juan","andres","diego","daniel","christian",
     "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
@@ -283,6 +290,7 @@ const isAboutOwner = (text) => {
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
+  // 🔹 Keywords sensibles
   const sensitiveKeywords = [
     "tecnologia","tecnologias","tecnologías",
     "experiencia","estudios","perfil","contratar",
@@ -302,14 +310,23 @@ const isAboutOwner = (text) => {
     normalizedText.includes(name)
   );
 
-  // 🔴 Detectar nombres raros tipo "ghgh", "asdasd"
-  const possibleNames = words.filter(word =>
-    word.length > 2 &&
-    !stopWords.includes(word) &&
-    !validNames.includes(word) &&
-    !commonNames.includes(word) &&
-    !sensitiveKeywords.some(kw => word.includes(kw))
-  );
+  // 🔤 Normalizar palabras (quita tildes)
+  const normalizeWord = (word) =>
+    word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // 🔴 Detectar nombres raros (tipo ghgh)
+  const possibleNames = words.filter(word => {
+    const clean = normalizeWord(word);
+
+    return (
+      clean.length > 2 &&
+      !stopWords.includes(clean) &&
+      !intentWords.includes(clean) &&
+      !validNames.includes(clean) &&
+      !commonNames.includes(clean) &&
+      !sensitiveKeywords.some(kw => clean.includes(kw))
+    );
+  });
 
   const hasWeirdName = possibleNames.length > 0;
 
