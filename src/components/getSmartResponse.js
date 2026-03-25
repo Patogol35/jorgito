@@ -255,7 +255,7 @@ const isAboutOwner = (text) => {
   // 🔹 Lista de nombres comunes (puedes ampliarla)
   const commonNames = [
   // 🔵 Masculinos
-  "luis","carlos","jose","juan","andres","diego","daniel", "christian",
+  "luis","carlos","jose","juan","andres","diego","daniel", "christian", "gay",
   "camilo","miguel","fernando","alex","pedro","alejandro",
   "manuel","david","sergio","rafael","adrian","ricardo",
   "marcos","oscar","alberto","roberto","ivan","hugo",
