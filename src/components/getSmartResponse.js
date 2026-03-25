@@ -256,12 +256,6 @@ const isAboutOwner = (text) => {
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
-  const commonNames = [
-    "luis","carlos","jose","juan","andres","diego","daniel","miguel",
-    "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
-    "ana","maria","sofia","valentina","camila","laura","paula"
-  ];
-
   const intentKeywords = [
     "tecnolog","experien","estudi","formacion","educacion",
     "master","universidad","proyecto","habilidad","stack",
@@ -277,12 +271,26 @@ const isAboutOwner = (text) => {
     normalizedText.includes(name)
   );
 
-  const hasOtherName = commonNames.some(name =>
-    normalizedText.includes(name) && !validNames.includes(name)
+  // 🔥 detectar palabras tipo "nombre"
+  const words = normalizedText.split(" ");
+
+  const suspiciousWords = words.filter(word =>
+    word.length > 3 && // evita "de", "la", etc
+    !validNames.includes(word) &&
+    !intentKeywords.some(k => word.includes(k))
   );
 
-  if (hasOtherName) return false;
+  const hasWeirdName = suspiciousWords.length > 0;
+
+  // 🔴 Si hay palabra rara + intención → bloquear
+  if (hasWeirdName && hasIntent && !hasOwnerName) {
+    return false;
+  }
+
+  // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
+
+  // 🟢 Si parece pregunta profesional → asumir Jorge
   if (hasIntent) return true;
 
   return true;
