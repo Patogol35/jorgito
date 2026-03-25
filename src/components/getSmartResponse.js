@@ -243,13 +243,15 @@ if (ctx.awaitingFollowUp) {
 }
 
 
+
   
-/* =========================
-🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
-========================= */
+
+  
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// Buscar específicamente "de + nombre" al FINAL
+// Palabras que NO son nombres (artículos/pronombres)
+const ignoredWords = ["su", "sus", "la", "el", "los", "las", "mi", "tu"];
+
 const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
 
 if (nameMatch) {
@@ -257,6 +259,7 @@ if (nameMatch) {
 
   if (
     detectedName &&
+    !ignoredWords.includes(detectedName) && // 🔥 clave
     !validNames.some(
       name =>
         detectedName.includes(name) ||
@@ -269,6 +272,8 @@ if (nameMatch) {
     };
   }
 }
+
+  
 
   
 
