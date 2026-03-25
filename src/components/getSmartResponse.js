@@ -265,6 +265,17 @@ if (ctx.awaitingFollowUp) {
     if (match) {
       const possibleName = normalize(match[1]);
 
+      const invalidNameWords = [
+  "su", "sus", "experiencia", "proyectos", "estudios",
+  "tecnologias", "tecnología", "perfil", "stack",
+  "habilidades", "contacto", "whatsapp"
+];
+
+// 🚀 Ignorar falsos "nombres"
+if (invalidNameWords.some(word => possibleName.includes(word))) {
+  continue;
+}
+
       // Si el nombre detectado NO es uno válido → bloquear
       if (!validNames.some((name) => possibleName.includes(name) || name.includes(possibleName))) {
         return false;
