@@ -253,9 +253,12 @@ if (ctx.awaitingFollowUp) {
 
   // 2) Detectar si menciona OTRO nombre después de patrones comunes
   const otherNamePatterns = [
-    /\b(?:de|a|sobre|acerca de|contactar a|contacto de|contratar a)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
-    /\b(?:quien es|quién es)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
-  ];
+  /\b(?:de|a|sobre|acerca de|contactar a|contacto de|contratar a)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
+  /\b(?:quien es|quién es|dime si|quiero saber si|sabes si)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
+  /^([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)\s+(?:es|tiene|trabaja|usa|estudio|estudió|hace|desarrolla|programa|sabe|conoce)/i,
+];
+
+    
 
   for (const pattern of otherNamePatterns) {
     const match = text.match(pattern);
@@ -271,16 +274,18 @@ if (ctx.awaitingFollowUp) {
 
   // 3) Si no hay nombre explícito, permitir si parece claramente sobre Jorge
   const ownerKeywords = [
-    "jorge", "patricio",
-    "su experiencia", "sus proyectos", "sus estudios", "sus tecnologias", "sus tecnologías",
-    "su perfil", "su stack", "sus habilidades", "sus libros",
-    "su contacto", "su whatsapp", "contactarlo", "contacto", "whatsapp",
-    "experiencia", "proyectos", "estudios", "tecnologias", "tecnologías",
-    "perfil", "habilidades", "stack", "full stack", "desarrollador",
-    "ingeniero", "formacion", "formación", "master", "máster",
-    "contratar", "libros", "quien te creo", "quién te creó",
-    "cuentame sobre", "cuéntame sobre", "dime acerca de"
-  ];
+  "su experiencia", "sus proyectos", "sus estudios", "sus tecnologias", "sus tecnologías",
+  "su perfil", "su stack", "sus habilidades", "sus libros",
+  "su contacto", "su whatsapp", "contactarlo",
+  "quien te creo", "quién te creó",
+  "cuentame sobre", "cuéntame sobre", "dime acerca de",
+  "como contactar", "cómo contactar",
+  "que experiencia tiene", "qué experiencia tiene",
+  "que estudios tiene", "qué estudios tiene",
+  "que tecnologias usa", "qué tecnologías usa",
+  "que proyectos tiene", "qué proyectos tiene",
+  "es full stack"
+];
 
   const hasOwnerContext = ownerKeywords.some((kw) => normalizedText.includes(kw));
 
