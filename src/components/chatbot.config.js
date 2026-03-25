@@ -151,21 +151,7 @@ export const INTENTS = {
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
-  PROFILE: [
-  "perfil",
-  "quien es jorge",
-  "quién es jorge",
-  "sobre jorge",
-  "acerca de jorge",
-  "cuentame sobre jorge",
-  "cuéntame sobre jorge",
-  "hablame de jorge",
-  "háblame de jorge",
-  "dime de jorge",
-  "quiero saber de jorge",
-  "informacion de jorge",
-  "información de jorge",
-],
+  PROFILE: ["jorge", "perfil"],
   EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades","tecnología"],
@@ -233,7 +219,7 @@ export const followUp = (intent) =>
   ({
     PROFILE: "¿Quieres conocer su experiencia profesional?\n👉 Responde \"si\" u \"ok\"",
     EXPERIENCE: "¿Te muestro las tecnologías que utiliza?\n👉 Responde \"si\" u \"ok\"",
-    SKILLS: "¿Quieres conocer los proyectos en los que ha trabajado Jorge?\n👉 Responde \"si\" u \"ok\"",
+    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?\n👉 Responde \"si\" u \"ok\"",
     PROJECTS: null,
   }[intent] || null);
 
