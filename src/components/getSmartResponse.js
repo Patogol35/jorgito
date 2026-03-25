@@ -262,7 +262,6 @@ const isAboutOwner = (text) => {
     "ana","maria","sofia","valentina","camila","laura","paula"
   ];
 
-  // 🔥 intención profesional
   const intentKeywords = [
     "tecnolog","experien","estudi","formacion","educacion",
     "master","universidad","proyecto","habilidad","stack",
@@ -282,41 +281,10 @@ const isAboutOwner = (text) => {
     normalizedText.includes(name) && !validNames.includes(name)
   );
 
-  // 🔴 Si menciona otro nombre → bloquear
   if (hasOtherName) return false;
-
-  // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
-
-  // 🟢 Si parece pregunta profesional → asumir Jorge
   if (hasIntent) return true;
 
-  // 🟡 fallback (no bloquear de más)
-  return true;
-};
-  
-  
-
-  // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
-
-  // 🟢 Si menciona tu nombre → permitir
-  if (hasOwnerName) {
-    return true;
-  }
-
-  // 🔴 Si hay otro nombre + pregunta sensible → bloquear
-  if (hasOtherName && hasSensitive) {
-    return false;
-  }
-
-  // 🟡 Bloquear SOLO si hay varios nombres raros (fix bug “donde estudio”)
-  if (hasSensitive && (hasOtherName || (hasWeirdName && !hasOwnerName))) {
-  return false;
-  }
-
-  // 🟢 Todo lo demás → asumir Jorge
   return true;
 };
 
