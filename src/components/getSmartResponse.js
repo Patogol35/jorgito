@@ -244,10 +244,12 @@ if (ctx.awaitingFollowUp) {
 
 
   
-// 🔴 BLOQUEO DE NOMBRES AJENOS (MEJORADO)
+/* =========================
+🔴 BLOQUEO DE NOMBRES AJENOS (MEJORADO PRO)
+========================= */
 const validNames = ["jorge", "patricio", "jorge patricio"];
 
-// 🔥 Palabras que NO son nombres
+// 🔥 Palabras que NO son nombres (para evitar falsos positivos)
 const ignoreWords = ["su", "sus", "el", "la", "los", "las"];
 
 const nameMatch = text.match(/\b(de|a|sobre)\s+([a-zA-Záéíóúñ]+)/i);
@@ -255,27 +257,26 @@ const nameMatch = text.match(/\b(de|a|sobre)\s+([a-zA-Záéíóúñ]+)/i);
 if (nameMatch) {
   const detectedName = normalize(nameMatch[2]);
 
-  if (ignoreWords.includes(detectedName)) {
-    // ✅ ignorar palabras como "su", "la", etc.
-  } else if (
-    detectedName &&
-    !validNames.some(
-      name =>
-        detectedName.includes(name) ||
-        name.includes(detectedName)
-    )
-  ) {
-    return {
-      text: replies.OUT_OF_SCOPE(ctx),
-      intent: "OUT_OF_SCOPE",
-    };
+  // ✅ Ignorar palabras vacías tipo "su", "la", etc.
+  if (!ignoreWords.includes(detectedName)) {
+    if (
+      detectedName &&
+      !validNames.some(
+        name =>
+          detectedName.includes(name) ||
+          name.includes(detectedName)
+      )
+    ) {
+      return {
+        text: replies.OUT_OF_SCOPE(ctx),
+        intent: "OUT_OF_SCOPE",
+      };
+    }
   }
 }
 
 
 
-  
-  
 /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
@@ -367,23 +368,22 @@ const isAboutOwner = (text) => {
     return true;
   }
 
-  // 🔥 FIX FINAL: permitir frases sensibles sin nombre
+  // 🔥 CLAVE: permitir TODO lo sensible sin nombre (esto arregla tu bug)
   if (hasSensitive) {
     return true;
   }
 
   return false;
 };
-  // 🔒 Bloquear si NO es sobre ti
+
+
+// 🔒 Bloquear si NO es sobre Jorge
 if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-}
-
-
-
+    }
 
   
 
