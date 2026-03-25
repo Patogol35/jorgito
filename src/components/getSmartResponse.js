@@ -381,7 +381,7 @@ if (
     "tecnologías trabaja",
     "proyectos ha hecho",
     "cuéntame sobre",
-    "cuentame sobre"
+    "cuentame sobre",
 
     "dime sobre sus tecnologías"
   ];
