@@ -242,67 +242,6 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
-
-
-  
-
-  
-/* =========================
-🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
-========================= */
-
-const validNames = ["jorge", "patricio", "jorge patricio"];
-const ignoredWords = ["su", "sus", "la", "el", "los", "las", "mi", "tu"];
-
-// 🔥 Normalizar y separar palabras correctamente
-const words = text.trim().split(/\s+/);
-
-// 🟢 1. Detectar SOLO "de + nombre" al final real
-const lastTwoWords = words.slice(-2);
-
-if (lastTwoWords[0] === "de") {
-  const detectedName = normalize(lastTwoWords[1]);
-
-  if (
-    detectedName &&
-    !ignoredWords.includes(detectedName) &&
-    !validNames.some(
-      name =>
-        detectedName.includes(name) ||
-        name.includes(detectedName)
-    )
-  ) {
-    return {
-      text: replies.UNKNOWN(ctx),
-      intent: "UNKNOWN",
-    };
-  }
-}
-
-// 🟢 2. Detectar nombre suelto al final (ej: "tecnologías luis")
-const lastWord = normalize(words[words.length - 1]);
-
-if (
-  lastWord &&
-  !ignoredWords.includes(lastWord) &&
-  !validNames.some(
-    name =>
-      lastWord.includes(name) ||
-      name.includes(lastWord)
-  )
-) {
-  if (words.length > 2) {
-    return {
-      text: replies.UNKNOWN(ctx),
-      intent: "UNKNOWN",
-    };
-  }
-  }
-
-  
-
-  
-
   /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
@@ -325,8 +264,6 @@ const isAboutOwner = (text) => {
   ];
 
   const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
-
-  
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
   const wordCount = words.length;
 
@@ -336,20 +273,6 @@ const isAboutOwner = (text) => {
 
     // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
-
-    "sus tecnologias",
-"sus tecnologías",
-"la tecnologia",
-"la tecnología",
-"habla de sus tecnologias",
-"habla de sus tecnologías",
-"hablame de sus tecnologias",
-"háblame de sus tecnologías",
-    "su experiencia",
-"la experiencia",
-"habla de su experiencia",
-"hablame de su experiencia",
-"háblame de su experiencia",
     "full stack",
     "libros favoritos",
     "máster en",
@@ -374,9 +297,7 @@ const isAboutOwner = (text) => {
     "tecnologías trabaja",
     "proyectos ha hecho",
     "cuéntame sobre",
-    "cuentame sobre",
-
-    "dime sobre sus tecnologías"
+    "cuentame sobre"
   ];
 
   if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
