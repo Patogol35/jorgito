@@ -345,7 +345,7 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-// 🧠 LÓGICA FINAL (PRO)
+// 🧠 LÓGICA FINAL (PRO REAL)
 // =========================
 
 // 🟢 Si menciona tu nombre → permitir SIEMPRE
@@ -353,18 +353,30 @@ if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Detectar cualquier otro nombre en la frase
-const hasOtherName =
-  words.some(word =>
-    commonNames.includes(word) && !validNames.includes(word)
-  ) || hasWeirdName;
+// 🔴 Normalizar palabra
+const cleanWord = (word) =>
+  word
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z]/g, "");
 
-// 🔴 BLOQUEO: si hay intención sensible + otro nombre → bloquear
+// 🔴 Detectar cualquier otro nombre
+const hasOtherName =
+  words.some(word => {
+    const clean = cleanWord(word);
+    return (
+      clean &&
+      commonNames.includes(clean) &&
+      !validNames.includes(clean)
+    );
+  }) || hasWeirdName;
+
+// 🔴 BLOQUEO
 if (hasSensitive && hasOtherName) {
   return false;
 }
 
-// 🟢 Todo lo demás → asumir que habla de Jorge
+// 🟢 Default → Jorge
 return true;
 };
 
