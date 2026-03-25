@@ -345,44 +345,46 @@ const normalizedText = text
   });
 
   const hasWeirdName = possibleNames.length > 0;
+  
+// =========================
+// 🧠 LÓGICA FINAL (MODO ESTRICTO)
+// =========================
 
-  // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
-
-  // 🔴 Detectar si hablan de OTRA persona (estructura)
-const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
-
-// 🔴 Detectar nombre al final tipo "tecnologias luis"
-const lastWord = words[words.length - 1];
-
-const isOtherNameAtEnd =
-  commonNames.includes(lastWord) &&
-  !validNames.includes(lastWord);
-
-// 🟢 Si menciona tu nombre → permitir
+// 🟢 Si menciona tu nombre → permitir SIEMPRE
 if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
-if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
+// 🔴 Palabras permitidas (controladas)
+const allowedWords = [
+  ...stopWords,
+  ...intentWords,
+  ...validNames
+];
+
+// 🔴 Detectar cualquier palabra NO permitida
+const hasInvalidWord = words.some(word => {
+  const clean = word
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z]/g, "");
+
+  return (
+    clean &&
+    clean.length > 2 &&
+    !allowedWords.includes(clean)
+  );
+});
+
+// 🔴 BLOQUEO TOTAL
+if (hasSensitive && hasInvalidWord) {
   return false;
 }
 
-// 🟢 Todo lo demás → asumir Jorge
-return true; };
-
-/* =========================
-🔒 BLOQUEO GLOBAL
-========================= */
-if (!isAboutOwner(text)) {
-  return {
-    text: replies.OUT_OF_SCOPE(ctx),
-    intent: "OUT_OF_SCOPE",
-  };
-
-}
+// 🟢 Default → asumir Jorge
+return true;
+};
 
 /* =========================
 🟢 DETECTAR INTENT
