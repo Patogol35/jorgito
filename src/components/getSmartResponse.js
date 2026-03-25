@@ -275,8 +275,6 @@ if (nameMatch) {
   }
 }
 
-
-
 /* =========================
 🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
 ========================= */
@@ -284,7 +282,6 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
   const normalizedText = text.toLowerCase().trim();
 
-  // ✅ Si menciona el nombre → permitir
   if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
@@ -296,22 +293,18 @@ const isAboutOwner = (text) => {
     "quien es", "quién es", "formacion", "formación",
     "educacion", "educación", "máster", "master",
     "libros", "libro", "full stack", "desarrollador",
-    "ingeniero", "stack", "full", "contactar", "contacto", "whatsapp"
+    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
   ];
 
-  const hasSensitive = sensitiveKeywords.some(kw =>
-    normalizedText.includes(kw)
-  );
-
+  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
   const wordCount = words.length;
 
-  // ✅ Si NO es sensible → permitir
   if (!hasSensitive) {
     return true;
   }
 
-  // ✅ Frases válidas sin nombre
+    // Frases multi-palabra válidas sin nombre
   const validMultiWord = [
     "full stack",
     "libros favoritos",
@@ -334,6 +327,7 @@ const isAboutOwner = (text) => {
     "sus libros",
     "estudios tiene",
     "experiencia tiene",
+    "tecnologías trabaja",
     "proyectos ha hecho",
     "cuéntame sobre",
     "cuentame sobre"
@@ -343,47 +337,24 @@ const isAboutOwner = (text) => {
     return true;
   }
 
-  // ✅ Permitir frases incompletas tipo "habla de..."
-  const incompletePatterns = [
-    "habla de",
-    "hablame de",
-    "háblame de",
-    "cuentame de",
-    "cuéntame de",
-    "informacion de",
-    "información de"
-  ];
-
-  if (incompletePatterns.some(p => normalizedText.startsWith(p))) {
-    return true;
-  }
-
-  // ✅ Permitir si termina en "de"
-  if (normalizedText.endsWith(" de")) {
-    return true;
-  }
-
-  // ✅ Permitir si es 1 palabra
+  // Permitir si es 1 palabra
   if (wordCount === 1) {
     return true;
   }
 
-  // 🔥 CLAVE: permitir TODO lo sensible sin nombre (esto arregla tu bug)
-  if (hasSensitive) {
-    return true;
-  }
-
+  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
   return false;
 };
 
-
-// 🔒 Bloquear si NO es sobre Jorge
-if (!isAboutOwner(text)) {
+  // 🔒 Bloquear si NO es sobre ti
+  if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-    }
+  }
+
+
 
   
 
@@ -444,65 +415,42 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 
 // 💾 Guardar en memoria
 saveMemory(ctx, { user: text, intent });
-      /* =========================
-🟢 CONTACTO (SOLO SI ES SOBRE JORGE)
-========================= */
-if (intent === "CONTACT") {
-  const normalizedText = text.toLowerCase();
-  const validNames = ["jorge", "patricio", "jorge patricio"];
+      /
 
-  // 🔹 Generar mensaje dinámico
-  const contactMessage = replies.CONTACT(ctx);
+  /* =========================
+  🟢 DETECTAR INTENT (SOBRE JORGE)
+  ========================= */
+let intent = detectIntent(text);
 
-  // Si menciona tu nombre → permitir
-  if (validNames.some(name => normalizedText.includes(name))) {
-    ctx.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
-      action: "CONTACT_CONFIRM",
-      intent,
-    };
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
+const normalizedText = text.toLowerCase();
+if (normalizedText.includes("jorge")) {
+  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+    intent = "CONTACT";
+  } else if (normalizedText.includes("tecnolog")) {
+    intent = "SKILLS";
+  } else if (normalizedText.includes("experiencia")) {
+    intent = "EXPERIENCE";
+  } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
+    intent = "EDUCATION";
+  } else if (normalizedText.includes("proyecto")) {
+    intent = "PROJECTS";
+  } else if (normalizedText.includes("contratar")) {
+    intent = "MOTIVATION";
+  } else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+    intent = "STACK";
+  } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
+    intent = "BOOK";
   }
+  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
+}
 
-  // Extraer posibles nombres después de "contactar"
-  let otherName = null;
+if (intent === "FAREWELL" && !isValidFarewell(text)) {
+  intent = "UNKNOWN";
+}
 
-  const patterns = [
-    /contactar\s+a\s+(\w+)/i,
-    /contactar\s+(\w+)/i,
-    /contacto\s+de\s+(\w+)/i,
-    /contacto\s+(\w+)/i,
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) {
-      otherName = normalize(match[1]);
-      break;
-    }
-  }
-
-  // Bloquear si no es Jorge
-  if (
-    otherName &&
-    !validNames.some(
-      name => otherName.includes(name) || name.includes(otherName)
-    )
-  ) {
-    return {
-      text: "Solo tengo información sobre Jorge Patricio 🙂",
-      intent: "UNKNOWN",
-    };
-  }
-
-  // Si no hay nombre → asumir que es sobre Jorge
-  ctx.awaiting = "CONTACT_CONFIRM";
-  return {
-    text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
-    action: "CONTACT_CONFIRM",
-    intent,
-  };
-                                     }
+saveMemory(ctx, { user: text, intent });
 
   // =========================
   // 🧠 RESPUESTA NORMAL
