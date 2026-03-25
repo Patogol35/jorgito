@@ -348,24 +348,21 @@ const normalizedText = text
   // 🧠 LÓGICA FINAL
   // =========================
 
-  // 🟢 Si menciona tu nombre → permitir
-  if (hasOwnerName) {
-    return true;
-  }
+  // 🔴 Detectar si hablan de OTRA persona (estructura real)
+const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
 
-  // 🔴 Si hay nombre raro + tema sensible → bloquear
-  if (hasWeirdName && hasSensitive) {
-    return false;
-  }
+// 🟢 Si menciona tu nombre → permitir
+if (hasOwnerName) {
+  return true;
+}
 
-  // 🟢 Si NO hay nombre raro → asumir que es Jorge
-  if (!hasWeirdName) {
-    return true;
-  }
-
-  // 🔴 Fallback
+// 🔴 Si pregunta sensible + menciona "de alguien" → bloquear
+if (isAskingAboutOtherPerson && hasSensitive) {
   return false;
-};
+}
+
+// 🟢 Todo lo demás → asumir Jorge
+return true;
 
 /* =========================
 🔒 BLOQUEO GLOBAL
