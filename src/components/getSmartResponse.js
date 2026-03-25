@@ -253,25 +253,23 @@ const isAboutOwner = (text) => {
   const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
 
   // 🔹 Lista de nombres comunes (puedes ampliarla)
-  const commonWords = [
-  // 🔵 Nombres masculinos
-  "luis","carlos","jose","juan","andres","diego","daniel","christian",
-  "camilo","miguel","fernando","alex","pedro","alejandro", "angel", "gilberto",
-  "manuel","david","sergio","rafael","adrian","ricardo", "axel",
+  const commonNames = [
+  // 🔵 Masculinos
+  "luis","carlos","jose","juan","andres","diego","daniel", "christian", "gay",
+  "camilo","miguel","fernando","alex","pedro","alejandro",
+  "manuel","david","sergio","rafael","adrian","ricardo",
   "marcos","oscar","alberto","roberto","ivan","hugo",
   "enrique","samuel","emilio","gabriel","esteban",
   "victor","martin","ignacio","julio","cesar","tomas",
   "felipe","cristian","edgar","ramon","armando",
   "leonardo","sebastian","mateo","nicolas","lucas",
-  "francisco","antonio","raul","guillermo",
+  "francisco","antonio","jorge","raul","guillermo",
   "alvaro","bruno","dario","fabian","gonzalo",
   "hector","joaquin","lorenzo","maximiliano","nahuel",
   "orlando","pablo","renato","salvador","santiago",
   "teodoro","ulises","valentin","walter","xavier","yago","zacarias",
-  "erick","kevin","bryan","jonathan","cristobal","agustin",
-  "rodrigo","mariano","ezequiel","leandro","matias","ismael",
 
-  // 🔴 Nombres femeninos
+  // 🔴 Femeninos
   "ana","maria","sofia","valentina","daniela","camila",
   "laura","paula","andrea","elena","lucia","isabella",
   "martina","gabriela","adriana","carolina","patricia",
@@ -283,20 +281,7 @@ const isAboutOwner = (text) => {
   "esther","fatima","gloria","helena","irene",
   "jimena","karla","liliana","mariana","nerea",
   "olga","priscila","rocio","susana","teresa",
-  "ursula","victoria","wanda","ximena","yolanda","zoe","samanta",
-  "araceli","brenda","celeste","dayana","erika","florencia",
-  "gisela","ingrid","jenifer","karen","melissa","pamela",
-
-  // ⚠️ Palabras comunes / insultos suaves
-  "tonto","tonta","estupido","estupida","idiota","imbecil",
-  "bobo","boba","torpe","lento","lenta","ridiculo","ridicula",
-  "inutil","molesto","pesado","fastidioso","necio","absurdo",
-  "payaso","payasa","bruto","bruta","ignorante","patetico",
-  "patetica","grosero","grosera","malcriado","malcriada",
-
-  // 🧩 Extras comunes (internet / slang)
-  "noob","fake","spam","bot","troll","hater","basura",
-  "asco","wtf","lol","xd","omg","fail","cringe"
+  "ursula","victoria","wanda","ximena","yolanda","zoe", "samanta"
 ];
 
   const hasOwnerName = validNames.some(name =>
