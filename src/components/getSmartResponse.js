@@ -245,13 +245,14 @@ if (ctx.awaitingFollowUp) {
 /* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
+
 const isAboutOwner = (text) => {
-const normalizedText = text
-  .toLowerCase()
-  .normalize("NFD")
-  .replace(/[\u0300-\u036f]/g, "") // quitar tildes
-  .replace(/[¿?¡!.,]/g, "") // 🔥 quitar signos
-  .trim();
+  const normalizedText = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // quitar tildes
+    .replace(/[¿?¡!.,]/g, "") // quitar signos
+    .trim();
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
@@ -262,21 +263,21 @@ const normalizedText = text
     "de","la","el","los","las","un","una","sobre","que","del","a","en","y","con"
   ];
 
-  // 🔹 Palabras de intención (NO son nombres)
+  // 🔹 Palabras de intención
   const intentWords = [
-  "hablame","háblame","cuentame","cuéntame","dime","decime",
-  "quiero","necesito","podrias","podrías","me","puedes",
-  "puede","explicame","explícame","informacion","información",
+    "hablame","háblame","cuentame","cuéntame","dime","decime",
+    "quiero","necesito","podrias","podrías","me","puedes",
+    "puede","explicame","explícame","informacion","información",
 
-  // 🔥 preguntas
-  "que","qué","cual","cuál","como","cómo",
-  "donde","dónde","cuando","cuándo",
-  "quien","quién","por","para",
+    // preguntas
+    "que","qué","cual","cuál","como","cómo",
+    "donde","dónde","cuando","cuándo",
+    "quien","quién","por","para",
 
-  // 🔥 pronombres (CLAVE)
-  "su","sus","mi","mis","tu","tus",
-  "nuestro","nuestra","nuestros","nuestras"
-];
+    // pronombres
+    "su","sus","mi","mis","tu","tus",
+    "nuestro","nuestra","nuestros","nuestras"
+  ];
 
   // 🔹 Nombres comunes
   const commonNames = [
@@ -304,35 +305,36 @@ const normalizedText = text
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
+  // 🔹 Keywords sensibles (se mantienen porque se usan en filtros internos)
   const sensitiveKeywords = [
-  "tecnologia","tecnologias","tecnologías",
-  "experiencia","estudios","perfil","contratar",
-  "proyectos","stack","habilidades","lenguajes",
-  "quien es","quién es","formacion","formación",
-  "educacion","educación","máster","master",
-  "libros","libro","full stack","desarrollador",
-  "ingeniero","full","contactar","contacto","whatsapp"
-];
+    "tecnologia","tecnologias","tecnologías",
+    "experiencia","estudios","perfil","contratar",
+    "proyectos","stack","habilidades","lenguajes",
+    "quien es","quién es","formacion","formación",
+    "educacion","educación","máster","master",
+    "libros","libro","full stack","desarrollador",
+    "ingeniero","full","contactar","contacto","whatsapp"
+  ];
 
-  // 🔹 Keywords sensibles
+  // 🔥 NUEVA detección robusta
   const hasSensitive =
-  /tecnolog|experien|estudi|formacion|educacion|master|universidad|proyecto|habilidad|stack|contact|libro|desarrollador|ingeniero|contratar/.test(normalizedText);
+    /tecnolog|experien|estudi|formacion|educacion|master|universidad|proyecto|habilidad|stack|contact|libro|desarrollador|ingeniero|contratar/.test(normalizedText);
 
   // 🟢 Detectar si menciona tu nombre
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
-  // 🔤 Normalizar palabras (quita tildes)
+  // 🔤 Normalizar palabra
   const normalizeWord = (word) =>
     word.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // 🔴 Detectar nombres raros (tipo ghgh)
+  // 🔴 Detectar nombres raros (MEJORADO)
   const possibleNames = words.filter(word => {
     const clean = normalizeWord(word);
 
     return (
-      clean.length > 2 &&
+      clean.length > 3 && // 🔥 FIX CLAVE
       !stopWords.includes(clean) &&
       !intentWords.includes(clean) &&
       !validNames.includes(clean) &&
@@ -343,32 +345,33 @@ const normalizedText = text
 
   const hasWeirdName = possibleNames.length > 0;
 
+  // 🔴 Detectar si hay OTRO nombre
+  const hasOtherName = words.some(word =>
+    commonNames.includes(word) && !validNames.includes(word)
+  );
+
   // =========================
-// 🧠 LÓGICA FINAL (FIX PRO)
-// =========================
+  // 🧠 LÓGICA FINAL
+  // =========================
 
-// 🔴 Detectar si hay OTRO nombre en cualquier parte
-const hasOtherName = words.some(word =>
-  commonNames.includes(word) && !validNames.includes(word)
-);
+  // 🟢 Si menciona tu nombre → permitir
+  if (hasOwnerName) {
+    return true;
+  }
 
-// 🟢 Si menciona tu nombre → permitir
-if (hasOwnerName) {
+  // 🔴 Si hay otro nombre + pregunta sensible → bloquear
+  if (hasOtherName && hasSensitive) {
+    return false;
+  }
+
+  // 🟡 Bloquear SOLO si hay varios nombres raros (fix bug “donde estudio”)
+  if (hasWeirdName && hasSensitive && possibleNames.length >= 2) {
+    return false;
+  }
+
+  // 🟢 Todo lo demás → asumir Jorge
   return true;
-}
-
-// 🔴 Si hay OTRO nombre + pregunta sensible → bloquear
-if (hasOtherName && hasSensitive) {
-  return false;
-}
-
-// 🟡 OPCIONAL (RECOMENDADO): bloquear nombres raros tipo "ghgh"
-if (hasWeirdName && hasSensitive) {
-  return false;
-}
-
-// 🟢 Todo lo demás → asumir Jorge
-return true; };
+};
 
 /* =========================
 🔒 BLOQUEO GLOBAL
