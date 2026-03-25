@@ -279,7 +279,7 @@ const isAboutOwner = (text) => {
 "háblame de",
 "hablame de",
 "sobre su experiencia",
-"sobre su perfil"
+"sobre su perfil",
     "full stack",
     "libros favoritos",
     "máster en",
