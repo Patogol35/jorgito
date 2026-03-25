@@ -259,10 +259,15 @@ const isAboutOwner = (text) => {
 
   // 🔹 Palabras de intención (NO son nombres)
   const intentWords = [
-    "hablame","háblame","cuentame","cuéntame","dime","decime",
-    "quiero","necesito","podrias","podrías","me","puedes",
-    "puede","explicame","explícame","informacion","información"
-  ];
+  "hablame","háblame","cuentame","cuéntame","dime","decime",
+  "quiero","necesito","podrias","podrías","me","puedes",
+  "puede","explicame","explícame","informacion","información",
+
+  // 🔥 NUEVO (IMPORTANTE)
+  "que","qué","cual","cuál","como","cómo",
+  "donde","dónde","cuando","cuándo",
+  "quien","quién","por","para"
+];
 
   // 🔹 Nombres comunes
   const commonNames = [
