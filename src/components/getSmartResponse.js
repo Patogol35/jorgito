@@ -242,74 +242,79 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
-  const isAboutOwner = (text) => {
-  const validNames = ["jorge patricio", "jorge", "patricio"];
-  const normalizedText = normalize(text);
+  /* =========================
+🟡 PROTECCIÓN DE DATOS: ¿ES SOBRE JORGE?
+========================= */
+const isAboutOwner = (text) => {
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+  const normalizedText = text.toLowerCase().trim();
 
-  // 1) Si contiene nombre válido → permitir
-  if (validNames.some((name) => normalizedText.includes(name))) {
+  if (validNames.some(name => normalizedText.includes(name))) {
     return true;
   }
 
-  // 2) Detectar si menciona OTRO nombre después de patrones comunes
-  const otherNamePatterns = [
-  /\b(?:de|a|sobre|acerca de|contactar a|contacto de|contratar a)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
-  /\b(?:quien es|quién es|dime si|quiero saber si|sabes si)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)/i,
-  /^([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+)?)\s+(?:es|tiene|trabaja|usa|estudio|estudió|hace|desarrolla|programa|sabe|conoce)/i,
-];
+  const sensitiveKeywords = [
+    "tecnologia", "tecnologias", "tecnologías",
+    "experiencia", "estudios", "perfil", "contratar",
+    "proyectos", "stack", "habilidades", "lenguajes",
+    "quien es", "quién es", "formacion", "formación",
+    "educacion", "educación", "máster", "master",
+    "libros", "libro", "full stack", "desarrollador",
+    "ingeniero", "stack","full","contactar", "contacto","whatsapp"
+  ];
 
-    
+  const hasSensitive = sensitiveKeywords.some(kw => normalizedText.includes(kw));
+  const words = normalizedText.split(/\s+/).filter(w => w.length > 0);
+  const wordCount = words.length;
 
-  for (const pattern of otherNamePatterns) {
-    const match = text.match(pattern);
-    if (match) {
-      const possibleName = normalize(match[1]);
-
-      const invalidNameWords = [
-  "su", "sus", "experiencia", "proyectos", "estudios",
-  "tecnologias", "tecnología", "perfil", "stack",
-  "habilidades", "contacto", "whatsapp"
-];
-
-// 🚀 Ignorar falsos "nombres"
-if (invalidNameWords.some(word => possibleName.includes(word))) {
-  continue;
-}
-
-      // Si el nombre detectado NO es uno válido → bloquear
-      if (!validNames.some((name) => possibleName.includes(name) || name.includes(possibleName))) {
-        return false;
-      }
-    }
-  }
-
-  // 3) Si no hay nombre explícito, permitir si parece claramente sobre Jorge
-  const ownerKeywords = [
-  "su experiencia", "sus proyectos", "sus estudios", "sus tecnologias", "sus tecnologías",
-  "su perfil", "su stack", "sus habilidades", "sus libros",
-  "su contacto", "su whatsapp", "contactarlo",
-  "quien te creo", "quién te creó",
-  "cuentame sobre", "cuéntame sobre", "dime acerca de",
-  "como contactar", "cómo contactar",
-  "que experiencia tiene", "qué experiencia tiene",
-  "que estudios tiene", "qué estudios tiene",
-  "que tecnologias usa", "qué tecnologías usa",
-  "que proyectos tiene", "qué proyectos tiene",
-  "es full stack"
-];
-
-  const hasOwnerContext = ownerKeywords.some((kw) => normalizedText.includes(kw));
-
-  if (hasOwnerContext) {
+  if (!hasSensitive) {
     return true;
   }
 
-  // 4) Si no parece sobre Jorge → permitir solo mensajes generales
-  return true;
+    // Frases multi-palabra válidas sin nombre
+  const validMultiWord = [
+    "full stack",
+    "libros favoritos",
+    "máster en",
+    "proyectos realizados",
+    "experiencia profesional",
+    "qué estudios",
+    "que estudios",
+    "qué experiencia",
+    "que experiencia",
+    "qué tecnologías",
+    "que tecnologias",
+    "tecnologías trabaja",
+    "es full stack",
+    "por qué contratar",
+    "como contactar",
+    "cómo contactar",
+    "quién te creó",
+    "quien te creo",
+    "sus libros",
+    "estudios tiene",
+    "experiencia tiene",
+    "tecnologías trabaja",
+    "proyectos ha hecho",
+    "cuéntame sobre",
+    "cuentame sobre"
+  ];
+
+  if (validMultiWord.some(phrase => normalizedText.includes(phrase))) {
+    return true;
+  }
+
+  // Permitir si es 1 palabra
+  if (wordCount === 1) {
+    return true;
+  }
+
+  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
+  return false;
 };
 
-  // 🔒 Bloquear si NO es sobre Jorge
-if (!isAboutOwner(text)) {
+  // 🔒 Bloquear si NO es sobre ti
+  if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
@@ -319,33 +324,17 @@ if (!isAboutOwner(text)) {
  /* =========================
   🟢 DETECTAR INTENT (SOBRE JORGE)
   ========================= */
-
-  if (["jorge", "jorge patricio", "patricio"].includes(text)) {
-  return {
-    text: replies.PROFILE(ctx),
-    intent: "PROFILE",
-  };
-  }
 let intent = detectIntent(text);
 
-  const normalizedText = text.toLowerCase();
-
-const isImplicitOwnerQuery =
-  normalizedText.includes("jorge") ||
-  normalizedText.includes("su ") ||
-  normalizedText.includes("sus ") ||
-  normalizedText.includes(" es ") ||
-  normalizedText.startsWith("es ") ||
-  normalizedText.includes("tiene") ||
-  normalizedText.includes("trabaja") ||
-  normalizedText.includes("usa");
-
-if (isImplicitOwnerQuery) {
+// 🔁 Ajuste: si "jorge" aparece junto con una palabra clave específica,
+// priorizar la intención técnica/sensible sobre PROFILE
+const normalizedText = text.toLowerCase();
+if (normalizedText.includes("jorge")) {
   if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
     intent = "CONTACT";
-  } else if (normalizedText.includes("tecnolog") || normalizedText.includes("usa")) {
+  } else if (normalizedText.includes("tecnolog")) {
     intent = "SKILLS";
-  } else if (normalizedText.includes("experiencia") || normalizedText.includes("tiene experiencia")) {
+  } else if (normalizedText.includes("experiencia")) {
     intent = "EXPERIENCE";
   } else if (normalizedText.includes("estudio") || normalizedText.includes("máster") || normalizedText.includes("formación")) {
     intent = "EDUCATION";
@@ -358,6 +347,7 @@ if (isImplicitOwnerQuery) {
   } else if (normalizedText.includes("libro") || normalizedText.includes("dan brown")) {
     intent = "BOOK";
   }
+  // Si ninguna condición se cumple, se respeta la intención detectada originalmente
 }
 
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
