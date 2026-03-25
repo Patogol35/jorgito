@@ -343,13 +343,31 @@ const isAboutOwner = (text) => {
   }
 
   // 🟢 Permitir si es una sola palabra
-  if (words.length === 1) {
-    return true;
-  }
+if (words.length === 1) {
+  return true;
+}
 
-  // 🔴 Bloquear todo lo demás
-  return false;
-};
+// 🔥 NUEVO
+const implicitOwnerQuestions = [
+  "experiencia",
+  "estudios",
+  "tecnologias",
+  "habilidades",
+  "proyectos",
+  "perfil",
+  "stack"
+];
+
+const isImplicitQuestion = implicitOwnerQuestions.some(word =>
+  normalizedText.includes(word)
+);
+
+if (isImplicitQuestion) {
+  return true;
+}
+
+// 🔴 Bloquear todo lo demás
+return false;
 
 // 🔒 Bloquear si NO es sobre ti
 if (!isAboutOwner(text)) {
