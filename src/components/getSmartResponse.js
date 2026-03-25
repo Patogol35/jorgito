@@ -244,7 +244,31 @@ if (ctx.awaitingFollowUp) {
 
 
   
+/* =========================
+🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
+========================= */
+const validNames = ["jorge", "patricio", "jorge patricio"];
 
+// Buscar específicamente "de + nombre" al FINAL
+const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
+
+if (nameMatch) {
+  const detectedName = normalize(nameMatch[1]);
+
+  if (
+    detectedName &&
+    !validNames.some(
+      name =>
+        detectedName.includes(name) ||
+        name.includes(detectedName)
+    )
+  ) {
+    return {
+      text: replies.UNKNOWN(ctx),
+      intent: "UNKNOWN",
+    };
+  }
+}
 
   
 
