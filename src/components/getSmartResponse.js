@@ -333,13 +333,16 @@ const isAboutOwner = (text) => {
   }
 
   // Permitir si es 1 palabra
-  if (wordCount === 1) {
-    return true;
-  }
+if (wordCount === 1) {
+  return true;
+}
 
-  // Bloquear todo lo demás sensible con 2+ palabras que no sea sobre ti
-  return false;
-};
+// ✅ PERMITIR frases sensibles aunque no tengan nombre
+if (hasSensitive) {
+  return true;
+}
+
+return false;
 
   // 🔒 Bloquear si NO es sobre ti
   if (!isAboutOwner(text)) {
