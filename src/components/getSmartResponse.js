@@ -247,11 +247,14 @@ if (ctx.awaitingFollowUp) {
   
 
   
-const validNames = ["jorge", "patricio", "jorge patricio"];
+/* =========================
+🔴 BLOQUEO DE NOMBRES AJENOS (FIX)
+========================= */
 
-// Palabras que NO son nombres (artículos/pronombres)
+const validNames = ["jorge", "patricio", "jorge patricio"];
 const ignoredWords = ["su", "sus", "la", "el", "los", "las", "mi", "tu"];
 
+// 🟢 1. Detectar "de + nombre"
 const nameMatch = text.match(/de\s+([a-zA-Záéíóúñ]+)$/i);
 
 if (nameMatch) {
@@ -259,13 +262,34 @@ if (nameMatch) {
 
   if (
     detectedName &&
-    !ignoredWords.includes(detectedName) && // 🔥 clave
+    !ignoredWords.includes(detectedName) &&
     !validNames.some(
       name =>
         detectedName.includes(name) ||
         name.includes(detectedName)
     )
   ) {
+    return {
+      text: replies.UNKNOWN(ctx),
+      intent: "UNKNOWN",
+    };
+  }
+}
+
+// 🟢 2. Detectar nombre suelto al final
+const words = text.split(" ");
+const lastWord = normalize(words[words.length - 1]);
+
+if (
+  lastWord &&
+  !ignoredWords.includes(lastWord) &&
+  !validNames.some(
+    name =>
+      lastWord.includes(name) ||
+      name.includes(lastWord)
+  )
+) {
+  if (words.length > 2) {
     return {
       text: replies.UNKNOWN(ctx),
       intent: "UNKNOWN",
