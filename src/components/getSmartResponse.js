@@ -345,40 +345,31 @@ const normalizedText = text
   const hasWeirdName = possibleNames.length > 0;
 
   // =========================
-// 🧠 LÓGICA FINAL (PRO REAL)
-// =========================
+  // 🧠 LÓGICA FINAL
+  // =========================
 
-// 🟢 Si menciona tu nombre → permitir SIEMPRE
+  // 🔴 Detectar si hablan de OTRA persona (estructura)
+const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
+
+// 🔴 Detectar nombre al final tipo "tecnologias luis"
+const lastWord = words[words.length - 1];
+
+const isOtherNameAtEnd =
+  commonNames.includes(lastWord) &&
+  !validNames.includes(lastWord);
+
+// 🟢 Si menciona tu nombre → permitir
 if (hasOwnerName) {
   return true;
 }
 
-// 🔴 Normalizar palabra
-const cleanWord = (word) =>
-  word
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z]/g, "");
-
-// 🔴 Detectar cualquier otro nombre
-const hasOtherName =
-  words.some(word => {
-    const clean = cleanWord(word);
-    return (
-      clean &&
-      commonNames.includes(clean) &&
-      !validNames.includes(clean)
-    );
-  }) || hasWeirdName;
-
-// 🔴 BLOQUEO
-if (hasSensitive && hasOtherName) {
+// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
+if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
   return false;
 }
 
-// 🟢 Default → Jorge
-return true;
-};
+// 🟢 Todo lo demás → asumir Jorge
+return true; };
 
 /* =========================
 🔒 BLOQUEO GLOBAL
