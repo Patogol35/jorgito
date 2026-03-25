@@ -254,22 +254,35 @@ const isAboutOwner = (text) => {
 
   // 🔹 Lista de nombres comunes (puedes ampliarla)
   const commonNames = [
-    "luis", "carlos", "ana", "maria", "jose", "juan",
-    "andres", "diego", "sofia", "valentina", "daniel",
-    "camila", "miguel", "fernando", "alex", "pedro",
-    "alejandro", "manuel", "david", "sergio", "rafael",
-    "adrian", "ricardo", "marcos", "oscar", "alberto",
-    "roberto", "ivan", "hugo", "enrique", "samuel",
-    "emilio", "gabriel", "esteban", "victor", "martin",
-    "ignacio", "julio", "cesar", "tomas", "felipe",
-    "cristian", "edgar", "ramon", "armando",
-    "laura", "paula", "andrea", "elena", "lucia",
-    "isabella", "martina", "daniela", "gabriela",
-    "adriana", "carolina", "patricia", "veronica",
-    "alejandra", "rosa", "carmen", "silvia",
-    "beatriz", "raquel", "noelia", "natalia",
-    "claudia", "monica", "diana", "pilar"
-  ];
+  // 🔵 Masculinos
+  "luis","carlos","jose","juan","andres","diego","daniel", "christian",
+  "camilo","miguel","fernando","alex","pedro","alejandro",
+  "manuel","david","sergio","rafael","adrian","ricardo",
+  "marcos","oscar","alberto","roberto","ivan","hugo",
+  "enrique","samuel","emilio","gabriel","esteban",
+  "victor","martin","ignacio","julio","cesar","tomas",
+  "felipe","cristian","edgar","ramon","armando",
+  "leonardo","sebastian","mateo","nicolas","lucas",
+  "francisco","antonio","jorge","raul","guillermo",
+  "alvaro","bruno","dario","fabian","gonzalo",
+  "hector","joaquin","lorenzo","maximiliano","nahuel",
+  "orlando","pablo","renato","salvador","santiago",
+  "teodoro","ulises","valentin","walter","xavier","yago","zacarias",
+
+  // 🔴 Femeninos
+  "ana","maria","sofia","valentina","daniela","camila",
+  "laura","paula","andrea","elena","lucia","isabella",
+  "martina","gabriela","adriana","carolina","patricia",
+  "veronica","alejandra","rosa","carmen","silvia",
+  "beatriz","raquel","noelia","natalia","claudia",
+  "monica","diana","pilar","luisa","renata","emilia",
+  "juliana","antonella","valeria","ximena","yesenia",
+  "zulema","amanda","bianca","catalina","dolores",
+  "esther","fatima","gloria","helena","irene",
+  "jimena","karla","liliana","mariana","nerea",
+  "olga","priscila","rocio","susana","teresa",
+  "ursula","victoria","wanda","ximena","yolanda","zoe"
+];
 
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
