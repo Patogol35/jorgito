@@ -455,7 +455,6 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 
 const isValidQuery = isAboutOwner(text);
 
-// 🔥 PERMITIR INTENTS IMPORTANTES AUNQUE EL FILTRO FALLE
 const allowedIntents = [
   "CONTACT",
   "PROFILE",
@@ -463,7 +462,7 @@ const allowedIntents = [
   "EXPERIENCE",
   "PROJECTS",
   "EDUCATION",
-  "MOTIVATION", 
+  "MOTIVATION",
 ];
 
 if (!isValidQuery && !allowedIntents.includes(intent)) {
