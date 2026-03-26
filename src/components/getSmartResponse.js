@@ -367,7 +367,7 @@ if (ctx.awaitingFollowUp) {
 
   if (!isValidQuery) {
     return {
-      text: "Ups 😅 solo puedo ayudarte con información de Jorge.",
+      text: replies.OUT_OF_SCOPE(ctx),
       intent: "OUT_OF_SCOPE",
     };
   }
