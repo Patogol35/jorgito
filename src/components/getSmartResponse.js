@@ -34,19 +34,7 @@ const isAboutOwner = (text) => {
 
   // ✅ Si menciona a Jorge → permitir
   if (normalizedText.includes("jorge")) return true;
-   // ✅ Permitir preguntas abiertas
-  const openQuestions = [
-    "quien es",
-    "quién es",
-    "hablame",
-    "háblame",
-    "cuentame",
-    "cuéntame",
-  ];
-
-  if (openQuestions.some(q => normalizedText.includes(q))) {
-    return true;
-  }
+   
 
   // ✅ Keywords permitidas
   const allowedKeywords = [
