@@ -342,11 +342,7 @@ const normalizedText = text
     );
   });
 
-  const hasWeirdName = possibleNames.length > 0;
-
-return hasOwnerName || hasSensitive || !hasWeirdName;
-};
-
+return true; }
   
 
 
