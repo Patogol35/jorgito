@@ -310,7 +310,7 @@ if (!isAboutOwner(text)) {
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
-  
+
 if (intent === "UNKNOWN") {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
@@ -318,60 +318,8 @@ if (intent === "UNKNOWN") {
   };
 }
 
-const normalizedText = text.toLowerCase().trim();
-
-// 🟢 Detectar si menciona tu nombre
-const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
-  .some(name => normalizedText.includes(name));
-
-// 🟢 Detectar intención general de perfil
-const isGeneralProfileQuery = [
-  "quien es",
-  "hablame",
-  "cuentame",
-  "dime",
-  "sobre"
-].some(word => normalizedText.includes(word));
-
-// 🔥 PERFIL GENERAL
-if (hasOwnerName || isGeneralProfileQuery) {
-  intent = "PROFILE";
-}
-
-// 🔥 INTENTS MÁS ESPECÍFICOS (sobrescriben PROFILE)
-if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
-  intent = "CONTACT";
-} else if (normalizedText.includes("tecnolog")) {
-  intent = "SKILLS";
-} else if (normalizedText.includes("experiencia")) {
-  intent = "EXPERIENCE";
-} else if (
-  normalizedText.includes("estudio") ||
-  normalizedText.includes("master") ||
-  normalizedText.includes("formacion")
-) {
-  intent = "EDUCATION";
-} else if (normalizedText.includes("proyecto")) {
-  intent = "PROJECTS";
-} else if (normalizedText.includes("contratar")) {
-  intent = "MOTIVATION";
-} else if (
-  normalizedText.includes("stack") ||
-  normalizedText.includes("full stack")
-) {
-  intent = "STACK";
-} else if (normalizedText.includes("libro")) {
-  intent = "BOOK";
-}
-
-if (intent === "FAREWELL" && !isValidFarewell(text)) {
-  intent = "UNKNOWN";
-}
-
 saveMemory(ctx, { user: text, intent });
 
-  
-  
 /* =========================
 🟢 CONTACTO
 ========================= */
@@ -405,4 +353,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
