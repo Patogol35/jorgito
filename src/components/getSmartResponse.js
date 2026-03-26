@@ -322,11 +322,10 @@ if (hasOtherName) return false;
 const suspiciousWord = words.find(word =>
   word.length > 2 &&
   !safeWords.includes(word) &&
-  !intentKeywords.some(k => word.includes(k)) &&
+  !intentKeywords.some(k => word.includes(k) || k.includes(word)) &&
   !validNames.some(name => name.includes(word))
 );
 
-// 🔴 bloquear basura
 if (suspiciousWord) return false;
 
   // 🟢 Si menciona Jorge → permitir
