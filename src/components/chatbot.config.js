@@ -79,7 +79,7 @@ SUGERENCIAS
 ========================= */
 export const SUGGESTIONS = [
   "¿Quién es Jorge?",
-  "¿Qué experiencia tiene?",
+  "¿Qué experiencia tiene Jorge?",
   "¿Qué estudios tiene?",
   "¿En qué tecnologías trabaja?",
   "¿Es Full Stack?",
