@@ -304,12 +304,13 @@ if (!isAboutOwner(text)) {
 
 }
 
+
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
 
-const normalizedText = text.toLowerCase();
+const normalizedText = text.toLowerCase().trim();
 
 // 🟢 Detectar si menciona tu nombre
 const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
@@ -317,29 +318,39 @@ const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
 
 // 🟢 Detectar intención general de perfil
 const isGeneralProfileQuery = [
-  "quien es","quién es","hablame","háblame",
-  "cuentame","cuéntame","dime","sobre"
+  "quien es",
+  "hablame",
+  "cuentame",
+  "dime",
+  "sobre"
 ].some(word => normalizedText.includes(word));
 
 // 🔥 PERFIL GENERAL
-if (hasOwnerName && isGeneralProfileQuery) {
+if (hasOwnerName || isGeneralProfileQuery) {
   intent = "PROFILE";
 }
 
-// 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE (REEMPLAZA EL IF ANTERIOR)
+// 🔥 INTENTS MÁS ESPECÍFICOS (sobrescriben PROFILE)
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (normalizedText.includes("tecnolog")) {
   intent = "SKILLS";
 } else if (normalizedText.includes("experiencia")) {
   intent = "EXPERIENCE";
-} else if (normalizedText.includes("estudio") || normalizedText.includes("master") || normalizedText.includes("formacion")) {
+} else if (
+  normalizedText.includes("estudio") ||
+  normalizedText.includes("master") ||
+  normalizedText.includes("formacion")
+) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
 } else if (normalizedText.includes("contratar")) {
   intent = "MOTIVATION";
-} else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+} else if (
+  normalizedText.includes("stack") ||
+  normalizedText.includes("full stack")
+) {
   intent = "STACK";
 } else if (normalizedText.includes("libro")) {
   intent = "BOOK";
@@ -351,6 +362,8 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
 
 saveMemory(ctx, { user: text, intent });
 
+  
+  
 /* =========================
 🟢 CONTACTO
 ========================= */
