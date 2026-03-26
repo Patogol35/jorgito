@@ -11,10 +11,8 @@ import {
   pickNonRepeated,
 } from "./chatbot.config";
 
-
-
 /* =========================
-🟡 PROTECCIÓN DE DATOS (STRICT MODE)
+🟡 PROTECCIÓN DE DATOS 
 ========================= */
 const isAboutOwner = (text) => {
   const normalizedText = text
@@ -44,7 +42,6 @@ const isAboutOwner = (text) => {
 
   return false;
 };
-
 
     /* =========================
 RESPUESTA INTELIGENTE
