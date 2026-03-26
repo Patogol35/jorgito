@@ -246,7 +246,7 @@ if (ctx.awaitingFollowUp) {
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 
-const isAboutOwner = (text) => {
+  const isAboutOwner = (text) => {
   const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
@@ -257,82 +257,73 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
   const intentKeywords = [
-  // 🔧 tecnologías / habilidades
-  "tecnologia","tecnologias","tecnolog",
-  "stack","habilidad","habilidades",
+    // 🔧 tecnologías / habilidades
+    "tecnologia","tecnologias","tecnolog",
+    "stack","habilidad","habilidades",
+    // 💼 experiencia
+    "experiencia","experiencias","experien",
+    "trabaja","trabajo","trabajos",
+    // 🎓 educación
+    "estudio","estudios","estudi",
+    "formacion","educacion",
+    "master","universidad","carrera",
+    // 🚀 proyectos
+    "proyecto","proyectos",
+    // 👨‍💻 perfil profesional
+    "desarrollador","ingeniero",
+    // ⚙️ acciones / skills
+    "usa","utiliza","maneja","sabe","conoce","domina",
+    // 📞 contacto / motivación
+    "contacto","contact","contactar","whatsapp","contratar",
+    // 📚 libros / gustos
+    "libro","libros","favorito","favoritos"
+  ];
 
-  // 💼 experiencia
-  "experiencia","experiencias","experien",
-  "trabaja","trabajo","trabajos",
+  const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
+  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
 
-  // 🎓 educación
-  "estudio","estudios","estudi",
-  "formacion","educacion",
-  "master","universidad","carrera",
+  // 🔥 palabras separadas
+  const words = normalizedText.split(" ");
 
-  // 🚀 proyectos
-  "proyecto","proyectos",
+  // palabras seguras
+  const safeWords = [
+    "que","cual","como","donde","cuando","por","para","con",
+    "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
+    "sus","su","los","las","y","o","en","del","al","por","favor"
+  ];
 
-  // 👨‍💻 perfil profesional
-  "desarrollador","ingeniero",
+  // nombres comunes (bloqueo directo)
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","miguel",
+    "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
+    "ana","maria","sofia","valentina","camila","laura","paula"
+  ];
 
-  // ⚙️ acciones / skills
-  "usa","utiliza","maneja","sabe","conoce","domina",
-
-  // 📞 contacto
-  "contacto","contact","contactar","whatsapp",
-
-  // 📚 libros / gustos
-  "libro","libros","favorito","favoritos"
-];
-
-  const hasIntent = intentKeywords.some(k =>
-    normalizedText.includes(k)
+  const hasOtherName = commonNames.some(name =>
+    normalizedText.includes(name) && !validNames.includes(name)
   );
 
-  const hasOwnerName = validNames.some(name =>
-    normalizedText.includes(name)
+  if (hasOtherName) return false;
+
+  // 🔥 detectar basura tipo "jsjs"
+  const suspiciousWord = words.find(word =>
+    word.length > 2 &&
+    !safeWords.includes(word) &&
+    !intentKeywords.some(k => word.includes(k) || k.includes(word)) &&
+    !validNames.some(name => name.includes(word))
   );
 
-  // 🔥 detectar palabras
-const words = normalizedText.split(" ");
-
-// palabras seguras
-const safeWords = [
-  "que","cual","como","donde","cuando","por","para","con",
-  "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
-  "sus","su","los","las","y","o","en","del","al"
-];
-
-// 🔴 nombres comunes (bloqueo directo)
-const commonNames = [
-  "luis","carlos","jose","juan","andres","diego","daniel","miguel",
-  "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
-  "ana","maria","sofia","valentina","camila","laura","paula"
-];
-
-// 🔴 detectar nombre ajeno
-const hasOtherName = commonNames.some(name =>
-  normalizedText.includes(name) && !validNames.includes(name)
-);
-
-if (hasOtherName) return false;
-
-// 🔥 detectar basura tipo "jsjs"
-const suspiciousWord = words.find(word =>
-  word.length > 2 &&
-  !safeWords.includes(word) &&
-  !intentKeywords.some(k => word.includes(k) || k.includes(word)) &&
-  !validNames.some(name => name.includes(word))
-);
-
-if (suspiciousWord) return false;
+  if (suspiciousWord) return false;
 
   // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
 
   // 🟢 Si parece pregunta profesional → asumir Jorge
   if (hasIntent) return true;
+
+  // 🟢 Pregunta sin nombre pero con intención profesional
+  const generalProfileKeywords = ["quien","quién","hablame","háblame","cuentame","cuéntame","dime","sobre"];
+  if (words.some(w => generalProfileKeywords.includes(w))) return true;
 
   return true;
 };
