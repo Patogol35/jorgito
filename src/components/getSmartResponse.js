@@ -211,7 +211,7 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
 FOLLOW UPS
 ========================= */
 if (ctx.awaitingFollowUp) {
-  if (YES_WORDS.includes(text)) {
+  if (isYes(text)) {
     const intent = ctx.awaitingFollowUp;
     ctx.awaitingFollowUp = null;
 
@@ -231,7 +231,7 @@ if (ctx.awaitingFollowUp) {
     }
   }
 
-  if (NO_WORDS.includes(text)) {
+  if (isNo(text)) {
     ctx.awaitingFollowUp = null;
     return {
       text: "Está bien 😊 ¿En qué más puedo ayudarte?",
