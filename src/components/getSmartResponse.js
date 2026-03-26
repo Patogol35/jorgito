@@ -87,7 +87,28 @@ if (nameMatch) {
     intent: "UNKNOWN",
   };
 }
-  
+  /* =========================
+🟢 CREADOR DEL BOT
+========================= */
+const creatorMatch = text.match(
+  /^(quien te creo| quien te creó|quien es tu creador|quién es tu creador|por quien fuiste creada)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (creatorMatch) {
+  const name = normalize(creatorMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.CREATOR(ctx),
+      intent: "CREATOR",
+    };
+  }
+
+  return {
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
+  };
+}
 
   /* =========================
 🟢 MUCHO GUSTO
@@ -300,9 +321,8 @@ if (ctx.awaitingFollowUp) {
     // 📞 contacto / motivación
     "contacto","contact","contactar","whatsapp","contratar",
     // 📚 libros / gustos
-    "libro","libros","favorito","favoritos",
-    //preguntas sobre el bot
-  "creador","quien te creo","quién te creó"
+    "libro","libros","favorito","favoritos"
+    
   ];
 
   const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
