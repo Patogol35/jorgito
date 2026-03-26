@@ -29,14 +29,20 @@ const hasExternalEntity = (text) => {
 const isAboutOwner = (text) => {
   const normalizedText = text.toLowerCase();
 
-  // ❌ Si menciona otra persona → bloquear
   if (hasExternalEntity(normalizedText)) return false;
 
-  // ✅ Si menciona a Jorge → permitir
   if (normalizedText.includes("jorge")) return true;
-   
 
-  // ✅ Keywords permitidas
+  if (
+    normalizedText.includes("quien") ||
+    normalizedText.includes("háblame") ||
+    normalizedText.includes("hablame") ||
+    normalizedText.includes("cuentame") ||
+    normalizedText.includes("cuéntame")
+  ) {
+    return true;
+  }
+
   const allowedKeywords = [
     "proyecto",
     "experiencia",
