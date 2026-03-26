@@ -1,6 +1,8 @@
 import { createReplies } from "./replies";
 import {
   WHATSAPP_URL,
+  YES_WORDS,
+  NO_WORDS,
   saveMemory,
   PROFILE,
   normalize,
@@ -17,6 +19,7 @@ RESPUESTA INTELIGENTE
 export function getSmartResponse(message, context) {
   const text = normalize(message);
 
+  // 🔑 Clonar contexto para evitar mutaciones
   const ctx = {
     ...context,
     memory: context.memory ? [...context.memory] : [],
@@ -27,158 +30,375 @@ export function getSmartResponse(message, context) {
       : {},
   };
 
+  // 🔑 Constantes al inicio
   const BOT_NAME = "sasha";
+
+  // 🔥 Si hay follow-up pendiente pero el usuario hace una pregunta clara,
+  // se cancela el follow-up y se responde normalmente
+  if (ctx.awaitingFollowUp) {
+    const directIntent = detectIntent(message);
+    if (directIntent !== "UNKNOWN") {
+      ctx.awaitingFollowUp = null;
+    }
+  }
 
   const replies = createReplies({ pickNonRepeated, PROFILE });
 
   /* =========================
-🟢 SALUDOS / FRASES DIRECTAS
-========================= */
-  const greetingMatch = text.match(/^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+\w+)?$/i);
+  🟢 SALUDO CORRECTO
+  ========================= */
+  const greetingMatch = text.match(
+    /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)(\s+[a-zA-Záéíóúñ]+)?$/i
+  );
 
   if (greetingMatch) {
     const name = normalize(greetingMatch[2]?.trim() || "");
+
     if (!name || name === BOT_NAME) {
-      return { text: replies.GREETING(ctx), intent: "GREETING" };
-    }
-    return { text: replies.UNKNOWN(ctx), intent: "UNKNOWN" };
-  }
-
-  const thanksMatch = text.match(/^(gracias|muchas gracias)(\s+\w+)?$/i);
-  if (thanksMatch) {
-    return { text: replies.GRA(ctx), intent: "GRA" };
-  }
-
-  /* =========================
-🔴 DESPEDIDA
-========================= */
-  if (isValidFarewell(text)) {
-    return { text: replies.FAREWELL(ctx), intent: "FAREWELL" };
-  }
-
-  /* =========================
-🔵 CONFIRMAR WHATSAPP
-========================= */
-  if (ctx.awaiting === "CONTACT_CONFIRM") {
-    if (isYes(text)) {
-      ctx.awaiting = null;
-      window.open(WHATSAPP_URL, "_blank");
-
       return {
-        text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
-        intent: "CONTACT_OPENED",
+        text: replies.GREETING(ctx),
+        intent: "GREETING",
       };
     }
 
-    if (isNo(text)) {
-      ctx.awaiting = null;
-      return {
-        text: "Está bien 😊 Avísame si luego deseas contactarlo.",
-        intent: "CONTACT_CANCEL",
-      };
-    }
+    return {
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
   }
 
   /* =========================
-🔒 PROTECCIÓN: SOLO SOBRE JORGE
+🟢 MUCHO GUSTO
 ========================= */
-  const isAboutOwner = (text) => {
-    const t = text.toLowerCase();
-    return (
-      t.includes("jorge") ||
-      t.includes("patricio") ||
-      t.includes("portafolio") ||
-      t.includes("desarrollador")
-    );
-  };
+const niceToMeetMatch = text.match(
+  /^(mucho gusto|un gusto|encantado|encantada)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
 
-  if (!isAboutOwner(text)) {
+if (niceToMeetMatch) {
+  const name = normalize(niceToMeetMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
     return {
-      text: replies.OUT_OF_SCOPE(ctx),
-      intent: "OUT_OF_SCOPE",
-    };
-  }
-
-  /* =========================
-🧠 DETECTAR INTENT (BIEN HECHO)
-========================= */
-  let intent = detectIntent(text);
-  const normalizedText = text.toLowerCase();
-
-  // 🔥 PRIORIDAD: específicos primero
-  if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
-    intent = "CONTACT";
-  } else if (normalizedText.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (normalizedText.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (
-    normalizedText.includes("estudio") ||
-    normalizedText.includes("master") ||
-    normalizedText.includes("formacion")
-  ) {
-    intent = "EDUCATION";
-  } else if (normalizedText.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (normalizedText.includes("contratar")) {
-    intent = "MOTIVATION";
-  } else if (
-    normalizedText.includes("stack") ||
-    normalizedText.includes("full stack")
-  ) {
-    intent = "STACK";
-  }
-
-  // 🔥 SOLO si no hay algo específico → PROFILE
-  const isGeneralProfileQuery = [
-    "quien es",
-    "hablame",
-    "cuentame",
-    "dime",
-    "sobre"
-  ].some(word => normalizedText.includes(word));
-
-  if (intent === "UNKNOWN" && isGeneralProfileQuery) {
-    intent = "PROFILE";
-  }
-
-  if (intent === "UNKNOWN") {
-    return {
-      text: replies.OUT_OF_SCOPE(ctx),
-      intent: "OUT_OF_SCOPE",
-    };
-  }
-
-  saveMemory(ctx, { user: text, intent });
-
-  /* =========================
-🟢 CONTACTO
-========================= */
-  if (intent === "CONTACT") {
-    ctx.awaiting = "CONTACT_CONFIRM";
-    return {
-      text: `${replies.CONTACT(ctx)}\n\n¿Quieres que lo abra ahora?`,
-      intent,
-    };
-  }
-
-  /* =========================
-🧠 RESPUESTA FINAL
-========================= */
-  let replyText =
-    typeof replies[intent] === "function"
-      ? replies[intent](ctx)
-      : replies[intent];
-
-  if (!replyText) {
-    return {
-      text: replies.OUT_OF_SCOPE(ctx),
-      intent: "OUT_OF_SCOPE",
+      text: replies.NICE_TO_MEET(ctx),
+      intent: "NICE_TO_MEET",
     };
   }
 
   return {
-    text: replyText,
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
+  };
+}
+
+  /* =========================
+  🟢 GRACIAS CONTROLADO
+  ========================= */
+  const thanksMatch = text.match(
+    /^(gracias|muchas gracias)(\s+[a-zA-Záéíóúñ]+)?$/i
+  );
+
+  if (thanksMatch) {
+    const name = normalize(thanksMatch[2]?.trim() || "");
+
+    if (!name || name === BOT_NAME) {
+      return {
+        text: replies.GRA(ctx),
+        intent: "GRA",
+      };
+    }
+
+    return {
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
+  }
+
+  /* =========================
+  🟢 ESTADO DE ÁNIMO
+  ========================= */
+  const moodMatch = text.match(
+    /^(como estas|cómo estás|estas bien|estás bien)(\s+[a-zA-Záéíóúñ]+)?$/i
+  );
+
+  if (moodMatch) {
+    const name = normalize(moodMatch[2] || "");
+
+    if (!name || name === BOT_NAME) {
+      return {
+        text: replies.MOOD(ctx),
+        intent: "MOOD",
+      };
+    }
+
+    return {
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
+  }
+
+      /* =========================
+  🟢 QUÉ ESTÁ HACIENDO
+  ========================= */
+  const doingMatch = text.match(
+    /^(que haces|qué haces|que estas haciendo|qué estás haciendo|en que estas|en qué estás|que andas haciendo|qué andas haciendo)(\s+[a-zA-Záéíóúñ]+)?$/i
+  );
+
+  if (doingMatch) {
+    const name = normalize(doingMatch[2] || "");
+
+    if (!name || name === BOT_NAME) {
+      return {
+        text: replies.WHAT_DOING(ctx),
+        intent: "WHAT_DOING",
+      };
+    }
+
+    return {
+  text: replies.UNKNOWN(ctx),
+  intent: "UNKNOWN",
+};
+  }
+
+  /* =========================
+  🟢 DETECTAR NOMBRE USUARIO
+  ========================= */
+  if (/^(me llamo|soy|mi nombre es)\s+/i.test(text)) {
+    const name = message
+      .replace(/^(me llamo|soy|mi nombre es)/i, "")
+      .trim();
+
+    ctx.userName = name;
+    saveMemory(ctx, { type: "user_name", value: name });
+
+    return {
+      text: `¡Mucho gusto, ${name}! 😊 ¿En qué puedo ayudarte hoy?`,
+      intent: "USER_NAME",
+    };
+  }
+
+  /* =========================
+  🔴 DESPEDIDA PRIORIDAD ABSOLUTA
+  ========================= */
+  if (isValidFarewell(text)) {
+    return {
+      text: replies.FAREWELL(ctx),
+      intent: "FAREWELL",
+    };
+  }
+
+  /* =========================
+🔵 CONFIRMACIÓN WHATSAPP
+========================= */
+if (ctx.awaiting === "CONTACT_CONFIRM") {
+  if (isYes(text)) {
+    ctx.awaiting = null;
+    window.open(WHATSAPP_URL, "_blank");
+
+    return {
+      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+      intent: "CONTACT_OPENED",
+    };
+  }
+
+  if (isNo(text)) {
+    ctx.awaiting = null;
+    return {
+      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+      intent: "CONTACT_CANCEL",
+    };
+  }
+}
+/* =========================
+FOLLOW UPS
+========================= */
+if (ctx.awaitingFollowUp) {
+  if (isYes(text)) {
+    const intent = ctx.awaitingFollowUp;
+    ctx.awaitingFollowUp = null;
+
+    // 🔥 Usar el MISMO sistema de replies (no texto fijo)
+    const chainReplies = {
+      PROFILE: () => replies.EXPERIENCE(ctx),
+      EXPERIENCE: () => replies.SKILLS(ctx),
+      SKILLS: () => replies.PROJECTS(ctx),
+    };
+
+    if (chainReplies[intent]) {
+      return {
+        text: chainReplies[intent](),
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+  }
+
+  if (isNo(text)) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  // Si responde otra cosa, se cancela el follow-up
+  ctx.awaitingFollowUp = null;
+}
+
+/* =========================
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
+========================= */
+
+  const isAboutOwner = (text) => {
+  const normalizedText = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .trim();
+
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "jorge","raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias",
+
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
+
+  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
+  if (hasOwnerName) return true;
+
+  const mentionsOtherRealName = commonNames.some(
+    name => normalizedText.includes(name) && !validNames.includes(name)
+  );
+
+  if (mentionsOtherRealName) return false;
+
+  return true;
+};
+
+/* =========================
+🔒 BLOQUEO GLOBAL
+========================= */
+if (!isAboutOwner(text)) {
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+
+}
+
+
+/* =========================
+🟢 DETECTAR INTENT
+========================= */
+let intent = detectIntent(text);
+
+const normalizedText = text; // ya viene normalizado arriba
+
+const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
+  .some(name => normalizedText.includes(name));
+
+const isGeneralProfileQuery = [
+  "quien es",
+  "hablame",
+  "cuentame",
+  "dime",
+  "sobre"
+].some(word => normalizedText.includes(word));
+
+// 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
+if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
+  intent = "PROFILE";
+}
+
+// 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
+if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
+  intent = "CONTACT";
+} else if (normalizedText.includes("tecnolog")) {
+  intent = "SKILLS";
+} else if (normalizedText.includes("experiencia")) {
+  intent = "EXPERIENCE";
+} else if (
+  normalizedText.includes("estudio") ||
+  normalizedText.includes("estudios") ||
+  normalizedText.includes("master") ||
+  normalizedText.includes("formacion") ||
+  normalizedText.includes("educacion")
+) {
+  intent = "EDUCATION";
+} else if (normalizedText.includes("proyecto")) {
+  intent = "PROJECTS";
+} else if (normalizedText.includes("contratar")) {
+  intent = "MOTIVATION";
+} else if (
+  normalizedText.includes("stack") ||
+  normalizedText.includes("full stack")
+) {
+  intent = "STACK";
+} else if (normalizedText.includes("libro")) {
+  intent = "BOOK";
+}
+
+if (intent === "UNKNOWN") {
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+}
+
+saveMemory(ctx, { user: text, intent });
+
+  
+  
+/* =========================
+🟢 CONTACTO
+========================= */
+if (intent === "CONTACT") {
+  const contactMessage = replies.CONTACT(ctx);
+
+  ctx.awaiting = "CONTACT_CONFIRM";
+  return {
+    text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
+    action: "CONTACT_CONFIRM",
     intent,
   };
 }
+
+/* =========================
+🧠 RESPUESTA NORMAL
+========================= */
+let replyText;
+
+if (typeof replies[intent] === "function") {
+  replyText = replies[intent](ctx);
+} else {
+  replyText = replies[intent];
+}
+
+if (!replyText) {
+  replyText = replies.OUT_OF_SCOPE(ctx);
+  intent = "OUT_OF_SCOPE";
+}
+
+return {
+  text: replyText,
+  intent,
+}; }
