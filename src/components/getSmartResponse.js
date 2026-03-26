@@ -25,6 +25,19 @@ const isAboutOwner = (text) => {
 
   // ✅ si menciona a Jorge
   if (t.includes("jorge")) return true;
+  const humanIntents = [
+  "quien es",
+  "hablame de",
+  "habla de",
+  "cuentame de",
+  "sobre",
+  "informacion",
+  "perfil",
+];
+
+if (humanIntents.some((w) => t.includes(w))) {
+  return true;
+}
 
   // ✅ keywords permitidas
   const allowed = [
