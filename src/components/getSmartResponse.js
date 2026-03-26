@@ -277,6 +277,8 @@ if (ctx.awaitingFollowUp) {
     "contacto","contact","contactar","whatsapp","contratar",
     // 📚 libros / gustos
     "libro","libros","favorito","favoritos"
+    //preguntas sobre el bot
+  "creador","quien te creo","quién te creó"
   ];
 
   const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
