@@ -60,6 +60,8 @@ export const detectIntent = (text) => {
     t.includes("estudio") ||
     t.includes("master") ||
     t.includes("máster") ||
+    t.includes("educación") ||
+    t.includes("educacion") ||
     t.includes("formacion") ||
     t.includes("formación")
   ) {
