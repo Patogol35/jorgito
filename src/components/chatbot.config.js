@@ -151,7 +151,14 @@ export const INTENTS = {
   FAREWELL: ["adiós", "hasta luego", "bye", "chao"],
 
   GREETING: ["hola", "buenas", "buenos días"],
-  PROFILE: ["jorge", "perfil", "quien es"],
+  PROFILE: [
+  "jorge",
+  "perfil",
+  "quien es",
+  "quien es jorge",
+  "informacion",
+  "sobre jorge",
+],
   EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
   EXPERIENCE: ["experiencia"],
   SKILLS: ["tecnologías", "lenguajes", "habilidades","tecnología"],
