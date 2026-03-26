@@ -276,7 +276,7 @@ if (ctx.awaitingFollowUp) {
     // 📞 contacto / motivación
     "contacto","contact","contactar","whatsapp","contratar",
     // 📚 libros / gustos
-    "libro","libros","favorito","favoritos"
+    "libro","libros","favorito","favoritos",
     //preguntas sobre el bot
   "creador","quien te creo","quién te creó"
   ];
