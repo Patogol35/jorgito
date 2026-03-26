@@ -271,21 +271,40 @@ const isAboutOwner = (text) => {
     normalizedText.includes(name)
   );
 
-  // 🔥 detectar palabras tipo "nombre"
-  const words = normalizedText.split(" ");
-// 🔴 SOLO bloquear si mencionan OTRO nombre real
+  // 🔥 detectar palabras
+const words = normalizedText.split(" ");
+
+// palabras seguras
+const safeWords = [
+  "que","cual","como","donde","cuando","por","para","con",
+  "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
+  "sus","su","los","las","y","o","en","del","al"
+];
+
+// 🔴 nombres comunes (bloqueo directo)
 const commonNames = [
   "luis","carlos","jose","juan","andres","diego","daniel","miguel",
   "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
   "ana","maria","sofia","valentina","camila","laura","paula"
 ];
 
+// 🔴 detectar nombre ajeno
 const hasOtherName = commonNames.some(name =>
   normalizedText.includes(name) && !validNames.includes(name)
 );
 
-// 🔴 Si menciona otro nombre → bloquear
 if (hasOtherName) return false;
+
+// 🔥 detectar basura tipo "jsjs"
+const suspiciousWord = words.find(word =>
+  word.length > 2 &&
+  !safeWords.includes(word) &&
+  !intentKeywords.some(k => word.includes(k)) &&
+  !validNames.some(name => name.includes(word))
+);
+
+// 🔴 bloquear basura
+if (suspiciousWord && !hasIntent) return false;
 
   // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
