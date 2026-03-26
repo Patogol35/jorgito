@@ -45,7 +45,7 @@ const isAboutOwner = (text) => {
   "perfil",
 ];
 
-if (humanIntents.some((w) => t.includes(w))) {
+if (humanIntents.some((w) => normalizedText.includes(w))) {
   return true;
 }
 
