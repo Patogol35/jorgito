@@ -257,11 +257,34 @@ const isAboutOwner = (text) => {
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
   const intentKeywords = [
-    "tecnolog","experien","estudi","formacion","educacion",
-    "master","universidad","proyecto","habilidad","stack",
-    "contact","libro","desarrollador","ingeniero","trabaja",
-    "usa","utiliza","maneja","sabe","conoce"
-  ];
+  // 🔧 tecnologías / habilidades
+  "tecnologia","tecnologias","tecnolog",
+  "stack","habilidad","habilidades",
+
+  // 💼 experiencia
+  "experiencia","experiencias","experien",
+  "trabaja","trabajo","trabajos",
+
+  // 🎓 educación
+  "estudio","estudios","estudi",
+  "formacion","educacion",
+  "master","universidad","carrera",
+
+  // 🚀 proyectos
+  "proyecto","proyectos",
+
+  // 👨‍💻 perfil profesional
+  "desarrollador","ingeniero",
+
+  // ⚙️ acciones / skills
+  "usa","utiliza","maneja","sabe","conoce","domina",
+
+  // 📞 contacto
+  "contacto","contact","whatsapp",
+
+  // 📚 otros
+  "libro"
+];
 
   const hasIntent = intentKeywords.some(k =>
     normalizedText.includes(k)
