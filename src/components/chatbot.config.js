@@ -217,9 +217,9 @@ FOLLOW UP
 ========================= */
 export const followUp = (intent) =>
   ({
-    PROFILE: "¿Quieres conocer su experiencia profesional?\n👉 Responde \"si\" u \"ok\"",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza?\n👉 Responde \"si\" u \"ok\"",
-    SKILLS: "¿Quieres saber en qué proyectos aplica estas tecnologías?\n👉 Responde \"si\" u \"ok\"",
+    PROFILE: "¿Quieres conocer la experiencia profesional de Jorge?\n👉 Responde \"si\" u \"ok\"",
+    EXPERIENCE: "¿Te muestro las tecnologías que utiliza Jorge?\n👉 Responde \"si\" u \"ok\"",
+    SKILLS: "¿Quieres saber acerca de los proyectos de Jorge?\n👉 Responde \"si\" u \"ok\"",
     PROJECTS: null,
   }[intent] || null);
 
