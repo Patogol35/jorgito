@@ -391,8 +391,8 @@ if (typeof replies[intent] === "function") {
 }
 
 if (!replyText) {
-  replyText = replies.UNKNOWN(ctx);
-  intent = "UNKNOWN";
+  replyText = replies.OUT_OF_SCOPE(ctx);
+  intent = "OUT_OF_SCOPE";
 }
 
 return {
