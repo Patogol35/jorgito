@@ -329,6 +329,11 @@ if (hasOwnerName && isGeneralProfileQuery) {
   intent = "PROFILE";
 }
 
+  // 🟢 SI SOLO DICE EL NOMBRE → PERFIL
+if (hasOwnerName && intent === "UNKNOWN") {
+  intent = "PROFILE";
+}
+
 // 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE (REEMPLAZA EL IF ANTERIOR)
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
