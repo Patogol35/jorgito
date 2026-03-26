@@ -243,6 +243,68 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
+========================= */
+
+  const isAboutOwner = (text) => {
+  const normalizedText = text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .trim();
+
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "jorge","raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias",
+
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
+
+  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
+  if (hasOwnerName) return true;
+
+  const mentionsOtherRealName = commonNames.some(
+    name => normalizedText.includes(name) && !validNames.includes(name)
+  );
+
+  if (mentionsOtherRealName) return false;
+
+  return true;
+};
+
+/* =========================
+🔒 BLOQUEO GLOBAL
+========================= */
+if (!isAboutOwner(text)) {
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+
+}
+
+/* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
