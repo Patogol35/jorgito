@@ -298,51 +298,53 @@ const isAboutOwner = (text) => {
     .replace(/[¿?¡!.,]/g, "")
     .trim();
 
+  // 🔥 nombres válidos (TU control)
+  const validNames = ["jorge", "patricio", "jorge patricio"];
+
   const intentKeywords = [
-    "tecnologia","tecnologias","tecnolog",
-    "stack","habilidad","habilidades",
-    "experiencia","experiencias","experien",
-    "trabaja","trabajo","trabajos",
-    "estudio","estudios","estudi",
-    "formacion","educacion","master","universidad","carrera",
-    "proyecto","proyectos",
-    "desarrollador","ingeniero",
-    "usa","utiliza","maneja","sabe","conoce","domina",
-    "contacto","contact","contactar","whatsapp","contratar",
-    "libro","libros","favorito","favoritos"
+    "tecnologia","stack","habilidad","experiencia",
+    "trabajo","estudio","formacion","educacion",
+    "proyecto","desarrollador","ingeniero",
+    "usa","utiliza","maneja","sabe","contacto",
+    "whatsapp","contratar","libro"
   ];
 
   const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
+  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
 
-  const words = normalizedText.split(" ");
-
-  const safeWords = [
-    "que","cual","como","donde","cuando","por","para","con",
-    "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
-    "sus","su","los","las","y","o","en","del","al","por","favor",
-    "puedo","podria","quiero","necesito","contactar"
+  // 🔴 BLOQUEO si menciona otro nombre
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","miguel",
+    "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
+    "ana","maria","sofia","valentina","camila","laura","paula"
   ];
 
-  // 🔥 Detectar palabras raras (pero más tolerante)
-  const suspiciousWord = words.find(word =>
-    word.length > 3 &&
-    !safeWords.includes(word) &&
-    !intentKeywords.some(k => word.includes(k) || k.includes(word))
+  const hasOtherName = commonNames.some(name =>
+    normalizedText.includes(name)
   );
 
-  if (suspiciousWord) return false;
+  if (hasOtherName && !hasOwnerName) return false;
 
-  if (hasIntent) return true;
+  // 🔥 REGLA CLAVE
+  if (hasOwnerName) return true;
 
+  // 👉 si hay intent PERO NO nombre → bloquear
+  if (hasIntent && !hasOwnerName) return false;
+
+  // 👉 preguntas generales sin nombre → bloquear
   const generalProfileKeywords = [
     "quien","hablame","cuentame","dime","sobre"
   ];
 
-  if (words.some(w => generalProfileKeywords.includes(w))) return true;
+  if (
+    generalProfileKeywords.some(k => normalizedText.includes(k)) &&
+    !hasOwnerName
+  ) {
+    return false;
+  }
 
-  return true;
+  return false;
 };
-
 
 /* =========================
 🟢 DETECTAR INTENT
