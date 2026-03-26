@@ -18,7 +18,7 @@ const hasExternalEntity = (text) => {
   const words = text.toLowerCase().split(" ");
 
   // Lista base (puedes ampliarla)
-  const blacklist = ["messi", "shakira", "ronaldo", "mbappe"];
+  const blacklist = ["messi", "shakira", "ronaldo", "mbappe", "luis"];
 
   return words.some((w) => blacklist.includes(w));
 };
