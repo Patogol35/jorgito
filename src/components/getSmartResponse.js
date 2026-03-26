@@ -310,6 +310,13 @@ if (!isAboutOwner(text)) {
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
+  
+if (intent === "UNKNOWN") {
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+}
 
 const normalizedText = text.toLowerCase().trim();
 
