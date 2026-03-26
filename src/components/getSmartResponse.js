@@ -12,31 +12,22 @@ import {
 } from "./chatbot.config";
 
 /* =========================
-🟡 DETECTOR DE ENTIDADES EXTERNAS
-========================= */
-const hasExternalEntity = (text) => {
-  const words = text.toLowerCase().split(" ");
-
-  // Lista base (puedes ampliarla)
-  const blacklist = ["messi", "shakira", "ronaldo", "mbappe"];
-
-  return words.some((w) => blacklist.includes(w));
-};
-
-/* =========================
-🟡 PROTECCIÓN INTELIGENTE
+VALIDACIÓN INTELIGENTE
 ========================= */
 const isAboutOwner = (text) => {
-  const normalizedText = text.toLowerCase();
+  const t = normalize(text);
 
-  // ❌ Si menciona otra persona → bloquear
-  if (hasExternalEntity(normalizedText)) return false;
+  // ❌ detectar nombres externos básicos
+  const blacklist = ["messi", "shakira", "ronaldo", "mbappe"];
+  if (blacklist.some((name) => t.includes(name))) {
+    return false;
+  }
 
-  // ✅ Si menciona a Jorge → permitir
-  if (normalizedText.includes("jorge")) return true;
+  // ✅ si menciona a Jorge
+  if (t.includes("jorge")) return true;
 
-  // ✅ Keywords permitidas
-  const allowedKeywords = [
+  // ✅ keywords permitidas
+  const allowed = [
     "proyecto",
     "experiencia",
     "tecnologia",
@@ -45,16 +36,13 @@ const isAboutOwner = (text) => {
     "whatsapp",
     "contratar",
     "perfil",
-    "sobre",
   ];
 
-  return allowedKeywords.some((word) =>
-    normalizedText.includes(word)
-  );
+  return allowed.some((w) => t.includes(w));
 };
 
 /* =========================
-RESPUESTA INTELIGENTE
+RESPUESTA
 ========================= */
 export function getSmartResponse(message, context) {
   const text = normalize(message);
@@ -69,65 +57,62 @@ export function getSmartResponse(message, context) {
       : {},
   };
 
-  const BOT_NAME = "sasha";
-
   const replies = createReplies({ pickNonRepeated, PROFILE });
 
   /* =========================
-  🧠 REDIRECCIÓN INTELIGENTE A JORGE
-  ========================= */
-  if (
-    text.includes("proyecto") &&
-    !text.includes("jorge")
-  ) {
-    return {
-      text: "Claro 😊 Te cuento sobre los proyectos de Jorge:",
-      intent: "PROJECTS_REDIRECT",
-    };
+CONTEXTO (CONTACTO)
+========================= */
+  if (ctx.awaiting === "CONTACT_CONFIRM") {
+    if (YES_WORDS.includes(text)) {
+      return {
+        text: `Perfecto 🚀 Aquí tienes el enlace:\n${WHATSAPP_URL}`,
+        intent: "CONTACT_OPEN",
+      };
+    }
+
+    if (NO_WORDS.includes(text)) {
+      return {
+        text: "Perfecto 😊 Si lo necesitas luego, aquí estaré.",
+        intent: "CONTACT_CANCEL",
+      };
+    }
   }
 
   /* =========================
-  🟢 SALUDO
-  ========================= */
-  const greetingMatch = text.match(
-    /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)/i
-  );
-
-  if (greetingMatch) {
+SALUDO
+========================= */
+  if (/^(hola|buenos dias|buenas tardes|buenas noches)/.test(text)) {
     return { text: replies.GREETING(ctx), intent: "GREETING" };
   }
 
   /* =========================
-  🔴 DESPEDIDA
-  ========================= */
+DESPEDIDA
+========================= */
   if (isValidFarewell(text)) {
     return { text: replies.FAREWELL(ctx), intent: "FAREWELL" };
   }
 
   /* =========================
-  🟢 INTENT
-  ========================= */
+INTENT
+========================= */
   let intent = detectIntent(text);
 
-  if (text.includes("contact") || text.includes("whatsapp")) {
-    intent = "CONTACT";
-  } else if (text.includes("tecnolog")) {
-    intent = "SKILLS";
-  } else if (text.includes("experiencia")) {
-    intent = "EXPERIENCE";
-  } else if (text.includes("proyecto")) {
-    intent = "PROJECTS";
-  } else if (text.includes("contratar")) {
-    intent = "MOTIVATION";
-  } else if (text.includes("stack")) {
-    intent = "STACK";
-  } else if (text.includes("sobre")) {
-    intent = "PROFILE";
+  // fallback inteligente SOLO si falla
+  if (intent === "UNKNOWN") {
+    if (text.includes("contact") || text.includes("whatsapp")) {
+      intent = "CONTACT";
+    } else if (text.includes("tecnolog")) {
+      intent = "SKILLS";
+    } else if (text.includes("experiencia")) {
+      intent = "EXPERIENCE";
+    } else if (text.includes("proyecto")) {
+      intent = "PROJECTS";
+    }
   }
 
   /* =========================
-  🔒 VALIDACIÓN GLOBAL
-  ========================= */
+VALIDACIÓN GLOBAL
+========================= */
   if (!isAboutOwner(text)) {
     return {
       text: "Solo puedo hablar sobre Jorge 😊",
@@ -136,13 +121,13 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
-  💾 MEMORIA
-  ========================= */
+MEMORIA
+========================= */
   saveMemory(ctx, { user: text, intent });
 
   /* =========================
-  🟢 CONTACTO
-  ========================= */
+CONTACTO
+========================= */
   if (intent === "CONTACT") {
     ctx.awaiting = "CONTACT_CONFIRM";
 
@@ -153,8 +138,8 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🧠 RESPUESTA FINAL
-  ========================= */
+RESPUESTA FINAL
+========================= */
   let replyText =
     typeof replies[intent] === "function"
       ? replies[intent](ctx)
