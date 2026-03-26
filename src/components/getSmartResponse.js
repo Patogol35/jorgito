@@ -288,10 +288,9 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
+🟡 PROTECCIÓN DE DATOS
 ========================= */
-
-  const isAboutOwner = (text) => {
+const isAboutOwner = (text) => {
   const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
@@ -302,43 +301,32 @@ if (ctx.awaitingFollowUp) {
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
   const intentKeywords = [
-    // 🔧 tecnologías / habilidades
     "tecnologia","tecnologias","tecnolog",
     "stack","habilidad","habilidades",
-    // 💼 experiencia
     "experiencia","experiencias","experien",
     "trabaja","trabajo","trabajos",
-    // 🎓 educación
     "estudio","estudios","estudi",
-    "formacion","educacion",
-    "master","universidad","carrera",
-    // 🚀 proyectos
+    "formacion","educacion","master","universidad","carrera",
     "proyecto","proyectos",
-    // 👨‍💻 perfil profesional
     "desarrollador","ingeniero",
-    // ⚙️ acciones / skills
     "usa","utiliza","maneja","sabe","conoce","domina",
-    // 📞 contacto / motivación
     "contacto","contact","contactar","whatsapp","contratar",
-    // 📚 libros / gustos
     "libro","libros","favorito","favoritos"
-    
   ];
 
   const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
   const hasOwnerName = validNames.some(name => normalizedText.includes(name));
 
-  // 🔥 palabras separadas
   const words = normalizedText.split(" ");
 
-  // palabras seguras
   const safeWords = [
     "que","cual","como","donde","cuando","por","para","con",
     "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
-    "sus","su","los","las","y","o","en","del","al","por","favor"
+    "sus","su","los","las","y","o","en","del","al","por","favor",
+    // 🔥 mejoras
+    "puedo","podria","quiero","necesito","contactar"
   ];
 
-  // nombres comunes (bloqueo directo)
   const commonNames = [
     "luis","carlos","jose","juan","andres","diego","daniel","miguel",
     "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
@@ -351,7 +339,6 @@ if (ctx.awaitingFollowUp) {
 
   if (hasOtherName) return false;
 
-  // 🔥 detectar basura tipo "jsjs"
   const suspiciousWord = words.find(word =>
     word.length > 2 &&
     !safeWords.includes(word) &&
@@ -361,67 +348,47 @@ if (ctx.awaitingFollowUp) {
 
   if (suspiciousWord) return false;
 
-  // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
-
-  // 🟢 Si parece pregunta profesional → asumir Jorge
   if (hasIntent) return true;
 
-  // 🟢 Pregunta sin nombre pero con intención profesional
   const generalProfileKeywords = ["quien","quién","hablame","háblame","cuentame","cuéntame","dime","sobre"];
   if (words.some(w => generalProfileKeywords.includes(w))) return true;
 
   return true;
 };
 
-/* =========================
-🔒 BLOQUEO GLOBAL
-========================= */
-// 🔴 BLOQUEO TOTAL (ANTES DE TODO)
-const isValidQuery = isAboutOwner(text);
-
-if (!isValidQuery) {
-  return {
-    text: "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información de Jorge.",
-    intent: "OUT_OF_SCOPE",
-  };
-}
+  
 
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
 
-// 🔴 SI HAY PALABRAS BASURA → FORZAR UNKNOWN
-const hasGarbage = text.match(/\b(jsjs|asdf|qwerty|xxx)\b/i);
-
-if (hasGarbage) {
+// basura
+if (/\b(jsjs|asdf|qwerty|xxx)\b/i.test(text)) {
   intent = "UNKNOWN";
 }
 
 const normalizedText = text.toLowerCase();
 
-// 🟢 Detectar si menciona tu nombre
 const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
   .some(name => normalizedText.includes(name));
 
-// 🟢 Detectar intención general de perfil
 const isGeneralProfileQuery = [
   "quien es","quién es","hablame","háblame",
   "cuentame","cuéntame","dime","sobre"
 ].some(word => normalizedText.includes(word));
 
-// 🔥 PERFIL GENERAL
+// perfil
 if (hasOwnerName && isGeneralProfileQuery) {
   intent = "PROFILE";
 }
 
-// 🟢 SI SOLO DICE EL NOMBRE → PERFIL
 if (hasOwnerName && intent === "UNKNOWN") {
   intent = "PROFILE";
 }
 
-// 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE
+// intents fuertes
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (normalizedText.includes("tecnolog")) {
@@ -438,19 +405,19 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "PROJECTS";
 } else if (normalizedText.includes("contratar")) {
   intent = "MOTIVATION";
-} else if (normalizedText.includes("stack") || normalizedText.includes("full stack")) {
+} else if (normalizedText.includes("stack")) {
   intent = "STACK";
 } else if (normalizedText.includes("libro")) {
   intent = "BOOK";
 }
 
-// 🔴 Validar despedida real
+// validar despedida
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
   intent = "UNKNOWN";
 }
 
 /* =========================
-🔒 BLOQUEO GLOBAL (DESPUÉS DEL INTENT)
+🔒 BLOQUEO GLOBAL (CORRECTO)
 ========================= */
 
 const isValidQuery = isAboutOwner(text);
@@ -473,10 +440,9 @@ if (!isValidQuery && !allowedIntents.includes(intent)) {
 }
 
 /* =========================
-💾 GUARDAR MEMORIA
+💾 MEMORIA
 ========================= */
 saveMemory(ctx, { user: text, intent });
-
 /* =========================
 🟢 CONTACTO
 ========================= */
