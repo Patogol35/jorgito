@@ -346,16 +346,7 @@ const normalizedText = text
 
   
 
-/* =========================
-🔒 BLOQUEO GLOBAL
-========================= */
-if (!isAboutOwner(text)) {
-  return {
-    text: replies.OUT_OF_SCOPE(ctx),
-    intent: "OUT_OF_SCOPE",
-  };
 
-}
 
 /* =========================
 🟢 DETECTAR INTENT
