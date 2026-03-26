@@ -10,8 +10,36 @@ UTILIDADES
 export const delay = () => Math.floor(Math.random() * 500) + 400;
 export const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-export const YES_WORDS = ["sí", "si", "claro", "ok", "dale", "okey"];
-export const NO_WORDS = ["no", "ahora no", "luego"];
+export const YES_WORDS = [
+  "si",
+  "sí",
+  "ok",
+  "claro",
+  "dale",
+  "okey",
+
+  // 🔥 naturales y comunes
+  "listo",
+  "perfecto",
+  "vale",
+  "de acuerdo",
+  "de una",
+  "va",
+  "bien"
+];
+
+export const NO_WORDS = [
+  "no",
+  "luego",
+  "despues",
+  "ahora no",
+
+  // 🔥 más natural
+  "no gracias",
+  "no quiero",
+  "tal vez luego",
+  "otro momento"
+];
 
 /* =========================
 MEMORIA
@@ -249,9 +277,9 @@ FOLLOW UP
 ========================= */
 export const followUp = (intent) =>
   ({
-    PROFILE: "¿Quieres conocer la experiencia profesional de Jorge?\n👉 Responde \"si\" u \"ok\"",
-    EXPERIENCE: "¿Te muestro las tecnologías que utiliza Jorge?\n👉 Responde \"si\" u \"ok\"",
-    SKILLS: "¿Quieres saber acerca de los proyectos de Jorge?\n👉 Responde \"si\" u \"ok\"",
+    PROFILE: "¿Quieres conocer la experiencia profesional de Jorge?",
+    EXPERIENCE: "¿Te muestro las tecnologías que utiliza Jorge?",
+    SKILLS: "¿Quieres saber acerca de los proyectos de Jorge?",
     PROJECTS: null,
   }[intent] || null);
 
