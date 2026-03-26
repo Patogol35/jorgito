@@ -318,18 +318,26 @@ if (suspiciousWord && !hasIntent) return false;
 /* =========================
 🔒 BLOQUEO GLOBAL
 ========================= */
-if (!isAboutOwner(text)) {
+// 🔴 BLOQUEO TOTAL (ANTES DE TODO)
+const isValidQuery = isAboutOwner(text);
+
+if (!isValidQuery) {
   return {
-    text: replies.OUT_OF_SCOPE(ctx),
+    text: "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información de Jorge.",
     intent: "OUT_OF_SCOPE",
   };
-
 }
 
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
+  // 🔴 SI HAY PALABRAS BASURA → FORZAR UNKNOWN
+const hasGarbage = text.match(/\b(jsjs|asdf|qwerty|xxx)\b/i);
+
+if (hasGarbage) {
+  intent = "UNKNOWN";
+}
 
 const normalizedText = text.toLowerCase();
 
