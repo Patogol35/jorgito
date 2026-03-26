@@ -100,6 +100,69 @@ export function getSmartResponse(message, context) {
     };
   }
 
+
+
+  /* =========================
+🔵 CONFIRMACIÓN WHATSAPP
+========================= */
+if (ctx.awaiting === "CONTACT_CONFIRM") {
+  if (YES_WORDS.includes(text)) {
+    ctx.awaiting = null;
+    window.open(WHATSAPP_URL, "_blank");
+
+    return {
+      text: "Perfecto 😊 Te llevo a WhatsApp ahora mismo.",
+      intent: "CONTACT_OPENED",
+    };
+  }
+
+  if (NO_WORDS.includes(text)) {
+    ctx.awaiting = null;
+    return {
+      text: "Está bien 😊 Avísame si luego deseas contactarlo.",
+      intent: "CONTACT_CANCEL",
+    };
+  }
+}
+
+/* =========================
+FOLLOW UPS
+========================= */
+if (ctx.awaitingFollowUp) {
+  if (YES_WORDS.includes(text)) {
+    const intent = ctx.awaitingFollowUp;
+    ctx.awaitingFollowUp = null;
+
+    // 🔥 Usar el MISMO sistema de replies (no texto fijo)
+    const chainReplies = {
+      PROFILE: () => replies.EXPERIENCE(ctx),
+      EXPERIENCE: () => replies.SKILLS(ctx),
+      SKILLS: () => replies.PROJECTS(ctx),
+    };
+
+    if (chainReplies[intent]) {
+      return {
+        text: chainReplies[intent](),
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+  }
+
+  if (NO_WORDS.includes(text)) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  // Si responde otra cosa, se cancela el follow-up
+  ctx.awaitingFollowUp = null;
+}
+
+
+
+  
   /* =========================
   🟢 SALUDO
   ========================= */
