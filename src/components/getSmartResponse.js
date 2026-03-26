@@ -273,19 +273,19 @@ const isAboutOwner = (text) => {
 
   // 🔥 detectar palabras tipo "nombre"
   const words = normalizedText.split(" ");
+// 🔴 SOLO bloquear si mencionan OTRO nombre real
+const commonNames = [
+  "luis","carlos","jose","juan","andres","diego","daniel","miguel",
+  "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
+  "ana","maria","sofia","valentina","camila","laura","paula"
+];
 
-  const suspiciousWords = words.filter(word =>
-    word.length > 3 && // evita "de", "la", etc
-    !validNames.includes(word) &&
-    !intentKeywords.some(k => word.includes(k))
-  );
+const hasOtherName = commonNames.some(name =>
+  normalizedText.includes(name) && !validNames.includes(name)
+);
 
-  const hasWeirdName = suspiciousWords.length > 0;
-
-  // 🔴 Si hay palabra rara + intención → bloquear
-  if (hasWeirdName && hasIntent && !hasOwnerName) {
-    return false;
-  }
+// 🔴 Si menciona otro nombre → bloquear
+if (hasOtherName) return false;
 
   // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
