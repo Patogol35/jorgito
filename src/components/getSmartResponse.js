@@ -65,15 +65,15 @@ export function getSmartResponse(message, context) {
 };
   }
 
-    /* =========================
-🟢 hola
+/* =========================
+🟢 NOMBRE DEL BOT
 ========================= */
-const niceToMeetMatch = text.match(
+const nameMatch = text.match(
   /^(cual es tu nombre|como te llamas|tu nombre|como puedo llamarte)(\s+[a-zA-Záéíóúñ]+)?$/i
 );
 
-if (niceToMeetMatch) {
-  const name = normalize(niceToMeetMatch[2]?.trim() || "");
+if (nameMatch) {
+  const name = normalize(nameMatch[2]?.trim() || "");
 
   if (!name || name === BOT_NAME) {
     return {
