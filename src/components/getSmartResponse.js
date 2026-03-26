@@ -9,6 +9,8 @@ import {
   detectIntent,
   isValidFarewell,
   pickNonRepeated,
+  isYes,
+  isNo
 } from "./chatbot.config";
 
 /* =========================
@@ -188,7 +190,7 @@ if (niceToMeetMatch) {
 🔵 CONFIRMACIÓN WHATSAPP
 ========================= */
 if (ctx.awaiting === "CONTACT_CONFIRM") {
-  if (YES_WORDS.includes(text)) {
+  if (isYes(text)) {
     ctx.awaiting = null;
     window.open(WHATSAPP_URL, "_blank");
 
@@ -198,7 +200,7 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
     };
   }
 
-  if (NO_WORDS.includes(text)) {
+  if (isNo(text)) {
     ctx.awaiting = null;
     return {
       text: "Está bien 😊 Avísame si luego deseas contactarlo.",
@@ -206,7 +208,6 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
     };
   }
 }
-
 /* =========================
 FOLLOW UPS
 ========================= */
