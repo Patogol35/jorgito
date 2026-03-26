@@ -80,14 +80,14 @@ SUGERENCIAS
 export const SUGGESTIONS = [
   "¿Quién es Jorge?",
   "¿Qué experiencia tiene Jorge?",
-  "¿Qué estudios tiene?",
-  "¿En qué tecnologías trabaja?",
-  "¿Es Full Stack?",
-  "Cuéntame sobre sus proyectos",
+  "¿Qué estudios tiene Jorge?",
+  "¿En qué tecnologías trabaja Jorge?",
+  "¿Jorge Es Full Stack?",
+  "Cuéntame sobre los proyectos de Jorge",
   "¿Por qué contratar a Jorge?",
   "¿Cómo puedo contactar a Jorge?",
   "¿Quién te creó?",
-  "Sus libros favoritos?",
+
 ];
 
 /* =========================
