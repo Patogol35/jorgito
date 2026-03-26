@@ -183,6 +183,29 @@ export const normalize = (t = "") =>
     .trim();
 
 /* =========================
+DETECTAR RESPUESTAS SI / NO
+========================= */
+export const isYes = (message = "") => {
+  const text = normalize(message);
+
+  return YES_WORDS.some(word =>
+    text === word ||
+    text.startsWith(word + " ") ||
+    text.includes(" " + word)
+  );
+};
+
+export const isNo = (message = "") => {
+  const text = normalize(message);
+
+  return NO_WORDS.some(word =>
+    text === word ||
+    text.startsWith(word + " ") ||
+    text.includes(" " + word)
+  );
+};
+
+/* =========================
 DETECT INTENT
 ========================= */
 export const detectIntent = (msg) => {
