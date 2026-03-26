@@ -391,7 +391,8 @@ if (!isValidQuery) {
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
-  // 🔴 SI HAY PALABRAS BASURA → FORZAR UNKNOWN
+
+// 🔴 SI HAY PALABRAS BASURA → FORZAR UNKNOWN
 const hasGarbage = text.match(/\b(jsjs|asdf|qwerty|xxx)\b/i);
 
 if (hasGarbage) {
@@ -415,19 +416,23 @@ if (hasOwnerName && isGeneralProfileQuery) {
   intent = "PROFILE";
 }
 
-  // 🟢 SI SOLO DICE EL NOMBRE → PERFIL
+// 🟢 SI SOLO DICE EL NOMBRE → PERFIL
 if (hasOwnerName && intent === "UNKNOWN") {
   intent = "PROFILE";
 }
 
-// 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE (REEMPLAZA EL IF ANTERIOR)
+// 🔥 DETECTAR INTENT AUNQUE NO DIGA NOMBRE
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (normalizedText.includes("tecnolog")) {
   intent = "SKILLS";
 } else if (normalizedText.includes("experiencia")) {
   intent = "EXPERIENCE";
-} else if (normalizedText.includes("estudio") || normalizedText.includes("master") || normalizedText.includes("formacion")) {
+} else if (
+  normalizedText.includes("estudio") ||
+  normalizedText.includes("master") ||
+  normalizedText.includes("formacion")
+) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
@@ -439,10 +444,38 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "BOOK";
 }
 
+// 🔴 Validar despedida real
 if (intent === "FAREWELL" && !isValidFarewell(text)) {
   intent = "UNKNOWN";
 }
 
+/* =========================
+🔒 BLOQUEO GLOBAL (DESPUÉS DEL INTENT)
+========================= */
+
+const isValidQuery = isAboutOwner(text);
+
+// 🔥 PERMITIR INTENTS IMPORTANTES AUNQUE EL FILTRO FALLE
+const allowedIntents = [
+  "CONTACT",
+  "PROFILE",
+  "SKILLS",
+  "EXPERIENCE",
+  "PROJECTS",
+  "EDUCATION",
+  "MOTIVATION", 
+];
+
+if (!isValidQuery && !allowedIntents.includes(intent)) {
+  return {
+    text: "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información de Jorge.",
+    intent: "OUT_OF_SCOPE",
+  };
+}
+
+/* =========================
+💾 GUARDAR MEMORIA
+========================= */
 saveMemory(ctx, { user: text, intent });
 
 /* =========================
