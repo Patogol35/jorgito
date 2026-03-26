@@ -140,6 +140,9 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
     "Solo tengo información sobre Jorge Patricio 🙂",
     "Puedo ayudarte únicamente con información sobre Jorge 😊",
     "Mi conocimiento está enfocado en Jorge, ¿quieres saber algo sobre él?",
+    "Por ahora solo puedo responder sobre Jorge Patricio 😊",
+    "Ese tema se me escapa, pero puedo hablarte de Jorge 😉",
+    "Estoy diseñada para darte info sobre Jorge, ¿te interesa saber algo?"
   ]),
 
     LIKES_MUSIC: (ctx) =>
