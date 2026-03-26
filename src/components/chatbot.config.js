@@ -158,6 +158,8 @@ export const INTENTS = {
   "quien es jorge",
   "informacion",
   "sobre jorge",
+    "hablame",
+    "háblame",
 ],
   EDUCATION: ["estudios", "máster", "formación", "estudio","formacion", "educación", "educacion"],
   EXPERIENCE: ["experiencia"],
