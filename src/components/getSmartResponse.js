@@ -304,7 +304,7 @@ const suspiciousWord = words.find(word =>
 );
 
 // 🔴 bloquear basura
-if (suspiciousWord && !hasIntent) return false;
+if (suspiciousWord) return false;
 
   // 🟢 Si menciona Jorge → permitir
   if (hasOwnerName) return true;
