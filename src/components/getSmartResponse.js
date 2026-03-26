@@ -280,10 +280,10 @@ const isAboutOwner = (text) => {
   "usa","utiliza","maneja","sabe","conoce","domina",
 
   // 📞 contacto
-  "contacto","contact","whatsapp",
+  "contacto","contact","contactar","whatsapp",
 
-  // 📚 otros
-  "libro"
+  // 📚 libros / gustos
+  "libro","libros","favorito","favoritos"
 ];
 
   const hasIntent = intentKeywords.some(k =>
