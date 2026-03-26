@@ -113,7 +113,9 @@ const adjustIntentIfJorgeMentioned = (text, currentIntent) => {
     normalizedText.includes("master") ||
     normalizedText.includes("máster") ||
     normalizedText.includes("formacion") ||
-    normalizedText.includes("formación")
+    normalizedText.includes("formación") ||
+    normalizedText.includes("educacion") ||
+    normalizedText.includes("educación") 
   ) {
     return "EDUCATION";
   }
