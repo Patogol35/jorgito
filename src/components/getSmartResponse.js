@@ -345,6 +345,8 @@ if (ctx.awaitingFollowUp) {
     intent = "EDUCATION";
   } else if (normalizedText.includes("proyecto")) {
     intent = "PROJECTS";
+    } else if (normalizedText.includes("contratar")) {
+  intent = "MOTIVATION";
   } else if (normalizedText.includes("stack")) {
     intent = "STACK";
   } else if (normalizedText.includes("libro")) {
