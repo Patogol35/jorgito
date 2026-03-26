@@ -11,40 +11,7 @@ import {
   pickNonRepeated,
 } from "./chatbot.config";
 
-/* =========================
-FOLLOW UPS
-========================= */
-if (ctx.awaitingFollowUp) {
-  if (YES_WORDS.includes(text)) {
-    const intent = ctx.awaitingFollowUp;
-    ctx.awaitingFollowUp = null;
 
-    // 🔥 Usar el MISMO sistema de replies (no texto fijo)
-    const chainReplies = {
-      PROFILE: () => replies.EXPERIENCE(ctx),
-      EXPERIENCE: () => replies.SKILLS(ctx),
-      SKILLS: () => replies.PROJECTS(ctx),
-    };
-
-    if (chainReplies[intent]) {
-      return {
-        text: chainReplies[intent](),
-        intent: intent === "SKILLS" ? "PROJECTS" : intent,
-        fromFollowUp: true,
-      };
-    }
-  }
-
-  if (NO_WORDS.includes(text)) {
-    ctx.awaitingFollowUp = null;
-    return {
-      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
-    };
-  }
-
-  // Si responde otra cosa, se cancela el follow-up
-  ctx.awaitingFollowUp = null;
-}
 
 /* =========================
 🟡 PROTECCIÓN DE DATOS (STRICT MODE)
@@ -320,6 +287,43 @@ if (ctx.awaiting === "CONTACT_CONFIRM") {
   }
 }
 
+
+/* =========================
+FOLLOW UPS
+========================= */
+if (ctx.awaitingFollowUp) {
+  if (YES_WORDS.includes(text)) {
+    const intent = ctx.awaitingFollowUp;
+    ctx.awaitingFollowUp = null;
+
+    // 🔥 Usar el MISMO sistema de replies (no texto fijo)
+    const chainReplies = {
+      PROFILE: () => replies.EXPERIENCE(ctx),
+      EXPERIENCE: () => replies.SKILLS(ctx),
+      SKILLS: () => replies.PROJECTS(ctx),
+    };
+
+    if (chainReplies[intent]) {
+      return {
+        text: chainReplies[intent](),
+        intent: intent === "SKILLS" ? "PROJECTS" : intent,
+        fromFollowUp: true,
+      };
+    }
+  }
+
+  if (NO_WORDS.includes(text)) {
+    ctx.awaitingFollowUp = null;
+    return {
+      text: "Está bien 😊 ¿En qué más puedo ayudarte?",
+    };
+  }
+
+  // Si responde otra cosa, se cancela el follow-up
+  ctx.awaitingFollowUp = null;
+}
+
+  
   /* =========================
   🟢 INTENT
   ========================= */
