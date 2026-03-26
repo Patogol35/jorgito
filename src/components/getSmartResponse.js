@@ -288,7 +288,7 @@ if (ctx.awaitingFollowUp) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS
+🟡 PROTECCIÓN DE DATOS (MEJORADA)
 ========================= */
 const isAboutOwner = (text) => {
   const normalizedText = text
@@ -297,8 +297,6 @@ const isAboutOwner = (text) => {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[¿?¡!.,]/g, "")
     .trim();
-
-  const validNames = ["jorge", "patricio", "jorge patricio"];
 
   const intentKeywords = [
     "tecnologia","tecnologias","tecnolog",
@@ -315,7 +313,6 @@ const isAboutOwner = (text) => {
   ];
 
   const hasIntent = intentKeywords.some(k => normalizedText.includes(k));
-  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
 
   const words = normalizedText.split(" ");
 
@@ -323,41 +320,29 @@ const isAboutOwner = (text) => {
     "que","cual","como","donde","cuando","por","para","con",
     "tiene","tengan","tengo","hay","usa","utiliza","de","la","el",
     "sus","su","los","las","y","o","en","del","al","por","favor",
-    // 🔥 mejoras
     "puedo","podria","quiero","necesito","contactar"
   ];
 
-  const commonNames = [
-    "luis","carlos","jose","juan","andres","diego","daniel","miguel",
-    "pedro","alejandro","david","sergio","rafael","adrian","ricardo",
-    "ana","maria","sofia","valentina","camila","laura","paula"
-  ];
-
-  const hasOtherName = commonNames.some(name =>
-    normalizedText.includes(name) && !validNames.includes(name)
-  );
-
-  if (hasOtherName) return false;
-
+  // 🔥 Detectar palabras raras (pero más tolerante)
   const suspiciousWord = words.find(word =>
-    word.length > 2 &&
+    word.length > 3 &&
     !safeWords.includes(word) &&
-    !intentKeywords.some(k => word.includes(k) || k.includes(word)) &&
-    !validNames.some(name => name.includes(word))
+    !intentKeywords.some(k => word.includes(k) || k.includes(word))
   );
 
   if (suspiciousWord) return false;
 
-  if (hasOwnerName) return true;
   if (hasIntent) return true;
 
-  const generalProfileKeywords = ["quien","quién","hablame","háblame","cuentame","cuéntame","dime","sobre"];
+  const generalProfileKeywords = [
+    "quien","hablame","cuentame","dime","sobre"
+  ];
+
   if (words.some(w => generalProfileKeywords.includes(w))) return true;
 
   return true;
 };
 
-  
 
 /* =========================
 🟢 DETECTAR INTENT
@@ -371,24 +356,7 @@ if (/\b(jsjs|asdf|qwerty|xxx)\b/i.test(text)) {
 
 const normalizedText = text.toLowerCase();
 
-const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
-  .some(name => normalizedText.includes(name));
-
-const isGeneralProfileQuery = [
-  "quien es","quién es","hablame","háblame",
-  "cuentame","cuéntame","dime","sobre"
-].some(word => normalizedText.includes(word));
-
-// perfil
-if (hasOwnerName && isGeneralProfileQuery) {
-  intent = "PROFILE";
-}
-
-if (hasOwnerName && intent === "UNKNOWN") {
-  intent = "PROFILE";
-}
-
-// intents fuertes
+// intents fuertes (SIN depender de nombre)
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (normalizedText.includes("tecnolog")) {
@@ -409,6 +377,13 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "STACK";
 } else if (normalizedText.includes("libro")) {
   intent = "BOOK";
+} else if (
+  normalizedText.includes("quien es") ||
+  normalizedText.includes("hablame") ||
+  normalizedText.includes("cuentame") ||
+  normalizedText.includes("sobre")
+) {
+  intent = "PROFILE";
 }
 
 // validar despedida
@@ -416,8 +391,9 @@ if (intent === "FAREWELL" && !isValidFarewell(text)) {
   intent = "UNKNOWN";
 }
 
+
 /* =========================
-🔒 BLOQUEO GLOBAL (CORRECTO)
+🔒 BLOQUEO GLOBAL
 ========================= */
 
 const isValidQuery = isAboutOwner(text);
@@ -430,19 +406,24 @@ const allowedIntents = [
   "PROJECTS",
   "EDUCATION",
   "MOTIVATION",
+  "STACK",
+  "BOOK"
 ];
 
 if (!isValidQuery && !allowedIntents.includes(intent)) {
   return {
-    text: "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información de Jorge.",
+    text: "Ups 😅 no estoy segura de eso, pero puedo ayudarte con información del perfil profesional.",
     intent: "OUT_OF_SCOPE",
   };
 }
+
 
 /* =========================
 💾 MEMORIA
 ========================= */
 saveMemory(ctx, { user: text, intent });
+
+
 /* =========================
 🟢 CONTACTO
 ========================= */
@@ -456,6 +437,7 @@ if (intent === "CONTACT") {
     intent,
   };
 }
+
 
 /* =========================
 🧠 RESPUESTA NORMAL
@@ -476,4 +458,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
