@@ -233,7 +233,7 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
         `Jorge cuenta con un ${PROFILE.education} 😊`,
         `Jorge tiene formación académica sólida: ${PROFILE.education} ☺️`,
         `Jorge se formó profesionalmente con un ${PROFILE.education} 💕`,
-        "Jorge posee estudios enfocados en tecnología 😊",
+        
         `Jorge cuenta con preparación académica sólida en el área de la informática y es ${PROFILE.education} ☺️`,
         `La formación académica de Jorge respalda su perfil profesional: ${PROFILE.education} 💻`,
       ]),
