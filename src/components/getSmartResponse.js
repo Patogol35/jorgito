@@ -15,9 +15,11 @@ import {
 🟡 DETECTOR DE ENTIDADES EXTERNAS
 ========================= */
 const hasExternalEntity = (text) => {
-  const words = text.toLowerCase().split(" ");
+  const words = text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, "")
+    .split(/\s+/);
 
-  // Lista base (puedes ampliarla)
   const blacklist = ["messi", "shakira", "ronaldo", "mbappe", "luis"];
 
   return words.some((w) => blacklist.includes(w));
@@ -29,20 +31,27 @@ const hasExternalEntity = (text) => {
 const isAboutOwner = (text) => {
   const normalizedText = text.toLowerCase();
 
-  if (hasExternalEntity(normalizedText)) return false;
+  // Si menciona otra persona y no menciona a Jorge → bloquear
+  if (hasExternalEntity(normalizedText) && !normalizedText.includes("jorge")) {
+    return false;
+  }
 
+  // Si menciona a Jorge → permitir
   if (normalizedText.includes("jorge")) return true;
 
+  // Preguntas abiertas
   if (
     normalizedText.includes("quien") ||
-    normalizedText.includes("háblame") ||
+    normalizedText.includes("quién") ||
     normalizedText.includes("hablame") ||
+    normalizedText.includes("háblame") ||
     normalizedText.includes("cuentame") ||
     normalizedText.includes("cuéntame")
   ) {
     return true;
   }
 
+  // Keywords permitidas
   const allowedKeywords = [
     "proyecto",
     "experiencia",
@@ -63,7 +72,7 @@ const isAboutOwner = (text) => {
 /* =========================
 RESPUESTA INTELIGENTE
 ========================= */
-export function getSmartResponse(message, context) {
+export function getSmartResponse(message, context = {}) {
   const text = normalize(message);
 
   const ctx = {
@@ -76,26 +85,11 @@ export function getSmartResponse(message, context) {
       : {},
   };
 
-  const BOT_NAME = "sasha";
-
   const replies = createReplies({ pickNonRepeated, PROFILE });
 
   /* =========================
-  🧠 REDIRECCIÓN INTELIGENTE A JORGE
-  ========================= */
-  if (
-    text.includes("proyecto") &&
-    !text.includes("jorge")
-  ) {
-    return {
-      text: "Claro 😊 Te cuento sobre los proyectos de Jorge:",
-      intent: "PROJECTS_REDIRECT",
-    };
-  }
-
-  /* =========================
-  🟢 SALUDO
-  ========================= */
+🧠 SALUDO
+========================= */
   const greetingMatch = text.match(
     /^(hola|buenos?\sd[ií]as|buenas?\stardes|buenas?\snoches)/i
   );
@@ -105,15 +99,15 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🔴 DESPEDIDA
-  ========================= */
+🔴 DESPEDIDA
+========================= */
   if (isValidFarewell(text)) {
     return { text: replies.FAREWELL(ctx), intent: "FAREWELL" };
   }
 
   /* =========================
-  🟢 INTENT
-  ========================= */
+🟢 INTENT
+========================= */
   let intent = detectIntent(text);
 
   if (text.includes("contact") || text.includes("whatsapp")) {
@@ -128,13 +122,19 @@ export function getSmartResponse(message, context) {
     intent = "MOTIVATION";
   } else if (text.includes("stack")) {
     intent = "STACK";
-  } else if (text.includes("sobre")) {
+  } else if (
+    text.includes("quien es") ||
+    text.includes("quién es") ||
+    text === "quien" ||
+    text === "quién" ||
+    text.includes("sobre")
+  ) {
     intent = "PROFILE";
   }
 
   /* =========================
-  🔒 VALIDACIÓN GLOBAL
-  ========================= */
+🔒 VALIDACIÓN GLOBAL
+========================= */
   if (!isAboutOwner(text)) {
     return {
       text: "Solo puedo hablar sobre Jorge 😊",
@@ -143,13 +143,13 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
-  💾 MEMORIA
-  ========================= */
+💾 MEMORIA
+========================= */
   saveMemory(ctx, { user: text, intent });
 
   /* =========================
-  🟢 CONTACTO
-  ========================= */
+🟢 CONTACTO
+========================= */
   if (intent === "CONTACT") {
     ctx.awaiting = "CONTACT_CONFIRM";
 
@@ -160,8 +160,8 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
-  🧠 RESPUESTA FINAL
-  ========================= */
+🧠 RESPUESTA FINAL
+========================= */
   let replyText =
     typeof replies[intent] === "function"
       ? replies[intent](ctx)
@@ -173,4 +173,4 @@ export function getSmartResponse(message, context) {
   }
 
   return { text: replyText, intent };
-                                 }
+}
