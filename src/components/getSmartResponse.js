@@ -344,32 +344,7 @@ const normalizedText = text
 
   const hasWeirdName = possibleNames.length > 0;
 
-  // =========================
-  // 🧠 LÓGICA FINAL
-  // =========================
-
-  // 🔴 Detectar si hablan de OTRA persona (estructura)
-const isAskingAboutOtherPerson = /\b(de|del)\s+([a-z]+)/.test(normalizedText);
-
-// 🔴 Detectar nombre al final tipo "tecnologias luis"
-const lastWord = words[words.length - 1];
-
-const isOtherNameAtEnd =
-  commonNames.includes(lastWord) &&
-  !validNames.includes(lastWord);
-
-// 🟢 Si menciona tu nombre → permitir
-if (hasOwnerName) {
-  return true;
-}
-
-// 🔴 Si pregunta sensible + (de alguien o nombre al final) → bloquear
-if ((isAskingAboutOtherPerson || isOtherNameAtEnd) && hasSensitive) {
-  return false;
-}
-
-// 🟢 Todo lo demás → asumir Jorge
-return true; };
+  
 
 /* =========================
 🔒 BLOQUEO GLOBAL
