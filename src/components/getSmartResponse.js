@@ -244,17 +244,17 @@ if (ctx.awaitingFollowUp) {
 }
 
 
-  /* =========================
-🤖 SELF BOT (QUIÉN TE CREÓ / QUIÉN ERES)
+/* =========================
+🤖 SELF BOT (QUIÉN TE CREÓ / QUIÉN ERES) PRO
 ========================= */
 const botMatch = text.match(
-  /^(quien te creo|quien te creó|quien eres|que eres|qué eres)(\s+[a-zA-Záéíóúñ]+)?$/i
+  /^(?:[a-zA-Záéíóúñ]+\s+)*(quien te creo|quien te creó|quien eres|que eres|qué eres)(\s+[a-zA-Záéíóúñ]+)?$/i
 );
 
 if (botMatch) {
   const name = normalize(botMatch[2]?.trim() || "");
 
-  // ✅ Solo válido si NO hay nombre o es el nombre del bot
+  // ✅ Solo válido si NO hay nombre o es el bot
   if (!name || name === BOT_NAME) {
     return {
       text: replies.CREATOR(ctx),
@@ -262,7 +262,7 @@ if (botMatch) {
     };
   }
 
-  // ❌ Si ponen otro nombre → bloquear
+  // ❌ Si meten otro nombre → bloquear
   return {
     text: replies.UNKNOWN(ctx),
     intent: "UNKNOWN",
