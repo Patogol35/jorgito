@@ -247,16 +247,25 @@ if (ctx.awaitingFollowUp) {
   /* =========================
 🤖 SELF BOT (QUIÉN TE CREÓ / QUIÉN ERES)
 ========================= */
-if (
-  text.includes("quien te creo") ||
-  text.includes("quien te creó") ||
-  text.includes("quien eres") ||
-  text.includes("que eres") ||
-  text.includes("qué eres")
-) {
+const botMatch = text.match(
+  /^(quien te creo|quien te creó|quien eres|que eres|qué eres)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (botMatch) {
+  const name = normalize(botMatch[2]?.trim() || "");
+
+  // ✅ Solo válido si NO hay nombre o es el nombre del bot
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.CREATOR(ctx),
+      intent: "CREATOR",
+    };
+  }
+
+  // ❌ Si ponen otro nombre → bloquear
   return {
-    text: replies.CREATOR(ctx),
-    intent: "CREATOR",
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
   };
 }
 
