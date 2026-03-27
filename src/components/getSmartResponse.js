@@ -296,7 +296,7 @@ if (botMatch) {
     "raul","guillermo","alvaro","bruno","dario","fabian",
     "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
     "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias",
+    "ulises","valentin","walter","xavier","yago","zacarias", "gay"
 
     "ana","maria","sofia","valentina","daniela","camila","laura",
     "paula","andrea","elena","lucia","isabella","martina","gabriela",
