@@ -270,7 +270,7 @@ if (botMatch) {
 }
 
 
-/* ========================= 🟣 DETECTOR PRO ========================= */
+/* ========================= 🟣 DETECTOR ULTRA PRO ========================= */
 
 // 🔤 Normalizar texto
 const cleanText = text
@@ -278,17 +278,19 @@ const cleanText = text
   .normalize("NFD")
   .replace(/[\u0300-\u036f]/g, "");
 
-// 🔤 INSULTOS (ampliado)
+// 🔤 INSULTOS (mega ampliado)
 const insultWords = [
   // básicos
-  "burro","asno","idiota","tonto","estupido","imbecil","marica",
+  "burro","asno","idiota","tonto","estupido","imbecil",
 
   // animales
   "perro","cerdo","marrano","bestia","rata","sapo",
 
   // LATAM
-  "pendejo","huevon","wevon","weon","gil","boludo","tarado","baboso",
-  "bruto","inutil","mediocre","malparido","gonorrea","careverga","careculo",
+  "pendejo","pendej0","huevon","huev0n","wevon","weon",
+  "gil","boludo","tarado","baboso",
+  "bruto","inutil","mediocre",
+  "malparido","gonorrea","careverga","careculo",
 
   // fuertes
   "patetico","ridiculo","basura","porqueria","asco","mierda",
@@ -302,22 +304,41 @@ const insultWords = [
 
 // 🔤 FRASES ofensivas
 const insultPhrases = [
-  "no sirves",
-  "no vales",
-  "das pena",
-  "me das asco",
-  "eres lo peor",
-  "que asco",
-  "vales nada"
+  "no sirves","no vales","das pena","me das asco",
+  "eres lo peor","vales nada","que asco","das lastima"
 ];
 
-// 🧠 Keywords sensibles
+// 🧠 KEYWORDS sensibles (ULTRA ampliado)
 const sensitiveKeywords = {
-  edad: ["edad","anos","cuantos anos","cumpleanos","fecha de nacimiento","nacio"],
-  relaciones: ["gay","homosexual","lesbiana","bi","bisexual","pareja","novia","novio","esposo","esposa","relacion"],
-  dinero: ["sueldo","salario","dinero","ingresos","cuanto gana","cuanto cobra"],
-  politica: ["religion","religioso","creencias","politica","ideologia","partido"],
-  ubicacion: ["vive","direccion","donde vive","ubicacion","reside","ciudad"]
+  edad: [
+    "edad","anos","cuantos anos","cumpleanos",
+    "fecha de nacimiento","nacio","que edad tiene"
+  ],
+
+  relaciones: [
+    "gay","homosexual","lesbiana","bi","bisexual",
+    "pareja","novia","novio","esposo","esposa",
+    "casado","casada","casarse","matrimonio",
+    "divorciado","soltero","relacion",
+    "sale con","esta con","tiene alguien",
+    "anda con","con quien esta"
+  ],
+
+  dinero: [
+    "sueldo","salario","dinero","ingresos",
+    "cuanto gana","cuanto cobra","riqueza","cuanto dinero tiene"
+  ],
+
+  politica: [
+    "religion","religioso","creencias",
+    "politica","ideologia","partido","vota","izquierda","derecha"
+  ],
+
+  ubicacion: [
+    "vive","direccion","donde vive",
+    "ubicacion","reside","ciudad","pais",
+    "donde esta","en que lugar vive"
+  ]
 };
 
 // 👤 nombres válidos
@@ -337,6 +358,14 @@ const isSensitiveTopic =
   matchKeyword(sensitiveKeywords.politica) ||
   matchKeyword(sensitiveKeywords.ubicacion);
 
+// 🔍 detectar preguntas
+const isQuestion =
+  cleanText.includes("?") ||
+  /^(quien|que|cuando|donde|por que|como|es|tiene|esta)/.test(cleanText);
+
+// 🔍 detectar preguntas sensibles directas
+const isSensitiveQuestion = hasOwner && isSensitiveTopic && isQuestion;
+
 // 🔍 detectar insultos por palabra
 const insultRegex = new RegExp(`\\b(${insultWords.join("|")})\\b`, "iu");
 const isInsultWord = insultRegex.test(cleanText);
@@ -347,18 +376,33 @@ const isInsultPhrase = insultPhrases.some(p => cleanText.includes(p));
 // 🔍 detectar ataques tipo "eres ..."
 const isDirectAttack = /eres\s+\w+/.test(cleanText);
 
-// 🔥 detección final
-const isInsult = isInsultWord || isInsultPhrase || isDirectAttack;
+// 🔍 detectar insultos disfrazados (con símbolos o puntos)
+const disguisedInsult = /i[\W_]*d[\W_]*i[\W_]*o[\W_]*t[\W_]*a/.test(cleanText);
+
+// 🔥 detección final insulto
+const isInsult =
+  isInsultWord ||
+  isInsultPhrase ||
+  isDirectAttack ||
+  disguisedInsult;
+
+// 🔍 detectar preguntas implícitas (sin nombre)
+const implicitOwnerAttack =
+  /es\s+casado|tiene\s+novia|tiene\s+pareja/.test(cleanText);
 
 // 🚨 RESPUESTA FINAL
-if (hasOwner && (isSensitiveTopic || isInsult)) {
+if (
+  (hasOwner && (isSensitiveTopic || isInsult)) ||
+  isSensitiveQuestion ||
+  implicitOwnerAttack
+) {
   return {
     text: isInsult
       ? "Prefiero mantener una conversación respetuosa 😊 Si deseas, puedo contarte sobre su experiencia profesional."
       : "Prefiero mantener esa información en privado 😊 ¿Te gustaría saber sobre su experiencia profesional o proyectos?",
     intent: "SENSITIVE_BLOCK",
   };
-               }
+}
 
 
   
