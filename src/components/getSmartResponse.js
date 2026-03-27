@@ -28,7 +28,7 @@ export function getSmartResponse(message, context) {
       : {},
   };
 
-  // 🔑 Constantes al inicio
+  // 🔑 Constantes
   const BOT_NAME = "sasha";
   const OWNER_NAMES = ["jorge", "patricio", "jorge patricio"];
 
@@ -71,44 +71,6 @@ export function getSmartResponse(message, context) {
       (name) => input.includes(name) && !OWNER_NAMES.includes(name)
     );
 
-  const isProfileQuestion = (input) => {
-    const profilePatterns = [
-      /que experiencia tiene/,
-      /cual es su experiencia/,
-      /habla de su experiencia/,
-      /que tecnologias (usa|maneja|domina|utiliza|conoce)/,
-      /que tecnologia maneja/,
-      /que habilidades tiene/,
-      /que skills tiene/,
-      /que proyectos ha (hecho|realizado)/,
-      /que proyectos tiene/,
-      /que estudios tiene/,
-      /cuales son sus estudios/,
-      /cual es su formacion/,
-      /cual es su educacion/,
-      /quiero contactarlo/,
-      /como puedo contactarlo/,
-      /su whatsapp/,
-      /quiero contratarlo/,
-      /por que contratarlo/,
-      /hablame de el/,
-      /cuentame de el/,
-      /dime sobre el/,
-      /su perfil/,
-      /^jorge$/,
-      /^patricio$/,
-      /^jorge patricio$/,
-      /^su experiencia$/,
-      /^sus estudios$/,
-      /^sus tecnologias$/,
-      /^sus proyectos$/,
-      /^su formacion$/,
-      /^su educacion$/
-    ];
-
-    return profilePatterns.some((pattern) => pattern.test(input));
-  };
-
   const looksLikeGenericKnowledge = (input) => {
     const genericPatterns = [
       /dinosaurio/,
@@ -128,6 +90,77 @@ export function getSmartResponse(message, context) {
     ];
 
     return genericPatterns.some((pattern) => pattern.test(input));
+  };
+
+  const isProfileQuestion = (input) => {
+    const profileKeywords = [
+      "experiencia",
+      "tecnologia",
+      "tecnologias",
+      "habilidades",
+      "skills",
+      "proyecto",
+      "proyectos",
+      "estudio",
+      "estudios",
+      "formacion",
+      "educacion",
+      "master",
+      "maestria",
+      "whatsapp",
+      "contacto",
+      "contactarlo",
+      "contratarlo",
+      "perfil"
+    ];
+
+    const profileTriggers = [
+      "su",
+      "sus",
+      "dime",
+      "cuentame",
+      "hablame",
+      "quiero saber",
+      "quiero ver",
+      "mostrar",
+      "muestrame"
+    ];
+
+    const directPatterns = [
+      /^jorge$/,
+      /^patricio$/,
+      /^jorge patricio$/,
+      /hablame de el/,
+      /cuentame de el/,
+      /dime sobre el/,
+      /dime de el/,
+      /quiero saber sobre el/
+    ];
+
+    const hasKeyword = profileKeywords.some((word) => input.includes(word));
+    const hasTrigger = profileTriggers.some((word) => input.includes(word));
+    const matchesDirectPattern = directPatterns.some((pattern) => pattern.test(input));
+
+    // Casos directos
+    if (matchesDirectPattern) return true;
+
+    // Ej: "su experiencia", "dime su experiencia", "cuéntame sus estudios"
+    if (hasKeyword && hasTrigger) return true;
+
+    // Casos cortos tipo: "experiencia", "tecnologías", "proyectos"
+    if (
+      /^(experiencia|tecnologias|tecnologia|habilidades|skills|proyectos|proyecto|estudios|estudio|formacion|educacion|perfil)$/.test(
+        input
+      )
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isThanksWithExtra = (input) => {
+    return /^(si|sí|ok|okay|claro|dale|perfecto|listo|va|de una)\s+gracias$/.test(input);
   };
 
   /* =========================
@@ -310,6 +343,15 @@ export function getSmartResponse(message, context) {
   FOLLOW UPS
   ========================= */
   if (ctx.awaitingFollowUp) {
+    // ❌ Bloquear "si gracias" para que NO dispare follow-up
+    if (isThanksWithExtra(text)) {
+      ctx.awaitingFollowUp = null;
+      return {
+        text: "Cuando gustes 😊",
+        intent: "FOLLOWUP_THANKS",
+      };
+    }
+
     if (isYes(text)) {
       const followIntent = ctx.awaitingFollowUp;
       ctx.awaitingFollowUp = null;
@@ -320,10 +362,16 @@ export function getSmartResponse(message, context) {
         SKILLS: () => replies.PROJECTS(ctx),
       };
 
+      const nextIntentMap = {
+        PROFILE: "EXPERIENCE",
+        EXPERIENCE: "SKILLS",
+        SKILLS: "PROJECTS",
+      };
+
       if (chainReplies[followIntent]) {
         return {
           text: chainReplies[followIntent](),
-          intent: followIntent === "SKILLS" ? "PROJECTS" : followIntent,
+          intent: nextIntentMap[followIntent],
           fromFollowUp: true,
         };
       }
@@ -474,4 +522,4 @@ export function getSmartResponse(message, context) {
     text: replyText,
     intent,
   };
-        }
+                           }
