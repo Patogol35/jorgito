@@ -243,6 +243,25 @@ if (ctx.awaitingFollowUp) {
   ctx.awaitingFollowUp = null;
 }
 
+
+  /* =========================
+🤖 SELF BOT (QUIÉN TE CREÓ / QUIÉN ERES)
+========================= */
+if (
+  text.includes("quien te creo") ||
+  text.includes("quien te creó") ||
+  text.includes("quien eres") ||
+  text.includes("que eres") ||
+  text.includes("qué eres")
+) {
+  return {
+    text: replies.CREATOR(ctx),
+    intent: "CREATOR",
+  };
+}
+
+  
+
 /* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
