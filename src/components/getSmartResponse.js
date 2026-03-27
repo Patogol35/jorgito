@@ -343,7 +343,7 @@ const sensitiveKeywords = {
   ],
 
   relaciones: [
-    "gay","homosexual","lesbiana","bi","bisexual",
+    "gay","homosexual","lesbiana", "bisexual",
     "pareja","novia","novio","esposo","esposa",
     "casado","casada","casarse","matrimonio",
     "divorciado","soltero","relacion",
