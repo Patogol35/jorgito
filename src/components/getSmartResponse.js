@@ -269,6 +269,25 @@ if (botMatch) {
   };
 }
 
+
+const sensitivePatterns = [
+  /(jorge|patricio).*(edad|años|cumpleaños)/i,
+  /(jorge|patricio).*(gay|homosexual|pareja|novia|novio)/i,
+  /(jorge|patricio).*(sueldo|salario|dinero|ingresos)/i,
+  /(jorge|patricio).*(religion|politica|ideologia)/i,
+  /(jorge|patricio).*(vive|direccion|casa)/i
+];
+
+const isSensitive = sensitivePatterns.some(r => r.test(text));
+
+if (isSensitive) {
+  return {
+    text: "Prefiero mantener esa información en privado 😊 ¿Te gustaría saber sobre su experiencia profesional o proyectos?",
+    intent: "SENSITIVE_BLOCK",
+  };
+}
+
+
   
 
 /* =========================
