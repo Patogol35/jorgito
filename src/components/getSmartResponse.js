@@ -553,7 +553,11 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if (normalizedText.includes("contratar")) {
+} else if 
+  (normalizedText.includes("contratar") ||
+  normalizedText.includes("elegir") ||
+  normalizedText.includes("escoger") ||
+  normalizedText.includes("confiar") ) {
   intent = "MOTIVATION";
 } else if (
   normalizedText.includes("stack") ||
