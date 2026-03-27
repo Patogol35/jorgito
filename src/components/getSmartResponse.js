@@ -359,8 +359,8 @@ const isGeneralProfileQuery = [
 ].some(word => normalizedText.includes(word));
 
 // 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
-if (intent === "UNKNOWN" && hasOwnerName) {
-  intent = "OUT_OF_SCOPE";
+if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
+  intent = "PROFILE";
 }
 
 // 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
