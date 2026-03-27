@@ -317,11 +317,7 @@ const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
   .some(name => normalizedText.includes(name));
 
 const isGeneralProfileQuery = [
-  "quien es",
-  "hablame",
-  "cuentame",
-  "dime",
-  "sobre"
+  "jorge"
 ].some(word => normalizedText.includes(word));
 
 // 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
