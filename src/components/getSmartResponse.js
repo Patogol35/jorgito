@@ -320,7 +320,7 @@ const sensitiveKeywords = {
     "pareja","novia","novio","esposo","esposa",
     "casado","casada","casarse","matrimonio",
     "divorciado","soltero","relacion",
-    "sale con","esta con","tiene alguien",
+    "sale con","esta con","tiene alguien", "maricon",
     "anda con","con quien esta"
   ],
 
