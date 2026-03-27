@@ -270,19 +270,58 @@ if (botMatch) {
 }
 
 
-const sensitivePatterns = [
-  /(jorge|patricio).*(edad|años|cumpleaños)/i,
-  /(jorge|patricio).*(gay|homosexual|pareja|novia|novio)/i,
-  /(jorge|patricio).*(sueldo|salario|dinero|ingresos)/i,
-  /(jorge|patricio).*(religion|politica|ideologia)/i,
-  /(jorge|patricio).*(vive|direccion|casa)/i
+/* ========================= 🟣 PREGUNTAS SENSIBLES + INSULTOS (PRO) ========================= */
+
+// 🔤 Normalizar texto (quita tildes)
+const cleanText = text
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g, "");
+
+// 🔤 Palabras de insulto (ampliadas)
+const insultWords = [
+  "burro","asno","idiota","tonto","estupido","imbecil","marica",
+  "pendejo","huevon","huevon","gil","boludo","tarado","baboso",
+  "inutil","mediocre","bruto","animal",
+  "ridiculo","patetico"
 ];
 
-const isSensitive = sensitivePatterns.some(r => r.test(text));
+// 🧠 Keywords sensibles (forma natural)
+const sensitiveKeywords = {
+  edad: ["edad","anos","cuantos anos","cumpleanos","fecha de nacimiento","nacio"],
+  relaciones: ["gay","homosexual","lesbiana","bi","bisexual","pareja","novia","novio","esposo","esposa","relacion","sale con","esta con"],
+  dinero: ["sueldo","salario","dinero","ingresos","cuanto gana","cuanto cobra","riqueza"],
+  politica: ["religion","religioso","creencias","politica","ideologia","partido"],
+  ubicacion: ["vive","direccion","casa","donde vive","ubicacion","reside","ciudad"]
+};
 
-if (isSensitive) {
+// 👤 nombres válidos
+const ownerNames = ["jorge","patricio","jorge patricio"];
+
+// 🔍 helpers
+const hasOwner = ownerNames.some(n => cleanText.includes(n));
+
+const matchKeyword = (keywords) =>
+  keywords.some(k => cleanText.includes(k));
+
+// 🔍 detectar categorías sensibles
+const isSensitiveTopic =
+  matchKeyword(sensitiveKeywords.edad) ||
+  matchKeyword(sensitiveKeywords.relaciones) ||
+  matchKeyword(sensitiveKeywords.dinero) ||
+  matchKeyword(sensitiveKeywords.politica) ||
+  matchKeyword(sensitiveKeywords.ubicacion);
+
+// 🔍 detectar insultos
+const insultRegex = new RegExp(`\\b(${insultWords.join("|")})\\b`, "i");
+const isInsult = insultRegex.test(cleanText);
+
+// 🔥 condición final
+if (hasOwner && (isSensitiveTopic || isInsult)) {
   return {
-    text: "Prefiero mantener esa información en privado 😊 ¿Te gustaría saber sobre su experiencia profesional o proyectos?",
+    text: isInsult
+      ? "Prefiero mantener una conversación respetuosa 😊 Si deseas, puedo contarte sobre su experiencia profesional."
+      : "Prefiero mantener esa información en privado 😊 ¿Te gustaría saber sobre su experiencia profesional o proyectos?",
     intent: "SENSITIVE_BLOCK",
   };
 }
