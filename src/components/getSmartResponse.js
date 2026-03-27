@@ -68,6 +68,29 @@ export function getSmartResponse(message, context) {
   }
 
   /* =========================
+🟣 NAME CONTROLADO
+========================= */
+const nameMatch = text.match(
+  /^(como te llamas|cual es tu nombre|tu nombre|quien eres)(\s+[a-zA-Záéíóúñ]+)?$/i
+);
+
+if (nameMatch) {
+  const name = normalize(nameMatch[2]?.trim() || "");
+
+  if (!name || name === BOT_NAME) {
+    return {
+      text: replies.NAME(ctx),
+      intent: "NAME",
+    };
+  }
+
+  return {
+    text: replies.UNKNOWN(ctx),
+    intent: "UNKNOWN",
+  };
+}
+
+  /* =========================
 🟢 MUCHO GUSTO
 ========================= */
 const niceToMeetMatch = text.match(
