@@ -265,7 +265,7 @@ if (ctx.awaitingFollowUp) {
     "gabriel","esteban","victor","martin","ignacio","julio","cesar",
     "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
     "sebastian","mateo","nicolas","lucas","francisco","antonio",
-    "jorge","raul","guillermo","alvaro","bruno","dario","fabian",
+    "raul","guillermo","alvaro","bruno","dario","fabian",
     "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
     "orlando","pablo","renato","salvador","santiago","teodoro",
     "ulises","valentin","walter","xavier","yago","zacarias",
@@ -282,16 +282,22 @@ if (ctx.awaitingFollowUp) {
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
-  const hasOwnerName = validNames.some(name => normalizedText.includes(name));
+  // ✅ SOLO válido si menciona a Jorge
+  const hasOwnerName = validNames.some(name =>
+    normalizedText.includes(name)
+  );
+
   if (hasOwnerName) return true;
 
+  // ❌ Si menciona otro nombre → bloquear
   const mentionsOtherRealName = commonNames.some(
-    name => normalizedText.includes(name) && !validNames.includes(name)
+    name => normalizedText.includes(name)
   );
 
   if (mentionsOtherRealName) return false;
 
-  return true;
+  // ❌ CLAVE: si no menciona ningún nombre → bloquear
+  return false;
 };
 
 /* =========================
