@@ -290,7 +290,11 @@ const insultWords = [
   "pendejo","pendej0","huevon","huev0n","wevon","weon",
   "gil","boludo","tarado","baboso",
   "bruto","inutil","mediocre",
-  "malparido","gonorrea","careverga","careculo",
+  "malparido","gonorrea","careverga","careculo", "pedorro", "pobre",
+  "loco", "rico", "rocoto", "indio", "longo", "bestia", "puñal", "prostituta",
+  "prostituto", "puto", "puta", "carcoso", "hediondo", "apestoso", "pedante",
+  "asesino", "maldito", "retrasado", "ignorante", "analfabeto", 
+  
 
   // fuertes
   "patetico","ridiculo","basura","porqueria","asco","mierda",
@@ -320,7 +324,7 @@ const sensitiveKeywords = {
     "pareja","novia","novio","esposo","esposa",
     "casado","casada","casarse","matrimonio",
     "divorciado","soltero","relacion",
-    "sale con","esta con","tiene alguien", "maricon",
+    "sale con","esta con","tiene alguien", "maricon", "marica",
     "anda con","con quien esta"
   ],
 
