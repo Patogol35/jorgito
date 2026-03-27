@@ -529,7 +529,17 @@ if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
 // 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
-} else if (normalizedText.includes("tecnolog")) {
+} else if (
+  normalizedText.includes("habilidad") ||
+  normalizedText.includes("habilidades") ||
+  normalizedText.includes("skill") ||
+  normalizedText.includes("skills") ||
+  normalizedText.includes("tecnolog") ||
+  normalizedText.includes("lenguaje") ||
+  normalizedText.includes("lenguajes") ||
+  normalizedText.includes("framework") ||
+  normalizedText.includes("herramienta")
+) {
   intent = "SKILLS";
 } else if (normalizedText.includes("experiencia")) {
   intent = "EXPERIENCE";
