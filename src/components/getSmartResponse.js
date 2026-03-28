@@ -291,79 +291,132 @@ if (botMatch) {
     intent: "UNKNOWN",
   };
 }
-  /* =========================
+
+
+
+
+  
+
+/* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 
-const normalizeText = (t) =>
-  t
+  const isAboutOwner = (text) => {
+  const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[¿?¡!.,]/g, "")
     .trim();
 
-const normalizedText = normalizeText(text);
+  const validNames = ["jorge", "patricio", "jorge patricio"];
 
-const ownerNames = ["jorge", "patricio", "jorge patricio"];
-const hasOwnerName = ownerNames.some(name =>
-  normalizedText.includes(name)
-);
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
+
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
+
+  // ✅ SOLO válido si menciona a Jorge
+  const hasOwnerName = validNames.some(name =>
+    normalizedText.includes(name)
+  );
+
+  if (hasOwnerName) return true;
+
+  // ❌ Si menciona otro nombre → bloquear
+  const mentionsOtherRealName = commonNames.some(
+    name => normalizedText.includes(name)
+  );
+
+  if (mentionsOtherRealName) return false;
+
+  // ❌ CLAVE: si no menciona ningún nombre → bloquear
+  return false;
+};
 
 /* =========================
-🔒 BLOQUEO GLOBAL (INTELIGENTE)
+🔒 BLOQUEO GLOBAL
 ========================= */
-
-// ⚠️ Pre-detectar intent SIN bloquear aún
-let intent = detectIntent(text);
-
-// 🔥 SOLO bloquear si:
-// - no menciona al owner
-// - y no hay intención válida
-if (!hasOwnerName && intent === "UNKNOWN") {
+if (!isAboutOwner(text)) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
+
 }
 
-/* =========================
-🚫 CONTROL FORZADO DE PROFILE
-========================= */
 
+/* =========================
+🟢 DETECTAR INTENT
+========================= */
+let intent = detectIntent(text);
+
+const normalizedText = text; // ya viene normalizado arriba
+
+const ownerNames = ["jorge", "patricio", "jorge patricio"];
+
+const hasOwnerName = ownerNames.some(name => normalizedText.includes(name));
+
+// ✅ Si escribe SOLO el nombre (válido)
+const isOnlyOwnerName = [
+  "jorge",
+  "patricio",
+  "jorge patricio"
+].includes(normalizedText.trim());
+
+// ✅ Frases permitidas para activar PROFILE
 const profileTriggers = [
   "quien es",
-  "quien fue",
-  "hablame",
-  "cuentame",
-  "dime",
-  "perfil",
+  "hablame de",
+  "habla de",
+  "cuentame de",
+  "dime de",
+  "dime el perfil",
+  "perfil de",
   "sobre"
 ];
 
-const hasProfileTrigger = profileTriggers.some(word =>
-  normalizedText.includes(word)
+// ✅ Debe tener trigger real de perfil
+const hasProfileTrigger = profileTriggers.some(trigger =>
+  normalizedText.includes(trigger)
 );
 
-// 🔥 Si detectIntent lanzó PROFILE → VALIDAR
-if (intent === "PROFILE") {
-  if (!hasOwnerName || !hasProfileTrigger) {
-    return {
-      text: replies.OUT_OF_SCOPE(ctx),
-      intent: "OUT_OF_SCOPE",
-    };
-  }
-}
+// ✅ Validación estricta para PROFILE:
+// - solo nombre
+// - o nombre + trigger de perfil
+// - o preguntas tipo "quien es jorge"
+const shouldTriggerProfile =
+  isOnlyOwnerName ||
+  (
+    hasOwnerName &&
+    hasProfileTrigger
+  );
 
-// 🔥 Si es UNKNOWN pero parece PROFILE válido → asignar
-if (intent === "UNKNOWN" && hasOwnerName && hasProfileTrigger) {
+// 🔥 PROFILE SOLO SI NO HAY INTENCIÓN ESPECÍFICA Y PASA FILTRO
+if (intent === "UNKNOWN" && shouldTriggerProfile) {
   intent = "PROFILE";
 }
-
-/* =========================
-🔥 INTENTS MÁS ESPECÍFICOS
-========================= */
-
+// 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (
@@ -390,12 +443,11 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if (
-  normalizedText.includes("contratar") ||
+} else if 
+  (normalizedText.includes("contratar") ||
   normalizedText.includes("elegir") ||
   normalizedText.includes("escoger") ||
-  normalizedText.includes("confiar")
-) {
+  normalizedText.includes("confiar") ) {
   intent = "MOTIVATION";
 } else if (
   normalizedText.includes("stack") ||
@@ -406,30 +458,6 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "BOOK";
 }
 
-/* =========================
-🚫 BLOQUEO BASURA (SOLO CUANDO NO HAY INTENT)
-========================= */
-
-const looksLikeNoise =
-  /^[a-z\s]+$/.test(normalizedText) &&
-  normalizedText.split(" ").length <= 3;
-
-if (
-  hasOwnerName &&
-  intent === "UNKNOWN" &&
-  !hasProfileTrigger &&
-  looksLikeNoise
-) {
-  return {
-    text: replies.OUT_OF_SCOPE(ctx),
-    intent: "OUT_OF_SCOPE",
-  };
-}
-
-/* =========================
-🚫 BLOQUE FINAL
-========================= */
-
 if (intent === "UNKNOWN") {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
@@ -439,10 +467,11 @@ if (intent === "UNKNOWN") {
 
 saveMemory(ctx, { user: text, intent });
 
+  
+  
 /* =========================
 🟢 CONTACTO
 ========================= */
-
 if (intent === "CONTACT") {
   const contactMessage = replies.CONTACT(ctx);
 
@@ -457,7 +486,6 @@ if (intent === "CONTACT") {
 /* =========================
 🧠 RESPUESTA NORMAL
 ========================= */
-
 let replyText;
 
 if (typeof replies[intent] === "function") {
@@ -474,5 +502,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-};
-}
+}; }
