@@ -374,49 +374,47 @@ let intent = detectIntent(text);
 const normalizedText = text; // ya viene normalizado arriba
 
 const ownerNames = ["jorge", "patricio", "jorge patricio"];
-
 const hasOwnerName = ownerNames.some(name => normalizedText.includes(name));
 
-// ✅ Si escribe SOLO el nombre (válido)
+// ✅ Solo nombre exacto
 const isOnlyOwnerName = [
   "jorge",
   "patricio",
   "jorge patricio"
 ].includes(normalizedText.trim());
 
-// ✅ Frases permitidas para activar PROFILE
+// ✅ Triggers válidos SOLO para PROFILE
 const profileTriggers = [
   "quien es",
   "hablame de",
   "habla de",
   "cuentame de",
+  "cuenta de",
   "dime de",
   "dime el perfil",
   "perfil de",
   "sobre"
 ];
 
-// ✅ Debe tener trigger real de perfil
 const hasProfileTrigger = profileTriggers.some(trigger =>
   normalizedText.includes(trigger)
 );
 
-// ✅ Validación estricta para PROFILE:
-// - solo nombre
-// - o nombre + trigger de perfil
-// - o preguntas tipo "quien es jorge"
+// ✅ PROFILE estricto
 const shouldTriggerProfile =
   isOnlyOwnerName ||
-  (
-    hasOwnerName &&
-    hasProfileTrigger
-  );
+  (hasOwnerName && hasProfileTrigger);
 
-// 🔥 PROFILE SOLO SI NO HAY INTENCIÓN ESPECÍFICA Y PASA FILTRO
-if (intent === "UNKNOWN" && shouldTriggerProfile) {
-  intent = "PROFILE";
+/* =========================
+🔥 SI detectIntent devolvió PROFILE, VALIDARLO
+========================= */
+if (intent === "PROFILE" && !shouldTriggerProfile) {
+  intent = "UNKNOWN";
 }
-// 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
+
+/* =========================
+🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
+========================= */
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (
@@ -443,11 +441,12 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if 
-  (normalizedText.includes("contratar") ||
+} else if (
+  normalizedText.includes("contratar") ||
   normalizedText.includes("elegir") ||
   normalizedText.includes("escoger") ||
-  normalizedText.includes("confiar") ) {
+  normalizedText.includes("confiar")
+) {
   intent = "MOTIVATION";
 } else if (
   normalizedText.includes("stack") ||
@@ -458,6 +457,13 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "BOOK";
 }
 
+/* =========================
+🔥 Si sigue UNKNOWN, recién permitir PROFILE como fallback
+========================= */
+if (intent === "UNKNOWN" && shouldTriggerProfile) {
+  intent = "PROFILE";
+}
+
 if (intent === "UNKNOWN") {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
@@ -466,7 +472,6 @@ if (intent === "UNKNOWN") {
 }
 
 saveMemory(ctx, { user: text, intent });
-
   
   
 /* =========================
