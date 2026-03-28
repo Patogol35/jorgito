@@ -137,12 +137,12 @@ export const createReplies = ({ pickNonRepeated, PROFILE }) => ({
 
     OUT_OF_SCOPE: (ctx) =>
   pickNonRepeated(ctx, "OUT_OF_SCOPE", [
-    "Puedo ayudarte mejor si mencionas a Jorge en tu pregunta 😊",
-    "Solo puedo darte información sobre Jorge, ¿quieres preguntarme algo sobre él? 😉",
-    "Si tu pregunta es sobre Jorge, estaré encantada de ayudarte 💻",
-    "Necesito que menciones a Jorge para poder responderte correctamente 🙂",
-    "Estoy diseñada para hablar sobre Jorge, ¿qué te gustaría saber de él? ✨",
-    "Si incluyes a Jorge en tu pregunta, podré ayudarte mucho mejor 😊"
+    "Para poder ayudarte, necesito que menciones a Jorge y que tu pregunta esté relacionada con su perfil profesional 😊",
+    "Puedo responderte sobre Jorge, pero la consulta debe mencionar su nombre y estar enfocada en su perfil, experiencia, tecnologías o proyectos 😉",
+    "Si deseas información sobre Jorge, menciona su nombre y haz una pregunta válida sobre su experiencia, habilidades, formación o contacto 💻",
+    "Estoy diseñada para hablar sobre Jorge y su perfil profesional ✨ Recuerda mencionar su nombre y preguntar por temas como experiencia, stack, proyectos o educación.",
+    "Necesito que menciones a Jorge en tu pregunta y que esté relacionada con su trayectoria profesional 🙂 Por ejemplo: perfil, tecnologías, proyectos o contacto.",
+    "Puedo ayudarte con información sobre Jorge, siempre que menciones su nombre y la pregunta sea sobre su perfil profesional 😊"
   ]),
 
     LIKES_MUSIC: (ctx) =>
