@@ -387,18 +387,28 @@ const hasProfileTrigger = profileTriggers.some(word =>
 );
 
 /* =========================
-🚫 BLOQUEO ANTI BASURA (CLAVE)
+🚫 BLOQUEO SOLO BASURA (NO AFECTA OTROS INTENTS)
 ========================= */
 
-// 🔥 SI menciona Jorge pero NO pide perfil → bloquear
-if (hasOwnerName && !hasProfileTrigger) {
+const looksLikeNoise =
+  /^[a-z\s]+$/.test(normalizedText) &&
+  normalizedText.split(" ").length <= 3;
+
+if (
+  hasOwnerName &&
+  intent === "UNKNOWN" &&
+  !hasProfileTrigger &&
+  looksLikeNoise
+) {
   return {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
 }
 
-// 🔥 SOLO aquí se permite PROFILE
+/* =========================
+✅ ACTIVAR PROFILE SOLO SI CORRESPONDE
+========================= */
 if (intent === "UNKNOWN" && hasOwnerName && hasProfileTrigger) {
   intent = "PROFILE";
 }
