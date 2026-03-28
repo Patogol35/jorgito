@@ -296,7 +296,7 @@ if (botMatch) {
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 
-  const isAboutOwner = (text) => {
+const isAboutOwner = (text) => {
   const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
@@ -317,7 +317,7 @@ if (botMatch) {
     "raul","guillermo","alvaro","bruno","dario","fabian",
     "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
     "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
+    "ulises","valentin","walter","xavier","yago","zacarias","gay",
 
     "ana","maria","sofia","valentina","daniela","camila","laura",
     "paula","andrea","elena","lucia","isabella","martina","gabriela",
@@ -331,21 +331,18 @@ if (botMatch) {
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
-  // ✅ SOLO válido si menciona a Jorge
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
   if (hasOwnerName) return true;
 
-  // ❌ Si menciona otro nombre → bloquear
   const mentionsOtherRealName = commonNames.some(
     name => normalizedText.includes(name)
   );
 
   if (mentionsOtherRealName) return false;
 
-  // ❌ CLAVE: si no menciona ningún nombre → bloquear
   return false;
 };
 
@@ -357,16 +354,14 @@ if (!isAboutOwner(text)) {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-
 }
-
 
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
 let intent = detectIntent(text);
 
-const normalizedText = text; // ya viene normalizado arriba
+const normalizedText = text;
 
 const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
   .some(name => normalizedText.includes(name));
@@ -391,11 +386,26 @@ const hasProfileTrigger = profileTriggers.some(word =>
   normalizedText.includes(word)
 );
 
+/* =========================
+🚫 BLOQUEO ANTI BASURA (CLAVE)
+========================= */
+
+// 🔥 SI menciona Jorge pero NO pide perfil → bloquear
+if (hasOwnerName && !hasProfileTrigger) {
+  return {
+    text: replies.OUT_OF_SCOPE(ctx),
+    intent: "OUT_OF_SCOPE",
+  };
+}
+
+// 🔥 SOLO aquí se permite PROFILE
 if (intent === "UNKNOWN" && hasOwnerName && hasProfileTrigger) {
   intent = "PROFILE";
 }
 
-// 🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
+/* =========================
+🔥 INTENTS MÁS ESPECÍFICOS
+========================= */
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (
@@ -422,11 +432,12 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if 
-  (normalizedText.includes("contratar") ||
+} else if (
+  normalizedText.includes("contratar") ||
   normalizedText.includes("elegir") ||
   normalizedText.includes("escoger") ||
-  normalizedText.includes("confiar") ) {
+  normalizedText.includes("confiar")
+) {
   intent = "MOTIVATION";
 } else if (
   normalizedText.includes("stack") ||
@@ -446,8 +457,6 @@ if (intent === "UNKNOWN") {
 
 saveMemory(ctx, { user: text, intent });
 
-  
-  
 /* =========================
 🟢 CONTACTO
 ========================= */
@@ -481,4 +490,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
