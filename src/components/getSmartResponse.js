@@ -371,16 +371,27 @@ const normalizedText = text; // ya viene normalizado arriba
 const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
   .some(name => normalizedText.includes(name));
 
-const isGeneralProfileQuery = [
-  "quien es",
-  "hablame",
-  "cuentame",
-  "dime",
-  "sobre"
-].some(word => normalizedText.includes(word));
+/* =========================
+🎯 PROFILE CONTROLADO (ULTRA ESTRICTO)
+========================= */
 
-// 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
-if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
+const profileTriggers = [
+  "quien es",
+  "quien fue",
+  "hablame",
+  "háblame",
+  "cuentame",
+  "cuéntame",
+  "dime",
+  "perfil",
+  "sobre"
+];
+
+const hasProfileTrigger = profileTriggers.some(word =>
+  normalizedText.includes(word)
+);
+
+if (intent === "UNKNOWN" && hasOwnerName && hasProfileTrigger) {
   intent = "PROFILE";
 }
 
