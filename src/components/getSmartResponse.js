@@ -522,37 +522,7 @@ const isGeneralProfileQuery = [
 ].some(word => normalizedText.includes(word));
 
 // 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
-// 🔍 detectar si el texto es válido (no basura)
-const isValidMessage = /^[a-zA-Záéíóúñ0-9\s¿?]+$/.test(normalizedText);
-
-// 🔍 detectar patrones tipo perfil
-const profileTriggers = [
-  "quien es",
-  "quien es jorge",
-  "hablame",
-  "hablame de",
-  "dime",
-  "dime sobre",
-  "perfil",
-  "sobre"
-];
-
-const isProfileQuery = profileTriggers.some(p =>
-  normalizedText.includes(p)
-);
-
-// 🔥 CONDICIÓN FINAL PRO
-if (
-  intent === "UNKNOWN" &&
-  isValidMessage &&
-  (
-    // ✔️ caso 1: solo "jorge"
-    normalizedText.trim() === "jorge" ||
-
-    // ✔️ caso 2: preguntas tipo perfil + jorge
-    (hasOwnerName && isProfileQuery)
-  )
-) {
+if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
   intent = "PROFILE";
 }
 
