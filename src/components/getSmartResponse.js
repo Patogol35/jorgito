@@ -510,33 +510,36 @@ let intent = detectIntent(text);
 
 const normalizedText = text; // ya viene normalizado arriba
 
-const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
-  .some(name => normalizedText.includes(name));
+const ownerNames = ["jorge", "patricio", "jorge patricio"];
 
-const isGeneralProfileQuery = [
-  "quien es",
-  "hablame",
-  "cuentame",
-  "dime",
-  "sobre"
-].some(word => normalizedText.includes(word));
-
-// 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
-// 🔍 patrones EXACTOS de perfil
-const profilePatterns = [
-  /^jorge$/, // solo "jorge"
-  /^(quien es|quién es)\s+jorge$/,
-  /^(hablame de|háblame de)\s+jorge$/,
-  /^(dime de|dime sobre)\s+jorge$/
-];
-
-// 🔥 detectar match exacto
-const isExactProfileQuery = profilePatterns.some(regex =>
-  regex.test(normalizedText.trim())
+// 🔹 Detectar si menciona al dueño
+const hasOwnerName = ownerNames.some(name =>
+  normalizedText.includes(name)
 );
 
-// 🔥 aplicar PROFILE solo aquí
-if (intent === "UNKNOWN" && isExactProfileQuery) {
+// 🔹 Frases válidas para activar PROFILE
+const profileTriggers = [
+  "quien es",
+  "hablame de",
+  "cuentame de",
+  "dime el perfil de",
+  "dime sobre",
+  "perfil de",
+  "sobre"
+];
+
+const hasProfileTrigger = profileTriggers.some(trigger =>
+  normalizedText.includes(trigger)
+);
+
+// 🔹 Caso 1: solo escribió el nombre exacto
+const isOnlyOwnerName = ownerNames.includes(normalizedText.trim());
+
+// 🔹 Caso 2: pregunta válida de perfil con el nombre
+const isValidProfileQuery = hasOwnerName && hasProfileTrigger;
+
+// 🔥 PROFILE SOLO SI cumple reglas válidas
+if (intent === "UNKNOWN" && (isOnlyOwnerName || isValidProfileQuery)) {
   intent = "PROFILE";
 }
 
