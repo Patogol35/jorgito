@@ -291,8 +291,7 @@ if (botMatch) {
     intent: "UNKNOWN",
   };
 }
-  
-/* =========================
+  /* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
 
@@ -367,7 +366,36 @@ const hasOwnerName = ["jorge", "patricio", "jorge patricio"]
   .some(name => normalizedText.includes(name));
 
 /* =========================
-🎯 PROFILE CONTROLADO (ULTRA ESTRICTO)
+🚫 CONTROL FORZADO DE PROFILE (CLAVE)
+========================= */
+
+if (intent === "PROFILE") {
+  const profileTriggers = [
+    "quien es",
+    "quien fue",
+    "hablame",
+    "háblame",
+    "cuentame",
+    "cuéntame",
+    "dime",
+    "perfil",
+    "sobre"
+  ];
+
+  const hasProfileTrigger = profileTriggers.some(word =>
+    normalizedText.includes(word)
+  );
+
+  if (!hasOwnerName || !hasProfileTrigger) {
+    return {
+      text: replies.OUT_OF_SCOPE(ctx),
+      intent: "OUT_OF_SCOPE",
+    };
+  }
+}
+
+/* =========================
+🎯 PROFILE CONTROLADO (CUANDO ES UNKNOWN)
 ========================= */
 
 const profileTriggers = [
@@ -386,29 +414,6 @@ const hasProfileTrigger = profileTriggers.some(word =>
   normalizedText.includes(word)
 );
 
-/* =========================
-🚫 BLOQUEO SOLO BASURA (NO AFECTA OTROS INTENTS)
-========================= */
-
-const looksLikeNoise =
-  /^[a-z\s]+$/.test(normalizedText) &&
-  normalizedText.split(" ").length <= 3;
-
-if (
-  hasOwnerName &&
-  intent === "UNKNOWN" &&
-  !hasProfileTrigger &&
-  looksLikeNoise
-) {
-  return {
-    text: replies.OUT_OF_SCOPE(ctx),
-    intent: "OUT_OF_SCOPE",
-  };
-}
-
-/* =========================
-✅ ACTIVAR PROFILE SOLO SI CORRESPONDE
-========================= */
 if (intent === "UNKNOWN" && hasOwnerName && hasProfileTrigger) {
   intent = "PROFILE";
 }
@@ -500,4 +505,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
