@@ -475,3 +475,4 @@ return {
   text: replyText,
   intent,
 };
+}
