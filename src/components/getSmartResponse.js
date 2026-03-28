@@ -512,31 +512,24 @@ const normalizedText = text; // ya viene normalizado arriba
 
 const ownerNames = ["jorge", "patricio", "jorge patricio"];
 
-// 🔹 Detectar si menciona al dueño
-const hasOwnerName = ownerNames.some(name =>
-  normalizedText.includes(name)
-);
-
-// 🔹 Frases válidas para activar PROFILE
-const profileTriggers = [
-  "quien es",
-  "hablame de",
-  "cuentame de",
-  "dime el perfil de",
-  "dime sobre",
-  "perfil de",
-  "sobre"
-];
-
-const hasProfileTrigger = profileTriggers.some(trigger =>
-  normalizedText.includes(trigger)
-);
-
 // 🔹 Caso 1: solo escribió el nombre exacto
 const isOnlyOwnerName = ownerNames.includes(normalizedText.trim());
 
-// 🔹 Caso 2: pregunta válida de perfil con el nombre
-const isValidProfileQuery = hasOwnerName && hasProfileTrigger;
+// 🔹 Patrones exactos permitidos para PROFILE
+const profilePatterns = [
+  /^(quien es)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(hablame de)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(cuentame de)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(dime el perfil de)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(dime sobre)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(perfil de)\s+(jorge|patricio|jorge patricio)$/i,
+  /^(sobre)\s+(jorge|patricio|jorge patricio)$/i
+];
+
+// 🔹 Caso 2: frase exacta válida de perfil
+const isValidProfileQuery = profilePatterns.some(pattern =>
+  pattern.test(normalizedText)
+);
 
 // 🔥 PROFILE SOLO SI cumple reglas válidas
 if (intent === "UNKNOWN" && (isOnlyOwnerName || isValidProfileQuery)) {
@@ -570,11 +563,12 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if 
-  (normalizedText.includes("contratar") ||
+} else if (
+  normalizedText.includes("contratar") ||
   normalizedText.includes("elegir") ||
   normalizedText.includes("escoger") ||
-  normalizedText.includes("confiar") ) {
+  normalizedText.includes("confiar")
+) {
   intent = "MOTIVATION";
 } else if (
   normalizedText.includes("stack") ||
