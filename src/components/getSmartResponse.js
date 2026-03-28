@@ -522,7 +522,21 @@ const isGeneralProfileQuery = [
 ].some(word => normalizedText.includes(word));
 
 // 🔥 PERFIL SOLO SI NO HAY INTENCIÓN ESPECÍFICA
-if (intent === "UNKNOWN" && (hasOwnerName || isGeneralProfileQuery)) {
+// 🔍 patrones EXACTOS de perfil
+const profilePatterns = [
+  /^jorge$/, // solo "jorge"
+  /^(quien es|quién es)\s+jorge$/,
+  /^(hablame de|háblame de)\s+jorge$/,
+  /^(dime de|dime sobre)\s+jorge$/
+];
+
+// 🔥 detectar match exacto
+const isExactProfileQuery = profilePatterns.some(regex =>
+  regex.test(normalizedText.trim())
+);
+
+// 🔥 aplicar PROFILE solo aquí
+if (intent === "UNKNOWN" && isExactProfileQuery) {
   intent = "PROFILE";
 }
 
