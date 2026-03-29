@@ -321,13 +321,35 @@ if (botMatch) {
   const professionWords = [
     "carpintero",
     "doctor",
-    "ingeniero",
+    
     "abogado",
-    "cliente",
-    "amigo",
+    
     "empleado",
-    "trabajador",
-    "programador",
+    "burro","asno","idiota","tonto","estupido","imbecil",
+
+  // animales
+  "perro","cerdo","marrano","bestia","rata","sapo",
+
+  // LATAM
+  "pendejo","pendej0","huevon","huev0n","wevon","weon",
+  "gil","boludo","tarado","baboso",
+  "bruto","inutil","mediocre",
+  "malparido","gonorrea","careverga","careculo","pedorro","pobre",
+  "loco","rico","rocoto","indio","longo","puñal",
+  "prostituta","prostituto","puto","puta",
+  "carcoso","hediondo","apestoso","pedante",
+  "asesino","maldito","retrasado","ignorante","analfabeto", "gay",
+    "homosexual", "bisexual", "maricon", "marica"
+
+  // fuertes
+  "patetico","ridiculo","basura","porqueria","asco","mierda",
+
+  // intelectuales
+  "inepto","incompetente","fracasado","perdedor",
+
+  // físicos
+  "feo","horrible","asqueroso","gordo","flaco"
+    
   ];
 
   const isTalkingAboutSomeoneElse = professionWords.some(prof =>
