@@ -513,4 +513,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-};
+}; }
