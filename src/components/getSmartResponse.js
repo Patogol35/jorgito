@@ -321,6 +321,39 @@ if (!isAboutOwner(text)) {
 }
 
 
+
+// 🔴 TEMAS SENSIBLES
+const sensitiveTopics = [
+  "gay",
+  "lesbiana",
+  "homosexual",
+  "bisexual",
+  "sexualidad",
+  "orientacion",
+  "orientación",
+  "vida privada",
+  "pareja",
+  "novia",
+  "novio",
+  "esposa",
+  "esposo",
+];
+
+const isSensitiveAboutOwner = (text) => {
+  return sensitiveTopics.some(word => text.includes(word));
+};
+
+// 🚫 BLOQUEO DE PREGUNTAS SENSIBLES SOBRE EL OWNER
+if (isAboutOwner(text) && isSensitiveAboutOwner(text)) {
+  return {
+    text: "Prefiero no compartir información personal 😊 Pero puedo contarte sobre su experiencia profesional, habilidades o proyectos.",
+    intent: "SENSITIVE_BLOCK",
+  };
+}
+
+  
+
+
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
