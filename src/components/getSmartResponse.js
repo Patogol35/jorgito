@@ -337,6 +337,29 @@ const sensitiveTopics = [
   "novio",
   "esposa",
   "esposo",
+  "burro","asno","idiota","tonto","estupido","imbecil",
+
+  // animales
+  "perro","cerdo","marrano","bestia","rata","sapo",
+
+  // LATAM
+  "pendejo","pendej0","huevon","huev0n","wevon","weon",
+  "gil","boludo","tarado","baboso",
+  "bruto","inutil","mediocre",
+  "malparido","gonorrea","careverga","careculo", "pedorro", "pobre",
+  "loco", "rico", "rocoto", "indio", "longo", "bestia", "puñal", "prostituta",
+  "prostituto", "puto", "puta", "carcoso", "hediondo", "apestoso", "pedante",
+  "asesino", "maldito", "retrasado", "ignorante", "analfabeto", 
+  
+
+  // fuertes
+  "patetico","ridiculo","basura","porqueria","asco","mierda",
+
+  // intelectuales
+  "ignorante","inepto","incompetente","fracasado","perdedor",
+
+  // físicos
+  "feo","horrible","asqueroso","gordo","flaco"
 ];
 
 const isSensitiveAboutOwner = (text) => {
