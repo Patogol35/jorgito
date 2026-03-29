@@ -345,14 +345,36 @@ const isOnlyOwnerName = [
 // ✅ Triggers válidos SOLO para PROFILE
 const profileTriggers = [
   "quien es",
+  "quien es el",
+  "quien es jorge",
   "hablame de",
   "habla de",
   "cuentame de",
   "cuenta de",
   "dime de",
   "dime el perfil",
+  "perfil",
   "perfil de",
-  "sobre"
+  "sobre",
+  "informacion de",
+  "informacion sobre",
+  "datos de",
+  "datos sobre",
+  "presentame a",
+  "presenta a",
+  "quiero saber de",
+  "quiero saber sobre",
+  "conocer a",
+  "conocer sobre",
+  "acerca de",
+  "sobre el",
+  "sobre jorge",
+  "biografia de",
+  "biografia",
+  "resumen de",
+  "resumen sobre",
+  "descripcion de",
+  "descripcion sobre"
 ];
 
 const hasProfileTrigger = profileTriggers.some(trigger =>
