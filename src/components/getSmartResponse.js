@@ -308,8 +308,45 @@ const isAboutOwner = (text) => {
 
   // 🔴 Palabras fuera de scope (NO son nombres)
   const blockedWords = [
-    "gay", "sexo", "sexual", "porn", "xxx"
-  ];
+  // 🔴 contenido sensible
+  "gay", "sexo", "sexual", "porn", "xxx",
+
+  // 🔴 oficios irrelevantes / absurdos para el contexto
+  "carpintero",
+  "albañil",
+  "plomero",
+  "electricista",
+  "mecanico",
+  "chofer",
+  "taxista",
+  "cocinero",
+  "chef",
+  "panadero",
+  "carnicero",
+  "agricultor",
+  "ganadero",
+  "pescador",
+  "soldador",
+  "pintor",
+  "obrero",
+  "jardinero",
+  "conserje",
+  "mesero",
+  "camarero",
+  "bartender",
+  "barbero",
+  "peluquero",
+  "zapatero",
+  "sastre",
+  "repartidor",
+  "mensajero",
+  "vendedor",
+  "comerciante",
+  "policia",
+  "militar",
+  "guardia",
+  "seguridad"
+];
 
   // 🔴 1. BLOQUEO PRIORIDAD MÁXIMA
   const hasBlockedWord = blockedWords.some(word =>
