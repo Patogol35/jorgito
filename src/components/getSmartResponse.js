@@ -321,50 +321,6 @@ if (!isAboutOwner(text)) {
 }
 
 
-
-// 🔴 TEMAS SENSIBLES
-const sensitiveTopics = [
-  "gay",
-  "lesbiana",
-  "homosexual",
-  "bisexual",
-  "burro","asno","idiota","tonto","estupido","imbecil",
-
-  // animales
-  "perro","cerdo","marrano","bestia","rata","sapo",
-
-  // LATAM
-  "pendejo","pendej0","huevon","huev0n","wevon","weon",
-  "gil","boludo","tarado","baboso",
-  "bruto","inutil","mediocre",
-  "malparido","gonorrea","careverga","careculo", "pedorro", "pobre",
-  "loco", "rico", "rocoto", "indio", "longo", "bestia", "puñal", "prostituta",
-  "prostituto", "puto", "puta", "carcoso", "hediondo", "apestoso", "pedante",
-  "asesino", "maldito", "retrasado", "ignorante", "analfabeto", 
-  
-
-  // fuertes
-  "patetico","ridiculo","basura","porqueria","asco","mierda",
-
-  // intelectuales
-  "ignorante","inepto","incompetente","fracasado","perdedor",
-
-  // físicos
-  "feo","horrible","asqueroso","gordo","flaco"
-];
-
-const isSensitiveAboutOwner = (text) => {
-  return sensitiveTopics.some(word => text.includes(word));
-};
-
-// 🚫 BLOQUEO DE PREGUNTAS SENSIBLES SOBRE EL OWNER
-if (isAboutOwner(text) && isSensitiveAboutOwner(text)) {
-  return {
-    text: "Prefiero mantener una conversación respetuosa 😊 Si deseas, puedo contarte sobre su experiencia profesional.",
-    intent: "SENSITIVE_BLOCK",
-  };
-}
-
   
 
 
