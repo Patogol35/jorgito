@@ -293,143 +293,74 @@ if (botMatch) {
 }
 
 /* =========================
-🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX)
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX REAL)
 ========================= */
 
-const isAboutOwner = (text) => {
-  const normalizedText = text
+const normalizeText = (text) =>
+  text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[¿?¡!.,]/g, "")
     .trim();
 
+const isAboutOwner = (text) => {
+  const normalizedText = normalizeText(text);
+
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
-  // 🔴 Palabras fuera de scope (NO son nombres)
   const blockedWords = [
-  // 🔴 contenido sensible
-  "gay","sexo","sexual","porn","xxx",
+    "gay","sexo","sexual","porn","xxx",
+    "carpintero","carpintera","albañil","plomero","plomera",
+    "electricista","mecanico","mecanica","chofer","taxista",
+    "cocinero","cocinera","chef","panadero","panadera",
+    "carnicero","carnicera","agricultor","agricultora",
+    "ganadero","ganadera","pescador","pescadora",
+    "soldador","soldadora","pintor","pintora",
+    "obrero","obrera","jardinero","jardinera",
+    "conserje","mesero","mesera","camarero","camarera",
+    "bartender","barbero","barbera","peluquero","peluquera",
+    "zapatero","zapatera","sastre","costurera",
+    "repartidor","repartidora","mensajero","mensajera",
+    "vendedor","vendedora","comerciante",
+    "policia","militar","guardia","seguridad",
+    "burro","burra","asno","asna","idiota",
+    "tonto","tonta","estupido","estupida","imbecil",
+    "perro","perra","cerdo","cerda","marrano","marrana",
+    "bestia","rata","sapo",
+    "pendejo","pendeja","huevon","huevona","weon","weona",
+    "gil","boludo","boluda","tarado","tarada",
+    "baboso","babosa","bruto","bruta","inutil","mediocre",
+    "malparido","malparida","gonorrea","careverga","careculo",
+    "pedorro","pedorra","loco","loca","indio","india",
+    "longo","longa","puñal","prostituta","prostituto",
+    "puto","puta","carcoso","carcosa","hediondo","hedionda",
+    "apestoso","apestosa","pedante","asesino","asesina",
+    "maldito","maldita","retrasado","retrasada",
+    "ignorante","analfabeto","analfabeta",
+    "patetico","patetica","ridiculo","ridicula",
+    "basura","porqueria","asco","mierda",
+    "inepto","inepta","incompetente",
+    "fracasado","fracasada","perdedor","perdedora",
+    "feo","fea","horrible","asqueroso","asquerosa",
+    "gordo","gorda","flaco","flaca",
+    "pobre"
+  ];
 
-  // 🔴 oficios irrelevantes (masculino + femenino)
-  "carpintero","carpintera",
-  "albañil",
-  "plomero","plomera",
-  "electricista",
-  "mecanico","mecanica",
-  "chofer",
-  "taxista",
-  "cocinero","cocinera",
-  "chef",
-  "panadero","panadera",
-  "carnicero","carnicera",
-  "agricultor","agricultora",
-  "ganadero","ganadera",
-  "pescador","pescadora",
-  "soldador","soldadora",
-  "pintor","pintora",
-  "obrero","obrera",
-  "jardinero","jardinera",
-  "conserje",
-  "mesero","mesera",
-  "camarero","camarera",
-  "bartender",
-  "barbero","barbera",
-  "peluquero","peluquera",
-  "zapatero","zapatera",
-  "sastre","costurera",
-  "repartidor","repartidora",
-  "mensajero","mensajera",
-  "vendedor","vendedora",
-  "comerciante",
-  "policia",
-  "militar",
-  "guardia",
-  "seguridad",
-
-  // 🔴 insultos básicos
-  "burro","burra",
-  "asno","asna",
-  "idiota",
-  "tonto","tonta",
-  "estupido","estupida",
-  "imbecil",
-
-  // 🔴 animales (uso ofensivo)
-  "perro","perra",
-  "cerdo","cerda",
-  "marrano","marrana",
-  "bestia",
-  "rata",
-  "sapo",
-
-  // 🔴 LATAM (ampliado + femenino)
-  "pendejo","pendeja","pendej0",
-  "huevon","huevona","huev0n",
-  "wevon","weona","weon",
-  "gil",
-  "boludo","boluda",
-  "tarado","tarada",
-  "baboso","babosa",
-  "bruto","bruta",
-  "inutil",
-  "mediocre",
-  "malparido","malparida",
-  "gonorrea",
-  "careverga","careculo",
-  "pedorro","pedorra",
-  "loco","loca",
-  "indio","india",
-  "longo","longa",
-  "puñal",
-  "prostituta","prostituto",
-  "puto","puta",
-  "carcoso","carcosa",
-  "hediondo","hedionda",
-  "apestoso","apestosa",
-  "pedante",
-  "asesino","asesina",
-  "maldito","maldita",
-  "retrasado","retrasada",
-  "ignorante",
-  "analfabeto","analfabeta",
-
-  // 🔴 fuertes
-  "patetico","patetica",
-  "ridiculo","ridicula",
-  "basura",
-  "porqueria",
-  "asco",
-  "mierda",
-
-  // 🔴 intelectuales
-  "inepto","inepta",
-  "incompetente",
-  "fracasado","fracasada",
-  "perdedor","perdedora",
-
-  // 🔴 físicos
-  "feo","fea",
-  "horrible",
-  "asqueroso","asquerosa",
-  "gordo","gorda",
-  "flaco","flaca"
-];
-
-  // 🔴 1. BLOQUEO PRIORIDAD MÁXIMA
+  // 🔴 BLOQUEO REAL (palabra completa)
   const hasBlockedWord = blockedWords.some(word =>
-    normalizedText.includes(word)
+    new RegExp(`\\b${word}\\b`).test(normalizedText)
   );
+
   if (hasBlockedWord) return false;
 
-  // 🟢 2. VALIDAR QUE SÍ ES SOBRE JORGE
+  // 🟢 Validar que menciona a Jorge (palabra completa)
   const hasOwnerName = validNames.some(name =>
-    normalizedText.includes(name)
+    new RegExp(`\\b${name}\\b`).test(normalizedText)
   );
 
   if (hasOwnerName) return true;
 
-  // 🔴 3. TODO LO DEMÁS → BLOQUEADO
   return false;
 };
 
@@ -443,42 +374,32 @@ if (!isAboutOwner(text)) {
   };
 }
 
-
 /* =========================
 🟢 DETECTAR INTENT
 ========================= */
-let intent = detectIntent(text);
 
-const normalizedText = text;
+const normalizedText = normalizeText(text);
+
+let intent = detectIntent(normalizedText);
 
 const ownerNames = ["jorge", "patricio", "jorge patricio"];
-const hasOwnerName = ownerNames.some(name => normalizedText.includes(name));
 
-// ✅ Solo nombre exacto
-const isOnlyOwnerName = [
-  "jorge",
-  "patricio",
-  "jorge patricio"
-].includes(normalizedText.trim());
+const hasOwnerName = ownerNames.some(name =>
+  new RegExp(`\\b${name}\\b`).test(normalizedText)
+);
 
-// ✅ Triggers válidos SOLO para PROFILE
+const isOnlyOwnerName = ["jorge","patricio","jorge patricio"]
+  .includes(normalizedText);
+
 const profileTriggers = [
-  "quien es",
-  "hablame de",
-  "habla de",
-  "cuentame de",
-  "cuenta de",
-  "dime de",
-  "dime el perfil",
-  "perfil de",
-  "sobre"
+  "quien es","hablame de","habla de","cuentame de",
+  "cuenta de","dime de","dime el perfil","perfil de","sobre"
 ];
 
 const hasProfileTrigger = profileTriggers.some(trigger =>
   normalizedText.includes(trigger)
 );
 
-// ✅ PROFILE estricto
 const shouldTriggerProfile =
   isOnlyOwnerName ||
   (hasOwnerName && hasProfileTrigger);
@@ -497,42 +418,22 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (
   normalizedText.includes("habilidad") ||
-  normalizedText.includes("habilidades") ||
-  normalizedText.includes("skill") ||
   normalizedText.includes("skills") ||
   normalizedText.includes("tecnolog") ||
-  normalizedText.includes("lenguaje") ||
-  normalizedText.includes("lenguajes") ||
-  normalizedText.includes("framework") ||
-  normalizedText.includes("herramienta")
+  normalizedText.includes("framework")
 ) {
   intent = "SKILLS";
 } else if (normalizedText.includes("experiencia")) {
   intent = "EXPERIENCE";
 } else if (
   normalizedText.includes("estudio") ||
-  normalizedText.includes("estudios") ||
-  normalizedText.includes("master") ||
-  normalizedText.includes("formacion") ||
   normalizedText.includes("educacion")
 ) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if (
-  normalizedText.includes("contratar") ||
-  normalizedText.includes("elegir") ||
-  normalizedText.includes("escoger") ||
-  normalizedText.includes("confiar")
-) {
-  intent = "MOTIVATION";
-} else if (
-  normalizedText.includes("stack") ||
-  normalizedText.includes("full stack")
-) {
+} else if (normalizedText.includes("stack")) {
   intent = "STACK";
-} else if (normalizedText.includes("libro")) {
-  intent = "BOOK";
 }
 
 /* =========================
@@ -552,36 +453,14 @@ if (intent === "UNKNOWN") {
 saveMemory(ctx, { user: text, intent });
 
 /* =========================
-🟢 CONTACTO
-========================= */
-if (intent === "CONTACT") {
-  const contactMessage = replies.CONTACT(ctx);
-
-  ctx.awaiting = "CONTACT_CONFIRM";
-  return {
-    text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
-    action: "CONTACT_CONFIRM",
-    intent,
-  };
-}
-
-/* =========================
 🧠 RESPUESTA NORMAL
 ========================= */
-let replyText;
-
-if (typeof replies[intent] === "function") {
-  replyText = replies[intent](ctx);
-} else {
-  replyText = replies[intent];
-}
-
-if (!replyText) {
-  replyText = replies.OUT_OF_SCOPE(ctx);
-  intent = "OUT_OF_SCOPE";
-}
+let replyText =
+  typeof replies[intent] === "function"
+    ? replies[intent](ctx)
+    : replies[intent];
 
 return {
-  text: replyText,
+  text: replyText || replies.OUT_OF_SCOPE(ctx),
   intent,
-};}
+};
