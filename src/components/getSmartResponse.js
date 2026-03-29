@@ -311,88 +311,49 @@ if (botMatch) {
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
+
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
+
+  // ✅ SOLO válido si menciona a Jorge
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
-  if (!hasOwnerName) return false;
+  if (hasOwnerName) return true;
 
-  // 🔥 BLOQUEO FUERTE: otra persona relacionada con Jorge
-  const professionWords = [
-    "carpintero",
-    "doctor",
-    
-    "abogado",
-    
-    "empleado",
-    "burro","asno","idiota","tonto","estupido","imbecil",
-
-  // animales
-  "perro","cerdo","marrano","bestia","rata","sapo",
-
-  // LATAM
-  "pendejo","pendej0","huevon","huev0n","wevon","weon",
-  "gil","boludo","tarado","baboso",
-  "bruto","inutil","mediocre",
-  "malparido","gonorrea","careverga","careculo","pedorro","pobre",
-  "loco","rico","rocoto","indio","longo","puñal",
-  "prostituta","prostituto","puto","puta",
-  "carcoso","hediondo","apestoso","pedante",
-  "asesino","maldito","retrasado","ignorante","analfabeto", "gay",
-    "homosexual", "bisexual", "maricon", "marica",
-
-  // fuertes
-  "patetico","ridiculo","basura","porqueria","asco","mierda",
-
-  // intelectuales
-  "inepto","incompetente","fracasado","perdedor",
-
-  // físicos
-  "feo","horrible","asqueroso","gordo","flaco"
-    
-  ];
-
-  const isTalkingAboutSomeoneElse = professionWords.some(prof =>
-    new RegExp(`${prof}\\s+de\\s+(jorge|patricio)`).test(normalizedText)
+  // ❌ Si menciona otro nombre → bloquear
+  const mentionsOtherRealName = commonNames.some(
+    name => normalizedText.includes(name)
   );
 
-  if (isTalkingAboutSomeoneElse) return false;
+  if (mentionsOtherRealName) return false;
 
-  // ✅ Contextos válidos
-  const validContexts = [
-    "experiencia",
-    "proyecto",
-    "proyectos",
-    "perfil",
-    "stack",
-    "habilidad",
-    "habilidades",
-    "tecnologia",
-    "tecnologias",
-    "contacto",
-  ];
-
-  const hasValidContext = validContexts.some(word =>
-    normalizedText.includes(word)
-  );
-
-  if (hasValidContext) return true;
-
-  // ❌ Contextos débiles
-  const badContextPatterns = [
-    /de\s+(jorge|patricio)/,
-    /para\s+(jorge|patricio)/,
-    /con\s+(jorge|patricio)/,
-  ];
-
-  const isBadContext = badContextPatterns.some(pattern =>
-    pattern.test(normalizedText)
-  );
-
-  if (isBadContext) return false;
-
-  return true;
+  // ❌ CLAVE: si no menciona ningún nombre → bloquear
+  return false;
 };
+
 /* =========================
 🔒 BLOQUEO GLOBAL
 ========================= */
