@@ -295,13 +295,11 @@ if (botMatch) {
 
 
 
-  
-
-/* =========================
-🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
+  /* =========================
+🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX)
 ========================= */
 
-  const isAboutOwner = (text) => {
+const isAboutOwner = (text) => {
   const normalizedText = text
     .toLowerCase()
     .normalize("NFD")
@@ -310,6 +308,11 @@ if (botMatch) {
     .trim();
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
+
+  // 🔴 Palabras fuera de scope (NO son nombres)
+  const blockedWords = [
+    "gay", "sexo", "sexual", "porn", "xxx"
+  ];
 
   const commonNames = [
     "luis","carlos","jose","juan","andres","diego","daniel","christian",
@@ -322,7 +325,7 @@ if (botMatch) {
     "raul","guillermo","alvaro","bruno","dario","fabian",
     "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
     "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
+    "ulises","valentin","walter","xavier","yago","zacarias",
 
     "ana","maria","sofia","valentina","daniela","camila","laura",
     "paula","andrea","elena","lucia","isabella","martina","gabriela",
@@ -336,21 +339,26 @@ if (botMatch) {
     "victoria","wanda","ximena","yolanda","zoe","samanta"
   ];
 
-  // ✅ SOLO válido si menciona a Jorge
+  // 🔴 1. BLOQUEO PRIORIDAD MÁXIMA
+  const hasBlockedWord = blockedWords.some(word =>
+    normalizedText.includes(word)
+  );
+  if (hasBlockedWord) return false;
+
+  // 🔴 2. BLOQUEAR SI HAY OTROS NOMBRES
+  const mentionsOtherName = commonNames.some(name =>
+    normalizedText.includes(name)
+  );
+  if (mentionsOtherName) return false;
+
+  // 🟢 3. VALIDAR QUE SÍ ES SOBRE JORGE
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
   if (hasOwnerName) return true;
 
-  // ❌ Si menciona otro nombre → bloquear
-  const mentionsOtherRealName = commonNames.some(
-    name => normalizedText.includes(name)
-  );
-
-  if (mentionsOtherRealName) return false;
-
-  // ❌ CLAVE: si no menciona ningún nombre → bloquear
+  // 🔴 4. TODO LO DEMÁS → BLOQUEADO
   return false;
 };
 
@@ -362,7 +370,6 @@ if (!isAboutOwner(text)) {
     text: replies.OUT_OF_SCOPE(ctx),
     intent: "OUT_OF_SCOPE",
   };
-
 }
 
 
@@ -371,7 +378,7 @@ if (!isAboutOwner(text)) {
 ========================= */
 let intent = detectIntent(text);
 
-const normalizedText = text; // ya viene normalizado arriba
+const normalizedText = text;
 
 const ownerNames = ["jorge", "patricio", "jorge patricio"];
 const hasOwnerName = ownerNames.some(name => normalizedText.includes(name));
@@ -406,14 +413,14 @@ const shouldTriggerProfile =
   (hasOwnerName && hasProfileTrigger);
 
 /* =========================
-🔥 SI detectIntent devolvió PROFILE, VALIDARLO
+🔥 VALIDACIÓN PROFILE
 ========================= */
 if (intent === "PROFILE" && !shouldTriggerProfile) {
   intent = "UNKNOWN";
 }
 
 /* =========================
-🔥 INTENTS MÁS ESPECÍFICOS (siempre prioridad)
+🔥 INTENTS PRIORITARIOS
 ========================= */
 if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
@@ -458,7 +465,7 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
 }
 
 /* =========================
-🔥 Si sigue UNKNOWN, recién permitir PROFILE como fallback
+🔥 FALLBACK PROFILE
 ========================= */
 if (intent === "UNKNOWN" && shouldTriggerProfile) {
   intent = "PROFILE";
@@ -472,8 +479,7 @@ if (intent === "UNKNOWN") {
 }
 
 saveMemory(ctx, { user: text, intent });
-  
-  
+
 /* =========================
 🟢 CONTACTO
 ========================= */
@@ -507,4 +513,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
