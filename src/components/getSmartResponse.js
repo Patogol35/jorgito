@@ -328,15 +328,6 @@ const sensitiveTopics = [
   "lesbiana",
   "homosexual",
   "bisexual",
-  "sexualidad",
-  "orientacion",
-  "orientación",
-  "vida privada",
-  "pareja",
-  "novia",
-  "novio",
-  "esposa",
-  "esposo",
   "burro","asno","idiota","tonto","estupido","imbecil",
 
   // animales
