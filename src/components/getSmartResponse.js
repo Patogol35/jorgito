@@ -339,7 +339,7 @@ if (botMatch) {
   "prostituta","prostituto","puto","puta",
   "carcoso","hediondo","apestoso","pedante",
   "asesino","maldito","retrasado","ignorante","analfabeto", "gay",
-    "homosexual", "bisexual", "maricon", "marica"
+    "homosexual", "bisexual", "maricon", "marica",
 
   // fuertes
   "patetico","ridiculo","basura","porqueria","asco","mierda",
