@@ -418,22 +418,42 @@ if (normalizedText.includes("contact") || normalizedText.includes("whatsapp")) {
   intent = "CONTACT";
 } else if (
   normalizedText.includes("habilidad") ||
+  normalizedText.includes("habilidades") ||
+  normalizedText.includes("skill") ||
   normalizedText.includes("skills") ||
   normalizedText.includes("tecnolog") ||
-  normalizedText.includes("framework")
+  normalizedText.includes("lenguaje") ||
+  normalizedText.includes("lenguajes") ||
+  normalizedText.includes("framework") ||
+  normalizedText.includes("herramienta")
 ) {
   intent = "SKILLS";
 } else if (normalizedText.includes("experiencia")) {
   intent = "EXPERIENCE";
 } else if (
   normalizedText.includes("estudio") ||
+  normalizedText.includes("estudios") ||
+  normalizedText.includes("master") ||
+  normalizedText.includes("formacion") ||
   normalizedText.includes("educacion")
 ) {
   intent = "EDUCATION";
 } else if (normalizedText.includes("proyecto")) {
   intent = "PROJECTS";
-} else if (normalizedText.includes("stack")) {
+} else if (
+  normalizedText.includes("contratar") ||
+  normalizedText.includes("elegir") ||
+  normalizedText.includes("escoger") ||
+  normalizedText.includes("confiar")
+) {
+  intent = "MOTIVATION";
+} else if (
+  normalizedText.includes("stack") ||
+  normalizedText.includes("full stack")
+) {
   intent = "STACK";
+} else if (normalizedText.includes("libro")) {
+  intent = "BOOK";
 }
 
 /* =========================
