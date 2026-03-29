@@ -293,6 +293,10 @@ if (botMatch) {
 }
 
 
+
+
+  
+
 /* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FINAL)
 ========================= */
@@ -307,8 +311,49 @@ if (botMatch) {
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
-  return validNames.some(name => normalizedText.includes(name));
+  const commonNames = [
+    "luis","carlos","jose","juan","andres","diego","daniel","christian",
+    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
+    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
+    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
+    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
+    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
+    "sebastian","mateo","nicolas","lucas","francisco","antonio",
+    "raul","guillermo","alvaro","bruno","dario","fabian",
+    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
+    "orlando","pablo","renato","salvador","santiago","teodoro",
+    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
+
+    "ana","maria","sofia","valentina","daniela","camila","laura",
+    "paula","andrea","elena","lucia","isabella","martina","gabriela",
+    "adriana","carolina","patricia","veronica","alejandra","rosa",
+    "carmen","silvia","beatriz","raquel","noelia","natalia",
+    "claudia","monica","diana","pilar","luisa","renata","emilia",
+    "juliana","antonella","valeria","ximena","yesenia","zulema",
+    "amanda","bianca","catalina","dolores","esther","fatima",
+    "gloria","helena","irene","jimena","karla","liliana","mariana",
+    "nerea","olga","priscila","rocio","susana","teresa","ursula",
+    "victoria","wanda","ximena","yolanda","zoe","samanta"
+  ];
+
+  // ✅ SOLO válido si menciona a Jorge
+  const hasOwnerName = validNames.some(name =>
+    normalizedText.includes(name)
+  );
+
+  if (hasOwnerName) return true;
+
+  // ❌ Si menciona otro nombre → bloquear
+  const mentionsOtherRealName = commonNames.some(
+    name => normalizedText.includes(name)
+  );
+
+  if (mentionsOtherRealName) return false;
+
+  // ❌ CLAVE: si no menciona ningún nombre → bloquear
+  return false;
 };
+
 /* =========================
 🔒 BLOQUEO GLOBAL
 ========================= */
@@ -319,9 +364,6 @@ if (!isAboutOwner(text)) {
   };
 
 }
-
-
-  
 
 
 /* =========================
@@ -344,24 +386,14 @@ const isOnlyOwnerName = [
 // ✅ Triggers válidos SOLO para PROFILE
 const profileTriggers = [
   "quien es",
-  "hablame",
-  "ablame",
+  "hablame de",
   "habla de",
-  "cuentame",
+  "cuentame de",
   "cuenta de",
   "dime de",
-  "perfil",
-  "sobre",
-  "informacion",
-  "datos",
-  "presentame",
-  "presenta",
-  "quiero saber",
-  "conocer",
-  "acerca de",
-  "biografia",
-  "resumen",
-  "descripcion"
+  "dime el perfil",
+  "perfil de",
+  "sobre"
 ];
 
 const hasProfileTrigger = profileTriggers.some(trigger =>
