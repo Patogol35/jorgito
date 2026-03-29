@@ -292,10 +292,7 @@ if (botMatch) {
   };
 }
 
-
-
-
-  /* =========================
+/* =========================
 🟡 PROTECCIÓN DE DATOS: NIVEL PRO (FIX)
 ========================= */
 
@@ -314,51 +311,20 @@ const isAboutOwner = (text) => {
     "gay", "sexo", "sexual", "porn", "xxx"
   ];
 
-  const commonNames = [
-    "luis","carlos","jose","juan","andres","diego","daniel","christian",
-    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
-    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
-    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
-    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
-    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
-    "sebastian","mateo","nicolas","lucas","francisco","antonio",
-    "raul","guillermo","alvaro","bruno","dario","fabian",
-    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
-    "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias",
-
-    "ana","maria","sofia","valentina","daniela","camila","laura",
-    "paula","andrea","elena","lucia","isabella","martina","gabriela",
-    "adriana","carolina","patricia","veronica","alejandra","rosa",
-    "carmen","silvia","beatriz","raquel","noelia","natalia",
-    "claudia","monica","diana","pilar","luisa","renata","emilia",
-    "juliana","antonella","valeria","ximena","yesenia","zulema",
-    "amanda","bianca","catalina","dolores","esther","fatima",
-    "gloria","helena","irene","jimena","karla","liliana","mariana",
-    "nerea","olga","priscila","rocio","susana","teresa","ursula",
-    "victoria","wanda","ximena","yolanda","zoe","samanta"
-  ];
-
   // 🔴 1. BLOQUEO PRIORIDAD MÁXIMA
   const hasBlockedWord = blockedWords.some(word =>
     normalizedText.includes(word)
   );
   if (hasBlockedWord) return false;
 
-  // 🔴 2. BLOQUEAR SI HAY OTROS NOMBRES
-  const mentionsOtherName = commonNames.some(name =>
-    normalizedText.includes(name)
-  );
-  if (mentionsOtherName) return false;
-
-  // 🟢 3. VALIDAR QUE SÍ ES SOBRE JORGE
+  // 🟢 2. VALIDAR QUE SÍ ES SOBRE JORGE
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
   if (hasOwnerName) return true;
 
-  // 🔴 4. TODO LO DEMÁS → BLOQUEADO
+  // 🔴 3. TODO LO DEMÁS → BLOQUEADO
   return false;
 };
 
@@ -513,4 +479,4 @@ if (!replyText) {
 return {
   text: replyText,
   intent,
-}; }
+};
