@@ -367,11 +367,8 @@ const hasProfileTrigger = profileTriggers.some(trigger =>
 
 // ✅ PROFILE estricto
 const shouldTriggerProfile =
-  !hasInvalidTopic &&
-  (
-    isOnlyOwnerName ||
-    (hasOwnerName && hasProfileTrigger)
-  );
+  isOnlyOwnerName ||
+  (hasOwnerName && hasProfileTrigger);
 
 /* =========================
 🔥 SI detectIntent devolvió PROFILE, VALIDARLO
