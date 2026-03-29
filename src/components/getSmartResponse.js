@@ -392,7 +392,7 @@ const isOnlyOwnerName = ["jorge","patricio","jorge patricio"]
   .includes(normalizedText);
 
 const profileTriggers = [
-  "quien es","hablame de","habla de","cuentame de",
+  "quien es","hablame de","habla de","cuentame de", "perfil",
   "cuenta de","dime de","dime el perfil","perfil de","sobre"
 ];
 
