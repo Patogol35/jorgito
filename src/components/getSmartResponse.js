@@ -311,49 +311,28 @@ if (botMatch) {
 
   const validNames = ["jorge", "patricio", "jorge patricio"];
 
-  const commonNames = [
-    "luis","carlos","jose","juan","andres","diego","daniel","christian",
-    "camilo","miguel","fernando","alex","pedro","alejandro","manuel",
-    "david","sergio","rafael","adrian","ricardo","marcos","oscar",
-    "alberto","roberto","ivan","hugo","enrique","samuel","emilio",
-    "gabriel","esteban","victor","martin","ignacio","julio","cesar",
-    "tomas","felipe","cristian","edgar","ramon","armando","leonardo",
-    "sebastian","mateo","nicolas","lucas","francisco","antonio",
-    "raul","guillermo","alvaro","bruno","dario","fabian",
-    "gonzalo","hector","joaquin","lorenzo","maximiliano","nahuel",
-    "orlando","pablo","renato","salvador","santiago","teodoro",
-    "ulises","valentin","walter","xavier","yago","zacarias", "gay",
-
-    "ana","maria","sofia","valentina","daniela","camila","laura",
-    "paula","andrea","elena","lucia","isabella","martina","gabriela",
-    "adriana","carolina","patricia","veronica","alejandra","rosa",
-    "carmen","silvia","beatriz","raquel","noelia","natalia",
-    "claudia","monica","diana","pilar","luisa","renata","emilia",
-    "juliana","antonella","valeria","ximena","yesenia","zulema",
-    "amanda","bianca","catalina","dolores","esther","fatima",
-    "gloria","helena","irene","jimena","karla","liliana","mariana",
-    "nerea","olga","priscila","rocio","susana","teresa","ursula",
-    "victoria","wanda","ximena","yolanda","zoe","samanta"
-  ];
-
-  // ✅ SOLO válido si menciona a Jorge
   const hasOwnerName = validNames.some(name =>
     normalizedText.includes(name)
   );
 
-  if (hasOwnerName) return true;
+  if (!hasOwnerName) return false;
 
-  // ❌ Si menciona otro nombre → bloquear
-  const mentionsOtherRealName = commonNames.some(
-    name => normalizedText.includes(name)
+  // 🔥 SOLO bloquear estructuras CLARAMENTE externas
+  const invalidPatterns = [
+    /carpintero\s+de\s+(jorge|patricio)/,
+    /amigo\s+de\s+(jorge|patricio)/,
+    /novio\s+de\s+(jorge|patricio)/,
+    /cliente\s+de\s+(jorge|patricio)/,
+  ];
+
+  const isInvalid = invalidPatterns.some(pattern =>
+    pattern.test(normalizedText)
   );
 
-  if (mentionsOtherRealName) return false;
+  if (isInvalid) return false;
 
-  // ❌ CLAVE: si no menciona ningún nombre → bloquear
-  return false;
+  return true;
 };
-
 /* =========================
 🔒 BLOQUEO GLOBAL
 ========================= */
