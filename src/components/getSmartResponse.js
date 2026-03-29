@@ -317,6 +317,26 @@ if (botMatch) {
 
   if (!hasOwnerName) return false;
 
+  // 🔥 BLOQUEO FUERTE: otra persona relacionada con Jorge
+  const professionWords = [
+    "carpintero",
+    "doctor",
+    "ingeniero",
+    "abogado",
+    "cliente",
+    "amigo",
+    "empleado",
+    "trabajador",
+    "programador",
+  ];
+
+  const isTalkingAboutSomeoneElse = professionWords.some(prof =>
+    new RegExp(`${prof}\\s+de\\s+(jorge|patricio)`).test(normalizedText)
+  );
+
+  if (isTalkingAboutSomeoneElse) return false;
+
+  // ✅ Contextos válidos
   const validContexts = [
     "experiencia",
     "proyecto",
@@ -336,6 +356,7 @@ if (botMatch) {
 
   if (hasValidContext) return true;
 
+  // ❌ Contextos débiles
   const badContextPatterns = [
     /de\s+(jorge|patricio)/,
     /para\s+(jorge|patricio)/,
