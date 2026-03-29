@@ -317,19 +317,36 @@ if (botMatch) {
 
   if (!hasOwnerName) return false;
 
-  // 🔥 SOLO bloquear estructuras CLARAMENTE externas
-  const invalidPatterns = [
-    /carpintero\s+de\s+(jorge|patricio)/,
-    /amigo\s+de\s+(jorge|patricio)/,
-    /novio\s+de\s+(jorge|patricio)/,
-    /cliente\s+de\s+(jorge|patricio)/,
+  const validContexts = [
+    "experiencia",
+    "proyecto",
+    "proyectos",
+    "perfil",
+    "stack",
+    "habilidad",
+    "habilidades",
+    "tecnologia",
+    "tecnologias",
+    "contacto",
   ];
 
-  const isInvalid = invalidPatterns.some(pattern =>
+  const hasValidContext = validContexts.some(word =>
+    normalizedText.includes(word)
+  );
+
+  if (hasValidContext) return true;
+
+  const badContextPatterns = [
+    /de\s+(jorge|patricio)/,
+    /para\s+(jorge|patricio)/,
+    /con\s+(jorge|patricio)/,
+  ];
+
+  const isBadContext = badContextPatterns.some(pattern =>
     pattern.test(normalizedText)
   );
 
-  if (isInvalid) return false;
+  if (isBadContext) return false;
 
   return true;
 };
