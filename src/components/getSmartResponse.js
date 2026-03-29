@@ -472,6 +472,20 @@ if (intent === "UNKNOWN") {
 
 saveMemory(ctx, { user: text, intent });
 
+  /* =========================
+🟢 CONTACTO
+========================= */
+if (intent === "CONTACT") {
+  const contactMessage = replies.CONTACT(ctx);
+
+  ctx.awaiting = "CONTACT_CONFIRM";
+  return {
+    text: `${contactMessage}\n\n¿Quieres que lo abra ahora?`,
+    action: "CONTACT_CONFIRM",
+    intent,
+  };
+}
+
 /* =========================
 🧠 RESPUESTA NORMAL
 ========================= */
