@@ -346,7 +346,7 @@ const isSensitiveAboutOwner = (text) => {
 // 🚫 BLOQUEO DE PREGUNTAS SENSIBLES SOBRE EL OWNER
 if (isAboutOwner(text) && isSensitiveAboutOwner(text)) {
   return {
-    text: "Prefiero no compartir información personal 😊 Pero puedo contarte sobre su experiencia profesional, habilidades o proyectos.",
+    text: "Prefiero mantener una conversación respetuosa 😊 Si deseas, puedo contarte sobre su experiencia profesional.",
     intent: "SENSITIVE_BLOCK",
   };
 }
