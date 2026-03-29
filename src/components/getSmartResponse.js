@@ -370,8 +370,7 @@ const sensitiveKeywords = {
   ]
 };
 
-// 👤 nombres válidos
-const ownerNames = ["jorge","patricio","jorge patricio"];
+
 
 // 🔍 helpers
 const hasOwner = ownerNames.some(n => cleanText.includes(n));
