@@ -67,7 +67,7 @@ function App() {
     [mode]
   );
 
-  const LIGHT_CARD_BG = "#f7f9fc";
+  const LIGHT_CARD_BG = "#fafafa";
 
   /* ✅ MEMO: evita recrear en cada render */
   const sections = useMemo(
