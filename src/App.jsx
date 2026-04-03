@@ -112,22 +112,19 @@ function App() {
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
 
-                /* 💎 BORDE DINÁMICO */
-                border: `1.5px solid ${
-                  mode === "light" ? `${color}70` : `${color}CC`
-                }`,
+                /* 🔥 BORDE UN POCO MÁS GRUESO */
+                border: `2px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
+
                 transition: "all 0.25s ease",
 
-                /* 🔥 HOVER PRO */
                 "&:hover": {
                   transform: "translateY(-4px)",
-                  border: `1.5px solid ${color}`,
                   boxShadow:
                     mode === "light"
-                      ? `0 6px 16px ${color}20`
-                      : `0 6px 20px ${color}40`,
+                      ? `0 6px 16px rgba(0,0,0,0.08)`
+                      : `0 6px 16px rgba(0,0,0,0.5)`,
                 },
               }}
             >
