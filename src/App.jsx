@@ -26,7 +26,6 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  /* ✅ MEJOR: lazy init (evita lecturas repetidas) */
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
@@ -37,7 +36,6 @@ function App() {
 
   const scrollOffset = "80px";
 
-  /* ✅ Persistencia */
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -46,10 +44,8 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  /* ✅ Seguridad extra */
   const t = translations[lang] || translations["es"];
 
-  /* ✅ Memo del theme (ya lo tenías bien) */
   const theme = useMemo(
     () =>
       createTheme({
@@ -69,7 +65,6 @@ function App() {
 
   const LIGHT_CARD_BG = "#fafafa";
 
-  /* ✅ MEMO: evita recrear en cada render */
   const sections = useMemo(
     () => [
       { id: "about", color: "#2e7d32", Component: About },
@@ -116,16 +111,21 @@ function App() {
                 borderRadius: 3,
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
-                border: `2px solid ${
-                  mode === "light"
-                    ? "rgba(0,0,0,0.85)"
-                    : "rgba(255,255,255,0.85)"
-                }`,
-                borderLeft: `4px solid ${color}`,
+
+                /* ✅ NUEVO BORDE ELEGANTE */
+                border: `1px solid ${color}`,
+
                 scrollMarginTop: scrollOffset,
-                transition: "transform 0.25s ease",
+
+                /* ✨ Mejora visual */
+                transition: "all 0.25s ease",
+
                 "&:hover": {
                   transform: "translateY(-4px)",
+                  boxShadow:
+                    mode === "light"
+                      ? `0 6px 16px rgba(0,0,0,0.08)`
+                      : `0 6px 16px rgba(0,0,0,0.5)`,
                 },
               }}
             >
