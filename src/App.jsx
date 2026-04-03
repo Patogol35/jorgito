@@ -112,20 +112,24 @@ function App() {
                 backgroundColor:
                   mode === "light" ? LIGHT_CARD_BG : "#222222",
 
-                /* ✅ NUEVO BORDE ELEGANTE */
-                border: `1px solid ${color}`,
+                /* 💎 BORDE ELEGANTE */
+                border: `1px solid ${color}60`,
 
                 scrollMarginTop: scrollOffset,
 
-                /* ✨ Mejora visual */
-                transition: "all 0.25s ease",
+                transition: "all 0.3s ease",
 
+                /* 🔥 EFECTO HOVER PRO */
                 "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow:
-                    mode === "light"
-                      ? `0 6px 16px rgba(0,0,0,0.08)`
-                      : `0 6px 16px rgba(0,0,0,0.5)`,
+                  transform: "translateY(-6px) scale(1.01)",
+
+                  border: `1px solid ${color}`,
+
+                  boxShadow: `
+                    0 0 0 1px ${color}40,
+                    0 8px 24px ${color}30,
+                    0 0 12px ${color}40
+                  `,
                 },
               }}
             >
