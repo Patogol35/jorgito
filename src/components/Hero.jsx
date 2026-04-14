@@ -15,14 +15,10 @@ import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
-export default function Hero({ mode, setMode, t, lang, setLang }) {
+export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-const [zoom, setZoom] = useState(false);
-  const glowColor =
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : "#60a5fa";
+  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -38,7 +34,7 @@ const [zoom, setZoom] = useState(false);
       y: 0,
       clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
-      transition: { duration: 1, ease: easeOutExpo },
+      transition: { duration: 0.9, ease: easeOutExpo },
     },
   };
 
@@ -46,8 +42,8 @@ const [zoom, setZoom] = useState(false);
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.22,
-        delayChildren: 0.6,
+        staggerChildren: 0.18,
+        delayChildren: 0.5,
       },
     },
   };
@@ -56,8 +52,8 @@ const [zoom, setZoom] = useState(false);
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.14,
-        delayChildren: 1.3,
+        staggerChildren: 0.12,
+        delayChildren: 1.1,
       },
     },
   };
@@ -83,25 +79,27 @@ const [zoom, setZoom] = useState(false);
       >
         {/* AVATAR */}
         <motion.div
-          initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
+          initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
+          transition={{ duration: 1.8, ease: easeOutExpo }}
           style={{
             borderRadius: "50%",
             transformStyle: "preserve-3d",
-            perspective: 1300,
+            perspective: 1200,
+            willChange: "transform",
           }}
         >
           <motion.div
-            animate={{ y: [0, -12, 0], rotateX: [0, 1.2, 0] }}
+            animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
                 boxShadow: [
-                  `0 0 18px ${theme.palette.primary.main}55`,
-                  `0 0 28px ${theme.palette.primary.main}88`,
-                  `0 0 18px ${theme.palette.primary.main}55`,
+                  `0 0 16px ${theme.palette.primary.main}55`,
+                  `0 0 26px ${theme.palette.primary.main}88`,
+                  `0 0 16px ${theme.palette.primary.main}55`,
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity }}
@@ -110,11 +108,15 @@ const [zoom, setZoom] = useState(false);
               <Avatar
                 alt="Jorge Patricio"
                 src="https://i.imgur.com/jr3rjzu.jpg"
+                imgProps={{
+                  loading: "lazy",
+                  decoding: "async",
+                }}
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
+                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
                   backgroundColor: theme.palette.background.paper,
                 }}
               />
@@ -188,7 +190,7 @@ const [zoom, setZoom] = useState(false);
                 {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true), // 🔥 abre modal
+                  onClick: () => setOpen(true),
                 },
                 {
                   label: t.hero.buttons.ai,
@@ -228,7 +230,6 @@ const [zoom, setZoom] = useState(false);
                       background: "transparent",
                       transform: "scale(1.15)",
                     },
-                    transition: "transform 0.2s ease",
                   }}
                 >
                   {mode === "light" ? (
@@ -244,64 +245,66 @@ const [zoom, setZoom] = useState(false);
       </Box>
 
       {/* MODAL */}
-      
-<Modal
-  open={open}
-  onClose={() => {
-    setOpen(false);
-    setZoom(false);
-  }}
-  sx={{ zIndex: 2000 }}
->
-  <Box
-    sx={{
-      position: "absolute",
-      zIndex: 2001,
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",
-      overflow: "auto", // 🔥 importante
-      bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
-      p: 2,
-      outline: "none",
-    }}
-  >
-    <IconButton
-      onClick={() => {
-        setOpen(false);
-        setZoom(false);
-      }}
-      sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.3)",
-      }}
-    >
-      <Close />
-    </IconButton>
+      <Modal
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setZoom(false);
+        }}
+        sx={{ zIndex: 2000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "95%", md: "70%" },
+            maxHeight: "90vh",
+            overflow: "auto",
+            bgcolor: "background.paper",
+            borderRadius: 3,
+            boxShadow: 24,
+            p: 2,
+            outline: "none",
+          }}
+        >
+          <IconButton
+            onClick={() => {
+              setOpen(false);
+              setZoom(false);
+            }}
+            sx={{
+              position: "sticky",
+              top: 0,
+              zIndex: 3000,
+              background: "rgba(0,0,0,0.3)",
+            }}
+          >
+            <Close />
+          </IconButton>
 
-    <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
-      onClick={() => setZoom(!zoom)}
-      sx={{
-        width: zoom ? "180%" : "100%", // 🔥 crece REAL
-        maxHeight: zoom ? "none" : { xs: "75vh", md: "85vh" },
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
-        cursor: zoom ? "zoom-out" : "zoom-in",
-        transition: "all 0.3s ease",
-      }}
-    />
-  </Box>
-</Modal>
+          <Box
+            component="img"
+            src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+            alt="certificado"
+            loading="lazy"
+            decoding="async"
+            onClick={() => setZoom(!zoom)}
+            sx={{
+              width: "100%",
+              transform: zoom ? "scale(1.8)" : "scale(1)",
+              transformOrigin: "center",
+              transition: "transform 0.3s ease",
+              willChange: "transform",
+              objectFit: "contain",
+              borderRadius: 2,
+              display: "block",
+              cursor: zoom ? "zoom-out" : "zoom-in",
+            }}
+          />
+        </Box>
+      </Modal>
     </>
   );
-                }
+                    }
