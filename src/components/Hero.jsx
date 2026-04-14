@@ -254,30 +254,26 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       transform: "translate(-50%, -50%)",
       width: { xs: "95%", md: "70%" },
       maxHeight: "90vh",
-      overflow: "auto", // 🔥 scroll vertical + horizontal
+      overflow: "auto",
       bgcolor: "background.paper",
       borderRadius: 3,
       boxShadow: 24,
       p: 2,
       outline: "none",
-      display: "flex",              // 🔥 centrado pro
-      flexDirection: "column",
-      alignItems: "center",
     }}
   >
-    {/* ❌ BOTÓN CERRAR */}
+    {/* ❌ BOTÓN CERRAR (FIX) */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",
-        top: 0,
-        alignSelf: "flex-end",      // 🔥 se alinea a la derecha
-        zIndex: 10,
-        background: "rgba(0,0,0,0.5)",
+        position: "absolute",   // 🔥 CAMBIO CLAVE
+        top: 10,
+        right: 10,
+        zIndex: 1000,
+        background: "rgba(0,0,0,0.6)",
         color: "#fff",
-        backdropFilter: "blur(6px)",
         "&:hover": {
-          background: "rgba(0,0,0,0.7)",
+          background: "rgba(0,0,0,0.8)",
         },
       }}
     >
@@ -291,7 +287,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxHeight: "80vh",          // 🔥 evita desbordes
+        maxHeight: "80vh",
         objectFit: "contain",
         borderRadius: 2,
       }}
