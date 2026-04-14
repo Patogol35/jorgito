@@ -271,14 +271,15 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
           </IconButton>
 
           <Box
-            component="img"
-            src="https://i.imgur.com/ar3z8lh.jpg"
-            alt="certificado"
-            sx={{
-              width: "100%",
-              borderRadius: 2,
-            }}
-          />
+  component="img"
+  src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+  alt="certificado"
+  sx={{
+    width: "100%",
+    borderRadius: 2,
+    objectFit: "contain",
+  }}
+/>
         </Box>
       </Modal>
     </>
