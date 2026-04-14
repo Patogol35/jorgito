@@ -246,35 +246,19 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       {/* MODAL */}
       
 <Modal open={open} onClose={() => setOpen(false)}>
-  <Box
-    sx={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: { xs: "85vh", md: "90vh" },
-      overflowY: "auto",
-      bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
-      pt: 6, // 🔥 espacio para la X (ANTES p:2)
-      px: 2,
-      pb: 2,
-      outline: "none",
-    }}
-  >
+  <>
+    {/* 🔥 BOTÓN FUERA DEL SCROLL */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "absolute",
-        top: 8,
-        right: 8,
-        zIndex: 20,
-        background: "rgba(0,0,0,0.5)",
+        position: "fixed",   // 🔥 CLAVE TOTAL
+        top: 10,
+        right: 10,
+        zIndex: 2000,
+        background: "rgba(0,0,0,0.6)",
         color: "#fff",
         "&:hover": {
-          background: "rgba(0,0,0,0.7)",
+          background: "rgba(0,0,0,0.8)",
         },
       }}
     >
@@ -282,19 +266,36 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     </IconButton>
 
     <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
       sx={{
-        width: "100%",
-        maxHeight: "70vh",
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
-        margin: "0 auto",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: { xs: "95%", md: "70%" },
+        maxHeight: { xs: "85vh", md: "90vh" },
+        overflowY: "auto",
+        bgcolor: "background.paper",
+        borderRadius: 3,
+        boxShadow: 24,
+        p: 2,
+        outline: "none",
       }}
-    />
-  </Box>
+    >
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        sx={{
+          width: "100%",
+          maxHeight: "70vh",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+          margin: "0 auto",
+        }}
+      />
+    </Box>
+  </>
 </Modal>
     </>
   );
