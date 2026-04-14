@@ -249,7 +249,7 @@ const [zoom, setZoom] = useState(false);
   open={open}
   onClose={() => {
     setOpen(false);
-    setZoom(false); // 🔥 reset zoom al cerrar
+    setZoom(false);
   }}
   sx={{ zIndex: 2000 }}
 >
@@ -262,7 +262,7 @@ const [zoom, setZoom] = useState(false);
       transform: "translate(-50%, -50%)",
       width: { xs: "95%", md: "70%" },
       maxHeight: "90vh",
-      overflowY: "auto",
+      overflow: "auto", // 🔥 importante
       bgcolor: "background.paper",
       borderRadius: 3,
       boxShadow: 24,
@@ -286,27 +286,20 @@ const [zoom, setZoom] = useState(false);
     </IconButton>
 
     <Box
+      component="img"
+      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+      alt="certificado"
+      onClick={() => setZoom(!zoom)}
       sx={{
-        overflow: "hidden",
-        cursor: zoom ? "zoom-out" : "zoom-in", // 🔥 cambia cursor
+        width: zoom ? "180%" : "100%", // 🔥 crece REAL
+        maxHeight: zoom ? "none" : { xs: "75vh", md: "85vh" },
+        objectFit: "contain",
+        borderRadius: 2,
+        display: "block",
+        cursor: zoom ? "zoom-out" : "zoom-in",
+        transition: "all 0.3s ease",
       }}
-    >
-      <Box
-        component="img"
-        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-        alt="certificado"
-        onClick={() => setZoom(!zoom)} // 🔥 toggle zoom
-        sx={{
-          width: "100%",
-          maxHeight: zoom ? "none" : { xs: "75vh", md: "85vh" },
-          transform: zoom ? "scale(1.8)" : "scale(1)", // 🔥 zoom real
-          transition: "transform 0.3s ease",
-          objectFit: "contain",
-          borderRadius: 2,
-          display: "block",
-        }}
-      />
-    </Box>
+    />
   </Box>
 </Modal>
     </>
