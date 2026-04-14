@@ -249,38 +249,42 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
   <Box
     sx={{
       position: "absolute",
-      top: "50%",
+      top: { xs: 0, md: "50%" },                // 🔥 clave
       left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",        // 🔥 clave
-      overflowY: "auto",        // 🔥 scroll vertical
+      transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" }, // 🔥 clave
+      width: { xs: "100%", md: "70%" },         // 🔥 ocupa toda la pantalla en móvil
+      height: { xs: "100%", md: "auto" },       // 🔥 evita recorte
+      maxHeight: { md: "90vh" },
+      overflow: "auto",                         // 🔥 scroll completo
       bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
+      borderRadius: { xs: 0, md: 3 },
+      boxShadow: { md: 24 },
       p: 2,
       outline: "none",
     }}
   >
+    {/* ❌ BOTÓN */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",     // 🔥 se queda arriba
+        position: "sticky",
         top: 0,
         zIndex: 10,
-        background: "rgba(0,0,0,0.3)",
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
       }}
     >
       <Close />
     </IconButton>
 
+    {/* 🖼️ IMAGEN */}
     <Box
       component="img"
       src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
       alt="certificado"
       sx={{
         width: "100%",
-        borderRadius: 2,
+        height: "auto",
         objectFit: "contain",
       }}
     />
