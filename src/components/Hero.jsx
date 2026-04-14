@@ -249,15 +249,16 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
   <Box
     sx={{
       position: "absolute",
-      top: { xs: 0, md: "50%" }, // 🔥 clave
+      top: { xs: "2%", md: "50%" },        // 🔥 arriba en móvil
       left: "50%",
-      transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" }, // 🔥 clave
-      width: { xs: "100%", md: "70%" },
-      maxHeight: { xs: "100vh", md: "90vh" }, // 🔥 evita corte
-      overflow: "auto", // 🔥 scroll completo
+      transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" },
+      width: { xs: "98%", md: "70%" },
+      height: { xs: "96vh", md: "auto" },  // 🔥 ocupa pantalla en horizontal
+      maxHeight: "96vh",
+      overflowY: "auto",
       bgcolor: "background.paper",
-      borderRadius: { xs: 0, md: 3 },
-      boxShadow: { md: 24 },
+      borderRadius: 3,
+      boxShadow: 24,
       p: 2,
       outline: "none",
     }}
@@ -268,8 +269,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
         position: "sticky",
         top: 0,
         zIndex: 10,
-        background: "rgba(0,0,0,0.4)",
-        color: "#fff",
+        background: "rgba(0,0,0,0.3)",
       }}
     >
       <Close />
@@ -281,8 +281,9 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        height: "auto",
-        display: "block",
+        maxHeight: "85vh",   // 🔥 evita que se corte
+        objectFit: "contain",
+        borderRadius: 2,
       }}
     />
   </Box>
