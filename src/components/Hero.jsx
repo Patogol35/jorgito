@@ -18,7 +18,7 @@ import { useState } from "react";
 export default function Hero({ mode, setMode, t, lang, setLang }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
+const [zoom, setZoom] = useState(false);
   const glowColor =
     theme.palette.mode === "dark"
       ? theme.palette.primary.main
@@ -247,7 +247,10 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       
 <Modal
   open={open}
-  onClose={() => setOpen(false)}
+  onClose={() => {
+    setOpen(false);
+    setZoom(false); // 🔥 reset zoom al cerrar
+  }}
   sx={{ zIndex: 2000 }}
 >
   <Box
@@ -268,7 +271,10 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     }}
   >
     <IconButton
-      onClick={() => setOpen(false)}
+      onClick={() => {
+        setOpen(false);
+        setZoom(false);
+      }}
       sx={{
         position: "sticky",
         top: 0,
@@ -280,19 +286,27 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     </IconButton>
 
     <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
-      loading="eager" // 🔥 evita delay
       sx={{
-        width: "100%",
-        height: "auto",
-        maxHeight: { xs: "75vh", md: "85vh" },
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
+        overflow: "hidden",
+        cursor: zoom ? "zoom-out" : "zoom-in", // 🔥 cambia cursor
       }}
-    />
+    >
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        onClick={() => setZoom(!zoom)} // 🔥 toggle zoom
+        sx={{
+          width: "100%",
+          maxHeight: zoom ? "none" : { xs: "75vh", md: "85vh" },
+          transform: zoom ? "scale(1.8)" : "scale(1)", // 🔥 zoom real
+          transition: "transform 0.3s ease",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+        }}
+      />
+    </Box>
   </Box>
 </Modal>
     </>
