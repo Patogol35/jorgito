@@ -248,28 +248,27 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 <Modal open={open} onClose={() => setOpen(false)}>
   <Box
     sx={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",
-      overflow: "auto",
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
       bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
+      overflow: "auto",
       p: 2,
-      outline: "none",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
     }}
   >
-    {/* ❌ BOTÓN CERRAR (FIX) */}
+    {/* ❌ BOTÓN CERRAR */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "absolute",   // 🔥 CAMBIO CLAVE
+        position: "fixed", // 🔥 SIEMPRE visible
         top: 10,
         right: 10,
-        zIndex: 1000,
+        zIndex: 2000,
         background: "rgba(0,0,0,0.6)",
         color: "#fff",
         "&:hover": {
@@ -287,9 +286,11 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxHeight: "80vh",
+        maxWidth: "900px", // 🔥 no se estira demasiado
+        height: "auto",
         objectFit: "contain",
         borderRadius: 2,
+        mt: 6, // 🔥 espacio para la X
       }}
     />
   </Box>
