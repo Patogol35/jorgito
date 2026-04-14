@@ -245,10 +245,17 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 
       {/* MODAL */}
       
-<Modal open={open} onClose={() => setOpen(false)}>
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{
+    zIndex: 2000, // 🔥 por encima del navbar
+  }}
+>
   <Box
     sx={{
       position: "absolute",
+      zIndex: 2001, // 🔥 asegura que esté arriba
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
@@ -267,8 +274,9 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       sx={{
         position: "sticky",
         top: 0,
-        zIndex: 10,
+        zIndex: 3000, // 🔥 siempre visible
         background: "rgba(0,0,0,0.3)",
+        backdropFilter: "blur(5px)", // opcional 🔥
       }}
     >
       <Close />
@@ -281,8 +289,8 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       sx={{
         width: "100%",
         maxHeight: {
-          xs: "75vh",   // 🔥 clave para móvil / horizontal
-          md: "80vh"
+          xs: "75vh", // 🔥 clave para horizontal
+          md: "80vh",
         },
         objectFit: "contain",
         borderRadius: 2,
