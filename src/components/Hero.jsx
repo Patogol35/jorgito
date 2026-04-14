@@ -243,8 +243,9 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
         </Box>
       </Box>
 
-      {/* 🔥 MODAL */}
-      <Modal open={open} onClose={() => setOpen(false)}>
+      {/* MODAL */}
+      
+<Modal open={open} onClose={() => setOpen(false)}>
   <Box
     sx={{
       position: "absolute",
@@ -252,35 +253,47 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",        // 🔥 clave
-      overflowY: "auto",        // 🔥 scroll vertical
+      maxHeight: "90vh",
+      overflow: "auto", // 🔥 scroll vertical + horizontal
       bgcolor: "background.paper",
       borderRadius: 3,
       boxShadow: 24,
       p: 2,
       outline: "none",
+      display: "flex",              // 🔥 centrado pro
+      flexDirection: "column",
+      alignItems: "center",
     }}
   >
+    {/* ❌ BOTÓN CERRAR */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",     // 🔥 se queda arriba
+        position: "sticky",
         top: 0,
+        alignSelf: "flex-end",      // 🔥 se alinea a la derecha
         zIndex: 10,
-        background: "rgba(0,0,0,0.3)",
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.7)",
+        },
       }}
     >
       <Close />
     </IconButton>
 
+    {/* 🖼️ IMAGEN */}
     <Box
       component="img"
       src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
       alt="certificado"
       sx={{
         width: "100%",
-        borderRadius: 2,
+        maxHeight: "80vh",          // 🔥 evita desbordes
         objectFit: "contain",
+        borderRadius: 2,
       }}
     />
   </Box>
