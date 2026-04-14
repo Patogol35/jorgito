@@ -253,31 +253,33 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: { xs: "95%", md: "70%" },
-      maxHeight: { xs: "85vh", md: "90vh" }, // 🔥 mejor para horizontal
+      maxHeight: { xs: "85vh", md: "90vh" },
       overflowY: "auto",
       bgcolor: "background.paper",
       borderRadius: 3,
       boxShadow: 24,
-      p: 2,
+      pt: 6, // 🔥 espacio para la X (ANTES p:2)
+      px: 2,
+      pb: 2,
       outline: "none",
     }}
   >
     <IconButton
-  onClick={() => setOpen(false)}
-  sx={{
-    position: "absolute",   // 🔥 en vez de sticky
-    top: 8,
-    right: 8,
-    zIndex: 20,
-    background: "rgba(0,0,0,0.5)",
-    color: "#fff",
-    "&:hover": {
-      background: "rgba(0,0,0,0.7)",
-    },
-  }}
->
-  <Close />
-</IconButton>
+      onClick={() => setOpen(false)}
+      sx={{
+        position: "absolute",
+        top: 8,
+        right: 8,
+        zIndex: 20,
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
+        "&:hover": {
+          background: "rgba(0,0,0,0.7)",
+        },
+      }}
+    >
+      <Close />
+    </IconButton>
 
     <Box
       component="img"
@@ -285,7 +287,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxHeight: "70vh",   // 🔥 CLAVE para horizontal
+        maxHeight: "70vh",
         objectFit: "contain",
         borderRadius: 2,
         display: "block",
