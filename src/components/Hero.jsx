@@ -5,16 +5,19 @@ import {
   Button,
   Avatar,
   IconButton,
+  Modal,
 } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
+import { useState } from "react";
 
 export default function Hero({ mode, setMode, t, lang, setLang }) {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
   const glowColor =
     theme.palette.mode === "dark"
@@ -185,8 +188,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
                 {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
-                  href:
-                    "https://i.imgur.com/ar3z8lh.jpg",
+                  onClick: () => setOpen(true), // 🔥 abre modal
                 },
                 {
                   label: t.hero.buttons.ai,
@@ -240,6 +242,45 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
           </motion.div>
         </Box>
       </Box>
+
+      {/* 🔥 MODAL */}
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "95%", md: "70%" },
+            bgcolor: "background.paper",
+            borderRadius: 3,
+            boxShadow: 24,
+            p: 2,
+            outline: "none",
+          }}
+        >
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          <Box
+            component="img"
+            src="https://i.imgur.com/ar3z8lh.jpg"
+            alt="certificado"
+            sx={{
+              width: "100%",
+              borderRadius: 2,
+            }}
+          />
+        </Box>
+      </Modal>
     </>
   );
-}
+                  }
