@@ -186,7 +186,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
                   href:
-                    "https://i.imgur.com/ar3z8lh.jpg",
+                    "https://imgur.com/a/uleI6b0",
                 },
                 {
                   label: t.hero.buttons.ai,
