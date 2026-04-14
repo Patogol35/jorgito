@@ -106,7 +106,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
             >
               <Avatar
                 alt="Jorge Patricio"
-                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
+                src="https://imgur.com/a/eRpXlAB"
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
