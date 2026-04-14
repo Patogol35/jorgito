@@ -246,65 +246,54 @@ export default function Hero({ mode, setMode, t }) {
 
       {/* MODAL */}
       <Modal
-        open={open}
-        onClose={() => {
-          setOpen(false);
-          setZoom(false);
-        }}
-        sx={{ zIndex: 2000 }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: { xs: "95%", md: "70%" },
-            maxHeight: "90vh",
-            overflow: "auto",
-            bgcolor: "background.paper",
-            borderRadius: 3,
-            boxShadow: 24,
-            p: 2,
-            outline: "none",
-          }}
-        >
-          <IconButton
-            onClick={() => {
-              setOpen(false);
-              setZoom(false);
-            }}
-            sx={{
-              position: "sticky",
-              top: 0,
-              zIndex: 3000,
-              background: "rgba(0,0,0,0.3)",
-            }}
-          >
-            <Close />
-          </IconButton>
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{ zIndex: 2000 }}
+>
+  <Box
+    sx={{
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: { xs: "95%", md: "70%" },
+      maxHeight: "90vh",
+      overflow: "auto",
+      bgcolor: "background.paper",
+      borderRadius: 3,
+      boxShadow: 24,
+      p: 2,
+      outline: "none",
+    }}
+  >
+    <IconButton
+      onClick={() => setOpen(false)}
+      sx={{
+        position: "sticky",
+        top: 0,
+        zIndex: 3000,
+        background: "rgba(0,0,0,0.3)",
+      }}
+    >
+      <Close />
+    </IconButton>
 
-          <Box
-            component="img"
-            src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-            alt="certificado"
-            loading="lazy"
-            decoding="async"
-            onClick={() => setZoom(!zoom)}
-            sx={{
-              width: "100%",
-              transform: zoom ? "scale(1.8)" : "scale(1)",
-              transformOrigin: "center",
-              transition: "transform 0.3s ease",
-              willChange: "transform",
-              objectFit: "contain",
-              borderRadius: 2,
-              display: "block",
-              cursor: zoom ? "zoom-out" : "zoom-in",
-            }}
-          />
-        </Box>
-      </Modal>
+    <Box
+      component="img"
+      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+      alt="certificado"
+      loading="lazy"
+      decoding="async"
+      sx={{
+        width: "100%",
+        maxHeight: "85vh",
+        objectFit: "contain",
+        borderRadius: 2,
+        display: "block",
+      }}
+    />
+  </Box>
+</Modal>
     </>
   );
                     }
