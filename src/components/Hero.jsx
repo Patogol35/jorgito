@@ -263,16 +263,21 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     }}
   >
     <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 10,
-        background: "rgba(0,0,0,0.3)",
-      }}
-    >
-      <Close />
-    </IconButton>
+  onClick={() => setOpen(false)}
+  sx={{
+    position: "absolute",   // 🔥 en vez de sticky
+    top: 8,
+    right: 8,
+    zIndex: 20,
+    background: "rgba(0,0,0,0.5)",
+    color: "#fff",
+    "&:hover": {
+      background: "rgba(0,0,0,0.7)",
+    },
+  }}
+>
+  <Close />
+</IconButton>
 
     <Box
       component="img"
