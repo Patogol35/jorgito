@@ -248,24 +248,26 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 <Modal open={open} onClose={() => setOpen(false)}>
   <Box
     sx={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      bgcolor: "background.paper",
+      position: "absolute",
+      top: { xs: "0", md: "50%" },         // 🔥 móvil arriba, desktop centro
+      left: "50%",
+      transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" },
+      width: { xs: "100%", md: "70%" },
+      height: { xs: "100%", md: "auto" },
+      maxHeight: { md: "90vh" },
       overflow: "auto",
+      bgcolor: "background.paper",
+      borderRadius: { xs: 0, md: 3 },     // 🔥 sin bordes en móvil
+      boxShadow: { md: 24 },
       p: 2,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
+      outline: "none",
     }}
   >
     {/* ❌ BOTÓN CERRAR */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "fixed", // 🔥 SIEMPRE visible
+        position: "fixed",   // 🔥 SIEMPRE visible
         top: 10,
         right: 10,
         zIndex: 2000,
@@ -286,8 +288,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxWidth: "900px", // 🔥 no se estira demasiado
-        height: "auto",
+        maxHeight: { xs: "none", md: "80vh" },
         objectFit: "contain",
         borderRadius: 2,
         mt: 6, // 🔥 espacio para la X
