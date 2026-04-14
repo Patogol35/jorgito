@@ -253,8 +253,8 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",        // 🔥 clave
-      overflowY: "auto",        // 🔥 scroll vertical
+      maxHeight: "90vh",
+      overflowY: "auto",
       bgcolor: "background.paper",
       borderRadius: 3,
       boxShadow: 24,
@@ -265,10 +265,15 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",     // 🔥 se queda arriba
-        top: 0,
-        zIndex: 10,
-        background: "rgba(0,0,0,0.3)",
+        position: "fixed",   // 🔥 SOLO ESTE CAMBIO
+        top: 10,
+        right: 10,
+        zIndex: 9999,
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
+        "&:hover": {
+          background: "rgba(0,0,0,0.7)",
+        },
       }}
     >
       <Close />
