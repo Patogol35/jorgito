@@ -245,15 +245,20 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 
       {/* MODAL */}
       
-<Modal open={open} onClose={() => setOpen(false)}>
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  disableScrollLock
+  keepMounted
+>
   <Box
     sx={{
       position: "absolute",
-      top: { xs: "2%", md: "50%" },        // 🔥 arriba en móvil
+      top: { xs: "2%", md: "50%" },
       left: "50%",
       transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" },
       width: { xs: "98%", md: "70%" },
-      height: { xs: "96vh", md: "auto" },  // 🔥 ocupa pantalla en horizontal
+      height: { xs: "96vh", md: "auto" },
       maxHeight: "96vh",
       overflowY: "auto",
       bgcolor: "background.paper",
@@ -281,7 +286,7 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxHeight: "85vh",   // 🔥 evita que se corte
+        maxHeight: "85vh",
         objectFit: "contain",
         borderRadius: 2,
       }}
