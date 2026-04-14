@@ -248,14 +248,12 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
 <Modal
   open={open}
   onClose={() => setOpen(false)}
-  sx={{
-    zIndex: 2000, // 🔥 por encima del navbar
-  }}
+  sx={{ zIndex: 2000 }}
 >
   <Box
     sx={{
       position: "absolute",
-      zIndex: 2001, // 🔥 asegura que esté arriba
+      zIndex: 2001,
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
@@ -274,9 +272,8 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       sx={{
         position: "sticky",
         top: 0,
-        zIndex: 3000, // 🔥 siempre visible
+        zIndex: 3000,
         background: "rgba(0,0,0,0.3)",
-        backdropFilter: "blur(5px)", // opcional 🔥
       }}
     >
       <Close />
@@ -286,16 +283,14 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       component="img"
       src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
       alt="certificado"
+      loading="eager" // 🔥 evita delay
       sx={{
         width: "100%",
-        maxHeight: {
-          xs: "75vh", // 🔥 clave para horizontal
-          md: "80vh",
-        },
+        height: "auto",
+        maxHeight: { xs: "75vh", md: "85vh" },
         objectFit: "contain",
         borderRadius: 2,
         display: "block",
-        margin: "0 auto",
       }}
     />
   </Box>
