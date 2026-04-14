@@ -252,9 +252,9 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       top: { xs: 0, md: "50%" }, // 🔥 clave
       left: "50%",
       transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" }, // 🔥 clave
-      width: { xs: "100%", md: "70%" }, // 🔥 ocupa todo en móvil
-      maxHeight: { xs: "100vh", md: "90vh" }, // 🔥 sin recorte en horizontal
-      overflowY: "auto",
+      width: { xs: "100%", md: "70%" },
+      maxHeight: { xs: "100vh", md: "90vh" }, // 🔥 evita corte
+      overflow: "auto", // 🔥 scroll completo
       bgcolor: "background.paper",
       borderRadius: { xs: 0, md: 3 },
       boxShadow: { md: 24 },
@@ -281,8 +281,8 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        height: "auto", // 🔥 clave
-        objectFit: "contain",
+        height: "auto",
+        display: "block",
       }}
     />
   </Box>
