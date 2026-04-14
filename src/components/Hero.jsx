@@ -271,17 +271,16 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
           </IconButton>
 
           <Box
-  component="iframe"
-  src="https://1drv.ms/i/c/060e38d9193a85f1/IQBSlokgBju1TporGYSYKPQeAY11ms0WmJwKQqGJKctWRL8"
-  sx={{
-    width: "100%",
-    height: "500px",
-    border: "none",
-    borderRadius: 2,
-  }}
-/>
+            component="img"
+            src="https://i.imgur.com/ar3z8lh.jpg"
+            alt="certificado"
+            sx={{
+              width: "100%",
+              borderRadius: 2,
+            }}
+          />
         </Box>
       </Modal>
     </>
   );
-                  }
+                }
