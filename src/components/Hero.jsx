@@ -246,53 +246,46 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       {/* MODAL */}
       
 <Modal open={open} onClose={() => setOpen(false)}>
-  <>
-    {/* ❌ BOTÓN CERRAR SIEMPRE VISIBLE */}
+  <Box
+    sx={{
+      position: "absolute",
+      top: { xs: 0, md: "50%" }, // 🔥 clave
+      left: "50%",
+      transform: { xs: "translateX(-50%)", md: "translate(-50%, -50%)" }, // 🔥 clave
+      width: { xs: "100%", md: "70%" }, // 🔥 ocupa todo en móvil
+      maxHeight: { xs: "100vh", md: "90vh" }, // 🔥 sin recorte en horizontal
+      overflowY: "auto",
+      bgcolor: "background.paper",
+      borderRadius: { xs: 0, md: 3 },
+      boxShadow: { md: 24 },
+      p: 2,
+      outline: "none",
+    }}
+  >
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "fixed",
-        top: 12,
-        right: 12,
-        zIndex: 1300,
-        background: "rgba(0,0,0,0.6)",
+        position: "sticky",
+        top: 0,
+        zIndex: 10,
+        background: "rgba(0,0,0,0.4)",
         color: "#fff",
-        "&:hover": {
-          background: "rgba(0,0,0,0.8)",
-        },
       }}
     >
       <Close />
     </IconButton>
 
-    {/* 📦 CONTENIDO */}
     <Box
+      component="img"
+      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+      alt="certificado"
       sx={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: { xs: "95%", md: "70%" },
-        maxHeight: "95vh",       // 🔥 más espacio
-        overflow: "auto",        // 🔥 scroll completo
-        bgcolor: "background.paper",
-        borderRadius: 3,
-        boxShadow: 24,
-        p: 2,
+        width: "100%",
+        height: "auto", // 🔥 clave
+        objectFit: "contain",
       }}
-    >
-      <Box
-        component="img"
-        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-        alt="certificado"
-        sx={{
-          width: "100%",
-          height: "auto",
-          display: "block",
-        }}
-      />
-    </Box>
-  </>
+    />
+  </Box>
 </Modal>
     </>
   );
