@@ -13,14 +13,21 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [zoom, setZoom] = useState(false);
+  const [scale, setScale] = useState(1);
+  const containerRef = useRef(null);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
+
+  const handleWheel = (e) => {
+    e.preventDefault();
+    const newScale = Math.min(Math.max(scale - e.deltaY * 0.001, 1), 3);
+    setScale(newScale);
+  };
 
   const fadeCinematic = {
     hidden: {
@@ -92,7 +99,6 @@ export default function Hero({ mode, setMode, t }) {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
@@ -129,7 +135,6 @@ export default function Hero({ mode, setMode, t }) {
           textAlign={{ xs: "center", sm: "left" }}
           maxWidth="600px"
           mx="auto"
-          zIndex={1}
         >
           <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
@@ -212,7 +217,6 @@ export default function Hero({ mode, setMode, t }) {
                       px: 4,
                       py: 1.4,
                       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
@@ -221,79 +225,101 @@ export default function Hero({ mode, setMode, t }) {
               ))}
 
               {/* 🌙 MODO */}
-              <motion.div variants={fadeCinematic}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                  }}
-                >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
-                </IconButton>
-              </motion.div>
+              <IconButton
+                onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                sx={{
+                  color: theme.palette.primary.main,
+                  "&:hover": {
+                    transform: "scale(1.15)",
+                  },
+                }}
+              >
+                {mode === "light" ? (
+                  <Brightness4 sx={{ fontSize: 28 }} />
+                ) : (
+                  <Brightness7 sx={{ fontSize: 28 }} />
+                )}
+              </IconButton>
             </Box>
           </motion.div>
         </Box>
       </Box>
 
-      {/* MODAL */}
+      {/* MODAL PRO */}
       <Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  sx={{ zIndex: 2000 }}
->
-  <Box
-    sx={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",
-      overflow: "auto",
-      bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
-      p: 2,
-      outline: "none",
-    }}
-  >
-    <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.3)",
-      }}
-    >
-      <Close />
-    </IconButton>
+        open={open}
+        onClose={() => {
+          setOpen(false);
+          setScale(1);
+        }}
+        sx={{ zIndex: 2000 }}
+      >
+        <Box
+          ref={containerRef}
+          onWheel={handleWheel}
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: { xs: "95%", md: "75%" },
+            height: "90vh",
+            overflow: "hidden",
+            bgcolor: "background.paper",
+            borderRadius: 3,
+            boxShadow: 24,
+            p: 2,
+            outline: "none",
+            cursor: scale > 1 ? "grab" : "default",
+          }}
+        >
+          <IconButton
+            onClick={() => {
+              setOpen(false);
+              setScale(1);
+            }}
+            sx={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              zIndex: 3000,
+              background: "rgba(0,0,0,0.3)",
+            }}
+          >
+            <Close />
+          </IconButton>
 
-    <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
-      loading="lazy"
-      decoding="async"
-      sx={{
-        width: "100%",
-        maxHeight: "85vh",
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
-      }}
-    />
-  </Box>
-</Modal>
+          <motion.div
+            drag={scale > 1}
+            dragConstraints={containerRef}
+            whileTap={{ cursor: "grabbing" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <motion.img
+              src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+              alt="certificado"
+              loading="lazy"
+              decoding="async"
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+                transform: `scale(${scale})`,
+                transition: "transform 0.2s ease",
+                willChange: "transform",
+                userSelect: "none",
+                pointerEvents: "none",
+              }}
+            />
+          </motion.div>
+        </Box>
+      </Modal>
     </>
   );
-                    }
+          }
