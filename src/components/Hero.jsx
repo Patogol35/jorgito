@@ -249,18 +249,14 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
   <Box
     sx={{
       position: "absolute",
-      top: { xs: 0, md: "50%" },   // 🔥 clave
+      top: "50%",
       left: "50%",
-      transform: {
-        xs: "translateX(-50%)",     // 🔥 sin centrar vertical
-        md: "translate(-50%, -50%)"
-      },
-      width: { xs: "100%", md: "70%" },
-      height: { xs: "100vh", md: "auto" }, // 🔥 ocupa toda la pantalla
-      maxHeight: { xs: "100vh", md: "90vh" },
+      transform: "translate(-50%, -50%)",
+      width: { xs: "95%", md: "70%" },
+      maxHeight: "90vh",
       overflowY: "auto",
       bgcolor: "background.paper",
-      borderRadius: { xs: 0, md: 3 },
+      borderRadius: 3,
       boxShadow: 24,
       p: 2,
       outline: "none",
@@ -269,11 +265,10 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",   // 🔥 vuelve a sticky
+        position: "sticky",
         top: 0,
         zIndex: 10,
-        background: "rgba(0,0,0,0.4)",
-        color: "#fff",
+        background: "rgba(0,0,0,0.3)",
       }}
     >
       <Close />
@@ -285,9 +280,14 @@ export default function Hero({ mode, setMode, t, lang, setLang }) {
       alt="certificado"
       sx={{
         width: "100%",
-        maxHeight: "85vh",   // 🔥 más alto ahora que hay espacio
+        maxHeight: {
+          xs: "75vh",   // 🔥 clave para móvil / horizontal
+          md: "80vh"
+        },
         objectFit: "contain",
         borderRadius: 2,
+        display: "block",
+        margin: "0 auto",
       }}
     />
   </Box>
