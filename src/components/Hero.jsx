@@ -290,7 +290,7 @@ export default function Hero({ mode, setMode, t }) {
       {/* 🖼️ IMAGEN */}
       <Box
         component="img"
-        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
         alt="certificado"
         loading="lazy"
         decoding="async"
