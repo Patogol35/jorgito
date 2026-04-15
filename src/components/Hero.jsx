@@ -248,36 +248,41 @@ export default function Hero({ mode, setMode, t }) {
       <Modal
   open={open}
   onClose={() => setOpen(false)}
-  sx={{ zIndex: 2000 }}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.85)", // 🔥 fondo oscuro elegante
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
 >
   <Box
     sx={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      position: "relative",
       width: { xs: "95%", md: "70%" },
       maxHeight: "90vh",
-      overflow: "auto",
-      bgcolor: "background.paper",
-      borderRadius: 3,
-      boxShadow: 24,
-      p: 2,
-      outline: "none",
     }}
   >
+    {/* ❌ BOTÓN SOBRE LA IMAGEN */}
     <IconButton
       onClick={() => setOpen(false)}
       sx={{
-        position: "sticky",
-        top: 0,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.3)",
+        position: "absolute",
+        top: 10,
+        right: 10,
+        zIndex: 10,
+        background: "rgba(0,0,0,0.5)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.7)",
+        },
       }}
     >
       <Close />
     </IconButton>
 
+    {/* 🖼️ IMAGEN */}
     <Box
       component="img"
       src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
@@ -286,7 +291,7 @@ export default function Hero({ mode, setMode, t }) {
       decoding="async"
       sx={{
         width: "100%",
-        maxHeight: "85vh",
+        maxHeight: "90vh",
         objectFit: "contain",
         borderRadius: 2,
         display: "block",
