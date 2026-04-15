@@ -17,8 +17,9 @@ import { useState } from "react";
 
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const [zoom, setZoom] = useState(false);
+
+  const [open, setOpen] = useState(false); // título
+  const [openCV, setOpenCV] = useState(false); // CV
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -92,7 +93,6 @@ export default function Hero({ mode, setMode, t }) {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
@@ -117,7 +117,6 @@ export default function Hero({ mode, setMode, t }) {
                   height: { xs: 130, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
                   boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
-                  backgroundColor: theme.palette.background.paper,
                 }}
               />
             </motion.div>
@@ -125,180 +124,136 @@ export default function Hero({ mode, setMode, t }) {
         </motion.div>
 
         {/* TEXTO */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-          zIndex={1}
-        >
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
           <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
                 variant="h3"
                 fontWeight="bold"
-                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                  fontSize: { xs: "1.9rem", md: "2.6rem" },
                 }}
               >
                 {t.hero.title}
               </Typography>
             </motion.div>
 
-            <motion.div variants={fadeCinematic}>
-              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
-                {t.hero.subtitle}
-              </Typography>
-            </motion.div>
+            <Typography variant="h6" sx={{ fontStyle: "italic" }}>
+              {t.hero.subtitle}
+            </Typography>
 
-            <motion.div variants={fadeCinematic}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
-                  letterSpacing: "0.3px",
-                  color: theme.palette.text.primary,
-                  maxWidth: "520px",
-                  mt: 3,
-                  mb: 5,
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {t.hero.description}
-              </Typography>
-            </motion.div>
+            <Typography sx={{ mt: 3, mb: 5 }}>
+              {t.hero.description}
+            </Typography>
           </motion.div>
 
           {/* BOTONES */}
           <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                justifyContent: { xs: "center", sm: "flex-start" },
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
-              {[
-                {
-                  label: t.hero.buttons.cv,
-                  icon: <DescriptionIcon />,
-                  href: "/Jorge.CV.pdf",
-                },
-                {
-                  label: t.hero.buttons.title,
-                  icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
-                },
-                {
-                  label: t.hero.buttons.ai,
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                },
-              ].map((btn, i) => (
-                <motion.div key={i} variants={fadeCinematic}>
-                  <Button
-                    variant="contained"
-                    startIcon={btn.icon}
-                    href={btn.href}
-                    onClick={btn.onClick}
-                    target={btn.href ? "_blank" : undefined}
-                    sx={{
-                      borderRadius: "25px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
-                    }}
-                  >
-                    {btn.label}
-                  </Button>
-                </motion.div>
-              ))}
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+              <Button
+                variant="contained"
+                startIcon={<DescriptionIcon />}
+                onClick={() => setOpenCV(true)}
+              >
+                {t.hero.buttons.cv}
+              </Button>
 
-              {/* 🌙 MODO */}
-              <motion.div variants={fadeCinematic}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                  }}
-                >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
-                </IconButton>
-              </motion.div>
+              <Button
+                variant="contained"
+                startIcon={<WorkspacePremiumIcon />}
+                onClick={() => setOpen(true)}
+              >
+                {t.hero.buttons.title}
+              </Button>
+
+              <Button
+                variant="contained"
+                startIcon={<SmartToyIcon />}
+                onClick={() => window.openSashaChat?.()}
+              >
+                {t.hero.buttons.ai}
+              </Button>
+
+              <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </Box>
           </motion.div>
         </Box>
       </Box>
 
-      {/* MODAL */}
+      {/* MODAL TÍTULO */}
       <Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  sx={{
-    zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.85)", // 🔥 fondo oscuro elegante
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <Box
-    sx={{
-      position: "relative",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",
-    }}
-  >
-    {/* ❌ BOTÓN SOBRE LA IMAGEN */}
-    <IconButton
-  onClick={() => setOpen(false)}
-  sx={{
-    position: "absolute",
-    top: 10,
-    left: 10, // 🔥 aquí el cambio
-    zIndex: 10,
-    background: "rgba(0,0,0,0.5)",
-    color: "#fff",
-    backdropFilter: "blur(6px)",
-    "&:hover": {
-      background: "rgba(0,0,0,0.7)",
-    },
-  }}
->
-  <Close />
-</IconButton>
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{
+          backgroundColor: "rgba(0,0,0,0.85)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box sx={{ position: "relative", width: "70%" }}>
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "absolute",
+              top: 10,
+              left: 10,
+              zIndex: 10,
+              color: "#fff",
+            }}
+          >
+            <Close />
+          </IconButton>
 
-    {/* 🖼️ IMAGEN */}
-    <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
-      loading="lazy"
-      decoding="async"
-      sx={{
-        width: "100%",
-        maxHeight: "90vh",
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
-      }}
-    />
-  </Box>
-</Modal>
+          <Box
+            component="img"
+            src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+            sx={{ width: "100%", borderRadius: 2 }}
+          />
+        </Box>
+      </Modal>
+
+      {/* MODAL CV */}
+      <Modal
+        open={openCV}
+        onClose={() => setOpenCV(false)}
+        sx={{
+          backgroundColor: "rgba(0,0,0,0.9)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Box sx={{ position: "relative", width: "80%", height: "90vh" }}>
+          <IconButton
+            onClick={() => setOpenCV(false)}
+            sx={{
+              position: "absolute",
+              top: 10,
+              left: 10,
+              zIndex: 10,
+              color: "#fff",
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          <Box
+            component="iframe"
+            src="/Jorge.CV.pdf"
+            sx={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+              background: "#fff",
+              borderRadius: 2,
+            }}
+          />
+        </Box>
+      </Modal>
     </>
   );
-          }
+              }
