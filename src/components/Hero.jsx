@@ -268,7 +268,7 @@ export default function Hero({ mode, setMode, t }) {
   onClick={() => setOpen(false)}
   sx={{
     position: "absolute",
-    top: 5,
+    top: 2,
     left: 10, // 🔥 aquí el cambio
     zIndex: 10,
     background: "rgba(0,0,0,0.5)",
