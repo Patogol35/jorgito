@@ -265,22 +265,22 @@ export default function Hero({ mode, setMode, t }) {
   >
     {/* ❌ BOTÓN SOBRE LA IMAGEN */}
     <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "absolute",
-        top: 10,
-        right: 10,
-        zIndex: 10,
-        background: "rgba(0,0,0,0.5)",
-        color: "#fff",
-        backdropFilter: "blur(6px)",
-        "&:hover": {
-          background: "rgba(0,0,0,0.7)",
-        },
-      }}
-    >
-      <Close />
-    </IconButton>
+  onClick={() => setOpen(false)}
+  sx={{
+    position: "absolute",
+    top: 10,
+    left: 10, // 🔥 aquí el cambio
+    zIndex: 10,
+    background: "rgba(0,0,0,0.5)",
+    color: "#fff",
+    backdropFilter: "blur(6px)",
+    "&:hover": {
+      background: "rgba(0,0,0,0.7)",
+    },
+  }}
+>
+  <Close />
+</IconButton>
 
     {/* 🖼️ IMAGEN */}
     <Box
