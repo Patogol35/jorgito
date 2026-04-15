@@ -20,9 +20,6 @@ export default function Hero({ mode, setMode, t }) {
   const [open, setOpen] = useState(false);
   const [zoom, setZoom] = useState(false);
 
-  // 🔥 NUEVO estado para CV
-  const [openCV, setOpenCV] = useState(false);
-
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -95,6 +92,7 @@ export default function Hero({ mode, setMode, t }) {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
@@ -187,7 +185,7 @@ export default function Hero({ mode, setMode, t }) {
                 {
                   label: t.hero.buttons.cv,
                   icon: <DescriptionIcon />,
-                  onClick: () => setOpenCV(true), // 🔥 cambiado
+                  href: "/Jorge.CV.pdf",
                 },
                 {
                   label: t.hero.buttons.title,
@@ -204,7 +202,9 @@ export default function Hero({ mode, setMode, t }) {
                   <Button
                     variant="contained"
                     startIcon={btn.icon}
+                    href={btn.href}
                     onClick={btn.onClick}
+                    target={btn.href ? "_blank" : undefined}
                     sx={{
                       borderRadius: "25px",
                       textTransform: "none",
@@ -244,93 +244,61 @@ export default function Hero({ mode, setMode, t }) {
         </Box>
       </Box>
 
-      {/* MODAL CERTIFICADO */}
+      {/* MODAL */}
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box sx={{ position: "relative", width: { xs: "95%", md: "70%" }, maxHeight: "90vh" }}>
-          <IconButton
-            onClick={() => setOpen(false)}
-            sx={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              zIndex: 10,
-              background: "rgba(0,0,0,0.5)",
-              color: "#fff",
-            }}
-          >
-            <Close />
-          </IconButton>
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.85)", // 🔥 fondo oscuro elegante
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <Box
+    sx={{
+      position: "relative",
+      width: { xs: "95%", md: "70%" },
+      maxHeight: "90vh",
+    }}
+  >
+    {/* ❌ BOTÓN SOBRE LA IMAGEN */}
+    <IconButton
+  onClick={() => setOpen(false)}
+  sx={{
+    position: "absolute",
+    top: 10,
+    left: 10, // 🔥 aquí el cambio
+    zIndex: 10,
+    background: "rgba(0,0,0,0.5)",
+    color: "#fff",
+    backdropFilter: "blur(6px)",
+    "&:hover": {
+      background: "rgba(0,0,0,0.7)",
+    },
+  }}
+>
+  <Close />
+</IconButton>
 
-          <Box
-            component="img"
-            src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-            sx={{
-              width: "100%",
-              maxHeight: "90vh",
-              objectFit: "contain",
-              borderRadius: 2,
-            }}
-          />
-        </Box>
-      </Modal>
-
-      {/* 🔥 MODAL CV */}
-      <Modal
-        open={openCV}
-        onClose={() => setOpenCV(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Box
-          sx={{
-            position: "relative",
-            width: { xs: "95%", md: "80%" },
-            height: "90vh",
-            borderRadius: 2,
-            overflow: "hidden",
-            bgcolor: "#000",
-          }}
-        >
-          <IconButton
-            onClick={() => setOpenCV(false)}
-            sx={{
-              position: "absolute",
-              top: 10,
-              left: 10,
-              zIndex: 10,
-              background: "rgba(0,0,0,0.5)",
-              color: "#fff",
-            }}
-          >
-            <Close />
-          </IconButton>
-
-          <Box
-            component="iframe"
-            src="/Jorge.CV.pdf"
-            sx={{
-              width: "100%",
-              height: "100%",
-              border: "none",
-            }}
-          />
-        </Box>
-      </Modal>
+    {/* 🖼️ IMAGEN */}
+    <Box
+      component="img"
+      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+      alt="certificado"
+      loading="lazy"
+      decoding="async"
+      sx={{
+        width: "100%",
+        maxHeight: "90vh",
+        objectFit: "contain",
+        borderRadius: 2,
+        display: "block",
+      }}
+    />
+  </Box>
+</Modal>
     </>
   );
-        }
+}
