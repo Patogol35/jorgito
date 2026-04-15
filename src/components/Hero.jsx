@@ -250,54 +250,60 @@ export default function Hero({ mode, setMode, t }) {
   onClose={() => setOpen(false)}
   sx={{
     zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.85)", // 🔥 fondo oscuro elegante
+    backgroundColor: "rgba(0,0,0,0.85)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   }}
 >
-  <Box
-    sx={{
-      position: "relative",
-      width: { xs: "95%", md: "70%" },
-      maxHeight: "90vh",
-    }}
-  >
-    {/* ❌ BOTÓN SOBRE LA IMAGEN */}
+  <>
+    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
     <IconButton
-  onClick={() => setOpen(false)}
-  sx={{
-    position: "absolute",
-    top: 10,
-    left: 10, // 🔥 aquí el cambio
-    zIndex: 10,
-    background: "rgba(0,0,0,0.5)",
-    color: "#fff",
-    backdropFilter: "blur(6px)",
-    "&:hover": {
-      background: "rgba(0,0,0,0.7)",
-    },
-  }}
->
-  <Close />
-</IconButton>
-
-    {/* 🖼️ IMAGEN */}
-    <Box
-      component="img"
-      src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
-      alt="certificado"
-      loading="lazy"
-      decoding="async"
+      onClick={() => setOpen(false)}
       sx={{
-        width: "100%",
-        maxHeight: "90vh",
-        objectFit: "contain",
-        borderRadius: 2,
-        display: "block",
+        position: "fixed", // 🔥 CLAVE
+        top: 20,
+        left: 20,
+        zIndex: 3000,
+        background: "rgba(0,0,0,0.6)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.8)",
+        },
       }}
-    />
-  </Box>
+    >
+      <Close />
+    </IconButton>
+
+    {/* CONTENEDOR */}
+    <Box
+      sx={{
+        position: "relative",
+        width: { xs: "95%", md: "70%" },
+        maxHeight: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* 🖼️ IMAGEN */}
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/jorgito/master/public/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        loading="lazy"
+        decoding="async"
+        sx={{
+          width: "100%",
+          maxHeight: "90vh",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+        }}
+      />
+    </Box>
+  </>
 </Modal>
     </>
   );
