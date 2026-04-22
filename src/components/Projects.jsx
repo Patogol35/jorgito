@@ -11,9 +11,10 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 // =====================
-// Tarjeta individual (NO TOCAR)
+// Tarjeta individual (MEJORADA VISUALMENTE)
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
@@ -23,26 +24,70 @@ function ProjectCard({ p, i, palette }) {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.12 }}
+        whileHover={{ y: -6, scale: 1.03 }}
+        transition={{ duration: 0.6, delay: i * 0.12 }}
         viewport={{ once: false }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color }} />
+          {/* Icono */}
+          <Icon sx={{ fontSize: 32, color: p.color }} />
 
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+          {/* Título + Link */}
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: 700,
+              mt: 1,
+              letterSpacing: 0.3,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 0.6,
+            }}
+          >
             <Link
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
               sx={{
+                position: "relative",
+                display: "inline-block",
+                px: 1.5,
+                py: 0.5,
+                borderRadius: "8px",
                 color: palette.text.primary,
                 fontWeight: "bold",
-                "&:hover": { color: p.color },
+                transition: "all 0.25s ease",
+
+                "&:hover": {
+                  color: "#fff",
+                  backgroundColor: p.color,
+                  boxShadow: `0 4px 12px ${p.color}55`,
+                  transform: "translateY(-2px)",
+                },
+
+                /* Línea animada */
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "0%",
+                  height: "2px",
+                  bottom: 0,
+                  left: 0,
+                  backgroundColor: p.color,
+                  transition: "width 0.3s ease",
+                },
+                "&:hover::after": {
+                  width: "100%",
+                },
               }}
             >
               {p.titulo}
             </Link>
+
+            {/* Icono externo */}
+            <OpenInNewIcon sx={{ fontSize: 16, opacity: 0.6 }} />
           </Typography>
         </Box>
       </motion.div>
@@ -83,7 +128,7 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construimos proyectos SIN romper nada */
+  /* 🔥 construimos proyectos */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -139,7 +184,9 @@ export default function Projects({ t }) {
         </Box>
       </motion.div>
 
-      {/* Grid — SIN CAMBIOS */}
+      {/* =========================
+          GRID
+      ========================= */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
