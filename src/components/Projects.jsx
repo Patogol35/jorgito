@@ -1,4 +1,4 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 
@@ -11,90 +11,104 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
 // =====================
-// Tarjeta limpia PRO
+// CARD PRO (estilo limpio premium)
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
   const isDark = palette.mode === "dark";
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
+    <Grid item xs={12} sm={6} md={4}>
+      <motion.a
+        href={p.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ opacity: 0, y: 25 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: i * 0.08 }}
+        transition={{ duration: 0.45, delay: i * 0.07 }}
+        style={{ textDecoration: "none" }}
       >
         <Box
-          component="a"
-          href={p.link}
-          target="_blank"
-          rel="noopener noreferrer"
           sx={{
-            display: "block",
-            p: 2.2,
+            p: 2.5,
             borderRadius: 3,
-            textAlign: "center",
-            textDecoration: "none",
+            height: "100%",
 
-            background: isDark ? "#1e1e1e" : "#ffffff",
+            background: isDark ? "#1b1b1b" : "#ffffff",
 
             border: `1px solid ${
-              isDark ? "rgba(255,255,255,0.06)" : "#eee"
+              isDark ? "rgba(255,255,255,0.06)" : "#eaeaea"
             }`,
-
-            boxShadow: isDark
-              ? "0 2px 10px rgba(0,0,0,0.4)"
-              : "0 2px 10px rgba(0,0,0,0.05)",
 
             transition: "all 0.25s ease",
 
             "&:hover": {
               transform: "translateY(-4px)",
-              boxShadow: isDark
-                ? "0 6px 20px rgba(0,0,0,0.6)"
-                : "0 6px 20px rgba(0,0,0,0.1)",
               borderColor: p.color,
+              boxShadow: isDark
+                ? "0 8px 25px rgba(0,0,0,0.5)"
+                : "0 8px 25px rgba(0,0,0,0.08)",
             },
           }}
         >
-          {/* ICONO */}
+          {/* TOP */}
           <Box
             sx={{
-              width: 42,
-              height: 42,
-              borderRadius: "12px",
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto",
-              mb: 1.2,
-              background: `${p.color}15`,
+              justifyContent: "space-between",
+              mb: 2,
             }}
           >
-            <Icon sx={{ fontSize: 22, color: p.color }} />
+            <Box
+              sx={{
+                width: 38,
+                height: 38,
+                borderRadius: 2,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: `${p.color}15`,
+              }}
+            >
+              <Icon sx={{ fontSize: 20, color: p.color }} />
+            </Box>
+
+            <ArrowOutwardIcon
+              sx={{
+                fontSize: 18,
+                opacity: 0.5,
+                transition: "0.25s",
+                ".MuiBox-root:hover &": {
+                  transform: "translate(3px,-3px)",
+                  opacity: 1,
+                },
+              }}
+            />
           </Box>
 
           {/* TITULO */}
           <Typography
-            variant="body1"
             sx={{
               fontWeight: 600,
-              fontSize: "0.95rem",
+              fontSize: "0.98rem",
+              lineHeight: 1.4,
               color: palette.text.primary,
             }}
           >
             {p.titulo}
           </Typography>
         </Box>
-      </motion.div>
+      </motion.a>
     </Grid>
   );
 }
 
 // =====================
-// Componente principal
+// COMPONENTE PRINCIPAL
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
@@ -104,7 +118,7 @@ export default function Projects({ t }) {
   const proyectosText = t.projects.items;
 
   const colors = [
-    "#1976d2",
+    "#2563eb",
     "#9333ea",
     "#16a34a",
     "#e11d48",
@@ -133,26 +147,26 @@ export default function Projects({ t }) {
     <Box
       id="projects"
       sx={{
-        py: 6,
+        py: 8,
         px: 2,
-        maxWidth: "1200px",
+        maxWidth: "1000px", // 🔥 más compacto = más profesional
         mx: "auto",
       }}
     >
-      {/* TITULO */}
+      {/* HEADER */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{ textAlign: "center", marginBottom: "2.5rem" }}
+        initial={{ opacity: 0, y: -15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        style={{ textAlign: "center", marginBottom: "3rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
             gap: 1,
-            px: 3,
-            py: 1,
+            px: 2.5,
+            py: 0.8,
             borderRadius: "999px",
             background: isDark
               ? "rgba(144,202,249,0.08)"
@@ -164,23 +178,26 @@ export default function Projects({ t }) {
             }`,
           }}
         >
-          <WorkOutlineIcon sx={{ fontSize: 20, color: primaryColor }} />
+          <WorkOutlineIcon sx={{ fontSize: 18, color: primaryColor }} />
 
           <Typography
-            variant="subtitle1"
-            sx={{ fontWeight: 600, color: primaryColor }}
+            sx={{
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              color: primaryColor,
+            }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* GRID LIMPIO */}
-      <Grid container spacing={2}>
+      {/* GRID */}
+      <Grid container spacing={2.2}>
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
       </Grid>
     </Box>
   );
-            }
+    }
