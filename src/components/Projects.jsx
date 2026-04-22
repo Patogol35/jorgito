@@ -14,81 +14,136 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 // =====================
-// Tarjeta individual (MEJORADA VISUALMENTE)
+// Tarjeta PRO 🔥
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
+  const isDark = palette.mode === "dark";
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
-        whileHover={{ y: -6, scale: 1.03 }}
+        whileHover={{ y: -10, scale: 1.04 }}
         transition={{ duration: 0.6, delay: i * 0.12 }}
-        viewport={{ once: false }}
       >
-        <Box sx={{ textAlign: "center", px: 1 }}>
-          {/* Icono */}
-          <Icon sx={{ fontSize: 32, color: p.color }} />
+        <Box
+          sx={{
+            p: 3,
+            borderRadius: "20px",
+            textAlign: "center",
+            position: "relative",
+            overflow: "hidden",
 
-          {/* Título + Link */}
-          <Typography
-            variant="subtitle1"
+            // 🌫️ Glass effect
+            backdropFilter: "blur(12px)",
+            background: isDark
+              ? "rgba(255,255,255,0.04)"
+              : "rgba(255,255,255,0.7)",
+
+            border: `1px solid ${
+              isDark
+                ? "rgba(255,255,255,0.08)"
+                : "rgba(0,0,0,0.06)"
+            }`,
+
+            boxShadow: isDark
+              ? "0 10px 30px rgba(0,0,0,0.4)"
+              : "0 10px 25px rgba(0,0,0,0.08)",
+
+            transition: "all 0.3s ease",
+
+            "&:hover": {
+              boxShadow: `0 15px 40px ${p.color}33`,
+            },
+
+            // ✨ Glow superior
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "3px",
+              background: p.color,
+            },
+          }}
+        >
+          {/* Icono */}
+          <Box
             sx={{
-              fontWeight: 700,
-              mt: 1,
-              letterSpacing: 0.3,
+              width: 60,
+              height: 60,
+              borderRadius: "16px",
+              margin: "0 auto",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: 0.6,
+              background: `${p.color}15`,
+              mb: 2,
             }}
           >
-            <Link
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
+            <Icon sx={{ fontSize: 30, color: p.color }} />
+          </Box>
+
+          {/* Título */}
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              mb: 1,
+              letterSpacing: 0.3,
+            }}
+          >
+            {p.titulo}
+          </Typography>
+
+          {/* Descripción (si existe en i18n) */}
+          {p.descripcion && (
+            <Typography
+              variant="body2"
               sx={{
-                position: "relative",
-                display: "inline-block",
-                px: 1.5,
-                py: 0.5,
-                borderRadius: "8px",
-                color: palette.text.primary,
-                fontWeight: "bold",
-                transition: "all 0.25s ease",
-
-                "&:hover": {
-                  color: "#fff",
-                  backgroundColor: p.color,
-                  boxShadow: `0 4px 12px ${p.color}55`,
-                  transform: "translateY(-2px)",
-                },
-
-                /* Línea animada */
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  width: "0%",
-                  height: "2px",
-                  bottom: 0,
-                  left: 0,
-                  backgroundColor: p.color,
-                  transition: "width 0.3s ease",
-                },
-                "&:hover::after": {
-                  width: "100%",
-                },
+                opacity: 0.7,
+                mb: 2,
+                fontSize: "0.9rem",
               }}
             >
-              {p.titulo}
-            </Link>
+              {p.descripcion}
+            </Typography>
+          )}
 
-            {/* Icono externo */}
-            <OpenInNewIcon sx={{ fontSize: 16, opacity: 0.6 }} />
-          </Typography>
+          {/* Botón */}
+          <Link
+            href={p.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            underline="none"
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 0.5,
+              px: 2,
+              py: 0.7,
+              borderRadius: "999px",
+              fontWeight: "bold",
+              fontSize: "0.85rem",
+              transition: "all 0.25s ease",
+
+              color: isDark ? "#fff" : p.color,
+              border: `1px solid ${p.color}`,
+
+              "&:hover": {
+                backgroundColor: p.color,
+                color: "#fff",
+                boxShadow: `0 6px 20px ${p.color}55`,
+                transform: "translateY(-2px)",
+              },
+            }}
+          >
+            Ver proyecto
+            <OpenInNewIcon sx={{ fontSize: 16 }} />
+          </Link>
         </Box>
       </motion.div>
     </Grid>
@@ -103,10 +158,8 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 tus colores originales */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -117,7 +170,6 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 tus iconos originales */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -128,7 +180,6 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construimos proyectos */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -139,28 +190,25 @@ export default function Projects({ t }) {
     <Box
       id="projects"
       sx={{
-        py: 4,
+        py: 6,
         scrollMarginTop: "80px",
         color: palette.text.primary,
       }}
     >
-      {/* =========================
-          TÍTULO
-      ========================= */}
+      {/* TÍTULO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
+        style={{ textAlign: "center", marginBottom: "3rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 0.9,
+            py: 1,
             borderRadius: "999px",
             background: isDark
               ? "rgba(144,202,249,0.06)"
@@ -177,17 +225,15 @@ export default function Projects({ t }) {
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            sx={{ fontWeight: "bold", color: primaryColor }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* =========================
-          GRID
-      ========================= */}
-      <Grid container spacing={3} justifyContent="center">
+      {/* GRID */}
+      <Grid container spacing={4} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
