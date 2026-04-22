@@ -13,92 +13,80 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta PRO
+// Tarjeta limpia PRO
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
   const isDark = palette.mode === "dark";
 
   return (
-    <Grid item xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4} lg={3}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: i * 0.1 }}
+        transition={{ duration: 0.4, delay: i * 0.08 }}
       >
         <Box
+          component="a"
+          href={p.link}
+          target="_blank"
+          rel="noopener noreferrer"
           sx={{
-            p: 3,
-            borderRadius: 4,
+            display: "block",
+            p: 2.2,
+            borderRadius: 3,
             textAlign: "center",
-            cursor: "pointer",
+            textDecoration: "none",
 
-            background: isDark
-              ? "linear-gradient(145deg, #1e1e1e, #2a2a2a)"
-              : "#ffffff",
-
-            boxShadow: isDark
-              ? "0 4px 20px rgba(0,0,0,0.6)"
-              : "0 4px 20px rgba(0,0,0,0.08)",
+            background: isDark ? "#1e1e1e" : "#ffffff",
 
             border: `1px solid ${
-              isDark ? "rgba(255,255,255,0.05)" : "#eee"
+              isDark ? "rgba(255,255,255,0.06)" : "#eee"
             }`,
 
-            transition: "all 0.3s ease",
+            boxShadow: isDark
+              ? "0 2px 10px rgba(0,0,0,0.4)"
+              : "0 2px 10px rgba(0,0,0,0.05)",
+
+            transition: "all 0.25s ease",
 
             "&:hover": {
-              transform: "translateY(-8px) scale(1.02)",
-              boxShadow: `0 10px 30px ${p.color}33`,
+              transform: "translateY(-4px)",
+              boxShadow: isDark
+                ? "0 6px 20px rgba(0,0,0,0.6)"
+                : "0 6px 20px rgba(0,0,0,0.1)",
+              borderColor: p.color,
             },
           }}
         >
           {/* ICONO */}
           <Box
             sx={{
-              width: 60,
-              height: 60,
-              borderRadius: "50%",
+              width: 42,
+              height: 42,
+              borderRadius: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               margin: "0 auto",
-              mb: 2,
+              mb: 1.2,
               background: `${p.color}15`,
             }}
           >
-            <Icon sx={{ fontSize: 30, color: p.color }} />
+            <Icon sx={{ fontSize: 22, color: p.color }} />
           </Box>
 
           {/* TITULO */}
           <Typography
-            variant="h6"
+            variant="body1"
             sx={{
-              fontWeight: "bold",
-              mb: 1,
+              fontWeight: 600,
+              fontSize: "0.95rem",
+              color: palette.text.primary,
             }}
           >
             {p.titulo}
           </Typography>
-
-          {/* LINK */}
-          <Link
-            href={p.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            underline="none"
-            sx={{
-              fontSize: "0.9rem",
-              fontWeight: "bold",
-              color: p.color,
-              transition: "0.3s",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            }}
-          >
-            Ver proyecto →
-          </Link>
         </Box>
       </motion.div>
     </Grid>
@@ -111,7 +99,7 @@ function ProjectCard({ p, i, palette }) {
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const primaryColor = isDark ? "#90caf9" : "#1976d2";
 
   const proyectosText = t.projects.items;
 
@@ -145,55 +133,54 @@ export default function Projects({ t }) {
     <Box
       id="projects"
       sx={{
-        py: 5,
-        scrollMarginTop: "80px",
-        color: palette.text.primary,
+        py: 6,
+        px: 2,
+        maxWidth: "1200px",
+        mx: "auto",
       }}
     >
       {/* TITULO */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
+        initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
+        transition={{ duration: 0.5 }}
+        style={{ textAlign: "center", marginBottom: "2.5rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 1,
             px: 3,
             py: 1,
             borderRadius: "999px",
             background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
+              ? "rgba(144,202,249,0.08)"
+              : "rgba(25,118,210,0.08)",
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
-            backdropFilter: "blur(6px)",
           }}
         >
-          <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
+          <WorkOutlineIcon sx={{ fontSize: 20, color: primaryColor }} />
 
           <Typography
-            variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor }}
+            variant="subtitle1"
+            sx={{ fontWeight: 600, color: primaryColor }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* GRID */}
-      <Grid container spacing={3} justifyContent="center">
+      {/* GRID LIMPIO */}
+      <Grid container spacing={2}>
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
       </Grid>
     </Box>
   );
-              }
+            }
