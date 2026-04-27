@@ -1,5 +1,5 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Typography, Grid, Box, Link, Paper } from "@mui/material";
+import { useTheme, alpha } from "@mui/material/styles";
 import { motion } from "framer-motion";
 
 // Íconos
@@ -13,7 +13,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta individual (NO TOCAR)
+// Tarjeta individual MEJORADA
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
@@ -23,13 +23,55 @@ function ProjectCard({ p, i, palette }) {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.12 }}
+        transition={{ duration: 0.6, delay: i * 0.1 }}
         viewport={{ once: false }}
       >
-        <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color }} />
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            borderRadius: 4,
+            textAlign: "center",
+            background:
+              palette.mode === "dark"
+                ? "rgba(255,255,255,0.03)"
+                : "#fff",
+            border: `1px solid ${alpha(p.color, 0.2)}`,
+            transition: "all 0.3s ease",
+            cursor: "pointer",
 
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
+            "&:hover": {
+              transform: "translateY(-6px) scale(1.02)",
+              boxShadow: `0 10px 25px ${alpha(p.color, 0.25)}`,
+              borderColor: p.color,
+            },
+          }}
+        >
+          {/* Icono */}
+          <Box
+            sx={{
+              width: 55,
+              height: 55,
+              margin: "0 auto",
+              borderRadius: "50%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: alpha(p.color, 0.1),
+              mb: 1.5,
+            }}
+          >
+            <Icon sx={{ fontSize: 28, color: p.color }} />
+          </Box>
+
+          {/* Título */}
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: "bold",
+              mt: 1,
+            }}
+          >
             <Link
               href={p.link}
               target="_blank"
@@ -37,14 +79,16 @@ function ProjectCard({ p, i, palette }) {
               underline="none"
               sx={{
                 color: palette.text.primary,
-                fontWeight: "bold",
-                "&:hover": { color: p.color },
+                transition: "all .2s ease",
+                "&:hover": {
+                  color: p.color,
+                },
               }}
             >
               {p.titulo}
             </Link>
           </Typography>
-        </Box>
+        </Paper>
       </motion.div>
     </Grid>
   );
@@ -58,10 +102,8 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 tus colores originales */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -72,7 +114,6 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 tus iconos originales */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -83,7 +124,6 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construimos proyectos SIN romper nada */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -94,37 +134,31 @@ export default function Projects({ t }) {
     <Box
       id="projects"
       sx={{
-        py: 4,
+        py: 6,
+        px: 2,
         scrollMarginTop: "80px",
         color: palette.text.primary,
       }}
     >
       {/* =========================
-          TÍTULO
+          TÍTULO MEJORADO
       ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        style={{ textAlign: "center", marginBottom: "2rem" }}
+        transition={{ duration: 0.6 }}
+        style={{ textAlign: "center", marginBottom: "2.5rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 0.9,
+            py: 1,
             borderRadius: "999px",
-            background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(144,202,249,0.25)"
-                : "rgba(25,118,210,0.25)"
-            }`,
+            background: alpha(primaryColor, 0.08),
+            border: `1px solid ${alpha(primaryColor, 0.25)}`,
             backdropFilter: "blur(6px)",
           }}
         >
@@ -132,14 +166,20 @@ export default function Projects({ t }) {
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            sx={{
+              fontWeight: "bold",
+              color: primaryColor,
+              letterSpacing: 0.5,
+            }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid — SIN CAMBIOS */}
+      {/* =========================
+          GRID
+      ========================= */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
