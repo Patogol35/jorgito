@@ -18,6 +18,7 @@ import { useState } from "react";
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -74,9 +75,6 @@ export default function Hero({ mode, setMode, t }) {
           pt: { xs: 6, sm: 8, md: 10 },
           pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
-
-          // ✅ Fondo adaptativo real
-          backgroundColor: "background.default",
         }}
       >
         {/* AVATAR */}
@@ -88,11 +86,13 @@ export default function Hero({ mode, setMode, t }) {
             borderRadius: "50%",
             transformStyle: "preserve-3d",
             perspective: 1200,
+            willChange: "transform",
           }}
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
@@ -108,15 +108,16 @@ export default function Hero({ mode, setMode, t }) {
               <Avatar
                 alt="Jorge Patricio"
                 src="https://i.imgur.com/jr3rjzu.jpg"
-                imgProps={{ loading: "lazy", decoding: "async" }}
+                imgProps={{
+                  loading: "lazy",
+                  decoding: "async",
+                }}
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
-
-                  // ✅ usando theme correctamente
                   border: `3px solid ${theme.palette.primary.main}`,
                   boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
-                  backgroundColor: "background.paper",
+                  backgroundColor: theme.palette.background.paper,
                 }}
               />
             </motion.div>
@@ -137,7 +138,7 @@ export default function Hero({ mode, setMode, t }) {
                 fontWeight="bold"
                 gutterBottom
                 sx={{
-                  color: "primary.main",
+                  color: theme.palette.primary.main,
                   fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
@@ -146,13 +147,7 @@ export default function Hero({ mode, setMode, t }) {
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontStyle: "italic",
-                  color: "text.secondary",
-                }}
-              >
+              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
                 {t.hero.subtitle}
               </Typography>
             </motion.div>
@@ -163,7 +158,7 @@ export default function Hero({ mode, setMode, t }) {
                   fontSize: { xs: "1rem", sm: "1.08rem" },
                   lineHeight: 1.9,
                   letterSpacing: "0.3px",
-                  color: "text.primary",
+                  color: theme.palette.text.primary,
                   maxWidth: "520px",
                   mt: 3,
                   mb: 5,
@@ -210,22 +205,15 @@ export default function Hero({ mode, setMode, t }) {
                     href={btn.href}
                     onClick={btn.onClick}
                     target={btn.href ? "_blank" : undefined}
-                    sx={(theme) => ({
+                    sx={{
                       borderRadius: "25px",
                       textTransform: "none",
                       fontWeight: "bold",
                       px: 4,
                       py: 1.4,
-
-                      // ✅ gradiente adaptado al theme
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                       boxShadow: "none",
-
-                      "&:hover": {
-                        background: `linear-gradient(90deg, ${theme.palette.primary.dark}, ${theme.palette.primary.main})`,
-                      },
-                    })}
+                    }}
                   >
                     {btn.label}
                   </Button>
@@ -237,7 +225,7 @@ export default function Hero({ mode, setMode, t }) {
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   sx={{
-                    color: "primary.main",
+                    color: theme.palette.primary.main,
                     "&:hover": {
                       background: "transparent",
                       transform: "scale(1.15)",
@@ -258,59 +246,65 @@ export default function Hero({ mode, setMode, t }) {
 
       {/* MODAL */}
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <>
-          <IconButton
-            onClick={() => setOpen(false)}
-            sx={{
-              position: "fixed",
-              top: 20,
-              left: 20,
-              zIndex: 3000,
-              background: "rgba(0,0,0,0.6)",
-              color: "#fff",
-              backdropFilter: "blur(6px)",
-              "&:hover": {
-                background: "rgba(0,0,0,0.8)",
-              },
-            }}
-          >
-            <Close />
-          </IconButton>
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.85)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <>
+    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
+    <IconButton
+      onClick={() => setOpen(false)}
+      sx={{
+        position: "fixed", // 🔥 CLAVE
+        top: 20,
+        left: 20,
+        zIndex: 3000,
+        background: "rgba(0,0,0,0.6)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.8)",
+        },
+      }}
+    >
+      <Close />
+    </IconButton>
 
-          <Box
-            sx={{
-              width: { xs: "95%", md: "70%" },
-              maxHeight: "90vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              component="img"
-              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              alt="certificado"
-              loading="lazy"
-              sx={{
-                width: "100%",
-                maxHeight: "90vh",
-                objectFit: "contain",
-                borderRadius: 2,
-              }}
-            />
-          </Box>
-        </>
-      </Modal>
+    {/* CONTENEDOR */}
+    <Box
+      sx={{
+        position: "relative",
+        width: { xs: "95%", md: "70%" },
+        maxHeight: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* 🖼️ IMAGEN */}
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        loading="lazy"
+        decoding="async"
+        sx={{
+          width: "100%",
+          maxHeight: "90vh",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+        }}
+      />
+    </Box>
+  </>
+</Modal>
     </>
   );
 }
