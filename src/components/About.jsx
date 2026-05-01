@@ -5,11 +5,13 @@ import { useTheme } from "@mui/material/styles";
 
 export default function About({ t }) {
   const theme = useTheme();
+
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.text.secondary;
 
   const estudios = t.about.studies;
 
+  // 🔥 colores íconos (se mantienen)
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
@@ -32,10 +34,13 @@ export default function About({ t }) {
           sx={{
             display: "inline-flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: 1,
             px: 3,
             py: 1,
             borderRadius: "999px",
+
+            // 🔥 automático según tema
             background: theme.palette.action.hover,
             border: `1px solid ${theme.palette.divider}`,
             backdropFilter: "blur(6px)",
@@ -65,7 +70,7 @@ export default function About({ t }) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -5, scale: 1.05 }}
-              whileTap={{ scale: 0.97 }} // 🔥 efecto al presionar
+              whileTap={{ scale: 0.97 }}
             >
               <Box
                 sx={{
@@ -73,20 +78,19 @@ export default function About({ t }) {
                   px: 2,
                   py: 2,
                   borderRadius: "16px",
+
+                  // 🔥 fondo correcto según tema
                   background: theme.palette.background.paper,
 
-                  // 🔥 borde siempre visible
-                  border: `1px solid ${primary}`,
+                  // 🔥 borde adaptativo (mejor que fijo)
+                  border: `1px solid ${theme.palette.divider}`,
 
                   transition:
-                    "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+                    "transform 0.25s ease, box-shadow 0.25s ease",
 
                   "&:hover": {
                     boxShadow: theme.shadows[3],
                   },
-
-                  "&:focus": { outline: "none" },
-                  "&:focus-visible": { outline: "none" },
                 }}
               >
                 <GraduationCap size={28} color={iconColors[i]} />
