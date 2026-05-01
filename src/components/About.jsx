@@ -68,6 +68,7 @@ export default function About({ t }) {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: i * 0.2 }}
+              whileHover={{ y: -5, scale: 1.04 }}
             >
               <Box
                 sx={{
@@ -76,14 +77,20 @@ export default function About({ t }) {
                   py: 2,
                   borderRadius: "16px",
                   background: theme.palette.background.paper,
-                  border: `1px solid ${theme.palette.divider}`,
-                  transition: "all 0.25s ease",
+
+                  // 🔥 BORDE SIEMPRE
+                  border: `1px solid ${primary}`,
+
+                  transition:
+                    "transform 0.25s ease, box-shadow 0.25s ease",
 
                   "&:hover": {
-                    transform: "translateY(-4px)",
-                    borderColor: primary,
                     boxShadow: theme.shadows[3],
                   },
+
+                  // 🔥 quitar focus feo
+                  "&:focus": { outline: "none" },
+                  "&:focus-visible": { outline: "none" },
                 }}
               >
                 <GraduationCap size={28} color={iconColors[i]} />
