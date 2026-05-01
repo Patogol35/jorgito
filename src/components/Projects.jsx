@@ -54,14 +54,13 @@ function ProjectCard({ p, i, palette }) {
 // Componente principal
 // =====================
 export default function Projects({ t }) {
-  const { palette } = useTheme();
-  const isDark = palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const theme = useTheme();
+  const primary = theme.palette.primary.main;
 
   /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 tus colores originales */
+  /* 🔥 tus colores originales (NO se tocan) */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -72,7 +71,7 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 tus iconos originales */
+  /* 🔥 tus iconos originales (NO se tocan) */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -83,7 +82,7 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construimos proyectos SIN romper nada */
+  /* 🔥 construcción de proyectos */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -96,11 +95,11 @@ export default function Projects({ t }) {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: palette.text.primary,
+        color: theme.palette.text.primary,
       }}
     >
       {/* =========================
-          TÍTULO
+          HEADER
       ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -112,39 +111,36 @@ export default function Projects({ t }) {
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 0.9,
+            py: 1,
             borderRadius: "999px",
-            background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(144,202,249,0.25)"
-                : "rgba(25,118,210,0.25)"
-            }`,
+            background: theme.palette.action.hover,
+            border: `1px solid ${theme.palette.divider}`,
             backdropFilter: "blur(6px)",
           }}
         >
-          <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
+          <WorkOutlineIcon sx={{ fontSize: 22, color: primary }} />
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            sx={{
+              fontWeight: "bold",
+              color: primary,
+              lineHeight: 1,
+            }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* Grid — SIN CAMBIOS */}
+      {/* GRID */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard key={i} p={p} i={i} palette={palette} />
+          <ProjectCard key={i} p={p} i={i} palette={theme.palette} />
         ))}
       </Grid>
     </Box>
   );
-}
+            }
