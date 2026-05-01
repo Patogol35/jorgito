@@ -21,10 +21,12 @@ import emailjs from "@emailjs/browser";
 export default function Form({ t }) {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
+  const secondary = theme.palette.text.secondary;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
+  // 🔥 fallback seguro
   const formText = t?.form || {
     title: "Contacto por Email",
     subtitle: "Ponte en contacto conmigo a través de este formulario",
@@ -56,8 +58,35 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
+  const fields = [
+    {
+      name: "from_name",
+      label: formText.fields.name,
+      icon: <PersonIcon sx={{ color: primary }} />,
+    },
+    {
+      name: "from_email",
+      label: formText.fields.email,
+      type: "email",
+      icon: <EmailIcon sx={{ color: primary }} />,
+    },
+    {
+      name: "message",
+      label: formText.fields.message,
+      multiline: true,
+      rows: 4,
+      icon: <MessageIcon sx={{ color: primary }} />,
+    },
+  ];
+
   return (
-    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
+    <Box
+      id="form"
+      sx={{
+        py: { xs: 4, md: 6 },
+        color: theme.palette.text.primary,
+      }}
+    >
       <Container maxWidth="sm">
 
         {/* ================= HEADER ================= */}
@@ -67,38 +96,23 @@ export default function Form({ t }) {
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 1,
-              px: 3,
-              py: 1,
-              borderRadius: "999px",
-              background: theme.palette.action.hover,
-              border: `1px solid ${theme.palette.divider}`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
+          <Box sx={headerStyle(theme)}>
             <ContactMailIcon sx={{ fontSize: 22, color: primary }} />
 
             <Typography
               variant="h6"
-              sx={{
-                fontWeight: "bold",
-                color: primary,
-                lineHeight: 1,
-              }}
+              sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
             >
               {formText.title}
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ================= SUBTÍTULO ================= */}
+        {/* ================= SUBTITLE ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
           <Typography
             variant="subtitle1"
@@ -106,6 +120,7 @@ export default function Form({ t }) {
               textAlign: "center",
               fontWeight: "bold",
               mb: 4,
+              color: secondary,
             }}
           >
             {formText.subtitle}
@@ -119,31 +134,12 @@ export default function Form({ t }) {
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
-          {[
-            {
-              name: "from_name",
-              label: formText.fields.name,
-              icon: <PersonIcon sx={{ color: primary }} />,
-            },
-            {
-              name: "from_email",
-              label: formText.fields.email,
-              type: "email",
-              icon: <EmailIcon sx={{ color: primary }} />,
-            },
-            {
-              name: "message",
-              label: formText.fields.message,
-              multiline: true,
-              rows: 4,
-              icon: <MessageIcon sx={{ color: primary }} />,
-            },
-          ].map((field, i) => (
+          {fields.map((field, i) => (
             <motion.div
               key={field.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <TextField
                 {...field}
@@ -153,7 +149,11 @@ export default function Form({ t }) {
                   startAdornment: (
                     <InputAdornment
                       position="start"
-                      sx={field.multiline ? { alignSelf: "flex-start", mt: 1 } : {}}
+                      sx={
+                        field.multiline
+                          ? { alignSelf: "flex-start", mt: 1 }
+                          : {}
+                      }
                     >
                       {field.icon}
                     </InputAdornment>
@@ -164,28 +164,17 @@ export default function Form({ t }) {
             </motion.div>
           ))}
 
-          {/* ================= BOTÓN ================= */}
+          {/* ================= BUTTON ================= */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Button
               type="submit"
               startIcon={<SendIcon />}
-              sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 5,
-                py: 1.4,
-                color: "#fff",
-                background: `linear-gradient(90deg, ${primary}, ${theme.palette.primary.dark})`,
-                "&:hover": {
-                  transform: "scale(1.05)",
-                },
-                transition: "transform 0.2s ease",
-              }}
+              sx={buttonStyle(theme)}
             >
               {formText.button}
             </Button>
@@ -198,46 +187,90 @@ export default function Form({ t }) {
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          sx={{
+            top: "50% !important",
+            transform: "translateY(-50%)",
+          }}
         >
-          <Alert
-            severity="success"
-            icon={false}
-            sx={{
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              fontWeight: 600,
-              textAlign: "center",
-              background: theme.palette.success.main,
-              color: theme.palette.success.contrastText,
-            }}
-          >
+          <Alert sx={alertStyle(theme)} icon={false}>
             <strong>{formText.success}</strong>
             <br />
             {formText.successMsg}
           </Alert>
         </Snackbar>
-
       </Container>
     </Box>
   );
 }
 
-/* ================= INPUT STYLE ================= */
+/* ================= STYLES ================= */
+
+const headerStyle = (theme) => ({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 1,
+  px: 3,
+  py: 1,
+  borderRadius: "999px",
+  background: theme.palette.action.hover,
+  border: `1px solid ${theme.palette.divider}`,
+  backdropFilter: "blur(6px)",
+});
+
+const buttonStyle = (theme) => ({
+  borderRadius: "25px",
+  textTransform: "none",
+  fontWeight: "bold",
+  px: 5,
+  py: 1.4,
+  color: theme.palette.getContrastText(theme.palette.primary.main),
+  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+  boxShadow: "none",
+  transition: "transform 0.2s ease",
+
+  "&:hover": {
+    transform: "scale(1.04)",
+    background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
+  },
+});
+
+const alertStyle = (theme) => ({
+  px: 4,
+  py: 2,
+  borderRadius: 3,
+  fontWeight: 600,
+  textAlign: "center",
+  fontSize: "0.95rem",
+  color: theme.palette.success.contrastText,
+  background: theme.palette.success.main,
+  boxShadow: theme.shadows[6],
+});
+
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
     background: theme.palette.background.paper,
+    backdropFilter: "blur(10px)",
+
     "& input, & textarea": {
       fontWeight: 600,
       color: theme.palette.text.primary,
     },
+
+    "& input::placeholder, & textarea::placeholder": {
+      color: theme.palette.text.secondary,
+      fontWeight: 400,
+    },
+
     "& fieldset": {
       borderColor: theme.palette.divider,
     },
+
     "&:hover fieldset": {
       borderColor: theme.palette.primary.main,
     },
+
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
     },
