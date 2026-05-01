@@ -11,7 +11,6 @@ export default function About({ t }) {
 
   const estudios = t.about.studies;
 
-  // 🔥 colores íconos (se mantienen)
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
@@ -40,9 +39,7 @@ export default function About({ t }) {
             py: 1,
             borderRadius: "999px",
 
-            // 🔥 automático según tema
             background: theme.palette.action.hover,
-            border: `1px solid ${theme.palette.divider}`,
             backdropFilter: "blur(6px)",
           }}
         >
@@ -79,14 +76,9 @@ export default function About({ t }) {
                   py: 2,
                   borderRadius: "16px",
 
-                  // 🔥 fondo correcto según tema
                   background: theme.palette.background.paper,
 
-                  // 🔥 borde adaptativo (mejor que fijo)
-                  border: `1px solid ${theme.palette.divider}`,
-
-                  transition:
-                    "transform 0.25s ease, box-shadow 0.25s ease",
+                  transition: "transform 0.25s ease, box-shadow 0.25s ease",
 
                   "&:hover": {
                     boxShadow: theme.shadows[3],
