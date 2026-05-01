@@ -20,13 +20,13 @@ import emailjs from "@emailjs/browser";
 
 export default function Form({ t }) {
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
-  const secondary = theme.palette.text.secondary;
+  const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  // 🔥 fallback seguro
+  // 🔥 FALLBACK (CLAVE para evitar pantalla blanca)
   const formText = t?.form || {
     title: "Contacto por Email",
     subtitle: "Ponte en contacto conmigo a través de este formulario",
@@ -55,76 +55,66 @@ export default function Form({ t }) {
         setSuccess(true);
         formRef.current.reset();
       })
-      .catch(() => alert(formText.error));
+      .catch(() => alert(formText.error)); // 🔥 seguro
   };
 
-  const fields = [
-    {
-      name: "from_name",
-      label: formText.fields.name,
-      icon: <PersonIcon sx={{ color: primary }} />,
-    },
-    {
-      name: "from_email",
-      label: formText.fields.email,
-      type: "email",
-      icon: <EmailIcon sx={{ color: primary }} />,
-    },
-    {
-      name: "message",
-      label: formText.fields.message,
-      multiline: true,
-      rows: 4,
-      icon: <MessageIcon sx={{ color: primary }} />,
-    },
-  ];
-
   return (
-    <Box
-      id="form"
-      sx={{
-        py: { xs: 4, md: 6 },
-        color: theme.palette.text.primary,
-      }}
-    >
+    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* ================= HEADER ================= */}
+        {/* ================= TÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           style={{ textAlign: "center", marginBottom: "2rem" }}
         >
-          <Box sx={headerStyle(theme)}>
-            <ContactMailIcon sx={{ fontSize: 22, color: primary }} />
-
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
               {formText.title}
             </Typography>
           </Box>
         </motion.div>
 
-        {/* ================= SUBTITLE ================= */}
+        {/* ================= SUBTÍTULO ================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
           <Typography
-  variant="subtitle1"
-  sx={{
-    textAlign: "center",
-    fontWeight: "bold",
-    mb: 4,
-    color: theme.palette.text.primary, 
-  }}
->
-  {formText.subtitle}
-</Typography>
+            variant="subtitle1"
+            sx={{
+              textAlign: "center",
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            {formText.subtitle}
+          </Typography>
         </motion.div>
 
         {/* ================= FORM ================= */}
@@ -134,7 +124,26 @@ export default function Form({ t }) {
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
-          {fields.map((field, i) => (
+          {[
+            {
+              name: "from_name",
+              label: formText.fields.name,
+              icon: <PersonIcon sx={{ color: primaryColor }} />,
+            },
+            {
+              name: "from_email",
+              label: formText.fields.email,
+              type: "email",
+              icon: <EmailIcon sx={{ color: primaryColor }} />,
+            },
+            {
+              name: "message",
+              label: formText.fields.message,
+              multiline: true,
+              rows: 4,
+              icon: <MessageIcon sx={{ color: primaryColor }} />,
+            },
+          ].map((field, i) => (
             <motion.div
               key={field.name}
               initial={{ opacity: 0, y: 20 }}
@@ -164,7 +173,7 @@ export default function Form({ t }) {
             </motion.div>
           ))}
 
-          {/* ================= BUTTON ================= */}
+          {/* ================= BOTÓN ================= */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -174,7 +183,24 @@ export default function Form({ t }) {
             <Button
               type="submit"
               startIcon={<SendIcon />}
-              sx={buttonStyle(theme)}
+              sx={{
+                borderRadius: "25px",
+                textTransform: "none",
+                fontWeight: "bold",
+                px: 5,
+                py: 1.4,
+                color:
+                  theme.palette.mode === "light"
+                    ? "#ffffff"
+                    : "#020617",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: "none",
+                "&:hover": {
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  transform: "scale(1.04)",
+                },
+                transition: "transform 0.2s ease",
+              }}
             >
               {formText.button}
             </Button>
@@ -192,7 +218,27 @@ export default function Form({ t }) {
             transform: "translateY(-50%)",
           }}
         >
-          <Alert sx={alertStyle(theme)} icon={false}>
+          <Alert
+            severity="success"
+            icon={false}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: 3,
+              fontWeight: 600,
+              textAlign: "center",
+              fontSize: "0.95rem",
+              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
+              background:
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, #064e3b, #022c22)"
+                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 20px 40px rgba(0,0,0,0.6)"
+                  : "0 20px 40px rgba(22,163,74,0.35)",
+            }}
+          >
             <strong>{formText.success}</strong>
             <br />
             {formText.successMsg}
@@ -203,81 +249,76 @@ export default function Form({ t }) {
   );
 }
 
-/* ================= STYLES ================= */
-
-const headerStyle = (theme) => ({
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 1,
-  px: 3,
-  py: 1,
-  borderRadius: "999px",
-  background: theme.palette.action.hover,
-  border: `1px solid ${theme.palette.divider}`,
-  backdropFilter: "blur(6px)",
-});
-
-const buttonStyle = (theme) => ({
-  borderRadius: "25px",
-  textTransform: "none",
-  fontWeight: "bold",
-  px: 5,
-  py: 1.4,
-  color: theme.palette.getContrastText(theme.palette.primary.main),
-  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-  boxShadow: "none",
-  transition: "transform 0.2s ease",
-
-  "&:hover": {
-    transform: "scale(1.04)",
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-  },
-});
-
-const alertStyle = (theme) => ({
-  px: 4,
-  py: 2,
-  borderRadius: 3,
-  fontWeight: 600,
-  textAlign: "center",
-  fontSize: "0.95rem",
-  color: theme.palette.success.contrastText,
-  background: theme.palette.success.main,
-  boxShadow: theme.shadows[6],
-});
-
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
-    background: theme.palette.background.paper,
-    backdropFilter: "blur(10px)",
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(14px)",
 
-    "& input, & textarea": {
+    outline: "none",
+
+    "& input": {
+      outline: "none",
       fontWeight: 600,
-      color: theme.palette.text.primary,
+      color:
+        theme.palette.mode === "dark"
+          ? "#ffffff"
+          : "#020617",
+    },
+
+    "& textarea": {
+      outline: "none",
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#ffffff"
+          : "#020617",
     },
 
     "& input::placeholder, & textarea::placeholder": {
-      color: theme.palette.text.secondary,
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(255,255,255,0.45)"
+          : "rgba(2,6,23,0.45)",
       fontWeight: 400,
     },
 
     "& fieldset": {
-      borderColor: theme.palette.divider,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
     },
 
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
+    },
+
+    "&:hover": {
+      boxShadow: "none",
+    },
+
+    "&.Mui-focused": {
+      outline: "none",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
+      boxShadow: "none",
     },
   },
 
   "& .MuiInputLabel-root": {
-    color: theme.palette.text.secondary,
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.85)"
+        : "rgba(2,6,23,0.85)",
     fontWeight: 600,
   },
 });
