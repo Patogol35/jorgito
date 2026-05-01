@@ -49,7 +49,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 THEME PRO DINÁMICO
+  // 🎨 THEME PRO (ajustado)
   const theme = useMemo(
     () =>
       createTheme({
@@ -74,8 +74,10 @@ function App() {
           h2: { fontWeight: 700 },
           h4: { fontWeight: 600 },
         },
+
+        // 🔥 FIX IMPORTANTE
         shape: {
-          borderRadius: 16,
+          borderRadius: 12, // antes 16 → ahora más elegante
         },
       }),
     [mode]
@@ -123,10 +125,13 @@ function App() {
               elevation={0}
               sx={(theme) => ({
                 mb: 4,
-                p: { xs: 3, md: 6 },
-                borderRadius: theme.shape.borderRadius,
 
-                // ✅ Usar theme correctamente
+                // 🔥 padding más equilibrado
+                p: { xs: 3, md: 5 },
+
+                // 🔥 FIX REAL DEL PROBLEMA
+                borderRadius: { xs: 3, md: 4 },
+
                 backgroundColor: theme.palette.background.paper,
 
                 border: `2px solid ${color}`,
