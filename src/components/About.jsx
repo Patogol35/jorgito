@@ -65,6 +65,7 @@ export default function About({ t }) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -5, scale: 1.05 }}
+              whileTap={{ scale: 0.97 }} // 🔥 efecto al presionar
             >
               <Box
                 sx={{
@@ -74,10 +75,9 @@ export default function About({ t }) {
                   borderRadius: "16px",
                   background: theme.palette.background.paper,
 
-                  // 🔥 mismo borde que Certifications
+                  // 🔥 borde siempre visible
                   border: `1px solid ${primary}`,
 
-                  // 🔥 mismo transition exacto
                   transition:
                     "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
