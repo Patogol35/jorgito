@@ -113,7 +113,7 @@ export default function Contact({ t }) {
     color: theme.palette.text.primary, 
   }}
 >
-  {formText.subtitle}
+  {t.contact.subtitle}
 </Typography>
         </motion.div>
 
