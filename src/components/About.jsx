@@ -6,7 +6,6 @@ import { useTheme } from "@mui/material/styles";
 export default function About({ t }) {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
-
   const secondary = theme.palette.text.secondary;
 
   const estudios = t.about.studies;
@@ -22,7 +21,7 @@ export default function About({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -57,7 +56,7 @@ export default function About({ t }) {
         </Box>
       </motion.div>
 
-      {/* GRID */}
+      {/* ================= GRID ================= */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
@@ -65,7 +64,7 @@ export default function About({ t }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }} // 🔥 MISMO que Certifications
+              whileHover={{ y: -5, scale: 1.05 }}
             >
               <Box
                 sx={{
@@ -75,10 +74,12 @@ export default function About({ t }) {
                   borderRadius: "16px",
                   background: theme.palette.background.paper,
 
+                  // 🔥 mismo borde que Certifications
                   border: `1px solid ${primary}`,
 
+                  // 🔥 mismo transition exacto
                   transition:
-                    "transform 0.25s ease, box-shadow 0.25s ease",
+                    "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
                   "&:hover": {
                     boxShadow: theme.shadows[3],
