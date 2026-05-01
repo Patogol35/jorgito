@@ -13,7 +13,7 @@ export default function About({ t }) {
   /* 🔥 textos desde i18n */
   const estudios = t.about.studies;
 
-  /* 🔥 COLORES ORIGINALES (NO SE TOCAN) */
+  /* 🔥 COLORES ORIGINALES */
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
@@ -65,10 +65,10 @@ export default function About({ t }) {
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.2 }}
-              whileHover={{ y: -5, scale: 1.04 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ y: -5, scale: 1.05 }} // 🔥 igual que Certifications
             >
               <Box
                 sx={{
@@ -78,17 +78,16 @@ export default function About({ t }) {
                   borderRadius: "16px",
                   background: theme.palette.background.paper,
 
-                  // 🔥 BORDE SIEMPRE
+                  // 🔥 MISMO BORDE
                   border: `1px solid ${primary}`,
 
                   transition:
-                    "transform 0.25s ease, box-shadow 0.25s ease",
+                    "all 0.25s ease",
 
                   "&:hover": {
                     boxShadow: theme.shadows[3],
                   },
 
-                  // 🔥 quitar focus feo
                   "&:focus": { outline: "none" },
                   "&:focus-visible": { outline: "none" },
                 }}
