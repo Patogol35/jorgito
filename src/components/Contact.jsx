@@ -105,15 +105,16 @@ export default function Contact({ t }) {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              mb: 2,
-            }}
-          >
-            {t.contact.subtitle}
-          </Typography>
+  variant="subtitle1"
+  sx={{
+    textAlign: "center",
+    fontWeight: "bold",
+    mb: 4,
+    color: theme.palette.text.primary, 
+  }}
+>
+  {formText.subtitle}
+</Typography>
         </motion.div>
 
         {/* =========================
