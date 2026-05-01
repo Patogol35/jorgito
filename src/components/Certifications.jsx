@@ -40,9 +40,7 @@ export default function Certifications({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* =========================
-          HEADER
-      ========================= */}
+      {/* ================= HEADER ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -62,9 +60,7 @@ export default function Certifications({ t }) {
             backdropFilter: "blur(6px)",
           }}
         >
-          <WorkspacePremiumIcon
-            sx={{ fontSize: 22, color: primary }}
-          />
+          <WorkspacePremiumIcon sx={{ fontSize: 22, color: primary }} />
 
           <Typography
             variant="h6"
@@ -79,9 +75,7 @@ export default function Certifications({ t }) {
         </Box>
       </motion.div>
 
-      {/* =========================
-          GRID
-      ========================= */}
+      {/* ================= GRID ================= */}
       <Grid container spacing={3} justifyContent="center">
         {certificaciones.map((cert, i) => {
           const Icon = iconTypes[i];
@@ -101,12 +95,24 @@ export default function Certifications({ t }) {
                     py: 2,
                     borderRadius: "16px",
                     background: theme.palette.background.paper,
-                    border: `1px solid ${theme.palette.divider}`,
-                    transition: "all 0.25s ease",
+
+                    // 🔥 borde SIEMPRE visible
+                    border: `1px solid ${primary}`,
+
+                    transition:
+                      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
                     "&:hover": {
-                      borderColor: primary,
+                      transform: "translateY(-4px)",
                       boxShadow: theme.shadows[3],
+                    },
+
+                    // 🔥 quitar focus feo
+                    "&:focus": {
+                      outline: "none",
+                    },
+                    "&:focus-visible": {
+                      outline: "none",
                     },
                   }}
                 >
