@@ -13,18 +13,19 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta individual (EDITADA mínimo necesario)
+// Tarjeta individual
 // =====================
 function ProjectCard({ p, i, palette, primary }) {
+  const theme = useTheme();
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.12 }}
-        whileHover={{ y: -5, scale: 1.04 }}
+        transition={{ duration: 0.5, delay: i * 0.1 }}
+        whileHover={{ y: -5, scale: 1.05 }}
       >
         <Box
           sx={{
@@ -34,23 +35,19 @@ function ProjectCard({ p, i, palette, primary }) {
             borderRadius: "16px",
             background: palette.background.paper,
 
-            // 🔥 BORDE SIEMPRE
+            // 🔥 borde azul SIEMPRE (igual certificaciones)
             border: `1px solid ${primary}`,
 
             transition:
               "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
             "&:hover": {
-              boxShadow: `0 10px 25px ${primary}33`,
+              transform: "translateY(-4px)",
+              boxShadow: theme.shadows[3],
             },
 
-            // 🔥 quitar focus feo
-            "&:focus": {
-              outline: "none",
-            },
-            "&:focus-visible": {
-              outline: "none",
-            },
+            "&:focus": { outline: "none" },
+            "&:focus-visible": { outline: "none" },
           }}
         >
           <Icon sx={{ fontSize: 30, color: p.color }} />
@@ -64,6 +61,7 @@ function ProjectCard({ p, i, palette, primary }) {
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
+                transition: "color 0.2s ease",
                 "&:hover": { color: p.color },
               }}
             >
@@ -83,10 +81,9 @@ export default function Projects({ t }) {
   const theme = useTheme();
   const primary = theme.palette.primary.main;
 
-  /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 colores originales */
+  // 🔥 colores (se mantienen)
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -97,7 +94,7 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 iconos originales */
+  // 🔥 iconos (se mantienen)
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -123,7 +120,7 @@ export default function Projects({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* HEADER */}
+      {/* ================= HEADER ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -158,7 +155,7 @@ export default function Projects({ t }) {
         </Box>
       </motion.div>
 
-      {/* GRID */}
+      {/* ================= GRID ================= */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard
@@ -172,4 +169,4 @@ export default function Projects({ t }) {
       </Grid>
     </Box>
   );
-}
+    }
