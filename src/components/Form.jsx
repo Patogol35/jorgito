@@ -115,16 +115,16 @@ export default function Form({ t }) {
           transition={{ duration: 0.5 }}
         >
           <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              mb: 4,
-              color: secondary,
-            }}
-          >
-            {formText.subtitle}
-          </Typography>
+  variant="subtitle1"
+  sx={{
+    textAlign: "center",
+    fontWeight: "bold",
+    mb: 4,
+    color: theme.palette.text.primary, 
+  }}
+>
+  {formText.subtitle}
+</Typography>
         </motion.div>
 
         {/* ================= FORM ================= */}
