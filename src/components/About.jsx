@@ -5,8 +5,7 @@ import { useTheme } from "@mui/material/styles";
 
 export default function About({ t }) {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const primary = theme.palette.primary.main;
 
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
@@ -26,6 +25,7 @@ export default function About({ t }) {
         color: theme.palette.text.primary,
       }}
     >
+      {/* ================= HEADER ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -36,44 +36,56 @@ export default function About({ t }) {
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 0.9,
+            py: 1,
             borderRadius: "999px",
-            background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
-            border: `1px solid ${
-              isDark
-                ? "rgba(144,202,249,0.25)"
-                : "rgba(25,118,210,0.25)"
-            }`,
+            background: theme.palette.action.hover,
+            border: `1px solid ${theme.palette.divider}`,
             backdropFilter: "blur(6px)",
           }}
         >
-          <GraduationCap size={22} color={primaryColor} />
+          <GraduationCap size={22} color={primary} />
 
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            sx={{
+              fontWeight: "bold",
+              color: primary,
+              lineHeight: 1,
+            }}
           >
             {t.about.title}
           </Typography>
         </Box>
       </motion.div>
 
+      {/* ================= GRID ================= */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: i * 0.3 }}
-              viewport={{ once: false }}
+              transition={{ duration: 0.8, delay: i * 0.2 }}
             >
-              <Box sx={{ textAlign: "center", px: 1 }}>
-                {/* 🔥 AQUÍ ESTÁ EL FIX */}
+              <Box
+                sx={{
+                  textAlign: "center",
+                  px: 2,
+                  py: 2,
+                  borderRadius: "16px",
+                  background: theme.palette.background.paper,
+                  border: `1px solid ${theme.palette.divider}`,
+                  transition: "all 0.25s ease",
+
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    borderColor: primary,
+                    boxShadow: theme.shadows[3],
+                  },
+                }}
+              >
                 <GraduationCap size={28} color={iconColors[i]} />
 
                 <Typography variant="subtitle1" sx={subtitleStyle}>
