@@ -26,16 +26,19 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
+  // 🌙 Tema
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
 
+  // 🌐 Idioma
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
 
+  // Persistencia
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -46,24 +49,37 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
+  // 🎨 THEME PRO DINÁMICO
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode,
+          primary: {
+            main: "#1976d2",
+          },
+          secondary: {
+            main: "#ffeb3b",
+          },
           background: {
-            default: mode === "dark" ? "#0a0a0a" : "#ffffff",
+            default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
             paper: mode === "dark" ? "#121212" : "#ffffff",
           },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
           },
         },
+        typography: {
+          fontFamily: "Poppins, Roboto, sans-serif",
+          h2: { fontWeight: 700 },
+          h4: { fontWeight: 600 },
+        },
+        shape: {
+          borderRadius: 16,
+        },
       }),
     [mode]
   );
-
-  const LIGHT_CARD_BG = "#fafafa";
 
   const sections = useMemo(
     () => [
@@ -105,28 +121,27 @@ function App() {
               key={id}
               id={id}
               elevation={0}
-              sx={{
+              sx={(theme) => ({
                 mb: 4,
                 p: { xs: 3, md: 6 },
-                borderRadius: 3,
-                backgroundColor:
-                  mode === "light" ? LIGHT_CARD_BG : "#222222",
+                borderRadius: theme.shape.borderRadius,
 
-                /* 🔥 BORDE UN POCO MÁS GRUESO */
+                // ✅ Usar theme correctamente
+                backgroundColor: theme.palette.background.paper,
+
                 border: `2px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
-
                 transition: "all 0.25s ease",
 
                 "&:hover": {
                   transform: "translateY(-4px)",
                   boxShadow:
-                    mode === "light"
-                      ? `0 6px 16px rgba(0,0,0,0.08)`
-                      : `0 6px 16px rgba(0,0,0,0.5)`,
+                    theme.palette.mode === "light"
+                      ? "0 6px 16px rgba(0,0,0,0.08)"
+                      : "0 6px 16px rgba(0,0,0,0.5)",
                 },
-              }}
+              })}
             >
               <Component t={t} />
             </Paper>
@@ -135,6 +150,7 @@ function App() {
 
         <Footer t={t} />
 
+        {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
             aria-label="whatsapp"
@@ -154,20 +170,23 @@ function App() {
           </Fab>
         </Tooltip>
 
+        {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
           <Fab
             aria-label="idioma"
             disableRipple
             disableFocusRipple
             disableTouchRipple
-            elevation={0}
             onClick={() => setLang(lang === "es" ? "en" : "es")}
-            sx={{
+            sx={(theme) => ({
               position: "fixed",
               top: 90,
               right: 16,
               zIndex: 1200,
-              bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.grey[900]
+                  : theme.palette.primary.main,
               color: "#fff",
               width: 52,
               height: 52,
@@ -175,14 +194,14 @@ function App() {
               fontSize: "1rem",
               letterSpacing: "1px",
               boxShadow: "none",
-              border: "none",
+
               "&:hover": {
-                bgcolor: mode === "dark" ? "#1e1e1e" : "#1976d2",
-                boxShadow: "none",
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[800]
+                    : theme.palette.primary.dark,
               },
-              "&:active": { boxShadow: "none" },
-              "&:focus": { boxShadow: "none" },
-            }}
+            })}
           >
             {lang === "es" ? "EN" : "ES"}
           </Fab>
