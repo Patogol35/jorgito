@@ -20,13 +20,11 @@ import emailjs from "@emailjs/browser";
 
 export default function Form({ t }) {
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
+  const primary = theme.palette.primary.main;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  // 🔥 FALLBACK (CLAVE para evitar pantalla blanca)
   const formText = t?.form || {
     title: "Contacto por Email",
     subtitle: "Ponte en contacto conmigo a través de este formulario",
@@ -55,14 +53,14 @@ export default function Form({ t }) {
         setSuccess(true);
         formRef.current.reset();
       })
-      .catch(() => alert(formText.error)); // 🔥 seguro
+      .catch(() => alert(formText.error));
   };
 
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* ================= TÍTULO ================= */}
+        {/* ================= HEADER ================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -73,26 +71,24 @@ export default function Form({ t }) {
             sx={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
               gap: 1,
               px: 3,
-              py: 0.9,
+              py: 1,
               borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
+              background: theme.palette.action.hover,
+              border: `1px solid ${theme.palette.divider}`,
               backdropFilter: "blur(6px)",
             }}
           >
-            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <ContactMailIcon sx={{ fontSize: 22, color: primary }} />
+
             <Typography
               variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+              sx={{
+                fontWeight: "bold",
+                color: primary,
+                lineHeight: 1,
+              }}
             >
               {formText.title}
             </Typography>
@@ -103,7 +99,6 @@ export default function Form({ t }) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
         >
           <Typography
             variant="subtitle1"
@@ -128,27 +123,27 @@ export default function Form({ t }) {
             {
               name: "from_name",
               label: formText.fields.name,
-              icon: <PersonIcon sx={{ color: primaryColor }} />,
+              icon: <PersonIcon sx={{ color: primary }} />,
             },
             {
               name: "from_email",
               label: formText.fields.email,
               type: "email",
-              icon: <EmailIcon sx={{ color: primaryColor }} />,
+              icon: <EmailIcon sx={{ color: primary }} />,
             },
             {
               name: "message",
               label: formText.fields.message,
               multiline: true,
               rows: 4,
-              icon: <MessageIcon sx={{ color: primaryColor }} />,
+              icon: <MessageIcon sx={{ color: primary }} />,
             },
           ].map((field, i) => (
             <motion.div
               key={field.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ delay: i * 0.1 }}
             >
               <TextField
                 {...field}
@@ -158,11 +153,7 @@ export default function Form({ t }) {
                   startAdornment: (
                     <InputAdornment
                       position="start"
-                      sx={
-                        field.multiline
-                          ? { alignSelf: "flex-start", mt: 1 }
-                          : {}
-                      }
+                      sx={field.multiline ? { alignSelf: "flex-start", mt: 1 } : {}}
                     >
                       {field.icon}
                     </InputAdornment>
@@ -177,7 +168,6 @@ export default function Form({ t }) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Button
@@ -189,15 +179,10 @@ export default function Form({ t }) {
                 fontWeight: "bold",
                 px: 5,
                 py: 1.4,
-                color:
-                  theme.palette.mode === "light"
-                    ? "#ffffff"
-                    : "#020617",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "none",
+                color: "#fff",
+                background: `linear-gradient(90deg, ${primary}, ${theme.palette.primary.dark})`,
                 "&:hover": {
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  transform: "scale(1.04)",
+                  transform: "scale(1.05)",
                 },
                 transition: "transform 0.2s ease",
               }}
@@ -213,10 +198,6 @@ export default function Form({ t }) {
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
-          }}
         >
           <Alert
             severity="success"
@@ -227,16 +208,8 @@ export default function Form({ t }) {
               borderRadius: 3,
               fontWeight: 600,
               textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
+              background: theme.palette.success.main,
+              color: theme.palette.success.contrastText,
             }}
           >
             <strong>{formText.success}</strong>
@@ -244,81 +217,34 @@ export default function Form({ t }) {
             {formText.successMsg}
           </Alert>
         </Snackbar>
+
       </Container>
     </Box>
   );
 }
 
+/* ================= INPUT STYLE ================= */
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
-    background:
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(14px)",
-
-    outline: "none",
-
-    "& input": {
-      outline: "none",
+    background: theme.palette.background.paper,
+    "& input, & textarea": {
       fontWeight: 600,
-      color:
-        theme.palette.mode === "dark"
-          ? "#ffffff"
-          : "#020617",
+      color: theme.palette.text.primary,
     },
-
-    "& textarea": {
-      outline: "none",
-      fontWeight: 600,
-      color:
-        theme.palette.mode === "dark"
-          ? "#ffffff"
-          : "#020617",
-    },
-
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(255,255,255,0.45)"
-          : "rgba(2,6,23,0.45)",
-      fontWeight: 400,
-    },
-
     "& fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.85)",
+      borderColor: theme.palette.divider,
     },
-
     "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
+      borderColor: theme.palette.primary.main,
     },
-
-    "&:hover": {
-      boxShadow: "none",
-    },
-
-    "&.Mui-focused": {
-      outline: "none",
-    },
-
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      boxShadow: "none",
     },
   },
 
   "& .MuiInputLabel-root": {
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.85)"
-        : "rgba(2,6,23,0.85)",
+    color: theme.palette.text.secondary,
     fontWeight: 600,
   },
 });
