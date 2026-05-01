@@ -209,17 +209,22 @@ export default function Skills({ t }) {
     borderRadius: "18px",
     background: theme.palette.background.paper,
 
-    // 🔥 borde azul SIEMPRE visible
+    // 🔥 borde azul SIEMPRE (igual todo el sistema)
     border: `1px solid ${primary}`,
 
-    transition: "all 0.25s ease",
+    transition:
+      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
     "&:hover": {
-      transform: "translateY(-5px)",
-      boxShadow: theme.shadows[4],
+      transform: "translateY(-4px)", // 🔥 mismo que certificaciones
+      boxShadow: theme.shadows[3],   // 🔥 misma sombra
+    },
 
-      // 🔥 opcional: más intenso en hover
-      borderColor: theme.palette.primary.dark,
+    "&:focus": {
+      outline: "none",
+    },
+    "&:focus-visible": {
+      outline: "none",
     },
   }}
 >
