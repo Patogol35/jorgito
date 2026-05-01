@@ -13,9 +13,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta individual (NO TOCAR)
+// Tarjeta individual (EDITADA mínimo necesario)
 // =====================
-function ProjectCard({ p, i, palette }) {
+function ProjectCard({ p, i, palette, primary }) {
   const Icon = p.icon;
 
   return (
@@ -24,9 +24,35 @@ function ProjectCard({ p, i, palette }) {
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: i * 0.12 }}
-        viewport={{ once: false }}
+        whileHover={{ y: -5, scale: 1.04 }}
       >
-        <Box sx={{ textAlign: "center", px: 1 }}>
+        <Box
+          sx={{
+            textAlign: "center",
+            px: 2,
+            py: 2,
+            borderRadius: "16px",
+            background: palette.background.paper,
+
+            // 🔥 BORDE SIEMPRE
+            border: `1px solid ${primary}`,
+
+            transition:
+              "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+
+            "&:hover": {
+              boxShadow: `0 10px 25px ${primary}33`,
+            },
+
+            // 🔥 quitar focus feo
+            "&:focus": {
+              outline: "none",
+            },
+            "&:focus-visible": {
+              outline: "none",
+            },
+          }}
+        >
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
@@ -60,7 +86,7 @@ export default function Projects({ t }) {
   /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 tus colores originales (NO se tocan) */
+  /* 🔥 colores originales */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -71,7 +97,7 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 tus iconos originales (NO se tocan) */
+  /* 🔥 iconos originales */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -82,7 +108,6 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construcción de proyectos */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -98,9 +123,7 @@ export default function Projects({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* =========================
-          HEADER
-      ========================= */}
+      {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -138,9 +161,15 @@ export default function Projects({ t }) {
       {/* GRID */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard key={i} p={p} i={i} palette={theme.palette} />
+          <ProjectCard
+            key={i}
+            p={p}
+            i={i}
+            palette={theme.palette}
+            primary={primary}
+          />
         ))}
       </Grid>
     </Box>
   );
-            }
+}
