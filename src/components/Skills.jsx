@@ -203,21 +203,26 @@ export default function Skills({ t }) {
                   transition={{ duration: 0.35 }}
                 >
                   <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "18px",
-                      background: theme.palette.background.paper,
-                      border: `1px solid ${theme.palette.divider}`,
-                      transition: "all 0.25s ease",
+  sx={{
+    p: 3,
+    textAlign: "center",
+    borderRadius: "18px",
+    background: theme.palette.background.paper,
 
-                      "&:hover": {
-                        transform: "translateY(-5px)",
-                        borderColor: primary,
-                        boxShadow: theme.shadows[4],
-                      },
-                    }}
-                  >
+    // 🔥 borde azul SIEMPRE visible
+    border: `1px solid ${primary}`,
+
+    transition: "all 0.25s ease",
+
+    "&:hover": {
+      transform: "translateY(-5px)",
+      boxShadow: theme.shadows[4],
+
+      // 🔥 opcional: más intenso en hover
+      borderColor: theme.palette.primary.dark,
+    },
+  }}
+>
                     <Box
                       component={motion.img}
                       src={skill.img}
