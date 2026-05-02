@@ -11,36 +11,36 @@ export default function About({ t }) {
 
   const estudios = t.about.studies;
 
-  const iconColors = ["#1976d2", "#9333ea", "#0ea5e9"];
+  const iconColors = ["#1976d2", "#9333ea"];
 
   return (
     <Box
       id="about"
       sx={{
-        py: 6,
-        px: 2,
+        py: 4,
         scrollMarginTop: "80px",
         color: theme.palette.text.primary,
       }}
     >
       {/* ================= HEADER ================= */}
       <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{ textAlign: "center", marginBottom: "3rem" }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
           sx={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 1.5,
+            justifyContent: "center",
+            gap: 1,
             px: 3,
-            py: 1.2,
+            py: 1,
             borderRadius: "999px",
+
             background: theme.palette.action.hover,
-            backdropFilter: "blur(10px)",
-            border: `1px solid ${theme.palette.divider}`,
+            backdropFilter: "blur(6px)",
           }}
         >
           <GraduationCap size={22} color={primary} />
@@ -48,9 +48,9 @@ export default function About({ t }) {
           <Typography
             variant="h6"
             sx={{
-              fontWeight: 700,
+              fontWeight: "bold",
               color: primary,
-              letterSpacing: 0.5,
+              lineHeight: 1,
             }}
           >
             {t.about.title}
@@ -63,87 +63,50 @@ export default function About({ t }) {
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -5, scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
             >
               <Box
-                sx={{
-                  textAlign: "center",
-                  px: 3,
-                  py: 3,
-                  borderRadius: "20px",
+  sx={{
+    textAlign: "center",
+    px: 2,
+    py: 2,
+    borderRadius: "16px",
 
-                  // 🔥 glass effect
-                  background: `linear-gradient(145deg, ${theme.palette.background.paper}, ${theme.palette.action.hover})`,
-                  backdropFilter: "blur(12px)",
+    background: theme.palette.background.paper,
 
-                  // 🔥 borde elegante
-                  border: `1px solid ${theme.palette.divider}`,
+    // 🔥 borde azul SIEMPRE (igual que todas)
+    border: `1px solid ${primary}`,
 
-                  // 🔥 sombra suave
-                  boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+    transition:
+      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
-                  transition: "all 0.3s ease",
+    "&:hover": {
+      transform: "translateY(-4px)", // 🔥 mismo movimiento
+      boxShadow: theme.shadows[3],   // 🔥 misma sombra
+    },
 
-                  "&:hover": {
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
-                    borderColor: primary,
-                  },
-                }}
-              >
-                {/* ICON */}
-                <Box
-                  sx={{
-                    width: 55,
-                    height: 55,
-                    margin: "0 auto",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    mb: 1.5,
+    "&:focus": { outline: "none" },
+    "&:focus-visible": { outline: "none" },
+  }}
+>
+                <GraduationCap size={28} color={iconColors[i]} />
 
-                    background: `linear-gradient(135deg, ${iconColors[i % iconColors.length]}, ${primary})`,
-                    color: "#fff",
-                  }}
-                >
-                  <GraduationCap size={26} />
-                </Box>
-
-                {/* TITULO */}
                 <Typography
                   variant="subtitle1"
-                  sx={{
-                    fontWeight: 700,
-                    mb: 0.5,
-                  }}
+                  sx={{ fontWeight: "bold", mt: 1 }}
                 >
                   {est.titulo}
                 </Typography>
 
-                {/* INSTITUCION */}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: secondary,
-                    fontWeight: 500,
-                  }}
-                >
+                <Typography variant="body2" color={secondary}>
                   {est.institucion}
                 </Typography>
 
-                {/* DETALLE */}
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: secondary,
-                    opacity: 0.8,
-                    mt: 0.5,
-                    fontSize: "0.8rem",
-                  }}
-                >
+                <Typography variant="body2" color={secondary}>
                   {est.detalle}
                 </Typography>
               </Box>
