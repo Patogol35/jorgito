@@ -70,21 +70,29 @@ export default function About({ t }) {
               whileTap={{ scale: 0.97 }}
             >
               <Box
-                sx={{
-                  textAlign: "center",
-                  px: 2,
-                  py: 2,
-                  borderRadius: "16px",
+  sx={{
+    textAlign: "center",
+    px: 2,
+    py: 2,
+    borderRadius: "16px",
 
-                  background: theme.palette.background.paper,
+    background: theme.palette.background.paper,
 
-                  transition: "transform 0.25s ease, box-shadow 0.25s ease",
+    // 🔥 borde azul SIEMPRE (igual que todas)
+    border: `1px solid ${primary}`,
 
-                  "&:hover": {
-                    boxShadow: theme.shadows[3],
-                  },
-                }}
-              >
+    transition:
+      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+
+    "&:hover": {
+      transform: "translateY(-4px)", // 🔥 mismo movimiento
+      boxShadow: theme.shadows[3],   // 🔥 misma sombra
+    },
+
+    "&:focus": { outline: "none" },
+    "&:focus-visible": { outline: "none" },
+  }}
+>
                 <GraduationCap size={28} color={iconColors[i]} />
 
                 <Typography
