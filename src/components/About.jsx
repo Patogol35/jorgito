@@ -38,7 +38,6 @@ export default function About({ t }) {
             px: 3,
             py: 1,
             borderRadius: "999px",
-
             background: theme.palette.action.hover,
             backdropFilter: "blur(6px)",
           }}
@@ -66,47 +65,81 @@ export default function About({ t }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
+              whileHover={{ y: -6, scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >
               <Box
-  sx={{
-    textAlign: "center",
-    px: 2,
-    py: 2,
-    borderRadius: "16px",
+                sx={{
+                  position: "relative",
+                  textAlign: "center",
+                  px: 3,
+                  py: 3,
+                  borderRadius: "16px",
 
-    background: theme.palette.background.paper,
+                  // 🔥 Fondo con gradiente sutil
+                  background: `linear-gradient(145deg, ${theme.palette.background.paper}, ${theme.palette.action.hover})`,
 
-    // 🔥 borde azul SIEMPRE (igual que todas)
-    border: `1px solid ${primary}`,
+                  // 🔥 Borde más suave
+                  border: `1px solid ${theme.palette.divider}`,
 
-    transition:
-      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+                  // 🔥 Transición más fluida
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 
-    "&:hover": {
-      transform: "translateY(-4px)", // 🔥 mismo movimiento
-      boxShadow: theme.shadows[3],   // 🔥 misma sombra
-    },
+                  "&:hover": {
+                    transform: "translateY(-6px)",
+                    boxShadow: `0 10px 25px rgba(0,0,0,0.1)`,
+                    borderColor: primary,
+                  },
 
-    "&:focus": { outline: "none" },
-    "&:focus-visible": { outline: "none" },
-  }}
->
-                <GraduationCap size={28} color={iconColors[i]} />
+                  // 🔥 Línea decorativa superior
+                  "&::before": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "3px",
+                    borderTopLeftRadius: "16px",
+                    borderTopRightRadius: "16px",
+                    background: primary,
+                  },
+                }}
+              >
+                {/* 🔥 Ícono con fondo circular */}
+                <Box
+                  sx={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto",
+                    mb: 1.5,
+                    background: `${iconColors[i]}22`,
+                  }}
+                >
+                  <GraduationCap size={24} color={iconColors[i]} />
+                </Box>
 
                 <Typography
                   variant="subtitle1"
-                  sx={{ fontWeight: "bold", mt: 1 }}
+                  sx={{ fontWeight: 700, mt: 1 }}
                 >
                   {est.titulo}
                 </Typography>
 
-                <Typography variant="body2" color={secondary}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: secondary, opacity: 0.8 }}
+                >
                   {est.institucion}
                 </Typography>
 
-                <Typography variant="body2" color={secondary}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: secondary, opacity: 0.8 }}
+                >
                   {est.detalle}
                 </Typography>
               </Box>
