@@ -13,43 +13,20 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta individual
+// Tarjeta individual (NO TOCAR)
 // =====================
-function ProjectCard({ p, i, palette, primary }) {
-  const theme = useTheme();
+function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: i * 0.1 }}
-        whileHover={{ y: -5, scale: 1.05 }}
+        transition={{ duration: 0.8, delay: i * 0.12 }}
+        viewport={{ once: false }}
       >
-        <Box
-          sx={{
-            textAlign: "center",
-            px: 2,
-            py: 2,
-            borderRadius: "16px",
-            background: palette.background.paper,
-
-            // 🔥 borde azul SIEMPRE (igual certificaciones)
-            border: `1px solid ${primary}`,
-
-            transition:
-              "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
-
-            "&:hover": {
-              transform: "translateY(-4px)",
-              boxShadow: theme.shadows[3],
-            },
-
-            "&:focus": { outline: "none" },
-            "&:focus-visible": { outline: "none" },
-          }}
-        >
+        <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
@@ -61,7 +38,6 @@ function ProjectCard({ p, i, palette, primary }) {
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
-                transition: "color 0.2s ease",
                 "&:hover": { color: p.color },
               }}
             >
@@ -78,12 +54,14 @@ function ProjectCard({ p, i, palette, primary }) {
 // Componente principal
 // =====================
 export default function Projects({ t }) {
-  const theme = useTheme();
-  const primary = theme.palette.primary.main;
+  const { palette } = useTheme();
+  const isDark = palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+  /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  // 🔥 colores (se mantienen)
+  /* 🔥 tus colores originales */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -94,7 +72,7 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  // 🔥 iconos (se mantienen)
+  /* 🔥 tus iconos originales */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -105,6 +83,7 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
+  /* 🔥 construimos proyectos SIN romper nada */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -117,10 +96,12 @@ export default function Projects({ t }) {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
+        color: palette.text.primary,
       }}
     >
-      {/* ================= HEADER ================= */}
+      {/* =========================
+          TÍTULO
+      ========================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -131,42 +112,39 @@ export default function Projects({ t }) {
           sx={{
             display: "inline-flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 1,
+            py: 0.9,
             borderRadius: "999px",
-            background: theme.palette.action.hover,
-            border: `1px solid ${theme.palette.divider}`,
+            background: isDark
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
+            border: `1px solid ${
+              isDark
+                ? "rgba(144,202,249,0.25)"
+                : "rgba(25,118,210,0.25)"
+            }`,
             backdropFilter: "blur(6px)",
           }}
         >
-          <WorkOutlineIcon sx={{ fontSize: 22, color: primary }} />
+          <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
 
           <Typography
             variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: primary,
-              lineHeight: 1,
-            }}
+            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
             {t.projects.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* ================= GRID ================= */}
+      {/* Grid — SIN CAMBIOS */}
       <Grid container spacing={3} justifyContent="center">
         {proyectos.map((p, i) => (
-          <ProjectCard
-            key={i}
-            p={p}
-            i={i}
-            palette={theme.palette}
-            primary={primary}
-          />
+          <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
       </Grid>
     </Box>
   );
-    }
+}
