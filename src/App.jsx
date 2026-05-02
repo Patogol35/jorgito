@@ -26,16 +26,19 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
+  // 🌙 Tema
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
 
+  // 🌐 Idioma
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
 
+  // Persistencia
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -46,7 +49,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 THEME MEJORADO
+  // 🎨 THEME PRO (ajustado)
   const theme = useMemo(
     () =>
       createTheme({
@@ -62,14 +65,19 @@ function App() {
             default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
             paper: mode === "dark" ? "#121212" : "#ffffff",
           },
+          text: {
+            primary: mode === "dark" ? "#ffffff" : "#111111",
+          },
         },
         typography: {
           fontFamily: "Poppins, Roboto, sans-serif",
           h2: { fontWeight: 700 },
           h4: { fontWeight: 600 },
         },
+
+        // 🔥 FIX IMPORTANTE
         shape: {
-          borderRadius: 14, // 🔥 más moderno
+          borderRadius: 12, // antes 16 → ahora más elegante
         },
       }),
     [mode]
@@ -117,45 +125,26 @@ function App() {
               elevation={0}
               sx={(theme) => ({
                 mb: 4,
+
+                // 🔥 padding más equilibrado
                 p: { xs: 3, md: 5 },
+
+                // 🔥 FIX REAL DEL PROBLEMA
                 borderRadius: { xs: 3, md: 4 },
 
                 backgroundColor: theme.palette.background.paper,
 
-                // 🔥 BORDE ELEGANTE (ANTES ERA 2px FUERTE)
-                border: "1px solid",
-                borderColor: theme.palette.divider,
-
-                // 🔥 EFECTO PREMIUM
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+                border: `2px solid ${color}`,
 
                 scrollMarginTop: scrollOffset,
                 transition: "all 0.25s ease",
 
-                // 🔥 LINEA SUPERIOR ELEGANTE (detalle pro)
-                position: "relative",
-                "&::before": {
-                  content: '""',
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "3px",
-                  background: color,
-                  borderTopLeftRadius: 12,
-                  borderTopRightRadius: 12,
-                  opacity: 0.8,
-                },
-
                 "&:hover": {
-                  transform: "translateY(-6px)",
+                  transform: "translateY(-4px)",
                   boxShadow:
                     theme.palette.mode === "light"
-                      ? "0 12px 28px rgba(0,0,0,0.08)"
-                      : "0 12px 28px rgba(0,0,0,0.6)",
+                      ? "0 6px 16px rgba(0,0,0,0.08)"
+                      : "0 6px 16px rgba(0,0,0,0.5)",
                 },
               })}
             >
@@ -176,14 +165,13 @@ function App() {
               right: 16,
               zIndex: 1000,
               bgcolor: "#25D366",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.3)",
               "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 30, color: "#fff" }} />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
@@ -191,6 +179,9 @@ function App() {
         <Tooltip title="Cambiar idioma" placement="left">
           <Fab
             aria-label="idioma"
+            disableRipple
+            disableFocusRipple
+            disableTouchRipple
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             sx={(theme) => ({
               position: "fixed",
@@ -205,10 +196,9 @@ function App() {
               width: 52,
               height: 52,
               fontWeight: 800,
-              fontSize: "0.9rem",
+              fontSize: "1rem",
               letterSpacing: "1px",
-
-              boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+              boxShadow: "none",
 
               "&:hover": {
                 bgcolor:
