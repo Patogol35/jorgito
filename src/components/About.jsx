@@ -5,12 +5,16 @@ import { useTheme } from "@mui/material/styles";
 
 export default function About({ t }) {
   const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const primary = theme.palette.primary.main;
   const secondary = theme.palette.text.secondary;
+  const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
+  /* 🔥 textos desde i18n */
   const estudios = t.about.studies;
 
+  /* 🔥 COLORES ORIGINALES (NO SE TOCAN) */
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
@@ -22,7 +26,6 @@ export default function About({ t }) {
         color: theme.palette.text.primary,
       }}
     >
-      {/* ================= HEADER ================= */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -36,69 +39,44 @@ export default function About({ t }) {
             justifyContent: "center",
             gap: 1,
             px: 3,
-            py: 1,
+            py: 0.9,
             borderRadius: "999px",
-
-            background: theme.palette.action.hover,
+            background: isDark
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
+            border: `1px solid ${
+              isDark
+                ? "rgba(144,202,249,0.25)"
+                : "rgba(25,118,210,0.25)"
+            }`,
             backdropFilter: "blur(6px)",
           }}
         >
-          <GraduationCap size={22} color={primary} />
+          <GraduationCap size={22} color={primaryColor} />
 
           <Typography
             variant="h6"
-            sx={{
-              fontWeight: "bold",
-              color: primary,
-              lineHeight: 1,
-            }}
+            sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
           >
             {t.about.title}
           </Typography>
         </Box>
       </motion.div>
 
-      {/* ================= GRID ================= */}
       <Grid container spacing={3} justifyContent="center">
         {estudios.map((est, i) => (
           <Grid item xs={12} sm={6} md={4} key={i}>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              whileHover={{ y: -5, scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.8, delay: i * 0.3 }}
+              viewport={{ once: false }}
             >
-              <Box
-  sx={{
-    textAlign: "center",
-    px: 2,
-    py: 2,
-    borderRadius: "16px",
-
-    background: theme.palette.background.paper,
-
-    // 🔥 borde azul SIEMPRE (igual que todas)
-    border: `1px solid ${primary}`,
-
-    transition:
-      "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
-
-    "&:hover": {
-      transform: "translateY(-4px)", // 🔥 mismo movimiento
-      boxShadow: theme.shadows[3],   // 🔥 misma sombra
-    },
-
-    "&:focus": { outline: "none" },
-    "&:focus-visible": { outline: "none" },
-  }}
->
+              <Box sx={{ textAlign: "center", px: 1 }}>
+                {/* 🔥 AQUÍ ESTÁ EL FIX */}
                 <GraduationCap size={28} color={iconColors[i]} />
 
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontWeight: "bold", mt: 1 }}
-                >
+                <Typography variant="subtitle1" sx={subtitleStyle}>
                   {est.titulo}
                 </Typography>
 
