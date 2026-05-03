@@ -20,7 +20,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 /* =========================
-   🎬 Animaciones
+   ANIMACIONES
 ========================= */
 
 const easeOutExpo = [0.16, 1, 0.3, 1];
@@ -65,7 +65,54 @@ const containerAnim = {
   },
 };
 
-/* ========================= */
+/* =========================
+   DATA
+========================= */
+
+const categories = [
+  "All",
+  "Frontend",
+  "Backend",
+  "Database",
+  "Cloud",
+  "Tools",
+];
+
+const skills = [
+  { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+  { name: "Spring", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
+  { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+  { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+  { name: "Postgres", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },
+  { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
+  { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
+  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
+  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
+  { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
+  { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
+  { name: "Git", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
+  { name: "MS Office", category: "Tools", img: "https://i.imgur.com/8EBPyBH.png" },
+  { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
+  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"},
+  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
+  { name: "NextDNS", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nextdns.svg" },
+];
+
+const categoryIcons = {
+  All: <AllInclusiveIcon fontSize="small" />,
+  Frontend: <CodeIcon fontSize="small" />,
+  Backend: <BuildCircleIcon fontSize="small" />,
+  Database: <StorageIcon fontSize="small" />,
+  Cloud: <CloudQueueIcon fontSize="small" />,
+  Tools: <BuildIcon fontSize="small" />,
+};
+
+/* =========================
+   COMPONENT
+========================= */
 
 export default function Skills({ t }) {
   const [filter, setFilter] = useState("All");
@@ -207,13 +254,13 @@ export default function Skills({ t }) {
                   <motion.div
                     layout
                     variants={fadeCard}
-                    initial={false} // 🔥 elimina flash
+                    initial={false}
                     animate="visible"
                     exit={{ opacity: 0, scale: 0.9 }}
                     whileHover={{ y: -6, scale: 1.04 }}
-                    style={{ willChange: "transform, opacity" }}
                   >
                     <Paper
+                      elevation={0}
                       sx={{
                         p: 3,
                         textAlign: "center",
@@ -224,12 +271,7 @@ export default function Skills({ t }) {
                             ? "rgba(255,255,255,0.15)"
                             : "rgba(0,0,0,0.12)"
                         }`,
-                        transition:
-                          "background-color 0.3s ease, border 0.3s ease, transform 0.25s ease",
-                        "&:hover": {
-                          transform: "translateY(-4px)",
-                          borderColor: primary,
-                        },
+                        transition: "background-color 0.3s ease, border 0.3s ease",
                       }}
                     >
                       <Box
@@ -272,4 +314,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-}
+                      }
