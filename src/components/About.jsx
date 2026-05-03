@@ -11,30 +11,20 @@ export default function About({ t }) {
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
-  /* 🔥 textos desde i18n */
   const estudios = t.about.studies;
-
-  /* 🔥 COLORES ORIGINALES (NO SE TOCAN) */
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
     <Box
       id="about"
-      sx={(theme) => ({
+      sx={{
         py: 4,
         scrollMarginTop: "80px",
-
         color: theme.palette.text.primary,
 
-        // 🔥 FIX: evita flash blanco
-        backgroundColor: theme.palette.background.paper,
-
-        // 🔥 transición suave entre temas
-        transition: "background-color 0.2s ease, color 0.2s ease",
-
-        // 🔥 optimización render
-        willChange: "background-color",
-      })}
+        // 🔥 IMPORTANTE: sin fondo
+        backgroundColor: "transparent",
+      }}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
@@ -52,7 +42,6 @@ export default function About({ t }) {
             py: 0.9,
             borderRadius: "999px",
 
-            // 🔥 leve ajuste para evitar mezcla con blanco
             background: isDark
               ? "rgba(144,202,249,0.08)"
               : "rgba(25,118,210,0.08)",
@@ -62,6 +51,8 @@ export default function About({ t }) {
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
+
+            // ⚠️ opcional: puedes quitar esto si quieres cero artefactos
             backdropFilter: "blur(6px)",
           }}
         >
