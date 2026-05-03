@@ -228,49 +228,35 @@ export default function Skills({ t }) {
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.35 }}
                     >
-                      <Paper sx={{
-                        p: 3,
-                        textAlign: "center",
-                        borderRadius: "22px",
-                        background: cardBg,
-                        border: `1px solid ${
-                          isDark
-                            ? "rgba(255,255,255,0.15)"
-                            : "rgba(0,0,0,0.12)"
-                        }`,
-                        "&:hover": {
-                          transform: "translateY(-4px)",
-                          borderColor: theme.palette.primary.main,
-                        },
-                      }}>
-                        <Box
-  component={motion.img}
-  src={skill.img}
-  alt={skill.name}
-  whileHover={{
-    scale: 1.12,
-    rotate: [0, 3, -3, 2, 0],
-    y: -4,
-  }}
-  whileTap={{
-    scale: 0.94,
-    rotate: 180,
-  }}
-  transition={{
-    type: "spring",
-    stiffness: 200,
-    damping: 16,
-  }}
+                      <Paper
   sx={{
-    width: 65,
-    height: 65,
-    mb: 2,
-    objectFit: "contain",
-    filter: isDark
-      ? "invert(1) brightness(1.22)"
-      : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+    p: 3,
+    textAlign: "center",
+    borderRadius: "22px",
+    background: cardBg,
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.15)"
+        : "rgba(0,0,0,0.12)"
+    }`,
+
+    // 🔥 SOLO animar lo necesario
+    transition:
+      "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+
+    // 🔥 mejora render (evita flicker)
+    willChange: "transform",
+
+    "&:hover": {
+      transform: "translateY(-4px)",
+      borderColor: theme.palette.primary.main,
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 10px 30px rgba(0,0,0,0.6)"
+          : "0 10px 25px rgba(0,0,0,0.15)",
+    },
   }}
-/>
+>
 
 <Typography fontWeight="bold">
   {skill.name}
