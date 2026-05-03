@@ -36,6 +36,7 @@ function App() {
 
   const scrollOffset = "80px";
 
+  // 🔥 PERSISTENCIA
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -44,9 +45,27 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  // 🔥 FIX GLOBAL FLASH (CLAVE)
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      * {
+        transition: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // fuerza reflow
+    window.getComputedStyle(document.body);
+
+    setTimeout(() => {
+      document.head.removeChild(style);
+    }, 50);
+  }, [mode]);
+
   const t = translations[lang] || translations["es"];
 
-  // 🔥 THEME FIX (SIN TRANSPARENCIAS)
+  // 🎨 THEME ESTABLE
   const theme = useMemo(
     () =>
       createTheme({
@@ -119,19 +138,17 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
 
-                // 🔥 BASE SÓLIDA (FIX REAL)
+                // 🔥 FONDO SÓLIDO (SIN FLASH)
                 backgroundColor:
                   theme.palette.mode === "dark"
                     ? "#121212"
                     : "#ffffff",
 
-                // 🔥 GLASS CONTROLADO (SIN FLASH)
+                // 🔥 EFECTO SUAVE SIN BLUR
                 backgroundImage:
                   theme.palette.mode === "dark"
-                    ? "linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04))"
-                    : "linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.02))",
-
-                backdropFilter: "blur(6px)",
+                    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
+                    : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
 
                 border: `1.5px solid ${color}33`,
 
