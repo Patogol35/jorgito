@@ -166,6 +166,56 @@ export default function Skills({ t }) {
             </Box>
           </motion.div>
 
+          {/* 🔥 FILTROS */}
+          <motion.div variants={fadeCinematic}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+              <Box ref={containerRef} sx={{ overflowX: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
+                <ToggleButtonGroup
+                  value={filter}
+                  exclusive
+                  onChange={(e, val) => val && setFilter(val)}
+                  sx={{ display: "inline-flex", gap: 1.2 }}
+                >
+                  {categories.map((cat) => (
+                    <ToggleButton
+                      key={cat}
+                      value={cat}
+                      ref={(el) => (buttonRefs.current[cat] = el)}
+                      component={motion.button}
+                      whileTap={{ scale: 0.92 }}
+                      sx={{
+                        borderRadius: "999px",
+                        px: 2.4,
+                        py: 1,
+                        fontWeight: 600,
+                        textTransform: "none",
+                        display: "flex",
+                        gap: 1,
+                        backgroundColor: isDark
+                          ? "rgba(255,255,255,0.04)"
+                          : "rgba(255,255,255,0.9)",
+                        border: `1px solid ${
+                          isDark
+                            ? "rgba(255,255,255,0.12)"
+                            : "rgba(0,0,0,0.12)"
+                        }`,
+                        "&.Mui-selected": {
+                          background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                          color: "#fff",
+                          borderColor: "transparent",
+                        },
+                      }}
+                    >
+                      {categoryIcons[cat]}
+                      {cat}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              </Box>
+            </Box>
+          </motion.div>
+
+
           {/* GRID */}
           <motion.div variants={fadeCinematic}>
             <Grid container spacing={4} justifyContent="center" sx={{ pt: 1 }}>
