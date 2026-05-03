@@ -23,13 +23,13 @@ export default function Footer({ t }) {
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
-  /* MISMO EFECTO DEL HERO */
+  /* 🎬 Animación optimizada (más fluida) */
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 16,
+      y: 20,
       clipPath: "inset(0 0 100% 0)",
-      filter: "blur(6px)",
+      filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
@@ -37,7 +37,7 @@ export default function Footer({ t }) {
       clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
       transition: {
-        duration: 0.9,
+        duration: 0.6,
         ease: easeOutExpo,
       },
     },
@@ -47,8 +47,8 @@ export default function Footer({ t }) {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.2,
+        staggerChildren: 0.1,
+        delayChildren: 0.15,
       },
     },
   };
@@ -80,20 +80,19 @@ export default function Footer({ t }) {
     [isDark]
   );
 
+  /* Separador SIN animación (más rendimiento) */
   const Separator = () => (
-    <MotionDiv variants={fadeCinematic}>
-      <Box
-        sx={{
-          width: 120,
-          height: 2,
-          mx: "auto",
-          my: 3,
-          borderRadius: 4,
-          background:
-            "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.85), rgba(255,255,255,0.12))",
-        }}
-      />
-    </MotionDiv>
+    <Box
+      sx={{
+        width: 120,
+        height: 2,
+        mx: "auto",
+        my: 3,
+        borderRadius: 4,
+        background:
+          "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.85), rgba(255,255,255,0.12))",
+      }}
+    />
   );
 
   return (
@@ -139,7 +138,7 @@ export default function Footer({ t }) {
           variants={footerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-80px" }}
         >
           {/* NOMBRE */}
           <MotionDiv variants={fadeCinematic}>
@@ -180,11 +179,11 @@ export default function Footer({ t }) {
           <MotionDiv variants={fadeCinematic}>
             <Box sx={{ mb: 3 }}>
               <SocialLinks
-  socialLinks={socialLinks}
-  size="30px"
-  animated={false}
-  spacing={2.2}
-/>
+                socialLinks={socialLinks}
+                size="30px"
+                animated={false}
+                spacing={2.2}
+              />
             </Box>
           </MotionDiv>
 
