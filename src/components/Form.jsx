@@ -202,27 +202,24 @@ export default function Form({ t }) {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Button
-              type="submit"
-              startIcon={<SendIcon />}
-              sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 5,
-                py: 1.4,
-                color:
-                  theme.palette.mode === "light"
-                    ? "#ffffff"
-                    : "#020617",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "none",
-                "&:hover": {
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  transform: "scale(1.04)",
-                },
-                transition: "transform 0.2s ease",
-              }}
-            >
+  type="submit"
+  startIcon={<SendIcon />}
+  sx={{
+    borderRadius: "25px",
+    textTransform: "none",
+    fontWeight: "bold",
+    px: 5,
+    py: 1.4,
+    color: "#ffffff",
+    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+    boxShadow: "none",
+    "&:hover": {
+      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+      transform: "scale(1.04)",
+    },
+    transition: "transform 0.2s ease",
+  }}
+>
               {formText.button}
             </Button>
           </motion.div>
