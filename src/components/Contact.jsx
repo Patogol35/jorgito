@@ -187,11 +187,7 @@ export default function Contact({ t }) {
           </motion.div>
 
           {/* Redes sociales */}
-          {/* Redes sociales */}
-<motion.div
-  variants={fadeCinematic}
-  viewport={{ once: true, margin: "-50px" }}
->
+          <motion.div variants={fadeCinematic}>
   <SocialLinks
     socialLinks={socialLinks}
     size="48px"
