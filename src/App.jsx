@@ -131,59 +131,54 @@ function App() {
 
     backgroundColor: theme.palette.background.paper,
 
-    // 🔥 BORDE MÁS CLARO Y ELEGANTE
-    border: `1.5px solid ${color}55`, // antes 30 → ahora más visible
-
-    // 🔥 GLOW MÁS DEFINIDO
-    boxShadow:
-      theme.palette.mode === "light"
-        ? `0 6px 18px rgba(0,0,0,0.06),
-           0 0 0 1px ${color}35`
-        : `0 6px 20px rgba(0,0,0,0.5),
-           0 0 0 1px ${color}40`,
+    // 🔥 BORDE CLARO Y ELEGANTE
+    border: `1.5px solid ${color}60`,
 
     position: "relative",
     overflow: "hidden",
 
-    // 🔥 ACCENT TOP BORDER (ULTRA PRO)
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "3px",
-      background: `linear-gradient(90deg, ${color}, ${color}88, transparent)`,
-    },
-
-    // 🔥 BORDE INTERNO SUAVE
+    // 🔥 BORDE INTERNO PREMIUM (más visible)
     "&::before": {
       content: '""',
       position: "absolute",
       inset: 0,
       borderRadius: "inherit",
       padding: "1px",
-      background: `linear-gradient(135deg, ${color}66, transparent 70%)`,
+      background: `linear-gradient(135deg, ${color}80, transparent 70%)`,
       WebkitMask:
         "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
       WebkitMaskComposite: "xor",
       maskComposite: "exclude",
+      opacity: 0.6,
+      transition: "opacity 0.3s ease",
       pointerEvents: "none",
     },
 
-    scrollMarginTop: scrollOffset,
-    transition: "all 0.3s ease",
+    // 🔥 GLOW BASE
+    boxShadow:
+      theme.palette.mode === "light"
+        ? `0 5px 16px rgba(0,0,0,0.06)`
+        : `0 6px 18px rgba(0,0,0,0.5)`,
 
+    scrollMarginTop: scrollOffset,
+    transition: "all 0.35s ease",
+
+    // 🔥 EFECTO PRO HOVER (aquí está la magia)
     "&:hover": {
       transform: "translateY(-6px)",
 
-      // 🔥 HOVER MÁS CLARO
+      border: `1.5px solid ${color}90`, // más intenso al hover
+
       boxShadow:
         theme.palette.mode === "light"
-          ? `0 12px 28px rgba(0,0,0,0.1),
-             0 0 0 1.5px ${color}70`
-          : `0 12px 30px rgba(0,0,0,0.6),
-             0 0 0 1.5px ${color}80`,
+          ? `0 14px 30px rgba(0,0,0,0.12),
+             0 0 12px ${color}40`
+          : `0 14px 32px rgba(0,0,0,0.7),
+             0 0 14px ${color}60`,
+
+      "&::before": {
+        opacity: 1, // 🔥 se ilumina el borde interno
+      },
     },
   })}
 >
