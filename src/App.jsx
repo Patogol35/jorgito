@@ -190,8 +190,9 @@ function App() {
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      top: 150, // ← debajo del navbar y delante del idioma
-      right: 16,
+      top: 90,      // mismo nivel que idioma
+      right: 80,    // ← más a la izquierda
+
       zIndex: 1200,
 
       bgcolor:
@@ -203,6 +204,7 @@ function App() {
       width: 52,
       height: 52,
       boxShadow: "none",
+      transition: "background-color 0.3s ease",
 
       "&:hover": {
         bgcolor:
