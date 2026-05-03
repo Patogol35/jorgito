@@ -169,23 +169,22 @@ export default function Navbar({ mode, setMode, t }) {
         <AppBar
   position="fixed"
   elevation={scrolled ? 6 : 2}
-  sx={(theme) => ({
-    backgroundColor: scrolled
-      ? theme.palette.primary.dark
-      : theme.palette.background.paper,
+  sx={{
+    backgroundColor:
+      mode === "dark"
+        ? "#121212"
+        : scrolled
+        ? theme.palette.primary.dark
+        : theme.palette.primary.main,
 
-    color: theme.palette.text.primary,
+    transition: "background-color 0.25s ease, box-shadow 0.25s ease",
 
-    transition: "background-color 0.35s ease, color 0.35s ease",
+    willChange: "background-color",
+    backfaceVisibility: "hidden",
 
-    backdropFilter: "blur(10px)", // 🔥 opcional pero pro
-
-    boxShadow: scrolled
-      ? "0 4px 16px rgba(0,0,0,0.25)"
-      : "none",
-
+    boxShadow: scrolled ? "0 4px 16px rgba(0,0,0,0.25)" : "none",
     zIndex: 1400,
-  })}
+  }}
 >
           <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
             {/* Logo */}
