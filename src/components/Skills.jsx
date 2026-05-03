@@ -23,24 +23,12 @@ import { motion } from "framer-motion";
    🎬 ANIMACIONES
 ========================= */
 
-const easeOutExpo = [0.16, 1, 0.3, 1];
-
 const fadeCinematic = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: easeOutExpo },
-  },
-};
-
-const containerMotion = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.06,
-      delayChildren: 0.15,
-    },
+    transition: { duration: 0.6 },
   },
 };
 
@@ -115,76 +103,45 @@ export default function Skills({ t }) {
     [filter]
   );
 
-  const cardBg = isDark
-    ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.9)";
-
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="skills"
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+        backgroundColor: theme.palette.background.default,
+        transition: "background-color 0.4s ease", // 🔥 anti flash global
+      }}
+    >
       <Container>
 
-        <motion.div
-          variants={containerMotion}
-          initial="hidden"
-          animate="visible"
-        >
+        <motion.div initial="hidden" animate="visible">
 
           {/* 🔥 TÍTULO */}
           <motion.div variants={fadeCinematic}>
-            <Box sx={{ textAlign: "center", mb: 4 }}>
-              <Box sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 1,
-                px: 3,
-                py: 1,
-                borderRadius: "999px",
-                backdropFilter: "blur(6px)",
-                transition: "all 0.35s ease",
-                background: isDark
-                  ? "rgba(144,202,249,0.08)"
-                  : "rgba(25,118,210,0.08)",
-              }}>
-                <BuildIcon sx={{ fontSize: 22 }} />
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  {t.skills.title}
-                </Typography>
-              </Box>
+            <Box textAlign="center" mb={4}>
+              <Typography variant="h6" fontWeight="bold">
+                {t.skills.title}
+              </Typography>
             </Box>
           </motion.div>
 
           {/* 🔥 FILTROS */}
           <motion.div variants={fadeCinematic}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-              <Box ref={containerRef} sx={{ overflowX: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
+            <Box display="flex" justifyContent="center" mb={6}>
+              <Box ref={containerRef} sx={{ overflowX: "auto" }}>
                 <ToggleButtonGroup
                   value={filter}
                   exclusive
                   onChange={(e, val) => val && setFilter(val)}
-                  sx={{ display: "inline-flex", gap: 1.2 }}
                 >
                   {categories.map((cat) => (
                     <ToggleButton
                       key={cat}
                       value={cat}
                       ref={(el) => (buttonRefs.current[cat] = el)}
-                      sx={{
-                        borderRadius: "999px",
-                        px: 2.4,
-                        py: 1,
-                        fontWeight: 600,
-                        textTransform: "none",
-                        display: "flex",
-                        gap: 1,
-                        transition: "all 0.3s ease",
-                        "&.Mui-selected": {
-                          background: theme.palette.primary.main,
-                          color: "#fff",
-                        },
-                      }}
                     >
-                      {categoryIcons[cat]}
-                      {cat}
+                      {categoryIcons[cat]} {cat}
                     </ToggleButton>
                   ))}
                 </ToggleButtonGroup>
@@ -203,12 +160,11 @@ export default function Skills({ t }) {
                         p: 3,
                         textAlign: "center",
                         borderRadius: "20px",
-                        background: cardBg,
-                        transition: "all 0.35s ease",
-                        willChange: "transform, background",
+                        backgroundColor: theme.palette.background.paper,
+                        transition: "all 0.4s ease",
+                        willChange: "transform, background-color",
                         "&:hover": {
                           transform: "translateY(-6px)",
-                          borderColor: theme.palette.primary.main,
                         },
                       }}
                     >
@@ -217,15 +173,12 @@ export default function Skills({ t }) {
                         src={skill.img}
                         alt={skill.name}
                         whileHover={{ scale: 1.1 }}
-                        transition={{ type: "spring", stiffness: 180 }}
                         sx={{
                           width: 65,
                           height: 65,
                           mb: 2,
                           objectFit: "contain",
-                          transition: "all 0.3s ease",
-                          // 👇 quitamos flicker fuerte
-                          filter: isDark ? "brightness(1.1)" : "none",
+                          transition: "transform 0.3s ease",
                         }}
                       />
 
@@ -244,4 +197,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-}
+                  }
