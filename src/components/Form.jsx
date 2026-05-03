@@ -26,7 +26,6 @@ export default function Form({ t }) {
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
-  // 🔥 TEXTO SEGURO
   const formText = t?.form || {
     title: "Contacto por Email",
     subtitle: "Ponte en contacto conmigo a través de este formulario",
@@ -58,32 +57,20 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  // 🔥 ANIMACIONES HERO STYLE
+  // 🔥 ANIMACIÓN SUAVE (SIN ROMPER DISEÑO)
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
       y: 16,
-      clipPath: "inset(0 0 100% 0)",
       filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
-      transition: { duration: 0.9, ease: easeOutExpo },
-    },
-  };
-
-  const containerStagger = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.4,
-      },
+      transition: { duration: 0.7, ease: easeOutExpo },
     },
   };
 
@@ -91,151 +78,157 @@ export default function Form({ t }) {
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* 🔥 TITULO + SUBTITULO */}
+        {/* ================= TÍTULO ================= */}
         <motion.div
-          variants={containerStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <motion.div variants={fadeCinematic}>
-            <Box
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1,
-                px: 3,
-                py: 0.9,
-                borderRadius: "999px",
-                background: isDark
-                  ? "rgba(144,202,249,0.06)"
-                  : "rgba(25,118,210,0.06)",
-                border: `1px solid ${
-                  isDark
-                    ? "rgba(144,202,249,0.25)"
-                    : "rgba(25,118,210,0.25)"
-                }`,
-                backdropFilter: "blur(6px)",
-                mx: "auto",
-                mb: 2,
-              }}
-            >
-              <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: "bold", color: primaryColor }}
-              >
-                {formText.title}
-              </Typography>
-            </Box>
-          </motion.div>
-
-          <motion.div variants={fadeCinematic}>
-            <Typography
-              variant="subtitle1"
-              sx={{
-                textAlign: "center",
-                fontWeight: "bold",
-                mb: 4,
-              }}
-            >
-              {formText.subtitle}
-            </Typography>
-          </motion.div>
-        </motion.div>
-
-        {/* 🔥 FORM */}
-        <motion.div
-          variants={containerStagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
         >
           <Box
-            component="form"
-            ref={formRef}
-            onSubmit={handleSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
           >
-            {[
-              {
-                name: "from_name",
-                label: formText.fields.name,
-                icon: <PersonIcon sx={{ color: primaryColor }} />,
-              },
-              {
-                name: "from_email",
-                label: formText.fields.email,
-                type: "email",
-                icon: <EmailIcon sx={{ color: primaryColor }} />,
-              },
-              {
-                name: "message",
-                label: formText.fields.message,
-                multiline: true,
-                rows: 4,
-                icon: <MessageIcon sx={{ color: primaryColor }} />,
-              },
-            ].map((field) => (
-              <motion.div key={field.name} variants={fadeCinematic}>
-                <TextField
-                  {...field}
-                  fullWidth
-                  required
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment
-                        position="start"
-                        sx={
-                          field.multiline
-                            ? { alignSelf: "flex-start", mt: 1 }
-                            : {}
-                        }
-                      >
-                        {field.icon}
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={inputStyle(theme)}
-                />
-              </motion.div>
-            ))}
-
-            {/* BOTÓN */}
-            <motion.div
-              variants={fadeCinematic}
-              style={{ display: "flex", justifyContent: "center" }}
+            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
             >
-              <Button
-                type="submit"
-                startIcon={<SendIcon />}
-                sx={{
-                  borderRadius: "25px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                  color:
-                    theme.palette.mode === "light"
-                      ? "#ffffff"
-                      : "#020617",
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "none",
-                  "&:hover": {
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    transform: "scale(1.04)",
-                  },
-                  transition: "transform 0.2s ease",
-                }}
-              >
-                {formText.button}
-              </Button>
-            </motion.div>
+              {formText.title}
+            </Typography>
           </Box>
         </motion.div>
 
-        {/* ALERT */}
+        {/* ================= SUBTÍTULO ================= */}
+        <motion.div
+          variants={fadeCinematic}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <Typography
+            variant="subtitle1"
+            sx={{
+              textAlign: "center",
+              fontWeight: "bold",
+              mb: 4,
+            }}
+          >
+            {formText.subtitle}
+          </Typography>
+        </motion.div>
+
+        {/* ================= FORM ================= */}
+        <Box
+          component="form"
+          ref={formRef}
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
+          {[
+            {
+              name: "from_name",
+              label: formText.fields.name,
+              icon: <PersonIcon sx={{ color: primaryColor }} />,
+            },
+            {
+              name: "from_email",
+              label: formText.fields.email,
+              type: "email",
+              icon: <EmailIcon sx={{ color: primaryColor }} />,
+            },
+            {
+              name: "message",
+              label: formText.fields.message,
+              multiline: true,
+              rows: 4,
+              icon: <MessageIcon sx={{ color: primaryColor }} />,
+            },
+          ].map((field, i) => (
+            <motion.div
+              key={field.name}
+              variants={fadeCinematic}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.12 }}
+            >
+              <TextField
+                {...field}
+                fullWidth
+                required
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment
+                      position="start"
+                      sx={
+                        field.multiline
+                          ? { alignSelf: "flex-start", mt: 1 }
+                          : {}
+                      }
+                    >
+                      {field.icon}
+                    </InputAdornment>
+                  ),
+                }}
+                sx={inputStyle(theme)}
+              />
+            </motion.div>
+          ))}
+
+          {/* ================= BOTÓN ================= */}
+          <motion.div
+            variants={fadeCinematic}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <Button
+              type="submit"
+              startIcon={<SendIcon />}
+              sx={{
+                borderRadius: "25px",
+                textTransform: "none",
+                fontWeight: "bold",
+                px: 5,
+                py: 1.4,
+                color:
+                  theme.palette.mode === "light"
+                    ? "#ffffff"
+                    : "#020617",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: "none",
+                "&:hover": {
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  transform: "scale(1.04)",
+                },
+                transition: "transform 0.2s ease",
+              }}
+            >
+              {formText.button}
+            </Button>
+          </motion.div>
+        </Box>
+
+        {/* ================= ALERT ================= */}
         <Snackbar
           open={success}
           autoHideDuration={3500}
