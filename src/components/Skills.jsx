@@ -25,7 +25,6 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
-// 🔥 SOLO para títulos (NO tocar)
 const fadeCinematic = {
   hidden: {
     opacity: 0,
@@ -42,7 +41,6 @@ const fadeCinematic = {
   },
 };
 
-// ✅ NUEVA animación para CARDS (SIN clipPath)
 const fadeCard = {
   hidden: {
     opacity: 0,
@@ -170,7 +168,7 @@ export default function Skills({ t }) {
                   alignItems: "center",
                   gap: 1,
                   px: 3,
-                  py: 1,
+                  py: 0.9,
                   borderRadius: "999px",
                   background: isDark
                     ? "rgba(144,202,249,0.06)"
@@ -180,10 +178,14 @@ export default function Skills({ t }) {
                       ? "rgba(144,202,249,0.25)"
                       : "rgba(25,118,210,0.25)"
                   }`,
+                  backdropFilter: "blur(6px)",
                 }}
               >
                 <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-                <Typography fontWeight="bold" color={primaryColor}>
+                <Typography
+                  variant="h6"
+                  sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+                >
                   {t.skills.title}
                 </Typography>
               </Box>
@@ -192,18 +194,50 @@ export default function Skills({ t }) {
 
           {/* FILTROS */}
           <motion.div variants={fadeCinematic}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
-              <Box ref={containerRef} sx={{ overflowX: "auto" }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+              <Box
+                ref={containerRef}
+                sx={{
+                  overflowX: "auto",
+                  "&::-webkit-scrollbar": { display: "none" },
+                }}
+              >
                 <ToggleButtonGroup
                   value={filter}
                   exclusive
                   onChange={(e, val) => val && setFilter(val)}
+                  sx={{ gap: 1.2, py: 0.5 }}
                 >
                   {categories.map((cat) => (
                     <ToggleButton
                       key={cat}
                       value={cat}
                       ref={(el) => (buttonRefs.current[cat] = el)}
+                      component={motion.button}
+                      whileTap={{ scale: 0.92 }}
+                      sx={{
+                        borderRadius: "999px",
+                        px: 2.4,
+                        py: 1,
+                        fontWeight: 600,
+                        fontSize: "0.9rem",
+                        textTransform: "none",
+                        display: "flex",
+                        gap: 1,
+                        backgroundColor: isDark
+                          ? "rgba(255,255,255,0.04)"
+                          : "rgba(255,255,255,0.9)",
+                        border: `1px solid ${
+                          isDark
+                            ? "rgba(255,255,255,0.12)"
+                            : "rgba(0,0,0,0.12)"
+                        }`,
+                        "&.Mui-selected": {
+                          background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                          color: "#fff",
+                          borderColor: "transparent",
+                        },
+                      }}
                     >
                       {categoryIcons[cat]} {cat}
                     </ToggleButton>
@@ -214,14 +248,14 @@ export default function Skills({ t }) {
           </motion.div>
 
           {/* GRID */}
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             <AnimatePresence mode="popLayout">
               {filteredSkills.map((skill) => (
                 <Grid item xs={6} sm={4} md={3} key={skill.name}>
                   <motion.div
                     layout
                     variants={fadeCard}
-                    initial="hidden"
+                    initial={false}   // 🔥 clave anti-parpadeo
                     animate="visible"
                     exit={{ opacity: 0, scale: 0.9 }}
                     whileHover={{ y: -6, scale: 1.04 }}
@@ -237,6 +271,11 @@ export default function Skills({ t }) {
                             ? "rgba(255,255,255,0.15)"
                             : "rgba(0,0,0,0.12)"
                         }`,
+                        transition: "all 0.25s ease",
+                        "&:hover": {
+                          transform: "translateY(-4px)",
+                          borderColor: primary,
+                        },
                       }}
                     >
                       <Box
@@ -244,14 +283,24 @@ export default function Skills({ t }) {
                         src={skill.img}
                         alt={skill.name}
                         whileHover={{
-                          scale: 1.15,
-                          rotate: [0, 5, -5, 0],
+                          scale: 1.12,
+                          rotate: [0, 3, -3, 2, 0],
+                          y: -4,
+                        }}
+                        whileTap={{ scale: 0.94, rotate: 180 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 16,
                         }}
                         sx={{
                           width: 65,
                           height: 65,
                           mb: 2,
                           objectFit: "contain",
+                          filter: isDark
+                            ? "invert(1) brightness(1.22)"
+                            : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
                         }}
                       />
 
@@ -269,4 +318,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-                      }
+   }
