@@ -105,15 +105,18 @@ export default function ChatBot() {
     bgcolor: primaryBg,
     color: "#fff",
 
+    transition: "background-color 0.25s ease",
+    willChange: "background-color",
+    backfaceVisibility: "hidden",
+
     "&:hover": {
       bgcolor: primaryBg,
     },
     "&:active": {
       bgcolor: primaryBg,
-      color: "#fff",
     },
     "&:focus": {
-      color: "#fff",
+      outline: "none",
     },
   }}
 >
