@@ -13,7 +13,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// Tarjeta individual (NO TOCAR)
+// Tarjeta individual (OPTIMIZADA)
 // =====================
 function ProjectCard({ p, i, palette }) {
   const Icon = p.icon;
@@ -23,8 +23,15 @@ function ProjectCard({ p, i, palette }) {
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: i * 0.12 }}
-        viewport={{ once: false }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+          delay: i * 0.08,
+        }}
+        viewport={{ once: true, margin: "-50px" }}
+        style={{
+          willChange: "transform, opacity",
+        }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
@@ -38,6 +45,7 @@ function ProjectCard({ p, i, palette }) {
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
+                transition: "color 0.2s ease",
                 "&:hover": { color: p.color },
               }}
             >
@@ -58,10 +66,8 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  /* 🔥 textos desde i18n */
   const proyectosText = t.projects.items;
 
-  /* 🔥 tus colores originales */
   const colors = [
     "#1976d2",
     "#9333ea",
@@ -72,7 +78,6 @@ export default function Projects({ t }) {
     "#10b981",
   ];
 
-  /* 🔥 tus iconos originales */
   const icons = [
     WbSunnyIcon,
     ShoppingCartIcon,
@@ -83,7 +88,6 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  /* 🔥 construimos proyectos SIN romper nada */
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i],
@@ -99,13 +103,12 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* =========================
-          TÍTULO
-      ========================= */}
+      {/* TÍTULO */}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true }}
         style={{ textAlign: "center", marginBottom: "2rem" }}
       >
         <Box
@@ -118,14 +121,14 @@ export default function Projects({ t }) {
             py: 0.9,
             borderRadius: "999px",
             background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
+              ? "rgba(144,202,249,0.08)"
+              : "rgba(25,118,210,0.08)",
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
-            backdropFilter: "blur(6px)",
+            backdropFilter: "blur(4px)",
           }}
         >
           <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
@@ -139,8 +142,8 @@ export default function Projects({ t }) {
         </Box>
       </motion.div>
 
-      {/* Grid — SIN CAMBIOS */}
-      <Grid container spacing={3} justifyContent="center">
+      {/* GRID */}
+      <Grid container spacing={2.5} justifyContent="center">
         {proyectos.map((p, i) => (
           <ProjectCard key={i} p={p} i={i} palette={palette} />
         ))}
