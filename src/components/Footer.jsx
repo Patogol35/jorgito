@@ -21,17 +21,50 @@ export default function Footer({ t }) {
   const { palette } = theme;
   const isDark = palette.mode === "dark";
 
+  const easeOutExpo = [0.16, 1, 0.3, 1];
+
+  /* MISMO EFECTO DEL HERO */
+  const fadeCinematic = {
+    hidden: {
+      opacity: 0,
+      y: 16,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(6px)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0 0 0% 0)",
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.9,
+        ease: easeOutExpo,
+      },
+    },
+  };
+
+  const footerContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.18,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
   const socialLinks = useMemo(
     () => [
       {
         icon: <GitHub />,
-        color: isDark ? "#ffffff" : "#ffffff",
+        color: "#ffffff",
         href: "https://github.com/Patogol35",
       },
       {
         icon: <LinkedIn />,
         color: isDark ? "#90caf9" : "#ffffff",
-        href: "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
+        href:
+          "https://www.linkedin.com/in/jorge-patricio-santamaría-cherrez-2a73792b2",
       },
       {
         icon: <Instagram />,
@@ -40,7 +73,7 @@ export default function Footer({ t }) {
       },
       {
         icon: <MailOutline />,
-        color: isDark ? "#ffffff" : "#ffffff",
+        color: "#ffffff",
         href: "mailto:patogol3535@gmail.com",
       },
     ],
@@ -48,17 +81,19 @@ export default function Footer({ t }) {
   );
 
   const Separator = () => (
-    <Box
-      sx={{
-        width: 120,
-        height: 2,
-        mx: "auto",
-        my: 3,
-        borderRadius: 4,
-        background:
-          "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.85), rgba(255,255,255,0.12))",
-      }}
-    />
+    <MotionDiv variants={fadeCinematic}>
+      <Box
+        sx={{
+          width: 120,
+          height: 2,
+          mx: "auto",
+          my: 3,
+          borderRadius: 4,
+          background:
+            "linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.85), rgba(255,255,255,0.12))",
+        }}
+      />
+    </MotionDiv>
   );
 
   return (
@@ -100,95 +135,86 @@ export default function Footer({ t }) {
           px: { xs: 2, sm: 3 },
         }}
       >
-        {/* NOMBRE */}
         <MotionDiv
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
+          variants={footerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              letterSpacing: "2px",
-              mb: 1,
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.98)",
-            }}
-          >
-            Jorge Patricio Santamaría Cherrez
-          </Typography>
-        </MotionDiv>
-
-        <Separator />
-
-        {/* ESLOGAN */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              mb: 2,
-              fontWeight: 500,
-              letterSpacing: "0.6px",
-              color: "rgba(255,255,255,0.92)",
-            }}
-          >
-            {t.footer.slogan}
-          </Typography>
-        </MotionDiv>
-
-        <Separator />
-
-        {/* REDES */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Box sx={{ mb: 3 }}>
-            <SocialLinks
-              socialLinks={socialLinks}
-              size="30px"
-              animated
-              spacing={2.2}
-            />
-          </Box>
-        </MotionDiv>
-
-        <Separator />
-
-        {/* CRÉDITOS */}
-        <MotionDiv
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          <Stack spacing={0.5}>
+          {/* NOMBRE */}
+          <MotionDiv variants={fadeCinematic}>
             <Typography
-              variant="caption"
+              variant="h6"
               sx={{
-                color: "rgba(255,255,255,0.9)",
-                letterSpacing: "0.5px",
+                fontWeight: 700,
+                letterSpacing: "2px",
+                mb: 1,
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.98)",
+              }}
+            >
+              Jorge Patricio Santamaría Cherrez
+            </Typography>
+          </MotionDiv>
+
+          <Separator />
+
+          {/* ESLOGAN */}
+          <MotionDiv variants={fadeCinematic}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                mb: 2,
                 fontWeight: 500,
+                letterSpacing: "0.6px",
+                color: "rgba(255,255,255,0.92)",
               }}
             >
-              {t.footer.credit}
+              {t.footer.slogan}
             </Typography>
+          </MotionDiv>
 
-            <Typography
-              variant="caption"
-              sx={{
-                color: "rgba(255,255,255,0.65)",
-                letterSpacing: "0.4px",
-              }}
-            >
-              © {new Date().getFullYear()} — {t.footer.rights}
-            </Typography>
-          </Stack>
+          <Separator />
+
+          {/* REDES */}
+          <MotionDiv variants={fadeCinematic}>
+            <Box sx={{ mb: 3 }}>
+              <SocialLinks
+                socialLinks={socialLinks}
+                size="30px"
+                animated
+                spacing={2.2}
+              />
+            </Box>
+          </MotionDiv>
+
+          <Separator />
+
+          {/* CRÉDITOS */}
+          <MotionDiv variants={fadeCinematic}>
+            <Stack spacing={0.5}>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "rgba(255,255,255,0.9)",
+                  letterSpacing: "0.5px",
+                  fontWeight: 500,
+                }}
+              >
+                {t.footer.credit}
+              </Typography>
+
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "rgba(255,255,255,0.65)",
+                  letterSpacing: "0.4px",
+                }}
+              >
+                © {new Date().getFullYear()} — {t.footer.rights}
+              </Typography>
+            </Stack>
+          </MotionDiv>
         </MotionDiv>
       </Box>
     </Box>
