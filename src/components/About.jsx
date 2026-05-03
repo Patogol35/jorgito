@@ -18,24 +18,24 @@ export default function About({ t }) {
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
-    return (
-  <Box
-    id="about"
-    sx={(theme) => ({
-      py: 4,
-      scrollMarginTop: "80px",
-      color: theme.palette.text.primary,
+    <Box
+      id="about"
+      sx={(theme) => ({
+        py: 4,
+        scrollMarginTop: "80px",
 
-      // 🔥 fondo sólido (fix flash)
-      backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.primary,
 
-      // 🔥 transición suave
-      transition: "background-color 0.2s ease, color 0.2s ease",
+        // 🔥 FIX: evita flash blanco
+        backgroundColor: theme.palette.background.paper,
 
-      // 🔥 optimización render
-      willChange: "background-color",
-    })}
-  >
+        // 🔥 transición suave entre temas
+        transition: "background-color 0.2s ease, color 0.2s ease",
+
+        // 🔥 optimización render
+        willChange: "background-color",
+      })}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -51,9 +51,12 @@ export default function About({ t }) {
             px: 3,
             py: 0.9,
             borderRadius: "999px",
+
+            // 🔥 leve ajuste para evitar mezcla con blanco
             background: isDark
-              ? "rgba(144,202,249,0.06)"
-              : "rgba(25,118,210,0.06)",
+              ? "rgba(144,202,249,0.08)"
+              : "rgba(25,118,210,0.08)",
+
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
@@ -83,7 +86,6 @@ export default function About({ t }) {
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
-                {/* 🔥 AQUÍ ESTÁ EL FIX */}
                 <GraduationCap size={28} color={iconColors[i]} />
 
                 <Typography variant="subtitle1" sx={subtitleStyle}>
