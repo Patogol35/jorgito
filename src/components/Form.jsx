@@ -57,26 +57,10 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  // 🔥 ANIMACIÓN SUAVE (SIN ROMPER DISEÑO)
+  // 🔥 ANIMACIONES
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
-const fadeCinematicTitle = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    clipPath: "inset(0 0 100% 0)",
-    filter: "blur(6px)",
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0 0 0% 0)",
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: easeOutExpo },
-  },
-};
-
     hidden: {
       opacity: 0,
       y: 16,
@@ -90,48 +74,64 @@ const fadeCinematicTitle = {
     },
   };
 
+  // 🔥 SOLO PARA EL TÍTULO
+  const fadeCinematicTitle = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(6px)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0 0 0% 0)",
+      filter: "blur(0px)",
+      transition: { duration: 0.7, ease: easeOutExpo },
+    },
+  };
+
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
         {/* ================= TÍTULO ================= */}
         <motion.div
-  variants={fadeCinematicTitle}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, margin: "-80px" }}
-  style={{ textAlign: "center", marginBottom: "2rem" }}
->
-  <Box
-    sx={{
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      px: 3,
-      py: 0.9,
-      borderRadius: "999px",
-      background: isDark
-        ? "rgba(144,202,249,0.06)"
-        : "rgba(25,118,210,0.06)",
-      border: `1px solid ${
-        isDark
-          ? "rgba(144,202,249,0.25)"
-          : "rgba(25,118,210,0.25)"
-      }`,
-      backdropFilter: "blur(6px)",
-    }}
-  >
-    <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-    <Typography
-      variant="h6"
-      sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-    >
-      {formText.title}
-    </Typography>
-  </Box>
-</motion.div>
+          variants={fadeCinematicTitle}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          style={{ textAlign: "center", marginBottom: "2rem" }}
+        >
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
+            >
+              {formText.title}
+            </Typography>
+          </Box>
+        </motion.div>
 
         {/* ================= SUBTÍTULO ================= */}
         <motion.div
@@ -220,24 +220,24 @@ const fadeCinematicTitle = {
             style={{ display: "flex", justifyContent: "center" }}
           >
             <Button
-  type="submit"
-  startIcon={<SendIcon />}
-  sx={{
-    borderRadius: "25px",
-    textTransform: "none",
-    fontWeight: "bold",
-    px: 5,
-    py: 1.4,
-    color: "#ffffff",
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-    boxShadow: "none",
-    "&:hover": {
-      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-      transform: "scale(1.04)",
-    },
-    transition: "transform 0.2s ease",
-  }}
->
+              type="submit"
+              startIcon={<SendIcon />}
+              sx={{
+                borderRadius: "25px",
+                textTransform: "none",
+                fontWeight: "bold",
+                px: 5,
+                py: 1.4,
+                color: "#ffffff",
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                boxShadow: "none",
+                "&:hover": {
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  transform: "scale(1.04)",
+                },
+                transition: "transform 0.2s ease",
+              }}
+            >
               {formText.button}
             </Button>
           </motion.div>
