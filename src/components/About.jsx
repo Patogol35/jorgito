@@ -11,7 +11,10 @@ export default function About({ t }) {
   const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
+  /* 🔥 textos desde i18n */
   const estudios = t.about.studies;
+
+  /* 🔥 COLORES ORIGINALES (NO SE TOCAN) */
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
@@ -22,7 +25,7 @@ export default function About({ t }) {
         scrollMarginTop: "80px",
         color: theme.palette.text.primary,
 
-        // 🔥 IMPORTANTE: sin fondo
+        // 🔥 IMPORTANTE: sin fondo (evita el cuadrado)
         backgroundColor: "transparent",
       }}
     >
@@ -42,6 +45,7 @@ export default function About({ t }) {
             py: 0.9,
             borderRadius: "999px",
 
+            // 🔥 leve mejora visual sin romper diseño
             background: isDark
               ? "rgba(144,202,249,0.08)"
               : "rgba(25,118,210,0.08)",
@@ -52,8 +56,8 @@ export default function About({ t }) {
                 : "rgba(25,118,210,0.25)"
             }`,
 
-            // ⚠️ opcional: puedes quitar esto si quieres cero artefactos
-            backdropFilter: "blur(6px)",
+            // ⚠️ Mantengo el blur pero más estable
+            backdropFilter: "blur(4px)",
           }}
         >
           <GraduationCap size={22} color={primaryColor} />
