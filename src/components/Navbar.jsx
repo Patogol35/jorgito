@@ -183,7 +183,6 @@ export default function Navbar({ mode, setMode, t }) {
             {/* Logo */}
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 
-
 <Typography
   variant="h6"
   sx={{
@@ -192,7 +191,7 @@ export default function Navbar({ mode, setMode, t }) {
     fontWeight: "bold",
     color: "#fff",
     cursor: "pointer",
-    lineHeight: 1, // 👈 ayuda a mantener alineación exacta
+    lineHeight: 1, 
   }}
   onClick={() => handleScrollTo("#hero")}
 >
@@ -208,8 +207,6 @@ export default function Navbar({ mode, setMode, t }) {
   </motion.div>
   Jorge Patricio
 </Typography>
-
-
               
             </motion.div>
 
@@ -258,18 +255,7 @@ export default function Navbar({ mode, setMode, t }) {
                 </motion.div>
               ))}
 
-              {/* Botón tema */}
-              <IconButton
-                onClick={toggleTheme}
-                sx={{ color: "#fff" }}
-                aria-label="Cambiar tema"
-              >
-                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-              </IconButton>
             </Box>
-
-
-
 
             {/* Botón menú móvil con animación */}
 <IconButton
@@ -383,25 +369,6 @@ export default function Navbar({ mode, setMode, t }) {
     </motion.a>
   ))}
 </Stack>
-
-              {/* Botones abajo redondos */}
-<Box
-  sx={{ display: "flex", gap: 2, mt: 3, justifyContent: "center" }}
->
-  <IconButton
-    onClick={toggleTheme}
-    sx={{
-      color: "#fff",
-      border: "1px solid #fff",
-      borderRadius: "50%",
-      width: 56,
-      height: 56,
-      "&:hover": { background: "rgba(255,255,255,0.12)" },
-    }}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </IconButton>
-</Box>
             </motion.div>
           </motion.div>
         )}
