@@ -18,6 +18,8 @@ import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
+const MotionDiv = motion.div;
+
 export default function Form({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -57,20 +59,32 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  // 🔥 ANIMACIÓN SUAVE (SIN ROMPER DISEÑO)
+  /* 🎬 SISTEMA UNIFICADO (igual que About) */
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
     hidden: {
       opacity: 0,
-      y: 16,
-      filter: "blur(6px)",
+      y: 20,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
       y: 0,
+      clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
-      transition: { duration: 0.7, ease: easeOutExpo },
+      transition: { duration: 0.6, ease: easeOutExpo },
+    },
+  };
+
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
+      },
     },
   };
 
@@ -78,185 +92,156 @@ export default function Form({ t }) {
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* ================= TÍTULO ================= */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-            >
-              {formText.title}
-            </Typography>
-          </Box>
-        </motion.div>
-
-        {/* ================= SUBTÍTULO ================= */}
-        <motion.div
-          variants={fadeCinematic}
+        <MotionDiv
+          variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
         >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              mb: 4,
-            }}
-          >
-            {formText.subtitle}
-          </Typography>
-        </motion.div>
 
-        {/* ================= FORM ================= */}
-        <Box
-          component="form"
-          ref={formRef}
-          onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-        >
-          {[
-            {
-              name: "from_name",
-              label: formText.fields.name,
-              icon: <PersonIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "from_email",
-              label: formText.fields.email,
-              type: "email",
-              icon: <EmailIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "message",
-              label: formText.fields.message,
-              multiline: true,
-              rows: 4,
-              icon: <MessageIcon sx={{ color: primaryColor }} />,
-            },
-          ].map((field, i) => (
-            <motion.div
-              key={field.name}
-              variants={fadeCinematic}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
+          {/* ===== TÍTULO ===== */}
+          <MotionDiv variants={fadeCinematic}>
+            <Box
+              sx={{
+                textAlign: "center",
+                mb: 3,
+              }}
             >
-              <TextField
-                {...field}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={
-                        field.multiline
-                          ? { alignSelf: "flex-start", mt: 1 }
-                          : {}
-                      }
-                    >
-                      {field.icon}
-                    </InputAdornment>
-                  ),
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 1,
+                  px: 3,
+                  py: 0.9,
+                  borderRadius: "999px",
+                  background: isDark
+                    ? "rgba(144,202,249,0.06)"
+                    : "rgba(25,118,210,0.06)",
+                  border: `1px solid ${
+                    isDark
+                      ? "rgba(144,202,249,0.25)"
+                      : "rgba(25,118,210,0.25)"
+                  }`,
+                  backdropFilter: "blur(6px)",
                 }}
-                sx={inputStyle(theme)}
-              />
-            </motion.div>
-          ))}
+              >
+                <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
 
-          {/* ================= BOTÓN ================= */}
-          <motion.div
-            variants={fadeCinematic}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    color: primaryColor,
+                  }}
+                >
+                  {formText.title}
+                </Typography>
+              </Box>
+            </Box>
+          </MotionDiv>
+
+          {/* ===== SUBTÍTULO ===== */}
+          <MotionDiv variants={fadeCinematic}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                textAlign: "center",
+                fontWeight: "bold",
+                mb: 4,
+              }}
+            >
+              {formText.subtitle}
+            </Typography>
+          </MotionDiv>
+
+          {/* ===== FORM ===== */}
+          <Box
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
-            <Button
-  type="submit"
-  startIcon={<SendIcon />}
-  sx={{
-    borderRadius: "25px",
-    textTransform: "none",
-    fontWeight: "bold",
-    px: 5,
-    py: 1.4,
-    color: "#ffffff",
-    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-    boxShadow: "none",
-    "&:hover": {
-      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-      transform: "scale(1.04)",
-    },
-    transition: "transform 0.2s ease",
-  }}
->
-              {formText.button}
-            </Button>
-          </motion.div>
-        </Box>
+            {[
+              {
+                name: "from_name",
+                label: formText.fields.name,
+                icon: <PersonIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "from_email",
+                label: formText.fields.email,
+                type: "email",
+                icon: <EmailIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "message",
+                label: formText.fields.message,
+                multiline: true,
+                rows: 4,
+                icon: <MessageIcon sx={{ color: primaryColor }} />,
+              },
+            ].map((field) => (
+              <MotionDiv key={field.name} variants={fadeCinematic}>
+                <TextField
+                  {...field}
+                  fullWidth
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment
+                        position="start"
+                        sx={
+                          field.multiline
+                            ? { alignSelf: "flex-start", mt: 1 }
+                            : {}
+                        }
+                      >
+                        {field.icon}
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={inputStyle(theme)}
+                />
+              </MotionDiv>
+            ))}
 
-        {/* ================= ALERT ================= */}
+            {/* ===== BOTÓN ===== */}
+            <MotionDiv
+              variants={fadeCinematic}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Button
+                type="submit"
+                startIcon={<SendIcon />}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 5,
+                  py: 1.4,
+                  color: "#fff",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  "&:hover": {
+                    transform: "scale(1.04)",
+                  },
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                {formText.button}
+              </Button>
+            </MotionDiv>
+          </Box>
+        </MotionDiv>
+
+        {/* ===== ALERT ===== */}
         <Snackbar
           open={success}
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
-          }}
         >
-          <Alert
-            severity="success"
-            icon={false}
-            sx={{
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              fontWeight: 600,
-              textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
-            }}
-          >
+          <Alert severity="success" icon={false}>
             <strong>{formText.success}</strong>
             <br />
             {formText.successMsg}
@@ -266,56 +251,3 @@ export default function Form({ t }) {
     </Box>
   );
 }
-
-const inputStyle = (theme) => ({
-  "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
-    background:
-      theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(14px)",
-
-    "& input, & textarea": {
-      fontWeight: 600,
-      color:
-        theme.palette.mode === "dark"
-          ? "#ffffff"
-          : "#020617",
-    },
-
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(255,255,255,0.45)"
-          : "rgba(2,6,23,0.45)",
-      fontWeight: 400,
-    },
-
-    "& fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.85)",
-    },
-
-    "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
-    },
-
-    "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
-    },
-  },
-
-  "& .MuiInputLabel-root": {
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.85)"
-        : "rgba(2,6,23,0.85)",
-    fontWeight: 600,
-  },
-});
