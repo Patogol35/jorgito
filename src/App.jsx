@@ -192,28 +192,28 @@ function App() {
             disableTouchRipple
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             sx={(theme) => ({
-              position: "fixed",
-              top: 90,
-              right: 16,
-              zIndex: 1200,
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
-              color: "#fff",
-              width: 52,
-              height: 52,
-              fontWeight: 800,
-              fontSize: "1rem",
-              letterSpacing: "1px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-            })}
+  position: "fixed",
+  top: 90,
+  right: 16,
+  zIndex: 1200,
+  bgcolor:
+    theme.palette.mode === "dark"
+      ? theme.palette.grey[900]
+      : theme.palette.primary.main,
+  color: "#fff",
+  width: 52,
+  height: 52,
+  fontWeight: 800,
+  fontSize: "1rem",
+  letterSpacing: "1px",
+  boxShadow: "none",
+  "&:hover": {
+    bgcolor:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[800]
+        : theme.palette.primary.dark,
+  },
+})}
           >
             {lang === "es" ? "EN" : "ES"}
           </Fab>
