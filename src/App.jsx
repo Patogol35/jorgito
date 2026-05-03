@@ -183,7 +183,7 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* Tema */}
+{/* Tema */}
 <Tooltip title="Cambiar tema" placement="left">
   <Fab
     aria-label="tema"
@@ -193,8 +193,8 @@ function App() {
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      top: 90,
-      right: 80, // ← queda al frente del botón idioma
+      top: 20, // ← arriba del botón idioma
+      right: 16, // ← misma línea vertical
       zIndex: 1200,
 
       bgcolor:
