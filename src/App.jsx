@@ -120,36 +120,62 @@ function App() {
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={(theme) => ({
-                mb: 4,
+  key={id}
+  id={id}
+  elevation={0}
+  sx={(theme) => ({
+    mb: 4,
+    p: { xs: 3, md: 5 },
 
-                // 🔥 padding más equilibrado
-                p: { xs: 3, md: 5 },
+    borderRadius: { xs: 3, md: 4 },
 
-                // 🔥 FIX REAL DEL PROBLEMA
-                borderRadius: { xs: 3, md: 4 },
+    backgroundColor: theme.palette.background.paper,
 
-                backgroundColor: theme.palette.background.paper,
+    // 🔥 borde premium
+    border: `1.5px solid ${color}30`, // transparencia elegante
 
-                border: `2px solid ${color}`,
+    // glow suave
+    boxShadow:
+      theme.palette.mode === "light"
+        ? `0 4px 14px rgba(0,0,0,0.05),
+           0 0 0 1px ${color}20`
+        : `0 4px 18px rgba(0,0,0,0.35),
+           0 0 0 1px ${color}25`,
 
-                scrollMarginTop: scrollOffset,
-                transition: "all 0.25s ease",
+    // línea interna elegante
+    position: "relative",
+    overflow: "hidden",
 
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 6px 16px rgba(0,0,0,0.08)"
-                      : "0 6px 16px rgba(0,0,0,0.5)",
-                },
-              })}
-            >
-              <Component t={t} />
-            </Paper>
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      inset: 0,
+      borderRadius: "inherit",
+      padding: "1px",
+      background: `linear-gradient(135deg, ${color}55, transparent 70%)`,
+      WebkitMask:
+        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+      WebkitMaskComposite: "xor",
+      maskComposite: "exclude",
+      pointerEvents: "none",
+    },
+
+    scrollMarginTop: scrollOffset,
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      transform: "translateY(-5px)",
+      boxShadow:
+        theme.palette.mode === "light"
+          ? `0 10px 24px rgba(0,0,0,0.08),
+             0 0 0 1px ${color}35`
+          : `0 10px 26px rgba(0,0,0,0.5),
+             0 0 0 1px ${color}35`,
+    },
+  })}
+>
+  <Component t={t} />
+</Paper>
           ))}
         </Container>
 
