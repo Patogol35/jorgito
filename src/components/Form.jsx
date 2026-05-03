@@ -59,7 +59,7 @@ export default function Form({ t }) {
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
-  // 🔥 MISMA ANIMACIÓN QUE ABOUT
+  // 🎬 Animación cinematográfica (solo para títulos)
   const fadeCinematic = {
     hidden: {
       opacity: 0,
@@ -76,6 +76,19 @@ export default function Form({ t }) {
     },
   };
 
+  // 🔥 Animación segura para inputs
+  const fadeSoft = {
+    hidden: {
+      opacity: 0,
+      y: 16,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   const containerMotion = {
     hidden: {},
     visible: {
@@ -89,7 +102,6 @@ export default function Form({ t }) {
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
-
         <motion.div
           variants={containerMotion}
           initial="hidden"
@@ -98,12 +110,7 @@ export default function Form({ t }) {
         >
           {/* ================= TÍTULO ================= */}
           <motion.div variants={fadeCinematic}>
-            <Box
-              sx={{
-                textAlign: "center",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
               <Box
                 sx={{
                   display: "inline-flex",
@@ -125,7 +132,6 @@ export default function Form({ t }) {
                 }}
               >
                 <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-
                 <Typography
                   variant="h6"
                   sx={{
@@ -181,7 +187,7 @@ export default function Form({ t }) {
                 icon: <MessageIcon sx={{ color: primaryColor }} />,
               },
             ].map((field) => (
-              <motion.div key={field.name} variants={fadeCinematic}>
+              <motion.div key={field.name} variants={fadeSoft}>
                 <TextField
                   {...field}
                   fullWidth
@@ -289,9 +295,7 @@ const inputStyle = (theme) => ({
     "& input, & textarea": {
       fontWeight: 600,
       color:
-        theme.palette.mode === "dark"
-          ? "#ffffff"
-          : "#020617",
+        theme.palette.mode === "dark" ? "#ffffff" : "#020617",
     },
 
     "& input::placeholder, & textarea::placeholder": {
