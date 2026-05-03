@@ -138,7 +138,7 @@ export default function Skills({ t }) {
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
       <Container>
 
-        {/* 🎬 TÍTULO (MISMA ANIMACIÓN QUE ABOUT) */}
+        {/* 🎬 TÍTULO */}
         <motion.div
           variants={containerAnim}
           initial="hidden"
@@ -146,12 +146,7 @@ export default function Skills({ t }) {
           viewport={{ once: true }}
         >
           <motion.div variants={fadeCinematic}>
-            <Box
-              sx={{
-                textAlign: "center",
-                marginBottom: "2rem",
-              }}
-            >
+            <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
               <Box
                 sx={{
                   display: "inline-flex",
@@ -259,23 +254,24 @@ export default function Skills({ t }) {
                   initial={{ opacity: 0, y: 20, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{
-                    duration: 0.35,
-                    ease: "easeOut",
-                  }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                 >
                   <Paper
                     sx={{
                       p: 3,
                       textAlign: "center",
                       borderRadius: "22px",
-                      background: cardBg,
+                      backgroundColor: cardBg,
+                      backgroundImage: "none",
                       border: `1px solid ${
                         isDark
                           ? "rgba(255,255,255,0.15)"
                           : "rgba(0,0,0,0.12)"
                       }`,
-                      transition: "all 0.25s ease",
+                      transition:
+                        "transform 0.25s ease, border-color 0.25s ease",
+                      willChange: "transform",
+                      transform: "translateZ(0)",
                       "&:hover": {
                         transform: "translateY(-4px)",
                         borderColor: theme.palette.primary.main,
@@ -324,4 +320,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-                    }
+                  }
