@@ -176,9 +176,13 @@ export default function Form({ t }) {
             ].map((field) => (
               <MotionDiv key={field.name} variants={fadeCinematic}>
                 <TextField
-                  {...field}
-                  fullWidth
-                  required
+  name={field.name}
+  label={field.label}
+  type={field.type || "text"}
+  multiline={field.multiline || false}
+  rows={field.rows || 1}
+  fullWidth
+  required
                   InputProps={{
                     startAdornment: (
                       <InputAdornment
