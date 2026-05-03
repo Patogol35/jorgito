@@ -307,4 +307,4 @@ export default function Hero({ mode, setMode, t }) {
 </Modal>
     </>
   );
-}
+                  }
