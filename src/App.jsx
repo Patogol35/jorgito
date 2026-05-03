@@ -187,14 +187,11 @@ function App() {
 <Tooltip title="Cambiar tema" placement="left">
   <Fab
     aria-label="tema"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      top: 20, // ← arriba del botón idioma
-      right: 16, // ← misma línea vertical
+      top: 150, // ← debajo del navbar y delante del idioma
+      right: 16,
       zIndex: 1200,
 
       bgcolor:
@@ -206,7 +203,6 @@ function App() {
       width: 52,
       height: 52,
       boxShadow: "none",
-      transition: "background-color 0.3s ease",
 
       "&:hover": {
         bgcolor:
