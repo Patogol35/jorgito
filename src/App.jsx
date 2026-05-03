@@ -185,39 +185,50 @@ function App() {
 
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
-          <Fab
-            aria-label="idioma"
-            disableRipple
-            disableFocusRipple
-            disableTouchRipple
-            onClick={() => setLang(lang === "es" ? "en" : "es")}
-            sx={(theme) => ({
-              position: "fixed",
-              top: 90,
-              right: 16,
-              zIndex: 1200,
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
-              color: "#fff",
-              width: 52,
-              height: 52,
-              fontWeight: 800,
-              fontSize: "1rem",
-              letterSpacing: "1px",
-              boxShadow: "none",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-            })}
-          >
-            {lang === "es" ? "EN" : "ES"}
-          </Fab>
-        </Tooltip>
+  <Fab
+    aria-label="idioma"
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
+    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,
+      right: 16,
+      zIndex: 1200,
+
+      width: 52,
+      height: 52,
+
+      fontWeight: 800,
+      fontSize: "1rem",
+      letterSpacing: "1px",
+
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
+
+      color: "#fff",
+
+      boxShadow: "none",
+
+      // 🔥 elimina el flash
+      transition: "background-color 0.3s ease, color 0.3s ease",
+
+      willChange: "background-color",
+
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
+    })}
+  >
+    {lang === "es" ? "EN" : "ES"}
+  </Fab>
+</Tooltip>
 
         <ChatBot t={t} lang={lang} />
       </Box>
