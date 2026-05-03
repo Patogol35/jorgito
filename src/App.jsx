@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -182,6 +182,43 @@ function App() {
             <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
+
+        {/* Tema */}
+<Tooltip title="Cambiar tema" placement="left">
+  <Fab
+    aria-label="tema"
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,
+      right: 80, // ← queda al frente del botón idioma
+      zIndex: 1200,
+
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
+
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
+      transition: "background-color 0.3s ease",
+
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
+    })}
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </Fab>
+</Tooltip>
 
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
