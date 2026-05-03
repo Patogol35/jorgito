@@ -191,7 +191,7 @@ function App() {
     sx={(theme) => ({
       position: "fixed",
       top: 90,      // mismo nivel que idioma
-      right: 80,    // ← más a la izquierda
+      right: 140,    // ← más a la izquierda
 
       zIndex: 1200,
 
