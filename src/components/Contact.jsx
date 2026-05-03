@@ -84,7 +84,7 @@ export default function Contact({ t }) {
     <Box
       id="contact"
       sx={{
-        py: 2,
+        py: 4,
         scrollMarginTop: "80px",
         color: palette.text.primary,
       }}
@@ -187,16 +187,17 @@ export default function Contact({ t }) {
           </motion.div>
 
           {/* Redes sociales */}
-          <motion.div variants={fadeCinematic}>
-            <SocialLinks
-              socialLinks={socialLinks}
-              size="48px"
-              animated={true}
-              spacing={2}
-            />
-          </motion.div>
-
-        </motion.div>
+          <motion.div
+  variants={fadeCinematic}
+  viewport={{ once: true, margin: "-50px" }}
+>
+  <SocialLinks
+    socialLinks={socialLinks}
+    size="48px"
+    animated={false}   
+    spacing={2}
+  />
+</motion.div>
       </Container>
     </Box>
   );
