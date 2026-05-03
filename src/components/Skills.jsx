@@ -75,7 +75,7 @@ const skills = [
   { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
   { name: "MS Office", category: "Tools", img: "https://i.imgur.com/8EBPyBH.png" },
   { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
-  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"},
+  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
   { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
   { name: "NextDNS", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nextdns.svg" },
 ];
@@ -138,7 +138,7 @@ export default function Skills({ t }) {
           viewport={{ once: true }}
         >
 
-          {/* 🔥 TÍTULO */}
+          {/* TÍTULO */}
           <motion.div variants={fadeCinematic}>
             <Box sx={{ textAlign: "center", mb: 4 }}>
               <Box sx={{
@@ -166,56 +166,7 @@ export default function Skills({ t }) {
             </Box>
           </motion.div>
 
-          {/* 🔥 FILTROS */}
-          <motion.div variants={fadeCinematic}>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-              <Box ref={containerRef} sx={{ overflowX: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
-                <ToggleButtonGroup
-                  value={filter}
-                  exclusive
-                  onChange={(e, val) => val && setFilter(val)}
-                  sx={{ display: "inline-flex", gap: 1.2 }}
-                >
-                  {categories.map((cat) => (
-                    <ToggleButton
-                      key={cat}
-                      value={cat}
-                      ref={(el) => (buttonRefs.current[cat] = el)}
-                      component={motion.button}
-                      whileTap={{ scale: 0.92 }}
-                      sx={{
-                        borderRadius: "999px",
-                        px: 2.4,
-                        py: 1,
-                        fontWeight: 600,
-                        textTransform: "none",
-                        display: "flex",
-                        gap: 1,
-                        backgroundColor: isDark
-                          ? "rgba(255,255,255,0.04)"
-                          : "rgba(255,255,255,0.9)",
-                        border: `1px solid ${
-                          isDark
-                            ? "rgba(255,255,255,0.12)"
-                            : "rgba(0,0,0,0.12)"
-                        }`,
-                        "&.Mui-selected": {
-                          background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                          color: "#fff",
-                          borderColor: "transparent",
-                        },
-                      }}
-                    >
-                      {categoryIcons[cat]}
-                      {cat}
-                    </ToggleButton>
-                  ))}
-                </ToggleButtonGroup>
-              </Box>
-            </Box>
-          </motion.div>
-
-          {/* 🔥 GRID */}
+          {/* GRID */}
           <motion.div variants={fadeCinematic}>
             <Grid container spacing={4} justifyContent="center" sx={{ pt: 1 }}>
               <AnimatePresence mode="popLayout">
@@ -223,44 +174,67 @@ export default function Skills({ t }) {
                   <Grid item xs={6} sm={4} md={3} key={skill.name}>
                     <motion.div
                       layout
-                      initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                      initial={false} // 🔥 evita flicker
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.35 }}
                     >
                       <Paper
-  sx={{
-    p: 3,
-    textAlign: "center",
-    borderRadius: "22px",
-    background: cardBg,
-    border: `1px solid ${
-      isDark
-        ? "rgba(255,255,255,0.15)"
-        : "rgba(0,0,0,0.12)"
-    }`,
+                        sx={{
+                          p: 3,
+                          textAlign: "center",
+                          borderRadius: "22px",
+                          background: cardBg,
+                          border: `1px solid ${
+                            isDark
+                              ? "rgba(255,255,255,0.15)"
+                              : "rgba(0,0,0,0.12)"
+                          }`,
+                          transition:
+                            "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
+                          willChange: "transform",
+                          "&:hover": {
+                            transform: "translateY(-4px)",
+                            borderColor: theme.palette.primary.main,
+                            boxShadow:
+                              theme.palette.mode === "dark"
+                                ? "0 10px 30px rgba(0,0,0,0.6)"
+                                : "0 10px 25px rgba(0,0,0,0.15)",
+                          },
+                        }}
+                      >
+                        <Box
+                          component={motion.img}
+                          src={skill.img}
+                          alt={skill.name}
+                          whileHover={{
+                            scale: 1.12,
+                            rotate: [0, 3, -3, 2, 0],
+                            y: -4,
+                          }}
+                          whileTap={{
+                            scale: 0.94,
+                            rotate: 180,
+                          }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 16,
+                          }}
+                          sx={{
+                            width: 65,
+                            height: 65,
+                            mb: 2,
+                            objectFit: "contain",
+                            filter: isDark
+                              ? "invert(1) brightness(1.22)"
+                              : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                          }}
+                        />
 
-    // 🔥 SOLO animar lo necesario
-    transition:
-      "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
-
-    // 🔥 mejora render (evita flicker)
-    willChange: "transform",
-
-    "&:hover": {
-      transform: "translateY(-4px)",
-      borderColor: theme.palette.primary.main,
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 10px 30px rgba(0,0,0,0.6)"
-          : "0 10px 25px rgba(0,0,0,0.15)",
-    },
-  }}
->
-
-<Typography fontWeight="bold">
-  {skill.name}
-</Typography>
+                        <Typography fontWeight="bold">
+                          {skill.name}
+                        </Typography>
                       </Paper>
                     </motion.div>
                   </Grid>
@@ -274,4 +248,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-}
+    }
