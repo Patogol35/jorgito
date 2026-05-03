@@ -13,6 +13,38 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import SocialLinks from "./SocialLinks";
 import { useTheme } from "@mui/material/styles";
 
+/* =========================
+   🎬 Animaciones tipo Hero
+========================= */
+
+const easeOutExpo = [0.16, 1, 0.3, 1];
+
+const fadeCinematic = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+    clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+};
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
 export default function Contact({ t }) {
   const theme = useTheme();
   const { palette } = theme;
@@ -58,105 +90,114 @@ export default function Contact({ t }) {
       }}
     >
       <Container maxWidth="sm">
-        {/* =========================  
-        TÍTULO CONTACTO  
-========================= */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
 
-            <Typography
-              variant="h6"
+        {/* 🎬 CONTENEDOR PRINCIPAL */}
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+
+          {/* =========================  
+              TÍTULO  
+          ========================= */}
+          <motion.div variants={fadeCinematic}>
+            <Box
               sx={{
-                fontWeight: "bold",
-                color: primaryColor,
-                lineHeight: 1,
+                textAlign: "center",
+                marginBottom: "2rem",
               }}
             >
-              {t.contact.title}
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
+                  px: 3,
+                  py: 0.9,
+                  borderRadius: "999px",
+                  background: isDark
+                    ? "rgba(144,202,249,0.06)"
+                    : "rgba(25,118,210,0.06)",
+                  border: `1px solid ${
+                    isDark
+                      ? "rgba(144,202,249,0.25)"
+                      : "rgba(25,118,210,0.25)"
+                  }`,
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    color: primaryColor,
+                    lineHeight: 1,
+                  }}
+                >
+                  {t.contact.title}
+                </Typography>
+              </Box>
+            </Box>
+          </motion.div>
+
+          {/* =========================
+              TEXTO INTRO
+          ========================= */}
+          <motion.div variants={fadeCinematic}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                textAlign: "center",
+                fontWeight: "bold",
+                mb: 2,
+              }}
+            >
+              {t.contact.subtitle}
             </Typography>
-          </Box>
+          </motion.div>
+
+          {/* =========================
+              DISPONIBILIDAD
+          ========================= */}
+          <motion.div variants={fadeCinematic}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1,
+                mb: 3,
+                color: palette.text.secondary,
+              }}
+            >
+              <AccessTime sx={{ fontSize: 18 }} />
+              <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                {t.contact.availability}
+              </Typography>
+            </Box>
+          </motion.div>
+
+          <motion.div variants={fadeCinematic}>
+            <Divider sx={{ mb: 3 }} />
+          </motion.div>
+
+          {/* Redes sociales */}
+          <motion.div variants={fadeCinematic}>
+            <SocialLinks
+              socialLinks={socialLinks}
+              size="48px"
+              animated={true}
+              spacing={2}
+            />
+          </motion.div>
+
         </motion.div>
-
-        {/* =========================
-            TEXTO INTRO
-        ========================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              mb: 2,
-            }}
-          >
-            {t.contact.subtitle}
-          </Typography>
-        </motion.div>
-
-        {/* =========================
-            DISPONIBILIDAD
-        ========================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 1,
-              mb: 3,
-              color: palette.text.secondary,
-            }}
-          >
-            <AccessTime sx={{ fontSize: 18 }} />
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
-              {t.contact.availability}
-            </Typography>
-          </Box>
-        </motion.div>
-
-        <Divider sx={{ mb: 3 }} />
-
-        {/* Redes sociales */}
-        <SocialLinks
-          socialLinks={socialLinks}
-          size="48px"
-          animated={true}
-          spacing={2}
-        />
       </Container>
     </Box>
   );
-        }
+                  }
