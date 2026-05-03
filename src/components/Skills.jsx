@@ -20,17 +20,42 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 /* =========================
+   🎬 ANIMACIONES GLOBAL
+========================= */
+
+const easeOutExpo = [0.16, 1, 0.3, 1];
+
+const fadeCinematic = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+    clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+};
+
+const containerMotion = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+/* =========================
    DATA
 ========================= */
 
-const categories = [
-  "All",
-  "Frontend",
-  "Backend",
-  "Database",
-  "Cloud",
-  "Tools",
-];
+const categories = ["All", "Frontend", "Backend", "Database", "Cloud", "Tools"];
 
 const skills = [
   { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
@@ -69,7 +94,6 @@ const categoryIcons = {
 ========================= */
 
 export default function Skills({ t }) {
-
   const [filter, setFilter] = useState("All");
 
   const theme = useTheme();
@@ -108,194 +132,136 @@ export default function Skills({ t }) {
       <Container>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          variants={containerMotion}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
         >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <BuildIcon
-              sx={{ fontSize: 22, color: primaryColor }}
-            />
-            <Typography
-  variant="h6"
-  sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
->
-  {t.skills.title}
-</Typography>
-          </Box>
-        </motion.div>
 
-        {/* FILTERS */}
-
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-
-          <Box
-            ref={containerRef}
-            sx={{
-              maxWidth: "100%",
-              overflowX: "auto",
-              "&::-webkit-scrollbar": { display: "none" },
-            }}
-          >
-
-            <ToggleButtonGroup
-              value={filter}
-              exclusive
-              onChange={(e, val) => val && setFilter(val)}
-              sx={{
+          {/* 🔥 TÍTULO */}
+          <motion.div variants={fadeCinematic}>
+            <Box sx={{ textAlign: "center", mb: 4 }}>
+              <Box sx={{
                 display: "inline-flex",
-                gap: 1.2,
-                py: 0.5,
-              }}
-            >
+                alignItems: "center",
+                gap: 1,
+                px: 3,
+                py: 0.9,
+                borderRadius: "999px",
+                background: isDark
+                  ? "rgba(144,202,249,0.06)"
+                  : "rgba(25,118,210,0.06)",
+                border: `1px solid ${
+                  isDark
+                    ? "rgba(144,202,249,0.25)"
+                    : "rgba(25,118,210,0.25)"
+                }`,
+                backdropFilter: "blur(6px)",
+              }}>
+                <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: primaryColor }}>
+                  {t.skills.title}
+                </Typography>
+              </Box>
+            </Box>
+          </motion.div>
 
-              {categories.map((cat) => (
-                <ToggleButton
-                  key={cat}
-                  value={cat}
-                  ref={(el) => (buttonRefs.current[cat] = el)}
-                  component={motion.button}
-                  whileTap={{ scale: 0.92 }}
-                  sx={{
-                    borderRadius: "999px",
-                    px: 2.4,
-                    py: 1,
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                    textTransform: "none",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    backgroundColor: isDark
-                      ? "rgba(255,255,255,0.04)"
-                      : "rgba(255,255,255,0.9)",
-                    border: `1px solid ${
-                      isDark
-                        ? "rgba(255,255,255,0.12)"
-                        : "rgba(0,0,0,0.12)"
-                    }`,
-                    "&.Mui-selected": {
-                      background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
-                      color: "#fff",
-                      borderColor: "transparent",
-                    },
-                  }}
+          {/* 🔥 FILTROS */}
+          <motion.div variants={fadeCinematic}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+              <Box ref={containerRef} sx={{ overflowX: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
+                <ToggleButtonGroup
+                  value={filter}
+                  exclusive
+                  onChange={(e, val) => val && setFilter(val)}
+                  sx={{ display: "inline-flex", gap: 1.2 }}
                 >
-                  {categoryIcons[cat]}
-{cat}
-                </ToggleButton>
-              ))}
-            </ToggleButtonGroup>
-
-          </Box>
-        </Box>
-
-        {/* GRID */}
-
-        <Grid container spacing={4} justifyContent="center">
-
-          <AnimatePresence mode="popLayout">
-
-            {filteredSkills.map((skill) => (
-
-              <Grid item xs={6} sm={4} md={3} key={skill.name}>
-
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{
-                    duration: 0.35,
-                    ease: "easeOut",
-                  }}
-                >
-
-                  <Paper
-                    sx={{
-                      p: 3,
-                      textAlign: "center",
-                      borderRadius: "22px",
-                      background: cardBg,
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      transition: "all 0.25s ease",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: theme.palette.primary.main,
-                      },
-                    }}
-                  >
-
-                    <Box
-                      component={motion.img}
-                      src={skill.img}
-                      alt={skill.name}
-                      whileHover={{
-                        scale: 1.12,
-                        rotate: [0, 3, -3, 2, 0],
-                        y: -4,
-                      }}
-                      whileTap={{
-                        scale: 0.94,
-                        rotate: 180,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 16,
-                      }}
+                  {categories.map((cat) => (
+                    <ToggleButton
+                      key={cat}
+                      value={cat}
+                      ref={(el) => (buttonRefs.current[cat] = el)}
+                      component={motion.button}
+                      whileTap={{ scale: 0.92 }}
                       sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        filter: isDark
-                          ? "invert(1) brightness(1.22)"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                        borderRadius: "999px",
+                        px: 2.4,
+                        py: 1,
+                        fontWeight: 600,
+                        textTransform: "none",
+                        display: "flex",
+                        gap: 1,
+                        backgroundColor: isDark
+                          ? "rgba(255,255,255,0.04)"
+                          : "rgba(255,255,255,0.9)",
+                        border: `1px solid ${
+                          isDark
+                            ? "rgba(255,255,255,0.12)"
+                            : "rgba(0,0,0,0.12)"
+                        }`,
+                        "&.Mui-selected": {
+                          background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                          color: "#fff",
+                          borderColor: "transparent",
+                        },
                       }}
-                    />
+                    >
+                      {categoryIcons[cat]}
+                      {cat}
+                    </ToggleButton>
+                  ))}
+                </ToggleButtonGroup>
+              </Box>
+            </Box>
+          </motion.div>
 
-                    <Typography fontWeight="bold">
-                      {skill.name}
-                    </Typography>
+          {/* 🔥 GRID */}
+          <motion.div variants={fadeCinematic}>
+            <Grid container spacing={4} justifyContent="center">
+              <AnimatePresence mode="popLayout">
+                {filteredSkills.map((skill) => (
+                  <Grid item xs={6} sm={4} md={3} key={skill.name}>
+                    <motion.div
+                      layout
+                      initial={{ opacity: 0, y: 20, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.35 }}
+                    >
+                      <Paper sx={{
+                        p: 3,
+                        textAlign: "center",
+                        borderRadius: "22px",
+                        background: cardBg,
+                        border: `1px solid ${
+                          isDark
+                            ? "rgba(255,255,255,0.15)"
+                            : "rgba(0,0,0,0.12)"
+                        }`,
+                        "&:hover": {
+                          transform: "translateY(-4px)",
+                          borderColor: theme.palette.primary.main,
+                        },
+                      }}>
+                        <Box
+                          component={motion.img}
+                          src={skill.img}
+                          alt={skill.name}
+                          whileHover={{ scale: 1.12 }}
+                          sx={{ width: 65, height: 65, mb: 2 }}
+                        />
+                        <Typography fontWeight="bold">{skill.name}</Typography>
+                      </Paper>
+                    </motion.div>
+                  </Grid>
+                ))}
+              </AnimatePresence>
+            </Grid>
+          </motion.div>
 
-                  </Paper>
-
-                </motion.div>
-
-              </Grid>
-
-            ))}
-
-          </AnimatePresence>
-
-        </Grid>
+        </motion.div>
 
       </Container>
     </Box>
   );
-                    }
+}
