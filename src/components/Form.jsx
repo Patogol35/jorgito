@@ -57,25 +57,10 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  // 🔥 ANIMACIONES
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
+  // 🔥 MISMA ANIMACIÓN QUE ABOUT
   const fadeCinematic = {
-    hidden: {
-      opacity: 0,
-      y: 16,
-      filter: "blur(6px)",
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.7, ease: easeOutExpo },
-    },
-  };
-
-  // 🔥 SOLO PARA EL TÍTULO
-  const fadeCinematicTitle = {
     hidden: {
       opacity: 0,
       y: 20,
@@ -91,157 +76,164 @@ export default function Form({ t }) {
     },
   };
 
+  const containerMotion = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
   return (
     <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* ================= TÍTULO ================= */}
         <motion.div
-          variants={fadeCinematicTitle}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
-        >
-          <Box
-            sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
-            }}
-          >
-            <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
-            >
-              {formText.title}
-            </Typography>
-          </Box>
-        </motion.div>
-
-        {/* ================= SUBTÍTULO ================= */}
-        <motion.div
-          variants={fadeCinematic}
+          variants={containerMotion}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              mb: 4,
-            }}
-          >
-            {formText.subtitle}
-          </Typography>
-        </motion.div>
-
-        {/* ================= FORM ================= */}
-        <Box
-          component="form"
-          ref={formRef}
-          onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-        >
-          {[
-            {
-              name: "from_name",
-              label: formText.fields.name,
-              icon: <PersonIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "from_email",
-              label: formText.fields.email,
-              type: "email",
-              icon: <EmailIcon sx={{ color: primaryColor }} />,
-            },
-            {
-              name: "message",
-              label: formText.fields.message,
-              multiline: true,
-              rows: 4,
-              icon: <MessageIcon sx={{ color: primaryColor }} />,
-            },
-          ].map((field, i) => (
-            <motion.div
-              key={field.name}
-              variants={fadeCinematic}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
-            >
-              <TextField
-                {...field}
-                fullWidth
-                required
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment
-                      position="start"
-                      sx={
-                        field.multiline
-                          ? { alignSelf: "flex-start", mt: 1 }
-                          : {}
-                      }
-                    >
-                      {field.icon}
-                    </InputAdornment>
-                  ),
-                }}
-                sx={inputStyle(theme)}
-              />
-            </motion.div>
-          ))}
-
-          {/* ================= BOTÓN ================= */}
-          <motion.div
-            variants={fadeCinematic}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            <Button
-              type="submit"
-              startIcon={<SendIcon />}
+          {/* ================= TÍTULO ================= */}
+          <motion.div variants={fadeCinematic}>
+            <Box
               sx={{
-                borderRadius: "25px",
-                textTransform: "none",
-                fontWeight: "bold",
-                px: 5,
-                py: 1.4,
-                color: "#ffffff",
-                background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                boxShadow: "none",
-                "&:hover": {
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  transform: "scale(1.04)",
-                },
-                transition: "transform 0.2s ease",
+                textAlign: "center",
+                marginBottom: "2rem",
               }}
             >
-              {formText.button}
-            </Button>
+              <Box
+                sx={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 1,
+                  px: 3,
+                  py: 0.9,
+                  borderRadius: "999px",
+                  background: isDark
+                    ? "rgba(144,202,249,0.06)"
+                    : "rgba(25,118,210,0.06)",
+                  border: `1px solid ${
+                    isDark
+                      ? "rgba(144,202,249,0.25)"
+                      : "rgba(25,118,210,0.25)"
+                  }`,
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: "bold",
+                    color: primaryColor,
+                    lineHeight: 1,
+                  }}
+                >
+                  {formText.title}
+                </Typography>
+              </Box>
+            </Box>
           </motion.div>
-        </Box>
+
+          {/* ================= SUBTÍTULO ================= */}
+          <motion.div variants={fadeCinematic}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                textAlign: "center",
+                fontWeight: "bold",
+                mb: 4,
+              }}
+            >
+              {formText.subtitle}
+            </Typography>
+          </motion.div>
+
+          {/* ================= FORM ================= */}
+          <Box
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+          >
+            {[
+              {
+                name: "from_name",
+                label: formText.fields.name,
+                icon: <PersonIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "from_email",
+                label: formText.fields.email,
+                type: "email",
+                icon: <EmailIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "message",
+                label: formText.fields.message,
+                multiline: true,
+                rows: 4,
+                icon: <MessageIcon sx={{ color: primaryColor }} />,
+              },
+            ].map((field) => (
+              <motion.div key={field.name} variants={fadeCinematic}>
+                <TextField
+                  {...field}
+                  fullWidth
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment
+                        position="start"
+                        sx={
+                          field.multiline
+                            ? { alignSelf: "flex-start", mt: 1 }
+                            : {}
+                        }
+                      >
+                        {field.icon}
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={inputStyle(theme)}
+                />
+              </motion.div>
+            ))}
+
+            {/* ================= BOTÓN ================= */}
+            <motion.div
+              variants={fadeCinematic}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Button
+                type="submit"
+                startIcon={<SendIcon />}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 5,
+                  py: 1.4,
+                  color: "#ffffff",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
+                  "&:hover": {
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    transform: "scale(1.04)",
+                  },
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                {formText.button}
+              </Button>
+            </motion.div>
+          </Box>
+        </motion.div>
 
         {/* ================= ALERT ================= */}
         <Snackbar
