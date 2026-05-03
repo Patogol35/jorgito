@@ -211,13 +211,10 @@ export default function Skills({ t }) {
               <Grid item xs={6} sm={4} md={3} key={skill.name}>
                 <motion.div
                   layout
-                  initial={false} // 🔥 evita flash al cambiar tema
+                  initial={false}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{
-                    duration: 0.35,
-                    ease: "easeOut",
-                  }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
                 >
                   <Paper
                     sx={{
@@ -238,41 +235,57 @@ export default function Skills({ t }) {
                       },
                     }}
                   >
+
+                    {/* ICON CONTAINER (SIN FILTER → SIN FLASH) */}
                     <Box
-                      component={motion.img}
-                      src={skill.img}
-                      alt={skill.name}
-                      whileHover={{
-                        scale: 1.12,
-                        rotate: [0, 3, -3, 2, 0],
-                        y: -4,
-                      }}
-                      whileTap={{
-                        scale: 0.94,
-                        rotate: 180,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 16,
-                      }}
                       sx={{
-                        width: 65,
-                        height: 65,
+                        width: 70,
+                        height: 70,
                         mb: 2,
-                        objectFit: "contain",
-                        transition: "filter 0.4s ease, transform 0.3s ease",
-                        willChange: "transform, filter",
-                        backfaceVisibility: "hidden",
-                        filter: isDark
-                          ? "invert(1) brightness(1.22)"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                        borderRadius: "16px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: isDark
+                          ? "rgba(255,255,255,0.06)"
+                          : "rgba(0,0,0,0.04)",
+                        border: `1px solid ${
+                          isDark
+                            ? "rgba(255,255,255,0.12)"
+                            : "rgba(0,0,0,0.08)"
+                        }`,
+                        transition: "all 0.3s ease",
                       }}
-                    />
+                    >
+                      <Box
+                        component={motion.img}
+                        src={skill.img}
+                        alt={skill.name}
+                        whileHover={{
+                          scale: 1.12,
+                          rotate: [0, 3, -3, 2, 0],
+                        }}
+                        whileTap={{
+                          scale: 0.94,
+                          rotate: 180,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 200,
+                          damping: 16,
+                        }}
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          objectFit: "contain",
+                        }}
+                      />
+                    </Box>
 
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
+
                   </Paper>
                 </motion.div>
               </Grid>
@@ -283,4 +296,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-}
+   }
