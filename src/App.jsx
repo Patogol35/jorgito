@@ -49,7 +49,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 THEME PRO (ajustado)
+  // 🎨 THEME PRO
   const theme = useMemo(
     () =>
       createTheme({
@@ -63,7 +63,9 @@ function App() {
           },
           background: {
             default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
-            paper: mode === "dark" ? "#121212" : "#ffffff",
+            paper: mode === "dark"
+              ? "rgba(18,18,18,0.7)"
+              : "rgba(255,255,255,0.7)",
           },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -74,10 +76,8 @@ function App() {
           h2: { fontWeight: 700 },
           h4: { fontWeight: 600 },
         },
-
-        // 🔥 FIX IMPORTANTE
         shape: {
-          borderRadius: 12, // antes 16 → ahora más elegante
+          borderRadius: 12,
         },
       }),
     [mode]
@@ -120,70 +120,44 @@ function App() {
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
-  key={id}
-  id={id}
-  elevation={0}
-  sx={(theme) => ({
-    mb: 4,
-    p: { xs: 3, md: 5 },
+              key={id}
+              id={id}
+              elevation={0}
+              sx={(theme) => ({
+                mb: 4,
+                p: { xs: 3, md: 5 },
+                borderRadius: { xs: 3, md: 4 },
 
-    borderRadius: { xs: 3, md: 4 },
+                // 🎨 Fondo tipo glass sutil
+                backgroundColor: theme.palette.background.paper,
+                backdropFilter: "blur(6px)",
 
-    backgroundColor: theme.palette.background.paper,
+                // 🔥 Borde elegante
+                border: `1.5px solid ${color}33`,
 
-    // 🔥 BORDE CLARO Y ELEGANTE
-    border: `1.5px solid ${color}60`,
+                // 🌫️ Sombra base
+                boxShadow:
+                  theme.palette.mode === "light"
+                    ? "0 4px 12px rgba(0,0,0,0.05)"
+                    : "0 4px 12px rgba(0,0,0,0.4)",
 
-    position: "relative",
-    overflow: "hidden",
+                scrollMarginTop: scrollOffset,
 
-    // 🔥 BORDE INTERNO PREMIUM (más visible)
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      inset: 0,
-      borderRadius: "inherit",
-      padding: "1px",
-      background: `linear-gradient(135deg, ${color}80, transparent 70%)`,
-      WebkitMask:
-        "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-      WebkitMaskComposite: "xor",
-      maskComposite: "exclude",
-      opacity: 0.6,
-      transition: "opacity 0.3s ease",
-      pointerEvents: "none",
-    },
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 
-    // 🔥 GLOW BASE
-    boxShadow:
-      theme.palette.mode === "light"
-        ? `0 5px 16px rgba(0,0,0,0.06)`
-        : `0 6px 18px rgba(0,0,0,0.5)`,
-
-    scrollMarginTop: scrollOffset,
-    transition: "all 0.35s ease",
-
-    // 🔥 EFECTO PRO HOVER (aquí está la magia)
-    "&:hover": {
-      transform: "translateY(-6px)",
-
-      border: `1.5px solid ${color}90`, // más intenso al hover
-
-      boxShadow:
-        theme.palette.mode === "light"
-          ? `0 14px 30px rgba(0,0,0,0.12),
-             0 0 12px ${color}40`
-          : `0 14px 32px rgba(0,0,0,0.7),
-             0 0 14px ${color}60`,
-
-      "&::before": {
-        opacity: 1, // 🔥 se ilumina el borde interno
-      },
-    },
-  })}
->
-  <Component t={t} />
-</Paper>
+                // 🚀 Hover PRO
+                "&:hover": {
+                  transform: "translateY(-6px) scale(1.01)",
+                  border: `1.5px solid ${color}`,
+                  boxShadow:
+                    theme.palette.mode === "light"
+                      ? "0 12px 28px rgba(0,0,0,0.08)"
+                      : "0 12px 28px rgba(0,0,0,0.6)",
+                },
+              })}
+            >
+              <Component t={t} />
+            </Paper>
           ))}
         </Container>
 
