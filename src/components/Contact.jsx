@@ -84,7 +84,7 @@ export default function Contact({ t }) {
     <Box
       id="contact"
       sx={{
-        py: 4,
+        py: 2,
         scrollMarginTop: "80px",
         color: palette.text.primary,
       }}
