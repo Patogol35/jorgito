@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import BuildIcon from "@mui/icons-material/Build";
 import CodeIcon from "@mui/icons-material/Code";
 import StorageIcon from "@mui/icons-material/Storage";
@@ -17,27 +17,20 @@ import {
   useTheme,
 } from "@mui/material";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 /* =========================
-   🎬 ANIMACIONES GLOBAL
+   🎬 ANIMACIONES
 ========================= */
 
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
 const fadeCinematic = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    clipPath: "inset(0 0 100% 0)",
-    filter: "blur(6px)",
-  },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    clipPath: "inset(0 0 0% 0)",
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: easeOutExpo },
+    transition: { duration: 0.6, ease: easeOutExpo },
   },
 };
 
@@ -45,8 +38,8 @@ const containerMotion = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
+      staggerChildren: 0.06,
+      delayChildren: 0.15,
     },
   },
 };
@@ -99,9 +92,6 @@ export default function Skills({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
-  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const primary = theme.palette.primary.main;
-
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
 
@@ -120,12 +110,14 @@ export default function Skills({ t }) {
     }
   }, [filter]);
 
-  const filteredSkills =
-    filter === "All" ? skills : skills.filter((s) => s.category === filter);
+  const filteredSkills = useMemo(
+    () => (filter === "All" ? skills : skills.filter((s) => s.category === filter)),
+    [filter]
+  );
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
-    : "rgba(255,255,255,0.85)";
+    : "rgba(255,255,255,0.9)";
 
   return (
     <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
@@ -134,8 +126,7 @@ export default function Skills({ t }) {
         <motion.div
           variants={containerMotion}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate="visible"
         >
 
           {/* 🔥 TÍTULO */}
@@ -146,20 +137,16 @@ export default function Skills({ t }) {
                 alignItems: "center",
                 gap: 1,
                 px: 3,
-                py: 0.9,
+                py: 1,
                 borderRadius: "999px",
-                background: isDark
-                  ? "rgba(144,202,249,0.06)"
-                  : "rgba(25,118,210,0.06)",
-                border: `1px solid ${
-                  isDark
-                    ? "rgba(144,202,249,0.25)"
-                    : "rgba(25,118,210,0.25)"
-                }`,
                 backdropFilter: "blur(6px)",
+                transition: "all 0.35s ease",
+                background: isDark
+                  ? "rgba(144,202,249,0.08)"
+                  : "rgba(25,118,210,0.08)",
               }}>
-                <BuildIcon sx={{ fontSize: 22, color: primaryColor }} />
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: primaryColor }}>
+                <BuildIcon sx={{ fontSize: 22 }} />
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   {t.skills.title}
                 </Typography>
               </Box>
@@ -181,8 +168,6 @@ export default function Skills({ t }) {
                       key={cat}
                       value={cat}
                       ref={(el) => (buttonRefs.current[cat] = el)}
-                      component={motion.button}
-                      whileTap={{ scale: 0.92 }}
                       sx={{
                         borderRadius: "999px",
                         px: 2.4,
@@ -191,18 +176,10 @@ export default function Skills({ t }) {
                         textTransform: "none",
                         display: "flex",
                         gap: 1,
-                        backgroundColor: isDark
-                          ? "rgba(255,255,255,0.04)"
-                          : "rgba(255,255,255,0.9)",
-                        border: `1px solid ${
-                          isDark
-                            ? "rgba(255,255,255,0.12)"
-                            : "rgba(0,0,0,0.12)"
-                        }`,
+                        transition: "all 0.3s ease",
                         "&.Mui-selected": {
-                          background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
+                          background: theme.palette.primary.main,
                           color: "#fff",
-                          borderColor: "transparent",
                         },
                       }}
                     >
@@ -217,74 +194,48 @@ export default function Skills({ t }) {
 
           {/* 🔥 GRID */}
           <motion.div variants={fadeCinematic}>
-            <Grid container spacing={4} justifyContent="center" sx={{ pt: 1 }}>
-              <AnimatePresence mode="popLayout" initial={false}>
-                {filteredSkills.map((skill) => (
-                  <Grid item xs={6} sm={4} md={3} key={skill.name}>
-                    <motion.div
-                      layout
-                      initial={false}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.35 }}
+            <Grid container spacing={4} justifyContent="center">
+              {filteredSkills.map((skill) => (
+                <Grid item xs={6} sm={4} md={3} key={skill.name}>
+                  <motion.div layout>
+                    <Paper
+                      sx={{
+                        p: 3,
+                        textAlign: "center",
+                        borderRadius: "20px",
+                        background: cardBg,
+                        transition: "all 0.35s ease",
+                        willChange: "transform, background",
+                        "&:hover": {
+                          transform: "translateY(-6px)",
+                          borderColor: theme.palette.primary.main,
+                        },
+                      }}
                     >
-                      <Paper
+                      <Box
+                        component={motion.img}
+                        src={skill.img}
+                        alt={skill.name}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 180 }}
                         sx={{
-                          p: 3,
-                          textAlign: "center",
-                          borderRadius: "22px",
-                          background: cardBg,
-                          border: `1px solid ${
-                            isDark
-                              ? "rgba(255,255,255,0.15)"
-                              : "rgba(0,0,0,0.12)"
-                          }`,
-                          transition: "all 0.35s ease",
-
-                          "&:hover": {
-                            transform: "translateY(-4px)",
-                            borderColor: theme.palette.primary.main,
-                          },
+                          width: 65,
+                          height: 65,
+                          mb: 2,
+                          objectFit: "contain",
+                          transition: "all 0.3s ease",
+                          // 👇 quitamos flicker fuerte
+                          filter: isDark ? "brightness(1.1)" : "none",
                         }}
-                      >
-                        <Box
-                          component={motion.img}
-                          src={skill.img}
-                          alt={skill.name}
-                          whileHover={{
-                            scale: 1.12,
-                            rotate: [0, 3, -3, 2, 0],
-                            y: -4,
-                          }}
-                          whileTap={{
-                            scale: 0.94,
-                            rotate: 180,
-                          }}
-                          transition={{
-                            type: "spring",
-                            stiffness: 200,
-                            damping: 16,
-                          }}
-                          sx={{
-                            width: 65,
-                            height: 65,
-                            mb: 2,
-                            objectFit: "contain",
-                            transition: "filter 0.35s ease",
-                            filter: isDark
-                              ? "invert(1) brightness(1.22)"
-                              : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
-                          }}
-                        />
+                      />
 
-                        <Typography fontWeight="bold">
-                          {skill.name}
-                        </Typography>
-                      </Paper>
-                    </motion.div>
-                  </Grid>
-                ))}
-              </AnimatePresence>
+                      <Typography fontWeight="bold">
+                        {skill.name}
+                      </Typography>
+                    </Paper>
+                  </motion.div>
+                </Grid>
+              ))}
             </Grid>
           </motion.div>
 
@@ -293,4 +244,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-          }
+}
