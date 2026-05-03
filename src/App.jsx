@@ -131,28 +131,39 @@ function App() {
 
     backgroundColor: theme.palette.background.paper,
 
-    // 🔥 borde premium
-    border: `1.5px solid ${color}30`, // transparencia elegante
+    // 🔥 BORDE MÁS CLARO Y ELEGANTE
+    border: `1.5px solid ${color}55`, // antes 30 → ahora más visible
 
-    // glow suave
+    // 🔥 GLOW MÁS DEFINIDO
     boxShadow:
       theme.palette.mode === "light"
-        ? `0 4px 14px rgba(0,0,0,0.05),
-           0 0 0 1px ${color}20`
-        : `0 4px 18px rgba(0,0,0,0.35),
-           0 0 0 1px ${color}25`,
+        ? `0 6px 18px rgba(0,0,0,0.06),
+           0 0 0 1px ${color}35`
+        : `0 6px 20px rgba(0,0,0,0.5),
+           0 0 0 1px ${color}40`,
 
-    // línea interna elegante
     position: "relative",
     overflow: "hidden",
 
+    // 🔥 ACCENT TOP BORDER (ULTRA PRO)
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "3px",
+      background: `linear-gradient(90deg, ${color}, ${color}88, transparent)`,
+    },
+
+    // 🔥 BORDE INTERNO SUAVE
     "&::before": {
       content: '""',
       position: "absolute",
       inset: 0,
       borderRadius: "inherit",
       padding: "1px",
-      background: `linear-gradient(135deg, ${color}55, transparent 70%)`,
+      background: `linear-gradient(135deg, ${color}66, transparent 70%)`,
       WebkitMask:
         "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
       WebkitMaskComposite: "xor",
@@ -164,13 +175,15 @@ function App() {
     transition: "all 0.3s ease",
 
     "&:hover": {
-      transform: "translateY(-5px)",
+      transform: "translateY(-6px)",
+
+      // 🔥 HOVER MÁS CLARO
       boxShadow:
         theme.palette.mode === "light"
-          ? `0 10px 24px rgba(0,0,0,0.08),
-             0 0 0 1px ${color}35`
-          : `0 10px 26px rgba(0,0,0,0.5),
-             0 0 0 1px ${color}35`,
+          ? `0 12px 28px rgba(0,0,0,0.1),
+             0 0 0 1.5px ${color}70`
+          : `0 12px 30px rgba(0,0,0,0.6),
+             0 0 0 1.5px ${color}80`,
     },
   })}
 >
