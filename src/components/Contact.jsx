@@ -15,10 +15,10 @@ import { useTheme } from "@mui/material/styles";
 
 export default function Contact({ t }) {
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
+  const { palette } = theme;
+  const isDark = palette.mode === "dark";
 
-  // 🔥 aquí sí mantenemos mode (caso válido)
-  const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
   const socialLinks = [
     {
@@ -54,14 +54,13 @@ export default function Contact({ t }) {
       sx={{
         py: 4,
         scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
+        color: palette.text.primary,
       }}
     >
       <Container maxWidth="sm">
-
         {/* =========================  
-            HEADER  
-        ========================= */}
+        TÍTULO CONTACTO  
+========================= */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -72,22 +71,29 @@ export default function Contact({ t }) {
             sx={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: 1,
               px: 3,
-              py: 1,
+              py: 0.9,
               borderRadius: "999px",
-              background: theme.palette.action.hover,
-              border: `1px solid ${theme.palette.divider}`,
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
               backdropFilter: "blur(6px)",
             }}
           >
-            <GroupsIcon sx={{ fontSize: 22, color: primary }} />
+            <GroupsIcon sx={{ fontSize: 22, color: primaryColor }} />
 
             <Typography
               variant="h6"
               sx={{
                 fontWeight: "bold",
-                color: primary,
+                color: primaryColor,
                 lineHeight: 1,
               }}
             >
@@ -105,16 +111,15 @@ export default function Contact({ t }) {
           transition={{ duration: 0.8, delay: 0.1 }}
         >
           <Typography
-  variant="subtitle1"
-  sx={{
-    textAlign: "center",
-    fontWeight: "bold",
-    mb: 4,
-    color: theme.palette.text.primary, 
-  }}
->
-  {t.contact.subtitle}
-</Typography>
+            variant="subtitle1"
+            sx={{
+              textAlign: "center",
+              fontWeight: "bold",
+              mb: 2,
+            }}
+          >
+            {t.contact.subtitle}
+          </Typography>
         </motion.div>
 
         {/* =========================
@@ -132,7 +137,7 @@ export default function Contact({ t }) {
               alignItems: "center",
               gap: 1,
               mb: 3,
-              color: theme.palette.text.secondary,
+              color: palette.text.secondary,
             }}
           >
             <AccessTime sx={{ fontSize: 18 }} />
@@ -144,17 +149,14 @@ export default function Contact({ t }) {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* =========================
-            REDES SOCIALES
-        ========================= */}
+        {/* Redes sociales */}
         <SocialLinks
           socialLinks={socialLinks}
           size="48px"
           animated={true}
           spacing={2}
         />
-
       </Container>
     </Box>
   );
-}
+        }
