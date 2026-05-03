@@ -26,19 +26,16 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  // 🌙 Tema
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
 
-  // 🌐 Idioma
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
 
-  // Persistencia
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -49,23 +46,17 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 THEME PRO
+  // 🔥 THEME FIX (SIN TRANSPARENCIAS)
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode,
-          primary: {
-            main: "#1976d2",
-          },
-          secondary: {
-            main: "#ffeb3b",
-          },
+          primary: { main: "#1976d2" },
+          secondary: { main: "#ffeb3b" },
           background: {
             default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
-            paper: mode === "dark"
-              ? "rgba(18,18,18,0.7)"
-              : "rgba(255,255,255,0.7)",
+            paper: mode === "dark" ? "#121212" : "#ffffff",
           },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -128,14 +119,22 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
 
-                // 🎨 Fondo tipo glass sutil
-                backgroundColor: theme.palette.background.paper,
+                // 🔥 BASE SÓLIDA (FIX REAL)
+                backgroundColor:
+                  theme.palette.mode === "dark"
+                    ? "#121212"
+                    : "#ffffff",
+
+                // 🔥 GLASS CONTROLADO (SIN FLASH)
+                backgroundImage:
+                  theme.palette.mode === "dark"
+                    ? "linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.04))"
+                    : "linear-gradient(rgba(0,0,0,0.02), rgba(0,0,0,0.02))",
+
                 backdropFilter: "blur(6px)",
 
-                // 🔥 Borde elegante
                 border: `1.5px solid ${color}33`,
 
-                // 🌫️ Sombra base
                 boxShadow:
                   theme.palette.mode === "light"
                     ? "0 4px 12px rgba(0,0,0,0.05)"
@@ -145,7 +144,6 @@ function App() {
 
                 transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
 
-                // 🚀 Hover PRO
                 "&:hover": {
                   transform: "translateY(-6px) scale(1.01)",
                   border: `1.5px solid ${color}`,
@@ -207,7 +205,6 @@ function App() {
               fontSize: "1rem",
               letterSpacing: "1px",
               boxShadow: "none",
-
               "&:hover": {
                 bgcolor:
                   theme.palette.mode === "dark"
