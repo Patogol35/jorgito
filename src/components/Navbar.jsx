@@ -167,15 +167,13 @@ export default function Navbar({ mode, setMode, t }) {
         transition={{ duration: 0.6 }}
       >
         <AppBar
-          position="fixed"
-          elevation={scrolled ? 6 : 2}
-          sx={{
-            backgroundColor:
-              mode === "dark"
-                ? "#121212"
-                : scrolled
-                ? theme.palette.primary.dark
-                : theme.palette.primary.main,
+  position="fixed"
+  elevation={0}
+  sx={{
+    backgroundColor:
+      mode === "dark"
+        ? "#121212"
+        : theme.palette.primary.main,
             transition: "all 0.3s ease",
             boxShadow: scrolled ? "0 4px 16px rgba(0,0,0,0.25)" : "none",
             zIndex: 1400,
