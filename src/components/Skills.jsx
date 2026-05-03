@@ -75,7 +75,7 @@ const skills = [
   { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
   { name: "MS Office", category: "Tools", img: "https://i.imgur.com/8EBPyBH.png" },
   { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
-  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"},
   { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
   { name: "NextDNS", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nextdns.svg" },
 ];
@@ -138,7 +138,7 @@ export default function Skills({ t }) {
           viewport={{ once: true }}
         >
 
-          {/* TÍTULO */}
+          {/* 🔥 TÍTULO */}
           <motion.div variants={fadeCinematic}>
             <Box sx={{ textAlign: "center", mb: 4 }}>
               <Box sx={{
@@ -215,16 +215,15 @@ export default function Skills({ t }) {
             </Box>
           </motion.div>
 
-
-          {/* GRID */}
+          {/* 🔥 GRID */}
           <motion.div variants={fadeCinematic}>
             <Grid container spacing={4} justifyContent="center" sx={{ pt: 1 }}>
-              <AnimatePresence mode="popLayout">
+              <AnimatePresence mode="popLayout" initial={false}>
                 {filteredSkills.map((skill) => (
                   <Grid item xs={6} sm={4} md={3} key={skill.name}>
                     <motion.div
                       layout
-                      initial={false} // 🔥 evita flicker
+                      initial={false}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       transition={{ duration: 0.35 }}
@@ -240,16 +239,11 @@ export default function Skills({ t }) {
                               ? "rgba(255,255,255,0.15)"
                               : "rgba(0,0,0,0.12)"
                           }`,
-                          transition:
-                            "transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
-                          willChange: "transform",
+                          transition: "all 0.35s ease",
+
                           "&:hover": {
                             transform: "translateY(-4px)",
                             borderColor: theme.palette.primary.main,
-                            boxShadow:
-                              theme.palette.mode === "dark"
-                                ? "0 10px 30px rgba(0,0,0,0.6)"
-                                : "0 10px 25px rgba(0,0,0,0.15)",
                           },
                         }}
                       >
@@ -276,6 +270,7 @@ export default function Skills({ t }) {
                             height: 65,
                             mb: 2,
                             objectFit: "contain",
+                            transition: "filter 0.35s ease",
                             filter: isDark
                               ? "invert(1) brightness(1.22)"
                               : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
@@ -298,4 +293,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-    }
+          }
