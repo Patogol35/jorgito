@@ -187,18 +187,22 @@ export default function Contact({ t }) {
           </motion.div>
 
           {/* Redes sociales */}
-          <motion.div
+          {/* Redes sociales */}
+<motion.div
   variants={fadeCinematic}
   viewport={{ once: true, margin: "-50px" }}
 >
   <SocialLinks
     socialLinks={socialLinks}
     size="48px"
-    animated={false}   
+    animated={false}
     spacing={2}
   />
 </motion.div>
-      </Container>
-    </Box>
-  );
-                  }
+
+</motion.div> 
+
+</Container>
+</Box>
+);
+}
