@@ -217,7 +217,7 @@ export default function Skills({ t }) {
 
           {/* 🔥 GRID */}
           <motion.div variants={fadeCinematic}>
-            <Grid container spacing={4} justifyContent="center">
+            <Grid container spacing={4} justifyContent="center" sx={{ pt: 1 }}>
               <AnimatePresence mode="popLayout">
                 {filteredSkills.map((skill) => (
                   <Grid item xs={6} sm={4} md={3} key={skill.name}>
