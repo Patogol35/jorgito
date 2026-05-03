@@ -244,13 +244,37 @@ export default function Skills({ t }) {
                         },
                       }}>
                         <Box
-                          component={motion.img}
-                          src={skill.img}
-                          alt={skill.name}
-                          whileHover={{ scale: 1.12 }}
-                          sx={{ width: 65, height: 65, mb: 2 }}
-                        />
-                        <Typography fontWeight="bold">{skill.name}</Typography>
+  component={motion.img}
+  src={skill.img}
+  alt={skill.name}
+  whileHover={{
+    scale: 1.12,
+    rotate: [0, 3, -3, 2, 0],
+    y: -4,
+  }}
+  whileTap={{
+    scale: 0.94,
+    rotate: 180,
+  }}
+  transition={{
+    type: "spring",
+    stiffness: 200,
+    damping: 16,
+  }}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+    filter: isDark
+      ? "invert(1) brightness(1.22)"
+      : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+  }}
+/>
+
+<Typography fontWeight="bold">
+  {skill.name}
+</Typography>
                       </Paper>
                     </motion.div>
                   </Grid>
