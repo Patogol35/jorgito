@@ -116,6 +116,7 @@ const categoryIcons = {
 
 export default function Skills({ t }) {
   const [filter, setFilter] = useState("All");
+  const [disableAnim, setDisableAnim] = useState(false);
 
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -125,6 +126,13 @@ export default function Skills({ t }) {
 
   const containerRef = useRef(null);
   const buttonRefs = useRef({});
+
+  /* 🔥 BLOQUEAR animaciones en cambio de tema */
+  useEffect(() => {
+    setDisableAnim(true);
+    const t = setTimeout(() => setDisableAnim(false), 180);
+    return () => clearTimeout(t);
+  }, [isDark]);
 
   useEffect(() => {
     const activeBtn = buttonRefs.current[filter];
@@ -149,7 +157,15 @@ export default function Skills({ t }) {
     : "rgba(255,255,255,0.85)";
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="skills"
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+        backgroundColor: theme.palette.background.default,
+        transition: "background-color 0.3s ease",
+      }}
+    >
       <Container>
 
         <motion.div
@@ -214,7 +230,7 @@ export default function Skills({ t }) {
                       value={cat}
                       ref={(el) => (buttonRefs.current[cat] = el)}
                       component={motion.button}
-                      whileTap={{ scale: 0.92 }}
+                      whileTap={!disableAnim ? { scale: 0.92 } : {}}
                       sx={{
                         borderRadius: "999px",
                         px: 2.4,
@@ -252,12 +268,16 @@ export default function Skills({ t }) {
               {filteredSkills.map((skill) => (
                 <Grid item xs={6} sm={4} md={3} key={skill.name}>
                   <motion.div
-                    layout
+                    layout={!disableAnim}
                     variants={fadeCard}
                     initial={false}
                     animate="visible"
                     exit={{ opacity: 0, scale: 0.9 }}
-                    whileHover={{ y: -6, scale: 1.04 }}
+                    whileHover={!disableAnim ? { y: -6, scale: 1.04 } : {}}
+                    transition={{
+                      duration: disableAnim ? 0 : 0.45,
+                      ease: easeOutExpo,
+                    }}
                   >
                     <Paper
                       elevation={0}
@@ -271,19 +291,23 @@ export default function Skills({ t }) {
                             ? "rgba(255,255,255,0.15)"
                             : "rgba(0,0,0,0.12)"
                         }`,
-                        transition: "background-color 0.3s ease, border 0.3s ease",
+                        transition:
+                          "background-color 0.3s ease, border 0.3s ease",
                       }}
                     >
                       <Box
                         component={motion.img}
                         src={skill.img}
                         alt={skill.name}
-                        whileHover={{
+                        whileHover={!disableAnim ? {
                           scale: 1.12,
                           rotate: [0, 3, -3, 2, 0],
                           y: -4,
-                        }}
-                        whileTap={{ scale: 0.94, rotate: 180 }}
+                        } : {}}
+                        whileTap={!disableAnim ? {
+                          scale: 0.94,
+                          rotate: 180,
+                        } : {}}
                         transition={{
                           type: "spring",
                           stiffness: 200,
@@ -314,4 +338,4 @@ export default function Skills({ t }) {
       </Container>
     </Box>
   );
-                      }
+                        }
