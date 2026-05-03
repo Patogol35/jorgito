@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-
+import { alpha } from "@mui/material/styles";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -186,12 +186,15 @@ function App() {
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
   <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={(theme) => ({
+  aria-label="idioma"
+  disableRipple
+  disableFocusRipple
+  disableTouchRipple
+  onClick={() => setLang(lang === "es" ? "en" : "es")}
+  sx={(theme) => {
+    const baseColor = theme.palette.primary.main;
+
+    return {
       position: "fixed",
       top: 90,
       right: 16,
@@ -204,30 +207,32 @@ function App() {
       fontSize: "1rem",
       letterSpacing: "1px",
 
+      // 🔥 CLAVE: mismo color base siempre
       bgcolor:
         theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+          ? alpha(baseColor, 0.25)
+          : baseColor,
 
       color: "#fff",
 
       boxShadow: "none",
 
-      // 🔥 elimina el flash
-      transition: "background-color 0.3s ease, color 0.3s ease",
+      transition: "all 0.25s ease",
 
-      willChange: "background-color",
+      willChange: "transform",
 
       "&:hover": {
+        transform: "scale(1.05)",
         bgcolor:
           theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
+            ? alpha(baseColor, 0.4)
             : theme.palette.primary.dark,
       },
-    })}
-  >
-    {lang === "es" ? "EN" : "ES"}
-  </Fab>
+    };
+  }}
+>
+  {lang === "es" ? "EN" : "ES"}
+</Fab>
 </Tooltip>
 
         <ChatBot t={t} lang={lang} />
