@@ -33,26 +33,106 @@ const categories = [
 ];
 
 const skills = [
-  { name: "React", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-  { name: "JavaScript", category: "Frontend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-  { name: "Spring", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" },
-  { name: "Python", category: "Backend", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-  { name: "MySQL", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-  { name: "Postgres", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-  { name: "Supabase", category: "Database", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg" },
-  { name: "AWS", category: "Cloud", img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg" },
-  { name: "Vercel", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg" },
-  { name: "Render", category: "Cloud", img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg" },
-  { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
-  { name: "npm", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" },
-  { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
-  { name: "Git", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-  { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
-  { name: "MS Office", category: "Tools", img: "https://i.imgur.com/8EBPyBH.png" },
-  { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
-  { name: "GitHub", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"},
-  { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
-  { name: "NextDNS", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nextdns.svg" },
+  {
+    name: "React",
+    category: "Frontend",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+  },
+  {
+    name: "JavaScript",
+    category: "Frontend",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+  },
+  {
+    name: "Spring",
+    category: "Backend",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg",
+  },
+  {
+    name: "Python",
+    category: "Backend",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  },
+  {
+    name: "MySQL",
+    category: "Database",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+  },
+  {
+    name: "Postgres",
+    category: "Database",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+  },
+  {
+    name: "Supabase",
+    category: "Database",
+    img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/supabase.svg",
+  },
+  {
+    name: "AWS",
+    category: "Cloud",
+    img: "https://cdn.worldvectorlogo.com/logos/aws-2.svg",
+  },
+  {
+    name: "Vercel",
+    category: "Cloud",
+    img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/vercel.svg",
+  },
+  {
+    name: "Render",
+    category: "Cloud",
+    img: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/render.svg",
+  },
+  {
+    name: "Postman",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+  },
+  {
+    name: "npm",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg",
+  },
+  {
+    name: "VirtualBox",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg",
+  },
+  {
+    name: "Git",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+  },
+  {
+    name: "AnyDesk",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg",
+  },
+  {
+    name: "MS Office",
+    category: "Tools",
+    img: "https://i.imgur.com/8EBPyBH.png",
+  },
+  {
+    name: "Ubuntu",
+    category: "Tools",
+    img: "https://i.imgur.com/VgVlsE6.png",
+  },
+  {
+    name: "GitHub",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+  },
+  {
+    name: "Elasticsearch",
+    category: "Database",
+    img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg",
+  },
+  {
+    name: "NextDNS",
+    category: "Tools",
+    img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/nextdns.svg",
+  },
 ];
 
 const categoryIcons = {
@@ -69,7 +149,6 @@ const categoryIcons = {
 ========================= */
 
 export default function Skills({ t }) {
-
   const [filter, setFilter] = useState("All");
 
   const theme = useTheme();
@@ -97,21 +176,32 @@ export default function Skills({ t }) {
   }, [filter]);
 
   const filteredSkills =
-    filter === "All" ? skills : skills.filter((s) => s.category === filter);
+    filter === "All"
+      ? skills
+      : skills.filter((s) => s.category === filter);
 
   const cardBg = isDark
     ? "rgba(255,255,255,0.05)"
     : "rgba(255,255,255,0.85)";
 
   return (
-    <Box id="skills" sx={{ py: 4, scrollMarginTop: "80px" }}>
+    <Box
+      id="skills"
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+      }}
+    >
       <Container>
-
+        {/* TÍTULO */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
-          style={{ textAlign: "center", marginBottom: "2rem" }}
+          style={{
+            textAlign: "center",
+            marginBottom: "2rem",
+          }}
         >
           <Box
             sx={{
@@ -134,30 +224,43 @@ export default function Skills({ t }) {
             }}
           >
             <BuildIcon
-              sx={{ fontSize: 22, color: primaryColor }}
+              sx={{
+                fontSize: 22,
+                color: primaryColor,
+              }}
             />
+
             <Typography
-  variant="h6"
-  sx={{ fontWeight: "bold", color: primaryColor, lineHeight: 1 }}
->
-  {t.skills.title}
-</Typography>
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                color: primaryColor,
+                lineHeight: 1,
+              }}
+            >
+              {t.skills.title}
+            </Typography>
           </Box>
         </motion.div>
 
         {/* FILTERS */}
-
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
-
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            mb: 6,
+          }}
+        >
           <Box
             ref={containerRef}
             sx={{
               maxWidth: "100%",
               overflowX: "auto",
-              "&::-webkit-scrollbar": { display: "none" },
+              "&::-webkit-scrollbar": {
+                display: "none",
+              },
             }}
           >
-
             <ToggleButtonGroup
               value={filter}
               exclusive
@@ -168,7 +271,6 @@ export default function Skills({ t }) {
                 py: 0.5,
               }}
             >
-
               {categories.map((cat) => (
                 <ToggleButton
                   key={cat}
@@ -194,6 +296,9 @@ export default function Skills({ t }) {
                         ? "rgba(255,255,255,0.12)"
                         : "rgba(0,0,0,0.12)"
                     }`,
+                    transition:
+                      "background-color 0.3s ease, border-color 0.3s ease",
+
                     "&.Mui-selected": {
                       background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
@@ -202,58 +307,82 @@ export default function Skills({ t }) {
                   }}
                 >
                   {categoryIcons[cat]}
-{cat}
+                  {cat}
                 </ToggleButton>
               ))}
             </ToggleButtonGroup>
-
           </Box>
         </Box>
 
         {/* GRID */}
-
-        <Grid container spacing={4} justifyContent="center">
-
+        <Grid
+          container
+          spacing={4}
+          justifyContent="center"
+        >
           <AnimatePresence mode="popLayout">
-
             {filteredSkills.map((skill) => (
-
-              <Grid item xs={6} sm={4} md={3} key={skill.name}>
-
+              <Grid
+                item
+                xs={6}
+                sm={4}
+                md={3}
+                key={skill.name}
+              >
                 <motion.div
                   layout
-                  initial={{ opacity: 0, y: 20, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                    scale: 0.96,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.9,
+                  }}
                   transition={{
                     duration: 0.35,
                     ease: "easeOut",
                   }}
                 >
-
                   <Paper
+                    elevation={0}
                     sx={{
                       p: 3,
                       textAlign: "center",
                       borderRadius: "22px",
-                      background: cardBg,
+                      backgroundColor: cardBg,
                       border: `1px solid ${
                         isDark
                           ? "rgba(255,255,255,0.15)"
                           : "rgba(0,0,0,0.12)"
                       }`,
-                      transition: "all 0.25s ease",
+                      backdropFilter: "blur(10px)",
+
+                      transition:
+                        "background-color 0.35s ease, border-color 0.35s ease, transform 0.25s ease",
+
+                      willChange:
+                        "transform, background-color",
+
                       "&:hover": {
                         transform: "translateY(-4px)",
-                        borderColor: theme.palette.primary.main,
+                        borderColor:
+                          theme.palette.primary.main,
                       },
                     }}
                   >
-
                     <Box
                       component={motion.img}
                       src={skill.img}
                       alt={skill.name}
+                      loading="lazy"
+                      decoding="async"
                       whileHover={{
                         scale: 1.12,
                         rotate: [0, 3, -3, 2, 0],
@@ -273,29 +402,26 @@ export default function Skills({ t }) {
                         height: 65,
                         mb: 2,
                         objectFit: "contain",
+
+                        transition:
+                          "filter 0.35s ease",
+
                         filter: isDark
-                          ? "invert(1) brightness(1.22)"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+                          ? "invert(1) brightness(1.15)"
+                          : "none",
                       }}
                     />
 
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
-
                   </Paper>
-
                 </motion.div>
-
               </Grid>
-
             ))}
-
           </AnimatePresence>
-
         </Grid>
-
       </Container>
     </Box>
   );
-}
+            }
