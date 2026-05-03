@@ -36,7 +36,7 @@ function App() {
 
   const scrollOffset = "80px";
 
-  // 🔥 PERSISTENCIA
+  // 🔥 Persistencia
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -45,27 +45,9 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  // 🔥 FIX GLOBAL FLASH (CLAVE)
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = `
-      * {
-        transition: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-
-    // fuerza reflow
-    window.getComputedStyle(document.body);
-
-    setTimeout(() => {
-      document.head.removeChild(style);
-    }, 50);
-  }, [mode]);
-
   const t = translations[lang] || translations["es"];
 
-  // 🎨 THEME ESTABLE
+  // 🎨 Theme optimizado
   const theme = useMemo(
     () =>
       createTheme({
@@ -93,6 +75,7 @@ function App() {
     [mode]
   );
 
+  // 🔥 Memo de secciones (correcto)
   const sections = useMemo(
     () => [
       { id: "about", color: "#2e7d32", Component: About },
@@ -138,13 +121,11 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
 
-                // 🔥 FONDO SÓLIDO (SIN FLASH)
                 backgroundColor:
                   theme.palette.mode === "dark"
                     ? "#121212"
                     : "#ffffff",
 
-                // 🔥 EFECTO SUAVE SIN BLUR
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
@@ -159,15 +140,19 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
-                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                // 🔥 OPTIMIZACIÓN IMPORTANTE
+                transition:
+                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+
+                willChange: "transform",
 
                 "&:hover": {
-                  transform: "translateY(-6px) scale(1.01)",
+                  transform: "translateY(-4px) scale(1.01)",
                   border: `1.5px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
-                      ? "0 12px 28px rgba(0,0,0,0.08)"
-                      : "0 12px 28px rgba(0,0,0,0.6)",
+                      ? "0 10px 24px rgba(0,0,0,0.08)"
+                      : "0 10px 24px rgba(0,0,0,0.6)",
                 },
               })}
             >
