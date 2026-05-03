@@ -18,14 +18,24 @@ export default function About({ t }) {
   const iconColors = ["#1976d2", "#9333ea"];
 
   return (
-    <Box
-      id="about"
-      sx={{
-        py: 4,
-        scrollMarginTop: "80px",
-        color: theme.palette.text.primary,
-      }}
-    >
+    return (
+  <Box
+    id="about"
+    sx={(theme) => ({
+      py: 4,
+      scrollMarginTop: "80px",
+      color: theme.palette.text.primary,
+
+      // 🔥 fondo sólido (fix flash)
+      backgroundColor: theme.palette.background.paper,
+
+      // 🔥 transición suave
+      transition: "background-color 0.2s ease, color 0.2s ease",
+
+      // 🔥 optimización render
+      willChange: "background-color",
+    })}
+  >
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         whileInView={{ opacity: 1, scale: 1 }}
