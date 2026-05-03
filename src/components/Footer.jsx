@@ -180,11 +180,11 @@ export default function Footer({ t }) {
           <MotionDiv variants={fadeCinematic}>
             <Box sx={{ mb: 3 }}>
               <SocialLinks
-                socialLinks={socialLinks}
-                size="30px"
-                animated
-                spacing={2.2}
-              />
+  socialLinks={socialLinks}
+  size="30px"
+  animated={false}
+  spacing={2.2}
+/>
             </Box>
           </MotionDiv>
 
