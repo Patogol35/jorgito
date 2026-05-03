@@ -24,9 +24,6 @@ export default function About({ t }) {
         py: 4,
         scrollMarginTop: "80px",
         color: theme.palette.text.primary,
-
-        // 🔥 IMPORTANTE: sin fondo (evita el cuadrado)
-        backgroundColor: "transparent",
       }}
     >
       <motion.div
@@ -44,20 +41,15 @@ export default function About({ t }) {
             px: 3,
             py: 0.9,
             borderRadius: "999px",
-
-            // 🔥 leve mejora visual sin romper diseño
             background: isDark
-              ? "rgba(144,202,249,0.08)"
-              : "rgba(25,118,210,0.08)",
-
+              ? "rgba(144,202,249,0.06)"
+              : "rgba(25,118,210,0.06)",
             border: `1px solid ${
               isDark
                 ? "rgba(144,202,249,0.25)"
                 : "rgba(25,118,210,0.25)"
             }`,
-
-            // ⚠️ Mantengo el blur pero más estable
-            backdropFilter: "blur(4px)",
+            backdropFilter: "blur(6px)",
           }}
         >
           <GraduationCap size={22} color={primaryColor} />
@@ -81,6 +73,7 @@ export default function About({ t }) {
               viewport={{ once: false }}
             >
               <Box sx={{ textAlign: "center", px: 1 }}>
+                {/* 🔥 AQUÍ ESTÁ EL FIX */}
                 <GraduationCap size={28} color={iconColors[i]} />
 
                 <Typography variant="subtitle1" sx={subtitleStyle}>
