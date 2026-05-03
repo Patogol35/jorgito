@@ -410,4 +410,4 @@ export default function Navbar({ mode, setMode, t }) {
       </AnimatePresence>
     </>
   );
-              }
+                }
