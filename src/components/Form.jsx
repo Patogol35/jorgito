@@ -18,45 +18,15 @@ import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-/* =========================
-   🎬 Animaciones tipo Hero
-========================= */
-
-const easeOutExpo = [0.16, 1, 0.3, 1];
-
-const fadeCinematic = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-    clipPath: "inset(0 0 100% 0)",
-    filter: "blur(6px)",
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0 0 0% 0)",
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: easeOutExpo },
-  },
-};
-
-const containerAnim = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
-    },
-  },
-};
-
 export default function Form({ t }) {
   const theme = useTheme();
-  const primary = theme.palette.primary.main;
+  const isDark = theme.palette.mode === "dark";
+  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
+  // 🔥 TEXTO SEGURO
   const formText = t?.form || {
     title: "Contacto por Email",
     subtitle: "Ponte en contacto conmigo a través de este formulario",
@@ -88,60 +58,79 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  const fields = [
-    {
-      name: "from_name",
-      label: formText.fields.name,
-      icon: <PersonIcon sx={{ color: primary }} />,
+  // 🔥 ANIMACIONES HERO STYLE
+  const easeOutExpo = [0.16, 1, 0.3, 1];
+
+  const fadeCinematic = {
+    hidden: {
+      opacity: 0,
+      y: 16,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(6px)",
     },
-    {
-      name: "from_email",
-      label: formText.fields.email,
-      type: "email",
-      icon: <EmailIcon sx={{ color: primary }} />,
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0 0 0% 0)",
+      filter: "blur(0px)",
+      transition: { duration: 0.9, ease: easeOutExpo },
     },
-    {
-      name: "message",
-      label: formText.fields.message,
-      multiline: true,
-      rows: 4,
-      icon: <MessageIcon sx={{ color: primary }} />,
+  };
+
+  const containerStagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.4,
+      },
     },
-  ];
+  };
 
   return (
-    <Box
-      id="form"
-      sx={{
-        py: { xs: 4, md: 6 },
-        color: theme.palette.text.primary,
-      }}
-    >
+    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
       <Container maxWidth="sm">
 
-        {/* 🎬 CONTENEDOR GLOBAL */}
+        {/* 🔥 TITULO + SUBTITULO */}
         <motion.div
-          variants={containerAnim}
+          variants={containerStagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
         >
-
-          {/* ================= HEADER ================= */}
           <motion.div variants={fadeCinematic}>
-            <Box sx={headerStyle(theme)}>
-              <ContactMailIcon sx={{ fontSize: 22, color: primary }} />
-
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
+                px: 3,
+                py: 0.9,
+                borderRadius: "999px",
+                background: isDark
+                  ? "rgba(144,202,249,0.06)"
+                  : "rgba(25,118,210,0.06)",
+                border: `1px solid ${
+                  isDark
+                    ? "rgba(144,202,249,0.25)"
+                    : "rgba(25,118,210,0.25)"
+                }`,
+                backdropFilter: "blur(6px)",
+                mx: "auto",
+                mb: 2,
+              }}
+            >
+              <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "bold", color: primary, lineHeight: 1 }}
+                sx={{ fontWeight: "bold", color: primaryColor }}
               >
                 {formText.title}
               </Typography>
             </Box>
           </motion.div>
 
-          {/* ================= SUBTITLE ================= */}
           <motion.div variants={fadeCinematic}>
             <Typography
               variant="subtitle1"
@@ -149,21 +138,46 @@ export default function Form({ t }) {
                 textAlign: "center",
                 fontWeight: "bold",
                 mb: 4,
-                color: theme.palette.text.primary,
               }}
             >
               {formText.subtitle}
             </Typography>
           </motion.div>
+        </motion.div>
 
-          {/* ================= FORM ================= */}
+        {/* 🔥 FORM */}
+        <motion.div
+          variants={containerStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           <Box
             component="form"
             ref={formRef}
             onSubmit={handleSubmit}
             sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
-            {fields.map((field) => (
+            {[
+              {
+                name: "from_name",
+                label: formText.fields.name,
+                icon: <PersonIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "from_email",
+                label: formText.fields.email,
+                type: "email",
+                icon: <EmailIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "message",
+                label: formText.fields.message,
+                multiline: true,
+                rows: 4,
+                icon: <MessageIcon sx={{ color: primaryColor }} />,
+              },
+            ].map((field) => (
               <motion.div key={field.name} variants={fadeCinematic}>
                 <TextField
                   {...field}
@@ -188,7 +202,7 @@ export default function Form({ t }) {
               </motion.div>
             ))}
 
-            {/* ================= BUTTON ================= */}
+            {/* BOTÓN */}
             <motion.div
               variants={fadeCinematic}
               style={{ display: "flex", justifyContent: "center" }}
@@ -196,7 +210,24 @@ export default function Form({ t }) {
               <Button
                 type="submit"
                 startIcon={<SendIcon />}
-                sx={buttonStyle(theme)}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 5,
+                  py: 1.4,
+                  color:
+                    theme.palette.mode === "light"
+                      ? "#ffffff"
+                      : "#020617",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
+                  "&:hover": {
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    transform: "scale(1.04)",
+                  },
+                  transition: "transform 0.2s ease",
+                }}
               >
                 {formText.button}
               </Button>
@@ -204,7 +235,7 @@ export default function Form({ t }) {
           </Box>
         </motion.div>
 
-        {/* ================= ALERT ================= */}
+        {/* ALERT */}
         <Snackbar
           open={success}
           autoHideDuration={3500}
@@ -215,7 +246,27 @@ export default function Form({ t }) {
             transform: "translateY(-50%)",
           }}
         >
-          <Alert sx={alertStyle(theme)} icon={false}>
+          <Alert
+            severity="success"
+            icon={false}
+            sx={{
+              px: 4,
+              py: 2,
+              borderRadius: 3,
+              fontWeight: 600,
+              textAlign: "center",
+              fontSize: "0.95rem",
+              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
+              background:
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, #064e3b, #022c22)"
+                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 20px 40px rgba(0,0,0,0.6)"
+                  : "0 20px 40px rgba(22,163,74,0.35)",
+            }}
+          >
             <strong>{formText.success}</strong>
             <br />
             {formText.successMsg}
@@ -226,61 +277,55 @@ export default function Form({ t }) {
   );
 }
 
-/* ================= STYLES (SIN CAMBIOS) ================= */
-
-const headerStyle = (theme) => ({
-  display: "inline-flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 1,
-  px: 3,
-  py: 1,
-  borderRadius: "999px",
-  background: theme.palette.action.hover,
-  border: `1px solid ${theme.palette.divider}`,
-  backdropFilter: "blur(6px)",
-});
-
-const buttonStyle = (theme) => ({
-  borderRadius: "25px",
-  textTransform: "none",
-  fontWeight: "bold",
-  px: 5,
-  py: 1.4,
-  color: theme.palette.getContrastText(theme.palette.primary.main),
-  background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
-  boxShadow: "none",
-  transition: "transform 0.2s ease",
-  "&:hover": {
-    transform: "scale(1.04)",
-  },
-});
-
-const alertStyle = (theme) => ({
-  px: 4,
-  py: 2,
-  borderRadius: 3,
-  fontWeight: 600,
-  textAlign: "center",
-  fontSize: "0.95rem",
-  color: theme.palette.success.contrastText,
-  background: theme.palette.success.main,
-  boxShadow: theme.shadows[6],
-});
-
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
     borderRadius: 3,
-    background: theme.palette.background.paper,
-    backdropFilter: "blur(10px)",
+    background:
+      theme.palette.mode === "dark"
+        ? "rgba(15,23,42,0.55)"
+        : "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(14px)",
+
+    "& input, & textarea": {
+      fontWeight: 600,
+      color:
+        theme.palette.mode === "dark"
+          ? "#ffffff"
+          : "#020617",
+    },
+
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(255,255,255,0.45)"
+          : "rgba(2,6,23,0.45)",
+      fontWeight: 400,
+    },
+
     "& fieldset": {
-      borderColor: theme.palette.divider,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? "rgba(96,165,250,0.35)"
+          : "rgba(37,99,235,0.85)",
     },
+
     "&:hover fieldset": {
-      borderColor: theme.palette.primary.main,
+      borderColor:
+        theme.palette.mode === "dark"
+          ? theme.palette.primary.main
+          : "#1d4ed8",
     },
+
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
     },
+  },
+
+  "& .MuiInputLabel-root": {
+    color:
+      theme.palette.mode === "dark"
+        ? "rgba(255,255,255,0.85)"
+        : "rgba(2,6,23,0.85)",
+    fontWeight: 600,
   },
 });
