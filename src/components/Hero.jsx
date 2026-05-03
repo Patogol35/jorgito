@@ -5,20 +5,21 @@ import {
   Button,
   Avatar,
   IconButton,
-  Modal,
 } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { Brightness4, Brightness7, Close } from "@mui/icons-material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
 
-export default function Hero({ mode, setMode, t }) {
+export default function Hero({ mode, setMode, t, lang, setLang }) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
-  const [zoom, setZoom] = useState(false);
+
+  const glowColor =
+    theme.palette.mode === "dark"
+      ? theme.palette.primary.main
+      : "#60a5fa";
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -34,7 +35,7 @@ export default function Hero({ mode, setMode, t }) {
       y: 0,
       clipPath: "inset(0 0 0% 0)",
       filter: "blur(0px)",
-      transition: { duration: 0.9, ease: easeOutExpo },
+      transition: { duration: 1, ease: easeOutExpo },
     },
   };
 
@@ -42,8 +43,8 @@ export default function Hero({ mode, setMode, t }) {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.5,
+        staggerChildren: 0.22,
+        delayChildren: 0.6,
       },
     },
   };
@@ -52,8 +53,8 @@ export default function Hero({ mode, setMode, t }) {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 1.1,
+        staggerChildren: 0.14,
+        delayChildren: 1.3,
       },
     },
   };
@@ -79,27 +80,25 @@ export default function Hero({ mode, setMode, t }) {
       >
         {/* AVATAR */}
         <motion.div
-          initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
+          initial={{ opacity: 0, rotateY: -180, scale: 0.9 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 1.8, ease: easeOutExpo }}
+          transition={{ duration: 2.4, ease: [0.25, 0.9, 0.35, 1] }}
           style={{
             borderRadius: "50%",
             transformStyle: "preserve-3d",
-            perspective: 1200,
-            willChange: "transform",
+            perspective: 1300,
           }}
         >
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={{ y: [0, -12, 0], rotateX: [0, 1.2, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
                 boxShadow: [
-                  `0 0 16px ${theme.palette.primary.main}55`,
-                  `0 0 26px ${theme.palette.primary.main}88`,
-                  `0 0 16px ${theme.palette.primary.main}55`,
+                  `0 0 18px ${theme.palette.primary.main}55`,
+                  `0 0 28px ${theme.palette.primary.main}88`,
+                  `0 0 18px ${theme.palette.primary.main}55`,
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity }}
@@ -107,16 +106,12 @@ export default function Hero({ mode, setMode, t }) {
             >
               <Avatar
                 alt="Jorge Patricio"
-                src="https://i.imgur.com/jr3rjzu.jpg"
-                imgProps={{
-                  loading: "lazy",
-                  decoding: "async",
-                }}
+                src="https://res.cloudinary.com/dqkwc0kf7/image/upload/v1768080897/file_00000000abe471f8a911de56e6d3cb7f_e0quhw.png"
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
+                  boxShadow: `0 0 12px ${theme.palette.primary.main}66`,
                   backgroundColor: theme.palette.background.paper,
                 }}
               />
@@ -190,7 +185,8 @@ export default function Hero({ mode, setMode, t }) {
                 {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
+                  href:
+                    "https://res.cloudinary.com/dqkwc0kf7/image/upload/v1759022233/image_b835ddca-c010-4f78-a300-676248ea3fd120250927_201635_cizk17.jpg",
                 },
                 {
                   label: t.hero.buttons.ai,
@@ -230,6 +226,7 @@ export default function Hero({ mode, setMode, t }) {
                       background: "transparent",
                       transform: "scale(1.15)",
                     },
+                    transition: "transform 0.2s ease",
                   }}
                 >
                   {mode === "light" ? (
@@ -243,68 +240,6 @@ export default function Hero({ mode, setMode, t }) {
           </motion.div>
         </Box>
       </Box>
-
-      {/* MODAL */}
-      <Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  sx={{
-    zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.85)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <>
-    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
-    <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "fixed", // 🔥 CLAVE
-        top: 20,
-        left: 20,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.6)",
-        color: "#fff",
-        backdropFilter: "blur(6px)",
-        "&:hover": {
-          background: "rgba(0,0,0,0.8)",
-        },
-      }}
-    >
-      <Close />
-    </IconButton>
-
-    {/* CONTENEDOR */}
-    <Box
-      sx={{
-        position: "relative",
-        width: { xs: "95%", md: "70%" },
-        maxHeight: "90vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {/* 🖼️ IMAGEN */}
-      <Box
-        component="img"
-        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-        alt="certificado"
-        loading="lazy"
-        decoding="async"
-        sx={{
-          width: "100%",
-          maxHeight: "90vh",
-          objectFit: "contain",
-          borderRadius: 2,
-          display: "block",
-        }}
-      />
-    </Box>
-  </>
-</Modal>
     </>
   );
-                  }
+                    }
