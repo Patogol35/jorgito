@@ -211,9 +211,9 @@ export default function Form({ t }) {
                 px: 5,
                 py: 1.4,
                 color:
-                  theme.palette.mode === "light"
-                    ? "#ffffff"
-                    : "#020617",
+  theme.palette.mode === "dark"
+    ? "#ffffff"
+    : "#020617",
                 background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
                 boxShadow: "none",
                 "&:hover": {
