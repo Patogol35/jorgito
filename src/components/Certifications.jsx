@@ -52,13 +52,13 @@ export default function Certifications({ t }) {
   ];
 
   const iconColors = [
-    "#1976d2",
-    "#d97706",
-    "#e11d48",
-    "#22c55e",
-    "#9333ea",
-    "#1e40af",
-  ];
+  "#1976d2",
+  "#1e40af",
+  "#2563eb",
+  "#3b82f6",
+  "#60a5fa",
+  "#93c5fd",
+];
 
   return (
     <Box
