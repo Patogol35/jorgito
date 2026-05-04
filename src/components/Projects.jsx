@@ -66,8 +66,11 @@ function ProjectCard({ p, palette }) {
               underline="none"
               sx={{
                 color: palette.text.primary,
-                fontWeight: "bold",
-                "&:hover": { color: p.color },
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
+    "&:hover": { 
+      color: p.color,
+      textShadow: `0 0 6px ${p.color}33` },
               }}
             >
               {p.titulo}
@@ -90,14 +93,13 @@ export default function Projects({ t }) {
   const proyectosText = t.projects.items;
 
   const colors = [
-    "#1976d2",
-    "#9333ea",
-    "#16a34a",
-    "#e11d48",
-    "#f59e0b",
-    "#0ea5e9",
-    "#10b981",
-  ];
+  "#1976d2",
+  "#1e40af",
+  "#2563eb",
+  "#3b82f6",
+  "#60a5fa",
+  "#93c5fd",
+];
 
   const icons = [
     WbSunnyIcon,
@@ -111,7 +113,7 @@ export default function Projects({ t }) {
 
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
-    color: colors[i],
+    color: colors[i % colors.length],
     icon: icons[i],
   }));
 
