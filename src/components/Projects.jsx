@@ -128,11 +128,12 @@ export default function Projects({ t }) {
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
+  key={t.projects.title} // 👈 CLAVE
+  variants={container}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+>
         {/* =========================
             TÍTULO (estilo Hero)
         ========================= */}
