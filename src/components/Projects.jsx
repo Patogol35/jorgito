@@ -94,10 +94,10 @@ export default function Projects({ t }) {
 
   const colors = [
   "#1976d2",
-  "#1e40af",
+  "#3b82f6",
   "#2563eb",
   "#1976d2",
-  "#1e40af",
+  "#3b82f6",
   "#2563eb",
 ];
 
