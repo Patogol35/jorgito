@@ -101,7 +101,10 @@ export default function ChatBot() {
   sx={(theme) => ({
     position: "fixed",
     bottom: 16,
-    right: 16, // 👈 SIEMPRE pegado al borde
+    ...(isLandscape
+      ? { left: 16 }   // 👈 horizontal → izquierda pegado
+      : { right: 88 }), // 👈 vertical → separado de WhatsApp
+
     zIndex: 1200,
 
     bgcolor:
