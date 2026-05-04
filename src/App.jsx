@@ -190,8 +190,8 @@ function App() {
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      bottom: 84, // 👈 arriba del chatbot
-      left: 16,   // 👈 MISMO LADO
+      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
+      left: 16,    // 👈 lado izquierdo
       zIndex: 1200,
 
       bgcolor:
