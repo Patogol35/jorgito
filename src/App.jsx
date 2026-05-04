@@ -191,7 +191,7 @@ function App() {
     sx={(theme) => ({
       position: "fixed",
       top: 90,
-      right: 325,
+      right: 80, // 👈 separación correcta
       zIndex: 1200,
 
       bgcolor:
@@ -204,9 +204,7 @@ function App() {
       height: 52,
       boxShadow: "none",
 
-      // 🔥 FIX IMPORTANTE
       transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
 
       "&:hover": {
         bgcolor:
@@ -223,7 +221,6 @@ function App() {
     {mode === "light" ? <Brightness4 /> : <Brightness7 />}
   </Fab>
 </Tooltip>
-
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
   <Fab
