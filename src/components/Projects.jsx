@@ -134,11 +134,11 @@ export default function Projects({ t }) {
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-        ref={ref}
-        variants={container}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
+  ref={ref}
+  variants={container}
+  initial={false} // 👈 CLAVE
+  animate="visible"
+>
         {/* =========================
             TÍTULO
         ========================= */}
