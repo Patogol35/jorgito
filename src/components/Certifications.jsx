@@ -57,7 +57,7 @@ export default function Certifications({ t }) {
   "#2563eb",
   "#3b82f6",
   "#60a5fa",
-  "#93c5fd",
+  "#1976d2",
 ];
 
   return (
