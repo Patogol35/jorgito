@@ -1,7 +1,7 @@
-                import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -52,10 +52,7 @@ function ProjectCard({ p, palette }) {
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div
-        variants={fadeCinematic}
-        style={{ willChange: "transform, opacity" }}
-      >
+      <motion.div variants={fadeCinematic}>
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
@@ -92,8 +89,9 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+  // 🔥 CONTROL DE ANIMACIÓN (CLAVE)
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
 
   // Protección de datos
   const proyectosText = t.projects?.items || [];
@@ -134,11 +132,12 @@ export default function Projects({ t }) {
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-  ref={ref}
-  variants={container}
-  initial={false} // 👈 CLAVE
-  animate="visible"
->
+        ref={ref}
+        variants={container}
+        initial={hasAnimated ? false : "hidden"} // 👈 CLAVE
+        animate="visible"
+        onAnimationComplete={() => setHasAnimated(true)}
+      >
         {/* =========================
             TÍTULO
         ========================= */}
