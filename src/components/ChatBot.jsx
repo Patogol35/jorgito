@@ -96,12 +96,12 @@ export default function ChatBot() {
   return (
     <>
       {/* BOTÓN FLOTANTE */}
-      <Fab
+<Fab
   onClick={() => setOpen(true)}
   sx={(theme) => ({
     position: "fixed",
     bottom: 16,
-    right: 325,
+    right: 16, // 👈 SIEMPRE pegado al borde
     zIndex: 1200,
 
     bgcolor:
@@ -115,7 +115,6 @@ export default function ChatBot() {
     boxShadow: "none",
 
     transition: "background-color 0.25s ease, transform 0.2s ease",
-    willChange: "background-color",
 
     "&:hover": {
       bgcolor:
