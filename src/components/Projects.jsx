@@ -1,6 +1,7 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+                import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -44,10 +45,10 @@ const container = {
 };
 
 // =====================
-// Tarjeta individual (mejorada pero sin romper)
+// Tarjeta individual
 // =====================
 function ProjectCard({ p, palette }) {
-  const Icon = p.icon;
+  const Icon = p.icon || WorkOutlineIcon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
@@ -60,17 +61,18 @@ function ProjectCard({ p, palette }) {
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
-              href={p.link}
-              target="_blank"
+              href={p.link || "#"}
+              target={p.link ? "_blank" : "_self"}
               rel="noopener noreferrer"
               underline="none"
               sx={{
                 color: palette.text.primary,
-    fontWeight: "bold",
-    transition: "all 0.3s ease",
-    "&:hover": { 
-      color: p.color,
-      textShadow: `0 0 6px ${p.color}33` },
+                fontWeight: "bold",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  color: p.color,
+                  textShadow: `0 0 6px ${p.color}33`,
+                },
               }}
             >
               {p.titulo}
@@ -90,16 +92,20 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const proyectosText = t.projects.items;
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  // Protección de datos
+  const proyectosText = t.projects?.items || [];
 
   const colors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   const icons = [
     WbSunnyIcon,
@@ -114,7 +120,7 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i],
+    icon: icons[i % icons.length],
   }));
 
   return (
@@ -128,22 +134,16 @@ export default function Projects({ t }) {
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-  key={t.projects.title} // 👈 CLAVE
-  variants={container}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true }}
->
+        ref={ref}
+        variants={container}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         {/* =========================
-            TÍTULO (estilo Hero)
+            TÍTULO
         ========================= */}
         <motion.div variants={fadeCinematic}>
-          <Box
-            sx={{
-              textAlign: "center",
-              marginBottom: "2rem",
-            }}
-          >
+          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
             <Box
               sx={{
                 display: "inline-flex",
@@ -174,13 +174,13 @@ export default function Projects({ t }) {
                   lineHeight: 1,
                 }}
               >
-                {t.projects.title}
+                {t.projects?.title || "Projects"}
               </Typography>
             </Box>
           </Box>
         </motion.div>
 
-        {/* GRID con stagger automático */}
+        {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
             <ProjectCard key={p.titulo || i} p={p} palette={palette} />
