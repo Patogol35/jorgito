@@ -1,7 +1,6 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -14,7 +13,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones estilo Hero
+// 🎬 Animaciones
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -34,25 +33,19 @@ const fadeCinematic = {
   },
 };
 
-const container = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
-    },
-  },
-};
-
 // =====================
-// Tarjeta individual
+// Tarjeta
 // =====================
 function ProjectCard({ p, palette }) {
   const Icon = p.icon || WorkOutlineIcon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div variants={fadeCinematic}>
+      <motion.div
+        variants={fadeCinematic}
+        initial="hidden"
+        animate="visible"
+      >
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
@@ -82,18 +75,13 @@ function ProjectCard({ p, palette }) {
 }
 
 // =====================
-// Componente principal
+// Main
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // 🔥 CONTROL DE ANIMACIÓN (CLAVE)
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const ref = useRef(null);
-
-  // Protección de datos
   const proyectosText = t.projects?.items || [];
 
   const colors = [
@@ -130,62 +118,55 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO */}
+      {/* TÍTULO */}
       <motion.div
-        ref={ref}
-        variants={container}
-        initial={hasAnimated ? false : "hidden"} // 👈 CLAVE
+        variants={fadeCinematic}
+        initial="hidden"
         animate="visible"
-        onAnimationComplete={() => setHasAnimated(true)}
       >
-        {/* =========================
-            TÍTULO
-        ========================= */}
-        <motion.div variants={fadeCinematic}>
-          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
-            <Box
+        <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+          <Box
+            sx={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              px: 3,
+              py: 0.9,
+              borderRadius: "999px",
+              background: isDark
+                ? "rgba(144,202,249,0.06)"
+                : "rgba(25,118,210,0.06)",
+              border: `1px solid ${
+                isDark
+                  ? "rgba(144,202,249,0.25)"
+                  : "rgba(25,118,210,0.25)"
+              }`,
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
+
+            <Typography
+              variant="h6"
               sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 1,
-                px: 3,
-                py: 0.9,
-                borderRadius: "999px",
-                background: isDark
-                  ? "rgba(144,202,249,0.06)"
-                  : "rgba(25,118,210,0.06)",
-                border: `1px solid ${
-                  isDark
-                    ? "rgba(144,202,249,0.25)"
-                    : "rgba(25,118,210,0.25)"
-                }`,
-                backdropFilter: "blur(6px)",
+                fontWeight: "bold",
+                color: primaryColor,
+                lineHeight: 1,
               }}
             >
-              <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: "bold",
-                  color: primaryColor,
-                  lineHeight: 1,
-                }}
-              >
-                {t.projects?.title || "Projects"}
-              </Typography>
-            </Box>
+              {t.projects?.title || "Projects"}
+            </Typography>
           </Box>
-        </motion.div>
-
-        {/* GRID */}
-        <Grid container spacing={3} justifyContent="center">
-          {proyectos.map((p, i) => (
-            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
-          ))}
-        </Grid>
+        </Box>
       </motion.div>
+
+      {/* GRID */}
+      <Grid container spacing={3} justifyContent="center">
+        {proyectos.map((p, i) => (
+          <ProjectCard key={p.titulo || i} p={p} palette={palette} />
+        ))}
+      </Grid>
     </Box>
   );
 }
