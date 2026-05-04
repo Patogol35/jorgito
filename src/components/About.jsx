@@ -1,4 +1,4 @@
-  import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import { GraduationCap } from "lucide-react";
 import { useTheme } from "@mui/material/styles";
@@ -45,7 +45,7 @@ export default function About({ t }) {
 
   const estudios = t.about.studies;
 
-  const iconColors = ["#1976d2", "#9333ea"];
+  const iconColors = ["#1976d2", "#1976d2"];
 
   return (
     <Box
