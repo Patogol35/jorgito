@@ -101,7 +101,7 @@ export default function ChatBot() {
   sx={(theme) => ({
     position: "fixed",
     bottom: 16,
-    right: 88,
+    right: 325,
     zIndex: 1200,
 
     bgcolor:
