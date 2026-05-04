@@ -98,27 +98,36 @@ export default function ChatBot() {
       {/* BOTÓN FLOTANTE */}
       <Fab
   onClick={() => setOpen(true)}
-  sx={{
+  sx={(theme) => ({
     position: "fixed",
     bottom: 16,
-    left: 16,
-    bgcolor: primaryBg,
+    right: 88,
+    zIndex: 1200,
+
+    bgcolor:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[900]
+        : theme.palette.primary.main,
+
     color: "#fff",
+    width: 52,
+    height: 52,
+    boxShadow: "none",
 
     transition: "background-color 0.25s ease, transform 0.2s ease",
     willChange: "background-color",
 
     "&:hover": {
-      bgcolor: primaryBg,
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[800]
+          : theme.palette.primary.dark,
     },
+
     "&:active": {
-      bgcolor: primaryBg,
       transform: "scale(0.95)",
     },
-    "&:focus": {
-      color: "#fff",
-    },
-  }}
+  })}
 >
   <SmartToyIcon />
 </Fab>
