@@ -44,7 +44,7 @@ const container = {
 };
 
 // =====================
-// Tarjeta individual (mejorada pero sin romper)
+// Tarjeta individual
 // =====================
 function ProjectCard({ p, palette }) {
   const Icon = p.icon;
@@ -56,7 +56,7 @@ function ProjectCard({ p, palette }) {
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color }} />
+          {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
@@ -66,11 +66,12 @@ function ProjectCard({ p, palette }) {
               underline="none"
               sx={{
                 color: palette.text.primary,
-    fontWeight: "bold",
-    transition: "all 0.3s ease",
-    "&:hover": { 
-      color: p.color,
-      textShadow: `0 0 6px ${p.color}33` },
+                fontWeight: "bold",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  color: p.color,
+                  textShadow: `0 0 6px ${p.color}33`,
+                },
               }}
             >
               {p.titulo}
@@ -90,16 +91,17 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const proyectosText = t.projects.items;
+  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
+  const proyectosText = t?.projects?.items || [];
 
   const colors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   const icons = [
     WbSunnyIcon,
@@ -114,7 +116,7 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i],
+    icon: icons[i % icons.length], // ✅ FIX ICONOS
   }));
 
   return (
@@ -173,19 +175,19 @@ export default function Projects({ t }) {
                   lineHeight: 1,
                 }}
               >
-                {t.projects.title}
+                {t?.projects?.title || ""}
               </Typography>
             </Box>
           </Box>
         </motion.div>
 
-        {/* GRID con stagger automático */}
+        {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
+            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
           ))}
         </Grid>
       </motion.div>
     </Box>
   );
-                }
+}
