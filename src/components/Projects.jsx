@@ -13,7 +13,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones
+// 🎬 Animaciones estilo Hero
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -33,36 +33,44 @@ const fadeCinematic = {
   },
 };
 
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
+
 // =====================
-// Tarjeta
+// Tarjeta individual (mejorada pero sin romper)
 // =====================
 function ProjectCard({ p, palette }) {
-  const Icon = p.icon || WorkOutlineIcon;
+  const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial="hidden"
-        animate="visible"
+        style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
-              href={p.link || "#"}
-              target={p.link ? "_blank" : "_self"}
+              href={p.link}
+              target="_blank"
               rel="noopener noreferrer"
               underline="none"
               sx={{
                 color: palette.text.primary,
-                fontWeight: "bold",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  color: p.color,
-                  textShadow: `0 0 6px ${p.color}33`,
-                },
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
+    "&:hover": { 
+      color: p.color,
+      textShadow: `0 0 6px ${p.color}33` },
               }}
             >
               {p.titulo}
@@ -75,23 +83,23 @@ function ProjectCard({ p, palette }) {
 }
 
 // =====================
-// Main
+// Componente principal
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const proyectosText = t.projects?.items || [];
+  const proyectosText = t.projects.items;
 
   const colors = [
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-  ];
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+];
 
   const icons = [
     WbSunnyIcon,
@@ -106,7 +114,7 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i % icons.length],
+    icon: icons[i],
   }));
 
   return (
@@ -118,55 +126,66 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* TÍTULO */}
+      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-        variants={fadeCinematic}
+        variants={container}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
       >
-        <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+        {/* =========================
+            TÍTULO (estilo Hero)
+        ========================= */}
+        <motion.div variants={fadeCinematic}>
           <Box
             sx={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 1,
-              px: 3,
-              py: 0.9,
-              borderRadius: "999px",
-              background: isDark
-                ? "rgba(144,202,249,0.06)"
-                : "rgba(25,118,210,0.06)",
-              border: `1px solid ${
-                isDark
-                  ? "rgba(144,202,249,0.25)"
-                  : "rgba(25,118,210,0.25)"
-              }`,
-              backdropFilter: "blur(6px)",
+              textAlign: "center",
+              marginBottom: "2rem",
             }}
           >
-            <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
-
-            <Typography
-              variant="h6"
+            <Box
               sx={{
-                fontWeight: "bold",
-                color: primaryColor,
-                lineHeight: 1,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
+                px: 3,
+                py: 0.9,
+                borderRadius: "999px",
+                background: isDark
+                  ? "rgba(144,202,249,0.06)"
+                  : "rgba(25,118,210,0.06)",
+                border: `1px solid ${
+                  isDark
+                    ? "rgba(144,202,249,0.25)"
+                    : "rgba(25,118,210,0.25)"
+                }`,
+                backdropFilter: "blur(6px)",
               }}
             >
-              {t.projects?.title || "Projects"}
-            </Typography>
-          </Box>
-        </Box>
-      </motion.div>
+              <WorkOutlineIcon sx={{ fontSize: 22, color: primaryColor }} />
 
-      {/* GRID */}
-      <Grid container spacing={3} justifyContent="center">
-        {proyectos.map((p, i) => (
-          <ProjectCard key={p.titulo || i} p={p} palette={palette} />
-        ))}
-      </Grid>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: "bold",
+                  color: primaryColor,
+                  lineHeight: 1,
+                }}
+              >
+                {t.projects.title}
+              </Typography>
+            </Box>
+          </Box>
+        </motion.div>
+
+        {/* GRID con stagger automático */}
+        <Grid container spacing={3} justifyContent="center">
+          {proyectos.map((p, i) => (
+            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
+          ))}
+        </Grid>
+      </motion.div>
     </Box>
   );
-}
+                }
