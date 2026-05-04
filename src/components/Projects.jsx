@@ -44,36 +44,36 @@ const container = {
 };
 
 // =====================
-// Tarjeta individual
+// Tarjeta individual (mejorada pero sin romper)
 // =====================
-function ProjectCard({ p, palette, primaryColor }) {
-  const Icon = p.icon || WorkOutlineIcon;
+function ProjectCard({ p, palette }) {
+  const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div variants={fadeCinematic}>
+      <motion.div
+        variants={fadeCinematic}
+        style={{ willChange: "transform, opacity" }}
+      >
         <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color || primaryColor }} />
+          <Icon sx={{ fontSize: 30, color: p.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
-              href={p.link || "#"}
-              target={p.link ? "_blank" : "_self"}
+              href={p.link}
+              target="_blank"
               rel="noopener noreferrer"
               underline="none"
               sx={{
                 color: palette.text.primary,
-                fontWeight: "bold",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  color: p.color || primaryColor,
-                  textShadow: p.color
-                    ? `0 0 6px ${p.color}33`
-                    : "none",
-                },
+    fontWeight: "bold",
+    transition: "all 0.3s ease",
+    "&:hover": { 
+      color: p.color,
+      textShadow: `0 0 6px ${p.color}33` },
               }}
             >
-              {p?.titulo || "Proyecto"}
+              {p.titulo}
             </Link>
           </Typography>
         </Box>
@@ -90,18 +90,16 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // ✅ PROTECCIÓN CLAVE
-  const proyectosText = t.projects?.items || [];
+  const proyectosText = t.projects.items;
 
   const colors = [
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1d4ed8",
-    "#60a5fa",
-    "#1e40af",
-    "#2563eb",
-  ];
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+];
 
   const icons = [
     WbSunnyIcon,
@@ -113,11 +111,10 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  // ✅ FIX IMPORTANTE
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i % icons.length],
+    icon: icons[i],
   }));
 
   return (
@@ -129,15 +126,23 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
+      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* TÍTULO */}
+        {/* =========================
+            TÍTULO (estilo Hero)
+        ========================= */}
         <motion.div variants={fadeCinematic}>
-          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+          <Box
+            sx={{
+              textAlign: "center",
+              marginBottom: "2rem",
+            }}
+          >
             <Box
               sx={{
                 display: "inline-flex",
@@ -168,21 +173,16 @@ export default function Projects({ t }) {
                   lineHeight: 1,
                 }}
               >
-                {t.projects?.title || "Projects"}
+                {t.projects.title}
               </Typography>
             </Box>
           </Box>
         </motion.div>
 
-        {/* GRID */}
+        {/* GRID con stagger automático */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard
-              key={p.titulo || i}
-              p={p}
-              palette={palette}
-              primaryColor={primaryColor}
-            />
+            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
           ))}
         </Grid>
       </motion.div>
