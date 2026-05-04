@@ -53,10 +53,10 @@ export default function Certifications({ t }) {
 
   const iconColors = [
   "#1976d2",
-  "#1e40af",
+  "#3b82f6",
   "#2563eb",
   "#1976d2",
-  "#1e40af",
+  "#3b82f6",
   "#2563eb",
 ];
 
