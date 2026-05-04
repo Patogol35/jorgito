@@ -20,9 +20,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { delay, SUGGESTIONS, followUp } from "./chatbot.config";
 import { getSmartResponse } from "./getSmartResponse";
 
-/* =========================
-COMPONENTE
-========================= */
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -33,15 +30,15 @@ export default function ChatBot() {
     [isDark, theme]
   );
 
+  // 🔥 refs clave
   const bottomRef = useRef(null);
+  const messagesRef = useRef(null);
+  const scrollPosition = useRef(0);
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState(() => {
-    const saved = localStorage.getItem("chat_context");
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [context, setContext] = useState({});
 
   const initialMessage = useMemo(
     () => ({
@@ -53,29 +50,32 @@ export default function ChatBot() {
     []
   );
 
-  // ✅ Cargar mensajes desde localStorage
-  const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem("chat_messages");
-    return saved ? JSON.parse(saved) : [initialMessage];
-  });
+  const [messages, setMessages] = useState([initialMessage]);
 
-  // ✅ Guardar mensajes
-  useEffect(() => {
-    localStorage.setItem("chat_messages", JSON.stringify(messages));
-  }, [messages]);
-
-  // ✅ Guardar contexto
-  useEffect(() => {
-    localStorage.setItem("chat_context", JSON.stringify(context));
-  }, [context]);
-
+  // abrir desde window
   useEffect(() => {
     window.openSashaChat = () => setOpen(true);
     window.closeSashaChat = () => setOpen(false);
   }, []);
 
+  // ✅ restaurar scroll al abrir
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (open && messagesRef.current) {
+      messagesRef.current.scrollTop = scrollPosition.current;
+    }
+  }, [open]);
+
+  // ✅ auto-scroll INTELIGENTE (solo si ya estaba abajo)
+  useEffect(() => {
+    const el = messagesRef.current;
+    if (!el) return;
+
+    const isNearBottom =
+      el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+
+    if (isNearBottom) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, typing]);
 
   const sendMessage = useCallback((text) => {
@@ -109,35 +109,33 @@ export default function ChatBot() {
     }, delay());
   }, []);
 
+  // 🔥 cerrar guardando scroll
+  const handleClose = () => {
+    if (messagesRef.current) {
+      scrollPosition.current = messagesRef.current.scrollTop;
+    }
+    setOpen(false);
+  };
+
   return (
     <>
-      {/* BOTÓN FLOTANTE */}
+      {/* BOTÓN */}
       <Fab
         onClick={() => setOpen(true)}
-        sx={(theme) => ({
+        sx={{
           position: "fixed",
           bottom: 16,
           left: 16,
           zIndex: 1200,
-          bgcolor:
-            theme.palette.mode === "dark"
-              ? theme.palette.grey[900]
-              : theme.palette.primary.main,
+          bgcolor: isDark ? "#111" : theme.palette.primary.main,
           color: "#fff",
           width: 52,
           height: 52,
           boxShadow: "none",
-          transition: "background-color 0.25s ease, transform 0.2s ease",
           "&:hover": {
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? theme.palette.grey[800]
-                : theme.palette.primary.dark,
+            bgcolor: isDark ? "#222" : theme.palette.primary.dark,
           },
-          "&:active": {
-            transform: "scale(0.95)",
-          },
-        })}
+        }}
       >
         <SmartToyIcon />
       </Fab>
@@ -145,7 +143,7 @@ export default function ChatBot() {
       {/* OVERLAY */}
       {open && (
         <Box
-          onClick={() => setOpen(false)}
+          onClick={handleClose}
           sx={{
             position: "fixed",
             inset: 0,
@@ -190,22 +188,13 @@ export default function ChatBot() {
               alignItems: "center",
             }}
           >
-            <Box display="flex" alignItems="center" gap={1}>
-              <SmartToyIcon fontSize="small" />
-              <Typography fontWeight="bold">Sasha</Typography>
-            </Box>
+            <Typography fontWeight="bold">Sasha</Typography>
 
             <Box>
-              {/* ✅ BORRAR CHAT COMPLETO */}
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
-                onClick={() => {
-                  setMessages([initialMessage]);
-                  setContext({});
-                  localStorage.removeItem("chat_messages");
-                  localStorage.removeItem("chat_context");
-                }}
+                onClick={() => setMessages([initialMessage])}
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
@@ -213,7 +202,7 @@ export default function ChatBot() {
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
-                onClick={() => setOpen(false)}
+                onClick={handleClose}
               >
                 <CloseIcon fontSize="small" />
               </IconButton>
@@ -223,41 +212,25 @@ export default function ChatBot() {
           {/* SUGERENCIAS */}
           <Box sx={{ p: 1 }}>
             {isLandscape ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                  pb: 1,
-                }}
-              >
+              <Box sx={{ display: "flex", gap: 1, overflowX: "auto" }}>
                 {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                    sx={{ flexShrink: 0 }}
-                  />
+                  <Chip key={q} label={q} onClick={() => sendMessage(q)} />
                 ))}
               </Box>
             ) : (
               <Stack direction="row" flexWrap="wrap" gap={1}>
                 {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() => sendMessage(q)}
-                  />
+                  <Chip key={q} label={q} onClick={() => sendMessage(q)} />
                 ))}
               </Stack>
             )}
           </Box>
 
           {/* MENSAJES */}
-          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
+          <Box
+            ref={messagesRef}
+            sx={{ flex: 1, p: 1, overflowY: "auto" }}
+          >
             {messages.map((m, i) => {
               const isUser = m.from === "user";
 
@@ -282,15 +255,9 @@ export default function ChatBot() {
                         ? "rgba(255,255,255,0.10)"
                         : "rgba(0,0,0,0.06)",
                       color: isUser ? "#fff" : "inherit",
-                      whiteSpace: "pre-line",
                     }}
                   >
-                    <Typography
-                      sx={{
-                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
-                        lineHeight: isLandscape ? 1.4 : 1.5,
-                      }}
-                    >
+                    <Typography fontSize="0.9rem">
                       {m.text}
                     </Typography>
                   </Box>
@@ -299,10 +266,7 @@ export default function ChatBot() {
             })}
 
             {typing && (
-              <Typography
-                variant="caption"
-                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
-              >
+              <Typography variant="caption" sx={{ opacity: 0.6 }}>
                 Sasha está escribiendo…
               </Typography>
             )}
@@ -325,6 +289,7 @@ export default function ChatBot() {
               }}
               placeholder="Escribe tu mensaje…"
             />
+
             <IconButton onClick={() => sendMessage(input)}>
               <SendIcon sx={{ color: "#03A9F4" }} />
             </IconButton>
@@ -333,4 +298,4 @@ export default function ChatBot() {
       )}
     </>
   );
-}
+              }
