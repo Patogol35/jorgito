@@ -112,10 +112,10 @@ export default function Projects({ t }) {
   ];
 
   const proyectos = proyectosText.map((item, i) => ({
-    ...item,
-    color: colors[i % colors.length],
-    icon: icons[i],
-  }));
+  ...item,
+  color: colors[i % colors.length],
+  icon: icons[i % icons.length], 
+}));
 
   return (
     <Box
