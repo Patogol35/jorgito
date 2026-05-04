@@ -61,6 +61,14 @@ export default function ChatBot() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
+  useEffect(() => {
+  if (open) {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "auto" });
+    }, 0);
+  }
+}, [open]);
+
   const sendMessage = useCallback((text) => {
     if (!text.trim()) return;
 
