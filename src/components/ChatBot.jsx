@@ -8,7 +8,6 @@ import {
   IconButton,
   Chip,
   Stack,
-  Tooltip,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -17,6 +16,7 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
+
 import { delay, SUGGESTIONS, followUp } from "./chatbot.config";
 import { getSmartResponse } from "./getSmartResponse";
 
@@ -38,7 +38,10 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
-  const [context, setContext] = useState({});
+  const [context, setContext] = useState(() => {
+    const saved = localStorage.getItem("chat_context");
+    return saved ? JSON.parse(saved) : {};
+  });
 
   const initialMessage = useMemo(
     () => ({
@@ -50,7 +53,21 @@ export default function ChatBot() {
     []
   );
 
-  const [messages, setMessages] = useState([initialMessage]);
+  // ✅ Cargar mensajes desde localStorage
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("chat_messages");
+    return saved ? JSON.parse(saved) : [initialMessage];
+  });
+
+  // ✅ Guardar mensajes
+  useEffect(() => {
+    localStorage.setItem("chat_messages", JSON.stringify(messages));
+  }, [messages]);
+
+  // ✅ Guardar contexto
+  useEffect(() => {
+    localStorage.setItem("chat_context", JSON.stringify(context));
+  }, [context]);
 
   useEffect(() => {
     window.openSashaChat = () => setOpen(true);
@@ -87,49 +104,44 @@ export default function ChatBot() {
           ...prev,
           awaiting: res.action || null,
           awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
-          // Si necesitas persistir memory o usedReplies, deberías extraerlos de `res.context`
-          // Pero en esta versión, no los usamos más allá de la respuesta
         };
       });
     }, delay());
   }, []);
+
   return (
     <>
       {/* BOTÓN FLOTANTE */}
-<Fab
-  onClick={() => setOpen(true)}
-  sx={(theme) => ({
-    position: "fixed",
-    bottom: 16,
-    left: 16, // 👈 SIEMPRE estable
-    zIndex: 1200,
+      <Fab
+        onClick={() => setOpen(true)}
+        sx={(theme) => ({
+          position: "fixed",
+          bottom: 16,
+          left: 16,
+          zIndex: 1200,
+          bgcolor:
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[900]
+              : theme.palette.primary.main,
+          color: "#fff",
+          width: 52,
+          height: 52,
+          boxShadow: "none",
+          transition: "background-color 0.25s ease, transform 0.2s ease",
+          "&:hover": {
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? theme.palette.grey[800]
+                : theme.palette.primary.dark,
+          },
+          "&:active": {
+            transform: "scale(0.95)",
+          },
+        })}
+      >
+        <SmartToyIcon />
+      </Fab>
 
-    bgcolor:
-      theme.palette.mode === "dark"
-        ? theme.palette.grey[900]
-        : theme.palette.primary.main,
-
-    color: "#fff",
-    width: 52,
-    height: 52,
-    boxShadow: "none",
-
-    transition: "background-color 0.25s ease, transform 0.2s ease",
-
-    "&:hover": {
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[800]
-          : theme.palette.primary.dark,
-    },
-
-    "&:active": {
-      transform: "scale(0.95)",
-    },
-  })}
->
-  <SmartToyIcon />
-</Fab>
       {/* OVERLAY */}
       {open && (
         <Box
@@ -184,13 +196,20 @@ export default function ChatBot() {
             </Box>
 
             <Box>
+              {/* ✅ BORRAR CHAT COMPLETO */}
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
-                onClick={() => setMessages([initialMessage])}
+                onClick={() => {
+                  setMessages([initialMessage]);
+                  setContext({});
+                  localStorage.removeItem("chat_messages");
+                  localStorage.removeItem("chat_context");
+                }}
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
+
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
@@ -258,12 +277,11 @@ export default function ChatBot() {
                       py: 1,
                       borderRadius: 2,
                       bgcolor: isUser
-  ? theme.palette.primary.main
-  : isDark
-  ? "rgba(255,255,255,0.10)"
-  : "rgba(0,0,0,0.06)",
-
-color: isUser ? "#fff" : "inherit",
+                        ? theme.palette.primary.main
+                        : isDark
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(0,0,0,0.06)",
+                      color: isUser ? "#fff" : "inherit",
                       whiteSpace: "pre-line",
                     }}
                   >
@@ -315,4 +333,4 @@ color: isUser ? "#fff" : "inherit",
       )}
     </>
   );
-}                            
+}
