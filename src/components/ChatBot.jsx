@@ -251,17 +251,12 @@ export default function ChatBot() {
                       py: 1,
                       borderRadius: 2,
                       bgcolor: isUser
-                        ? isDark
-                          ? theme.palette.primary.light
-                          : theme.palette.primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
-                      color: isUser
-                        ? isDark
-                          ? "#000"
-                          : "#fff"
-                        : "inherit",
+  ? theme.palette.primary.main
+  : isDark
+  ? "rgba(255,255,255,0.10)"
+  : "rgba(0,0,0,0.06)",
+
+color: isUser ? "#fff" : "inherit",
                       whiteSpace: "pre-line",
                     }}
                   >
