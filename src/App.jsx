@@ -184,14 +184,14 @@ function App() {
         </Tooltip>
 
 {/* Tema */}
-<Tooltip title="Cambiar tema" placement="left">
+<Tooltip title="Cambiar tema" placement="right">
   <Fab
     aria-label="tema"
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      top: 90,
-      right: 80, // 👈 separación correcta
+      bottom: 84, // 👈 arriba del chatbot
+      left: 16,   // 👈 MISMO LADO
       zIndex: 1200,
 
       bgcolor:
