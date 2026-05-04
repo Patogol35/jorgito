@@ -96,9 +96,9 @@ export default function Projects({ t }) {
   "#1976d2",
   "#1e40af",
   "#2563eb",
-  "#3b82f6",
-  "#60a5fa",
-  "#93c5fd",
+  "#1976d2",
+  "#1e40af",
+  "#2563eb",
 ];
 
   const icons = [
