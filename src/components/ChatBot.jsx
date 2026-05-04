@@ -8,6 +8,7 @@ import {
   IconButton,
   Chip,
   Stack,
+  Tooltip,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -16,10 +17,12 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import { delay, SUGGESTIONS, followUp } from "./chatbot.config";
 import { getSmartResponse } from "./getSmartResponse";
 
+/* =========================
+COMPONENTE
+========================= */
 export default function ChatBot() {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
@@ -30,10 +33,7 @@ export default function ChatBot() {
     [isDark, theme]
   );
 
-  // 🔥 refs clave
   const bottomRef = useRef(null);
-  const messagesRef = useRef(null);
-  const scrollPosition = useRef(0);
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -52,30 +52,13 @@ export default function ChatBot() {
 
   const [messages, setMessages] = useState([initialMessage]);
 
-  // abrir desde window
   useEffect(() => {
     window.openSashaChat = () => setOpen(true);
     window.closeSashaChat = () => setOpen(false);
   }, []);
 
-  // ✅ restaurar scroll al abrir
   useEffect(() => {
-    if (open && messagesRef.current) {
-      messagesRef.current.scrollTop = scrollPosition.current;
-    }
-  }, [open]);
-
-  // ✅ auto-scroll INTELIGENTE (solo si ya estaba abajo)
-  useEffect(() => {
-    const el = messagesRef.current;
-    if (!el) return;
-
-    const isNearBottom =
-      el.scrollHeight - el.scrollTop - el.clientHeight < 80;
-
-    if (isNearBottom) {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
   const sendMessage = useCallback((text) => {
@@ -104,46 +87,53 @@ export default function ChatBot() {
           ...prev,
           awaiting: res.action || null,
           awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+          // Si necesitas persistir memory o usedReplies, deberías extraerlos de `res.context`
+          // Pero en esta versión, no los usamos más allá de la respuesta
         };
       });
     }, delay());
   }, []);
-
-  // 🔥 cerrar guardando scroll
-  const handleClose = () => {
-    if (messagesRef.current) {
-      scrollPosition.current = messagesRef.current.scrollTop;
-    }
-    setOpen(false);
-  };
-
   return (
     <>
-      {/* BOTÓN */}
-      <Fab
-        onClick={() => setOpen(true)}
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          zIndex: 1200,
-          bgcolor: isDark ? "#111" : theme.palette.primary.main,
-          color: "#fff",
-          width: 52,
-          height: 52,
-          boxShadow: "none",
-          "&:hover": {
-            bgcolor: isDark ? "#222" : theme.palette.primary.dark,
-          },
-        }}
-      >
-        <SmartToyIcon />
-      </Fab>
+      {/* BOTÓN FLOTANTE */}
+<Fab
+  onClick={() => setOpen(true)}
+  sx={(theme) => ({
+    position: "fixed",
+    bottom: 16,
+    left: 16, // 👈 SIEMPRE estable
+    zIndex: 1200,
 
+    bgcolor:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[900]
+        : theme.palette.primary.main,
+
+    color: "#fff",
+    width: 52,
+    height: 52,
+    boxShadow: "none",
+
+    transition: "background-color 0.25s ease, transform 0.2s ease",
+
+    "&:hover": {
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[800]
+          : theme.palette.primary.dark,
+    },
+
+    "&:active": {
+      transform: "scale(0.95)",
+    },
+  })}
+>
+  <SmartToyIcon />
+</Fab>
       {/* OVERLAY */}
       {open && (
         <Box
-          onClick={handleClose}
+          onClick={() => setOpen(false)}
           sx={{
             position: "fixed",
             inset: 0,
@@ -188,7 +178,10 @@ export default function ChatBot() {
               alignItems: "center",
             }}
           >
-            <Typography fontWeight="bold">Sasha</Typography>
+            <Box display="flex" alignItems="center" gap={1}>
+              <SmartToyIcon fontSize="small" />
+              <Typography fontWeight="bold">Sasha</Typography>
+            </Box>
 
             <Box>
               <IconButton
@@ -198,11 +191,10 @@ export default function ChatBot() {
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
-
               <IconButton
                 size="small"
                 sx={{ color: "#fff" }}
-                onClick={handleClose}
+                onClick={() => setOpen(false)}
               >
                 <CloseIcon fontSize="small" />
               </IconButton>
@@ -212,25 +204,41 @@ export default function ChatBot() {
           {/* SUGERENCIAS */}
           <Box sx={{ p: 1 }}>
             {isLandscape ? (
-              <Box sx={{ display: "flex", gap: 1, overflowX: "auto" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  overflowX: "auto",
+                  whiteSpace: "nowrap",
+                  pb: 1,
+                }}
+              >
                 {SUGGESTIONS.map((q) => (
-                  <Chip key={q} label={q} onClick={() => sendMessage(q)} />
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                    sx={{ flexShrink: 0 }}
+                  />
                 ))}
               </Box>
             ) : (
               <Stack direction="row" flexWrap="wrap" gap={1}>
                 {SUGGESTIONS.map((q) => (
-                  <Chip key={q} label={q} onClick={() => sendMessage(q)} />
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                  />
                 ))}
               </Stack>
             )}
           </Box>
 
           {/* MENSAJES */}
-          <Box
-            ref={messagesRef}
-            sx={{ flex: 1, p: 1, overflowY: "auto" }}
-          >
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((m, i) => {
               const isUser = m.from === "user";
 
@@ -250,14 +258,21 @@ export default function ChatBot() {
                       py: 1,
                       borderRadius: 2,
                       bgcolor: isUser
-                        ? theme.palette.primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
-                      color: isUser ? "#fff" : "inherit",
+  ? theme.palette.primary.main
+  : isDark
+  ? "rgba(255,255,255,0.10)"
+  : "rgba(0,0,0,0.06)",
+
+color: isUser ? "#fff" : "inherit",
+                      whiteSpace: "pre-line",
                     }}
                   >
-                    <Typography fontSize="0.9rem">
+                    <Typography
+                      sx={{
+                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
+                        lineHeight: isLandscape ? 1.4 : 1.5,
+                      }}
+                    >
                       {m.text}
                     </Typography>
                   </Box>
@@ -266,7 +281,10 @@ export default function ChatBot() {
             })}
 
             {typing && (
-              <Typography variant="caption" sx={{ opacity: 0.6 }}>
+              <Typography
+                variant="caption"
+                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
+              >
                 Sasha está escribiendo…
               </Typography>
             )}
@@ -289,7 +307,6 @@ export default function ChatBot() {
               }}
               placeholder="Escribe tu mensaje…"
             />
-
             <IconButton onClick={() => sendMessage(input)}>
               <SendIcon sx={{ color: "#03A9F4" }} />
             </IconButton>
@@ -298,4 +315,4 @@ export default function ChatBot() {
       )}
     </>
   );
-              }
+}                            
