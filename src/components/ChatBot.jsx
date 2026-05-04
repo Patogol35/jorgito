@@ -101,10 +101,7 @@ export default function ChatBot() {
   sx={(theme) => ({
     position: "fixed",
     bottom: 16,
-    ...(isLandscape
-      ? { left: 16 }   // 👈 horizontal → izquierda pegado
-      : { right: 88 }), // 👈 vertical → separado de WhatsApp
-
+    left: 16, // 👈 SIEMPRE estable
     zIndex: 1200,
 
     bgcolor:
@@ -133,7 +130,6 @@ export default function ChatBot() {
 >
   <SmartToyIcon />
 </Fab>
-
       {/* OVERLAY */}
       {open && (
         <Box
