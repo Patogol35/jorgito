@@ -45,6 +45,31 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  useEffect(() => {
+  let scrollY = 0;
+
+  const handleBefore = () => {
+    scrollY = window.scrollY;
+  };
+
+  const handleAfter = () => {
+    setTimeout(() => {
+      window.scrollTo({
+        top: scrollY,
+        behavior: "auto", // importante para evitar animación rara
+      });
+    }, 100); // pequeño delay para que termine el reflow
+  };
+
+  window.addEventListener("orientationchange", handleBefore);
+  window.addEventListener("resize", handleAfter);
+
+  return () => {
+    window.removeEventListener("orientationchange", handleBefore);
+    window.removeEventListener("resize", handleAfter);
+  };
+}, []);
+
   const t = translations[lang] || translations["es"];
 
   // 🎨 Theme optimizado
