@@ -1,4 +1,4 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 
@@ -8,9 +8,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MovieIcon from "@mui/icons-material/Movie";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FunctionsIcon from "@mui/icons-material/Functions";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
 // =====================
 // 🎬 Animaciones estilo Hero
@@ -46,36 +46,34 @@ const container = {
 // =====================
 // Tarjeta individual
 // =====================
-function ProjectCard({ p, palette }) {
+function ProjectCard({ p }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
+        initial={false} // 🔥 evita re-animación al cambiar tema
+        whileHover={{ y: -5, scale: 1.05 }}
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
           {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-            <Link
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                color: palette.text.primary,
-                fontWeight: "bold",
-                transition: "color 0.25s ease, text-shadow 0.25s ease",
-                "&:hover": {
-                  color: p.color,
-                  textShadow: `0 0 6px ${p.color}33`,
-                },
-              }}
-            >
-              {p.titulo}
-            </Link>
+          <Typography
+            variant="subtitle1"
+            onClick={() => window.open(p.link, "_blank")}
+            sx={{
+              fontWeight: "bold",
+              mt: 1,
+              cursor: "pointer",
+              transition: "color 0.25s ease",
+              "&:hover": {
+                color: p.color,
+              },
+            }}
+          >
+            {p.titulo}
           </Typography>
         </Box>
       </motion.div>
@@ -91,7 +89,7 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
+  // Protección por si cambia idioma
   const proyectosText = t?.projects?.items || [];
 
   const colors = [
@@ -116,7 +114,7 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i % icons.length], // ✅ FIX ICONOS
+    icon: icons[i % icons.length],
   }));
 
   return (
@@ -128,17 +126,15 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO */}
+      {/* CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* =========================
-            TÍTULO (estilo Hero)
-        ========================= */}
-        <motion.div variants={fadeCinematic}>
+        {/* TÍTULO */}
+        <motion.div variants={fadeCinematic} initial={false}>
           <Box
             sx={{
               textAlign: "center",
@@ -184,7 +180,7 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
+            <ProjectCard key={i} p={p} />
           ))}
         </Grid>
       </motion.div>
