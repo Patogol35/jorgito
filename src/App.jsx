@@ -91,7 +91,7 @@ function App() {
 
       <Box
         sx={{
-          minHeight: "100dvh", // 🔥 FIX PRINCIPAL
+          minHeight: "100dvh", // 🔥 viewport real móvil
           overflowX: "hidden",
         }}
       >
@@ -108,8 +108,10 @@ function App() {
         <Container
           maxWidth="lg"
           sx={{
-            py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+            py: 5,
+            px: { xs: 2, sm: 3, md: 4 }, // 🔥 padding estable (clave)
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           {sections.map(({ id, color, Component }) => (
@@ -121,6 +123,9 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
+
+                width: "100%",          // 🔥 FIX layout
+                maxWidth: "100%",       // 🔥 FIX layout
 
                 backgroundColor:
                   theme.palette.mode === "dark"
@@ -146,7 +151,7 @@ function App() {
 
                 willChange: "transform",
 
-                // 🔥 Hover solo desktop
+                // 🔥 hover solo en desktop
                 "@media (hover: hover)": {
                   "&:hover": {
                     transform: "translateY(-4px) scale(1.01)",
@@ -169,7 +174,6 @@ function App() {
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
-            aria-label="whatsapp"
             sx={{
               position: "fixed",
               bottom: 16,
@@ -203,16 +207,7 @@ function App() {
               width: 52,
               height: 52,
               boxShadow: "none",
-              transition: "background-color 0.25s ease, transform 0.2s ease",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
+              "&:active": { transform: "scale(0.95)" },
             })}
           >
             {mode === "light" ? <Brightness4 /> : <Brightness7 />}
@@ -239,16 +234,7 @@ function App() {
               fontSize: "1rem",
               letterSpacing: "1px",
               boxShadow: "none",
-              transition: "background-color 0.25s ease, transform 0.2s ease",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
+              "&:active": { transform: "scale(0.95)" },
             })}
           >
             {lang === "es" ? "EN" : "ES"}
