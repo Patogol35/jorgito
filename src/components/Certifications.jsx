@@ -71,11 +71,10 @@ export default function Certifications({ t }) {
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
+  variants={container}
+  initial="hidden"
+  animate="visible" // 🔥 FIX REAL
+>
         {/* =========================
             TÍTULO estilo Hero
         ========================= */}
