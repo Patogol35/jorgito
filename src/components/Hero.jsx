@@ -1,4 +1,5 @@
 import {
+  Toolbar,
   Box,
   Typography,
   Button,
@@ -17,6 +18,7 @@ import { useState } from "react";
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -58,6 +60,8 @@ export default function Hero({ mode, setMode, t }) {
 
   return (
     <>
+      <Toolbar />
+
       <Box
         id="hero"
         sx={{
@@ -67,12 +71,9 @@ export default function Hero({ mode, setMode, t }) {
           flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
           justifyContent: "center",
-
-          minHeight: "calc(100vh - 64px)", // 🔥 FIX PRINCIPAL
-
           gap: { xs: 4, md: 8 },
-          pt: { xs: 4, sm: 6, md: 8 },
-          pb: { xs: 1, sm: 2 },
+          pt: { xs: 6, sm: 8, md: 10 },
+          pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
       >
@@ -219,7 +220,7 @@ export default function Hero({ mode, setMode, t }) {
                 </motion.div>
               ))}
 
-              {/* MODO */}
+              {/* 🌙 MODO */}
               <motion.div variants={fadeCinematic}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
@@ -243,64 +244,67 @@ export default function Hero({ mode, setMode, t }) {
         </Box>
       </Box>
 
-      {/* MODAL (igual que el tuyo) */}
+      {/* MODAL */}
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <>
-          <IconButton
-            onClick={() => setOpen(false)}
-            sx={{
-              position: "fixed",
-              top: 20,
-              left: 20,
-              zIndex: 3000,
-              background: "rgba(0,0,0,0.6)",
-              color: "#fff",
-              backdropFilter: "blur(6px)",
-              "&:hover": {
-                background: "rgba(0,0,0,0.8)",
-              },
-            }}
-          >
-            <Close />
-          </IconButton>
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.85)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <>
+    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
+    <IconButton
+      onClick={() => setOpen(false)}
+      sx={{
+        position: "fixed", // 🔥 CLAVE
+        top: 20,
+        left: 20,
+        zIndex: 3000,
+        background: "rgba(0,0,0,0.6)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.8)",
+        },
+      }}
+    >
+      <Close />
+    </IconButton>
 
-          <Box
-            sx={{
-              position: "relative",
-              width: { xs: "95%", md: "70%" },
-              maxHeight: "90vh",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              component="img"
-              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              alt="certificado"
-              loading="lazy"
-              decoding="async"
-              sx={{
-                width: "100%",
-                maxHeight: "90vh",
-                objectFit: "contain",
-                borderRadius: 2,
-                display: "block",
-              }}
-            />
-          </Box>
-        </>
-      </Modal>
+    {/* CONTENEDOR */}
+    <Box
+      sx={{
+        position: "relative",
+        width: { xs: "95%", md: "70%" },
+        maxHeight: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* 🖼️ IMAGEN */}
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        loading="lazy"
+        decoding="async"
+        sx={{
+          width: "100%",
+          maxHeight: "90vh",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+        }}
+      />
+    </Box>
+  </>
+</Modal>
     </>
   );
 }
