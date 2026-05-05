@@ -58,25 +58,31 @@ function ProjectCard({ p, palette }) {
         <Box sx={{ textAlign: "center", px: 1 }}>
           {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
-          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-            <Link
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                color: palette.text.primary,
-                fontWeight: "bold",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  color: p.color,
-                  textShadow: `0 0 6px ${p.color}33`,
-                },
-              }}
-            >
-              {p.titulo}
-            </Link>
-          </Typography>
+          <Typography
+  variant="subtitle1"
+  sx={{
+    fontWeight: "bold",
+    mt: 1,
+    color: palette.text.primary, // 👈 AQUÍ el control real
+  }}
+>
+  <Link
+    href={p.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    underline="none"
+    color="inherit" // 👈 CLAVE
+    sx={{
+      transition: "all 0.3s ease",
+      "&:hover": {
+        color: p.color,
+        textShadow: `0 0 6px ${p.color}33`,
+      },
+    }}
+  >
+    {p.titulo}
+  </Link>
+</Typography>
         </Box>
       </motion.div>
     </Grid>
