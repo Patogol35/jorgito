@@ -44,20 +44,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
-  // 🔥 FIX scroll al rotar pantalla (mobile)
-useEffect(() => {
-  const handleResize = () => {
-    if (window.innerWidth < 900) {
-      window.scrollTo({
-        top: window.scrollY - 50,
-        behavior: "auto",
-      });
-    }
-  };
-
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
 
   const t = translations[lang] || translations["es"];
 
