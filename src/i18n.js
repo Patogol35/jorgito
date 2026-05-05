@@ -55,41 +55,46 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      items: [
-        {
-          titulo: "Curso de React.js",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          institucion: "Universidad Internacional de la Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Curso de Python",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certificaciones",
+  items: [
+    {
+      titulo: "React.js (Hooks, Context API)",
+      institucion: "Platzi",
+      año: 2025,
+      tags: ["React", "Hooks", "Context"],
     },
+    {
+      titulo: "React & TypeScript",
+      institucion: "Udemy",
+      año: 2024,
+      tags: ["React", "TypeScript"],
+    },
+    {
+      titulo: "Azure Fundamentals AZ-900",
+      institucion: "Universidad Internacional de la Rioja",
+      año: 2023,
+      tags: ["Azure", "Cloud"],
+    },
+    {
+      titulo: "Python (Programación)",
+      institucion: "Platzi",
+      año: 2025,
+      tags: ["Python"],
+    },
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      tags: ["Python", "Pandas", "NumPy"],
+    },
+    {
+      titulo: "Fundamentos de IA",
+      institucion: "IBM",
+      año: 2025,
+      tags: ["AI", "Machine Learning"],
+    },
+  ],
+},
 
     projects: {
   title: "Apps Demostrativas",
@@ -206,42 +211,46 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     certifications: {
-      title: "Certifications",
-      items: [
-        {
-          titulo: "React.js Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
-          institucion: "International University of La Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Python Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentals of Artificial Intelligence",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certifications",
+  items: [
+    {
+      titulo: "React.js (Hooks, Context API)",
+      institucion: "Platzi",
+      año: 2025,
+      tags: ["React", "Hooks", "Context"],
     },
-
+    {
+      titulo: "React & TypeScript",
+      institucion: "Udemy",
+      año: 2024,
+      tags: ["React", "TypeScript"],
+    },
+    {
+      titulo: "Azure Fundamentals AZ-900",
+      institucion: "International University of La Rioja",
+      año: 2023,
+      tags: ["Azure", "Cloud"],
+    },
+    {
+      titulo: "Python Programming",
+      institucion: "Platzi",
+      año: 2025,
+      tags: ["Python"],
+    },
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      tags: ["Python", "Pandas", "NumPy"],
+    },
+    {
+      titulo: "AI Fundamentals",
+      institucion: "IBM",
+      año: 2025,
+      tags: ["AI", "Machine Learning"],
+    },
+  ],
+},
     projects: {
   title: "Demo Applications",
   items: [
