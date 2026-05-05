@@ -1,7 +1,6 @@
-import { Typography, Grid, Box, Link as MuiLink } from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -14,7 +13,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones
+// 🎬 Animaciones estilo Hero
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -52,12 +51,15 @@ function ProjectCard({ p, palette }) {
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div variants={fadeCinematic}>
+      <motion.div
+        variants={fadeCinematic}
+        style={{ willChange: "transform, opacity" }}
+      >
         <Box sx={{ textAlign: "center", px: 1 }}>
           {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-            <MuiLink
+            <Link
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -73,23 +75,8 @@ function ProjectCard({ p, palette }) {
               }}
             >
               {p.titulo}
-            </MuiLink>
+            </Link>
           </Typography>
-
-          {p.descripcion && (
-            <Typography
-              variant="caption"
-              sx={{
-                display: "block",
-                mt: 0.5,
-                opacity: 0.7,
-                maxWidth: 220,
-                mx: "auto",
-              }}
-            >
-              {p.descripcion}
-            </Typography>
-          )}
         </Box>
       </motion.div>
     </Grid>
@@ -104,11 +91,7 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // 🔥 FIX: control manual del viewport (NO más flash)
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  // ✅ Protección idioma
+  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
   const proyectosText = t?.projects?.items || [];
 
   const colors = [
@@ -133,13 +116,12 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i % icons.length],
+    icon: icons[i % icons.length], // ✅ FIX ICONOS
   }));
 
   return (
     <Box
       id="projects"
-      ref={ref} // 🔥 IMPORTANTE
       sx={{
         py: 4,
         scrollMarginTop: "80px",
@@ -150,10 +132,11 @@ export default function Projects({ t }) {
       <motion.div
         variants={container}
         initial="hidden"
-        animate={isInView ? "visible" : "hidden"} // 🔥 CONTROLADO
+        whileInView="visible"
+        viewport={{ once: true }}
       >
         {/* =========================
-            TÍTULO
+            TÍTULO (estilo Hero)
         ========================= */}
         <motion.div variants={fadeCinematic}>
           <Box
@@ -201,7 +184,7 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={i} p={p} palette={palette} />
+            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
           ))}
         </Grid>
       </motion.div>
