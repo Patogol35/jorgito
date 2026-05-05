@@ -12,7 +12,6 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -27,16 +26,17 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  const [mode, setMode] = useState(
-    () => localStorage.getItem("themeMode") || "dark"
+  const [mode, setMode] = useState(() =>
+    localStorage.getItem("themeMode") || "dark"
   );
 
-  const [lang, setLang] = useState(
-    () => localStorage.getItem("lang") || "es"
+  const [lang, setLang] = useState(() =>
+    localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
 
+  // 🔥 Persistencia
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
@@ -47,6 +47,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
+  // 🎨 Theme optimizado
   const theme = useMemo(
     () =>
       createTheme({
@@ -74,6 +75,7 @@ function App() {
     [mode]
   );
 
+  // 🔥 Memo de secciones (correcto)
   const sections = useMemo(
     () => [
       { id: "about", color: "#2e7d32", Component: About },
@@ -90,13 +92,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* 🔥 FIX del problema de rotación */}
-      <Box
-        sx={{
-          minHeight: "100dvh",
-          overflowX: "hidden",
-        }}
-      >
+      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
         <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
 
         <Hero
@@ -111,7 +107,7 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: { xs: 4, md: 6 },
+            py: 6,
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -124,21 +120,32 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
+
                 backgroundColor:
-                  theme.palette.mode === "dark" ? "#121212" : "#ffffff",
+                  theme.palette.mode === "dark"
+                    ? "#121212"
+                    : "#ffffff",
+
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
                     : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
+
                 border: `1.5px solid ${color}55`,
+
                 boxShadow:
                   theme.palette.mode === "light"
                     ? "0 4px 12px rgba(0,0,0,0.05)"
                     : "0 4px 12px rgba(0,0,0,0.4)",
+
                 scrollMarginTop: scrollOffset,
+
+                // 🔥 OPTIMIZACIÓN IMPORTANTE
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+
                 willChange: "transform",
+
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
                   border: `1.5px solid ${color}`,
@@ -176,77 +183,90 @@ function App() {
           </Fab>
         </Tooltip>
 
-        {/* Tema */}
-        <Tooltip title="Cambiar tema" placement="right">
-          <Fab
-            aria-label="tema"
-            onClick={() => setMode(mode === "light" ? "dark" : "light")}
-            sx={(theme) => ({
-              position: "fixed",
-              top: { xs: 80, sm: 90 },
-              left: 16,
-              zIndex: 1200,
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
-              color: "#fff",
-              width: 52,
-              height: 52,
-              boxShadow: "none",
-              transition: "background-color 0.25s ease, transform 0.2s ease",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
-            })}
-          >
-            {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-          </Fab>
-        </Tooltip>
+{/* Tema */}
+<Tooltip title="Cambiar tema" placement="right">
+  <Fab
+    aria-label="tema"
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
+      left: 16,    // 👈 lado izquierdo
+      zIndex: 1200,
 
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
+
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
+
+      transition: "background-color 0.25s ease, transform 0.2s ease",
+
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
+
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </Fab>
+</Tooltip>
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
-          <Fab
-            aria-label="idioma"
-            onClick={() => setLang(lang === "es" ? "en" : "es")}
-            sx={(theme) => ({
-              position: "fixed",
-              top: { xs: 80, sm: 90 },
-              right: 16,
-              zIndex: 1200,
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
-              color: "#fff",
-              width: 52,
-              height: 52,
-              fontWeight: 800,
-              fontSize: "1rem",
-              letterSpacing: "1px",
-              boxShadow: "none",
-              transition: "background-color 0.25s ease, transform 0.2s ease",
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-              "&:active": {
-                transform: "scale(0.95)",
-              },
-            })}
-          >
-            {lang === "es" ? "EN" : "ES"}
-          </Fab>
-        </Tooltip>
+  <Fab
+    aria-label="idioma"
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
+    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,
+      right: 16,
+      zIndex: 1200,
 
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
+
+      color: "#fff",
+      width: 52,
+      height: 52,
+      fontWeight: 800,
+      fontSize: "1rem",
+      letterSpacing: "1px",
+      boxShadow: "none",
+
+      // 🔥 MISMO FIX
+      transition: "background-color 0.25s ease, transform 0.2s ease",
+      willChange: "background-color",
+
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
+
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    {lang === "es" ? "EN" : "ES"}
+  </Fab>
+</Tooltip>
         <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
