@@ -1,7 +1,7 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -14,7 +14,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones (IGUAL QUE TUYA)
+// 🎬 Animaciones (TU ESTILO ORIGINAL)
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -45,16 +45,16 @@ const container = {
 };
 
 // =====================
-// Tarjeta (FIX REAL)
+// CARD
 // =====================
-function ProjectCard({ p, palette }) {
+function ProjectCard({ p, palette, disableAnimation }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial={false} // 🔥 CLAVE: evita re-animación en cambio de tema
+        initial={disableAnimation ? false : "hidden"}
         animate="visible"
         style={{ willChange: "transform, opacity" }}
       >
@@ -70,6 +70,7 @@ function ProjectCard({ p, palette }) {
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
+                transition: "color 0.3s ease",
                 "&:hover": { color: p.color },
               }}
             >
@@ -83,14 +84,24 @@ function ProjectCard({ p, palette }) {
 }
 
 // =====================
-// MAIN COMPONENT
+// MAIN
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const hasAnimated = useRef(false); // 🔥 controla animación global
+  const hasAnimated = useRef(false);
+  const prevMode = useRef(palette.mode);
+
+  // 🔥 detectar cambio de tema
+  const isThemeChange = prevMode.current !== palette.mode;
+
+  useEffect(() => {
+    prevMode.current = palette.mode;
+  }, [palette.mode]);
+
+  const disableAnimation = hasAnimated.current || isThemeChange;
 
   const proyectosText = t.projects.items;
 
@@ -129,10 +140,9 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🔥 CONTROL TOTAL DE ANIMACIÓN */}
       <motion.div
         variants={container}
-        initial={hasAnimated.current ? false : "hidden"}
+        initial={disableAnimation ? false : "hidden"}
         animate="visible"
         onAnimationComplete={() => {
           hasAnimated.current = true;
@@ -141,15 +151,14 @@ export default function Projects({ t }) {
         {/* HEADER */}
         <motion.div
           variants={fadeCinematic}
-          initial={false}
+          initial={disableAnimation ? false : "hidden"}
           animate="visible"
         >
-          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+          <Box sx={{ textAlign: "center", mb: 4 }}>
             <Box
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
                 gap: 1,
                 px: 3,
                 py: 0.9,
@@ -169,11 +178,7 @@ export default function Projects({ t }) {
 
               <Typography
                 variant="h6"
-                sx={{
-                  fontWeight: "bold",
-                  color: primaryColor,
-                  lineHeight: 1,
-                }}
+                sx={{ fontWeight: "bold", color: primaryColor }}
               >
                 {t.projects.title}
               </Typography>
@@ -184,7 +189,12 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={`${p.titulo}-${i}`} p={p} palette={palette} />
+            <ProjectCard
+              key={`${p.titulo}-${i}`}
+              p={p}
+              palette={palette}
+              disableAnimation={disableAnimation}
+            />
           ))}
         </Grid>
       </motion.div>
