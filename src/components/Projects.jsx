@@ -59,6 +59,7 @@ function ProjectCard({ p, palette }) {
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
+          {/* TÍTULO */}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
               href={p.link}
@@ -73,6 +74,18 @@ function ProjectCard({ p, palette }) {
             >
               {p.titulo}
             </Link>
+          </Typography>
+
+          {/* 🔥 NUEVO: DESCRIPCIÓN */}
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              mt: 0.5,
+              fontSize: "0.85rem",
+            }}
+          >
+            {p.descripcion}
           </Typography>
         </Box>
       </motion.div>
@@ -125,7 +138,7 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO IGUAL QUE CERTIFICATIONS */}
+      {/* 🎬 ANIMACIÓN TIPO CERTIFICATIONS */}
       <motion.div
         variants={container}
         initial="hidden"
