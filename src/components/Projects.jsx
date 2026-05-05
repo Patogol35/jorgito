@@ -1,7 +1,6 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useRef } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -54,8 +53,7 @@ function ProjectCard({ p, palette }) {
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial="hidden"        // ✅ FIX
-        animate="visible"
+        whileHover={{ y: -5, scale: 1.05 }}
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
@@ -89,8 +87,6 @@ export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-
-  const hasAnimated = useRef(false);
 
   const proyectosText = t.projects.items;
 
@@ -129,21 +125,15 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* CONTENEDOR PRINCIPAL */}
+      {/* 🎬 CONTENEDOR ANIMADO IGUAL QUE CERTIFICATIONS */}
       <motion.div
         variants={container}
-        initial={hasAnimated.current ? false : "hidden"}
-        animate="visible"
-        onAnimationComplete={() => {
-          hasAnimated.current = true;
-        }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
       >
         {/* HEADER */}
-        <motion.div
-          variants={fadeCinematic}
-          initial="hidden"      // ✅ FIX
-          animate="visible"
-        >
+        <motion.div variants={fadeCinematic}>
           <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
             <Box
               sx={{
@@ -190,4 +180,4 @@ export default function Projects({ t }) {
       </motion.div>
     </Box>
   );
-    }
+}
