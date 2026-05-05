@@ -1,7 +1,7 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -14,7 +14,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones (TU ESTILO ORIGINAL)
+// 🎬 Animaciones (TUYA)
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -47,14 +47,14 @@ const container = {
 // =====================
 // CARD
 // =====================
-function ProjectCard({ p, palette, disableAnimation }) {
+function ProjectCard({ p, palette, shouldAnimate }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial={disableAnimation ? false : "hidden"}
+        initial={shouldAnimate ? "hidden" : false}
         animate="visible"
         style={{ willChange: "transform, opacity" }}
       >
@@ -91,17 +91,10 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+  // 🔥 SOLO controla la primera animación
   const hasAnimated = useRef(false);
-  const prevMode = useRef(palette.mode);
 
-  // 🔥 detectar cambio de tema
-  const isThemeChange = prevMode.current !== palette.mode;
-
-  useEffect(() => {
-    prevMode.current = palette.mode;
-  }, [palette.mode]);
-
-  const disableAnimation = hasAnimated.current || isThemeChange;
+  const shouldAnimate = !hasAnimated.current;
 
   const proyectosText = t.projects.items;
 
@@ -142,7 +135,7 @@ export default function Projects({ t }) {
     >
       <motion.div
         variants={container}
-        initial={disableAnimation ? false : "hidden"}
+        initial={shouldAnimate ? "hidden" : false}
         animate="visible"
         onAnimationComplete={() => {
           hasAnimated.current = true;
@@ -151,7 +144,7 @@ export default function Projects({ t }) {
         {/* HEADER */}
         <motion.div
           variants={fadeCinematic}
-          initial={disableAnimation ? false : "hidden"}
+          initial={shouldAnimate ? "hidden" : false}
           animate="visible"
         >
           <Box sx={{ textAlign: "center", mb: 4 }}>
@@ -193,7 +186,7 @@ export default function Projects({ t }) {
               key={`${p.titulo}-${i}`}
               p={p}
               palette={palette}
-              disableAnimation={disableAnimation}
+              shouldAnimate={shouldAnimate}
             />
           ))}
         </Grid>
