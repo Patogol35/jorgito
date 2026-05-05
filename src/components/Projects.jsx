@@ -76,7 +76,7 @@ function ProjectCard({ p, palette }) {
             </Link>
           </Typography>
 
-          {/* 🔥 NUEVO: DESCRIPCIÓN */}
+          {/* DESCRIPCIÓN */}
           <Typography
             variant="body2"
             sx={{
@@ -138,7 +138,7 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 ANIMACIÓN TIPO CERTIFICATIONS */}
+      {/* 🎬 ANIMACIÓN SCROLL */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -187,7 +187,11 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={`${p.titulo}-${i}`} p={p} palette={palette} />
+            <ProjectCard
+              key={i}   // 🔥 FIX CLAVE PARA i18n
+              p={p}
+              palette={palette}
+            />
           ))}
         </Grid>
       </motion.div>
