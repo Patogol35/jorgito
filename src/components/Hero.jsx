@@ -1,4 +1,5 @@
 import {
+  Toolbar,
   Box,
   Typography,
   Button,
@@ -12,21 +13,12 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-
-  // 🔥 FIX REAL: evita salto al rotar
-  useEffect(() => {
-    const handleResize = () => {
-      window.scrollTo(0, 0);
-    };
-
-    window.addEventListener("orientationchange", handleResize);
-    return () => window.removeEventListener("orientationchange", handleResize);
-  }, []);
+  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -34,76 +26,120 @@ export default function Hero({ mode, setMode, t }) {
     hidden: {
       opacity: 0,
       y: 16,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
+      clipPath: "inset(0 0 0% 0)",
+      filter: "blur(0px)",
       transition: { duration: 0.9, ease: easeOutExpo },
+    },
+  };
+
+  const textContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.18,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  const buttonsContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 1.1,
+      },
     },
   };
 
   return (
     <>
+      <Toolbar />
+
       <Box
         id="hero"
         sx={{
           position: "relative",
-
-          /* 🔥 CLAVE REAL */
-          minHeight: "100dvh",
-
+          overflow: "hidden",
           display: "flex",
-          flexDirection: {
-            xs: "column",
-            sm: "row",
-            "@media (orientation: landscape)": "column",
-          },
-
+          flexDirection: { xs: "column", sm: "row" },
           alignItems: "center",
           justifyContent: "center",
-
-          gap: { xs: 3, md: 8 },
-
+          gap: { xs: 4, md: 8 },
+          pt: { xs: 6, sm: 8, md: 10 },
+          pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
-
-          /* 🔥 menos padding en horizontal */
-          pt: {
-            xs: 4,
-            sm: 6,
-            "@media (orientation: landscape)": 2,
-          },
-
-          pb: 2,
-
-          overflow: "hidden",
         }}
       >
         {/* AVATAR */}
         <motion.div
           initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 1.8, ease: easeOutExpo }}
+          style={{
+            borderRadius: "50%",
+            transformStyle: "preserve-3d",
+            perspective: 1200,
+            willChange: "transform",
+          }}
         >
-          <Avatar
-            alt="Jorge Patricio"
-            src="https://i.imgur.com/jr3rjzu.jpg"
-            sx={{
-              width: { xs: 110, sm: 160, md: 200 },
-              height: { xs: 110, sm: 160, md: 200 },
-              border: `3px solid ${theme.palette.primary.main}`,
-            }}
-          />
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
+          >
+            <motion.div
+              animate={{
+                boxShadow: [
+                  `0 0 16px ${theme.palette.primary.main}55`,
+                  `0 0 26px ${theme.palette.primary.main}88`,
+                  `0 0 16px ${theme.palette.primary.main}55`,
+                ],
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+              style={{ borderRadius: "50%" }}
+            >
+              <Avatar
+                alt="Jorge Patricio"
+                src="https://i.imgur.com/jr3rjzu.jpg"
+                imgProps={{
+                  loading: "lazy",
+                  decoding: "async",
+                }}
+                sx={{
+                  width: { xs: 130, sm: 170, md: 200 },
+                  height: { xs: 130, sm: 170, md: 200 },
+                  border: `3px solid ${theme.palette.primary.main}`,
+                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
+                  backgroundColor: theme.palette.background.paper,
+                }}
+              />
+            </motion.div>
+          </motion.div>
         </motion.div>
 
         {/* TEXTO */}
-        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
-          <motion.div initial="hidden" animate="visible">
+        <Box
+          textAlign={{ xs: "center", sm: "left" }}
+          maxWidth="600px"
+          mx="auto"
+          zIndex={1}
+        >
+          <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
+                variant="h3"
                 fontWeight="bold"
+                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.6rem", sm: "2.3rem" },
+                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
                 {t.hero.title}
@@ -111,94 +147,164 @@ export default function Hero({ mode, setMode, t }) {
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography sx={{ mt: 1 }}>
+              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
                 {t.hero.subtitle}
               </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography sx={{ mt: 2 }}>
+              <Typography
+                sx={{
+                  fontSize: { xs: "1rem", sm: "1.08rem" },
+                  lineHeight: 1.9,
+                  letterSpacing: "0.3px",
+                  color: theme.palette.text.primary,
+                  maxWidth: "520px",
+                  mt: 3,
+                  mb: 5,
+                  whiteSpace: "pre-line",
+                }}
+              >
                 {t.hero.description}
               </Typography>
             </motion.div>
           </motion.div>
 
           {/* BOTONES */}
-          <Box
-            sx={{
-              display: "flex",
-              gap: 2,
-              mt: 3,
-              flexWrap: "wrap",
-              justifyContent: { xs: "center", sm: "flex-start" },
-            }}
-          >
-            <Button
-              variant="contained"
-              startIcon={<DescriptionIcon />}
-              href="/Jorge.CV.pdf"
-              target="_blank"
+          <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                justifyContent: { xs: "center", sm: "flex-start" },
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
             >
-              {t.hero.buttons.cv}
-            </Button>
+              {[
+                {
+                  label: t.hero.buttons.cv,
+                  icon: <DescriptionIcon />,
+                  href: "/Jorge.CV.pdf",
+                },
+                {
+                  label: t.hero.buttons.title,
+                  icon: <WorkspacePremiumIcon />,
+                  onClick: () => setOpen(true),
+                },
+                {
+                  label: t.hero.buttons.ai,
+                  icon: <SmartToyIcon />,
+                  onClick: () => window.openSashaChat?.(),
+                },
+              ].map((btn, i) => (
+                <motion.div key={i} variants={fadeCinematic}>
+                  <Button
+                    variant="contained"
+                    startIcon={btn.icon}
+                    href={btn.href}
+                    onClick={btn.onClick}
+                    target={btn.href ? "_blank" : undefined}
+                    sx={{
+                      borderRadius: "25px",
+                      textTransform: "none",
+                      fontWeight: "bold",
+                      px: 4,
+                      py: 1.4,
+                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                      boxShadow: "none",
+                    }}
+                  >
+                    {btn.label}
+                  </Button>
+                </motion.div>
+              ))}
 
-            <Button
-              variant="contained"
-              startIcon={<WorkspacePremiumIcon />}
-              onClick={() => setOpen(true)}
-            >
-              {t.hero.buttons.title}
-            </Button>
-
-            <Button
-              variant="contained"
-              startIcon={<SmartToyIcon />}
-              onClick={() => window.openSashaChat?.()}
-            >
-              {t.hero.buttons.ai}
-            </Button>
-
-            <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
-              {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-            </IconButton>
-          </Box>
+              {/* 🌙 MODO */}
+              <motion.div variants={fadeCinematic}>
+                <IconButton
+                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
+                  sx={{
+                    color: theme.palette.primary.main,
+                    "&:hover": {
+                      background: "transparent",
+                      transform: "scale(1.15)",
+                    },
+                  }}
+                >
+                  {mode === "light" ? (
+                    <Brightness4 sx={{ fontSize: 28 }} />
+                  ) : (
+                    <Brightness7 sx={{ fontSize: 28 }} />
+                  )}
+                </IconButton>
+              </motion.div>
+            </Box>
+          </motion.div>
         </Box>
       </Box>
 
       {/* MODAL */}
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <>
-          <IconButton
-            onClick={() => setOpen(false)}
-            sx={{
-              position: "fixed",
-              top: 20,
-              left: 20,
-              color: "#fff",
-            }}
-          >
-            <Close />
-          </IconButton>
+      <Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.85)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <>
+    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
+    <IconButton
+      onClick={() => setOpen(false)}
+      sx={{
+        position: "fixed", // 🔥 CLAVE
+        top: 20,
+        left: 20,
+        zIndex: 3000,
+        background: "rgba(0,0,0,0.6)",
+        color: "#fff",
+        backdropFilter: "blur(6px)",
+        "&:hover": {
+          background: "rgba(0,0,0,0.8)",
+        },
+      }}
+    >
+      <Close />
+    </IconButton>
 
-          <Box
-            sx={{
-              width: "90%",
-              maxHeight: "90vh",
-              margin: "auto",
-              mt: 5,
-            }}
-          >
-            <Box
-              component="img"
-              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              sx={{
-                width: "100%",
-                objectFit: "contain",
-              }}
-            />
-          </Box>
-        </>
-      </Modal>
+    {/* CONTENEDOR */}
+    <Box
+      sx={{
+        position: "relative",
+        width: { xs: "95%", md: "70%" },
+        maxHeight: "90vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* 🖼️ IMAGEN */}
+      <Box
+        component="img"
+        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+        alt="certificado"
+        loading="lazy"
+        decoding="async"
+        sx={{
+          width: "100%",
+          maxHeight: "90vh",
+          objectFit: "contain",
+          borderRadius: 2,
+          display: "block",
+        }}
+      />
+    </Box>
+  </>
+</Modal>
     </>
   );
 }
