@@ -1,5 +1,4 @@
 import {
-  Toolbar,
   Box,
   Typography,
   Button,
@@ -13,11 +12,21 @@ import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+
+  // 🔥 FIX REAL: evita salto al rotar
+  useEffect(() => {
+    const handleResize = () => {
+      window.scrollTo(0, 0);
+    };
+
+    window.addEventListener("orientationchange", handleResize);
+    return () => window.removeEventListener("orientationchange", handleResize);
+  }, []);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -25,128 +34,76 @@ export default function Hero({ mode, setMode, t }) {
     hidden: {
       opacity: 0,
       y: 16,
-      clipPath: "inset(0 0 100% 0)",
-      filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0 0 0% 0)",
-      filter: "blur(0px)",
       transition: { duration: 0.9, ease: easeOutExpo },
-    },
-  };
-
-  const textContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.5,
-      },
-    },
-  };
-
-  const buttonsContainer = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 1.1,
-      },
     },
   };
 
   return (
     <>
-      {/* 🔥 evita espacio raro */}
-      <Toolbar />
-
       <Box
         id="hero"
         sx={{
           position: "relative",
-          overflow: "hidden",
+
+          /* 🔥 CLAVE REAL */
+          minHeight: "100dvh",
 
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
+          flexDirection: {
+            xs: "column",
+            sm: "row",
+            "@media (orientation: landscape)": "column",
+          },
 
           alignItems: "center",
           justifyContent: "center",
 
           gap: { xs: 3, md: 8 },
 
-          /* 🔥 CLAVE: controla altura en horizontal */
-          minHeight: {
-            xs: "auto",
-            sm: "calc(100vh - 64px)",
+          px: { xs: 2, sm: 4, md: 8 },
+
+          /* 🔥 menos padding en horizontal */
+          pt: {
+            xs: 4,
+            sm: 6,
+            "@media (orientation: landscape)": 2,
           },
 
-          pt: { xs: 4, sm: 6, md: 10 },
-          pb: { xs: 2, sm: 3 },
-          px: { xs: 2, sm: 4, md: 8 },
+          pb: 2,
+
+          overflow: "hidden",
         }}
       >
         {/* AVATAR */}
         <motion.div
           initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
-          transition={{ duration: 1.8, ease: easeOutExpo }}
-          style={{
-            borderRadius: "50%",
-            transformStyle: "preserve-3d",
-            perspective: 1200,
-          }}
+          transition={{ duration: 1.5 }}
         >
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
-          >
-            <motion.div
-              animate={{
-                boxShadow: [
-                  `0 0 16px ${theme.palette.primary.main}55`,
-                  `0 0 26px ${theme.palette.primary.main}88`,
-                  `0 0 16px ${theme.palette.primary.main}55`,
-                ],
-              }}
-              transition={{ duration: 4, repeat: Infinity }}
-              style={{ borderRadius: "50%" }}
-            >
-              <Avatar
-                alt="Jorge Patricio"
-                src="https://i.imgur.com/jr3rjzu.jpg"
-                imgProps={{
-                  loading: "lazy",
-                  decoding: "async",
-                }}
-                sx={{
-                  width: { xs: 120, sm: 170, md: 200 },
-                  height: { xs: 120, sm: 170, md: 200 },
-                  border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
-                }}
-              />
-            </motion.div>
-          </motion.div>
+          <Avatar
+            alt="Jorge Patricio"
+            src="https://i.imgur.com/jr3rjzu.jpg"
+            sx={{
+              width: { xs: 110, sm: 160, md: 200 },
+              height: { xs: 110, sm: 160, md: 200 },
+              border: `3px solid ${theme.palette.primary.main}`,
+            }}
+          />
         </motion.div>
 
         {/* TEXTO */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-          zIndex={1}
-        >
-          <motion.div variants={textContainer} initial="hidden" animate="visible">
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
+          <motion.div initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
-                variant="h3"
                 fontWeight="bold"
-                gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.7rem", sm: "2.3rem", md: "2.6rem" },
+                  fontSize: { xs: "1.6rem", sm: "2.3rem" },
                 }}
               >
                 {t.hero.title}
@@ -154,103 +111,62 @@ export default function Hero({ mode, setMode, t }) {
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
+              <Typography sx={{ mt: 1 }}>
                 {t.hero.subtitle}
               </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "0.95rem", sm: "1.05rem" },
-                  lineHeight: 1.8,
-                  color: theme.palette.text.primary,
-                  mt: 2,
-                  mb: 4,
-                  whiteSpace: "pre-line",
-                }}
-              >
+              <Typography sx={{ mt: 2 }}>
                 {t.hero.description}
               </Typography>
             </motion.div>
           </motion.div>
 
           {/* BOTONES */}
-          <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                justifyContent: { xs: "center", sm: "flex-start" },
-                flexWrap: "wrap",
-              }}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              mt: 3,
+              flexWrap: "wrap",
+              justifyContent: { xs: "center", sm: "flex-start" },
+            }}
+          >
+            <Button
+              variant="contained"
+              startIcon={<DescriptionIcon />}
+              href="/Jorge.CV.pdf"
+              target="_blank"
             >
-              {[
-                {
-                  label: t.hero.buttons.cv,
-                  icon: <DescriptionIcon />,
-                  href: "/Jorge.CV.pdf",
-                },
-                {
-                  label: t.hero.buttons.title,
-                  icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
-                },
-                {
-                  label: t.hero.buttons.ai,
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                },
-              ].map((btn, i) => (
-                <motion.div key={i} variants={fadeCinematic}>
-                  <Button
-                    variant="contained"
-                    startIcon={btn.icon}
-                    href={btn.href}
-                    onClick={btn.onClick}
-                    target={btn.href ? "_blank" : undefined}
-                    sx={{
-                      borderRadius: "25px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 3,
-                      py: 1.2,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    }}
-                  >
-                    {btn.label}
-                  </Button>
-                </motion.div>
-              ))}
+              {t.hero.buttons.cv}
+            </Button>
 
-              {/* MODO */}
-              <motion.div variants={fadeCinematic}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                  }}
-                >
-                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-                </IconButton>
-              </motion.div>
-            </Box>
-          </motion.div>
+            <Button
+              variant="contained"
+              startIcon={<WorkspacePremiumIcon />}
+              onClick={() => setOpen(true)}
+            >
+              {t.hero.buttons.title}
+            </Button>
+
+            <Button
+              variant="contained"
+              startIcon={<SmartToyIcon />}
+              onClick={() => window.openSashaChat?.()}
+            >
+              {t.hero.buttons.ai}
+            </Button>
+
+            <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+              {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+            </IconButton>
+          </Box>
         </Box>
       </Box>
 
       {/* MODAL */}
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <Modal open={open} onClose={() => setOpen(false)}>
         <>
           <IconButton
             onClick={() => setOpen(false)}
@@ -258,7 +174,6 @@ export default function Hero({ mode, setMode, t }) {
               position: "fixed",
               top: 20,
               left: 20,
-              zIndex: 3000,
               color: "#fff",
             }}
           >
@@ -267,17 +182,17 @@ export default function Hero({ mode, setMode, t }) {
 
           <Box
             sx={{
-              width: { xs: "95%", md: "70%" },
+              width: "90%",
               maxHeight: "90vh",
+              margin: "auto",
+              mt: 5,
             }}
           >
             <Box
               component="img"
               src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              alt="certificado"
               sx={{
                 width: "100%",
-                maxHeight: "90vh",
                 objectFit: "contain",
               }}
             />
@@ -286,4 +201,4 @@ export default function Hero({ mode, setMode, t }) {
       </Modal>
     </>
   );
-        }
+}
