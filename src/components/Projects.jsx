@@ -1,6 +1,7 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
+import { memo, useMemo } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -8,12 +9,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MovieIcon from "@mui/icons-material/Movie";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FunctionsIcon from "@mui/icons-material/Functions";
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
 // =====================
-// 🎬 Animaciones estilo Hero
+// 🎬 Animaciones
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -44,76 +45,84 @@ const container = {
 };
 
 // =====================
-// Tarjeta individual (mejorada pero sin romper)
+// 🎯 CONFIG CENTRALIZADA
 // =====================
-function ProjectCard({ p, palette }) {
-  const Icon = p.icon;
+const PROJECT_CONFIG = [
+  { icon: WbSunnyIcon, color: "#1976d2" },
+  { icon: ShoppingCartIcon, color: "#9333ea" },
+  { icon: MovieIcon, color: "#16a34a" },
+  { icon: QuizIcon, color: "#e11d48" },
+  { icon: FunctionsIcon, color: "#f59e0b" },
+  { icon: AccessTimeIcon, color: "#0ea5e9" },
+  { icon: QrCode2Icon, color: "#10b981" },
+];
+
+// =====================
+// Tarjeta optimizada
+// =====================
+const ProjectCard = memo(function ProjectCard({ project, palette }) {
+  const Icon = project.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div
-        variants={fadeCinematic}
-        style={{ willChange: "transform, opacity" }}
-      >
+      <motion.div variants={fadeCinematic}>
         <Box sx={{ textAlign: "center", px: 1 }}>
-          <Icon sx={{ fontSize: 30, color: p.color }} />
+          <Icon sx={{ fontSize: 30, color: project.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
-              href={p.link}
+              href={project.link}
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
-                "&:hover": { color: p.color },
+                transition: "0.3s",
+                "&:hover": { color: project.color },
               }}
             >
-              {p.titulo}
+              {project.titulo}
             </Link>
+          </Typography>
+
+          {/* 🔥 NUEVO: descripción */}
+          <Typography
+            variant="body2"
+            sx={{
+              color: palette.text.secondary,
+              mt: 0.5,
+              fontSize: "0.8rem",
+            }}
+          >
+            {project.descripcion}
           </Typography>
         </Box>
       </motion.div>
     </Grid>
   );
-}
+});
 
 // =====================
-// Componente principal
+// MAIN COMPONENT
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  const proyectosText = t.projects.items;
+  // 🔥 MEMO para evitar renders innecesarios
+  const proyectos = useMemo(() => {
+    return t.projects.items.map((item, i) => {
+      const config = PROJECT_CONFIG[i % PROJECT_CONFIG.length];
 
-  const colors = [
-    "#1976d2",
-    "#9333ea",
-    "#16a34a",
-    "#e11d48",
-    "#f59e0b",
-    "#0ea5e9",
-    "#10b981",
-  ];
-
-  const icons = [
-    WbSunnyIcon,
-    ShoppingCartIcon,
-    MovieIcon,
-    QuizIcon,
-    FunctionsIcon,
-    AccessTimeIcon,
-    QrCode2Icon,
-  ];
-
-  const proyectos = proyectosText.map((item, i) => ({
-    ...item,
-    color: colors[i],
-    icon: icons[i],
-  }));
+      return {
+        ...item,
+        icon: config.icon,
+        color: config.color,
+      };
+    });
+  }, [t]);
 
   return (
     <Box
@@ -124,31 +133,22 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* =========================
-            TÍTULO (estilo Hero)
-        ========================= */}
+        {/* HEADER */}
         <motion.div variants={fadeCinematic}>
-          <Box
-            sx={{
-              textAlign: "center",
-              marginBottom: "2rem",
-            }}
-          >
+          <Box sx={{ textAlign: "center", mb: 4 }}>
             <Box
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
                 gap: 1,
                 px: 3,
-                py: 0.9,
+                py: 1,
                 borderRadius: "999px",
                 background: isDark
                   ? "rgba(144,202,249,0.06)"
@@ -168,7 +168,6 @@ export default function Projects({ t }) {
                 sx={{
                   fontWeight: "bold",
                   color: primaryColor,
-                  lineHeight: 1,
                 }}
               >
                 {t.projects.title}
@@ -177,10 +176,14 @@ export default function Projects({ t }) {
           </Box>
         </motion.div>
 
-        {/* GRID con stagger automático */}
+        {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
-          {proyectos.map((p, i) => (
-            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
+          {proyectos.map((project, i) => (
+            <ProjectCard
+              key={project.titulo || i}
+              project={project}
+              palette={palette}
+            />
           ))}
         </Grid>
       </motion.div>
