@@ -77,6 +77,22 @@ function ProjectCard({ p, palette }) {
               {p.titulo}
             </Link>
           </Typography>
+
+          {/* 🔥 NUEVO: descripción corta */}
+          {p.descripcion && (
+            <Typography
+              variant="caption"
+              sx={{
+                display: "block",
+                mt: 0.5,
+                opacity: 0.7,
+                maxWidth: 220,
+                mx: "auto",
+              }}
+            >
+              {p.descripcion}
+            </Typography>
+          )}
         </Box>
       </motion.div>
     </Grid>
