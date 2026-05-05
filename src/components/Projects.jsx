@@ -1,7 +1,6 @@
 import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import { useMemo } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -14,21 +13,22 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones (OPTIMIZADAS)
+// 🎬 Animaciones estilo Hero
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
-// ❌ SIN blur (causaba flash)
 const fadeCinematic = {
   hidden: {
     opacity: 0,
     y: 20,
     clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
   },
   visible: {
     opacity: 1,
     y: 0,
     clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
     transition: { duration: 0.7, ease: easeOutExpo },
   },
 };
@@ -53,30 +53,21 @@ function ProjectCard({ p, palette }) {
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial={false} // ✅ evita re-animación
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
           {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
-          {/* ✅ Typography controla color */}
-          <Typography
-            variant="subtitle1"
-            sx={{
-              fontWeight: "bold",
-              mt: 1,
-              color: palette.text.primary,
-              transition: "color 0.3s ease",
-            }}
-          >
+          <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
-              color="inherit" // ✅ hereda del theme
               sx={{
-                transition: "all 0.3s ease",
+                color: palette.text.primary,
+                fontWeight: "bold",
+                transition: "color 0.25s ease, text-shadow 0.25s ease",
                 "&:hover": {
                   color: p.color,
                   textShadow: `0 0 6px ${p.color}33`,
@@ -100,6 +91,7 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
   const proyectosText = t?.projects?.items || [];
 
   const colors = [
@@ -121,14 +113,11 @@ export default function Projects({ t }) {
     QrCode2Icon,
   ];
 
-  // ✅ MEMO para evitar re-render innecesario
-  const proyectos = useMemo(() => {
-    return proyectosText.map((item, i) => ({
-      ...item,
-      color: colors[i % colors.length],
-      icon: icons[i % icons.length],
-    }));
-  }, [proyectosText]);
+  const proyectos = proyectosText.map((item, i) => ({
+    ...item,
+    color: colors[i % colors.length],
+    icon: icons[i % icons.length], // ✅ FIX ICONOS
+  }));
 
   return (
     <Box
@@ -139,15 +128,23 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR */}
+      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
-        initial={false} // ✅ CLAVE para quitar flash
-        animate="visible"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
       >
-        {/* TÍTULO */}
-        <motion.div variants={fadeCinematic} initial={false}>
-          <Box sx={{ textAlign: "center", mb: "2rem" }}>
+        {/* =========================
+            TÍTULO (estilo Hero)
+        ========================= */}
+        <motion.div variants={fadeCinematic}>
+          <Box
+            sx={{
+              textAlign: "center",
+              marginBottom: "2rem",
+            }}
+          >
             <Box
               sx={{
                 display: "inline-flex",
@@ -186,15 +183,11 @@ export default function Projects({ t }) {
 
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
-          {proyectos.map((p) => (
-            <ProjectCard
-              key={p.titulo} // ✅ KEY REAL (no index)
-              p={p}
-              palette={palette}
-            />
+          {proyectos.map((p, i) => (
+            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
           ))}
         </Grid>
       </motion.div>
     </Box>
   );
-    }
+}
