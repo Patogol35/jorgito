@@ -65,7 +65,7 @@ export default function Certifications({ t }) {
       id="certifications"
       sx={{
         py: 4,
-        scrollMarginTop: "80px",
+        scrollMarginTop: { xs: "0px", md: "80px" }
         color: palette.text.primary,
       }}
     >
