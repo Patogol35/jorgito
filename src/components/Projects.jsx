@@ -1,6 +1,7 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box, Link as MuiLink } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 // Íconos
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
@@ -13,7 +14,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones estilo Hero
+// 🎬 Animaciones
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -51,15 +52,12 @@ function ProjectCard({ p, palette }) {
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div
-        variants={fadeCinematic}
-        style={{ willChange: "transform, opacity" }}
-      >
+      <motion.div variants={fadeCinematic}>
         <Box sx={{ textAlign: "center", px: 1 }}>
           {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-            <Link
+            <MuiLink
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
@@ -75,10 +73,9 @@ function ProjectCard({ p, palette }) {
               }}
             >
               {p.titulo}
-            </Link>
+            </MuiLink>
           </Typography>
 
-          {/* 🔥 NUEVO: descripción corta */}
           {p.descripcion && (
             <Typography
               variant="caption"
@@ -107,7 +104,11 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
+  // 🔥 FIX: control manual del viewport (NO más flash)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  // ✅ Protección idioma
   const proyectosText = t?.projects?.items || [];
 
   const colors = [
@@ -132,12 +133,13 @@ export default function Projects({ t }) {
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
     color: colors[i % colors.length],
-    icon: icons[i % icons.length], // ✅ FIX ICONOS
+    icon: icons[i % icons.length],
   }));
 
   return (
     <Box
       id="projects"
+      ref={ref} // 🔥 IMPORTANTE
       sx={{
         py: 4,
         scrollMarginTop: "80px",
@@ -148,11 +150,10 @@ export default function Projects({ t }) {
       <motion.div
         variants={container}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate={isInView ? "visible" : "hidden"} // 🔥 CONTROLADO
       >
         {/* =========================
-            TÍTULO (estilo Hero)
+            TÍTULO
         ========================= */}
         <motion.div variants={fadeCinematic}>
           <Box
@@ -200,7 +201,7 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
+            <ProjectCard key={i} p={p} palette={palette} />
           ))}
         </Grid>
       </motion.div>
