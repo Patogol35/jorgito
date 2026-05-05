@@ -14,23 +14,17 @@ import QrCode2Icon from "@mui/icons-material/QrCode2";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
 // =====================
-// 🎬 Animaciones
+// 🎬 Animaciones (SIN FLASH)
 // =====================
-const easeOutExpo = [0.16, 1, 0.3, 1];
-
 const fadeCinematic = {
   hidden: {
     opacity: 0,
     y: 20,
-    clipPath: "inset(0 0 100% 0)",
-    filter: "blur(6px)",
   },
   visible: {
     opacity: 1,
     y: 0,
-    clipPath: "inset(0 0 0% 0)",
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: easeOutExpo },
+    transition: { duration: 0.5 },
   },
 };
 
@@ -39,7 +33,7 @@ const container = {
   visible: {
     transition: {
       staggerChildren: 0.08,
-      delayChildren: 0.2,
+      delayChildren: 0.1,
     },
   },
 };
@@ -58,14 +52,20 @@ const PROJECT_CONFIG = [
 ];
 
 // =====================
-// Tarjeta optimizada
+// 🧩 Card optimizada
 // =====================
 const ProjectCard = memo(function ProjectCard({ project, palette }) {
   const Icon = project.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <motion.div variants={fadeCinematic}>
+      <motion.div
+        variants={fadeCinematic}
+        initial={false} // 🔥 CLAVE: evita re-animación en cambio de tema
+        animate="visible"
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: "spring", stiffness: 200 }}
+      >
         <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: project.color }} />
 
@@ -75,18 +75,22 @@ const ProjectCard = memo(function ProjectCard({ project, palette }) {
               target="_blank"
               rel="noopener noreferrer"
               underline="none"
+              aria-label={`Abrir proyecto ${project.titulo}`}
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
                 transition: "0.3s",
-                "&:hover": { color: project.color },
+                "&:hover": {
+                  color: project.color,
+                  textDecoration: "underline",
+                },
               }}
             >
               {project.titulo}
             </Link>
           </Typography>
 
-          {/* 🔥 NUEVO: descripción */}
+          {/* ✅ descripción visible */}
           <Typography
             variant="body2"
             sx={{
@@ -104,15 +108,17 @@ const ProjectCard = memo(function ProjectCard({ project, palette }) {
 });
 
 // =====================
-// MAIN COMPONENT
+// 🚀 MAIN COMPONENT
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // 🔥 MEMO para evitar renders innecesarios
+  // 🔥 evitar renders innecesarios
   const proyectos = useMemo(() => {
+    if (!t?.projects?.items) return [];
+
     return t.projects.items.map((item, i) => {
       const config = PROJECT_CONFIG[i % PROJECT_CONFIG.length];
 
@@ -133,6 +139,7 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
+      {/* 🔥 CLAVE: once:true evita re-animación al cambiar tema */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -180,7 +187,7 @@ export default function Projects({ t }) {
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((project, i) => (
             <ProjectCard
-              key={project.titulo || i}
+              key={`${project.titulo}-${i}`}
               project={project}
               palette={palette}
             />
