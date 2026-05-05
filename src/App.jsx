@@ -27,12 +27,12 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  const [mode, setMode] = useState(() =>
-    localStorage.getItem("themeMode") || "dark"
+  const [mode, setMode] = useState(
+    () => localStorage.getItem("themeMode") || "dark"
   );
 
-  const [lang, setLang] = useState(() =>
-    localStorage.getItem("lang") || "es"
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
@@ -90,7 +90,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      {/* 🔥 FIX PRINCIPAL AQUÍ */}
+      {/* 🔥 FIX del problema de rotación */}
       <Box
         sx={{
           minHeight: "100dvh",
@@ -111,7 +111,7 @@ function App() {
           maxWidth="lg"
           disableGutters
           sx={{
-            py: { xs: 4, md: 6 }, // 🔥 mejor responsive
+            py: { xs: 4, md: 6 },
             px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
           }}
         >
@@ -124,31 +124,21 @@ function App() {
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
-
                 backgroundColor:
-                  theme.palette.mode === "dark"
-                    ? "#121212"
-                    : "#ffffff",
-
+                  theme.palette.mode === "dark" ? "#121212" : "#ffffff",
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
                     : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
-
                 border: `1.5px solid ${color}55`,
-
                 boxShadow:
                   theme.palette.mode === "light"
                     ? "0 4px 12px rgba(0,0,0,0.05)"
                     : "0 4px 12px rgba(0,0,0,0.4)",
-
                 scrollMarginTop: scrollOffset,
-
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
-
                 willChange: "transform",
-
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
                   border: `1.5px solid ${color}`,
@@ -193,7 +183,7 @@ function App() {
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
             sx={(theme) => ({
               position: "fixed",
-              top: { xs: 80, sm: 90 }, // 🔥 fix responsive
+              top: { xs: 80, sm: 90 },
               left: 16,
               zIndex: 1200,
               bgcolor:
@@ -224,13 +214,10 @@ function App() {
         <Tooltip title="Cambiar idioma" placement="left">
           <Fab
             aria-label="idioma"
-            disableRipple
-            disableFocusRipple
-            disableTouchRipple
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             sx={(theme) => ({
               position: "fixed",
-              top: { xs: 80, sm: 90 }, // 🔥 fix responsive
+              top: { xs: 80, sm: 90 },
               right: 16,
               zIndex: 1200,
               bgcolor:
@@ -263,3 +250,7 @@ function App() {
         <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
+  );
+}
+
+export default App;
