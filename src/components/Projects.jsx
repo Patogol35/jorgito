@@ -14,7 +14,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 
 // =====================
-// 🎬 Animaciones (TUYA)
+// 🎬 Animaciones
 // =====================
 const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -45,16 +45,16 @@ const container = {
 };
 
 // =====================
-// CARD
+// Tarjeta
 // =====================
-function ProjectCard({ p, palette, shouldAnimate }) {
+function ProjectCard({ p, palette }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
         variants={fadeCinematic}
-        initial={shouldAnimate ? "hidden" : false}
+        initial="hidden"        // ✅ FIX
         animate="visible"
         style={{ willChange: "transform, opacity" }}
       >
@@ -70,7 +70,6 @@ function ProjectCard({ p, palette, shouldAnimate }) {
               sx={{
                 color: palette.text.primary,
                 fontWeight: "bold",
-                transition: "color 0.3s ease",
                 "&:hover": { color: p.color },
               }}
             >
@@ -84,17 +83,14 @@ function ProjectCard({ p, palette, shouldAnimate }) {
 }
 
 // =====================
-// MAIN
+// MAIN COMPONENT
 // =====================
 export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // 🔥 SOLO controla la primera animación
   const hasAnimated = useRef(false);
-
-  const shouldAnimate = !hasAnimated.current;
 
   const proyectosText = t.projects.items;
 
@@ -133,9 +129,10 @@ export default function Projects({ t }) {
         color: palette.text.primary,
       }}
     >
+      {/* CONTENEDOR PRINCIPAL */}
       <motion.div
         variants={container}
-        initial={shouldAnimate ? "hidden" : false}
+        initial={hasAnimated.current ? false : "hidden"}
         animate="visible"
         onAnimationComplete={() => {
           hasAnimated.current = true;
@@ -144,14 +141,15 @@ export default function Projects({ t }) {
         {/* HEADER */}
         <motion.div
           variants={fadeCinematic}
-          initial={shouldAnimate ? "hidden" : false}
+          initial="hidden"      // ✅ FIX
           animate="visible"
         >
-          <Box sx={{ textAlign: "center", mb: 4 }}>
+          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
             <Box
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 1,
                 px: 3,
                 py: 0.9,
@@ -171,7 +169,11 @@ export default function Projects({ t }) {
 
               <Typography
                 variant="h6"
-                sx={{ fontWeight: "bold", color: primaryColor }}
+                sx={{
+                  fontWeight: "bold",
+                  color: primaryColor,
+                  lineHeight: 1,
+                }}
               >
                 {t.projects.title}
               </Typography>
@@ -182,15 +184,10 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard
-              key={`${p.titulo}-${i}`}
-              p={p}
-              palette={palette}
-              shouldAnimate={shouldAnimate}
-            />
+            <ProjectCard key={`${p.titulo}-${i}`} p={p} palette={palette} />
           ))}
         </Grid>
       </motion.div>
     </Box>
   );
-}
+    }
