@@ -59,14 +59,19 @@ function App() {
 
   const handleAfter = () => {
     const id = localStorage.getItem("currentSection");
-    if (id) {
+    if (!id) return;
+
+    requestAnimationFrame(() => {
       setTimeout(() => {
         document.getElementById(id)?.scrollIntoView({
           behavior: "auto",
           block: "start",
         });
-      }, 100);
-    }
+
+        // 🧹 limpiar para evitar basura en memoria
+        localStorage.removeItem("currentSection");
+      }, 80);
+    });
   };
 
   window.addEventListener("orientationchange", handleBefore);
