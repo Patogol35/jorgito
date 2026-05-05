@@ -65,16 +65,17 @@ export default function Certifications({ t }) {
       id="certifications"
       sx={{
         py: 4,
-        scrollMarginTop: { xs: "0px", md: "80px" },
+        scrollMarginTop: "80px",
         color: palette.text.primary,
       }}
     >
       {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
-  variants={container}
-  initial="hidden"
-  animate="visible" // 🔥 FIX REAL
->
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+      >
         {/* =========================
             TÍTULO estilo Hero
         ========================= */}
@@ -157,4 +158,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-}
+                }
