@@ -46,19 +46,27 @@ function App() {
   }, [lang]);
 
   useEffect(() => {
-  let scrollY = 0;
-
   const handleBefore = () => {
-    scrollY = window.scrollY;
+    const sections = document.querySelectorAll("section, [id]");
+    for (let sec of sections) {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+        localStorage.setItem("currentSection", sec.id);
+        break;
+      }
+    }
   };
 
   const handleAfter = () => {
-    setTimeout(() => {
-      window.scrollTo({
-        top: scrollY,
-        behavior: "auto", // importante para evitar animación rara
-      });
-    }, 100); // pequeño delay para que termine el reflow
+    const id = localStorage.getItem("currentSection");
+    if (id) {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: "auto",
+          block: "start",
+        });
+      }, 100);
+    }
   };
 
   window.addEventListener("orientationchange", handleBefore);
