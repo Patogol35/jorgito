@@ -21,10 +21,14 @@ const fadeCinematic = {
   hidden: {
     opacity: 0,
     y: 20,
+    clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
   },
   visible: {
     opacity: 1,
     y: 0,
+    clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
     transition: { duration: 0.7, ease: easeOutExpo },
   },
 };
@@ -40,7 +44,7 @@ const container = {
 };
 
 // =====================
-// Tarjeta individual
+// Tarjeta individual (mejorada pero sin romper)
 // =====================
 function ProjectCard({ p, palette }) {
   const Icon = p.icon;
@@ -52,7 +56,7 @@ function ProjectCard({ p, palette }) {
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
-          {Icon && <Icon sx={{ fontSize: 30, color: p.color }} />}
+          <Icon sx={{ fontSize: 30, color: p.color }} />
 
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
             <Link
@@ -61,14 +65,9 @@ function ProjectCard({ p, palette }) {
               rel="noopener noreferrer"
               underline="none"
               sx={{
-                color: "text.primary",
-transition: "color 0.25s ease",
+                color: palette.text.primary,
                 fontWeight: "bold",
-                
-                "&:hover": {
-                  color: p.color,
-                  textShadow: `0 0 6px ${p.color}33`,
-                },
+                "&:hover": { color: p.color },
               }}
             >
               {p.titulo}
@@ -88,16 +87,16 @@ export default function Projects({ t }) {
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
-  // ✅ PROTECCIÓN PARA CAMBIO DE IDIOMA
-  const proyectosText = t?.projects?.items || [];
+  const proyectosText = t.projects.items;
 
   const colors = [
     "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
+    "#9333ea",
+    "#16a34a",
+    "#e11d48",
+    "#f59e0b",
+    "#0ea5e9",
+    "#10b981",
   ];
 
   const icons = [
@@ -112,8 +111,8 @@ export default function Projects({ t }) {
 
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
-    color: colors[i % colors.length],
-    icon: icons[i % icons.length], // ✅ FIX ICONOS
+    color: colors[i],
+    icon: icons[i],
   }));
 
   return (
@@ -172,16 +171,16 @@ export default function Projects({ t }) {
                   lineHeight: 1,
                 }}
               >
-                {t?.projects?.title || ""}
+                {t.projects.title}
               </Typography>
             </Box>
           </Box>
         </motion.div>
 
-        {/* GRID */}
+        {/* GRID con stagger automático */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={i} p={p} palette={palette} /> // ✅ KEY ESTABLE
+            <ProjectCard key={p.titulo || i} p={p} palette={palette} />
           ))}
         </Grid>
       </motion.div>
