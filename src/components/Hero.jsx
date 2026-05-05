@@ -18,7 +18,6 @@ import { useState } from "react";
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -60,6 +59,7 @@ export default function Hero({ mode, setMode, t }) {
 
   return (
     <>
+      {/* 🔥 evita espacio raro */}
       <Toolbar />
 
       <Box
@@ -67,12 +67,22 @@ export default function Hero({ mode, setMode, t }) {
         sx={{
           position: "relative",
           overflow: "hidden",
+
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
+
           alignItems: "center",
           justifyContent: "center",
-          gap: { xs: 4, md: 8 },
-          pt: { xs: 6, sm: 8, md: 10 },
+
+          gap: { xs: 3, md: 8 },
+
+          /* 🔥 CLAVE: controla altura en horizontal */
+          minHeight: {
+            xs: "auto",
+            sm: "calc(100vh - 64px)",
+          },
+
+          pt: { xs: 4, sm: 6, md: 10 },
           pb: { xs: 2, sm: 3 },
           px: { xs: 2, sm: 4, md: 8 },
         }}
@@ -86,13 +96,11 @@ export default function Hero({ mode, setMode, t }) {
             borderRadius: "50%",
             transformStyle: "preserve-3d",
             perspective: 1200,
-            willChange: "transform",
           }}
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform" }}
+            transition={{ duration: 5, repeat: Infinity }}
           >
             <motion.div
               animate={{
@@ -113,11 +121,10 @@ export default function Hero({ mode, setMode, t }) {
                   decoding: "async",
                 }}
                 sx={{
-                  width: { xs: 130, sm: 170, md: 200 },
-                  height: { xs: 130, sm: 170, md: 200 },
+                  width: { xs: 120, sm: 170, md: 200 },
+                  height: { xs: 120, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
                   boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
-                  backgroundColor: theme.palette.background.paper,
                 }}
               />
             </motion.div>
@@ -139,7 +146,7 @@ export default function Hero({ mode, setMode, t }) {
                 gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                  fontSize: { xs: "1.7rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
                 {t.hero.title}
@@ -155,13 +162,11 @@ export default function Hero({ mode, setMode, t }) {
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
-                  letterSpacing: "0.3px",
+                  fontSize: { xs: "0.95rem", sm: "1.05rem" },
+                  lineHeight: 1.8,
                   color: theme.palette.text.primary,
-                  maxWidth: "520px",
-                  mt: 3,
-                  mb: 5,
+                  mt: 2,
+                  mb: 4,
                   whiteSpace: "pre-line",
                 }}
               >
@@ -178,7 +183,6 @@ export default function Hero({ mode, setMode, t }) {
                 gap: 2,
                 justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
-                alignItems: "center",
               }}
             >
               {[
@@ -209,10 +213,9 @@ export default function Hero({ mode, setMode, t }) {
                       borderRadius: "25px",
                       textTransform: "none",
                       fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
+                      px: 3,
+                      py: 1.2,
                       background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
                     }}
                   >
                     {btn.label}
@@ -220,23 +223,15 @@ export default function Hero({ mode, setMode, t }) {
                 </motion.div>
               ))}
 
-              {/* 🌙 MODO */}
+              {/* MODO */}
               <motion.div variants={fadeCinematic}>
                 <IconButton
                   onClick={() => setMode(mode === "light" ? "dark" : "light")}
                   sx={{
                     color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
                   }}
                 >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
+                  {mode === "light" ? <Brightness4 /> : <Brightness7 />}
                 </IconButton>
               </motion.div>
             </Box>
@@ -246,65 +241,49 @@ export default function Hero({ mode, setMode, t }) {
 
       {/* MODAL */}
       <Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  sx={{
-    zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.85)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <>
-    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
-    <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "fixed", // 🔥 CLAVE
-        top: 20,
-        left: 20,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.6)",
-        color: "#fff",
-        backdropFilter: "blur(6px)",
-        "&:hover": {
-          background: "rgba(0,0,0,0.8)",
-        },
-      }}
-    >
-      <Close />
-    </IconButton>
-
-    {/* CONTENEDOR */}
-    <Box
-      sx={{
-        position: "relative",
-        width: { xs: "95%", md: "70%" },
-        maxHeight: "90vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {/* 🖼️ IMAGEN */}
-      <Box
-        component="img"
-        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-        alt="certificado"
-        loading="lazy"
-        decoding="async"
+        open={open}
+        onClose={() => setOpen(false)}
         sx={{
-          width: "100%",
-          maxHeight: "90vh",
-          objectFit: "contain",
-          borderRadius: 2,
-          display: "block",
+          zIndex: 2000,
+          backgroundColor: "rgba(0,0,0,0.85)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-      />
-    </Box>
-  </>
-</Modal>
+      >
+        <>
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "fixed",
+              top: 20,
+              left: 20,
+              zIndex: 3000,
+              color: "#fff",
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          <Box
+            sx={{
+              width: { xs: "95%", md: "70%" },
+              maxHeight: "90vh",
+            }}
+          >
+            <Box
+              component="img"
+              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+              alt="certificado"
+              sx={{
+                width: "100%",
+                maxHeight: "90vh",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
+        </>
+      </Modal>
     </>
   );
         }
