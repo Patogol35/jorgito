@@ -52,13 +52,13 @@ export default function Certifications({ t }) {
   ];
 
   const iconColors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   return (
     <Box
@@ -124,10 +124,10 @@ export default function Certifications({ t }) {
           </Box>
         </motion.div>
 
-        {/* GRID con animación coordinada */}
+        {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
-            const Icon = iconTypes[i];
+            const Icon = iconTypes[i % iconTypes.length];
 
             return (
               <Grid item xs={12} sm={6} md={4} key={i}>
@@ -136,8 +136,17 @@ export default function Certifications({ t }) {
                   whileHover={{ y: -5, scale: 1.05 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Box sx={{ textAlign: "center", px: 1 }}>
-                    <Icon size={28} color={iconColors[i]} />
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      px: 1,
+                      py: 1,
+                    }}
+                  >
+                    <Icon
+                      size={28}
+                      color={iconColors[i % iconColors.length]}
+                    />
 
                     <Typography
                       variant="subtitle1"
@@ -146,9 +155,43 @@ export default function Certifications({ t }) {
                       {cert.titulo}
                     </Typography>
 
-                    <Typography variant="body2" color="text.secondary">
-                      {cert.institucion} | {cert.año}
+                    {/* 🔥 Institución */}
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "text.secondary",
+                        fontSize: "0.8rem",
+                        mt: 0.3,
+                      }}
+                    >
+                      {cert.institucion}
                     </Typography>
+
+                    {/* 🔥 Año separado */}
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        display: "block",
+                        opacity: 0.7,
+                        letterSpacing: 0.3,
+                      }}
+                    >
+                      {cert.año}
+                    </Typography>
+
+                    {/* 🔥 EXTRA (opcional: tags tech) */}
+                    {cert.tags && (
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          display: "block",
+                          mt: 0.5,
+                          opacity: 0.6,
+                        }}
+                      >
+                        {cert.tags.join(" • ")}
+                      </Typography>
+                    )}
                   </Box>
                 </motion.div>
               </Grid>
@@ -158,4 +201,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-        }
+}
