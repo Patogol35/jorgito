@@ -92,39 +92,45 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     projects: {
-      title: "Apps Demostrativas",
-      items: [
-        {
-          titulo: "App para ver el clima",
-          link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
-        },
-        {
-          titulo: "E-commerce Full Stack (React + Django)",
-          link: "https://ecommerce-jorge-patricio.vercel.app/",
-        },
-        {
-          titulo: "Explorador de películas",
-          link: "https://movie-explorer-jorge-patricio.vercel.app/",
-        },
-        {
-          titulo: "Quiz educativo de Ambato y Ecuador",
-          link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "Calculadora Científica",
-          link: "https://calculadorajorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "Reloj Global",
-          link: "https://reloj-jorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "App para Crear y Escanear Códigos QR",
-          link: "https://jorgepatricio-codigo-qr.vercel.app/",
-        },
-      ],
+  title: "Apps Demostrativas",
+  items: [
+    {
+      titulo: "Weather App (React + API)",
+      descripcion: "Consumo de API y UI dinámica",
+      link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     },
-
+    {
+      titulo: "E-commerce Full Stack",
+      descripcion: "React + Django + JWT Auth",
+      link: "https://ecommerce-jorge-patricio.vercel.app/",
+    },
+    {
+      titulo: "Movie Explorer",
+      descripcion: "React + API de películas",
+      link: "https://movie-explorer-jorge-patricio.vercel.app/",
+    },
+    {
+      titulo: "Quiz Educativo",
+      descripcion: "Lógica interactiva + scoring",
+      link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "Calculadora Científica",
+      descripcion: "JS + lógica matemática",
+      link: "https://calculadorajorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "Reloj Global",
+      descripcion: "Timezones + lógica de tiempo",
+      link: "https://reloj-jorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "QR Generator & Scanner",
+      descripcion: "Generación y lectura QR",
+      link: "https://jorgepatricio-codigo-qr.vercel.app/",
+    },
+  ],
+},
     contact: {
       title: "Redes Sociales",
       subtitle:
@@ -237,39 +243,45 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     projects: {
-      title: "Demo Applications",
-      items: [
-        {
-          titulo: "Weather App",
-          link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
-        },
-        {
-          titulo: "Full Stack E-commerce (React + Django)",
-          link: "https://ecommerce-jorge-patricio.vercel.app/",
-        },
-        {
-          titulo: "Movie Explorer",
-          link: "https://movie-explorer-jorge-patricio.vercel.app/",
-        },
-        {
-          titulo: "Educational Quiz (Ambato & Ecuador)",
-          link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "Scientific Calculator",
-          link: "https://calculadorajorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "Global Clock",
-          link: "https://reloj-jorgepatricio.vercel.app/",
-        },
-        {
-          titulo: "QR Code Generator & Scanner",
-          link: "https://jorgepatricio-codigo-qr.vercel.app/",
-        },
-      ],
+  title: "Demo Applications",
+  items: [
+    {
+      titulo: "Weather App (React + API)",
+      descripcion: "API consumption & dynamic UI",
+      link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     },
-
+    {
+      titulo: "Full Stack E-commerce",
+      descripcion: "React + Django + JWT Auth",
+      link: "https://ecommerce-jorge-patricio.vercel.app/",
+    },
+    {
+      titulo: "Movie Explorer",
+      descripcion: "React + movie API",
+      link: "https://movie-explorer-jorge-patricio.vercel.app/",
+    },
+    {
+      titulo: "Educational Quiz",
+      descripcion: "Interactive logic + scoring",
+      link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "Scientific Calculator",
+      descripcion: "JS + math logic",
+      link: "https://calculadorajorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "Global Clock",
+      descripcion: "Timezones + time logic",
+      link: "https://reloj-jorgepatricio.vercel.app/",
+    },
+    {
+      titulo: "QR Generator & Scanner",
+      descripcion: "QR generation & scanning",
+      link: "https://jorgepatricio-codigo-qr.vercel.app/",
+    },
+  ],
+},
     contact: {
       title: "Social Media",
       subtitle:
