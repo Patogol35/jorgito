@@ -158,23 +158,31 @@ export default function Certifications({ t }) {
                     </Typography>
 
                     <Typography variant="body2" color="text.secondary">
-                      {cert.institucion} | {cert.año}
-                    </Typography>
+  {cert.institucion} | {cert.año}
+</Typography>
 
+{/* 🔥 BOTÓN NUEVO */}
 {cert.link && (
   <Button
     href={cert.link}
     target="_blank"
     rel="noopener noreferrer"
     size="small"
+    variant="outlined"
     sx={{
       mt: 1,
       textTransform: "none",
       fontSize: "0.75rem",
+      borderRadius: "999px",
       color: primaryColor,
       borderColor: primaryColor,
+      "&:hover": {
+        borderColor: primaryColor,
+        background: isDark
+          ? "rgba(187,222,251,0.08)"
+          : "rgba(25,118,210,0.08)",
+      },
     }}
-    variant="outlined"
   >
     {t.certifications.view}
   </Button>
