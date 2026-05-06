@@ -42,24 +42,25 @@ export default function Certifications({ t }) {
 
   const certificaciones = t.certifications.items;
 
+  // 🔥 Iconos mixtos (MUI + Lucide)
   const iconTypes = [
-  { type: "mui", icon: WorkspacePremiumIcon },
-  { type: "lucide", icon: BookOpen },
-  { type: "lucide", icon: GraduationCap },
-  { type: "mui", icon: WorkspacePremiumIcon },
-  { type: "lucide", icon: Brain },
-  { type: "lucide", icon: Brain },
-  { type: "mui", icon: WorkspacePremiumIcon },
-];
+    { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: BookOpen },
+    { type: "lucide", icon: GraduationCap },
+    { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: Brain },
+    { type: "lucide", icon: Brain },
+    { type: "mui", icon: WorkspacePremiumIcon },
+  ];
 
   const iconColors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   return (
     <Box
@@ -128,7 +129,11 @@ export default function Certifications({ t }) {
         {/* GRID con animación coordinada */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
-            const Icon = iconTypes[i];
+            // 🔥 FIX: desestructuración correcta + protección índice
+            const { type, icon: Icon } =
+              iconTypes[i % iconTypes.length];
+
+            const color = iconColors[i % iconColors.length];
 
             return (
               <Grid item xs={12} sm={6} md={4} key={i}>
@@ -138,7 +143,12 @@ export default function Certifications({ t }) {
                   style={{ willChange: "transform, opacity" }}
                 >
                   <Box sx={{ textAlign: "center", px: 1 }}>
-                    <Icon size={28} color={iconColors[i]} />
+                    {/* 🔥 Render correcto según tipo */}
+                    {type === "mui" ? (
+                      <Icon sx={{ fontSize: 28, color }} />
+                    ) : (
+                      <Icon size={28} color={color} />
+                    )}
 
                     <Typography
                       variant="subtitle1"
