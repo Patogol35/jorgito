@@ -93,7 +93,6 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
     projects: {
   title: "Apps Demostrativas",
-      view: "Ver proyecto",
   items: [
     {
       titulo: "Weather App (React + API)",
@@ -245,7 +244,6 @@ I am also skilled in development tools, API testing, virtualization, network sec
 
     projects: {
   title: "Demo Applications",
-      view: "View Project", //
   items: [
     {
       titulo: "Weather App (React + API)",
