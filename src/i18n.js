@@ -60,7 +60,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
   items: [
     {
       titulo: "Certificado Académico Personal",
-      institucion: "Universidad Internacional de La Rioja (UNIR)",
+      institucion: "Universidad Internacional de La Rioja",
       año: 2024,
       link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859", 
     },
@@ -225,7 +225,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
   items: [
     {
       titulo: "Certificate of Academic Achievement",
-      institucion: "International University of La Rioja (UNIR)",
+      institucion: "International University of La Rioja",
       año: 2024,
       link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859",
     },
