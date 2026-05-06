@@ -44,9 +44,9 @@ export default function Certifications({ t }) {
 
   // 🔥 Iconos mixtos (MUI + Lucide)
   const iconTypes = [
-    { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: GraduationCap  },
     { type: "lucide", icon: BookOpen },
-    { type: "lucide", icon: GraduationCap },
+    { type: "mui", icon: WorkspacePremiumIcon},
     { type: "mui", icon: WorkspacePremiumIcon },
     { type: "lucide", icon: Brain },
     { type: "lucide", icon: Brain },
