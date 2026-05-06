@@ -59,9 +59,9 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       items: [
 
         {
-      title: "Certificado Académico Personal",
-      institution: "Universidad Internacional de La Rioja (UNIR)",
-      year: 2024,
+      titulo: "Certificado Académico Personal",
+      institucion: "Universidad Internacional de La Rioja (UNIR)",
+      año: 2024,
     },
         {
           titulo: "Curso de React.js",
@@ -80,9 +80,9 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
           año: 2023,
         },
         {
-        title: "Claude con la API de Anthropic",
-      institution: "Anthropic",
-      year: 2026,
+        titulo: "Claude con la API de Anthropic",
+      institucion: "Anthropic",
+      año: 2026,
     },
         {
           titulo: "Data Analysis with Python",
