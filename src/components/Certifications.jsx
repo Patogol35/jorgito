@@ -1,8 +1,9 @@
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 // =====================
 // 🎬 Animaciones estilo Hero
@@ -69,7 +70,6 @@ export default function Certifications({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -140,12 +140,12 @@ export default function Certifications({ t }) {
                       {cert.titulo}
                     </Typography>
 
-                    {/* ✅ CAMBIO AQUÍ */}
+                    {/* DESCRIPCIÓN */}
                     <Typography variant="body2" color="text.secondary">
                       {cert.descripcion}
                     </Typography>
 
-                    {/* ✅ NUEVO (opcional, sin romper diseño) */}
+                    {/* TECNOLOGÍAS */}
                     <Typography
                       variant="caption"
                       sx={{
@@ -156,6 +156,31 @@ export default function Certifications({ t }) {
                     >
                       {cert.tecnologias.join(" · ")}
                     </Typography>
+
+                    {/* ✅ NUEVO: LINK */}
+                    {cert.link && (
+                      <Link
+                        href={cert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        underline="none"
+                        sx={{
+                          mt: 1,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 0.5,
+                          fontSize: "0.8rem",
+                          fontWeight: 600,
+                          color: primaryColor,
+                          "&:hover": {
+                            textDecoration: "underline",
+                          },
+                        }}
+                      >
+                        {t.certifications.view}
+                        <OpenInNewIcon sx={{ fontSize: 14 }} />
+                      </Link>
+                    )}
                   </Box>
                 </motion.div>
               </Grid>
@@ -165,4 +190,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-                }
+}
