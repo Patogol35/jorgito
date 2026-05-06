@@ -61,19 +61,7 @@ function ProjectCard({ p, palette }) {
 
           {/* TÍTULO */}
           <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 1 }}>
-            <Link
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                color: palette.text.primary,
-                fontWeight: "bold",
-                "&:hover": { color: p.color },
-              }}
-            >
-              {p.titulo}
-            </Link>
+            {p.titulo}
           </Typography>
 
           {/* DESCRIPCIÓN */}
@@ -87,6 +75,30 @@ function ProjectCard({ p, palette }) {
           >
             {p.descripcion}
           </Typography>
+
+          {/* LINK SEPARADO */}
+          {p.link && (
+            <Link
+              href={p.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              underline="none"
+              sx={{
+                display: "inline-block",
+                mt: 1,
+                fontSize: "0.8rem",
+                fontWeight: "bold",
+                color: p.color,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  textDecoration: "underline",
+                  opacity: 0.8,
+                },
+              }}
+            >
+              {p.viewText}
+            </Link>
+          )}
         </Box>
       </motion.div>
     </Grid>
@@ -127,6 +139,7 @@ export default function Projects({ t }) {
     ...item,
     color: colors[i % colors.length],
     icon: icons[i % icons.length],
+    viewText: t.projects.view, // 🔥 i18n dinámico
   }));
 
   return (
@@ -187,14 +200,10 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard
-              key={i}   // 🔥 FIX CLAVE PARA i18n
-              p={p}
-              palette={palette}
-            />
+            <ProjectCard key={i} p={p} palette={palette} />
           ))}
         </Grid>
       </motion.div>
     </Box>
   );
-                }
+}
