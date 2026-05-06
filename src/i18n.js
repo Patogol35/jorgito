@@ -55,82 +55,92 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-  title: "Certificaciones",
-  items: [
-    {
-      titulo: "Curso de React.js",
-      descripcion: "Platzi · 2025",
-      tecnologias: ["React", "Hooks", "JSX", "Componentes"],
+      title: "Certificaciones",
+      view: "Ver diploma",
+      items: [
+        {
+          titulo: "Curso de React.js",
+          descripcion: "Platzi · 2025",
+          tecnologias: ["React", "Hooks", "JSX", "Componentes"],
+          link: "https://tudiploma.com/react",
+        },
+        {
+          titulo: "React & TypeScript - The Practical Guide",
+          descripcion: "Udemy · 2024",
+          tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
+          link: "",
+        },
+        {
+          titulo:
+            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+          descripcion: "Universidad Internacional de la Rioja · 2023",
+          tecnologias: ["Azure", "Cloud", "Networking", "Security"],
+          link: "",
+        },
+        {
+          titulo: "Curso de Python",
+          descripcion: "Platzi · 2025",
+          tecnologias: ["Python", "POO", "Scripts", "Data Structures"],
+          link: "",
+        },
+        {
+          titulo: "Data Analysis with Python",
+          descripcion: "freeCodeCamp · 2024",
+          tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
+          link: "",
+        },
+        {
+          titulo: "Fundamentos de la Inteligencia Artificial",
+          descripcion: "IBM · 2025",
+          tecnologias: ["AI", "Machine Learning", "Neural Networks"],
+          link: "",
+        },
+      ],
     },
-    {
-      titulo: "React & TypeScript - The Practical Guide",
-      descripcion: "Udemy · 2024",
-      tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
-    },
-    {
-      titulo:
-        "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-      descripcion: "Universidad Internacional de la Rioja · 2023",
-      tecnologias: ["Azure", "Cloud", "Networking", "Security"],
-    },
-    {
-      titulo: "Curso de Python",
-      descripcion: "Platzi · 2025",
-      tecnologias: ["Python", "POO", "Scripts", "Data Structures"],
-    },
-    {
-      titulo: "Data Analysis with Python",
-      descripcion: "freeCodeCamp · 2024",
-      tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
-    },
-    {
-      titulo: "Fundamentos de la Inteligencia Artificial",
-      descripcion: "IBM · 2025",
-      tecnologias: ["AI", "Machine Learning", "Neural Networks"],
-    },
-  ],
-},
+
 
     projects: {
-  title: "Apps Demostrativas",
-  items: [
-    {
-      titulo: "Weather App (React + API)",
-      descripcion: "Consumo de API y UI dinámica",
-      link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
+      title: "Apps Demostrativas",
+      view: "Ver proyecto",
+      items: [
+        {
+          titulo: "Weather App (React + API)",
+          descripcion: "Consumo de API y UI dinámica",
+          link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
+        },
+        {
+          titulo: "E-commerce Full Stack",
+          descripcion: "React + Django + JWT Auth",
+          link: "https://ecommerce-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Movie Explorer",
+          descripcion: "React + API de películas",
+          link: "https://movie-explorer-jorge-patricio.vercel.app/",
+        },
+        {
+          titulo: "Quiz Educativo",
+          descripcion: "Lógica interactiva + scoring",
+          link: "https://quiz-educativo-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Calculadora Científica",
+          descripcion: "JS + lógica matemática",
+          link: "https://calculadorajorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "Reloj Global",
+          descripcion: "Timezones + lógica de tiempo",
+          link: "https://reloj-jorgepatricio.vercel.app/",
+        },
+        {
+          titulo: "QR Generator & Scanner",
+          descripcion: "Generación y lectura QR",
+          link: "https://jorgepatricio-codigo-qr.vercel.app/",
+        },
+      ],
     },
-    {
-      titulo: "E-commerce Full Stack",
-      descripcion: "React + Django + JWT Auth",
-      link: "https://ecommerce-jorge-patricio.vercel.app/",
-    },
-    {
-      titulo: "Movie Explorer",
-      descripcion: "React + API de películas",
-      link: "https://movie-explorer-jorge-patricio.vercel.app/",
-    },
-    {
-      titulo: "Quiz Educativo",
-      descripcion: "Lógica interactiva + scoring",
-      link: "https://quiz-educativo-jorgepatricio.vercel.app/",
-    },
-    {
-      titulo: "Calculadora Científica",
-      descripcion: "JS + lógica matemática",
-      link: "https://calculadorajorgepatricio.vercel.app/",
-    },
-    {
-      titulo: "Reloj Global",
-      descripcion: "Timezones + lógica de tiempo",
-      link: "https://reloj-jorgepatricio.vercel.app/",
-    },
-    {
-      titulo: "QR Generator & Scanner",
-      descripcion: "Generación y lectura QR",
-      link: "https://jorgepatricio-codigo-qr.vercel.app/",
-    },
-  ],
-},
+
     contact: {
       title: "Redes Sociales",
       subtitle:
@@ -207,43 +217,51 @@ I am also skilled in development tools, API testing, virtualization, network sec
 
     certifications: {
   title: "Certifications",
+  view: "View Certificate",
   items: [
     {
       titulo: "React.js Course",
       descripcion: "Platzi · 2025",
       tecnologias: ["React", "Hooks", "JSX", "Components"],
+      link: "https://tudiploma.com/react",
     },
     {
       titulo: "React & TypeScript - The Practical Guide",
       descripcion: "Udemy · 2024",
       tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
+      link: "",
     },
     {
       titulo:
         "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
       descripcion: "International University of La Rioja · 2023",
       tecnologias: ["Azure", "Cloud", "Networking", "Security"],
+      link: "",
     },
     {
       titulo: "Python Course",
       descripcion: "Platzi · 2025",
       tecnologias: ["Python", "OOP", "Scripts", "Data Structures"],
+      link: "",
     },
     {
       titulo: "Data Analysis with Python",
       descripcion: "freeCodeCamp · 2024",
       tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
+      link: "",
     },
     {
       titulo: "Fundamentals of Artificial Intelligence",
       descripcion: "IBM · 2025",
       tecnologias: ["AI", "Machine Learning", "Neural Networks"],
+      link: "",
     },
   ],
 },
 
     projects: {
   title: "Demo Applications",
+  view: "View Project",
   items: [
     {
       titulo: "Weather App (React + API)",
