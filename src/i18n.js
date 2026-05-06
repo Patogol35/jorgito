@@ -68,7 +68,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       titulo: "React & TypeScript - The Practical Guide",
       descripcion: "Udemy · 2024",
       tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
-      link: null,
+      link: "https//criket.com",
     },
     {
       titulo:
