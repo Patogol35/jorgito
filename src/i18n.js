@@ -71,10 +71,10 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://platzi.com/p/santamariapatricio3/curso/11887-reactjs/diploma/detalle/",
     },
     {
-      titulo: "React & TypeScript - The Practical Guide",
+      titulo: "Curso completo de Linux: Manejo de comandos y Shell Script",
       institucion: "Udemy",
       año: 2024,
-      link: "#",
+      link: "https://ude.my/UC-094701b8-dbdf-49b9-9ba5-4cd81e94353f",
     },
     {
       titulo:
@@ -227,32 +227,32 @@ I am also skilled in development tools, API testing, virtualization, network sec
       titulo: "Certificate of Academic Achievement",
       institucion: "International University of La Rioja (UNIR)",
       año: 2024,
-      link: "#",
+      link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859",
     },
     {
       titulo: "React.js Course",
       institucion: "Platzi",
       año: 2025,
-      link: "#",
+      link: "https://platzi.com/p/santamariapatricio3/curso/11887-reactjs/diploma/detalle/",
     },
     {
-      titulo: "React & TypeScript - The Practical Guide",
+      titulo: "Complete Linux Course: Command Line and Shell Scripting",
       institucion: "Udemy",
       año: 2024,
-      link: "#",
+      link: "https://ude.my/UC-094701b8-dbdf-49b9-9ba5-4cd81e94353f",
     },
     {
       titulo:
         "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
       institucion: "International University of La Rioja",
       año: 2023,
-      link: "#",
+      link: "https://verifirma.unir.net/csv/da488225-89b2-4f4d-96ba-06b7372a7388",
     },
     {
       titulo: "Claude with the Anthropic API",
       institucion: "Anthropic",
       año: 2026,
-      link: "#",
+      link: "https://verify.skilljar.com/c/aqfmgit4gfex",
     },
     {
       titulo: "Data Analysis with Python",
