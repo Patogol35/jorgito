@@ -52,13 +52,13 @@ export default function Certifications({ t }) {
   ];
 
   const iconColors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   return (
     <Box
@@ -76,16 +76,9 @@ export default function Certifications({ t }) {
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* =========================
-            TÍTULO estilo Hero
-        ========================= */}
+        {/* 🔥 TÍTULO */}
         <motion.div variants={fadeCinematic}>
-          <Box
-            sx={{
-              textAlign: "center",
-              marginBottom: "2rem",
-            }}
-          >
+          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
             <Box
               sx={{
                 display: "inline-flex",
@@ -124,7 +117,7 @@ export default function Certifications({ t }) {
           </Box>
         </motion.div>
 
-        {/* GRID con animación coordinada */}
+        {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
             const Icon = iconTypes[i];
@@ -139,6 +132,7 @@ export default function Certifications({ t }) {
                   <Box sx={{ textAlign: "center", px: 1 }}>
                     <Icon size={28} color={iconColors[i]} />
 
+                    {/* TITULO */}
                     <Typography
                       variant="subtitle1"
                       sx={{ fontWeight: "bold", mt: 1 }}
@@ -146,8 +140,21 @@ export default function Certifications({ t }) {
                       {cert.titulo}
                     </Typography>
 
+                    {/* ✅ CAMBIO AQUÍ */}
                     <Typography variant="body2" color="text.secondary">
-                      {cert.institucion} | {cert.año}
+                      {cert.descripcion}
+                    </Typography>
+
+                    {/* ✅ NUEVO (opcional, sin romper diseño) */}
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        display: "block",
+                        mt: 0.5,
+                        opacity: 0.7,
+                      }}
+                    >
+                      {cert.tecnologias.join(" · ")}
                     </Typography>
                   </Box>
                 </motion.div>
@@ -158,4 +165,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-}
+                }
