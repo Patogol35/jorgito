@@ -81,13 +81,13 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
         "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
       institucion: "Universidad Internacional de la Rioja",
       año: 2023,
-      link: "#",
+      link: "https://verifirma.unir.net/csv/da488225-89b2-4f4d-96ba-06b7372a7388",
     },
     {
       titulo: "Claude con la API de Anthropic",
       institucion: "Anthropic",
       año: 2026,
-      link: "#",
+      link: "https://verify.skilljar.com/c/aqfmgit4gfex",
     },
     {
       titulo: "Data Analysis with Python",
