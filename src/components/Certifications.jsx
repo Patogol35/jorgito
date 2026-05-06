@@ -1,4 +1,4 @@
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Chip } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
@@ -52,13 +52,13 @@ export default function Certifications({ t }) {
   ];
 
   const iconColors = [
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-];
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+  ];
 
   return (
     <Box
@@ -69,28 +69,19 @@ export default function Certifications({ t }) {
         color: palette.text.primary,
       }}
     >
-      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* =========================
-            TÍTULO estilo Hero
-        ========================= */}
+        {/* 🔹 TÍTULO */}
         <motion.div variants={fadeCinematic}>
-          <Box
-            sx={{
-              textAlign: "center",
-              marginBottom: "2rem",
-            }}
-          >
+          <Box sx={{ textAlign: "center", mb: 3 }}>
             <Box
               sx={{
                 display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
                 gap: 1,
                 px: 3,
                 py: 0.9,
@@ -109,14 +100,9 @@ export default function Certifications({ t }) {
               <WorkspacePremiumIcon
                 sx={{ fontSize: 22, color: primaryColor }}
               />
-
               <Typography
                 variant="h6"
-                sx={{
-                  fontWeight: "bold",
-                  color: primaryColor,
-                  lineHeight: 1,
-                }}
+                sx={{ fontWeight: "bold", color: primaryColor }}
               >
                 {t.certifications.title}
               </Typography>
@@ -124,7 +110,7 @@ export default function Certifications({ t }) {
           </Box>
         </motion.div>
 
-        {/* GRID con animación coordinada */}
+        {/* 🔹 GRID */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
             const Icon = iconTypes[i];
@@ -133,22 +119,77 @@ export default function Certifications({ t }) {
               <Grid item xs={12} sm={6} md={4} key={i}>
                 <motion.div
                   variants={fadeCinematic}
-                  whileHover={{ y: -5, scale: 1.05 }}
-                  style={{ willChange: "transform, opacity" }}
+                  whileHover={{ y: -6, scale: 1.04 }}
                 >
-                  <Box sx={{ textAlign: "center", px: 1 }}>
-                    <Icon size={28} color={iconColors[i]} />
+                  <Box
+                    sx={{
+                      textAlign: "center",
+                      px: 2,
+                      py: 2,
+                      borderRadius: 3,
+                      transition: "all 0.3s",
+                      "&:hover": {
+                        background: isDark
+                          ? "rgba(255,255,255,0.03)"
+                          : "rgba(0,0,0,0.03)",
+                      },
+                    }}
+                  >
+                    {/* ICON */}
+                    <Icon size={30} color={iconColors[i]} />
 
+                    {/* TYPE BADGE */}
+                    <Chip
+                      label={cert.type}
+                      size="small"
+                      sx={{
+                        mt: 1,
+                        mb: 1,
+                        fontSize: "0.7rem",
+                      }}
+                    />
+
+                    {/* TITLE */}
                     <Typography
                       variant="subtitle1"
-                      sx={{ fontWeight: "bold", mt: 1 }}
+                      sx={{ fontWeight: "bold" }}
                     >
                       {cert.titulo}
                     </Typography>
 
+                    {/* INSTITUTION */}
                     <Typography variant="body2" color="text.secondary">
                       {cert.institucion} | {cert.año}
                     </Typography>
+
+                    {/* DESCRIPTION */}
+                    <Typography
+                      variant="body2"
+                      sx={{ mt: 1, fontSize: "0.8rem" }}
+                      color="text.secondary"
+                    >
+                      {cert.descripcion}
+                    </Typography>
+
+                    {/* SKILLS */}
+                    <Box
+                      sx={{
+                        mt: 1,
+                        display: "flex",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        gap: 0.5,
+                      }}
+                    >
+                      {cert.skills.map((skill, idx) => (
+                        <Chip
+                          key={idx}
+                          label={skill}
+                          size="small"
+                          variant="outlined"
+                        />
+                      ))}
+                    </Box>
                   </Box>
                 </motion.div>
               </Grid>
@@ -158,4 +199,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-                }
+}
