@@ -55,47 +55,54 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      items: [
-
-        {
+  title: "Certificaciones",
+  view: "Ver certificado", // 👈 igual que projects
+  items: [
+    {
       titulo: "Certificado Académico Personal",
       institucion: "Universidad Internacional de La Rioja (UNIR)",
       año: 2024,
+      link: "#", // 👈 aquí va el PDF o URL
     },
-        {
-          titulo: "Curso de React.js",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          institucion: "Universidad Internacional de la Rioja",
-          año: 2023,
-        },
-        {
-        titulo: "Claude con la API de Anthropic",
+    {
+      titulo: "Curso de React.js",
+      institucion: "Platzi",
+      año: 2025,
+      link: "#",
+    },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      institucion: "Udemy",
+      año: 2024,
+      link: "#",
+    },
+    {
+      titulo:
+        "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+      institucion: "Universidad Internacional de la Rioja",
+      año: 2023,
+      link: "#",
+    },
+    {
+      titulo: "Claude con la API de Anthropic",
       institucion: "Anthropic",
       año: 2026,
+      link: "#",
     },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      link: "#",
     },
+    {
+      titulo: "Fundamentos de la Inteligencia Artificial",
+      institucion: "IBM",
+      año: 2025,
+      link: "#",
+    },
+  ],
+},
 
     projects: {
   title: "Apps Demostrativas",
@@ -213,47 +220,54 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     certifications: {
-      title: "Certifications",
-      items: [
-
-        {
-  titulo: "Certificate of Academic Achievement",
-  institucion: "International University of La Rioja (UNIR)",
-  año: 2024,
-},
-        {
-          titulo: "React.js Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
-          institucion: "International University of La Rioja",
-          año: 2023,
-        },
-        {
+  title: "Certifications",
+  view: "View Certificate",
+  items: [
+    {
+      titulo: "Certificate of Academic Achievement",
+      institucion: "International University of La Rioja (UNIR)",
+      año: 2024,
+      link: "#",
+    },
+    {
+      titulo: "React.js Course",
+      institucion: "Platzi",
+      año: 2025,
+      link: "#",
+    },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      institucion: "Udemy",
+      año: 2024,
+      link: "#",
+    },
+    {
+      titulo:
+        "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
+      institucion: "International University of La Rioja",
+      año: 2023,
+      link: "#",
+    },
+    {
       titulo: "Claude with the Anthropic API",
       institucion: "Anthropic",
       año: 2026,
+      link: "#",
     },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentals of Artificial Intelligence",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      link: "#",
     },
+    {
+      titulo: "Fundamentals of Artificial Intelligence",
+      institucion: "IBM",
+      año: 2025,
+      link: "#",
+    },
+  ],
+},
 
     projects: {
   title: "Demo Applications",
