@@ -62,13 +62,13 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       titulo: "Certificado Académico Personal",
       institucion: "Universidad Internacional de La Rioja (UNIR)",
       año: 2024,
-      link: "#", // 👈 aquí va el PDF o URL
+      link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859", 
     },
     {
       titulo: "Curso de React.js",
       institucion: "Platzi",
       año: 2025,
-      link: "#",
+      link: "https://platzi.com/p/santamariapatricio3/curso/11887-reactjs/diploma/detalle/",
     },
     {
       titulo: "React & TypeScript - The Practical Guide",
@@ -99,7 +99,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       titulo: "Fundamentos de la Inteligencia Artificial",
       institucion: "IBM",
       año: 2025,
-      link: "#",
+      link: "https://www.credly.com/badges/cfe457d9-e1ee-45c8-9098-9fc9cc18493e/linked_in_profile",
     },
   ],
 },
