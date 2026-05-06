@@ -49,6 +49,7 @@ export default function Certifications({ t }) {
     BookOpen,
     Brain,
     Brain,
+    BookOpen,
   ];
 
   const iconColors = [
