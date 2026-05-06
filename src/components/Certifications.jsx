@@ -1,9 +1,8 @@
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import { Typography, Grid, Box, Button } from "@mui/material";
 // =====================
 // 🎬 Animaciones estilo Hero
 // =====================
