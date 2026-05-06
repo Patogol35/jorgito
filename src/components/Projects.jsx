@@ -117,12 +117,11 @@ export default function Projects({ t }) {
 
   const colors = [
     "#1976d2",
-    "#9333ea",
-    "#16a34a",
-    "#e11d48",
-    "#f59e0b",
-    "#0ea5e9",
-    "#10b981",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
   ];
 
   const icons = [
