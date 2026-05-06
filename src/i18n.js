@@ -217,9 +217,9 @@ I am also skilled in development tools, API testing, virtualization, network sec
       items: [
 
         {
-  title: "Certificate of Academic Achievement",
-  institution: "International University of La Rioja (UNIR)",
-  year: 2024,
+  titulo: "Certificate of Academic Achievement",
+  institucion: "International University of La Rioja (UNIR)",
+  año: 2024,
 },
         {
           titulo: "React.js Course",
@@ -238,9 +238,9 @@ I am also skilled in development tools, API testing, virtualization, network sec
           año: 2023,
         },
         {
-      title: "Claude with the Anthropic API",
-      institution: "Anthropic",
-      year: 2026,
+      titulo: "Claude with the Anthropic API",
+      institucion: "Anthropic",
+      año: 2026,
     },
         {
           titulo: "Data Analysis with Python",
