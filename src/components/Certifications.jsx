@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-
+import { Typography, Grid, Box, Button } from "@mui/material";
 // =====================
 // 🎬 Animaciones estilo Hero
 // =====================
@@ -160,6 +160,25 @@ export default function Certifications({ t }) {
                     <Typography variant="body2" color="text.secondary">
                       {cert.institucion} | {cert.año}
                     </Typography>
+
+{cert.link && (
+  <Button
+    href={cert.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    size="small"
+    sx={{
+      mt: 1,
+      textTransform: "none",
+      fontSize: "0.75rem",
+      color: primaryColor,
+      borderColor: primaryColor,
+    }}
+    variant="outlined"
+  >
+    {t.certifications.view}
+  </Button>
+)}
                   </Box>
                 </motion.div>
               </Grid>
