@@ -55,41 +55,64 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      items: [
-        {
-          titulo: "Curso de React.js",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          institucion: "Universidad Internacional de la Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Curso de Python",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certificaciones",
+  items: [
+    {
+      titulo: "Curso de React.js",
+      institucion: "Platzi",
+      año: 2025,
+      type: "Curso",
+      skills: ["Hooks", "Componentes", "Estado", "SPA"],
+      descripcion:
+        "Desarrollo de aplicaciones modernas con React, manejo de estado y arquitectura de componentes reutilizables.",
     },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      institucion: "Udemy",
+      año: 2024,
+      type: "Curso",
+      skills: ["TypeScript", "Tipado fuerte", "Interfaces", "Buenas prácticas"],
+      descripcion:
+        "Uso de TypeScript en aplicaciones React para mejorar la escalabilidad, mantenimiento y calidad del código.",
+    },
+    {
+      titulo: "AZ-900: Microsoft Azure Fundamentals",
+      institucion: "Universidad Internacional de la Rioja",
+      año: 2023,
+      type: "Certificación",
+      skills: ["Cloud Computing", "Azure", "Servicios en la nube", "Seguridad"],
+      descripcion:
+        "Fundamentos de computación en la nube, servicios de Azure, modelos de despliegue y conceptos de seguridad.",
+    },
+    {
+      titulo: "Curso de Python",
+      institucion: "Platzi",
+      año: 2025,
+      type: "Curso",
+      skills: ["Python", "Automatización", "Lógica", "Scripts"],
+      descripcion:
+        "Fundamentos de programación en Python orientados a automatización y desarrollo de scripts.",
+    },
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      type: "Curso",
+      skills: ["Pandas", "Numpy", "Análisis de datos", "Visualización"],
+      descripcion:
+        "Análisis y manipulación de datos utilizando librerías de Python enfocadas en ciencia de datos.",
+    },
+    {
+      titulo: "Fundamentos de la Inteligencia Artificial",
+      institucion: "IBM",
+      año: 2025,
+      type: "Curso",
+      skills: ["IA", "Machine Learning", "Modelos", "Conceptos clave"],
+      descripcion:
+        "Introducción a la inteligencia artificial, aprendizaje automático y aplicaciones en el mundo real.",
+    },
+  ],
+},
 
     projects: {
   title: "Apps Demostrativas",
@@ -206,41 +229,64 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     certifications: {
-      title: "Certifications",
-      items: [
-        {
-          titulo: "React.js Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
-          institucion: "International University of La Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Python Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentals of Artificial Intelligence",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certifications",
+  items: [
+    {
+      titulo: "React.js Course",
+      institucion: "Platzi",
+      año: 2025,
+      type: "Course",
+      skills: ["Hooks", "Components", "State", "SPA"],
+      descripcion:
+        "Development of modern applications using React, including state management and reusable component architecture.",
     },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      institucion: "Udemy",
+      año: 2024,
+      type: "Course",
+      skills: ["TypeScript", "Strong typing", "Interfaces", "Best practices"],
+      descripcion:
+        "Using TypeScript in React applications to improve scalability, maintainability, and code quality.",
+    },
+    {
+      titulo: "AZ-900: Microsoft Azure Fundamentals",
+      institucion: "International University of La Rioja",
+      año: 2023,
+      type: "Certification",
+      skills: ["Cloud Computing", "Azure", "Cloud Services", "Security"],
+      descripcion:
+        "Fundamentals of cloud computing, Azure services, deployment models, and security concepts.",
+    },
+    {
+      titulo: "Python Course",
+      institucion: "Platzi",
+      año: 2025,
+      type: "Course",
+      skills: ["Python", "Automation", "Logic", "Scripting"],
+      descripcion:
+        "Programming fundamentals in Python focused on automation and script development.",
+    },
+    {
+      titulo: "Data Analysis with Python",
+      institucion: "freeCodeCamp",
+      año: 2024,
+      type: "Course",
+      skills: ["Pandas", "NumPy", "Data Analysis", "Visualization"],
+      descripcion:
+        "Data analysis and manipulation using Python libraries focused on data science.",
+    },
+    {
+      titulo: "Fundamentals of Artificial Intelligence",
+      institucion: "IBM",
+      año: 2025,
+      type: "Course",
+      skills: ["AI", "Machine Learning", "Models", "Core concepts"],
+      descripcion:
+        "Introduction to artificial intelligence, machine learning, and real-world applications.",
+    },
+  ],
+},
 
     projects: {
   title: "Demo Applications",
