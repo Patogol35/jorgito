@@ -55,41 +55,46 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      items: [
-        {
-          titulo: "Curso de React.js",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          institucion: "Universidad Internacional de la Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Curso de Python",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certificaciones",
+  items: [
+    {
+      title: "Certificado de Logro Académico",
+      institution: "Universidad Internacional de La Rioja (UNIR)",
+      year: 2024,
     },
+    {
+      title: "Curso de React.js",
+      institution: "Platzi",
+      year: 2025,
+    },
+    {
+      title: "React y TypeScript - Guía Práctica",
+      institution: "Udemy",
+      year: 2024,
+    },
+    {
+      title:
+        "Preparación para la Certificación Microsoft Azure Fundamentals (AZ-900)",
+      institution: "Universidad Internacional de La Rioja (UNIR)",
+      year: 2023,
+    },
+    {
+      title: "Claude con la API de Anthropic",
+      institution: "Anthropic",
+      year: 2026,
+    },
+    {
+      title: "Análisis de Datos con Python",
+      institution: "freeCodeCamp",
+      year: 2024,
+    },
+    {
+      title: "Fundamentos de Inteligencia Artificial",
+      institution: "IBM",
+      year: 2025,
+    },
+  ],
+    }
 
     projects: {
   title: "Apps Demostrativas",
@@ -207,41 +212,46 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     certifications: {
-      title: "Certifications",
-      items: [
-        {
-          titulo: "React.js Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
-          institucion: "International University of La Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Python Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentals of Artificial Intelligence",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certifications",
+  items: [
+    {
+      title: "Certificate of Academic Achievement",
+      institution: "International University of La Rioja (UNIR)",
+      year: 2024,
     },
+    {
+      title: "React.js Course",
+      institution: "Platzi",
+      year: 2025,
+    },
+    {
+      title: "React & TypeScript - The Practical Guide",
+      institution: "Udemy",
+      year: 2024,
+    },
+    {
+      title:
+        "Microsoft Azure Fundamentals (AZ-900) Certification Preparation",
+      institution: "International University of La Rioja (UNIR)",
+      year: 2023,
+    },
+    {
+      title: "Claude with the Anthropic API",
+      institution: "Anthropic",
+      year: 2026,
+    },
+    {
+      title: "Data Analysis with Python",
+      institution: "freeCodeCamp",
+      year: 2024,
+    },
+    {
+      title: "Fundamentals of Artificial Intelligence",
+      institution: "IBM",
+      year: 2025,
+    },
+  ],
+}
 
     projects: {
   title: "Demo Applications",
