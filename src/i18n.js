@@ -93,6 +93,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
     projects: {
   title: "Apps Demostrativas",
+      view: "Ver proyecto",
   items: [
     {
       titulo: "Weather App (React + API)",
