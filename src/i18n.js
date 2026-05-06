@@ -55,41 +55,41 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      items: [
-        {
-          titulo: "Curso de React.js",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          institucion: "Universidad Internacional de la Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Curso de Python",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certificaciones",
+  items: [
+    {
+      titulo: "Curso de React.js",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["React", "Hooks", "JSX", "Componentes"],
     },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      descripcion: "Udemy · 2024",
+      tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
+    },
+    {
+      titulo:
+        "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+      descripcion: "Universidad Internacional de la Rioja · 2023",
+      tecnologias: ["Azure", "Cloud", "Networking", "Security"],
+    },
+    {
+      titulo: "Curso de Python",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["Python", "POO", "Scripts", "Data Structures"],
+    },
+    {
+      titulo: "Data Analysis with Python",
+      descripcion: "freeCodeCamp · 2024",
+      tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
+    },
+    {
+      titulo: "Fundamentos de la Inteligencia Artificial",
+      descripcion: "IBM · 2025",
+      tecnologias: ["AI", "Machine Learning", "Neural Networks"],
+    },
+  ],
+},
 
     projects: {
   title: "Apps Demostrativas",
@@ -206,41 +206,41 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     certifications: {
-      title: "Certifications",
-      items: [
-        {
-          titulo: "React.js Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          institucion: "Udemy",
-          año: 2024,
-        },
-        {
-          titulo:
-            "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
-          institucion: "International University of La Rioja",
-          año: 2023,
-        },
-        {
-          titulo: "Python Course",
-          institucion: "Platzi",
-          año: 2025,
-        },
-        {
-          titulo: "Data Analysis with Python",
-          institucion: "freeCodeCamp",
-          año: 2024,
-        },
-        {
-          titulo: "Fundamentals of Artificial Intelligence",
-          institucion: "IBM",
-          año: 2025,
-        },
-      ],
+  title: "Certifications",
+  items: [
+    {
+      titulo: "React.js Course",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["React", "Hooks", "JSX", "Components"],
     },
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      descripcion: "Udemy · 2024",
+      tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
+    },
+    {
+      titulo:
+        "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
+      descripcion: "International University of La Rioja · 2023",
+      tecnologias: ["Azure", "Cloud", "Networking", "Security"],
+    },
+    {
+      titulo: "Python Course",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["Python", "OOP", "Scripts", "Data Structures"],
+    },
+    {
+      titulo: "Data Analysis with Python",
+      descripcion: "freeCodeCamp · 2024",
+      tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
+    },
+    {
+      titulo: "Fundamentals of Artificial Intelligence",
+      descripcion: "IBM · 2025",
+      tecnologias: ["AI", "Machine Learning", "Neural Networks"],
+    },
+  ],
+},
 
     projects: {
   title: "Demo Applications",
