@@ -94,7 +94,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       year: 2025,
     },
   ],
-    }
+    },
 
     projects: {
   title: "Apps Demostrativas",
@@ -251,7 +251,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       year: 2025,
     },
   ],
-}
+},
 
     projects: {
   title: "Demo Applications",
