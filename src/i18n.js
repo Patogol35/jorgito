@@ -245,6 +245,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
 
     projects: {
   title: "Demo Applications",
+      view: "View Project", //
   items: [
     {
       titulo: "Weather App (React + API)",
