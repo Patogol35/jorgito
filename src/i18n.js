@@ -55,49 +55,48 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     certifications: {
-      title: "Certificaciones",
-      view: "Ver diploma",
-      items: [
-        {
-          titulo: "Curso de React.js",
-          descripcion: "Platzi · 2025",
-          tecnologias: ["React", "Hooks", "JSX", "Componentes"],
-          link: "https://tudiploma.com/react",
-        },
-        {
-          titulo: "React & TypeScript - The Practical Guide",
-          descripcion: "Udemy · 2024",
-          tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
-          link: "",
-        },
-        {
-          titulo:
-            "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
-          descripcion: "Universidad Internacional de la Rioja · 2023",
-          tecnologias: ["Azure", "Cloud", "Networking", "Security"],
-          link: "",
-        },
-        {
-          titulo: "Curso de Python",
-          descripcion: "Platzi · 2025",
-          tecnologias: ["Python", "POO", "Scripts", "Data Structures"],
-          link: "",
-        },
-        {
-          titulo: "Data Analysis with Python",
-          descripcion: "freeCodeCamp · 2024",
-          tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
-          link: "",
-        },
-        {
-          titulo: "Fundamentos de la Inteligencia Artificial",
-          descripcion: "IBM · 2025",
-          tecnologias: ["AI", "Machine Learning", "Neural Networks"],
-          link: "",
-        },
-      ],
+  title: "Certificaciones",
+  view: "Ver diploma",
+  items: [
+    {
+      titulo: "Curso de React.js",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["React", "Hooks", "JSX", "Componentes"],
+      link: "https://tudiploma.com/react",
     },
-
+    {
+      titulo: "React & TypeScript - The Practical Guide",
+      descripcion: "Udemy · 2024",
+      tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
+      link: null,
+    },
+    {
+      titulo:
+        "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+      descripcion: "Universidad Internacional de la Rioja · 2023",
+      tecnologias: ["Azure", "Cloud", "Networking", "Security"],
+      link: null,
+    },
+    {
+      titulo: "Curso de Python",
+      descripcion: "Platzi · 2025",
+      tecnologias: ["Python", "POO", "Scripts", "Data Structures"],
+      link: null,
+    },
+    {
+      titulo: "Data Analysis with Python",
+      descripcion: "freeCodeCamp · 2024",
+      tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
+      link: null,
+    },
+    {
+      titulo: "Fundamentos de la Inteligencia Artificial",
+      descripcion: "IBM · 2025",
+      tecnologias: ["AI", "Machine Learning", "Neural Networks"],
+      link: null,
+    },
+  ],
+},
 
     projects: {
       title: "Apps Demostrativas",
@@ -229,32 +228,32 @@ I am also skilled in development tools, API testing, virtualization, network sec
       titulo: "React & TypeScript - The Practical Guide",
       descripcion: "Udemy · 2024",
       tecnologias: ["React", "TypeScript", "Generics", "Hooks"],
-      link: "",
+      link: null,
     },
     {
       titulo:
         "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
       descripcion: "International University of La Rioja · 2023",
       tecnologias: ["Azure", "Cloud", "Networking", "Security"],
-      link: "",
+      link: null,
     },
     {
       titulo: "Python Course",
       descripcion: "Platzi · 2025",
       tecnologias: ["Python", "OOP", "Scripts", "Data Structures"],
-      link: "",
+      link: null,
     },
     {
       titulo: "Data Analysis with Python",
       descripcion: "freeCodeCamp · 2024",
       tecnologias: ["Python", "Pandas", "NumPy", "Data Analysis"],
-      link: "",
+      link: null,
     },
     {
       titulo: "Fundamentals of Artificial Intelligence",
       descripcion: "IBM · 2025",
       tecnologias: ["AI", "Machine Learning", "Neural Networks"],
-      link: "",
+      link: null,
     },
   ],
 },
