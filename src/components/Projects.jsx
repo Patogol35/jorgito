@@ -1,4 +1,4 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 
@@ -82,27 +82,31 @@ function ProjectCard({ p, palette, variants }) {
 
           {/* LINK SEPARADO */}
           {p.link && (
-            <Link
-              href={p.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{
-                display: "inline-block",
-                mt: 1,
-                fontSize: "0.8rem",
-                fontWeight: "bold",
-                color: p.color,
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  textDecoration: "underline",
-                  opacity: 0.8,
-                },
-              }}
-            >
-              {p.viewText || "Ver proyecto"}
-            </Link>
-          )}
+  <Button
+    href={p.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    size="small"
+    variant="outlined"
+    sx={{
+      mt: 1,
+      textTransform: "none",
+      fontSize: "0.75rem",
+      borderRadius: "999px",
+      color: p.color,
+      borderColor: p.color,
+      "&:hover": {
+        borderColor: p.color,
+        background:
+          palette.mode === "dark"
+            ? "rgba(255,255,255,0.08)"
+            : "rgba(0,0,0,0.05)",
+      },
+    }}
+  >
+    {p.viewText || "Ver proyecto"}
+  </Button>
+)}
         </Box>
       </motion.div>
     </Grid>
