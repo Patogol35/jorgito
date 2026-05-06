@@ -46,14 +46,18 @@ const container = {
 // =====================
 // Tarjeta
 // =====================
-function ProjectCard({ p, palette }) {
+function ProjectCard({ p, palette, variants }) {
   const Icon = p.icon;
 
   return (
     <Grid item xs={12} sm={6} md={4}>
       <motion.div
-        variants={fadeCinematic}
-        whileHover={{ y: -5, scale: 1.05 }}
+        variants={variants}
+        whileHover={{
+          y: -6,
+          scale: 1.06,
+          transition: { duration: 0.25 },
+        }}
         style={{ willChange: "transform, opacity" }}
       >
         <Box sx={{ textAlign: "center", px: 1 }}>
@@ -96,7 +100,7 @@ function ProjectCard({ p, palette }) {
                 },
               }}
             >
-              {p.viewText}
+              {p.viewText || "Ver proyecto"}
             </Link>
           )}
         </Box>
@@ -117,11 +121,12 @@ export default function Projects({ t }) {
 
   const colors = [
     "#1976d2",
-  "#3b82f6",
-  "#2563eb",
-  "#1976d2",
-  "#3b82f6",
-  "#2563eb",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
+    "#3b82f6",
+    "#2563eb",
+    "#1976d2",
   ];
 
   const icons = [
@@ -138,7 +143,7 @@ export default function Projects({ t }) {
     ...item,
     color: colors[i % colors.length],
     icon: icons[i % icons.length],
-    viewText: t.projects.view, // 🔥 i18n dinámico
+    viewText: t.projects.view,
   }));
 
   return (
@@ -199,7 +204,12 @@ export default function Projects({ t }) {
         {/* GRID */}
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
-            <ProjectCard key={i} p={p} palette={palette} />
+            <ProjectCard
+              key={i}
+              p={p}
+              palette={palette}
+              variants={fadeCinematic}
+            />
           ))}
         </Grid>
       </motion.div>
