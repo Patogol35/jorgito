@@ -1,9 +1,8 @@
-import { Typography, Grid, Box, Link } from "@mui/material";
+import { Typography, Grid, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 // =====================
 // 🎬 Animaciones estilo Hero
@@ -53,13 +52,13 @@ export default function Certifications({ t }) {
   ];
 
   const iconColors = [
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-  ];
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+];
 
   return (
     <Box
@@ -70,15 +69,23 @@ export default function Certifications({ t }) {
         color: palette.text.primary,
       }}
     >
+      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* 🔥 TÍTULO */}
+        {/* =========================
+            TÍTULO estilo Hero
+        ========================= */}
         <motion.div variants={fadeCinematic}>
-          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+          <Box
+            sx={{
+              textAlign: "center",
+              marginBottom: "2rem",
+            }}
+          >
             <Box
               sx={{
                 display: "inline-flex",
@@ -117,7 +124,7 @@ export default function Certifications({ t }) {
           </Box>
         </motion.div>
 
-        {/* GRID */}
+        {/* GRID con animación coordinada */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
             const Icon = iconTypes[i];
@@ -132,7 +139,6 @@ export default function Certifications({ t }) {
                   <Box sx={{ textAlign: "center", px: 1 }}>
                     <Icon size={28} color={iconColors[i]} />
 
-                    {/* TITULO */}
                     <Typography
                       variant="subtitle1"
                       sx={{ fontWeight: "bold", mt: 1 }}
@@ -140,47 +146,9 @@ export default function Certifications({ t }) {
                       {cert.titulo}
                     </Typography>
 
-                    {/* DESCRIPCIÓN */}
                     <Typography variant="body2" color="text.secondary">
-                      {cert.descripcion}
+                      {cert.institucion} | {cert.año}
                     </Typography>
-
-                    {/* TECNOLOGÍAS */}
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        display: "block",
-                        mt: 0.5,
-                        opacity: 0.7,
-                      }}
-                    >
-                      {cert.tecnologias.join(" · ")}
-                    </Typography>
-
-                    {/* ✅ NUEVO: LINK */}
-                    {cert.link && (
-                      <Link
-                        href={cert.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        underline="none"
-                        sx={{
-                          mt: 1,
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 0.5,
-                          fontSize: "0.8rem",
-                          fontWeight: 600,
-                          color: primaryColor,
-                          "&:hover": {
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        {t.certifications.view}
-                        <OpenInNewIcon sx={{ fontSize: 14 }} />
-                      </Link>
-                    )}
                   </Box>
                 </motion.div>
               </Grid>
