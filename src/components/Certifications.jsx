@@ -43,14 +43,14 @@ export default function Certifications({ t }) {
   const certificaciones = t.certifications.items;
 
   const iconTypes = [
-    BookOpen,
-    BookOpen,
-    GraduationCap,
-    BookOpen,
-    Brain,
-    Brain,
-    BookOpen,
-  ];
+  { type: "mui", icon: WorkspacePremiumIcon },
+  { type: "lucide", icon: BookOpen },
+  { type: "lucide", icon: GraduationCap },
+  { type: "mui", icon: WorkspacePremiumIcon },
+  { type: "lucide", icon: Brain },
+  { type: "lucide", icon: Brain },
+  { type: "mui", icon: WorkspacePremiumIcon },
+];
 
   const iconColors = [
   "#1976d2",
