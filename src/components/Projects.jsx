@@ -60,7 +60,33 @@ function ProjectCard({ p, palette, variants }) {
         }}
         style={{ willChange: "transform, opacity" }}
       >
-        <Box sx={{ textAlign: "center", px: 1 }}>
+      <Box
+  sx={{
+    textAlign: "center",
+    px: 1,
+    py: 2,
+
+    borderRadius: "24px",
+
+    background:
+      palette.mode === "dark"
+        ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
+        : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
+
+    border: `1px solid ${
+      palette.mode === "dark"
+        ? "rgba(144,202,249,0.32)"
+        : "rgba(25,118,210,0.22)"
+    }`,
+
+    boxShadow:
+      palette.mode === "dark"
+        ? "0 8px 24px rgba(0,0,0,0.28)"
+        : "0 8px 24px rgba(25,118,210,0.08)",
+
+    backdropFilter: "blur(10px)",
+  }}
+>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
           {/* TÍTULO */}
@@ -168,33 +194,7 @@ export default function Projects({ t }) {
       >
         {/* HEADER */}
         <motion.div variants={fadeCinematic}>
-          <Box
-  sx={{
-    textAlign: "center",
-    px: 1,
-    py: 2,
-
-    borderRadius: "24px",
-
-    background:
-      palette.mode === "dark"
-        ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
-        : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
-
-    border: `1px solid ${
-      palette.mode === "dark"
-        ? "rgba(144,202,249,0.32)"
-        : "rgba(25,118,210,0.22)"
-    }`,
-
-    boxShadow:
-      palette.mode === "dark"
-        ? "0 8px 24px rgba(0,0,0,0.28)"
-        : "0 8px 24px rgba(25,118,210,0.08)",
-
-    backdropFilter: "blur(10px)",
-  }}
->
+          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
             <Box
               sx={{
                 display: "inline-flex",
