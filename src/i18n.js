@@ -224,7 +224,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
   view: "View Certificate",
   items: [
     {
-      titulo: "Certificate of Academic Achievement",
+      titulo: "Personal Academic Certificate",
       institucion: "International University of La Rioja",
       año: 2024,
       link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859",
