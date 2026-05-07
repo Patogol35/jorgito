@@ -154,10 +154,10 @@ export default function Certifications({ t }) {
       : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
 
     border: `1px solid ${
-      isDark
-        ? "rgba(255,255,255,0.06)"
-        : "rgba(25,118,210,0.08)"
-    }`,
+  isDark
+    ? "rgba(144,202,249,0.18)"
+    : "rgba(25,118,210,0.16)"
+}`,
 
     backdropFilter: "blur(10px)",
 
