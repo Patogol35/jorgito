@@ -143,21 +143,38 @@ export default function Certifications({ t }) {
                 >
                   <Box
   sx={{
-    textAlign: "center",
-    px: 1,
-    py: 2,
+  sx={{
+  textAlign: "center",
+  px: 1,
+  py: 2,
+  borderRadius: "24px",
 
-    borderRadius: "24px",
+  background: isDark
+    ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
+    : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
+
+  border: `1px solid ${
+    isDark
+      ? "rgba(25,118,210,0.55)"
+      : "rgba(25,118,210,0.28)"
+  }`,
+
+  backdropFilter: "blur(10px)",
+  position: "relative",
+
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    left: "12%",
+    bottom: 0,
+    width: "76%",
+    height: "1px",
 
     background: isDark
-      ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
-      : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
+      ? "linear-gradient(to right, transparent, rgba(25,118,210,0.45), transparent)"
+      : "linear-gradient(to right, transparent, rgba(25,118,210,0.25), transparent)",
+  },
 
-    border: `1px solid ${
-  palette.mode === "dark"
-    ? "rgba(100,181,246,0.65)" // azul elegante y visible en oscuro
-    : "rgba(30,136,229,0.42)" // azul limpio y suave en claro
-}`,
 
 backdropFilter: "blur(10px)",
 
