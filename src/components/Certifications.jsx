@@ -153,24 +153,13 @@ export default function Certifications({ t }) {
       ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
       : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
 
-    border: `1px solid ${
+    border: `2px solid ${
   palette.mode === "dark"
     ? "rgba(144,202,249,0.48)"
     : "rgba(25,118,210,0.32)"
 }`,
 
-boxShadow:
-  palette.mode === "dark"
-    ? `
-      0 0 0 1px rgba(144,202,249,0.12),
-      0 10px 28px rgba(0,0,0,0.35)
-    `
-    : `
-      0 0 0 1px rgba(25,118,210,0.08),
-      0 10px 28px rgba(25,118,210,0.10)
-    `,
-
-    backdropFilter: "blur(10px)",
+backdropFilter: "blur(10px)",
 
     position: "relative",
 
