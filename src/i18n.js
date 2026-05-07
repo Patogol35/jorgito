@@ -90,7 +90,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://verify.skilljar.com/c/aqfmgit4gfex",
     },
     {
-      titulo: "Data Analysis with Python",
+      titulo: "Análisis de Datos con Python",
       institucion: "freeCodeCamp",
       año: 2024,
       link: "https://freecodecamp.org/espanol/certification/fcce02c3b29-930b-4b79-ae3a-3ed1bdc290f9/data-analysis-with-python-v7",
@@ -119,7 +119,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://jorge-patricio-ecommerce.vercel.app/",
     },
     {
-      titulo: "Movie Explorer",
+      titulo: "Explorador de Películas",
       descripcion: "React + API de películas",
       link: "https://movie-explorer-jorge-patricio.vercel.app/",
     },
@@ -139,7 +139,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://reloj-jorgepatricio.vercel.app/",
     },
     {
-      titulo: "QR Generator & Scanner",
+      titulo: "Generador y Escáner QR",
       descripcion: "Generación y lectura QR",
       link: "https://jorgepatricio-codigo-qr.vercel.app/",
     },
