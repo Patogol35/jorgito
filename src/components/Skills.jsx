@@ -290,21 +290,14 @@ transform: "translateZ(0)",
     rotate: 180,
   }}
   transition={{
+    rotate: {
+      duration: 0.45,
+      ease: "easeInOut",
+    },
     scale: {
       type: "spring",
-      stiffness: 200,
-      damping: 16,
-    },
-
-    y: {
-      type: "spring",
-      stiffness: 200,
-      damping: 16,
-    },
-
-    rotate: {
-      duration: 0.38,
-      ease: "easeInOut",
+      stiffness: 220,
+      damping: 14,
     },
   }}
   sx={{
@@ -313,8 +306,9 @@ transform: "translateZ(0)",
     mb: 2,
     objectFit: "contain",
 
-    willChange: "transform",
+    backfaceVisibility: "hidden",
     transform: "translateZ(0)",
+    willChange: "transform",
 
     filter: isDark
       ? "invert(1) brightness(1.22)"
