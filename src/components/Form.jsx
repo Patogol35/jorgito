@@ -162,209 +162,84 @@ export default function Form({ t }) {
 
           {/* ================= FORM ================= */}
           <Box
-  component="form"
-  ref={formRef}
-  onSubmit={handleSubmit}
-  sx={{
-    display: "flex",
-    flexDirection: "column",
-    gap: 3.2,
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+          >
+            {[
+              {
+                name: "from_name",
+                label: formText.fields.name,
+                icon: <PersonIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "from_email",
+                label: formText.fields.email,
+                type: "email",
+                icon: <EmailIcon sx={{ color: primaryColor }} />,
+              },
+              {
+                name: "message",
+                label: formText.fields.message,
+                multiline: true,
+                rows: 4,
+                icon: <MessageIcon sx={{ color: primaryColor }} />,
+              },
+            ].map((field) => (
+              <motion.div key={field.name} variants={fadeSoft}>
+                <TextField
+                  {...field}
+                  fullWidth
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment
+                        position="start"
+                        sx={
+                          field.multiline
+                            ? { alignSelf: "flex-start", mt: 1 }
+                            : {}
+                        }
+                      >
+                        {field.icon}
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={inputStyle(theme)}
+                />
+              </motion.div>
+            ))}
 
-    p: { xs: 2.2, md: 3.2 },
-
-    borderRadius: "30px",
-
-    backdropFilter: "blur(18px)",
-
-    background:
-      theme.palette.mode === "dark"
-        ? "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
-        : "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72))",
-
-    border:
-      theme.palette.mode === "dark"
-        ? "1px solid rgba(255,255,255,0.06)"
-        : "1px solid rgba(15,23,42,0.06)",
-
-    boxShadow:
-      theme.palette.mode === "dark"
-        ? "0 12px 40px rgba(0,0,0,0.45)"
-        : "0 12px 40px rgba(15,23,42,0.08)",
-  }}
->
-  {[
-    {
-      name: "from_name",
-      label: formText.fields.name,
-      icon: <PersonIcon sx={{ color: primaryColor }} />,
-    },
-    {
-      name: "from_email",
-      label: formText.fields.email,
-      type: "email",
-      icon: <EmailIcon sx={{ color: primaryColor }} />,
-    },
-    {
-      name: "message",
-      label: formText.fields.message,
-      multiline: true,
-      rows: 4,
-      icon: <MessageIcon sx={{ color: primaryColor }} />,
-    },
-  ].map((field) => (
-    <motion.div
-      key={field.name}
-      variants={fadeSoft}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.2 }}
-    >
-      <TextField
-        {...field}
-        fullWidth
-        required
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment
-              position="start"
-              sx={
-                field.multiline
-                  ? {
-                      alignSelf: "flex-start",
-                      mt: 1.3,
-                    }
-                  : {}
-              }
+            {/* ================= BOTÓN ================= */}
+            <motion.div
+              variants={fadeCinematic}
+              style={{ display: "flex", justifyContent: "center" }}
             >
-              {field.icon}
-            </InputAdornment>
-          ),
-        }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "20px",
-            overflow: "hidden",
-            transition: "all 0.35s ease",
-            backdropFilter: "blur(16px)",
-
-            background:
-              theme.palette.mode === "dark"
-                ? "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
-                : "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.75))",
-
-            boxShadow:
-              theme.palette.mode === "dark"
-                ? "0 4px 20px rgba(0,0,0,0.35)"
-                : "0 4px 18px rgba(15,23,42,0.06)",
-
-            "& fieldset": {
-              borderWidth: "1px",
-              borderColor:
-                theme.palette.mode === "dark"
-                  ? "rgba(255,255,255,0.08)"
-                  : "rgba(15,23,42,0.08)",
-            },
-
-            "&:hover": {
-              transform: "translateY(-3px)",
-
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 10px 28px rgba(0,0,0,0.45)"
-                  : "0 10px 28px rgba(15,23,42,0.12)",
-
-              "& fieldset": {
-                borderColor: primaryColor,
-              },
-            },
-
-            "&.Mui-focused": {
-              transform: "translateY(-2px)",
-
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? `0 0 0 4px ${primaryColor}18, 0 12px 32px rgba(0,0,0,0.5)`
-                  : `0 0 0 4px ${primaryColor}15, 0 12px 30px rgba(15,23,42,0.10)`,
-
-              "& fieldset": {
-                borderColor: primaryColor,
-                borderWidth: "1.5px",
-              },
-            },
-          },
-
-          "& .MuiInputBase-input": {
-            py: 1.8,
-            fontSize: "0.97rem",
-            fontWeight: 500,
-          },
-
-          "& .MuiInputLabel-root": {
-            fontWeight: 600,
-            transition: "all 0.25s ease",
-
-            color:
-              theme.palette.mode === "dark"
-                ? "rgba(255,255,255,0.7)"
-                : "rgba(15,23,42,0.7)",
-          },
-
-          "& .MuiInputLabel-root.Mui-focused": {
-            color: primaryColor,
-          },
-
-          "& .MuiInputAdornment-root": {
-            opacity: 0.85,
-          },
-
-          "& textarea": {
-            lineHeight: 1.8,
-          },
-        }}
-      />
-    </motion.div>
-  ))}
-
-  {/* ================= BOTÓN ================= */}
-  <motion.div
-    variants={fadeCinematic}
-    style={{ display: "flex", justifyContent: "center" }}
-  >
-    <Button
-      type="submit"
-      startIcon={<SendIcon />}
-      sx={{
-        borderRadius: "25px",
-        textTransform: "none",
-        fontWeight: "bold",
-        px: 5,
-        py: 1.4,
-        color: "#ffffff",
-        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-
-        boxShadow:
-          theme.palette.mode === "dark"
-            ? "0 10px 25px rgba(59,130,246,0.35)"
-            : "0 10px 25px rgba(37,99,235,0.25)",
-
-        "&:hover": {
-          background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-          transform: "scale(1.04)",
-
-          boxShadow:
-            theme.palette.mode === "dark"
-              ? "0 14px 30px rgba(59,130,246,0.45)"
-              : "0 14px 30px rgba(37,99,235,0.35)",
-        },
-
-        transition: "all 0.25s ease",
-      }}
-    >
-      {formText.button}
-    </Button>
-  </motion.div>
-</Box>
-
+              <Button
+                type="submit"
+                startIcon={<SendIcon />}
+                sx={{
+                  borderRadius: "25px",
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  px: 5,
+                  py: 1.4,
+                  color: "#ffffff",
+                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                  boxShadow: "none",
+                  "&:hover": {
+                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+                    transform: "scale(1.04)",
+                  },
+                  transition: "transform 0.2s ease",
+                }}
+              >
+                {formText.button}
+              </Button>
+            </motion.div>
+          </Box>
+        </motion.div>
 
         {/* ================= ALERT ================= */}
         <Snackbar
@@ -410,51 +285,105 @@ export default function Form({ t }) {
 
 const inputStyle = (theme) => ({
   "& .MuiOutlinedInput-root": {
-    borderRadius: 3,
+    borderRadius: "20px",
+    overflow: "hidden",
+    transition: "all 0.25s ease",
+
     background:
       theme.palette.mode === "dark"
-        ? "rgba(15,23,42,0.55)"
-        : "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(14px)",
+        ? "linear-gradient(145deg, rgba(15,23,42,0.92), rgba(30,41,59,0.78))"
+        : "linear-gradient(145deg, rgba(255,255,255,0.96), rgba(248,250,252,0.92))",
 
-    "& input, & textarea": {
-      fontWeight: 600,
-      color:
-        theme.palette.mode === "dark" ? "#ffffff" : "#020617",
-    },
+    backdropFilter: "blur(16px)",
 
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(255,255,255,0.45)"
-          : "rgba(2,6,23,0.45)",
-      fontWeight: 400,
-    },
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? "0 8px 24px rgba(0,0,0,0.35)"
+        : "0 8px 24px rgba(15,23,42,0.06)",
 
     "& fieldset": {
-      borderColor:
+      border: `1px solid ${
         theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.35)"
-          : "rgba(37,99,235,0.85)",
+          ? "rgba(148,163,184,0.16)"
+          : "rgba(148,163,184,0.25)"
+      }`,
+      transition: "all 0.25s ease",
+    },
+
+    "&:hover": {
+      transform: "translateY(-1px)",
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 12px 28px rgba(0,0,0,0.42)"
+          : "0 12px 28px rgba(15,23,42,0.10)",
     },
 
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? theme.palette.primary.main
-          : "#1d4ed8",
+          ? "rgba(96,165,250,0.5)"
+          : "rgba(59,130,246,0.5)",
+    },
+
+    "&.Mui-focused": {
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? "0 0 0 4px rgba(59,130,246,0.15)"
+          : "0 0 0 4px rgba(37,99,235,0.12)",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
+      borderWidth: "1.5px",
+    },
+
+    "& input, & textarea": {
+      color: theme.palette.mode === "dark" ? "#f8fafc" : "#0f172a",
+      fontWeight: 500,
+      fontSize: "0.96rem",
+      paddingTop: "15px",
+      paddingBottom: "15px",
+    },
+
+    "& textarea": {
+      lineHeight: 1.7,
+    },
+
+    "& input::placeholder, & textarea::placeholder": {
+      color:
+        theme.palette.mode === "dark"
+          ? "rgba(255,255,255,0.38)"
+          : "rgba(15,23,42,0.38)",
+      opacity: 1,
     },
   },
 
+  "& .MuiInputAdornment-root": {
+    marginRight: 1,
+
+    "& svg": {
+      fontSize: 21,
+      opacity: 0.9,
+      transition: "all 0.25s ease",
+    },
+  },
+
+  "& .MuiOutlinedInput-root.Mui-focused .MuiInputAdornment-root svg": {
+    transform: "scale(1.08)",
+    color: theme.palette.primary.main,
+  },
+
   "& .MuiInputLabel-root": {
+    fontWeight: 600,
+    letterSpacing: "0.2px",
+
     color:
       theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.85)"
-        : "rgba(2,6,23,0.85)",
-    fontWeight: 600,
+        ? "rgba(255,255,255,0.78)"
+        : "rgba(15,23,42,0.78)",
+
+    "&.Mui-focused": {
+      color: theme.palette.primary.main,
+    },
   },
 });
