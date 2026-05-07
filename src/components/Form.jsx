@@ -162,54 +162,208 @@ export default function Form({ t }) {
 
           {/* ================= FORM ================= */}
           <Box
-            component="form"
-            ref={formRef}
-            onSubmit={handleSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
-          >
-            {[
-              {
-                name: "from_name",
-                label: formText.fields.name,
-                icon: <PersonIcon sx={{ color: primaryColor }} />,
+  component="form"
+  ref={formRef}
+  onSubmit={handleSubmit}
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    gap: 3.2,
+
+    p: { xs: 2.2, md: 3.2 },
+
+    borderRadius: "30px",
+
+    backdropFilter: "blur(18px)",
+
+    background:
+      theme.palette.mode === "dark"
+        ? "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
+        : "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.72))",
+
+    border:
+      theme.palette.mode === "dark"
+        ? "1px solid rgba(255,255,255,0.06)"
+        : "1px solid rgba(15,23,42,0.06)",
+
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? "0 12px 40px rgba(0,0,0,0.45)"
+        : "0 12px 40px rgba(15,23,42,0.08)",
+  }}
+>
+  {[
+    {
+      name: "from_name",
+      label: formText.fields.name,
+      icon: <PersonIcon sx={{ color: primaryColor }} />,
+    },
+    {
+      name: "from_email",
+      label: formText.fields.email,
+      type: "email",
+      icon: <EmailIcon sx={{ color: primaryColor }} />,
+    },
+    {
+      name: "message",
+      label: formText.fields.message,
+      multiline: true,
+      rows: 4,
+      icon: <MessageIcon sx={{ color: primaryColor }} />,
+    },
+  ].map((field) => (
+    <motion.div
+      key={field.name}
+      variants={fadeSoft}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.2 }}
+    >
+      <TextField
+        {...field}
+        fullWidth
+        required
+        variant="outlined"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment
+              position="start"
+              sx={
+                field.multiline
+                  ? {
+                      alignSelf: "flex-start",
+                      mt: 1.3,
+                    }
+                  : {}
+              }
+            >
+              {field.icon}
+            </InputAdornment>
+          ),
+        }}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "20px",
+            overflow: "hidden",
+            transition: "all 0.35s ease",
+            backdropFilter: "blur(16px)",
+
+            background:
+              theme.palette.mode === "dark"
+                ? "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))"
+                : "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,255,255,0.75))",
+
+            boxShadow:
+              theme.palette.mode === "dark"
+                ? "0 4px 20px rgba(0,0,0,0.35)"
+                : "0 4px 18px rgba(15,23,42,0.06)",
+
+            "& fieldset": {
+              borderWidth: "1px",
+              borderColor:
+                theme.palette.mode === "dark"
+                  ? "rgba(255,255,255,0.08)"
+                  : "rgba(15,23,42,0.08)",
+            },
+
+            "&:hover": {
+              transform: "translateY(-3px)",
+
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 10px 28px rgba(0,0,0,0.45)"
+                  : "0 10px 28px rgba(15,23,42,0.12)",
+
+              "& fieldset": {
+                borderColor: primaryColor,
               },
-              {
-                name: "from_email",
-                label: formText.fields.email,
-                type: "email",
-                icon: <EmailIcon sx={{ color: primaryColor }} />,
+            },
+
+            "&.Mui-focused": {
+              transform: "translateY(-2px)",
+
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? `0 0 0 4px ${primaryColor}18, 0 12px 32px rgba(0,0,0,0.5)`
+                  : `0 0 0 4px ${primaryColor}15, 0 12px 30px rgba(15,23,42,0.10)`,
+
+              "& fieldset": {
+                borderColor: primaryColor,
+                borderWidth: "1.5px",
               },
-              {
-                name: "message",
-                label: formText.fields.message,
-                multiline: true,
-                rows: 4,
-                icon: <MessageIcon sx={{ color: primaryColor }} />,
-              },
-            ].map((field) => (
-              <motion.div key={field.name} variants={fadeSoft}>
-                <TextField
-                  {...field}
-                  fullWidth
-                  required
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment
-                        position="start"
-                        sx={
-                          field.multiline
-                            ? { alignSelf: "flex-start", mt: 1 }
-                            : {}
-                        }
-                      >
-                        {field.icon}
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={inputStyle(theme)}
-                />
-              </motion.div>
-            ))}
+            },
+          },
+
+          "& .MuiInputBase-input": {
+            py: 1.8,
+            fontSize: "0.97rem",
+            fontWeight: 500,
+          },
+
+          "& .MuiInputLabel-root": {
+            fontWeight: 600,
+            transition: "all 0.25s ease",
+
+            color:
+              theme.palette.mode === "dark"
+                ? "rgba(255,255,255,0.7)"
+                : "rgba(15,23,42,0.7)",
+          },
+
+          "& .MuiInputLabel-root.Mui-focused": {
+            color: primaryColor,
+          },
+
+          "& .MuiInputAdornment-root": {
+            opacity: 0.85,
+          },
+
+          "& textarea": {
+            lineHeight: 1.8,
+          },
+        }}
+      />
+    </motion.div>
+  ))}
+
+  {/* ================= BOTÓN ================= */}
+  <motion.div
+    variants={fadeCinematic}
+    style={{ display: "flex", justifyContent: "center" }}
+  >
+    <Button
+      type="submit"
+      startIcon={<SendIcon />}
+      sx={{
+        borderRadius: "25px",
+        textTransform: "none",
+        fontWeight: "bold",
+        px: 5,
+        py: 1.4,
+        color: "#ffffff",
+        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? "0 10px 25px rgba(59,130,246,0.35)"
+            : "0 10px 25px rgba(37,99,235,0.25)",
+
+        "&:hover": {
+          background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+          transform: "scale(1.04)",
+
+          boxShadow:
+            theme.palette.mode === "dark"
+              ? "0 14px 30px rgba(59,130,246,0.45)"
+              : "0 14px 30px rgba(37,99,235,0.35)",
+        },
+
+        transition: "all 0.25s ease",
+      }}
+    >
+      {formText.button}
+    </Button>
+  </motion.div>
+</Box>
 
             {/* ================= BOTÓN ================= */}
             <motion.div
