@@ -48,8 +48,8 @@ export default function Certifications({ t }) {
     { type: "mui", icon: WorkspacePremiumIcon},
     { type: "mui", icon: WorkspacePremiumIcon },
     { type: "lucide", icon: Brain },
-    { type: "lucide", icon: Brain },
     { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: Brain },
   ];
 
   const iconColors = [
