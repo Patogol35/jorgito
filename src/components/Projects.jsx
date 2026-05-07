@@ -107,6 +107,41 @@ function ProjectCard({ p, palette, variants }) {
     {p.viewText || "Ver proyecto"}
   </Button>
 )}
+
+          {/* ✨ Línea elegante */}
+<Box
+  sx={{
+    width: "160px",
+    height: "1px",
+    mx: "auto",
+    mt: 2,
+    borderRadius: "999px",
+
+    background:
+      palette.mode === "dark"
+        ? `linear-gradient(
+            90deg,
+            transparent,
+            ${p.color},
+            rgba(255,255,255,0.45),
+            ${p.color},
+            transparent
+          )`
+        : `linear-gradient(
+            90deg,
+            transparent,
+            rgba(25,118,210,0.25),
+            ${p.color},
+            rgba(25,118,210,0.25),
+            transparent
+          )`,
+
+    boxShadow:
+      palette.mode === "dark"
+        ? `0 0 10px ${p.color}55`
+        : `0 0 6px ${p.color}22`,
+  }}
+/>
         </Box>
       </motion.div>
     </Grid>
