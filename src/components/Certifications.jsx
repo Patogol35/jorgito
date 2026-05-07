@@ -141,7 +141,51 @@ export default function Certifications({ t }) {
                   whileHover={{ y: -5, scale: 1.05 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Box sx={{ textAlign: "center", px: 1 }}>
+                  <Box
+  sx={{
+    textAlign: "center",
+    px: 2,
+    py: 2,
+    position: "relative",
+
+    // 🔥 Línea divisora elegante
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      top: "15%",
+      right: 0,
+      width: "1px",
+      height: "70%",
+      background: isDark
+        ? "linear-gradient(to bottom, transparent, rgba(255,255,255,0.18), transparent)"
+        : "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)",
+    },
+
+    // 🔥 quitar última línea de cada fila desktop
+    "@media (min-width:900px)": {
+      "&:nth-of-type(3n)::after": {
+        display: "none",
+      },
+    },
+
+    // 🔥 quitar última línea tablet
+    "@media (min-width:600px) and (max-width:899px)": {
+      "&:nth-of-type(2n)::after": {
+        display: "none",
+      },
+    },
+
+    // 🔥 móvil sin líneas
+    "@media (max-width:599px)": {
+      "&::after": {
+        display: "none",
+      },
+      borderBottom: isDark
+        ? "1px solid rgba(255,255,255,0.08)"
+        : "1px solid rgba(0,0,0,0.08)",
+    },
+  }}
+>
                     {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
                       <Icon sx={{ fontSize: 28, color }} />
