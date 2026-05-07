@@ -109,7 +109,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       view: "Ver proyecto",
   items: [
     {
-      titulo: "Weather App (React + API)",
+      titulo: "Aplicación del Clima (React + API)",
       descripcion: "Consumo de API y UI dinámica",
       link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     },
@@ -124,7 +124,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://movie-explorer-jorge-patricio.vercel.app/",
     },
     {
-      titulo: "Quiz Educativo",
+      titulo: "Quiz Educativo de Ambato y Ecuador",
       descripcion: "Lógica interactiva + scoring",
       link: "https://quiz-educativo-jorgepatricio.vercel.app/",
     },
@@ -289,7 +289,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       link: "https://movie-explorer-jorge-patricio.vercel.app/",
     },
     {
-      titulo: "Educational Quiz",
+      titulo: "Educational Quiz about Ambato and Ecuador",
       descripcion: "Interactive logic + scoring",
       link: "https://quiz-educativo-jorgepatricio.vercel.app/",
     },
