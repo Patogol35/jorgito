@@ -291,50 +291,34 @@ const inputStyle = (theme) => ({
 
     background:
       theme.palette.mode === "dark"
-        ? "linear-gradient(145deg, rgba(15,23,42,0.92), rgba(30,41,59,0.78))"
-        : "linear-gradient(145deg, rgba(255,255,255,0.96), rgba(248,250,252,0.92))",
+        ? "linear-gradient(145deg, rgba(15,23,42,0.92), rgba(30,41,59,0.82))"
+        : "linear-gradient(145deg, rgba(255,255,255,0.97), rgba(248,250,252,0.95))",
 
-    backdropFilter: "blur(16px)",
+    backdropFilter: "blur(12px)",
 
-    boxShadow:
-      theme.palette.mode === "dark"
-        ? "0 8px 24px rgba(0,0,0,0.35)"
-        : "0 8px 24px rgba(15,23,42,0.06)",
+    // ❌ sombra eliminada
+    boxShadow: "none",
 
     "& fieldset": {
-      border: `1px solid ${
+      borderWidth: "1.6px",
+      borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(148,163,184,0.16)"
-          : "rgba(148,163,184,0.25)"
-      }`,
-      transition: "all 0.25s ease",
-    },
+          ? "rgba(148,163,184,0.35)"
+          : "rgba(100,116,139,0.45)",
 
-    "&:hover": {
-      transform: "translateY(-1px)",
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 12px 28px rgba(0,0,0,0.42)"
-          : "0 12px 28px rgba(15,23,42,0.10)",
+      transition: "all 0.25s ease",
     },
 
     "&:hover fieldset": {
       borderColor:
         theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.5)"
-          : "rgba(59,130,246,0.5)",
-    },
-
-    "&.Mui-focused": {
-      boxShadow:
-        theme.palette.mode === "dark"
-          ? "0 0 0 4px rgba(59,130,246,0.15)"
-          : "0 0 0 4px rgba(37,99,235,0.12)",
+          ? "rgba(96,165,250,0.65)"
+          : "rgba(37,99,235,0.75)",
     },
 
     "&.Mui-focused fieldset": {
       borderColor: theme.palette.primary.main,
-      borderWidth: "1.5px",
+      borderWidth: "2px",
     },
 
     "& input, & textarea": {
