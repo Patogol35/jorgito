@@ -141,7 +141,42 @@ export default function Certifications({ t }) {
                   whileHover={{ y: -5, scale: 1.05 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Box sx={{ textAlign: "center", px: 1 }}>
+                  <Box
+  sx={{
+    textAlign: "center",
+    px: 1,
+    py: 2,
+
+    borderRadius: "24px",
+
+    background: isDark
+      ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
+      : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
+
+    border: `1px solid ${
+      isDark
+        ? "rgba(255,255,255,0.06)"
+        : "rgba(25,118,210,0.08)"
+    }`,
+
+    backdropFilter: "blur(10px)",
+
+    position: "relative",
+
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      left: "12%",
+      bottom: 0,
+      width: "76%",
+      height: "1px",
+
+      background: isDark
+        ? "linear-gradient(to right, transparent, rgba(144,202,249,0.35), transparent)"
+        : "linear-gradient(to right, transparent, rgba(25,118,210,0.22), transparent)",
+    },
+  }}
+>
                     {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
                       <Icon sx={{ fontSize: 28, color }} />
