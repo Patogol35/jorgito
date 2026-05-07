@@ -155,8 +155,8 @@ export default function Certifications({ t }) {
 
     border: `2px solid ${
   palette.mode === "dark"
-    ? "rgba(144,202,249,0.48)"
-    : "rgba(25,118,210,0.32)"
+    ? "rgba(100,181,246,0.65)" // azul elegante y visible en oscuro
+    : "rgba(30,136,229,0.42)" // azul limpio y suave en claro
 }`,
 
 backdropFilter: "blur(10px)",
