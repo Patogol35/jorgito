@@ -146,6 +146,7 @@ export default function Certifications({ t }) {
   textAlign: "center",
   px: 1,
   py: 2,
+
   borderRadius: "24px",
 
   background: isDark
@@ -159,7 +160,14 @@ export default function Certifications({ t }) {
   }`,
 
   backdropFilter: "blur(10px)",
+
   position: "relative",
+
+  transition: "transform 0.25s ease, border-color 0.25s ease",
+
+  "&:hover": {
+    borderColor: palette.primary.main,
+  },
 
   "&::after": {
     content: '""',
@@ -174,24 +182,6 @@ export default function Certifications({ t }) {
       : "linear-gradient(to right, transparent, rgba(25,118,210,0.25), transparent)",
   },
 }}
-
-backdropFilter: "blur(10px)",
-
-    position: "relative",
-
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      left: "12%",
-      bottom: 0,
-      width: "76%",
-      height: "1px",
-
-      background: isDark
-        ? "linear-gradient(to right, transparent, rgba(144,202,249,0.35), transparent)"
-        : "linear-gradient(to right, transparent, rgba(25,118,210,0.22), transparent)",
-    },
-  }}
 >
                     {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
@@ -247,4 +237,4 @@ backdropFilter: "blur(10px)",
       </motion.div>
     </Box>
   );
-}
+      }
