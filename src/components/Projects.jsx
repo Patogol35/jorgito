@@ -60,23 +60,7 @@ function ProjectCard({ p, palette, variants }) {
         }}
         style={{ willChange: "transform, opacity" }}
       >
-      <Box
-  sx={{
-    textAlign: "center",
-    px: 1,
-    py: 2,
-
-    borderRadius: "24px",
-
-    background:
-      palette.mode === "dark"
-        ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
-        : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
-
-    border: `1px solid ${palette.primary.main}`,
-backdropFilter: "blur(10px)",
-  }}
->
+        <Box sx={{ textAlign: "center", px: 1 }}>
           <Icon sx={{ fontSize: 30, color: p.color }} />
 
           {/* TÍTULO */}
