@@ -290,15 +290,9 @@ transform: "translateZ(0)",
     rotate: 180,
   }}
   transition={{
-    rotate: {
-      duration: 0.45,
-      ease: "easeInOut",
-    },
-    scale: {
-      type: "spring",
-      stiffness: 220,
-      damping: 14,
-    },
+    type: "spring",
+    stiffness: 200,
+    damping: 16,
   }}
   sx={{
     width: 65,
@@ -306,16 +300,17 @@ transform: "translateZ(0)",
     mb: 2,
     objectFit: "contain",
 
-    backfaceVisibility: "hidden",
-    transform: "translateZ(0)",
+    /* 🔥 evita el lag del primer giro */
     willChange: "transform",
+    transform: "translate3d(0,0,0)",
+    backfaceVisibility: "hidden",
+    perspective: 1000,
 
     filter: isDark
       ? "invert(1) brightness(1.22)"
       : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
   }}
 />
-
                     <Typography fontWeight="bold">
                       {skill.name}
                     </Typography>
