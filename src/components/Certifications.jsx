@@ -155,9 +155,13 @@ export default function Certifications({ t }) {
 
     border: `1px solid ${
   isDark
-    ? "rgba(144,202,249,0.18)"
-    : "rgba(25,118,210,0.16)"
+    ? "rgba(144,202,249,0.32)"
+    : "rgba(25,118,210,0.22)"
 }`,
+
+boxShadow: isDark
+  ? "0 8px 24px rgba(0,0,0,0.28)"
+  : "0 8px 24px rgba(25,118,210,0.08)",
 
     backdropFilter: "blur(10px)",
 
