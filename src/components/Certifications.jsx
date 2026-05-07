@@ -194,32 +194,36 @@ export default function Certifications({ t }) {
                     {/* ✨ Línea divisora elegante */}
 <Box
   sx={{
-    width: "70%",
+    width: "75%",
+    maxWidth: "180px",
     height: "1px",
     mx: "auto",
-    my: 1.5,
+    mt: 2,
     borderRadius: "999px",
+
     background: isDark
       ? `linear-gradient(
           90deg,
           transparent,
           ${color},
-          rgba(255,255,255,0.4),
+          rgba(255,255,255,0.45),
           ${color},
           transparent
         )`
       : `linear-gradient(
           90deg,
           transparent,
-          rgba(25,118,210,0.35),
+          rgba(25,118,210,0.25),
           ${color},
-          rgba(25,118,210,0.35),
+          rgba(25,118,210,0.25),
           transparent
         )`,
+
     opacity: 0.9,
+
     boxShadow: isDark
-      ? `0 0 12px ${color}55`
-      : `0 0 8px ${color}33`,
+      ? `0 0 10px ${color}55`
+      : `0 0 6px ${color}22`,
   }}
 />
                     
