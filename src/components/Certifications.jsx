@@ -169,19 +169,20 @@ export default function Certifications({ t }) {
     size="small"
     variant="outlined"
     sx={{
-      mt: 1,
-      textTransform: "none",
-      fontSize: "0.75rem",
-      borderRadius: "999px",
-      color: primaryColor,
-      borderColor: primaryColor,
-      "&:hover": {
-        borderColor: primaryColor,
-        background: isDark
-          ? "rgba(187,222,251,0.08)"
-          : "rgba(25,118,210,0.08)",
-      },
-    }}
+  mt: 1,
+  textTransform: "none",
+  fontSize: "0.75rem",
+  borderRadius: "999px",
+  color,
+  borderColor: color,
+  "&:hover": {
+    borderColor: color,
+    background:
+      isDark
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.05)",
+  },
+}}
   >
     {t.certifications.view}
   </Button>
