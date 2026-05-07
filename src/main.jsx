@@ -1,9 +1,6 @@
 // main.jsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
-import "./App.css"; // 👈 FALTA ESTO
-
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
