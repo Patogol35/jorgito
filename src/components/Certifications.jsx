@@ -160,7 +160,38 @@ export default function Certifications({ t }) {
   {cert.institucion} | {cert.año}
 </Typography>
 
-                {/* ✨ Línea divisora elegante */}
+                
+
+{/* 🔥 BOTÓN NUEVO */}
+{cert.link && (
+  <Button
+    href={cert.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    size="small"
+    variant="outlined"
+    sx={{
+  mt: 1,
+  textTransform: "none",
+  fontSize: "0.75rem",
+  borderRadius: "999px",
+  color,
+  borderColor: color,
+  "&:hover": {
+    borderColor: color,
+    background:
+      isDark
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.05)",
+  },
+}}
+  >
+    {t.certifications.view}
+  </Button>
+)}
+
+
+                    {/* ✨ Línea divisora elegante */}
 <Box
   sx={{
     width: "70%",
@@ -191,34 +222,7 @@ export default function Certifications({ t }) {
       : `0 0 8px ${color}33`,
   }}
 />
-
-{/* 🔥 BOTÓN NUEVO */}
-{cert.link && (
-  <Button
-    href={cert.link}
-    target="_blank"
-    rel="noopener noreferrer"
-    size="small"
-    variant="outlined"
-    sx={{
-  mt: 1,
-  textTransform: "none",
-  fontSize: "0.75rem",
-  borderRadius: "999px",
-  color,
-  borderColor: color,
-  "&:hover": {
-    borderColor: color,
-    background:
-      isDark
-        ? "rgba(255,255,255,0.08)"
-        : "rgba(0,0,0,0.05)",
-  },
-}}
-  >
-    {t.certifications.view}
-  </Button>
-)}
+                    
                   </Box>
                 </motion.div>
               </Grid>
