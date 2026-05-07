@@ -162,114 +162,54 @@ export default function Form({ t }) {
 
           {/* ================= FORM ================= */}
           <Box
-  component="form"
-  ref={formRef}
-  onSubmit={handleSubmit}
-  sx={{ display: "flex", flexDirection: "column", gap: 3 }}
->
-  {[
-    {
-      name: "from_name",
-      label: formText.fields.name,
-      icon: <PersonIcon sx={{ color: primaryColor }} />,
-    },
-    {
-      name: "from_email",
-      label: formText.fields.email,
-      type: "email",
-      icon: <EmailIcon sx={{ color: primaryColor }} />,
-    },
-    {
-      name: "message",
-      label: formText.fields.message,
-      multiline: true,
-      rows: 4,
-      icon: <MessageIcon sx={{ color: primaryColor }} />,
-    },
-  ].map((field) => (
-    <motion.div key={field.name} variants={fadeSoft}>
-      <TextField
-        {...field}
-        fullWidth
-        required
-        variant="outlined"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment
-              position="start"
-              sx={
-                field.multiline
-                  ? {
-                      alignSelf: "flex-start",
-                      mt: 1.3,
-                    }
-                  : {}
-              }
-            >
-              {field.icon}
-            </InputAdornment>
-          ),
-        }}
-        sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "18px",
-            transition: "all 0.3s ease",
-            backdropFilter: "blur(10px)",
-
-            background:
-              theme.palette.mode === "dark"
-                ? "rgba(255,255,255,0.03)"
-                : "rgba(255,255,255,0.75)",
-
-            "& fieldset": {
-              borderColor:
-                theme.palette.mode === "dark"
-                  ? "rgba(255,255,255,0.12)"
-                  : "rgba(0,0,0,0.12)",
-            },
-
-            "&:hover": {
-              transform: "translateY(-2px)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 6px 18px rgba(0,0,0,0.35)"
-                  : "0 6px 18px rgba(0,0,0,0.08)",
-
-              "& fieldset": {
-                borderColor: primaryColor,
+            component="form"
+            ref={formRef}
+            onSubmit={handleSubmit}
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+          >
+            {[
+              {
+                name: "from_name",
+                label: formText.fields.name,
+                icon: <PersonIcon sx={{ color: primaryColor }} />,
               },
-            },
-
-            "&.Mui-focused": {
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? `0 0 0 4px ${primaryColor}22`
-                  : `0 0 0 4px ${primaryColor}18`,
-
-              "& fieldset": {
-                borderWidth: "1.5px",
-                borderColor: primaryColor,
+              {
+                name: "from_email",
+                label: formText.fields.email,
+                type: "email",
+                icon: <EmailIcon sx={{ color: primaryColor }} />,
               },
-            },
-          },
-
-          "& .MuiInputBase-input": {
-            py: 1.6,
-            fontSize: "0.95rem",
-          },
-
-          "& .MuiInputLabel-root": {
-            fontWeight: 500,
-          },
-
-          "& textarea": {
-            lineHeight: 1.7,
-          },
-        }}
-      />
-    </motion.div>
-  ))}
-</Box>
+              {
+                name: "message",
+                label: formText.fields.message,
+                multiline: true,
+                rows: 4,
+                icon: <MessageIcon sx={{ color: primaryColor }} />,
+              },
+            ].map((field) => (
+              <motion.div key={field.name} variants={fadeSoft}>
+                <TextField
+                  {...field}
+                  fullWidth
+                  required
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment
+                        position="start"
+                        sx={
+                          field.multiline
+                            ? { alignSelf: "flex-start", mt: 1 }
+                            : {}
+                        }
+                      >
+                        {field.icon}
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={inputStyle(theme)}
+                />
+              </motion.div>
+            ))}
 
             {/* ================= BOTÓN ================= */}
             <motion.div
