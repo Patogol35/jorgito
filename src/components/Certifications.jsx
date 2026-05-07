@@ -144,45 +144,105 @@ export default function Certifications({ t }) {
                   <Box
   sx={{
     textAlign: "center",
-    px: 2,
-    py: 2,
+    px: 2.5,
+    py: 2.5,
     position: "relative",
 
-    // 🔥 Línea divisora elegante
+    // 🔥 división vertical fuerte y elegante
     "&::after": {
       content: '""',
       position: "absolute",
-      top: "15%",
+      top: "10%",
       right: 0,
-      width: "1px",
-      height: "70%",
+      width: "2px",
+      height: "80%",
+      borderRadius: "999px",
       background: isDark
-        ? "linear-gradient(to bottom, transparent, rgba(255,255,255,0.18), transparent)"
-        : "linear-gradient(to bottom, transparent, rgba(0,0,0,0.12), transparent)",
+        ? `
+          linear-gradient(
+            to bottom,
+            transparent,
+            rgba(144,202,249,0.15),
+            rgba(144,202,249,0.55),
+            rgba(144,202,249,0.15),
+            transparent
+          )
+        `
+        : `
+          linear-gradient(
+            to bottom,
+            transparent,
+            rgba(25,118,210,0.12),
+            rgba(25,118,210,0.45),
+            rgba(25,118,210,0.12),
+            transparent
+          )
+        `,
+      boxShadow: isDark
+        ? "0 0 12px rgba(144,202,249,0.35)"
+        : "0 0 10px rgba(25,118,210,0.25)",
+      opacity: 1,
     },
 
-    // 🔥 quitar última línea de cada fila desktop
+    // 🔥 línea horizontal elegante abajo
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      bottom: 0,
+      left: "10%",
+      width: "80%",
+      height: "1.5px",
+      borderRadius: "999px",
+      background: isDark
+        ? `
+          linear-gradient(
+            to right,
+            transparent,
+            rgba(144,202,249,0.45),
+            transparent
+          )
+        `
+        : `
+          linear-gradient(
+            to right,
+            transparent,
+            rgba(25,118,210,0.35),
+            transparent
+          )
+        `,
+      boxShadow: isDark
+        ? "0 0 10px rgba(144,202,249,0.25)"
+        : "0 0 8px rgba(25,118,210,0.18)",
+    },
+
+    // desktop
     "@media (min-width:900px)": {
       "&:nth-of-type(3n)::after": {
         display: "none",
       },
     },
 
-    // 🔥 quitar última línea tablet
+    // tablet
     "@media (min-width:600px) and (max-width:899px)": {
       "&:nth-of-type(2n)::after": {
         display: "none",
       },
     },
 
-    // 🔥 móvil sin líneas
+    // móvil
     "@media (max-width:599px)": {
       "&::after": {
         display: "none",
       },
-      borderBottom: isDark
-        ? "1px solid rgba(255,255,255,0.08)"
-        : "1px solid rgba(0,0,0,0.08)",
+
+      "&::before": {
+        left: "5%",
+        width: "90%",
+      },
+
+      "&:last-child::before": {
+        display: "none",
+      },
     },
   }}
 >
