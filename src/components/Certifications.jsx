@@ -141,7 +141,13 @@ export default function Certifications({ t }) {
                   whileHover={{ y: -5, scale: 1.05 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Box sx={{ textAlign: "center", px: 1 }}>
+                  <Box
+  sx={{
+    textAlign: "center",
+    px: 1,
+    width: "100%",
+  }}
+>
                     {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
                       <Icon sx={{ fontSize: 28, color }} />
@@ -218,12 +224,6 @@ export default function Certifications({ t }) {
           rgba(25,118,210,0.25),
           transparent
         )`,
-
-    opacity: 0.9,
-
-    boxShadow: isDark
-      ? `0 0 10px ${color}55`
-      : `0 0 6px ${color}22`,
   }}
 />
                     
