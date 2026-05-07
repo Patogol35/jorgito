@@ -183,7 +183,37 @@ export default function Contact({ t }) {
           </motion.div>
 
           <motion.div variants={fadeCinematic}>
-            <Divider sx={{ mb: 3 }} />
+            <Box
+  sx={{
+    width: "160px",
+    height: "1px",
+    mx: "auto",
+    mb: 3,
+    borderRadius: "999px",
+
+    background: isDark
+      ? `linear-gradient(
+          90deg,
+          transparent,
+          #3b82f6,
+          rgba(255,255,255,0.45),
+          #3b82f6,
+          transparent
+        )`
+      : `linear-gradient(
+          90deg,
+          transparent,
+          rgba(25,118,210,0.25),
+          #1976d2,
+          rgba(25,118,210,0.25),
+          transparent
+        )`,
+
+    boxShadow: isDark
+      ? "0 0 10px rgba(59,130,246,0.35)"
+      : "0 0 6px rgba(25,118,210,0.18)",
+  }}
+/>
           </motion.div>
 
           {/* Redes sociales */}
