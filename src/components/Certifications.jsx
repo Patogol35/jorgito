@@ -141,111 +141,7 @@ export default function Certifications({ t }) {
                   whileHover={{ y: -5, scale: 1.05 }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Box
-  sx={{
-    textAlign: "center",
-    px: 2.5,
-    py: 2.5,
-    position: "relative",
-
-    // 🔥 división vertical fuerte y elegante
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      top: "10%",
-      right: 0,
-      width: "2px",
-      height: "80%",
-      borderRadius: "999px",
-      background: isDark
-        ? `
-          linear-gradient(
-            to bottom,
-            transparent,
-            rgba(144,202,249,0.15),
-            rgba(144,202,249,0.55),
-            rgba(144,202,249,0.15),
-            transparent
-          )
-        `
-        : `
-          linear-gradient(
-            to bottom,
-            transparent,
-            rgba(25,118,210,0.12),
-            rgba(25,118,210,0.45),
-            rgba(25,118,210,0.12),
-            transparent
-          )
-        `,
-      boxShadow: isDark
-        ? "0 0 12px rgba(144,202,249,0.35)"
-        : "0 0 10px rgba(25,118,210,0.25)",
-      opacity: 1,
-    },
-
-    // 🔥 línea horizontal elegante abajo
-    "&::before": {
-      content: '""',
-      position: "absolute",
-      bottom: 0,
-      left: "10%",
-      width: "80%",
-      height: "1.5px",
-      borderRadius: "999px",
-      background: isDark
-        ? `
-          linear-gradient(
-            to right,
-            transparent,
-            rgba(144,202,249,0.45),
-            transparent
-          )
-        `
-        : `
-          linear-gradient(
-            to right,
-            transparent,
-            rgba(25,118,210,0.35),
-            transparent
-          )
-        `,
-      boxShadow: isDark
-        ? "0 0 10px rgba(144,202,249,0.25)"
-        : "0 0 8px rgba(25,118,210,0.18)",
-    },
-
-    // desktop
-    "@media (min-width:900px)": {
-      "&:nth-of-type(3n)::after": {
-        display: "none",
-      },
-    },
-
-    // tablet
-    "@media (min-width:600px) and (max-width:899px)": {
-      "&:nth-of-type(2n)::after": {
-        display: "none",
-      },
-    },
-
-    // móvil
-    "@media (max-width:599px)": {
-      "&::after": {
-        display: "none",
-      },
-
-      "&::before": {
-        left: "5%",
-        width: "90%",
-      },
-
-      "&:last-child::before": {
-        display: "none",
-      },
-    },
-  }}
->
+                  <Box sx={{ textAlign: "center", px: 1 }}>
                     {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
                       <Icon sx={{ fontSize: 28, color }} />
@@ -263,6 +159,38 @@ export default function Certifications({ t }) {
                     <Typography variant="body2" color="text.secondary">
   {cert.institucion} | {cert.año}
 </Typography>
+
+                {/* ✨ Línea divisora elegante */}
+<Box
+  sx={{
+    width: "70%",
+    height: "1px",
+    mx: "auto",
+    my: 1.5,
+    borderRadius: "999px",
+    background: isDark
+      ? `linear-gradient(
+          90deg,
+          transparent,
+          ${color},
+          rgba(255,255,255,0.4),
+          ${color},
+          transparent
+        )`
+      : `linear-gradient(
+          90deg,
+          transparent,
+          rgba(25,118,210,0.35),
+          ${color},
+          rgba(25,118,210,0.35),
+          transparent
+        )`,
+    opacity: 0.9,
+    boxShadow: isDark
+      ? `0 0 12px ${color}55`
+      : `0 0 8px ${color}33`,
+  }}
+/>
 
 {/* 🔥 BOTÓN NUEVO */}
 {cert.link && (
@@ -300,4 +228,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-}
+        }
