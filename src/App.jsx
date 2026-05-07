@@ -12,7 +12,6 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
-
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -46,76 +45,47 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  // 🔥 Mantener sección visible
   useEffect(() => {
-    const handleBefore = () => {
-      const sections = document.querySelectorAll("section, [id]");
-
-      for (let sec of sections) {
-        const rect = sec.getBoundingClientRect();
-
-        if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-          localStorage.setItem("currentSection", sec.id);
-          break;
-        }
+  const handleBefore = () => {
+    const sections = document.querySelectorAll("section, [id]");
+    for (let sec of sections) {
+      const rect = sec.getBoundingClientRect();
+      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+        localStorage.setItem("currentSection", sec.id);
+        break;
       }
-    };
+    }
+  };
 
-    const handleAfter = () => {
-      const id = localStorage.getItem("currentSection");
-      if (!id) return;
+  const handleAfter = () => {
+    const id = localStorage.getItem("currentSection");
+    if (!id) return;
 
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          document.getElementById(id)?.scrollIntoView({
-            behavior: "auto",
-            block: "start",
-          });
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: "auto",
+          block: "start",
+        });
 
-          localStorage.removeItem("currentSection");
-        }, 80);
-      });
-    };
+        // 🧹 limpiar para evitar basura en memoria
+        localStorage.removeItem("currentSection");
+      }, 80);
+    });
+  };
 
-    window.addEventListener("orientationchange", handleBefore);
-    window.addEventListener("resize", handleAfter);
+  window.addEventListener("orientationchange", handleBefore);
+  window.addEventListener("resize", handleAfter);
 
-    return () => {
-      window.removeEventListener("orientationchange", handleBefore);
-      window.removeEventListener("resize", handleAfter);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener("orientationchange", handleBefore);
+    window.removeEventListener("resize", handleAfter);
+  };
+}, []);
 
   const t = translations[lang] || translations["es"];
 
-  // 🎬 Transición cinematic tema
-  const toggleTheme = () => {
-    // Compatibilidad
-    if (!document.startViewTransition) {
-      setMode(mode === "light" ? "dark" : "light");
-      return;
-    }
-
-    document.startViewTransition(() => {
-      setMode(mode === "light" ? "dark" : "light");
-    });
-
-    document.documentElement.animate(
-      {
-        clipPath: [
-          "inset(0 0 100% 0)",
-          "inset(0 0 0% 0)",
-        ],
-      },
-      {
-        duration: 600,
-        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-        pseudoElement: "::view-transition-new(root)",
-      }
-    );
-  };
-
-  // 🎨 Theme
+  // 🎨 Theme optimizado
   const theme = useMemo(
     () =>
       createTheme({
@@ -123,23 +93,19 @@ function App() {
           mode,
           primary: { main: "#1976d2" },
           secondary: { main: "#ffeb3b" },
-
           background: {
             default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
             paper: mode === "dark" ? "#121212" : "#ffffff",
           },
-
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
           },
         },
-
         typography: {
           fontFamily: "Poppins, Roboto, sans-serif",
           h2: { fontWeight: 700 },
           h4: { fontWeight: 600 },
         },
-
         shape: {
           borderRadius: 12,
         },
@@ -147,7 +113,7 @@ function App() {
     [mode]
   );
 
-  // 🔥 Secciones
+  // 🔥 Memo de secciones (correcto)
   const sections = useMemo(
     () => [
       { id: "about", color: "#2e7d32", Component: About },
@@ -212,6 +178,7 @@ function App() {
 
                 scrollMarginTop: scrollOffset,
 
+                // 🔥 OPTIMIZACIÓN IMPORTANTE
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
@@ -219,9 +186,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-
                   border: `1.5px solid ${color}`,
-
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
@@ -246,117 +211,100 @@ function App() {
               right: 16,
               zIndex: 1000,
               bgcolor: "#25D366",
-
-              "&:hover": {
-                bgcolor: "#1ebe5c",
-              },
+              "&:hover": { bgcolor: "#1ebe5c" },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon
-              sx={{
-                fontSize: 32,
-                color: "#fff",
-              }}
-            />
+            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
           </Fab>
         </Tooltip>
 
-        {/* Tema */}
-        <Tooltip title="Cambiar tema" placement="right">
-          <Fab
-            aria-label="tema"
-            onClick={toggleTheme}
-            sx={(theme) => ({
-              position: "fixed",
-              top: 90,
-              left: 16,
-              zIndex: 1200,
+{/* Tema */}
+<Tooltip title="Cambiar tema" placement="right">
+  <Fab
+    aria-label="tema"
+    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
+      left: 16,    // 👈 lado izquierdo
+      zIndex: 1200,
 
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
 
-              color: "#fff",
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
 
-              width: 52,
-              height: 52,
+      transition: "background-color 0.25s ease, transform 0.2s ease",
 
-              boxShadow: "none",
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
 
-              transition:
-                "background-color 0.25s ease, transform 0.2s ease",
-
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-
-              "&:active": {
-                transform: "scale(0.95)",
-              },
-            })}
-          >
-            {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-          </Fab>
-        </Tooltip>
-
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+  </Fab>
+</Tooltip>
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
-          <Fab
-            aria-label="idioma"
-            disableRipple
-            disableFocusRipple
-            disableTouchRipple
-            onClick={() => setLang(lang === "es" ? "en" : "es")}
-            sx={(theme) => ({
-              position: "fixed",
-              top: 90,
-              right: 16,
-              zIndex: 1200,
+  <Fab
+    aria-label="idioma"
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
+    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    sx={(theme) => ({
+      position: "fixed",
+      top: 90,
+      right: 16,
+      zIndex: 1200,
 
-              bgcolor:
-                theme.palette.mode === "dark"
-                  ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
 
-              color: "#fff",
+      color: "#fff",
+      width: 52,
+      height: 52,
+      fontWeight: 800,
+      fontSize: "1rem",
+      letterSpacing: "1px",
+      boxShadow: "none",
 
-              width: 52,
-              height: 52,
+      // 🔥 MISMO FIX
+      transition: "background-color 0.25s ease, transform 0.2s ease",
+      willChange: "background-color",
 
-              fontWeight: 800,
-              fontSize: "1rem",
-              letterSpacing: "1px",
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
 
-              boxShadow: "none",
-
-              transition:
-                "background-color 0.25s ease, transform 0.2s ease",
-
-              willChange: "background-color",
-
-              "&:hover": {
-                bgcolor:
-                  theme.palette.mode === "dark"
-                    ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
-              },
-
-              "&:active": {
-                transform: "scale(0.95)",
-              },
-            })}
-          >
-            {lang === "es" ? "EN" : "ES"}
-          </Fab>
-        </Tooltip>
-
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    {lang === "es" ? "EN" : "ES"}
+  </Fab>
+</Tooltip>
         <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
