@@ -153,7 +153,7 @@ export default function Certifications({ t }) {
       ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
       : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
 
-    border: `2px solid ${
+    border: `1px solid ${
   palette.mode === "dark"
     ? "rgba(100,181,246,0.65)" // azul elegante y visible en oscuro
     : "rgba(30,136,229,0.42)" // azul limpio y suave en claro
