@@ -277,33 +277,44 @@ transform: "translateZ(0)",
                     }}
                   >
                     <Box
-                      component={motion.img}
-                      src={skill.img}
-                      alt={skill.name}
-                      whileHover={{
-                        scale: 1.12,
-                        rotate: [0, 3, -3, 2, 0],
-                        y: -4,
-                      }}
-                      whileTap={{
-                        scale: 0.94,
-                        rotate: 180,
-                      }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 16,
-                      }}
-                      sx={{
-                        width: 65,
-                        height: 65,
-                        mb: 2,
-                        objectFit: "contain",
-                        filter: isDark
-                          ? "invert(1) brightness(1.22)"
-                          : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
-                      }}
-                    />
+  component={motion.img}
+  src={skill.img}
+  alt={skill.name}
+  whileHover={{
+    scale: 1.12,
+    rotate: [0, 3, -3, 2, 0],
+    y: -4,
+  }}
+  whileTap={{
+    scale: 0.94,
+    rotate: 180,
+  }}
+  transition={{
+    rotate: {
+      duration: 0.45,
+      ease: "easeInOut",
+    },
+    scale: {
+      type: "spring",
+      stiffness: 220,
+      damping: 14,
+    },
+  }}
+  sx={{
+    width: 65,
+    height: 65,
+    mb: 2,
+    objectFit: "contain",
+
+    backfaceVisibility: "hidden",
+    transform: "translateZ(0)",
+    willChange: "transform",
+
+    filter: isDark
+      ? "invert(1) brightness(1.22)"
+      : "drop-shadow(0 0 5px rgba(0,0,0,0.22))",
+  }}
+/>
 
                     <Typography fontWeight="bold">
                       {skill.name}
