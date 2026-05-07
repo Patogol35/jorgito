@@ -286,13 +286,14 @@ transform: "translateZ(0)",
                         y: -4,
                       }}
                       whileTap={{
-  scale: 0.94,
-  rotate: 180,
-}}
-transition={{
-  duration: 0.35,
-  ease: "easeInOut",
-}}
+                        scale: 0.94,
+                        rotate: 180,
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 16,
+                      }}
                       sx={{
                         width: 65,
                         height: 65,
@@ -317,4 +318,4 @@ transition={{
       </Container>
     </Box>
   );
-                  }
+    }
