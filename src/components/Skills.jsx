@@ -290,9 +290,22 @@ transform: "translateZ(0)",
     rotate: 180,
   }}
   transition={{
-    type: "spring",
-    stiffness: 200,
-    damping: 16,
+    scale: {
+      type: "spring",
+      stiffness: 200,
+      damping: 16,
+    },
+
+    y: {
+      type: "spring",
+      stiffness: 200,
+      damping: 16,
+    },
+
+    rotate: {
+      duration: 0.38,
+      ease: "easeInOut",
+    },
   }}
   sx={{
     width: 65,
@@ -300,11 +313,8 @@ transform: "translateZ(0)",
     mb: 2,
     objectFit: "contain",
 
-    /* 🔥 evita el lag del primer giro */
     willChange: "transform",
-    transform: "translate3d(0,0,0)",
-    backfaceVisibility: "hidden",
-    perspective: 1000,
+    transform: "translateZ(0)",
 
     filter: isDark
       ? "invert(1) brightness(1.22)"
