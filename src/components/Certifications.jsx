@@ -153,21 +153,13 @@ export default function Certifications({ t }) {
     ? "linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))"
     : "linear-gradient(145deg, rgba(25,118,210,0.02), rgba(255,255,255,0.9))",
 
-  border: `1px solid ${
-    isDark
-      ? "rgba(25,118,210,0.55)"
-      : "rgba(25,118,210,0.28)"
-  }`,
+  border: `1px solid ${palette.primary.main}`,
 
   backdropFilter: "blur(10px)",
 
   position: "relative",
 
-  transition: "transform 0.25s ease, border-color 0.25s ease",
-
-  "&:hover": {
-    borderColor: palette.primary.main,
-  },
+  
 
   "&::after": {
     content: '""',
