@@ -143,7 +143,6 @@ export default function Certifications({ t }) {
                 >
                   <Box
   sx={{
-  sx={{
   textAlign: "center",
   px: 1,
   py: 2,
@@ -174,7 +173,7 @@ export default function Certifications({ t }) {
       ? "linear-gradient(to right, transparent, rgba(25,118,210,0.45), transparent)"
       : "linear-gradient(to right, transparent, rgba(25,118,210,0.25), transparent)",
   },
-
+}}
 
 backdropFilter: "blur(10px)",
 
