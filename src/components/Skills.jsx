@@ -263,19 +263,17 @@ export default function Skills({ t }) {
                       borderRadius: "22px",
                       backgroundColor: cardBg,
                       backgroundImage: "none",
-                      border: `1px solid ${
-                        isDark
-                          ? "rgba(255,255,255,0.15)"
-                          : "rgba(0,0,0,0.12)"
-                      }`,
-                      transition:
-                        "transform 0.25s ease, border-color 0.25s ease",
-                      willChange: "transform",
-                      transform: "translateZ(0)",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                        borderColor: theme.palette.primary.main,
-                      },
+                      border: `1px solid ${theme.palette.primary.main}`,
+
+transition: "transform 0.25s ease",
+
+willChange: "transform",
+
+transform: "translateZ(0)",
+
+"&:hover": {
+  transform: "translateY(-4px)",
+},
                     }}
                   >
                     <Box
