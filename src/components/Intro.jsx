@@ -12,7 +12,7 @@ export default function Intro({ onFinish }) {
 
           setTimeout(() => {
             onFinish();
-          }, 400);
+          }, 500);
 
           return 100;
         }
@@ -40,59 +40,142 @@ export default function Intro({ onFinish }) {
         position: "relative",
       }}
     >
-      {/* Glow azul */}
+      {/* Glow principal */}
       <div
         style={{
           position: "absolute",
-          width: "500px",
-          height: "500px",
-          background: "rgba(79,195,247,0.15)",
+          width: "600px",
+          height: "600px",
+          background: "rgba(79,195,247,0.14)",
           borderRadius: "50%",
-          filter: "blur(120px)",
+          filter: "blur(140px)",
         }}
       />
 
-      {/* Card */}
+      {/* Grid tecnológico */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
+          `,
+          backgroundSize: "40px 40px",
+          opacity: 0.25,
+        }}
+      />
+
+      {/* Card principal */}
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.7 }}
         style={{
           width: "90%",
-          maxWidth: "500px",
-          padding: "40px",
-          borderRadius: "24px",
-          background: "rgba(15,23,42,0.72)",
-          backdropFilter: "blur(14px)",
+          maxWidth: "560px",
+          padding: "42px",
+          borderRadius: "28px",
+          background: "rgba(10,15,25,0.72)",
+          backdropFilter: "blur(16px)",
           border: "1px solid rgba(79,195,247,0.18)",
-          boxShadow: "0 0 40px rgba(79,195,247,0.12)",
+          boxShadow:
+            "0 0 50px rgba(79,195,247,0.12), inset 0 0 30px rgba(255,255,255,0.02)",
+          position: "relative",
+          overflow: "hidden",
           zIndex: 2,
         }}
       >
-        {/* Texto */}
+        {/* Línea glow arriba */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "2px",
+            background:
+              "linear-gradient(90deg, transparent, #4FC3F7, transparent)",
+          }}
+        />
+
+        {/* Logo */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            width: "82px",
+            height: "82px",
+            margin: "0 auto 26px",
+            borderRadius: "24px",
+            background:
+              "linear-gradient(135deg, rgba(66,165,245,0.22), rgba(79,195,247,0.08))",
+            border: "1px solid rgba(79,195,247,0.25)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 0 35px rgba(79,195,247,0.18)",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          <span
+            style={{
+              color: "#4FC3F7",
+              fontSize: "2rem",
+              fontWeight: 700,
+              fontFamily: "Poppins, sans-serif",
+              letterSpacing: "1px",
+            }}
+          >
+            JS
+          </span>
+        </motion.div>
+
+        {/* Título */}
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
           style={{
-            color: "#fff",
-            fontSize: "1.8rem",
-            marginBottom: "30px",
+            color: "#ffffff",
+            fontSize: "1.9rem",
             fontWeight: 700,
+            marginBottom: "10px",
             textAlign: "center",
+            fontFamily: "Poppins, sans-serif",
+            letterSpacing: "0.5px",
+          }}
+        >
+          Portafolio Profesional
+        </motion.h1>
+
+        {/* Subtitulo */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          style={{
+            color: "rgba(255,255,255,0.68)",
+            textAlign: "center",
+            fontSize: "0.98rem",
+            marginBottom: "36px",
+            lineHeight: 1.7,
             fontFamily: "Poppins, sans-serif",
           }}
         >
-          Jorge Santamaría
-        </motion.h1>
+          Ingeniería de Software · Inteligencia Artificial · Desarrollo Web
+        </motion.p>
 
         {/* Barra */}
         <div
           style={{
             width: "100%",
-            height: "10px",
-            background: "rgba(255,255,255,0.08)",
+            height: "12px",
+            background: "rgba(255,255,255,0.06)",
             borderRadius: "999px",
             overflow: "hidden",
+            position: "relative",
           }}
         >
           <motion.div
@@ -100,9 +183,29 @@ export default function Intro({ onFinish }) {
               height: "100%",
               borderRadius: "999px",
               background:
-                "linear-gradient(90deg, #42A5F5 0%, #4FC3F7 100%)",
+                "linear-gradient(90deg, #1976d2 0%, #4FC3F7 100%)",
               width: `${progress}%`,
-              boxShadow: "0 0 18px rgba(79,195,247,0.6)",
+              boxShadow: "0 0 20px rgba(79,195,247,0.65)",
+            }}
+          />
+
+          {/* Shine */}
+          <motion.div
+            animate={{
+              x: ["-100%", "500%"],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            style={{
+              position: "absolute",
+              top: 0,
+              width: "80px",
+              height: "100%",
+              background:
+                "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)",
             }}
           />
         </div>
@@ -113,29 +216,31 @@ export default function Intro({ onFinish }) {
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           style={{
-            marginTop: "18px",
+            marginTop: "20px",
             textAlign: "center",
             color: "#4FC3F7",
-            fontSize: "1rem",
-            fontWeight: 600,
+            fontSize: "1.05rem",
+            fontWeight: 700,
             fontFamily: "monospace",
-            letterSpacing: "1px",
+            letterSpacing: "2px",
+            textShadow: "0 0 12px rgba(79,195,247,0.4)",
           }}
         >
           {progress}%
         </motion.div>
 
-        {/* texto abajo */}
+        {/* Texto inferior */}
         <div
           style={{
-            marginTop: "20px",
+            marginTop: "18px",
             textAlign: "center",
-            color: "rgba(255,255,255,0.7)",
-            fontSize: "0.95rem",
+            color: "rgba(255,255,255,0.55)",
+            fontSize: "0.92rem",
             fontFamily: "Poppins, sans-serif",
+            letterSpacing: "0.3px",
           }}
         >
-          Cargando experiencia digital...
+          Inicializando experiencia digital...
         </div>
       </motion.div>
     </motion.div>
