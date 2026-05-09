@@ -99,69 +99,40 @@ export default function Intro({ onFinish }) {
           }}
         />
 
-        {/* Logo */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          style={{
-            width: "82px",
-            height: "82px",
-            margin: "0 auto 26px",
-            borderRadius: "24px",
-            background:
-              "linear-gradient(135deg, rgba(66,165,245,0.22), rgba(79,195,247,0.08))",
-            border: "1px solid rgba(79,195,247,0.25)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 35px rgba(79,195,247,0.18)",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <span
-            style={{
-              color: "#4FC3F7",
-              fontSize: "2rem",
-              fontWeight: 700,
-              fontFamily: "Poppins, sans-serif",
-              letterSpacing: "1px",
-            }}
-          >
-            JS
-          </span>
-        </motion.div>
-
-        {/* Título */}
+        {/* Nombre */}
         <motion.h1
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
           style={{
-            color: "#ffffff",
-            fontSize: "1.9rem",
-            fontWeight: 700,
-            marginBottom: "10px",
             textAlign: "center",
+            fontSize: "2.2rem",
+            fontWeight: 800,
+            marginBottom: "10px",
             fontFamily: "Poppins, sans-serif",
-            letterSpacing: "0.5px",
+            letterSpacing: "1px",
+            background: "linear-gradient(90deg, #42A5F5, #4FC3F7, #90CAF9)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: "0 0 18px rgba(79,195,247,0.25)",
           }}
         >
-          Portafolio Profesional
+          Jorge Santamaría
         </motion.h1>
 
         {/* Subtitulo */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
           style={{
             color: "rgba(255,255,255,0.68)",
             textAlign: "center",
-            fontSize: "0.98rem",
-            marginBottom: "36px",
+            fontSize: "1rem",
+            marginBottom: "38px",
             lineHeight: 1.7,
             fontFamily: "Poppins, sans-serif",
+            letterSpacing: "0.3px",
           }}
         >
           Ingeniería de Software · Inteligencia Artificial · Desarrollo Web
@@ -245,4 +216,4 @@ export default function Intro({ onFinish }) {
       </motion.div>
     </motion.div>
   );
-}
+            }
