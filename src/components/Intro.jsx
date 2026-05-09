@@ -19,7 +19,7 @@ export default function Intro({ onFinish }) {
 
         return prev + 1;
       });
-    }, 40);
+    }, 32);
 
     return () => clearInterval(interval);
   }, [onFinish]);
