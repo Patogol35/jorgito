@@ -191,7 +191,7 @@ export default function Intro({ onFinish }) {
             letterSpacing: "0.5px",
           }}
         >
-          Ingeniería de Software · Sistemas IA · Desarrollo Full Stack
+         Máster en Ingeniería de Software y Sistemas Informáticos
         </motion.div>
 
         {/* STATUS */}
