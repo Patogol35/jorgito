@@ -150,7 +150,7 @@ export default function Intro({ onFinish }) {
             textShadow: "0 0 12px rgba(79,195,247,0.45)",
           }}
         >
-          SYSTEM INITIALIZATION
+          INICIALIZANDO SISTEMA
         </motion.div>
 
         {/* NOMBRE */}
@@ -191,7 +191,7 @@ export default function Intro({ onFinish }) {
             letterSpacing: "0.5px",
           }}
         >
-          Software Engineering · AI Systems · Full Stack Development
+          Ingeniería de Software · Sistemas IA · Desarrollo Full Stack
         </motion.div>
 
         {/* STATUS */}
@@ -206,7 +206,7 @@ export default function Intro({ onFinish }) {
             letterSpacing: "1px",
           }}
         >
-          <span>Loading Interface</span>
+          <span>Cargando interfaz</span>
           <span>{progress}%</span>
         </div>
 
@@ -274,12 +274,12 @@ export default function Intro({ onFinish }) {
             lineHeight: 1.8,
           }}
         >
-          <div>{">"} Initializing digital environment...</div>
-          <div>{">"} Loading projects and certifications...</div>
-          <div>{">"} AI modules online...</div>
-          <div>{">"} Portfolio ready.</div>
+          <div>{">"} Inicializando entorno digital...</div>
+          <div>{">"} Cargando proyectos y certificaciones...</div>
+          <div>{">"} Sistemas de IA en línea...</div>
+          <div>{">"} Portafolio listo.</div>
         </motion.div>
       </motion.div>
     </motion.div>
   );
-        }
+}
