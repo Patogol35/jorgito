@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-const messages = [
-  "Inicializando Portafolio...",
-  "Cargando Proyectos...",
-  "Cargando Sistemas IA...",
-  "Bienvenido Jorge Santamaría",
-];
+import { motion } from "framer-motion";
 
 export default function Intro({ onFinish }) {
-  const [index, setIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (index < messages.length - 1) {
-      const timer = setTimeout(() => {
-        setIndex((prev) => prev + 1);
-      }, 700);
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
 
-      return () => clearTimeout(timer);
-    } else {
-      const finishTimer = setTimeout(() => {
-        onFinish();
-      }, 1200);
+          setTimeout(() => {
+            onFinish();
+          }, 400);
 
-      return () => clearTimeout(finishTimer);
-    }
-  }, [index, onFinish]);
+          return 100;
+        }
+
+        return prev + 1;
+      });
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, [onFinish]);
 
   return (
     <motion.div
@@ -43,108 +40,104 @@ export default function Intro({ onFinish }) {
         position: "relative",
       }}
     >
-      {/* Glow fondo */}
+      {/* Glow azul */}
       <div
         style={{
           position: "absolute",
           width: "500px",
           height: "500px",
-          background: "rgba(79,195,247,0.12)",
+          background: "rgba(79,195,247,0.15)",
           borderRadius: "50%",
           filter: "blur(120px)",
         }}
       />
 
-      {/* Terminal */}
+      {/* Card */}
       <motion.div
-        initial={{ opacity: 0, y: 25, scale: 0.96 }}
+        initial={{ opacity: 0, y: 30, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7 }}
         style={{
           width: "90%",
-          maxWidth: "700px",
-          background: "rgba(15,23,42,0.7)",
-          border: "1px solid rgba(79,195,247,0.18)",
-          borderRadius: "24px",
+          maxWidth: "500px",
           padding: "40px",
+          borderRadius: "24px",
+          background: "rgba(15,23,42,0.72)",
           backdropFilter: "blur(14px)",
-          boxShadow: "0 0 40px rgba(79,195,247,0.15)",
-          position: "relative",
+          border: "1px solid rgba(79,195,247,0.18)",
+          boxShadow: "0 0 40px rgba(79,195,247,0.12)",
           zIndex: 2,
         }}
       >
-        {/* Botones terminal */}
-        <div
+        {/* Texto */}
+        <motion.h1
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           style={{
-            display: "flex",
-            gap: "8px",
-            marginBottom: "24px",
+            color: "#fff",
+            fontSize: "1.8rem",
+            marginBottom: "30px",
+            fontWeight: 700,
+            textAlign: "center",
+            fontFamily: "Poppins, sans-serif",
           }}
         >
-          <div
+          Jorge Santamaría
+        </motion.h1>
+
+        {/* Barra */}
+        <div
+          style={{
+            width: "100%",
+            height: "10px",
+            background: "rgba(255,255,255,0.08)",
+            borderRadius: "999px",
+            overflow: "hidden",
+          }}
+        >
+          <motion.div
             style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#ff5f56",
-            }}
-          />
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#ffbd2e",
-            }}
-          />
-          <div
-            style={{
-              width: 12,
-              height: 12,
-              borderRadius: "50%",
-              background: "#27c93f",
+              height: "100%",
+              borderRadius: "999px",
+              background:
+                "linear-gradient(90deg, #42A5F5 0%, #4FC3F7 100%)",
+              width: `${progress}%`,
+              boxShadow: "0 0 18px rgba(79,195,247,0.6)",
             }}
           />
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              color: "#4FC3F7",
-              fontFamily: "monospace",
-              fontSize: "1.15rem",
-              lineHeight: 1.9,
-              textShadow: "0 0 10px rgba(79,195,247,0.35)",
-            }}
-          >
-            {messages.slice(0, index + 1).map((msg, i) => (
-              <div key={i}>
-                {">"} {msg}
-              </div>
-            ))}
+        {/* porcentaje */}
+        <motion.div
+          key={progress}
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          style={{
+            marginTop: "18px",
+            textAlign: "center",
+            color: "#4FC3F7",
+            fontSize: "1rem",
+            fontWeight: 600,
+            fontFamily: "monospace",
+            letterSpacing: "1px",
+          }}
+        >
+          {progress}%
+        </motion.div>
 
-            <span className="cursor">_</span>
-          </motion.div>
-        </AnimatePresence>
+        {/* texto abajo */}
+        <div
+          style={{
+            marginTop: "20px",
+            textAlign: "center",
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "0.95rem",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        >
+          Cargando experiencia digital...
+        </div>
       </motion.div>
-
-      <style>
-        {`
-          .cursor {
-            animation: blink 0.8s infinite;
-          }
-
-          @keyframes blink {
-            50% {
-              opacity: 0;
-            }
-          }
-        `}
-      </style>
     </motion.div>
   );
 }
