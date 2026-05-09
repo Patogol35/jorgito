@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const messages = [
-  "Initializing Portfolio...",
-  "Loading Projects...",
-  "Loading AI Systems...",
-  "Welcome Jorge Santamaría",
+  "Inicializando Portafolio...",
+  "Cargando Proyectos...",
+  "Cargando Sistemas IA...",
+  "Bienvenido Jorge Santamaría",
 ];
 
 export default function Intro({ onFinish }) {
@@ -49,7 +49,7 @@ export default function Intro({ onFinish }) {
           position: "absolute",
           width: "500px",
           height: "500px",
-          background: "rgba(0,255,204,0.08)",
+          background: "rgba(79,195,247,0.12)",
           borderRadius: "50%",
           filter: "blur(120px)",
         }}
@@ -64,16 +64,16 @@ export default function Intro({ onFinish }) {
           width: "90%",
           maxWidth: "700px",
           background: "rgba(15,23,42,0.7)",
-          border: "1px solid rgba(0,255,204,0.15)",
+          border: "1px solid rgba(79,195,247,0.18)",
           borderRadius: "24px",
           padding: "40px",
           backdropFilter: "blur(14px)",
-          boxShadow: "0 0 40px rgba(0,255,204,0.08)",
+          boxShadow: "0 0 40px rgba(79,195,247,0.15)",
           position: "relative",
           zIndex: 2,
         }}
       >
-        {/* botones terminal */}
+        {/* Botones terminal */}
         <div
           style={{
             display: "flex",
@@ -114,11 +114,11 @@ export default function Intro({ onFinish }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             style={{
-              color: "#00ffcc",
+              color: "#4FC3F7",
               fontFamily: "monospace",
               fontSize: "1.15rem",
               lineHeight: 1.9,
-              textShadow: "0 0 10px rgba(0,255,204,0.25)",
+              textShadow: "0 0 10px rgba(79,195,247,0.35)",
             }}
           >
             {messages.slice(0, index + 1).map((msg, i) => (
