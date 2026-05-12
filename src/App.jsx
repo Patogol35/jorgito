@@ -9,7 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import Intro from "./components/Intro.jsx";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import Navbar from "./components/Navbar.jsx";
@@ -33,7 +33,6 @@ function App() {
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
   );
-  const [loading, setLoading] = useState(true);
 
   const scrollOffset = "80px";
 
@@ -127,12 +126,8 @@ function App() {
     []
   );
 
-  if (loading) {
-  return <Intro onFinish={() => setLoading(false)} />;
-}
-
-return (
-  <ThemeProvider theme={theme}>
+  return (
+    <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
