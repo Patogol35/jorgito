@@ -18,7 +18,6 @@ import { useState } from "react";
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [zoom, setZoom] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
@@ -27,13 +26,11 @@ export default function Hero({ mode, setMode, t }) {
       opacity: 0,
       y: 16,
       clipPath: "inset(0 0 100% 0)",
-      filter: "blur(6px)",
     },
     visible: {
       opacity: 1,
       y: 0,
       clipPath: "inset(0 0 0% 0)",
-      filter: "blur(0px)",
       transition: { duration: 0.9, ease: easeOutExpo },
     },
   };
@@ -79,7 +76,7 @@ export default function Hero({ mode, setMode, t }) {
       >
         {/* AVATAR */}
         <motion.div
-          initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
+          initial={{ opacity: 0, rotateY: -45, scale: 0.92 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
           transition={{ duration: 1.8, ease: easeOutExpo }}
           style={{
@@ -87,6 +84,8 @@ export default function Hero({ mode, setMode, t }) {
             transformStyle: "preserve-3d",
             perspective: 1200,
             willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
           }}
         >
           <motion.div
@@ -96,10 +95,10 @@ export default function Hero({ mode, setMode, t }) {
           >
             <motion.div
               animate={{
-                boxShadow: [
-                  `0 0 16px ${theme.palette.primary.main}55`,
-                  `0 0 26px ${theme.palette.primary.main}88`,
-                  `0 0 16px ${theme.palette.primary.main}55`,
+                filter: [
+                  `drop-shadow(0 0 16px ${theme.palette.primary.main}55)`,
+                  `drop-shadow(0 0 26px ${theme.palette.primary.main}88)`,
+                  `drop-shadow(0 0 16px ${theme.palette.primary.main}55)`,
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity }}
@@ -116,7 +115,6 @@ export default function Hero({ mode, setMode, t }) {
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
                   backgroundColor: theme.palette.background.paper,
                 }}
               />
@@ -246,65 +244,62 @@ export default function Hero({ mode, setMode, t }) {
 
       {/* MODAL */}
       <Modal
-  open={open}
-  onClose={() => setOpen(false)}
-  sx={{
-    zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.85)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <>
-    {/* ❌ BOTÓN FIJO (SIEMPRE ARRIBA) */}
-    <IconButton
-      onClick={() => setOpen(false)}
-      sx={{
-        position: "fixed", // 🔥 CLAVE
-        top: 20,
-        left: 20,
-        zIndex: 3000,
-        background: "rgba(0,0,0,0.6)",
-        color: "#fff",
-        backdropFilter: "blur(6px)",
-        "&:hover": {
-          background: "rgba(0,0,0,0.8)",
-        },
-      }}
-    >
-      <Close />
-    </IconButton>
-
-    {/* CONTENEDOR */}
-    <Box
-      sx={{
-        position: "relative",
-        width: { xs: "95%", md: "70%" },
-        maxHeight: "90vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {/* 🖼️ IMAGEN */}
-      <Box
-        component="img"
-        src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-        alt="certificado"
-        loading="lazy"
-        decoding="async"
+        open={open}
+        onClose={() => setOpen(false)}
         sx={{
-          width: "100%",
-          maxHeight: "90vh",
-          objectFit: "contain",
-          borderRadius: 2,
-          display: "block",
+          zIndex: 2000,
+          backgroundColor: "rgba(0,0,0,0.85)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-      />
-    </Box>
-  </>
-</Modal>
+      >
+        <>
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "fixed",
+              top: 20,
+              left: 20,
+              zIndex: 3000,
+              background: "rgba(0,0,0,0.6)",
+              color: "#fff",
+              backdropFilter: "blur(6px)",
+              "&:hover": {
+                background: "rgba(0,0,0,0.8)",
+              },
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          <Box
+            sx={{
+              position: "relative",
+              width: { xs: "95%", md: "70%" },
+              maxHeight: "90vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              component="img"
+              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+              alt="certificado"
+              loading="lazy"
+              decoding="async"
+              sx={{
+                width: "100%",
+                maxHeight: "90vh",
+                objectFit: "contain",
+                borderRadius: 2,
+                display: "block",
+              }}
+            />
+          </Box>
+        </>
+      </Modal>
     </>
   );
-            }                
+}
