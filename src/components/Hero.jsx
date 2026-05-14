@@ -23,19 +23,20 @@ export default function Hero({ mode, setMode, t }) {
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
-  hidden: {
-    opacity: 0,
-    y: 18,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.75,
-      ease: [0.16, 1, 0.3, 1],
+    hidden: {
+      opacity: 0,
+      y: 16,
+      clipPath: "inset(0 0 100% 0)",
+      filter: "blur(6px)",
     },
-  },
-};
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0 0 0% 0)",
+      filter: "blur(0px)",
+      transition: { duration: 0.9, ease: easeOutExpo },
+    },
+  };
 
   const textContainer = {
     hidden: {},
@@ -77,93 +78,52 @@ export default function Hero({ mode, setMode, t }) {
         }}
       >
         {/* AVATAR */}
-<motion.div
-  initial={{
-    opacity: 0,
-    scale: 0.78,
-    y: 40,
-    rotate: -8,
-  }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    rotate: 0,
-  }}
-  transition={{
-    duration: 1.2,
-    ease: [0.16, 1, 0.3, 1],
-  }}
-  style={{
-    borderRadius: "50%",
-    willChange: "transform, opacity",
-    transform: "translateZ(0)",
-    backfaceVisibility: "hidden",
-  }}
->
-  {/* FLOATING */}
-  <motion.div
-    animate={{
-      y: [0, -10, 0],
-      rotate: [0, 1.5, 0, -1.5, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-    style={{
-      willChange: "transform",
-      transform: "translateZ(0)",
-    }}
-  >
-    {/* GLOW */}
-    <motion.div
-      animate={{
-        scale: [1, 1.02, 1],
-      }}
-      transition={{
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      style={{
-        borderRadius: "50%",
-      }}
-    >
-      <Avatar
-        alt="Jorge Patricio"
-        src="https://i.imgur.com/jr3rjzu.jpg"
-        imgProps={{
-          loading: "eager",
-          decoding: "async",
-        }}
-        sx={{
-          width: { xs: 130, sm: 170, md: 200 },
-          height: { xs: 130, sm: 170, md: 200 },
+        <motion.div
+          initial={{ opacity: 0, rotateY: -140, scale: 0.92 }}
+          animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+          transition={{ duration: 1.8, ease: easeOutExpo }}
+          style={{
+            borderRadius: "50%",
+            transformStyle: "preserve-3d",
+            perspective: 1200,
+            willChange: "transform",
+          }}
+        >
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
+          >
+            <motion.div
+              animate={{
+                boxShadow: [
+                  `0 0 16px ${theme.palette.primary.main}55`,
+                  `0 0 26px ${theme.palette.primary.main}88`,
+                  `0 0 16px ${theme.palette.primary.main}55`,
+                ],
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+              style={{ borderRadius: "50%" }}
+            >
+              <Avatar
+                alt="Jorge Patricio"
+                src="https://i.imgur.com/jr3rjzu.jpg"
+                imgProps={{
+                  loading: "lazy",
+                  decoding: "async",
+                }}
+                sx={{
+                  width: { xs: 130, sm: 170, md: 200 },
+                  height: { xs: 130, sm: 170, md: 200 },
+                  border: `3px solid ${theme.palette.primary.main}`,
+                  boxShadow: `0 0 10px ${theme.palette.primary.main}66`,
+                  backgroundColor: theme.palette.background.paper,
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        </motion.div>
 
-          // 🔥 TU BORDE ORIGINAL
-          border: `3px solid ${theme.palette.primary.main}`,
-
-          // 🔥 GLOW ESTÁTICO (NO ANIMADO)
-          boxShadow: `
-            0 0 18px ${theme.palette.primary.main}66,
-            0 10px 35px rgba(0,0,0,0.25)
-          `,
-
-          backgroundColor: theme.palette.background.paper,
-
-          willChange: "transform",
-          transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
-
-          imageRendering: "auto",
-          contain: "layout paint style",
-        }}
-      />
-    </motion.div>
-  </motion.div>
-</motion.div>
         {/* TEXTO */}
         <Box
           textAlign={{ xs: "center", sm: "left" }}
