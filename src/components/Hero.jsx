@@ -25,7 +25,7 @@ export default function Hero({ mode, setMode, t }) {
   const fadeCinematic = {
   hidden: {
     opacity: 0,
-    y: 24,
+    y: 18,
   },
   visible: {
     opacity: 1,
@@ -80,7 +80,7 @@ export default function Hero({ mode, setMode, t }) {
 <motion.div
   initial={{
     opacity: 0,
-    scale: 0.75,
+    scale: 0.78,
     y: 40,
     rotate: -8,
   }}
@@ -95,17 +95,17 @@ export default function Hero({ mode, setMode, t }) {
     ease: [0.16, 1, 0.3, 1],
   }}
   style={{
+    borderRadius: "50%",
     willChange: "transform, opacity",
     transform: "translateZ(0)",
     backfaceVisibility: "hidden",
-    perspective: 1000,
   }}
 >
   {/* FLOATING */}
   <motion.div
     animate={{
       y: [0, -10, 0],
-      rotate: [0, 1.2, 0, -1.2, 0],
+      rotate: [0, 1.5, 0, -1.5, 0],
     }}
     transition={{
       duration: 5,
@@ -120,8 +120,7 @@ export default function Hero({ mode, setMode, t }) {
     {/* GLOW */}
     <motion.div
       animate={{
-        scale: [1, 1.03, 1],
-        opacity: [0.9, 1, 0.9],
+        scale: [1, 1.02, 1],
       }}
       transition={{
         duration: 3,
@@ -130,13 +129,6 @@ export default function Hero({ mode, setMode, t }) {
       }}
       style={{
         borderRadius: "50%",
-        padding: "4px",
-        background: `linear-gradient(
-          135deg,
-          ${theme.palette.primary.main},
-          #60a5fa
-        )`,
-        boxShadow: `0 0 30px ${theme.palette.primary.main}55`,
       }}
     >
       <Avatar
@@ -150,13 +142,16 @@ export default function Hero({ mode, setMode, t }) {
           width: { xs: 130, sm: 170, md: 200 },
           height: { xs: 130, sm: 170, md: 200 },
 
-          border: `3px solid ${theme.palette.background.paper}`,
+          // 🔥 TU BORDE ORIGINAL
+          border: `3px solid ${theme.palette.primary.main}`,
+
+          // 🔥 GLOW ESTÁTICO (NO ANIMADO)
+          boxShadow: `
+            0 0 18px ${theme.palette.primary.main}66,
+            0 10px 35px rgba(0,0,0,0.25)
+          `,
 
           backgroundColor: theme.palette.background.paper,
-
-          boxShadow: `
-            0 10px 40px rgba(0,0,0,0.25)
-          `,
 
           willChange: "transform",
           transform: "translateZ(0)",
