@@ -74,52 +74,67 @@ export default function Hero({ mode, setMode, t }) {
         }}
       >
         {/* AVATAR */}
-        <motion.div
-          initial={{ opacity: 0, y: 35, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, ease: easeOutExpo }}
-          style={{
-            borderRadius: "50%",
-            willChange: "transform, opacity",
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
-          }}
-        >
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            style={{
-              willChange: "transform",
-              transform: "translateZ(0)",
-            }}
-          >
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
-              style={{ borderRadius: "50%" }}
-            >
-              <Avatar
-                alt="Jorge Patricio"
-                src="https://i.imgur.com/jr3rjzu.jpg"
-                imgProps={{
-                  loading: "lazy",
-                  decoding: "async",
-                }}
-                sx={{
-                  width: { xs: 130, sm: 170, md: 200 },
-                  height: { xs: 130, sm: 170, md: 200 },
-                  border: `3px solid ${theme.palette.primary.main}`,
-                  boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
-                  backgroundColor: theme.palette.background.paper,
-                }}
-              />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+<motion.div
+  initial={{
+    opacity: 0,
+    rotateY: -70,
+    scale: 0.9,
+    y: 30,
+  }}
+  animate={{
+    opacity: 1,
+    rotateY: 0,
+    scale: 1,
+    y: 0,
+  }}
+  transition={{
+    duration: 1,
+    ease: easeOutExpo,
+  }}
+  style={{
+    borderRadius: "50%",
+    transformStyle: "preserve-3d",
+    perspective: 1000,
+    willChange: "transform, opacity",
+    transform: "translateZ(0)",
+    backfaceVisibility: "hidden",
+  }}
+>
+  <motion.div
+    animate={{ y: [0, -5, 0] }}
+    transition={{
+      duration: 6,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    style={{
+      willChange: "transform",
+      transform: "translateZ(0)",
+    }}
+  >
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.3 }}
+      style={{ borderRadius: "50%" }}
+    >
+      <Avatar
+        alt="Jorge Patricio"
+        src="https://i.imgur.com/jr3rjzu.jpg"
+        imgProps={{
+          loading: "lazy",
+          decoding: "async",
+        }}
+        sx={{
+          width: { xs: 130, sm: 170, md: 200 },
+          height: { xs: 130, sm: 170, md: 200 },
+          border: `3px solid ${theme.palette.primary.main}`,
+          boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
+          backgroundColor: theme.palette.background.paper,
+        }}
+      />
+    </motion.div>
+  </motion.div>
+</motion.div>
 
         {/* TEXTO */}
         <Box
