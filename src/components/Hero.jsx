@@ -25,14 +25,14 @@ export default function Hero({ mode, setMode, t }) {
   const fadeCinematic = {
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 24,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.7,
-      ease: easeOutExpo,
+      duration: 0.75,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
@@ -78,25 +78,37 @@ export default function Hero({ mode, setMode, t }) {
       >
         {/* AVATAR */}
 <motion.div
-  initial={{ opacity: 0, scale: 0.9 }}
-  animate={{ opacity: 1, scale: 1 }}
+  initial={{
+    opacity: 0,
+    scale: 0.75,
+    y: 40,
+    rotate: -8,
+  }}
+  animate={{
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    rotate: 0,
+  }}
   transition={{
-    duration: 0.8,
+    duration: 1.2,
     ease: [0.16, 1, 0.3, 1],
   }}
   style={{
-    willChange: "transform",
-    backfaceVisibility: "hidden",
+    willChange: "transform, opacity",
     transform: "translateZ(0)",
+    backfaceVisibility: "hidden",
+    perspective: 1000,
   }}
 >
-  {/* FLOAT SUAVE */}
+  {/* FLOATING */}
   <motion.div
     animate={{
-      y: [0, -8, 0],
+      y: [0, -10, 0],
+      rotate: [0, 1.2, 0, -1.2, 0],
     }}
     transition={{
-      duration: 4,
+      duration: 5,
       repeat: Infinity,
       ease: "easeInOut",
     }}
@@ -105,17 +117,26 @@ export default function Hero({ mode, setMode, t }) {
       transform: "translateZ(0)",
     }}
   >
-    {/* GLOW SUAVE */}
-    <Box
-      sx={{
+    {/* GLOW */}
+    <motion.div
+      animate={{
+        scale: [1, 1.03, 1],
+        opacity: [0.9, 1, 0.9],
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      style={{
         borderRadius: "50%",
-        p: "4px",
+        padding: "4px",
         background: `linear-gradient(
           135deg,
           ${theme.palette.primary.main},
-          #3b82f6
+          #60a5fa
         )`,
-        boxShadow: `0 0 18px ${theme.palette.primary.main}55`,
+        boxShadow: `0 0 30px ${theme.palette.primary.main}55`,
       }}
     >
       <Avatar
@@ -133,12 +154,19 @@ export default function Hero({ mode, setMode, t }) {
 
           backgroundColor: theme.palette.background.paper,
 
+          boxShadow: `
+            0 10px 40px rgba(0,0,0,0.25)
+          `,
+
           willChange: "transform",
           transform: "translateZ(0)",
           backfaceVisibility: "hidden",
+
+          imageRendering: "auto",
+          contain: "layout paint style",
         }}
       />
-    </Box>
+    </motion.div>
   </motion.div>
 </motion.div>
         {/* TEXTO */}
