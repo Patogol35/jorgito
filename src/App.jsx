@@ -95,7 +95,7 @@ function App() {
           secondary: { main: "#ffeb3b" },
           background: {
   default: mode === "dark" ? "#0a0a0a" : "#e9dfcf",
-  paper: mode === "dark" ? "#121212" : "#f6efe6",
+  paper: mode === "dark" ? "#121212" : "#f8f6f2",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -162,14 +162,14 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#f6efe6",
+    : "#f8f6f2",
 
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
                     : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
 
-                border: `1.5px solid ${color}55`,
+                border: "1px solid rgba(0,0,0,0.05)",
 
                 boxShadow:
                   theme.palette.mode === "light"
