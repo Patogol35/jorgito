@@ -94,8 +94,8 @@ function App() {
           primary: { main: "#1976d2" },
           secondary: { main: "#ffeb3b" },
           background: {
-  default: mode === "dark" ? "#0a0a0a" : "#f4f1ea",
-  paper: mode === "dark" ? "#121212" : "#fcfaf7",
+  default: mode === "dark" ? "#0a0a0a" : "#e9dfcf",
+  paper: mode === "dark" ? "#121212" : "#f6efe6",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -162,7 +162,7 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#fcfaf7",
+    : "#f6efe6",
 
                 backgroundImage:
                   theme.palette.mode === "dark"
