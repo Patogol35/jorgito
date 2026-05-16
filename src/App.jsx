@@ -176,19 +176,13 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#efe6d8",
+    : "#f6f3ee",
 
                 backgroundImage:
   theme.palette.mode === "dark"
     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : `
-      linear-gradient(
-        to bottom right,
-        rgba(255,255,255,0.65),
-        rgba(255,255,255,0.15)
-      )
-    `,
-
+    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
+                
                 border: `1.5px solid ${color}55`,
 
                 boxShadow:
