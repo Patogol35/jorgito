@@ -241,86 +241,35 @@ function App() {
     aria-label="tema"
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
-  mb: 4,
-  p: { xs: 3, md: 5 },
-  borderRadius: { xs: 4, md: 5 },
+      position: "fixed",
+      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
+      left: 16,    // 👈 lado izquierdo
+      zIndex: 1200,
 
-  position: "relative",
-  overflow: "hidden",
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
 
-  background:
-    theme.palette.mode === "dark"
-      ? "rgba(18,18,18,0.72)"
-      : "rgba(255,248,240,0.72)",
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
 
-  backdropFilter: "blur(14px)",
-  WebkitBackdropFilter: "blur(14px)",
+      transition: "background-color 0.25s ease, transform 0.2s ease",
 
-  border:
-    theme.palette.mode === "dark"
-      ? `1px solid rgba(255,255,255,0.06)`
-      : `1px solid rgba(255,255,255,0.7)`,
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
 
-  boxShadow:
-    theme.palette.mode === "light"
-      ? `
-        0 10px 30px rgba(0,0,0,0.06),
-        0 2px 8px rgba(0,0,0,0.04)
-      `
-      : `
-        0 10px 30px rgba(0,0,0,0.45),
-        0 2px 8px rgba(0,0,0,0.25)
-      `,
-
-  scrollMarginTop: scrollOffset,
-
-  transition:
-    "transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease",
-
-  willChange: "transform",
-
-  "&::before": {
-    content: '""',
-    position: "absolute",
-    inset: 0,
-    borderRadius: "inherit",
-    padding: "1px",
-
-    background: `
-      linear-gradient(
-        135deg,
-        ${color}55,
-        transparent,
-        rgba(255,255,255,0.15)
-      )
-    `,
-
-    WebkitMask:
-      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-    WebkitMaskComposite: "xor",
-    pointerEvents: "none",
-  },
-
-  "&:hover": {
-    transform: "translateY(-6px) scale(1.015)",
-
-    boxShadow:
-      theme.palette.mode === "light"
-        ? `
-          0 18px 40px rgba(0,0,0,0.10),
-          0 4px 14px rgba(0,0,0,0.06)
-        `
-        : `
-          0 18px 40px rgba(0,0,0,0.65),
-          0 4px 14px rgba(0,0,0,0.35)
-        `,
-
-    border:
-      theme.palette.mode === "dark"
-        ? `1px solid ${color}55`
-        : `1px solid ${color}88`,
-  },
-})} >
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
     {mode === "light" ? <Brightness4 /> : <Brightness7 />}
   </Fab>
 </Tooltip>
