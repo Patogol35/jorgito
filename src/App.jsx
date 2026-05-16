@@ -89,7 +89,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 Theme premium azul hielo
+  // 🎨 Theme beige premium
   const theme = useMemo(
     () =>
       createTheme({
@@ -97,20 +97,23 @@ function App() {
           mode,
 
           primary: {
-            main: "#1976d2",
+            main: "#8b5e3c",
           },
 
           secondary: {
-            main: "#ffeb3b",
+            main: "#c8a97e",
           },
 
           background: {
-            default: mode === "dark" ? "#0a0a0a" : "#edf4ff",
-            paper: mode === "dark" ? "#121212" : "#f7fbff",
+            // 🔥 Fondo beige elegante
+            default: mode === "dark" ? "#0a0a0a" : "#ebe2d3",
+
+            // 🔥 Cards crema premium
+            paper: mode === "dark" ? "#121212" : "#f8f1e7",
           },
 
           text: {
-            primary: mode === "dark" ? "#ffffff" : "#111827",
+            primary: mode === "dark" ? "#ffffff" : "#2d2218",
           },
         },
 
@@ -127,21 +130,21 @@ function App() {
         },
 
         shape: {
-          borderRadius: 12,
+          borderRadius: 14,
         },
       }),
     [mode]
   );
 
-  // 🔥 Memo de secciones
+  // 🔥 Secciones
   const sections = useMemo(
     () => [
-      { id: "about", color: "#2e7d32", Component: About },
-      { id: "skills", color: "#fb8c00", Component: Skills },
-      { id: "certifications", color: "#C0A660", Component: Certifications },
-      { id: "projects", color: "#1976d2", Component: Projects },
-      { id: "contact", color: "#d32f2f", Component: Contact },
-      { id: "form", color: "#00897b", Component: Form },
+      { id: "about", color: "#4e7d4e", Component: About },
+      { id: "skills", color: "#c27c2c", Component: Skills },
+      { id: "certifications", color: "#b6954d", Component: Certifications },
+      { id: "projects", color: "#7a5cfa", Component: Projects },
+      { id: "contact", color: "#b85b52", Component: Contact },
+      { id: "form", color: "#3e8b7b", Component: Form },
     ],
     []
   );
@@ -154,8 +157,10 @@ function App() {
         sx={{
           minHeight: "100vh",
           overflowX: "hidden",
+
           bgcolor: "background.default",
-          transition: "background-color 0.3s ease",
+
+          transition: "background-color 0.35s ease",
         }}
       >
         <Navbar
@@ -178,6 +183,7 @@ function App() {
           disableGutters
           sx={{
             py: 6,
+
             px: {
               xs: 2,
               sm: 4,
@@ -201,31 +207,43 @@ function App() {
                 },
 
                 borderRadius: {
-                  xs: 3,
-                  md: 4,
+                  xs: 4,
+                  md: 5,
                 },
 
+                // 🔥 Fondo crema elegante
                 backgroundColor:
                   theme.palette.mode === "dark"
                     ? "#121212"
-                    : "#f7fbff",
+                    : "#f8f1e7",
 
+                // 🔥 Gradient premium
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-                    : "linear-gradient(rgba(255,255,255,0.65), rgba(255,255,255,0.25))",
+                    : `
+                      linear-gradient(
+                        135deg,
+                        rgba(255,255,255,0.7),
+                        rgba(255,248,240,0.45)
+                      )
+                    `,
 
+                // 🔥 Glass effect
                 backdropFilter:
                   theme.palette.mode === "light"
-                    ? "blur(8px)"
+                    ? "blur(10px)"
                     : "none",
 
                 border: `1.5px solid ${color}55`,
 
                 boxShadow:
                   theme.palette.mode === "light"
-                    ? "0 6px 18px rgba(30,64,175,0.08)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+                    ? `
+                      0 8px 22px rgba(120, 90, 60, 0.10),
+                      0 2px 8px rgba(0,0,0,0.04)
+                    `
+                    : "0 6px 18px rgba(0,0,0,0.45)",
 
                 scrollMarginTop: scrollOffset,
 
@@ -235,14 +253,17 @@ function App() {
                 willChange: "transform",
 
                 "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
+                  transform: "translateY(-5px) scale(1.01)",
 
                   border: `1.5px solid ${color}`,
 
                   boxShadow:
                     theme.palette.mode === "light"
-                      ? "0 12px 28px rgba(59,130,246,0.14)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
+                      ? `
+                        0 14px 32px rgba(120,90,60,0.16),
+                        0 4px 12px rgba(0,0,0,0.06)
+                      `
+                      : "0 12px 28px rgba(0,0,0,0.65)",
                 },
               })}
             >
@@ -300,7 +321,7 @@ function App() {
               bgcolor:
                 theme.palette.mode === "dark"
                   ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
+                  : "#8b5e3c",
 
               color: "#fff",
 
@@ -316,7 +337,7 @@ function App() {
                 bgcolor:
                   theme.palette.mode === "dark"
                     ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
+                    : "#6f472c",
               },
 
               "&:active": {
@@ -353,7 +374,7 @@ function App() {
               bgcolor:
                 theme.palette.mode === "dark"
                   ? theme.palette.grey[900]
-                  : theme.palette.primary.main,
+                  : "#8b5e3c",
 
               color: "#fff",
 
@@ -369,13 +390,11 @@ function App() {
               transition:
                 "background-color 0.25s ease, transform 0.2s ease",
 
-              willChange: "background-color",
-
               "&:hover": {
                 bgcolor:
                   theme.palette.mode === "dark"
                     ? theme.palette.grey[800]
-                    : theme.palette.primary.dark,
+                    : "#6f472c",
               },
 
               "&:active": {
