@@ -168,6 +168,7 @@ function App() {
               id={id}
               elevation={0}
               sx={(theme) => ({
+                width: "100%",
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
