@@ -176,7 +176,7 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#fcf8f2",
+    : "#efe6d8",
 
                 backgroundImage:
   theme.palette.mode === "dark"
