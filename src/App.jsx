@@ -158,7 +158,7 @@ function App() {
         <Box
   sx={{
     py: 6,
-    px: { xs: 2, sm: 3, md: 4 },
+    px: 0,
     width: "100%",
   }}
 >
