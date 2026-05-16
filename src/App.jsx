@@ -139,9 +139,9 @@ function App() {
   theme.palette.mode === "dark"
     ? "#0a0a0a"
     : `
-      radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 30%),
+      radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 28%),
       radial-gradient(circle at bottom right, rgba(0,0,0,0.03), transparent 35%),
-      linear-gradient(135deg, #ebe3d5 0%, #e4d8c3 100%)
+      linear-gradient(135deg, #ebe3d5 0%, #ddd0bb 100%)
     `,
   })}
 >
@@ -171,7 +171,7 @@ function App() {
               sx={(theme) => ({
                 mb: 4,
                 p: { xs: 3, md: 5 },
-                borderRadius: "28px",
+                borderRadius: "18px",
 
                 backgroundColor:
   theme.palette.mode === "dark"
