@@ -156,20 +156,19 @@ function App() {
         />
 
         <Container
-  maxWidth={false}
-  disableGutters
-  sx={{
-    py: 6,
-    px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 10 },
-  }}
->
+          maxWidth="lg"
+          disableGutters
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
+        >
           {sections.map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
               elevation={0}
               sx={(theme) => ({
-                width: "100%",
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
