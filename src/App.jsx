@@ -227,80 +227,118 @@ function App() {
     aria-label="tema"
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
-      position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
-      left: 16,    // 👈 lado izquierdo
-      zIndex: 1200,
+  mb: 4,
+  p: { xs: 3, md: 5 },
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+  borderRadius: { xs: 4, md: 5 },
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      boxShadow: "none",
+  position: "relative",
+  overflow: "hidden",
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+  background:
+    theme.palette.mode === "dark"
+      ? `
+        radial-gradient(
+          circle at top left,
+          rgba(255,255,255,0.06),
+          transparent 35%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(20,20,20,0.96),
+          rgba(10,10,10,0.98)
+        )
+      `
+      : `
+        radial-gradient(
+          circle at top left,
+          rgba(255,255,255,0.9),
+          transparent 30%
+        ),
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.95),
+          rgba(240,236,228,0.96)
+        )
+      `,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+  backdropFilter: "blur(12px)",
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </Fab>
-</Tooltip>
-        {/* Idioma */}
-        <Tooltip title="Cambiar idioma" placement="left">
-  <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
+  border:
+    theme.palette.mode === "dark"
+      ? "1px solid rgba(255,255,255,0.08)"
+      : "1px solid rgba(255,255,255,0.7)",
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+  boxShadow:
+    theme.palette.mode === "dark"
+      ? `
+        0 10px 30px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.04)
+      `
+      : `
+        0 10px 25px rgba(0,0,0,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.8)
+      `,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-      boxShadow: "none",
+  transition:
+    "transform 0.25s ease, box-shadow 0.25s ease",
 
-      // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    inset: 0,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+    background:
+      theme.palette.mode === "dark"
+        ? `
+          linear-gradient(
+            130deg,
+            ${color}22,
+            transparent 40%
+          )
+        `
+        : `
+          linear-gradient(
+            130deg,
+            ${color}18,
+            transparent 40%
+          )
+        `,
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
+    pointerEvents: "none",
+  },
+
+  "&::after": {
+    content: '""',
+    position: "absolute",
+    width: 220,
+    height: 220,
+
+    top: -80,
+    right: -80,
+
+    background: `${color}15`,
+    filter: "blur(70px)",
+    borderRadius: "50%",
+
+    pointerEvents: "none",
+  },
+
+  "&:hover": {
+    transform: "translateY(-6px)",
+
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? `
+          0 16px 45px rgba(0,0,0,0.6),
+          0 0 0 1px ${color}44
+        `
+        : `
+          0 16px 40px rgba(0,0,0,0.1),
+          0 0 0 1px ${color}22
+        `,
+  },
+})}
   >
     {lang === "es" ? "EN" : "ES"}
   </Fab>
