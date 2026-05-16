@@ -136,13 +136,13 @@ function App() {
     overflowX: "hidden",
 
     background:
-      theme.palette.mode === "dark"
-        ? "#0a0a0a"
-        : `
-          radial-gradient(circle at top left, rgba(255,255,255,0.45), transparent 35%),
-          radial-gradient(circle at bottom right, rgba(0,0,0,0.04), transparent 35%),
-          #e6dccb
-        `,
+  theme.palette.mode === "dark"
+    ? "#0a0a0a"
+    : `
+      radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(0,0,0,0.03), transparent 35%),
+      linear-gradient(135deg, #ebe3d5 0%, #e4d8c3 100%)
+    `,
   })}
 >
         <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
@@ -171,7 +171,7 @@ function App() {
               sx={(theme) => ({
                 mb: 4,
                 p: { xs: 3, md: 5 },
-                borderRadius: 0,
+                borderRadius: "28px",
 
                 backgroundColor:
   theme.palette.mode === "dark"
