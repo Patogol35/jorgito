@@ -94,8 +94,8 @@ function App() {
           primary: { main: "#1976d2" },
           secondary: { main: "#ffeb3b" },
           background: {
-  default: mode === "dark" ? "#0a0a0a" : "#e9dfcf",
-  paper: mode === "dark" ? "#121212" : "#f8f6f2",
+  default: mode === "dark" ? "#0a0a0a" : "#f3ede2",
+  paper: mode === "dark" ? "#121212" : "#fcfaf7",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -130,7 +130,21 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
+      <Box
+  sx={(theme) => ({
+    minHeight: "100vh",
+    overflowX: "hidden",
+
+    background:
+      theme.palette.mode === "dark"
+        ? "#0a0a0a"
+        : `
+          radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 40%),
+          radial-gradient(circle at bottom right, rgba(0,0,0,0.03), transparent 35%),
+          #f3ede2
+        `,
+  })}
+>
         <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
 
         <Hero
