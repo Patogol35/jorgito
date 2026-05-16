@@ -160,7 +160,7 @@ function App() {
           disableGutters
           sx={{
             py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+            px: { xs: 1, sm: 2, md: 3, lg: 4 },
           }}
         >
           {sections.map(({ id, color, Component }) => (
