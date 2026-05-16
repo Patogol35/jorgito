@@ -210,7 +210,7 @@ function App() {
               <Component t={t} />
             </Paper>
           ))}
-        </box>
+        </Box>
 
         <Footer t={t} />
 
