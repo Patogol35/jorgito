@@ -12,6 +12,7 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -26,12 +27,12 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  const [mode, setMode] = useState(() =>
-    localStorage.getItem("themeMode") || "dark"
+  const [mode, setMode] = useState(
+    () => localStorage.getItem("themeMode") || "dark"
   );
 
-  const [lang, setLang] = useState(() =>
-    localStorage.getItem("lang") || "es"
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
@@ -45,67 +46,86 @@ function App() {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  // 🔥 Mantener posición al rotar
   useEffect(() => {
-  const handleBefore = () => {
-    const sections = document.querySelectorAll("section, [id]");
-    for (let sec of sections) {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-        localStorage.setItem("currentSection", sec.id);
-        break;
+    const handleBefore = () => {
+      const sections = document.querySelectorAll("section, [id]");
+
+      for (let sec of sections) {
+        const rect = sec.getBoundingClientRect();
+
+        if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
+          localStorage.setItem("currentSection", sec.id);
+          break;
+        }
       }
-    }
-  };
+    };
 
-  const handleAfter = () => {
-    const id = localStorage.getItem("currentSection");
-    if (!id) return;
+    const handleAfter = () => {
+      const id = localStorage.getItem("currentSection");
 
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: "auto",
-          block: "start",
-        });
+      if (!id) return;
 
-        // 🧹 limpiar para evitar basura en memoria
-        localStorage.removeItem("currentSection");
-      }, 80);
-    });
-  };
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({
+            behavior: "auto",
+            block: "start",
+          });
 
-  window.addEventListener("orientationchange", handleBefore);
-  window.addEventListener("resize", handleAfter);
+          localStorage.removeItem("currentSection");
+        }, 80);
+      });
+    };
 
-  return () => {
-    window.removeEventListener("orientationchange", handleBefore);
-    window.removeEventListener("resize", handleAfter);
-  };
-}, []);
+    window.addEventListener("orientationchange", handleBefore);
+    window.addEventListener("resize", handleAfter);
+
+    return () => {
+      window.removeEventListener("orientationchange", handleBefore);
+      window.removeEventListener("resize", handleAfter);
+    };
+  }, []);
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 Theme optimizado
+  // 🎨 Theme premium azul hielo
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode,
-          primary: { main: "#1976d2" },
-          secondary: { main: "#ffeb3b" },
-          background: {
-            default: mode === "dark" ? "#0a0a0a" : "#f5f5f5",
-            paper: mode === "dark" ? "#121212" : "#ffffff",
+
+          primary: {
+            main: "#1976d2",
           },
+
+          secondary: {
+            main: "#ffeb3b",
+          },
+
+          background: {
+            default: mode === "dark" ? "#0a0a0a" : "#edf4ff",
+            paper: mode === "dark" ? "#121212" : "#f7fbff",
+          },
+
           text: {
-            primary: mode === "dark" ? "#ffffff" : "#111111",
+            primary: mode === "dark" ? "#ffffff" : "#111827",
           },
         },
+
         typography: {
           fontFamily: "Poppins, Roboto, sans-serif",
-          h2: { fontWeight: 700 },
-          h4: { fontWeight: 600 },
+
+          h2: {
+            fontWeight: 700,
+          },
+
+          h4: {
+            fontWeight: 600,
+          },
         },
+
         shape: {
           borderRadius: 12,
         },
@@ -113,7 +133,7 @@ function App() {
     [mode]
   );
 
-  // 🔥 Memo de secciones (correcto)
+  // 🔥 Memo de secciones
   const sections = useMemo(
     () => [
       { id: "about", color: "#2e7d32", Component: About },
@@ -130,8 +150,20 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <Box sx={{ minHeight: "100vh", overflowX: "hidden" }}>
-        <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
+      <Box
+        sx={{
+          minHeight: "100vh",
+          overflowX: "hidden",
+          bgcolor: "background.default",
+          transition: "background-color 0.3s ease",
+        }}
+      >
+        <Navbar
+          mode={mode}
+          setMode={setMode}
+          t={t}
+          lang={lang}
+        />
 
         <Hero
           mode={mode}
@@ -146,7 +178,13 @@ function App() {
           disableGutters
           sx={{
             py: 6,
-            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+            px: {
+              xs: 2,
+              sm: 4,
+              md: 6,
+              lg: 8,
+              xl: 12,
+            },
           }}
         >
           {sections.map(({ id, color, Component }) => (
@@ -156,29 +194,41 @@ function App() {
               elevation={0}
               sx={(theme) => ({
                 mb: 4,
-                p: { xs: 3, md: 5 },
-                borderRadius: { xs: 3, md: 4 },
+
+                p: {
+                  xs: 3,
+                  md: 5,
+                },
+
+                borderRadius: {
+                  xs: 3,
+                  md: 4,
+                },
 
                 backgroundColor:
                   theme.palette.mode === "dark"
                     ? "#121212"
-                    : "#ffffff",
+                    : "#f7fbff",
 
                 backgroundImage:
                   theme.palette.mode === "dark"
                     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-                    : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
+                    : "linear-gradient(rgba(255,255,255,0.65), rgba(255,255,255,0.25))",
+
+                backdropFilter:
+                  theme.palette.mode === "light"
+                    ? "blur(8px)"
+                    : "none",
 
                 border: `1.5px solid ${color}55`,
 
                 boxShadow:
                   theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
+                    ? "0 6px 18px rgba(30,64,175,0.08)"
                     : "0 4px 12px rgba(0,0,0,0.4)",
 
                 scrollMarginTop: scrollOffset,
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
@@ -186,10 +236,12 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
+
                   border: `1.5px solid ${color}`,
+
                   boxShadow:
                     theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
+                      ? "0 12px 28px rgba(59,130,246,0.14)"
                       : "0 10px 24px rgba(0,0,0,0.6)",
                 },
               })}
@@ -210,101 +262,131 @@ function App() {
               bottom: 16,
               right: 16,
               zIndex: 1000,
+
               bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
+
+              "&:hover": {
+                bgcolor: "#1ebe5c",
+              },
             }}
             onClick={() =>
               window.open("https://wa.me/593997979099", "_blank")
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon
+              sx={{
+                fontSize: 32,
+                color: "#fff",
+              }}
+            />
           </Fab>
         </Tooltip>
 
-{/* Tema */}
-<Tooltip title="Cambiar tema" placement="right">
-  <Fab
-    aria-label="tema"
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
-      left: 16,    // 👈 lado izquierdo
-      zIndex: 1200,
+        {/* Tema */}
+        <Tooltip title="Cambiar tema" placement="right">
+          <Fab
+            aria-label="tema"
+            onClick={() =>
+              setMode(mode === "light" ? "dark" : "light")
+            }
+            sx={(theme) => ({
+              position: "fixed",
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+              top: 90,
+              left: 16,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      boxShadow: "none",
+              zIndex: 1200,
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.grey[900]
+                  : theme.palette.primary.main,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+              color: "#fff",
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </Fab>
-</Tooltip>
+              width: 52,
+              height: 52,
+
+              boxShadow: "none",
+
+              transition:
+                "background-color 0.25s ease, transform 0.2s ease",
+
+              "&:hover": {
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[800]
+                    : theme.palette.primary.dark,
+              },
+
+              "&:active": {
+                transform: "scale(0.95)",
+              },
+            })}
+          >
+            {mode === "light" ? (
+              <Brightness4 />
+            ) : (
+              <Brightness7 />
+            )}
+          </Fab>
+        </Tooltip>
+
         {/* Idioma */}
         <Tooltip title="Cambiar idioma" placement="left">
-  <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
+          <Fab
+            aria-label="idioma"
+            disableRipple
+            disableFocusRipple
+            disableTouchRipple
+            onClick={() =>
+              setLang(lang === "es" ? "en" : "es")
+            }
+            sx={(theme) => ({
+              position: "fixed",
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+              top: 90,
+              right: 16,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-      boxShadow: "none",
+              zIndex: 1200,
 
-      // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.grey[900]
+                  : theme.palette.primary.main,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+              color: "#fff",
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {lang === "es" ? "EN" : "ES"}
-  </Fab>
-</Tooltip>
+              width: 52,
+              height: 52,
+
+              fontWeight: 800,
+              fontSize: "1rem",
+              letterSpacing: "1px",
+
+              boxShadow: "none",
+
+              transition:
+                "background-color 0.25s ease, transform 0.2s ease",
+
+              willChange: "background-color",
+
+              "&:hover": {
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[800]
+                    : theme.palette.primary.dark,
+              },
+
+              "&:active": {
+                transform: "scale(0.95)",
+              },
+            })}
+          >
+            {lang === "es" ? "EN" : "ES"}
+          </Fab>
+        </Tooltip>
+
         <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
