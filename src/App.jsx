@@ -155,20 +155,20 @@ function App() {
           setLang={setLang}
         />
 
-        <Box
-  sx={{
-    py: 6,
-    px: 0,
-    width: "100%",
-  }}
->
+        <Container
+          maxWidth="lg"
+          disableGutters
+          sx={{
+            py: 6,
+            px: { xs: 2, sm: 4, md: 6, lg: 8, xl: 12 },
+          }}
+        >
           {sections.map(({ id, color, Component }) => (
             <Paper
               key={id}
               id={id}
               elevation={0}
               sx={(theme) => ({
-                width: "100%",
                 mb: 4,
                 p: { xs: 3, md: 5 },
                 borderRadius: 0,
@@ -211,7 +211,7 @@ function App() {
               <Component t={t} />
             </Paper>
           ))}
-        </Box>
+        </Container>
 
         <Footer t={t} />
 
