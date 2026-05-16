@@ -171,7 +171,7 @@ function App() {
                 width: "100%",
                 mb: 4,
                 p: { xs: 3, md: 5 },
-                borderRadius: { xs: 3, md: 4 },
+                borderRadius: 0,
 
                 backgroundColor:
   theme.palette.mode === "dark"
