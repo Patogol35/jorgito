@@ -159,22 +159,41 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: { xs: 3, md: 4 },
 
-                backgroundColor:
+                background:
   theme.palette.mode === "dark"
-    ? "#121212"
-    : "#f8f6f2",
+    ? `
+      linear-gradient(
+        145deg,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.015)
+      )
+    `
+    : `
+      linear-gradient(
+        145deg,
+        rgba(255,255,255,0.9),
+        rgba(255,255,255,0.72)
+      )
+    `,
 
-                backgroundImage:
-                  theme.palette.mode === "dark"
-                    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-                    : "linear-gradient(rgba(0,0,0,0.015), rgba(0,0,0,0.015))",
+backdropFilter: "blur(10px)",
+WebkitBackdropFilter: "blur(10px)",
 
-                border: `1.5px solid ${color}55`,
+border:
+  theme.palette.mode === "dark"
+    ? `1px solid rgba(255,255,255,0.08)`
+    : `1px solid rgba(255,255,255,0.7)`,
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+boxShadow:
+  theme.palette.mode === "dark"
+    ? `
+      0 10px 30px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.03)
+    `
+    : `
+      0 10px 30px rgba(0,0,0,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.8)
+    `,
 
                 scrollMarginTop: scrollOffset,
 
@@ -185,13 +204,20 @@ function App() {
                 willChange: "transform",
 
                 "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
-                },
+  transform: "translateY(-6px)",
+  border: `1px solid ${color}99`,
+
+  boxShadow:
+    theme.palette.mode === "dark"
+      ? `
+        0 14px 40px rgba(0,0,0,0.55),
+        0 0 0 1px ${color}33
+      `
+      : `
+        0 14px 40px rgba(0,0,0,0.10),
+        0 0 0 1px ${color}22
+      `,
+},
               })}
             >
               <Component t={t} />
