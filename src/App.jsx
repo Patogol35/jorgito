@@ -95,9 +95,7 @@ function App() {
           secondary: { main: "#ffeb3b" },
           background: {
   default: mode === "dark" ? "#0a0a0a" : "#e6dccb",
-  paper: mode === "dark"
-  ? "#121212"
-  : "#ffffff",
+  paper: mode === "dark" ? "#121212" : "#f6f3ee",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -178,7 +176,7 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#ffffff",
+    : "#f6f3ee",
 
                 backgroundImage:
   theme.palette.mode === "dark"
