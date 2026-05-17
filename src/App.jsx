@@ -97,7 +97,7 @@ function App() {
   default: mode === "dark" ? "#0a0a0a" : "#e6dccb",
   paper: mode === "dark"
   ? "#121212"
-  : "rgba(255,255,255,0.82)",
+  : "#ffffff",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
@@ -178,9 +178,7 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "rgba(255,255,255,0.82)",
-
-backdropFilter: "blur(10px)",
+    : "#ffffff",
 
                 backgroundImage:
   theme.palette.mode === "dark"
