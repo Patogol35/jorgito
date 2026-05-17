@@ -176,7 +176,9 @@ function App() {
                 backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#f6f3ee",
+    : "rgba(255,255,255,0.82)",
+
+backdropFilter: "blur(10px)",
 
                 backgroundImage:
   theme.palette.mode === "dark"
