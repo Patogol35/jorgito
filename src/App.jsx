@@ -95,7 +95,9 @@ function App() {
           secondary: { main: "#ffeb3b" },
           background: {
   default: mode === "dark" ? "#0a0a0a" : "#e6dccb",
-  paper: mode === "dark" ? "#121212" : "#f6f3ee",
+  paper: mode === "dark"
+  ? "#121212"
+  : "rgba(255,255,255,0.82)",
 },
           text: {
             primary: mode === "dark" ? "#ffffff" : "#111111",
