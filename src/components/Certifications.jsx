@@ -2,6 +2,7 @@ import { Typography, Grid, Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { GraduationCap, BookOpen, Brain } from "lucide-react";
+import { GraduationCap, BookOpen, Brain, Bot } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 // =====================
 // 🎬 Animaciones estilo Hero
@@ -49,6 +50,7 @@ export default function Certifications({ t }) {
     { type: "mui", icon: WorkspacePremiumIcon },
     { type: "lucide", icon: Brain },
     { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: Bot },
     { type: "lucide", icon: Brain },
   ];
 
