@@ -116,7 +116,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     {
       titulo: "E-commerce Full Stack",
       descripcion: "React + Django + JWT Auth",
-      link: "https://jorge-patricio-ecommerce.vercel.app/",
+      link: "https://ecommerce-patricio-santamaria.vercel.app/",
     },
     {
       titulo: "Explorador de Películas",
@@ -281,7 +281,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
     {
       titulo: "Full Stack E-commerce",
       descripcion: "React + Django + JWT Auth",
-      link: "https://jorge-patricio-ecommerce.vercel.app/",
+      link: "https://ecommerce-patricio-santamaria.vercel.app/",
     },
     {
       titulo: "Movie Explorer",
