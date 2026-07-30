@@ -56,7 +56,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
     certifications: {
   title: "Certificaciones",
-  view: "Ver certificado", // 👈 igual que projects
+  view: "Ver certificado", 
   items: [
     {
       titulo: "Certificado Académico Personal",
@@ -95,12 +95,12 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       año: 2024,
       link: "https://freecodecamp.org/espanol/certification/fcce02c3b29-930b-4b79-ae3a-3ed1bdc290f9/data-analysis-with-python-v7",
     },
-   // {
-//  titulo: "Desarrollo con IA: Programa con Agentes",
- // institucion: "BIG School",
-    //año: 2026,
-  //link: "https://smallpdf.com/es/file#s=cb991f7a-1853-4071-a540-5578bf338a7e",
-//},
+   {
+  titulo: "Protocolo de Contexto de Modelo: Temas Avanzados",
+  institucion: "Anthropic",
+  año: 2026,
+  link: "https://verify.skilljar.com/c/7obb8vycfzfb",
+},
     {
       titulo: "Fundamentos de la Inteligencia Artificial",
       institucion: "IBM",
@@ -267,12 +267,12 @@ I am also skilled in development tools, API testing, virtualization, network sec
       link: "https://freecodecamp.org/espanol/certification/fcce02c3b29-930b-4b79-ae3a-3ed1bdc290f9/data-analysis-with-python-v7",
     },
 
-   // {
-//  titulo: "AI Development: Programming with Agents",
- // institucion: "BIG School",
-//  año: 2026,
- // link: "https://certificados.thebigschool.com/wp-content/uploads/certs/MDEV3/Certificado-Jorge-Patricio-Santamaria-Cherrez-b8990txr.pdf",
-//},
+   {
+  titulo: "Model Context Protocol: Advanced Topics",
+  institucion: "Anthropic",
+  año: 2026,
+  link: "https://verify.skilljar.com/c/7obb8vycfzfb",
+},
     {
       titulo: "Fundamentals of Artificial Intelligence",
       institucion: "IBM",
