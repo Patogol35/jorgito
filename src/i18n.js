@@ -99,7 +99,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
   titulo: "Desarrollo con IA: Programa con Agentes",
   institucion: "BIG School",
   año: 2026,
-  link: "https://certificados.thebigschool.com/wp-content/uploads/certs/MDEV3/Certificado-Jorge-Patricio-Santamaria-Cherrez-b8990txr.pdf",
+  link: "https://smallpdf.com/es/file#s=cb991f7a-1853-4071-a540-5578bf338a7e",
 },
     {
       titulo: "Fundamentos de la Inteligencia Artificial",
