@@ -12,6 +12,7 @@ import {
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
+
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
@@ -36,76 +37,113 @@ function App() {
 
   const scrollOffset = "80px";
 
-  // 🔥 Persistencia
+  // Persistencia del tema
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
 
+  // Persistencia del idioma
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  // Restaurar sección después de resize/orientation change
   useEffect(() => {
-  const handleBefore = () => {
-    const sections = document.querySelectorAll("section, [id]");
-    for (let sec of sections) {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-        localStorage.setItem("currentSection", sec.id);
-        break;
+    const handleBefore = () => {
+      const sections = document.querySelectorAll("section, [id]");
+
+      for (let sec of sections) {
+        const rect = sec.getBoundingClientRect();
+
+        if (
+          rect.top >= 0 &&
+          rect.top < window.innerHeight / 2
+        ) {
+          localStorage.setItem("currentSection", sec.id);
+          break;
+        }
       }
-    }
-  };
+    };
 
-  const handleAfter = () => {
-    const id = localStorage.getItem("currentSection");
-    if (!id) return;
+    const handleAfter = () => {
+      const id = localStorage.getItem("currentSection");
 
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: "auto",
-          block: "start",
-        });
+      if (!id) return;
 
-        // 🧹 limpiar para evitar basura en memoria
-        localStorage.removeItem("currentSection");
-      }, 80);
-    });
-  };
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({
+            behavior: "auto",
+            block: "start",
+          });
 
-  window.addEventListener("orientationchange", handleBefore);
-  window.addEventListener("resize", handleAfter);
+          localStorage.removeItem("currentSection");
+        }, 80);
+      });
+    };
 
-  return () => {
-    window.removeEventListener("orientationchange", handleBefore);
-    window.removeEventListener("resize", handleAfter);
-  };
-}, []);
+    window.addEventListener("orientationchange", handleBefore);
+    window.addEventListener("resize", handleAfter);
+
+    return () => {
+      window.removeEventListener(
+        "orientationchange",
+        handleBefore
+      );
+
+      window.removeEventListener("resize", handleAfter);
+    };
+  }, []);
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 Theme optimizado
+  // Theme
   const theme = useMemo(
     () =>
       createTheme({
         palette: {
           mode,
-          primary: { main: "#1976d2" },
-          secondary: { main: "#ffeb3b" },
+
+          primary: {
+            main: "#1976d2",
+          },
+
+          secondary: {
+            main: "#ffeb3b",
+          },
+
           background: {
-  default: mode === "dark" ? "#0a0a0a" : "#F8FAFC",
-  paper: mode === "dark" ? "#121212" : "#ffffff",
-},
+            default:
+              mode === "dark"
+                ? "#0a0a0a"
+                : "#faf8f2",
+
+            paper:
+              mode === "dark"
+                ? "#121212"
+                : "#ffffff",
+          },
+
           text: {
-            primary: mode === "dark" ? "#ffffff" : "#111111",
+            primary:
+              mode === "dark"
+                ? "#ffffff"
+                : "#111111",
           },
         },
+
         typography: {
           fontFamily: "Poppins, Roboto, sans-serif",
-          h2: { fontWeight: 700 },
-          h4: { fontWeight: 600 },
+
+          h2: {
+            fontWeight: 700,
+          },
+
+          h4: {
+            fontWeight: 600,
+          },
         },
+
         shape: {
           borderRadius: 12,
         },
@@ -113,15 +151,39 @@ function App() {
     [mode]
   );
 
-  // 🔥 Memo de secciones (correcto)
+  // Secciones
   const sections = useMemo(
     () => [
-      { id: "about", color: "#2e7d32", Component: About },
-      { id: "skills", color: "#fb8c00", Component: Skills },
-      { id: "certifications", color: "#C0A660", Component: Certifications },
-      { id: "projects", color: "#1976d2", Component: Projects },
-      { id: "contact", color: "#d32f2f", Component: Contact },
-      { id: "form", color: "#00897b", Component: Form },
+      {
+        id: "about",
+        color: "#2e7d32",
+        Component: About,
+      },
+      {
+        id: "skills",
+        color: "#fb8c00",
+        Component: Skills,
+      },
+      {
+        id: "certifications",
+        color: "#C0A660",
+        Component: Certifications,
+      },
+      {
+        id: "projects",
+        color: "#1976d2",
+        Component: Projects,
+      },
+      {
+        id: "contact",
+        color: "#d32f2f",
+        Component: Contact,
+      },
+      {
+        id: "form",
+        color: "#00897b",
+        Component: Form,
+      },
     ],
     []
   );
@@ -131,194 +193,380 @@ function App() {
       <CssBaseline />
 
       <Box
-  sx={(theme) => ({
-    minHeight: "100vh",
-    overflowX: "hidden",
+        sx={{
+          position: "relative",
+          minHeight: "100vh",
+          overflowX: "hidden",
 
-    background:
-  theme.palette.mode === "dark"
-    ? "#0a0a0a"
-    : `
-      radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 30%),
-      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)
-    `,
-  })}
->
-        <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
+          // Fondo base
+          backgroundColor:
+            mode === "dark"
+              ? "#0a0a0a"
+              : "#faf8f2",
+        }}
+      >
 
-        <Hero
-          mode={mode}
-          setMode={setMode}
-          t={t}
-          lang={lang}
-          setLang={setLang}
-        />
+        {/* =====================================================
+            GOLDEN HOUR - MODO CLARO
+        ===================================================== */}
 
-        <Container
-          maxWidth="lg"
-          disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 1, sm: 2, md: 3, lg: 4 },
-          }}
-        >
-          {sections.map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={(theme) => ({
-                mb: 4,
-                p: { xs: 3, md: 5 },
-                borderRadius: "18px",
+        {mode === "light" && (
+          <>
+            {/* Layer 1 */}
+            <Box
+              aria-hidden="true"
+              sx={{
+                position: "absolute",
+                inset: 0,
 
-                backgroundColor:
-  theme.palette.mode === "dark"
-    ? "#121212"
-    : "#ffffff",
+                background:
+                  "linear-gradient(rgba(0,0,0,0) 0%, rgba(255,183,77,0.12) 28%, rgb(255,255,255) 18%, rgb(255,138,61) 68%, rgb(183,77,0) 100%)",
 
-                backgroundImage:
-  theme.palette.mode === "dark"
-    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
-                
-                border: `1.5px solid ${color}55`,
+                mixBlendMode: "multiply",
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+                filter: {
+                  xs: "blur(125px)",
+                  md: "blur(180px)",
+                },
 
-                scrollMarginTop: scrollOffset,
-
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
-                transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
-
+                transform: "translateZ(0)",
                 willChange: "transform",
 
+                pointerEvents: "none",
+
+                zIndex: 0,
+              }}
+            />
+
+            {/* Layer 2 */}
+            <Box
+              aria-hidden="true"
+              sx={{
+                position: "absolute",
+                inset: 0,
+
+                background:
+                  "linear-gradient(rgba(0,0,0,0) 0%, rgba(255,183,77,0.22) 34%, rgb(255,255,255) 66%, rgb(255,138,61) 82%, rgb(183,77,0) 100%)",
+
+                mixBlendMode: "multiply",
+
+                filter: {
+                  xs: "blur(100px)",
+                  md: "blur(144px)",
+                },
+
+                transform: "translateZ(0)",
+                willChange: "transform",
+
+                pointerEvents: "none",
+
+                zIndex: 0,
+              }}
+            />
+          </>
+        )}
+
+        {/* =====================================================
+            CONTENIDO DE LA APP
+        ===================================================== */}
+
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
+
+          {/* Navbar */}
+          <Navbar
+            mode={mode}
+            setMode={setMode}
+            t={t}
+            lang={lang}
+          />
+
+          {/* Hero */}
+          <Hero
+            mode={mode}
+            setMode={setMode}
+            t={t}
+            lang={lang}
+            setLang={setLang}
+          />
+
+          {/* =====================================================
+              SECCIONES
+          ===================================================== */}
+
+          <Container
+            maxWidth="lg"
+            disableGutters
+            sx={{
+              py: 6,
+              px: {
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 4,
+              },
+            }}
+          >
+            {sections.map(
+              ({ id, color, Component }) => (
+                <Paper
+                  key={id}
+                  id={id}
+                  elevation={0}
+                  sx={(theme) => ({
+                    mb: 4,
+
+                    p: {
+                      xs: 3,
+                      md: 5,
+                    },
+
+                    borderRadius: "18px",
+
+                    // =================================================
+                    // FONDO DE LAS TARJETAS
+                    // =================================================
+
+                    backgroundColor:
+                      theme.palette.mode === "dark"
+                        ? "#121212"
+                        : "rgba(255, 255, 255, 0.68)",
+
+                    // =================================================
+                    // EFECTO VIDRIO EN MODO CLARO
+                    // =================================================
+
+                    backdropFilter:
+                      theme.palette.mode === "light"
+                        ? "blur(14px)"
+                        : "none",
+
+                    WebkitBackdropFilter:
+                      theme.palette.mode === "light"
+                        ? "blur(14px)"
+                        : "none",
+
+                    backgroundImage:
+                      theme.palette.mode === "dark"
+                        ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
+                        : "linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.10))",
+
+                    border: `1.5px solid ${color}55`,
+
+                    boxShadow:
+                      theme.palette.mode === "light"
+                        ? "0 8px 30px rgba(120, 70, 20, 0.08)"
+                        : "0 4px 12px rgba(0,0,0,0.4)",
+
+                    scrollMarginTop: scrollOffset,
+
+                    transition:
+                      "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+
+                    willChange: "transform",
+
+                    "&:hover": {
+                      transform:
+                        "translateY(-4px) scale(1.01)",
+
+                      border: `1.5px solid ${color}`,
+
+                      boxShadow:
+                        theme.palette.mode === "light"
+                          ? "0 14px 35px rgba(120,70,20,0.12)"
+                          : "0 10px 24px rgba(0,0,0,0.6)",
+                    },
+                  })}
+                >
+                  <Component t={t} />
+                </Paper>
+              )
+            )}
+          </Container>
+
+          {/* Footer */}
+          <Footer t={t} />
+
+          {/* =====================================================
+              WHATSAPP
+          ===================================================== */}
+
+          <Tooltip
+            title="Chatea por WhatsApp"
+            placement="left"
+          >
+            <Fab
+              aria-label="whatsapp"
+              sx={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+
+                zIndex: 1000,
+
+                bgcolor: "#25D366",
+
                 "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
+                  bgcolor: "#1ebe5c",
+                },
+              }}
+              onClick={() =>
+                window.open(
+                  "https://wa.me/593997979099",
+                  "_blank"
+                )
+              }
+            >
+              <WhatsAppIcon
+                sx={{
+                  fontSize: 32,
+                  color: "#fff",
+                }}
+              />
+            </Fab>
+          </Tooltip>
+
+          {/* =====================================================
+              BOTÓN TEMA
+          ===================================================== */}
+
+          <Tooltip
+            title="Cambiar tema"
+            placement="right"
+          >
+            <Fab
+              aria-label="tema"
+              onClick={() =>
+                setMode(
+                  mode === "light"
+                    ? "dark"
+                    : "light"
+                )
+              }
+              sx={(theme) => ({
+                position: "fixed",
+
+                top: 90,
+                left: 16,
+
+                zIndex: 1200,
+
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[900]
+                    : theme.palette.primary.main,
+
+                color: "#fff",
+
+                width: 52,
+                height: 52,
+
+                boxShadow: "none",
+
+                transition:
+                  "background-color 0.25s ease, transform 0.2s ease",
+
+                "&:hover": {
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? theme.palette.grey[800]
+                      : theme.palette.primary.dark,
+                },
+
+                "&:active": {
+                  transform: "scale(0.95)",
                 },
               })}
             >
-              <Component t={t} />
-            </Paper>
-          ))}
-        </Container>
+              {mode === "light" ? (
+                <Brightness4 />
+              ) : (
+                <Brightness7 />
+              )}
+            </Fab>
+          </Tooltip>
 
-        <Footer t={t} />
+          {/* =====================================================
+              BOTÓN IDIOMA
+          ===================================================== */}
 
-        {/* WhatsApp */}
-        <Tooltip title="Chatea por WhatsApp" placement="left">
-          <Fab
-            aria-label="whatsapp"
-            sx={{
-              position: "fixed",
-              bottom: 16,
-              right: 16,
-              zIndex: 1000,
-              bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
-            }}
-            onClick={() =>
-              window.open("https://wa.me/593997979099", "_blank")
-            }
+          <Tooltip
+            title="Cambiar idioma"
+            placement="left"
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
-          </Fab>
-        </Tooltip>
+            <Fab
+              aria-label="idioma"
+              disableRipple
+              disableFocusRipple
+              disableTouchRipple
+              onClick={() =>
+                setLang(
+                  lang === "es"
+                    ? "en"
+                    : "es"
+                )
+              }
+              sx={(theme) => ({
+                position: "fixed",
 
-{/* Tema */}
-<Tooltip title="Cambiar tema" placement="right">
-  <Fab
-    aria-label="tema"
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
-      left: 16,    // 👈 lado izquierdo
-      zIndex: 1200,
+                top: 90,
+                right: 16,
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+                zIndex: 1200,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      boxShadow: "none",
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[900]
+                    : theme.palette.primary.main,
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+                color: "#fff",
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+                width: 52,
+                height: 52,
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </Fab>
-</Tooltip>
-        {/* Idioma */}
-        <Tooltip title="Cambiar idioma" placement="left">
-  <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
+                fontWeight: 800,
+                fontSize: "1rem",
+                letterSpacing: "1px",
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+                boxShadow: "none",
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-      boxShadow: "none",
+                transition:
+                  "background-color 0.25s ease, transform 0.2s ease",
 
-      // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
+                willChange: "background-color",
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+                "&:hover": {
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? theme.palette.grey[800]
+                      : theme.palette.primary.dark,
+                },
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {lang === "es" ? "EN" : "ES"}
-  </Fab>
-</Tooltip>
-        <ChatBot t={t} lang={lang} />
+                "&:active": {
+                  transform: "scale(0.95)",
+                },
+              })}
+            >
+              {lang === "es"
+                ? "EN"
+                : "ES"}
+            </Fab>
+          </Tooltip>
+
+          {/* =====================================================
+              CHATBOT
+          ===================================================== */}
+
+          <ChatBot
+            t={t}
+            lang={lang}
+          />
+
+        </Box>
       </Box>
     </ThemeProvider>
   );
