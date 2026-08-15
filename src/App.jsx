@@ -37,17 +37,26 @@ function App() {
 
   const scrollOffset = "80px";
 
-  // Persistencia del tema
+  // ============================================================
+  // PERSISTENCIA DEL TEMA
+  // ============================================================
+
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
 
-  // Persistencia del idioma
+  // ============================================================
+  // PERSISTENCIA DEL IDIOMA
+  // ============================================================
+
   useEffect(() => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  // Restaurar sección después de resize/orientation change
+  // ============================================================
+  // RESTAURAR SECCIÓN DESPUÉS DE RESIZE / ORIENTATION CHANGE
+  // ============================================================
+
   useEffect(() => {
     const handleBefore = () => {
       const sections = document.querySelectorAll("section, [id]");
@@ -59,7 +68,10 @@ function App() {
           rect.top >= 0 &&
           rect.top < window.innerHeight / 2
         ) {
-          localStorage.setItem("currentSection", sec.id);
+          localStorage.setItem(
+            "currentSection",
+            sec.id
+          );
           break;
         }
       }
@@ -82,8 +94,15 @@ function App() {
       });
     };
 
-    window.addEventListener("orientationchange", handleBefore);
-    window.addEventListener("resize", handleAfter);
+    window.addEventListener(
+      "orientationchange",
+      handleBefore
+    );
+
+    window.addEventListener(
+      "resize",
+      handleAfter
+    );
 
     return () => {
       window.removeEventListener(
@@ -91,13 +110,21 @@ function App() {
         handleBefore
       );
 
-      window.removeEventListener("resize", handleAfter);
+      window.removeEventListener(
+        "resize",
+        handleAfter
+      );
     };
   }, []);
 
-  const t = translations[lang] || translations["es"];
+  const t =
+    translations[lang] ||
+    translations["es"];
 
-  // Theme
+  // ============================================================
+  // MATERIAL UI THEME
+  // ============================================================
+
   const theme = useMemo(
     () =>
       createTheme({
@@ -133,7 +160,8 @@ function App() {
         },
 
         typography: {
-          fontFamily: "Poppins, Roboto, sans-serif",
+          fontFamily:
+            "Poppins, Roboto, sans-serif",
 
           h2: {
             fontWeight: 700,
@@ -151,7 +179,10 @@ function App() {
     [mode]
   );
 
-  // Secciones
+  // ============================================================
+  // SECCIONES
+  // ============================================================
+
   const sections = useMemo(
     () => [
       {
@@ -192,13 +223,18 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
+      {/* ========================================================
+          CONTENEDOR PRINCIPAL
+      ======================================================== */}
+
       <Box
         sx={{
           position: "relative",
-          minHeight: "100vh",
           overflowX: "hidden",
+          minHeight: "100vh",
 
-          // Fondo base
+          // IMPORTANTE:
+          // El fondo base está aquí, no en las capas.
           backgroundColor:
             mode === "dark"
               ? "#0a0a0a"
@@ -206,13 +242,18 @@ function App() {
         }}
       >
 
-        {/* =====================================================
-            GOLDEN HOUR - MODO CLARO
-        ===================================================== */}
+        {/* ======================================================
+            SAFFRON SILK
+            SOLO SE MUESTRA EN MODO CLARO
+        ====================================================== */}
 
         {mode === "light" && (
           <>
-            {/* Layer 1 */}
+            {/* --------------------------------------------------
+                LAYER 1
+                Radial / Normal
+            -------------------------------------------------- */}
+
             <Box
               aria-hidden="true"
               sx={{
@@ -220,16 +261,18 @@ function App() {
                 inset: 0,
 
                 background:
-                  "linear-gradient(rgba(0,0,0,0) 0%, rgba(255,183,77,0.12) 28%, rgb(255,255,255) 18%, rgb(255,138,61) 68%, rgb(183,77,0) 100%)",
+                  "radial-gradient(circle at 20% 25%, rgba(234,179,8,0.6) 0%, transparent 50%)",
 
-                mixBlendMode: "multiply",
+                mixBlendMode: "normal",
 
                 filter: {
-                  xs: "blur(125px)",
-                  md: "blur(180px)",
+                  xs: "blur(188px)",
+                  md: "blur(260px)",
                 },
 
-                transform: "translateZ(0)",
+                transform:
+                  "translateZ(0)",
+
                 willChange: "transform",
 
                 pointerEvents: "none",
@@ -238,7 +281,11 @@ function App() {
               }}
             />
 
-            {/* Layer 2 */}
+            {/* --------------------------------------------------
+                LAYER 2
+                Radial / Normal
+            -------------------------------------------------- */}
+
             <Box
               aria-hidden="true"
               sx={{
@@ -246,16 +293,82 @@ function App() {
                 inset: 0,
 
                 background:
-                  "linear-gradient(rgba(0,0,0,0) 0%, rgba(255,183,77,0.22) 34%, rgb(255,255,255) 66%, rgb(255,138,61) 82%, rgb(183,77,0) 100%)",
+                  "radial-gradient(circle at 80% 30%, rgba(217,119,6,0.5) 0%, transparent 45%)",
+
+                mixBlendMode: "normal",
+
+                filter: {
+                  xs: "blur(175px)",
+                  md: "blur(252px)",
+                },
+
+                transform:
+                  "translateZ(0)",
+
+                willChange: "transform",
+
+                pointerEvents: "none",
+
+                zIndex: 0,
+              }}
+            />
+
+            {/* --------------------------------------------------
+                LAYER 3
+                Radial / Multiply
+            -------------------------------------------------- */}
+
+            <Box
+              aria-hidden="true"
+              sx={{
+                position: "absolute",
+                inset: 0,
+
+                background:
+                  "radial-gradient(circle at 50% 80%, rgba(180,83,9,0.4) 0%, transparent 55%)",
 
                 mixBlendMode: "multiply",
 
                 filter: {
-                  xs: "blur(100px)",
-                  md: "blur(144px)",
+                  xs: "blur(200px)",
+                  md: "blur(260px)",
                 },
 
-                transform: "translateZ(0)",
+                transform:
+                  "translateZ(0)",
+
+                willChange: "transform",
+
+                pointerEvents: "none",
+
+                zIndex: 0,
+              }}
+            />
+
+            {/* --------------------------------------------------
+                LAYER 4
+                Radial / Multiply
+            -------------------------------------------------- */}
+
+            <Box
+              aria-hidden="true"
+              sx={{
+                position: "absolute",
+                inset: 0,
+
+                background:
+                  "radial-gradient(circle at 30% 70%, rgba(251,191,36,0.3) 0%, transparent 40%)",
+
+                mixBlendMode: "multiply",
+
+                filter: {
+                  xs: "blur(150px)",
+                  md: "blur(216px)",
+                },
+
+                transform:
+                  "translateZ(0)",
+
                 willChange: "transform",
 
                 pointerEvents: "none",
@@ -266,9 +379,10 @@ function App() {
           </>
         )}
 
-        {/* =====================================================
-            CONTENIDO DE LA APP
-        ===================================================== */}
+        {/* ======================================================
+            CONTENIDO
+            SIEMPRE POR ENCIMA DEL GRADIENTE
+        ====================================================== */}
 
         <Box
           sx={{
@@ -277,7 +391,10 @@ function App() {
           }}
         >
 
-          {/* Navbar */}
+          {/* ====================================================
+              NAVBAR
+          ==================================================== */}
+
           <Navbar
             mode={mode}
             setMode={setMode}
@@ -285,7 +402,10 @@ function App() {
             lang={lang}
           />
 
-          {/* Hero */}
+          {/* ====================================================
+              HERO
+          ==================================================== */}
+
           <Hero
             mode={mode}
             setMode={setMode}
@@ -294,15 +414,16 @@ function App() {
             setLang={setLang}
           />
 
-          {/* =====================================================
-              SECCIONES
-          ===================================================== */}
+          {/* ====================================================
+              CONTENIDO PRINCIPAL
+          ==================================================== */}
 
           <Container
             maxWidth="lg"
             disableGutters
             sx={{
               py: 6,
+
               px: {
                 xs: 1,
                 sm: 2,
@@ -312,7 +433,11 @@ function App() {
             }}
           >
             {sections.map(
-              ({ id, color, Component }) => (
+              ({
+                id,
+                color,
+                Component,
+              }) => (
                 <Paper
                   key={id}
                   id={id}
@@ -334,10 +459,10 @@ function App() {
                     backgroundColor:
                       theme.palette.mode === "dark"
                         ? "#121212"
-                        : "rgba(255, 255, 255, 0.68)",
+                        : "rgba(255,255,255,0.68)",
 
                     // =================================================
-                    // EFECTO VIDRIO EN MODO CLARO
+                    // GLASS EFFECT EN MODO CLARO
                     // =================================================
 
                     backdropFilter:
@@ -355,14 +480,16 @@ function App() {
                         ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
                         : "linear-gradient(rgba(255,255,255,0.25), rgba(255,255,255,0.10))",
 
-                    border: `1.5px solid ${color}55`,
+                    border:
+                      `1.5px solid ${color}55`,
 
                     boxShadow:
                       theme.palette.mode === "light"
-                        ? "0 8px 30px rgba(120, 70, 20, 0.08)"
+                        ? "0 8px 30px rgba(120,70,20,0.08)"
                         : "0 4px 12px rgba(0,0,0,0.4)",
 
-                    scrollMarginTop: scrollOffset,
+                    scrollMarginTop:
+                      scrollOffset,
 
                     transition:
                       "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
@@ -373,7 +500,8 @@ function App() {
                       transform:
                         "translateY(-4px) scale(1.01)",
 
-                      border: `1.5px solid ${color}`,
+                      border:
+                        `1.5px solid ${color}`,
 
                       boxShadow:
                         theme.palette.mode === "light"
@@ -388,12 +516,15 @@ function App() {
             )}
           </Container>
 
-          {/* Footer */}
+          {/* ====================================================
+              FOOTER
+          ==================================================== */}
+
           <Footer t={t} />
 
-          {/* =====================================================
+          {/* ====================================================
               WHATSAPP
-          ===================================================== */}
+          ==================================================== */}
 
           <Tooltip
             title="Chatea por WhatsApp"
@@ -430,9 +561,9 @@ function App() {
             </Fab>
           </Tooltip>
 
-          {/* =====================================================
-              BOTÓN TEMA
-          ===================================================== */}
+          {/* ====================================================
+              BOTÓN CAMBIAR TEMA
+          ==================================================== */}
 
           <Tooltip
             title="Cambiar tema"
@@ -490,9 +621,9 @@ function App() {
             </Fab>
           </Tooltip>
 
-          {/* =====================================================
+          {/* ====================================================
               BOTÓN IDIOMA
-          ===================================================== */}
+          ==================================================== */}
 
           <Tooltip
             title="Cambiar idioma"
@@ -537,7 +668,8 @@ function App() {
                 transition:
                   "background-color 0.25s ease, transform 0.2s ease",
 
-                willChange: "background-color",
+                willChange:
+                  "background-color",
 
                 "&:hover": {
                   bgcolor:
@@ -557,9 +689,9 @@ function App() {
             </Fab>
           </Tooltip>
 
-          {/* =====================================================
+          {/* ====================================================
               CHATBOT
-          ===================================================== */}
+          ==================================================== */}
 
           <ChatBot
             t={t}
