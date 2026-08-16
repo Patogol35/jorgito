@@ -38,16 +38,12 @@ function App() {
   const scrollOffset = "80px";
 
   // ============================================================
-  // PERSISTENCIA DEL TEMA
+  // PERSISTENCIA
   // ============================================================
 
   useEffect(() => {
     localStorage.setItem("themeMode", mode);
   }, [mode]);
-
-  // ============================================================
-  // PERSISTENCIA DEL IDIOMA
-  // ============================================================
 
   useEffect(() => {
     localStorage.setItem("lang", lang);
@@ -122,7 +118,7 @@ function App() {
     translations["es"];
 
   // ============================================================
-  // MATERIAL UI THEME
+  // THEME
   // ============================================================
 
   const theme = useMemo(
@@ -233,8 +229,15 @@ function App() {
           overflowX: "hidden",
           minHeight: "100vh",
 
-          // IMPORTANTE:
-          // El fondo base está aquí, no en las capas.
+          /*
+           * Fondo base.
+           *
+           * En modo claro:
+           * #faf8f2
+           *
+           * Las capas del efecto Champagne permanecen
+           * transparentes y se superponen sobre este fondo.
+           */
           backgroundColor:
             mode === "dark"
               ? "#0a0a0a"
@@ -243,16 +246,16 @@ function App() {
       >
 
         {/* ======================================================
-            SAFFRON SILK
-            SOLO SE MUESTRA EN MODO CLARO
+            CHAMPAGNE
+            SOLO MODO CLARO
         ====================================================== */}
 
         {mode === "light" && (
           <>
-            {/* --------------------------------------------------
+            {/* ==================================================
                 LAYER 1
-                Radial / Normal
-            -------------------------------------------------- */}
+                Linear gradient / normal
+            ================================================== */}
 
             <Box
               aria-hidden="true"
@@ -261,30 +264,25 @@ function App() {
                 inset: 0,
 
                 background:
-                  "radial-gradient(circle at 20% 25%, rgba(234,179,8,0.6) 0%, transparent 50%)",
+                  "linear-gradient(145deg, #fffbeb 0%, #fef3c7 38%, #fde68a 68%, #fcd34d 100%)",
 
                 mixBlendMode: "normal",
 
-                filter: {
-                  xs: "blur(188px)",
-                  md: "blur(260px)",
-                },
+                pointerEvents: "none",
 
                 transform:
                   "translateZ(0)",
 
                 willChange: "transform",
 
-                pointerEvents: "none",
-
                 zIndex: 0,
               }}
             />
 
-            {/* --------------------------------------------------
+            {/* ==================================================
                 LAYER 2
-                Radial / Normal
-            -------------------------------------------------- */}
+                Radial gradient / multiply
+            ================================================== */}
 
             <Box
               aria-hidden="true"
@@ -293,62 +291,29 @@ function App() {
                 inset: 0,
 
                 background:
-                  "radial-gradient(circle at 80% 30%, rgba(217,119,6,0.5) 0%, transparent 45%)",
-
-                mixBlendMode: "normal",
-
-                filter: {
-                  xs: "blur(175px)",
-                  md: "blur(252px)",
-                },
-
-                transform:
-                  "translateZ(0)",
-
-                willChange: "transform",
-
-                pointerEvents: "none",
-
-                zIndex: 0,
-              }}
-            />
-
-            {/* --------------------------------------------------
-                LAYER 3
-                Radial / Multiply
-            -------------------------------------------------- */}
-
-            <Box
-              aria-hidden="true"
-              sx={{
-                position: "absolute",
-                inset: 0,
-
-                background:
-                  "radial-gradient(circle at 50% 80%, rgba(180,83,9,0.4) 0%, transparent 55%)",
+                  "radial-gradient(ellipse 55% 40% at 55% 38%, rgba(255,255,255,0.42) 0%, transparent 65%)",
 
                 mixBlendMode: "multiply",
 
                 filter: {
-                  xs: "blur(200px)",
-                  md: "blur(260px)",
+                  xs: "blur(80px)",
+                  md: "blur(115px)",
                 },
+
+                pointerEvents: "none",
 
                 transform:
                   "translateZ(0)",
 
                 willChange: "transform",
 
-                pointerEvents: "none",
-
                 zIndex: 0,
               }}
             />
 
-            {/* --------------------------------------------------
-                LAYER 4
-                Radial / Multiply
-            -------------------------------------------------- */}
+            {/* ==================================================
+                FILM GRAIN
+            ================================================== */}
 
             <Box
               aria-hidden="true"
@@ -356,32 +321,57 @@ function App() {
                 position: "absolute",
                 inset: 0,
 
-                background:
-                  "radial-gradient(circle at 30% 70%, rgba(251,191,36,0.3) 0%, transparent 40%)",
+                mixBlendMode: "overlay",
 
-                mixBlendMode: "multiply",
-
-                filter: {
-                  xs: "blur(150px)",
-                  md: "blur(216px)",
-                },
-
-                transform:
-                  "translateZ(0)",
-
-                willChange: "transform",
+                opacity: 0.85,
 
                 pointerEvents: "none",
 
                 zIndex: 0,
               }}
-            />
+            >
+              <svg
+                width="100%"
+                height="100%"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <filter id="champagne-grain">
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.7"
+                    numOctaves="4"
+                    stitchTiles="stitch"
+                  />
+
+                  <feColorMatrix
+                    type="matrix"
+                    values="
+                      0.181 0.608 0.061 0 0.075
+                      0.181 0.608 0.061 0 0.075
+                      0.181 0.608 0.061 0 0.075
+                      0     0     0     1 0
+                    "
+                  />
+                </filter>
+
+                <rect
+                  width="100%"
+                  height="100%"
+                  filter="url(#champagne-grain)"
+                />
+              </svg>
+            </Box>
           </>
         )}
 
         {/* ======================================================
             CONTENIDO
-            SIEMPRE POR ENCIMA DEL GRADIENTE
+            SIEMPRE POR ENCIMA DEL FONDO
         ====================================================== */}
 
         <Box
@@ -415,7 +405,7 @@ function App() {
           />
 
           {/* ====================================================
-              CONTENIDO PRINCIPAL
+              SECCIONES
           ==================================================== */}
 
           <Container
@@ -459,7 +449,7 @@ function App() {
                     backgroundColor:
                       theme.palette.mode === "dark"
                         ? "#121212"
-                        : "rgba(255,255,255,0.68)",
+                        : "rgba(255,255,255,0.70)",
 
                     // =================================================
                     // GLASS EFFECT EN MODO CLARO
@@ -485,7 +475,7 @@ function App() {
 
                     boxShadow:
                       theme.palette.mode === "light"
-                        ? "0 8px 30px rgba(120,70,20,0.08)"
+                        ? "0 8px 30px rgba(120,80,20,0.08)"
                         : "0 4px 12px rgba(0,0,0,0.4)",
 
                     scrollMarginTop:
@@ -505,7 +495,7 @@ function App() {
 
                       boxShadow:
                         theme.palette.mode === "light"
-                          ? "0 14px 35px rgba(120,70,20,0.12)"
+                          ? "0 14px 35px rgba(120,80,20,0.12)"
                           : "0 10px 24px rgba(0,0,0,0.6)",
                     },
                   })}
@@ -534,6 +524,7 @@ function App() {
               aria-label="whatsapp"
               sx={{
                 position: "fixed",
+
                 bottom: 16,
                 right: 16,
 
@@ -562,7 +553,7 @@ function App() {
           </Tooltip>
 
           {/* ====================================================
-              BOTÓN CAMBIAR TEMA
+              BOTÓN TEMA
           ==================================================== */}
 
           <Tooltip
