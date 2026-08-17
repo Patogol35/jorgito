@@ -11,6 +11,7 @@ import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 
 // =====================
 // 🎬 Animaciones
@@ -158,25 +159,28 @@ export default function Projects({ t }) {
 
   const proyectosText = t.projects.items;
 
+  
   const colors = [
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1976d2",
-    "#3b82f6",
-    "#2563eb",
-    "#1976d2",
-  ];
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#3b82f6",
+  "#2563eb",
+  "#1976d2",
+  "#7e57c2",
+];
 
   const icons = [
-    WbSunnyIcon,
-    ShoppingCartIcon,
-    MovieIcon,
-    QuizIcon,
-    FunctionsIcon,
-    AccessTimeIcon,
-    QrCode2Icon,
-  ];
+  WbSunnyIcon,
+  ShoppingCartIcon,
+  MovieIcon,
+  QuizIcon,
+  FunctionsIcon,
+  AccessTimeIcon,
+  QrCode2Icon,
+  SportsEsportsIcon,
+];
 
   const proyectos = proyectosText.map((item, i) => ({
     ...item,
