@@ -40,6 +40,14 @@ const getMenuItems = (t) => [
     color: "linear-gradient(135deg, #2e7d32, #66bb6a)",
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
+
+  {
+    label: t.menu.projects,
+    href: "#projects",
+    color: "linear-gradient(135deg, #0288d1, #03a9f4)",
+    icon: <WorkIcon sx={{ color: "#fff" }} />,
+  },
+  
   {
     label: t.menu.skills,
     href: "#skills",
@@ -53,12 +61,7 @@ const getMenuItems = (t) => [
       "linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), linear-gradient(135deg, #CBB26A, #B59A5A)",
     icon: <VerifiedIcon sx={{ color: "#fff" }} />,
   },
-  {
-    label: t.menu.projects,
-    href: "#projects",
-    color: "linear-gradient(135deg, #0288d1, #03a9f4)",
-    icon: <WorkIcon sx={{ color: "#fff" }} />,
-  },
+  
   {
     label: t.menu.contact,
     href: "#contact",
