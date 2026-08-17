@@ -113,18 +113,18 @@ function App() {
     [mode]
   );
 
-  // 🔥 Memo de secciones (correcto)
+  //  Memo de secciones 
   const sections = useMemo(
-    () => [
-      { id: "about", color: "#2e7d32", Component: About },
-      { id: "skills", color: "#fb8c00", Component: Skills },
-      { id: "certifications", color: "#C0A660", Component: Certifications },
-      { id: "projects", color: "#1976d2", Component: Projects },
-      { id: "contact", color: "#d32f2f", Component: Contact },
-      { id: "form", color: "#00897b", Component: Form },
-    ],
-    []
-  );
+  () => [
+    { id: "about", color: "#2e7d32", Component: About },
+    { id: "projects", color: "#1976d2", Component: Projects },
+    { id: "skills", color: "#fb8c00", Component: Skills },
+    { id: "certifications", color: "#C0A660", Component: Certifications },
+    { id: "contact", color: "#d32f2f", Component: Contact },
+    { id: "form", color: "#00897b", Component: Form },
+  ],
+  []
+);
 
   return (
     <ThemeProvider theme={theme}>
