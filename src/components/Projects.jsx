@@ -12,7 +12,21 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-
+const ChessIcon = ({ sx }) => (
+  <Box
+    component="span"
+    sx={{
+      fontSize: "30px",
+      lineHeight: 1,
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      ...sx,
+    }}
+  >
+    ♟
+  </Box>
+);
 // =====================
 // 🎬 Animaciones
 // =====================
@@ -174,7 +188,7 @@ export default function Projects({ t }) {
   const icons = [
   WbSunnyIcon,
   ShoppingCartIcon,
-  SportsEsportsIcon,
+    ChessIcon,
   MovieIcon,
   QuizIcon,
   FunctionsIcon,
