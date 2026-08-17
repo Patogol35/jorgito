@@ -174,12 +174,13 @@ export default function Projects({ t }) {
   const icons = [
   WbSunnyIcon,
   ShoppingCartIcon,
+  SportsEsportsIcon,
   MovieIcon,
   QuizIcon,
   FunctionsIcon,
   AccessTimeIcon,
   QrCode2Icon,
-  SportsEsportsIcon,
+  
 ];
 
   const proyectos = proyectosText.map((item, i) => ({
