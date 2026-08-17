@@ -46,42 +46,48 @@ function App() {
   }, [lang]);
 
   useEffect(() => {
-  const handleBefore = () => {
-    const sections = document.querySelectorAll("section, [id]");
-    for (let sec of sections) {
-      const rect = sec.getBoundingClientRect();
-      if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-        localStorage.setItem("currentSection", sec.id);
-        break;
+    const handleBefore = () => {
+      const sections = document.querySelectorAll("section, [id]");
+
+      for (let sec of sections) {
+        const rect = sec.getBoundingClientRect();
+
+        if (
+          rect.top >= 0 &&
+          rect.top < window.innerHeight / 2
+        ) {
+          localStorage.setItem("currentSection", sec.id);
+          break;
+        }
       }
-    }
-  };
+    };
 
-  const handleAfter = () => {
-    const id = localStorage.getItem("currentSection");
-    if (!id) return;
+    const handleAfter = () => {
+      const id = localStorage.getItem("currentSection");
 
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: "auto",
-          block: "start",
-        });
+      if (!id) return;
 
-        // 🧹 limpiar para evitar basura en memoria
-        localStorage.removeItem("currentSection");
-      }, 80);
-    });
-  };
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({
+            behavior: "auto",
+            block: "start",
+          });
 
-  window.addEventListener("orientationchange", handleBefore);
-  window.addEventListener("resize", handleAfter);
+          // 🧹 limpiar para evitar basura en memoria
+          localStorage.removeItem("currentSection");
+        }, 80);
+      });
+    };
 
-  return () => {
-    window.removeEventListener("orientationchange", handleBefore);
-    window.removeEventListener("resize", handleAfter);
-  };
-}, []);
+    window.addEventListener("orientationchange", handleBefore);
+    window.addEventListener("resize", handleAfter);
+
+    return () => {
+      window.removeEventListener("orientationchange", handleBefore);
+      window.removeEventListener("resize", handleAfter);
+    };
+  }, []);
 
   const t = translations[lang] || translations["es"];
 
@@ -91,21 +97,47 @@ function App() {
       createTheme({
         palette: {
           mode,
-          primary: { main: "#1976d2" },
-          secondary: { main: "#ffeb3b" },
+
+          primary: {
+            main: "#1976d2",
+          },
+
+          secondary: {
+            main: "#ffeb3b",
+          },
+
           background: {
-  default: mode === "dark" ? "#0a0a0a" : "#F8FAFC",
-  paper: mode === "dark" ? "#121212" : "#ffffff",
-},
+            default:
+              mode === "dark"
+                ? "#0a0a0a"
+                : "#f7f3eb",
+
+            paper:
+              mode === "dark"
+                ? "#121212"
+                : "#ffffff",
+          },
+
           text: {
-            primary: mode === "dark" ? "#ffffff" : "#111111",
+            primary:
+              mode === "dark"
+                ? "#ffffff"
+                : "#111111",
           },
         },
+
         typography: {
           fontFamily: "Poppins, Roboto, sans-serif",
-          h2: { fontWeight: 700 },
-          h4: { fontWeight: 600 },
+
+          h2: {
+            fontWeight: 700,
+          },
+
+          h4: {
+            fontWeight: 600,
+          },
         },
+
         shape: {
           borderRadius: 12,
         },
@@ -113,38 +145,78 @@ function App() {
     [mode]
   );
 
-  //  Memo de secciones 
+  // Memo de secciones
   const sections = useMemo(
-  () => [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#C0A660", Component: Certifications },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-    { id: "form", color: "#00897b", Component: Form },
-  ],
-  []
-);
+    () => [
+      {
+        id: "about",
+        color: "#2e7d32",
+        Component: About,
+      },
+      {
+        id: "projects",
+        color: "#1976d2",
+        Component: Projects,
+      },
+      {
+        id: "skills",
+        color: "#fb8c00",
+        Component: Skills,
+      },
+      {
+        id: "certifications",
+        color: "#C0A660",
+        Component: Certifications,
+      },
+      {
+        id: "contact",
+        color: "#d32f2f",
+        Component: Contact,
+      },
+      {
+        id: "form",
+        color: "#00897b",
+        Component: Form,
+      },
+    ],
+    []
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
       <Box
-  sx={(theme) => ({
-    minHeight: "100vh",
-    overflowX: "hidden",
+        sx={(theme) => ({
+          minHeight: "100vh",
+          overflowX: "hidden",
 
-    background:
-  theme.palette.mode === "dark"
-    ? "#0a0a0a"
-    : `
-      radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 30%),
-      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)
-    `,
-  })}
->
-        <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
+          background:
+            theme.palette.mode === "dark"
+              ? "#0a0a0a"
+              : `
+                radial-gradient(
+                  ellipse 55% 40% at 55% 38%,
+                  rgba(255,255,255,0.65) 0%,
+                  rgba(255,255,255,0.28) 38%,
+                  transparent 68%
+                ),
+                linear-gradient(
+                  145deg,
+                  #fffdf8 0%,
+                  #f8f1e4 32%,
+                  #ead9b8 67%,
+                  #d6b878 100%
+                )
+              `,
+        })}
+      >
+        <Navbar
+          mode={mode}
+          setMode={setMode}
+          t={t}
+          lang={lang}
+        />
 
         <Hero
           mode={mode}
@@ -159,7 +231,12 @@ function App() {
           disableGutters
           sx={{
             py: 6,
-            px: { xs: 1, sm: 2, md: 3, lg: 4 },
+            px: {
+              xs: 1,
+              sm: 2,
+              md: 3,
+              lg: 4,
+            },
           }}
         >
           {sections.map(({ id, color, Component }) => (
@@ -169,19 +246,24 @@ function App() {
               elevation={0}
               sx={(theme) => ({
                 mb: 4,
-                p: { xs: 3, md: 5 },
+
+                p: {
+                  xs: 3,
+                  md: 5,
+                },
+
                 borderRadius: "18px",
 
                 backgroundColor:
-  theme.palette.mode === "dark"
-    ? "#121212"
-    : "#ffffff",
+                  theme.palette.mode === "dark"
+                    ? "#121212"
+                    : "#ffffff",
 
                 backgroundImage:
-  theme.palette.mode === "dark"
-    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
-                
+                  theme.palette.mode === "dark"
+                    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
+                    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
+
                 border: `1.5px solid ${color}55`,
 
                 boxShadow:
@@ -198,8 +280,11 @@ function App() {
                 willChange: "transform",
 
                 "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
+                  transform:
+                    "translateY(-4px) scale(1.01)",
+
                   border: `1.5px solid ${color}`,
+
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
@@ -215,7 +300,10 @@ function App() {
         <Footer t={t} />
 
         {/* WhatsApp */}
-        <Tooltip title="Chatea por WhatsApp" placement="left">
+        <Tooltip
+          title="Chatea por WhatsApp"
+          placement="left"
+        >
           <Fab
             aria-label="whatsapp"
             sx={{
@@ -223,102 +311,152 @@ function App() {
               bottom: 16,
               right: 16,
               zIndex: 1000,
+
               bgcolor: "#25D366",
-              "&:hover": { bgcolor: "#1ebe5c" },
+
+              "&:hover": {
+                bgcolor: "#1ebe5c",
+              },
             }}
             onClick={() =>
-              window.open("https://wa.me/593997979099", "_blank")
+              window.open(
+                "https://wa.me/593997979099",
+                "_blank"
+              )
             }
           >
-            <WhatsAppIcon sx={{ fontSize: 32, color: "#fff" }} />
+            <WhatsAppIcon
+              sx={{
+                fontSize: 32,
+                color: "#fff",
+              }}
+            />
           </Fab>
         </Tooltip>
 
-{/* Tema */}
-<Tooltip title="Cambiar tema" placement="right">
-  <Fab
-    aria-label="tema"
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
-      left: 16,    // 👈 lado izquierdo
-      zIndex: 1200,
+        {/* Tema */}
+        <Tooltip
+          title="Cambiar tema"
+          placement="right"
+        >
+          <Fab
+            aria-label="tema"
+            onClick={() =>
+              setMode(
+                mode === "light"
+                  ? "dark"
+                  : "light"
+              )
+            }
+            sx={(theme) => ({
+              position: "fixed",
+              top: 90,
+              left: 16,
+              zIndex: 1200,
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.grey[900]
+                  : theme.palette.primary.main,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      boxShadow: "none",
+              color: "#fff",
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+              width: 52,
+              height: 52,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+              boxShadow: "none",
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {mode === "light" ? <Brightness4 /> : <Brightness7 />}
-  </Fab>
-</Tooltip>
+              transition:
+                "background-color 0.25s ease, transform 0.2s ease",
+
+              "&:hover": {
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[800]
+                    : theme.palette.primary.dark,
+              },
+
+              "&:active": {
+                transform: "scale(0.95)",
+              },
+            })}
+          >
+            {mode === "light" ? (
+              <Brightness4 />
+            ) : (
+              <Brightness7 />
+            )}
+          </Fab>
+        </Tooltip>
+
         {/* Idioma */}
-        <Tooltip title="Cambiar idioma" placement="left">
-  <Fab
-    aria-label="idioma"
-    disableRipple
-    disableFocusRipple
-    disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
-    sx={(theme) => ({
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
+        <Tooltip
+          title="Cambiar idioma"
+          placement="left"
+        >
+          <Fab
+            aria-label="idioma"
+            disableRipple
+            disableFocusRipple
+            disableTouchRipple
+            onClick={() =>
+              setLang(
+                lang === "es"
+                  ? "en"
+                  : "es"
+              )
+            }
+            sx={(theme) => ({
+              position: "fixed",
+              top: 90,
+              right: 16,
+              zIndex: 1200,
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.grey[900]
+                  : theme.palette.primary.main,
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-      boxShadow: "none",
+              color: "#fff",
 
-      // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
+              width: 52,
+              height: 52,
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+              fontWeight: 800,
+              fontSize: "1rem",
+              letterSpacing: "1px",
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    {lang === "es" ? "EN" : "ES"}
-  </Fab>
-</Tooltip>
-        <ChatBot t={t} lang={lang} />
+              boxShadow: "none",
+
+              // 🔥 MISMO FIX
+              transition:
+                "background-color 0.25s ease, transform 0.2s ease",
+
+              willChange:
+                "background-color",
+
+              "&:hover": {
+                bgcolor:
+                  theme.palette.mode === "dark"
+                    ? theme.palette.grey[800]
+                    : theme.palette.primary.dark,
+              },
+
+              "&:active": {
+                transform: "scale(0.95)",
+              },
+            })}
+          >
+            {lang === "es"
+              ? "EN"
+              : "ES"}
+          </Fab>
+        </Tooltip>
+
+        <ChatBot
+          t={t}
+          lang={lang}
+        />
       </Box>
     </ThemeProvider>
   );
