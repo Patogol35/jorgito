@@ -124,6 +124,12 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       descripcion: "React + Django + JWT Auth",
       link: "https://ecommerce-patricio-santamaria.vercel.app/",
     },
+
+    {
+  titulo: "Ajedrez con IA (React)",
+  descripcion: "Juego de ajedrez en React con inteligencia artificial",
+  link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
+},
     {
       titulo: "Explorador de Películas",
       descripcion: "React + API de películas",
@@ -296,6 +302,12 @@ I am also skilled in development tools, API testing, virtualization, network sec
       descripcion: "React + Django + JWT Auth",
       link: "https://ecommerce-patricio-santamaria.vercel.app/",
     },
+
+    {
+  titulo: "AI Chess (React)",
+  descripcion: "React chess game with artificial intelligence",
+  link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
+},
     {
       titulo: "Movie Explorer",
       descripcion: "React + movie API",
