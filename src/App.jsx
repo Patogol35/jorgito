@@ -74,7 +74,6 @@ function App() {
             block: "start",
           });
 
-          // 🧹 limpiar para evitar basura en memoria
           localStorage.removeItem("currentSection");
         }, 80);
       });
@@ -91,7 +90,7 @@ function App() {
 
   const t = translations[lang] || translations["es"];
 
-  // 🎨 Theme optimizado
+  // 🎨 Theme
   const theme = useMemo(
     () =>
       createTheme({
@@ -110,7 +109,7 @@ function App() {
             default:
               mode === "dark"
                 ? "#0a0a0a"
-                : "#f7f3eb",
+                : "#E8DCC8",
 
             paper:
               mode === "dark"
@@ -196,17 +195,30 @@ function App() {
               ? "#0a0a0a"
               : `
                 radial-gradient(
-                  ellipse 55% 40% at 55% 38%,
-                  rgba(255,255,255,0.65) 0%,
-                  rgba(255,255,255,0.28) 38%,
-                  transparent 68%
+                  circle at 15% 10%,
+                  #FFF8EA 0%,
+                  rgba(255,248,234,0.85) 16%,
+                  transparent 38%
                 ),
+
+                radial-gradient(
+                  circle at 90% 20%,
+                  rgba(200,169,107,0.38) 0%,
+                  transparent 36%
+                ),
+
+                radial-gradient(
+                  circle at 75% 90%,
+                  rgba(245,235,221,0.85) 0%,
+                  transparent 42%
+                ),
+
                 linear-gradient(
-                  145deg,
-                  #fffdf8 0%,
-                  #f8f1e4 32%,
-                  #ead9b8 67%,
-                  #d6b878 100%
+                  135deg,
+                  #F5EBDD 0%,
+                  #E8DCC8 38%,
+                  #D8C19A 72%,
+                  #C8A96B 100%
                 )
               `,
         })}
@@ -268,12 +280,11 @@ function App() {
 
                 boxShadow:
                   theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
+                    ? "0 4px 12px rgba(80,65,45,0.10)"
                     : "0 4px 12px rgba(0,0,0,0.4)",
 
                 scrollMarginTop: scrollOffset,
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
@@ -287,7 +298,7 @@ function App() {
 
                   boxShadow:
                     theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
+                      ? "0 10px 24px rgba(80,65,45,0.14)"
                       : "0 10px 24px rgba(0,0,0,0.6)",
                 },
               })}
@@ -311,7 +322,6 @@ function App() {
               bottom: 16,
               right: 16,
               zIndex: 1000,
-
               bgcolor: "#25D366",
 
               "&:hover": {
@@ -428,12 +438,10 @@ function App() {
 
               boxShadow: "none",
 
-              // 🔥 MISMO FIX
               transition:
                 "background-color 0.25s ease, transform 0.2s ease",
 
-              willChange:
-                "background-color",
+              willChange: "background-color",
 
               "&:hover": {
                 bgcolor:
@@ -447,9 +455,7 @@ function App() {
               },
             })}
           >
-            {lang === "es"
-              ? "EN"
-              : "ES"}
+            {lang === "es" ? "EN" : "ES"}
           </Fab>
         </Tooltip>
 
