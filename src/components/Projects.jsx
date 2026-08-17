@@ -182,7 +182,7 @@ export default function Projects({ t }) {
   "#3b82f6",
   "#2563eb",
   "#1976d2",
-  "#7e57c2",
+    "#1976d2",
 ];
 
   const icons = [
