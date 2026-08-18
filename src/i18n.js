@@ -126,7 +126,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
 
     {
-  titulo: "Ajedrez con IA (React)",
+  titulo: "Ajedrez con IA",
   descripcion: "Juego de ajedrez en React con inteligencia artificial",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
@@ -304,7 +304,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
     {
-  titulo: "AI Chess (React)",
+  titulo: "AI Chess",
   descripcion: "React chess game with artificial intelligence",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
