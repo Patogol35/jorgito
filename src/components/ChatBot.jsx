@@ -13,8 +13,6 @@ import {
   TextField,
   Typography,
   IconButton,
-  Chip,
-  Stack,
   useMediaQuery,
 } from "@mui/material";
 
@@ -450,55 +448,6 @@ export default function ChatBot() {
                 <CloseIcon fontSize="small" />
               </IconButton>
             </Box>
-          </Box>
-
-          {/* SUGERENCIAS */}
-
-          <Box sx={{ p: 1 }}>
-            {isLandscape ? (
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  overflowX: "auto",
-                  whiteSpace: "nowrap",
-                  pb: 1,
-                }}
-              >
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() =>
-                      sendMessage(q)
-                    }
-                    disabled={typing}
-                    sx={{
-                      flexShrink: 0,
-                    }}
-                  />
-                ))}
-              </Box>
-            ) : (
-              <Stack
-                direction="row"
-                flexWrap="wrap"
-                gap={1}
-              >
-                {SUGGESTIONS.map((q) => (
-                  <Chip
-                    key={q}
-                    label={q}
-                    size="small"
-                    onClick={() =>
-                      sendMessage(q)
-                    }
-                    disabled={typing}
-                  />
-                ))}
-              </Stack>
-            )}
           </Box>
 
           {/* MENSAJES */}
