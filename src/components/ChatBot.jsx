@@ -1,4 +1,11 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
+
 import {
   Box,
   Fab,
@@ -10,6 +17,7 @@ import {
   Stack,
   useMediaQuery,
 } from "@mui/material";
+
 import { useTheme } from "@mui/material/styles";
 
 import SmartToyIcon from "@mui/icons-material/SmartToy";
@@ -19,30 +27,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import { SUGGESTIONS } from "./chatbot.config";
 
-/*
-|--------------------------------------------------------------------------
-| CONFIGURACIÓN
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   CONFIGURACIÓN
+========================= */
 
-// URL del backend de Sasha.
-//
-// En desarrollo:
-// VITE_SASHA_API_URL=http://localhost:3000/api/chat
-//
-// En producción:
-// VITE_SASHA_API_URL=https://tu-backend.onrender.com/api/chat
-//
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "https://groqbot-8jru.onrender.com/api/chat";
 
 const MAX_MESSAGE_LENGTH = 1500;
-const MAX_HISTORY_MESSAGES = 12;
 
-/*
-|--------------------------------------------------------------------------
-| COMPONENTE
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   COMPONENTE
+========================= */
 
 export default function ChatBot() {
   const theme = useTheme();
@@ -63,17 +58,23 @@ export default function ChatBot() {
 
   const bottomRef = useRef(null);
 
-  /*
-  |--------------------------------------------------------------------------
-  | ESTADOS
-  |--------------------------------------------------------------------------
-  */
-
   const [open, setOpen] = useState(false);
 
   const [input, setInput] = useState("");
 
   const [typing, setTyping] = useState(false);
+
+  /*
+   * Historial que se envía al backend.
+   *
+   * El backend espera:
+   *
+   * {
+   *   role: "user" | "assistant",
+   *   content: "..."
+   * }
+   */
+  const [history, setHistory] = useState([]);
 
   const initialMessage = useMemo(
     () => ({
@@ -89,11 +90,9 @@ export default function ChatBot() {
     initialMessage,
   ]);
 
-  /*
-  |--------------------------------------------------------------------------
-  | FUNCIONES GLOBALES
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     ABRIR / CERRAR DESDE FUERA
+  ========================= */
 
   useEffect(() => {
     window.openSashaChat = () => setOpen(true);
@@ -106,11 +105,9 @@ export default function ChatBot() {
     };
   }, []);
 
-  /*
-  |--------------------------------------------------------------------------
-  | SCROLL AUTOMÁTICO
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     SCROLL AUTOMÁTICO
+  ========================= */
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
@@ -128,11 +125,9 @@ export default function ChatBot() {
     }
   }, [open]);
 
-  /*
-  |--------------------------------------------------------------------------
-  | BLOQUEAR SCROLL DEL BODY
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     BLOQUEAR SCROLL DEL BODY
+  ========================= */
 
   useEffect(() => {
     if (open) {
@@ -146,132 +141,54 @@ export default function ChatBot() {
     };
   }, [open]);
 
-  /*
-  |--------------------------------------------------------------------------
-  | CONVERTIR HISTORIAL DEL FRONTEND AL FORMATO DEL BACKEND
-  |--------------------------------------------------------------------------
-  */
-
-  const buildHistory = useCallback(
-    (currentMessages) => {
-      return currentMessages
-        .filter(
-          (message) =>
-            message.from === "user" ||
-            message.from === "bot"
-        )
-        .filter(
-          (message) =>
-            typeof message.text === "string" &&
-            message.text.trim()
-        )
-        .slice(-MAX_HISTORY_MESSAGES)
-        .map((message) => ({
-          role:
-            message.from === "user"
-              ? "user"
-              : "assistant",
-
-          content: message.text.trim(),
-        }));
-    },
-    []
-  );
-
-  /*
-  |--------------------------------------------------------------------------
-  | ENVIAR MENSAJE
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     ENVIAR MENSAJE
+  ========================= */
 
   const sendMessage = useCallback(
     async (text) => {
       const userMessage = text.trim();
 
-      /*
-      |--------------------------------------------------------------------------
-      | VALIDACIONES FRONTEND
-      |--------------------------------------------------------------------------
-      */
-
-      if (!userMessage) {
-        return;
-      }
-
-      if (typing) {
+      if (!userMessage || typing) {
         return;
       }
 
       if (userMessage.length > MAX_MESSAGE_LENGTH) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            from: "user",
-            text: userMessage,
-          },
+        setMessages((current) => [
+          ...current,
           {
             from: "bot",
-            text: `Tu mensaje es demasiado largo. El máximo permitido es de ${MAX_MESSAGE_LENGTH} caracteres.`,
+            text:
+              `El mensaje no puede superar los ${MAX_MESSAGE_LENGTH} caracteres.`,
           },
         ]);
-
-        setInput("");
 
         return;
       }
 
       /*
-      |--------------------------------------------------------------------------
-      | MENSAJE DEL USUARIO
-      |--------------------------------------------------------------------------
-      */
-
-      const userMessageObject = {
-        from: "user",
-        text: userMessage,
-      };
+       * Guardamos el historial actual antes
+       * de agregar el nuevo mensaje.
+       */
+      const currentHistory = [...history];
 
       /*
-      |--------------------------------------------------------------------------
-      | HISTORIAL ANTES DE AGREGAR EL NUEVO MENSAJE
-      |--------------------------------------------------------------------------
-      |
-      | El backend recibe el mensaje actual por separado.
-      | Por eso el historial contiene únicamente los mensajes
-      | anteriores.
-      |
-      */
-
-      const history = buildHistory(messages);
-
-      /*
-      |--------------------------------------------------------------------------
-      | ACTUALIZAR UI
-      |--------------------------------------------------------------------------
-      */
-
-      setMessages((prev) => [
-        ...prev,
-        userMessageObject,
+       * Mostrar inmediatamente el mensaje
+       * del usuario en la interfaz.
+       */
+      setMessages((current) => [
+        ...current,
+        {
+          from: "user",
+          text: userMessage,
+        },
       ]);
 
       setInput("");
 
       setTyping(true);
 
-      /*
-      |--------------------------------------------------------------------------
-      | PETICIÓN AL BACKEND
-      |--------------------------------------------------------------------------
-      */
-
       try {
-        if (!API_URL) {
-          throw new Error(
-            "No está configurada VITE_SASHA_API_URL."
-          );
-        }
-
         const response = await fetch(API_URL, {
           method: "POST",
 
@@ -281,155 +198,118 @@ export default function ChatBot() {
 
           body: JSON.stringify({
             message: userMessage,
-            history,
+
+            history: currentHistory,
           }),
         });
 
-        /*
-        |--------------------------------------------------------------------------
-        | RATE LIMIT
-        |--------------------------------------------------------------------------
-        */
-
-        if (response.status === 429) {
-          setMessages((prev) => [
-            ...prev,
-            {
-              from: "bot",
-              text:
-                "Estoy recibiendo muchas solicitudes en este momento 😅. " +
-                "Inténtalo nuevamente en unos segundos.",
-            },
-          ]);
-
-          return;
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | ERROR DE AUTENTICACIÓN / CONFIGURACIÓN
-        |--------------------------------------------------------------------------
-        */
-
-        if (response.status === 401) {
-          setMessages((prev) => [
-            ...prev,
-            {
-              from: "bot",
-              text:
-                "No puedo conectarme con el servicio de inteligencia artificial en este momento.",
-            },
-          ]);
-
-          return;
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | OTROS ERRORES HTTP
-        |--------------------------------------------------------------------------
-        */
-
-        if (!response.ok) {
-          let errorMessage =
-            "No fue posible obtener una respuesta de Sasha.";
-
-          try {
-            const errorData =
-              await response.json();
-
-            if (errorData?.error) {
-              errorMessage = errorData.error;
-            }
-          } catch {
-            // Si el backend no devuelve JSON,
-            // utilizamos el mensaje genérico.
-          }
-
-          throw new Error(errorMessage);
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | RESPUESTA
-        |--------------------------------------------------------------------------
-        */
-
         const data = await response.json();
 
+        /*
+         * Manejo específico del rate limit
+         * enviado por tu backend.
+         */
+        if (response.status === 429) {
+          throw new Error(
+            data?.error ||
+              "Sasha está recibiendo muchas solicitudes. Inténtalo nuevamente en unos segundos."
+          );
+        }
+
+        /*
+         * Otros errores HTTP.
+         */
+        if (!response.ok) {
+          throw new Error(
+            data?.error ||
+              "No fue posible obtener una respuesta de Sasha."
+          );
+        }
+
+        /*
+         * Respuesta generada por Groq.
+         */
         const botResponse =
           data?.response?.trim();
 
         if (!botResponse) {
           throw new Error(
-            "Sasha no devolvió una respuesta válida."
+            "Sasha no devolvió una respuesta."
           );
         }
 
         /*
-        |--------------------------------------------------------------------------
-        | AGREGAR RESPUESTA DE SASHA
-        |--------------------------------------------------------------------------
-        */
-
-        setMessages((prev) => [
-          ...prev,
+         * Mostrar respuesta del bot.
+         */
+        setMessages((current) => [
+          ...current,
           {
             from: "bot",
             text: botResponse,
           },
         ]);
+
+        /*
+         * Actualizar historial para la siguiente
+         * pregunta.
+         *
+         * IMPORTANTE:
+         * El backend utiliza "user" y "assistant".
+         */
+        setHistory((current) => [
+          ...current,
+          {
+            role: "user",
+            content: userMessage,
+          },
+          {
+            role: "assistant",
+            content: botResponse,
+          },
+        ]);
       } catch (error) {
         console.error(
-          "❌ Error comunicando con Sasha:",
+          "❌ Error al comunicarse con Sasha:",
           error
         );
 
-        setMessages((prev) => [
-          ...prev,
+        setMessages((current) => [
+          ...current,
           {
             from: "bot",
             text:
               error?.message ||
-              "No pude conectarme con Sasha. Inténtalo nuevamente.",
+              "No fue posible conectar con Sasha. Inténtalo nuevamente.",
           },
         ]);
       } finally {
         setTyping(false);
       }
     },
-    [
-      messages,
-      typing,
-      buildHistory,
-    ]
+    [history, typing]
   );
 
-  /*
-  |--------------------------------------------------------------------------
-  | LIMPIAR CHAT
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     NUEVA CONVERSACIÓN
+  ========================= */
 
   const clearChat = useCallback(() => {
     setMessages([initialMessage]);
+
+    setHistory([]);
 
     setInput("");
 
     setTyping(false);
   }, [initialMessage]);
 
-  /*
-  |--------------------------------------------------------------------------
-  | RENDER
-  |--------------------------------------------------------------------------
-  */
+  /* =========================
+     RENDER
+  ========================= */
 
   return (
     <>
-      {/* =========================================================
-          BOTÓN FLOTANTE
-      ========================================================= */}
+      {/* BOTÓN FLOTANTE */}
 
       <Fab
         onClick={() => setOpen(true)}
@@ -469,9 +349,7 @@ export default function ChatBot() {
         <SmartToyIcon />
       </Fab>
 
-      {/* =========================================================
-          OVERLAY
-      ========================================================= */}
+      {/* OVERLAY */}
 
       {open && (
         <Box
@@ -485,9 +363,7 @@ export default function ChatBot() {
         />
       )}
 
-      {/* =========================================================
-          CHAT
-      ========================================================= */}
+      {/* CHAT */}
 
       {open && (
         <Paper
@@ -509,27 +385,19 @@ export default function ChatBot() {
             ...(isLandscape
               ? {
                   inset: "72px 0 10px 0",
-
                   margin: "0 auto",
-
                   width: "100%",
-
                   maxWidth: 640,
                 }
               : {
                   bottom: 90,
-
                   left: 16,
-
                   width: 360,
-
                   height: 520,
                 }),
           }}
         >
-          {/* =====================================================
-              HEADER
-          ===================================================== */}
+          {/* HEADER */}
 
           <Box
             sx={{
@@ -560,20 +428,15 @@ export default function ChatBot() {
             </Box>
 
             <Box>
-              {/* LIMPIAR */}
-
               <IconButton
                 size="small"
                 sx={{
                   color: "#fff",
                 }}
                 onClick={clearChat}
-                disabled={typing}
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
-
-              {/* CERRAR */}
 
               <IconButton
                 size="small"
@@ -589,22 +452,16 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* =====================================================
-              SUGERENCIAS
-          ===================================================== */}
+          {/* SUGERENCIAS */}
 
           <Box sx={{ p: 1 }}>
             {isLandscape ? (
               <Box
                 sx={{
                   display: "flex",
-
                   gap: 1,
-
                   overflowX: "auto",
-
                   whiteSpace: "nowrap",
-
                   pb: 1,
                 }}
               >
@@ -644,16 +501,12 @@ export default function ChatBot() {
             )}
           </Box>
 
-          {/* =====================================================
-              MENSAJES
-          ===================================================== */}
+          {/* MENSAJES */}
 
           <Box
             sx={{
               flex: 1,
-
               p: 1,
-
               overflowY: "auto",
             }}
           >
@@ -667,10 +520,9 @@ export default function ChatBot() {
                   sx={{
                     display: "flex",
 
-                    justifyContent:
-                      isUser
-                        ? "flex-end"
-                        : "flex-start",
+                    justifyContent: isUser
+                      ? "flex-end"
+                      : "flex-start",
 
                     mb: 1,
                   }}
@@ -686,8 +538,8 @@ export default function ChatBot() {
                       borderRadius: 2,
 
                       bgcolor: isUser
-                        ? theme.palette.primary
-                            .main
+                        ? theme.palette
+                            .primary.main
                         : isDark
                         ? "rgba(255,255,255,0.10)"
                         : "rgba(0,0,0,0.06)",
@@ -698,9 +550,6 @@ export default function ChatBot() {
 
                       whiteSpace:
                         "pre-line",
-
-                      overflowWrap:
-                        "break-word",
                     }}
                   >
                     <Typography
@@ -723,16 +572,13 @@ export default function ChatBot() {
               );
             })}
 
-            {/* ===================================================
-                INDICADOR DE ESCRITURA
-            =================================================== */}
+            {/* INDICADOR DE ESCRITURA */}
 
             {typing && (
               <Typography
                 variant="caption"
                 sx={{
                   opacity: 0.7,
-
                   color:
                     theme.palette.text
                       .secondary,
@@ -745,9 +591,7 @@ export default function ChatBot() {
             <div ref={bottomRef} />
           </Box>
 
-          {/* =====================================================
-              INPUT
-          ===================================================== */}
+          {/* INPUT */}
 
           <Box
             sx={{
@@ -781,12 +625,12 @@ export default function ChatBot() {
             />
 
             <IconButton
-              onClick={() =>
-                sendMessage(input)
-              }
               disabled={
                 typing ||
                 !input.trim()
+              }
+              onClick={() =>
+                sendMessage(input)
               }
             >
               <SendIcon
@@ -800,4 +644,4 @@ export default function ChatBot() {
       )}
     </>
   );
-    }
+}
