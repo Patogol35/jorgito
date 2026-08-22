@@ -33,7 +33,7 @@ import { SUGGESTIONS } from "./chatbot.config";
 // En producción:
 // VITE_SASHA_API_URL=https://tu-backend.onrender.com/api/chat
 //
-const API_URL = import.meta.env.VITE_SASHA_API_URL;
+const API_URL = import.meta.env.VITE_API_URL;
 
 const MAX_MESSAGE_LENGTH = 1500;
 const MAX_HISTORY_MESSAGES = 12;
