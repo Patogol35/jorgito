@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import {
   Box,
   Fab,
@@ -7,19 +6,25 @@ import {
   TextField,
   Typography,
   IconButton,
+  Chip,
+  Stack,
+  Tooltip,
   useMediaQuery,
 } from "@mui/material";
-
 import { useTheme } from "@mui/material/styles";
 
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { delay, SUGGESTIONS, followUp } from "./chatbot.config";
+import { getSmartResponse } from "./getSmartResponse";
 
+/* =========================
+COMPONENTE
+========================= */
 export default function ChatBot() {
   const theme = useTheme();
-
   const isDark = theme.palette.mode === "dark";
   const isLandscape = useMediaQuery("(orientation: landscape)");
 
@@ -33,14 +38,14 @@ export default function ChatBot() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
+  const [context, setContext] = useState({});
 
   const initialMessage = useMemo(
     () => ({
       from: "bot",
       text:
         "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia, proyectos, " +
-        "habilidades o cualquier otra cosa.",
+        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
     }),
     []
   );
@@ -53,146 +58,99 @@ export default function ChatBot() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, typing]);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({
-          behavior: "auto",
-        });
-      }, 0);
-    }
-  }, [open]);
+  if (open) {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "auto" });
+    }, 0);
+  }
+}, [open]);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+  if (open) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
 
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [open]);
+  return () => {
+    document.body.style.overflow = "auto";
+  };
+}, [open]);
 
-  const sendMessage = async (text) => {
-    if (!text.trim() || typing) return;
+  const sendMessage = useCallback((text) => {
+    if (!text.trim()) return;
 
-    const userMessage = text.trim();
-
-    setMessages((prev) => [
-      ...prev,
-      {
-        from: "user",
-        text: userMessage,
-      },
-    ]);
-
+    setMessages((m) => [...m, { from: "user", text }]);
     setInput("");
     setTyping(true);
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/chat`,
-        {
-          method: "POST",
+    setTimeout(() => {
+      setContext((prev) => {
+        const res = getSmartResponse(text, prev);
+        const follow = followUp(res.intent);
 
-          headers: {
-            "Content-Type": "application/json",
-          },
+        setMessages((m) => [
+          ...m,
+          { from: "bot", text: res.text },
+          ...(!res.fromFollowUp && follow
+            ? [{ from: "bot", text: follow }]
+            : []),
+        ]);
 
-          body: JSON.stringify({
-            message: userMessage,
-          }),
-        }
-      );
+        setTyping(false);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Error del servidor"
-        );
-      }
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          from: "bot",
-          text: data.response,
-        },
-      ]);
-    } catch (error) {
-      console.error("Error Sasha:", error);
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          from: "bot",
-          text:
-            "Lo siento 😕 No pude conectarme con el servidor. " +
-            "Inténtalo nuevamente.",
-        },
-      ]);
-    } finally {
-      setTyping(false);
-    }
-  };
-
-  const resetChat = () => {
-    setMessages([initialMessage]);
-    setInput("");
-  };
-
+        return {
+          ...prev,
+          awaiting: res.action || null,
+          awaitingFollowUp: !res.fromFollowUp && follow ? res.intent : null,
+          // Si necesitas persistir memory o usedReplies, deberías extraerlos de `res.context`
+          // Pero en esta versión, no los usamos más allá de la respuesta
+        };
+      });
+    }, delay());
+  }, []);
   return (
     <>
       {/* BOTÓN FLOTANTE */}
+<Fab
+  onClick={() => setOpen(true)}
+  sx={(theme) => ({
+    position: "fixed",
+    bottom: 16,
+    left: 16, // 👈 SIEMPRE estable
+    zIndex: 1200,
 
-      <Fab
-        onClick={() => setOpen(true)}
-        sx={(theme) => ({
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          zIndex: 1200,
+    bgcolor:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[900]
+        : theme.palette.primary.main,
 
-          bgcolor:
-            theme.palette.mode === "dark"
-              ? theme.palette.grey[900]
-              : theme.palette.primary.main,
+    color: "#fff",
+    width: 52,
+    height: 52,
+    boxShadow: "none",
 
-          color: "#fff",
+    transition: "background-color 0.25s ease, transform 0.2s ease",
 
-          width: 52,
-          height: 52,
+    "&:hover": {
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[800]
+          : theme.palette.primary.dark,
+    },
 
-          boxShadow: "none",
-
-          transition:
-            "background-color 0.25s ease, transform 0.2s ease",
-
-          "&:hover": {
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? theme.palette.grey[800]
-                : theme.palette.primary.dark,
-          },
-
-          "&:active": {
-            transform: "scale(0.95)",
-          },
-        })}
-      >
-        <SmartToyIcon />
-      </Fab>
-
+    "&:active": {
+      transform: "scale(0.95)",
+    },
+  })}
+>
+  <SmartToyIcon />
+</Fab>
       {/* OVERLAY */}
-
       {open && (
         <Box
           onClick={() => setOpen(false)}
@@ -205,21 +163,15 @@ export default function ChatBot() {
       )}
 
       {/* CHAT */}
-
       {open && (
         <Paper
           onClick={(e) => e.stopPropagation()}
           sx={{
             position: "fixed",
-
-            zIndex: (theme) =>
-              theme.zIndex.modal + 2,
-
+            zIndex: (theme) => theme.zIndex.modal + 2,
             display: "flex",
             flexDirection: "column",
-
             overflow: "hidden",
-
             ...(isLandscape
               ? {
                   inset: "72px 0 10px 0",
@@ -236,50 +188,32 @@ export default function ChatBot() {
           }}
         >
           {/* HEADER */}
-
           <Box
             sx={{
               p: 1,
-
               bgcolor: primaryBg,
-
               color: "#fff",
-
               display: "flex",
-
               justifyContent: "space-between",
-
               alignItems: "center",
             }}
           >
-            <Box
-              display="flex"
-              alignItems="center"
-              gap={1}
-            >
+            <Box display="flex" alignItems="center" gap={1}>
               <SmartToyIcon fontSize="small" />
-
-              <Typography fontWeight="bold">
-                Sasha
-              </Typography>
+              <Typography fontWeight="bold">Sasha</Typography>
             </Box>
 
             <Box>
               <IconButton
                 size="small"
-                sx={{
-                  color: "#fff",
-                }}
-                onClick={resetChat}
+                sx={{ color: "#fff" }}
+                onClick={() => setMessages([initialMessage])}
               >
                 <DeleteIcon fontSize="small" />
               </IconButton>
-
               <IconButton
                 size="small"
-                sx={{
-                  color: "#fff",
-                }}
+                sx={{ color: "#fff" }}
                 onClick={() => setOpen(false)}
               >
                 <CloseIcon fontSize="small" />
@@ -287,15 +221,44 @@ export default function ChatBot() {
             </Box>
           </Box>
 
-          {/* MENSAJES */}
+          {/* SUGERENCIAS */}
+          <Box sx={{ p: 1 }}>
+            {isLandscape ? (
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                  overflowX: "auto",
+                  whiteSpace: "nowrap",
+                  pb: 1,
+                }}
+              >
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                    sx={{ flexShrink: 0 }}
+                  />
+                ))}
+              </Box>
+            ) : (
+              <Stack direction="row" flexWrap="wrap" gap={1}>
+                {SUGGESTIONS.map((q) => (
+                  <Chip
+                    key={q}
+                    label={q}
+                    size="small"
+                    onClick={() => sendMessage(q)}
+                  />
+                ))}
+              </Stack>
+            )}
+          </Box>
 
-          <Box
-            sx={{
-              flex: 1,
-              p: 1,
-              overflowY: "auto",
-            }}
-          >
+          {/* MENSAJES */}
+          <Box sx={{ flex: 1, p: 1, overflowY: "auto" }}>
             {messages.map((m, i) => {
               const isUser = m.from === "user";
 
@@ -304,45 +267,30 @@ export default function ChatBot() {
                   key={i}
                   sx={{
                     display: "flex",
-
-                    justifyContent: isUser
-                      ? "flex-end"
-                      : "flex-start",
-
+                    justifyContent: isUser ? "flex-end" : "flex-start",
                     mb: 1,
                   }}
                 >
                   <Box
                     sx={{
                       maxWidth: "80%",
-
                       px: 1.5,
                       py: 1,
-
                       borderRadius: 2,
-
                       bgcolor: isUser
-                        ? theme.palette.primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
+  ? theme.palette.primary.main
+  : isDark
+  ? "rgba(255,255,255,0.10)"
+  : "rgba(0,0,0,0.06)",
 
-                      color: isUser
-                        ? "#fff"
-                        : "inherit",
-
+color: isUser ? "#fff" : "inherit",
                       whiteSpace: "pre-line",
                     }}
                   >
                     <Typography
                       sx={{
-                        fontSize: isLandscape
-                          ? "0.85rem"
-                          : "0.95rem",
-
-                        lineHeight: isLandscape
-                          ? 1.4
-                          : 1.5,
+                        fontSize: isLandscape ? "0.85rem" : "0.95rem",
+                        lineHeight: isLandscape ? 1.4 : 1.5,
                       }}
                     >
                       {m.text}
@@ -355,11 +303,7 @@ export default function ChatBot() {
             {typing && (
               <Typography
                 variant="caption"
-                sx={{
-                  opacity: 0.7,
-                  color:
-                    theme.palette.text.secondary,
-                }}
+                sx={{ opacity: 0.7, color: theme.palette.text.secondary }}
               >
                 Sasha está escribiendo…
               </Typography>
@@ -369,48 +313,26 @@ export default function ChatBot() {
           </Box>
 
           {/* INPUT */}
-
-          <Box
-            sx={{
-              display: "flex",
-              p: 1,
-            }}
-          >
+          <Box sx={{ display: "flex", p: 1 }}>
             <TextField
               fullWidth
               size="small"
               value={input}
-              disabled={typing}
-              onChange={(e) =>
-                setInput(e.target.value)
-              }
+              onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (
-                  e.key === "Enter" &&
-                  !e.shiftKey
-                ) {
+                if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
                   sendMessage(input);
                 }
               }}
               placeholder="Escribe tu mensaje…"
             />
-
-            <IconButton
-              onClick={() => sendMessage(input)}
-              disabled={
-                !input.trim() || typing
-              }
-            >
-              <SendIcon
-                sx={{
-                  color: "#03A9F4",
-                }}
-              />
+            <IconButton onClick={() => sendMessage(input)}>
+              <SendIcon sx={{ color: "#03A9F4" }} />
             </IconButton>
           </Box>
         </Paper>
       )}
     </>
   );
-      }
+}                            
