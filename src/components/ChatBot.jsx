@@ -108,20 +108,22 @@ export default function ChatBot() {
   ========================= */
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [messages, typing]);
+  bottomRef.current?.scrollIntoView({
+    behavior: "smooth",
+    block: "end",
+  });
+}, [messages, typing]);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({
-          behavior: "auto",
-        });
-      }, 0);
-    }
-  }, [open]);
+  if (open) {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({
+        behavior: "auto",
+        block: "end",
+      });
+    }, 0);
+  }
+}, [open]);
 
   /* =========================
      BLOQUEAR SCROLL DEL BODY
@@ -369,16 +371,16 @@ export default function ChatBot() {
             e.stopPropagation()
           }
           sx={{
-            position: "fixed",
+  position: "fixed",
+  zIndex: (theme) =>
+    theme.zIndex.modal + 2,
 
-            zIndex: (theme) =>
-              theme.zIndex.modal + 2,
+  display: "flex",
+  flexDirection: "column",
 
-            display: "flex",
+  minHeight: 0,
 
-            flexDirection: "column",
-
-            overflow: "hidden",
+  overflow: "hidden",
 
             ...(isLandscape
               ? {
@@ -452,79 +454,104 @@ export default function ChatBot() {
 
           {/* MENSAJES */}
 
-          <Box
-  sx={{
-    flex: 1,
-    minHeight: 0,
-    p: 1,
-    overflowY: "auto",
-    overflowX: "hidden",
-  }}
->
-            {messages.map((m, i) => {
-              const isUser =
-                m.from === "user";
-
-              return (
-                <Box
-                  key={i}
-                  sx={{
-                    display: "flex",
-
-                    justifyContent: isUser
-                      ? "flex-end"
-                      : "flex-start",
-
-                    mb: 1,
-                  }}
-                >
-
 <Box
   sx={{
-    maxWidth: "80%",
-    minWidth: 0,
+    flex: "1 1 0",
+    minHeight: 0,
+    height: 0,
 
-    px: 1.5,
-    py: 1,
+    p: 1,
 
-    borderRadius: 2,
+    overflowY: "auto",
+    overflowX: "hidden",
 
-    bgcolor: isUser
-      ? theme.palette.primary.main
-      : isDark
-      ? "rgba(255,255,255,0.10)"
-      : "rgba(0,0,0,0.06)",
-
-    color: isUser
-      ? "#fff"
-      : "inherit",
-
-    whiteSpace: "pre-line",
-
-    overflowWrap: "anywhere",
-    wordBreak: "break-word",
+    WebkitOverflowScrolling: "touch",
   }}
 >
-                  
-                    <Typography
-                      sx={{
-                        fontSize:
-                          isLandscape
-                            ? "0.85rem"
-                            : "0.95rem",
+  {messages.map((m, i) => {
+    const isUser = m.from === "user";
 
-                        lineHeight:
-                          isLandscape
-                            ? 1.4
-                            : 1.5,
-                      }}
-                    >
-                      {m.text}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
+    return (
+      <Box
+        key={i}
+        sx={{
+          display: "flex",
+
+          justifyContent: isUser
+            ? "flex-end"
+            : "flex-start",
+
+          mb: 1,
+
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: "80%",
+            minWidth: 0,
+
+            px: 1.5,
+            py: 1,
+
+            borderRadius: 2,
+
+            bgcolor: isUser
+              ? theme.palette.primary.main
+              : isDark
+              ? "rgba(255,255,255,0.10)"
+              : "rgba(0,0,0,0.06)",
+
+            color: isUser
+              ? "#fff"
+              : "inherit",
+
+            whiteSpace: "pre-wrap",
+
+            overflowWrap: "anywhere",
+            wordBreak: "break-word",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: isLandscape
+                ? "0.85rem"
+                : "0.95rem",
+
+              lineHeight: isLandscape
+                ? 1.4
+                : 1.5,
+
+              whiteSpace: "pre-wrap",
+
+              overflowWrap: "anywhere",
+              wordBreak: "break-word",
+            }}
+          >
+            {m.text}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  })}
+
+  {/* INDICADOR DE ESCRITURA */}
+
+  {typing && (
+    <Typography
+      variant="caption"
+      sx={{
+        opacity: 0.7,
+        color:
+          theme.palette.text.secondary,
+      }}
+    >
+      Sasha está escribiendo…
+    </Typography>
+  )}
+
+  <div ref={bottomRef} />
+</Box>
 
             {/* INDICADOR DE ESCRITURA */}
 
