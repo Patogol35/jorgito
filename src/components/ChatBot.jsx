@@ -535,23 +535,6 @@ export default function ChatBot() {
     );
   })}
 
-  {/* INDICADOR DE ESCRITURA */}
-
-  {typing && (
-    <Typography
-      variant="caption"
-      sx={{
-        opacity: 0.7,
-        color:
-          theme.palette.text.secondary,
-      }}
-    >
-      Sasha está escribiendo…
-    </Typography>
-  )}
-
-  <div ref={bottomRef} />
-</Box>
 
             {/* INDICADOR DE ESCRITURA */}
 
