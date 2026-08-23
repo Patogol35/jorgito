@@ -459,10 +459,11 @@ function App() {
           </Fab>
         </Tooltip>
 
-        <ChatBot
-          t={t}
-          lang={lang}
-        />
+    <ChatBot
+  key={lang}
+  t={t}
+  lang={lang}
+/>
       </Box>
     </ThemeProvider>
   );
