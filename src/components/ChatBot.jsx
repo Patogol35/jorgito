@@ -35,7 +35,7 @@ const MAX_MESSAGE_LENGTH = 1500;
    COMPONENTE
 ========================= */
 
-export default function ChatBot() {
+export default function ChatBot({ t, lang }) {
   const theme = useTheme();
 
   const isDark = theme.palette.mode === "dark";
@@ -73,14 +73,12 @@ export default function ChatBot() {
   const [history, setHistory] = useState([]);
 
   const initialMessage = useMemo(
-    () => ({
-      from: "bot",
-      text:
-        "Hola 👋 Soy Sasha, la asistente virtual de Jorge. " +
-        "Puedes preguntarme sobre su perfil, experiencia o proyectos.",
-    }),
-    []
-  );
+  () => ({
+    from: "bot",
+    text: t.chatbot.greeting,
+  }),
+  [t]
+);
 
   const [messages, setMessages] = useState([
     initialMessage,
