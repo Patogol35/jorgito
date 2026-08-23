@@ -29,7 +29,7 @@ import { SUGGESTIONS } from "./chatbot.config";
    CONFIGURACIÓN
 ========================= */
 
-const API_URL = "https://groqbot-8jru.onrender.com/api/chat";
+const API_URL = "https://groqbot-lz9q.onrender.com/api/chat";
 
 const MAX_MESSAGE_LENGTH = 1500;
 
