@@ -27,7 +27,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
    CONFIGURACIÓN
 ========================= */
 
-const API_URL = "https://groqbot-lz9q.onrender.com/api/chat";
+const API_URL = "https://groqbot-08r8.onrender.com/api/chat";
 
 const MAX_MESSAGE_LENGTH = 1500;
 
