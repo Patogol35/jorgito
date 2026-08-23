@@ -84,6 +84,19 @@ export default function ChatBot({ t }) {
     initialMessage,
   ]);
 
+  useEffect(() => {
+  setMessages((current) => {
+    if (
+      current.length === 1 &&
+      current[0].from === "bot"
+    ) {
+      return [initialMessage];
+    }
+
+    return current;
+  });
+}, [initialMessage]);
+
   /* =========================
      ABRIR / CERRAR DESDE FUERA
   ========================= */
