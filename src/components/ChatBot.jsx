@@ -35,7 +35,7 @@ const MAX_MESSAGE_LENGTH = 1500;
    COMPONENTE
 ========================= */
 
-export default function ChatBot({ t, lang }) {
+export default function ChatBot({ t }) {
   const theme = useTheme();
 
   const isDark = theme.palette.mode === "dark";
@@ -554,19 +554,16 @@ export default function ChatBot({ t, lang }) {
             {/* INDICADOR DE ESCRITURA */}
 
             {typing && (
-              <Typography
-                variant="caption"
-                sx={{
-                  opacity: 0.7,
-
-                  color:
-                    theme.palette.text
-                      .secondary,
-                }}
-              >
-                Sasha está escribiendo…
-              </Typography>
-            )}
+  <Typography
+    variant="caption"
+    sx={{
+      opacity: 0.7,
+      color: theme.palette.text.secondary,
+    }}
+  >
+    {t.chatbot.typing}
+  </Typography>
+)}
 
             <div ref={bottomRef} />
           </Box>
@@ -602,7 +599,7 @@ export default function ChatBot({ t, lang }) {
                 maxLength:
                   MAX_MESSAGE_LENGTH,
               }}
-              placeholder="Escribe tu mensaje…"
+              placeholder={t.chatbot.placeholder}
             />
 
             <IconButton
