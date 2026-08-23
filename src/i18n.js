@@ -54,6 +54,13 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       },
     },
 
+    chatbot: {
+  greeting:
+    "Hola 👋 Soy Sasha, la asistente virtual de Jorge. Puedes preguntarme sobre su perfil, experiencia o proyectos.",
+  placeholder: "Escribe tu mensaje…",
+  typing: "Sasha está escribiendo…",
+},
+
     certifications: {
   title: "Certificaciones",
   view: "Ver certificado", 
@@ -230,6 +237,13 @@ I am also skilled in development tools, API testing, virtualization, network sec
         Tools: "Tools",
       },
     },
+
+    chatbot: {
+  greeting:
+    "Hello 👋 I'm Sasha, Jorge's virtual assistant. You can ask me about his profile, experience, or projects.",
+  placeholder: "Type your message…",
+  typing: "Sasha is typing…",
+},
 
     certifications: {
   title: "Certifications",
