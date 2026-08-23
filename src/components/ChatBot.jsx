@@ -453,12 +453,14 @@ export default function ChatBot() {
           {/* MENSAJES */}
 
           <Box
-            sx={{
-              flex: 1,
-              p: 1,
-              overflowY: "auto",
-            }}
-          >
+  sx={{
+    flex: 1,
+    minHeight: 0,
+    p: 1,
+    overflowY: "auto",
+    overflowX: "hidden",
+  }}
+>
             {messages.map((m, i) => {
               const isUser =
                 m.from === "user";
@@ -476,31 +478,34 @@ export default function ChatBot() {
                     mb: 1,
                   }}
                 >
-                  <Box
-                    sx={{
-                      maxWidth: "80%",
 
-                      px: 1.5,
+<Box
+  sx={{
+    maxWidth: "80%",
+    minWidth: 0,
 
-                      py: 1,
+    px: 1.5,
+    py: 1,
 
-                      borderRadius: 2,
+    borderRadius: 2,
 
-                      bgcolor: isUser
-                        ? theme.palette
-                            .primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
+    bgcolor: isUser
+      ? theme.palette.primary.main
+      : isDark
+      ? "rgba(255,255,255,0.10)"
+      : "rgba(0,0,0,0.06)",
 
-                      color: isUser
-                        ? "#fff"
-                        : "inherit",
+    color: isUser
+      ? "#fff"
+      : "inherit",
 
-                      whiteSpace:
-                        "pre-line",
-                    }}
-                  >
+    whiteSpace: "pre-line",
+
+    overflowWrap: "anywhere",
+    wordBreak: "break-word",
+  }}
+>
+                  
                     <Typography
                       sx={{
                         fontSize:
