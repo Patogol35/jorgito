@@ -189,11 +189,9 @@ export default function Projects({ t }) {
   WbSunnyIcon,
   ShoppingCartIcon,
     ChessIcon,
-  MovieIcon,
   QuizIcon,
   FunctionsIcon,
   AccessTimeIcon,
-  QrCode2Icon,
   
 ];
 
