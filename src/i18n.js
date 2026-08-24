@@ -129,7 +129,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
     {
   titulo: "Ajedrez con IA",
-  descripcion: "React + Stockfish",
+  descripcion: "React + IA",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
     
@@ -144,10 +144,10 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://calculadorajorgepatricio.vercel.app/",
     },
     {
-      titulo: "Chatbot con IA",
-      descripcion: "Groq",
-      link: "https://chatbot-jorge.vercel.app/",
-    },
+  titulo: "Chatbot con IA",
+  descripcion: "Asistente Virtual + Groq",
+  link: "https://chatbot-jorge.vercel.app/",
+},
     
   ],
 },
@@ -301,7 +301,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
 
     {
   titulo: "AI Chess",
-  descripcion: "React + Stockfish",
+  descripcion: "React + IA",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
     
@@ -315,7 +315,13 @@ I am also skilled in development tools, API testing, virtualization, network sec
       descripcion: "JS + math logic",
       link: "https://calculadorajorgepatricio.vercel.app/",
     },
+
     
+  {
+  titulo: "AI Chatbot",
+  descripcion: "Virtual assistant + Groq",
+  link: "https://chatbot-jorge.vercel.app/",
+},
     
   ],
 },
