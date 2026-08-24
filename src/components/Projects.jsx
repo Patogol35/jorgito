@@ -9,7 +9,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FunctionsIcon from "@mui/icons-material/Functions";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 import QrCode2Icon from "@mui/icons-material/QrCode2";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 const ChessIcon = ({ sx }) => (
@@ -191,7 +191,7 @@ export default function Projects({ t }) {
     ChessIcon,
   QuizIcon,
   FunctionsIcon,
-  AccessTimeIcon,
+  SmartToyIcon,  
   
 ];
 
