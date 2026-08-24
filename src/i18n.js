@@ -117,8 +117,8 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       view: "Ver proyecto",
   items: [
     {
-      titulo: "Aplicación del Clima (React + API)",
-      descripcion: "Consumo de API y UI dinámica",
+      titulo: "Aplicación del Clima",
+      descripcion: "Consumo de API + React",
       link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     },
     {
@@ -289,8 +289,8 @@ I am also skilled in development tools, API testing, virtualization, network sec
       view: "View Project", //
   items: [
     {
-      titulo: "Weather App (React + API)",
-      descripcion: "API consumption & dynamic UI",
+      titulo: "Weather App",
+      descripcion: "API consumption + React",
       link: "https://jorgepatriciosantamariacherrezweath.vercel.app/",
     },
     {
