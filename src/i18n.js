@@ -129,7 +129,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
     {
   titulo: "Ajedrez con IA",
-  descripcion: "Juego de ajedrez en React con inteligencia artificial",
+  descripcion: "React + Stockfish",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
     
@@ -144,9 +144,9 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://calculadorajorgepatricio.vercel.app/",
     },
     {
-      titulo: "Reloj Global",
-      descripcion: "Timezones + lógica de tiempo",
-      link: "https://reloj-jorgepatricio.vercel.app/",
+      titulo: "Chatbot con IA",
+      descripcion: "Groq",
+      link: "https://chatbot-jorge.vercel.app/",
     },
     
   ],
@@ -301,7 +301,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
 
     {
   titulo: "AI Chess",
-  descripcion: "React chess game with artificial intelligence",
+  descripcion: "React + Stockfish",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
     
@@ -315,11 +315,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       descripcion: "JS + math logic",
       link: "https://calculadorajorgepatricio.vercel.app/",
     },
-    {
-      titulo: "Global Clock",
-      descripcion: "Timezones + time logic",
-      link: "https://reloj-jorgepatricio.vercel.app/",
-    },
+    
     
   ],
 },
