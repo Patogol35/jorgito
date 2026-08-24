@@ -71,12 +71,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       año: 2024,
       link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859", 
     },
-    {
-      titulo: "Curso de React.js",
-      institucion: "Platzi",
-      año: 2025,
-      link: "https://platzi.com/p/santamariapatricio3/curso/11887-reactjs/diploma/detalle/",
-    },
+    
     {
       titulo: "Curso completo de Linux: Manejo de comandos y Shell Script",
       institucion: "Udemy",
@@ -137,11 +132,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
   descripcion: "Juego de ajedrez en React con inteligencia artificial",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
-    {
-      titulo: "Explorador de Películas",
-      descripcion: "React + API de películas",
-      link: "https://movie-explorer-jorge-patricio.vercel.app/",
-    },
+    
     {
       titulo: "Quiz Educativo de Ambato y Ecuador",
       descripcion: "Lógica interactiva + scoring",
@@ -157,11 +148,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       descripcion: "Timezones + lógica de tiempo",
       link: "https://reloj-jorgepatricio.vercel.app/",
     },
-    {
-      titulo: "Generador y Escáner QR",
-      descripcion: "Generación y lectura QR",
-      link: "https://jorgepatricio-codigo-qr.vercel.app/",
-    },
+    
   ],
 },
     contact: {
@@ -255,12 +242,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       año: 2024,
       link: "https://verifirma.unir.net/csv/39f3cabd-d6f2-4a82-b7f2-c39e1eaf4859",
     },
-    {
-      titulo: "React.js Course",
-      institucion: "Platzi",
-      año: 2025,
-      link: "https://platzi.com/p/santamariapatricio3/curso/11887-reactjs/diploma/detalle/",
-    },
+    
     {
       titulo: "Complete Linux Course: Command Line and Shell Scripting",
       institucion: "Udemy",
@@ -322,11 +304,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
   descripcion: "React chess game with artificial intelligence",
   link: "https://ajedrez-ia-jorge-patricio.vercel.app/",
 },
-    {
-      titulo: "Movie Explorer",
-      descripcion: "React + movie API",
-      link: "https://movie-explorer-jorge-patricio.vercel.app/",
-    },
+    
     {
       titulo: "Educational Quiz about Ambato and Ecuador",
       descripcion: "Interactive logic + scoring",
@@ -342,11 +320,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       descripcion: "Timezones + time logic",
       link: "https://reloj-jorgepatricio.vercel.app/",
     },
-    {
-      titulo: "QR Generator & Scanner",
-      descripcion: "QR generation & scanning",
-      link: "https://jorgepatricio-codigo-qr.vercel.app/",
-    },
+    
   ],
 },
     contact: {
