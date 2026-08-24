@@ -73,14 +73,14 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     },
     
     {
-      titulo: "Curso completo de Linux: Manejo de comandos y Shell Script",
+      titulo: "Curso completo de Linux",
       institucion: "Udemy",
       año: 2024,
       link: "https://ude.my/UC-094701b8-dbdf-49b9-9ba5-4cd81e94353f",
     },
     {
       titulo:
-        "Curso de Preparación para la Certificación AZ900: Microsoft Azure Fundamentals",
+        "Curso de Preparación para la Certificación AZ900",
       institucion: "Universidad Internacional de la Rioja",
       año: 2023,
       link: "https://verifirma.unir.net/csv/da488225-89b2-4f4d-96ba-06b7372a7388",
@@ -98,7 +98,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       link: "https://freecodecamp.org/espanol/certification/fcce02c3b29-930b-4b79-ae3a-3ed1bdc290f9/data-analysis-with-python-v7",
     },
    {
-  titulo: "Protocolo de Contexto de Modelo: Temas Avanzados",
+  titulo: "Protocolo de Contexto de Modelo",
   institucion: "Anthropic",
   año: 2026,
   link: "https://verify.skilljar.com/c/7obb8vycfzfb",
@@ -244,14 +244,14 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
     
     {
-      titulo: "Complete Linux Course: Command Line and Shell Scripting",
+      titulo: "Complete Linux Course",
       institucion: "Udemy",
       año: 2024,
       link: "https://ude.my/UC-094701b8-dbdf-49b9-9ba5-4cd81e94353f",
     },
     {
       titulo:
-        "AZ-900 Certification Preparation Course: Microsoft Azure Fundamentals",
+        "AZ-900 Certification Preparation Course: Microsoft",
       institucion: "International University of La Rioja",
       año: 2023,
       link: "https://verifirma.unir.net/csv/da488225-89b2-4f4d-96ba-06b7372a7388",
@@ -270,7 +270,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
 
    {
-  titulo: "Model Context Protocol: Advanced Topics",
+  titulo: "Model Context Protocol",
   institucion: "Anthropic",
   año: 2026,
   link: "https://verify.skilljar.com/c/7obb8vycfzfb",
