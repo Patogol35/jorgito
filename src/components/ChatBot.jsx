@@ -339,15 +339,14 @@ export default function ChatBot({ t }) {
 
           boxShadow: "none",
 
-          transition:
-            "background-color 0.25s ease, transform 0.2s ease",
+          transition: "transform 0.2s ease",
 
-          "&:hover": {
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? theme.palette.grey[800]
-                : theme.palette.primary.dark,
-          },
+"&:hover": {
+  bgcolor:
+    theme.palette.mode === "dark"
+      ? theme.palette.grey[800]
+      : theme.palette.primary.dark,
+},
 
           "&:active": {
             transform: "scale(0.95)",
