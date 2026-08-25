@@ -220,7 +220,7 @@ export default function Contact({ t }) {
 <motion.div variants={fadeCinematic}>
   <SocialLinks
     socialLinks={socialLinks}
-    size="48px"
+    size="40px"
     spacing={2}
   />
 </motion.div>
