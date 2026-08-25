@@ -171,8 +171,11 @@ function App() {
     mb: 4,
     p: { xs: 3, md: 5 },
     borderRadius: "18px",
-
-    "linear-gradient(135deg, #dbeafe 0%, #ccfbf1 100%)"
+    
+    background:
+  theme.palette.mode === "dark"
+    ? "#121212"
+    :"linear-gradient(135deg, #dbeafe 0%, #ccfbf1 100%)"
 
     border: `1.5px solid ${color}55`,
 
