@@ -2,14 +2,19 @@ import { IconButton, Link, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
-export default function SocialLinks({ socialLinks, size = "30px", animated = true, spacing = 2 }) {
+export default function SocialLinks({
+  socialLinks,
+  size = "30px",
+  animated = true,
+  spacing = 2,
+}) {
   return (
     <Box
       sx={{
         display: "flex",
-        flexWrap: "wrap",          // 🔹 permite que los iconos bajen a otra fila
-        justifyContent: "center",  // 🔹 centrado horizontal
-        gap: spacing,              // 🔹 espacio moderado entre iconos
+        flexWrap: "wrap",
+        justifyContent: "center",
+        gap: spacing,
         mt: 2,
       }}
     >
@@ -19,26 +24,62 @@ export default function SocialLinks({ socialLinks, size = "30px", animated = tru
             component={Link}
             href={s.href}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
+            aria-label={`Abrir ${s.href}`}
             sx={{
+              color: s.color,
+              transition: "all 0.25s ease",
+
               "&:hover": {
                 backgroundColor: "transparent",
-                transform: animated ? "scale(1.2)" : "none",
               },
             }}
           >
-            {React.cloneElement(s.icon, { sx: { color: s.color, fontSize: size } })}
+            {React.cloneElement(s.icon, {
+              sx: {
+                color: s.color,
+                fontSize: size,
+                transition: "filter 0.25s ease",
+              },
+            })}
           </IconButton>
         );
 
         return animated ? (
           <motion.div
             key={i}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: i * 0.2 }}
-            whileHover={{ scale: 1.2, rotate: 8 }}
-            whileTap={{ scale: 0.9 }}
+            initial={{
+              opacity: 0,
+              y: 15,
+              scale: 0.7,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.5,
+            }}
+            transition={{
+              duration: 0.45,
+              delay: i * 0.1,
+              ease: "easeOut",
+            }}
+            whileHover={{
+              y: -6,
+              scale: 1.2,
+              rotate: 8,
+              filter: `drop-shadow(0 0 8px ${s.color})`,
+            }}
+            whileTap={{
+              scale: 0.85,
+              rotate: -5,
+            }}
+            style={{
+              display: "flex",
+            }}
           >
             {iconButton}
           </motion.div>
