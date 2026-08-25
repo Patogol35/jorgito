@@ -2,6 +2,8 @@ import { IconButton, Link, Box } from "@mui/material";
 import { motion } from "framer-motion";
 import React from "react";
 
+const MotionIconButton = motion(IconButton);
+
 export default function SocialLinks({
   socialLinks,
   size = "30px",
@@ -19,32 +21,13 @@ export default function SocialLinks({
       }}
     >
       {socialLinks.map((s, i) => {
-        const iconButton = (
-          <IconButton
+        return animated ? (
+          <MotionIconButton
+            key={i}
             component={Link}
             href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            sx={{
-              backgroundColor: "transparent",
-
-              "&:hover": {
-                backgroundColor: "transparent",
-              },
-            }}
-          >
-            {React.cloneElement(s.icon, {
-              sx: {
-                color: s.color,
-                fontSize: size,
-              },
-            })}
-          </IconButton>
-        );
-
-        return animated ? (
-          <motion.div
-            key={i}
             initial={{
               opacity: 0,
               y: 15,
@@ -69,21 +52,53 @@ export default function SocialLinks({
             }}
             whileHover={{
               y: -4,
-              scale: 1.12,
-              rotate: [0, -10, 10, -6, 0],
+              scale: 1.15,
+              rotate: [0, -12, 12, -8, 0],
               transition: {
-                duration: 0.45,
+                duration: 0.5,
                 ease: "easeInOut",
               },
             }}
             whileTap={{
-              scale: 0.92,
+              scale: 0.9,
+            }}
+            sx={{
+              backgroundColor: "transparent",
+
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
             }}
           >
-            {iconButton}
-          </motion.div>
+            {React.cloneElement(s.icon, {
+              sx: {
+                color: s.color,
+                fontSize: size,
+              },
+            })}
+          </MotionIconButton>
         ) : (
-          <div key={i}>{iconButton}</div>
+          <IconButton
+            key={i}
+            component={Link}
+            href={s.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              backgroundColor: "transparent",
+
+              "&:hover": {
+                backgroundColor: "transparent",
+              },
+            }}
+          >
+            {React.cloneElement(s.icon, {
+              sx: {
+                color: s.color,
+                fontSize: size,
+              },
+            })}
+          </IconButton>
         );
       })}
     </Box>
