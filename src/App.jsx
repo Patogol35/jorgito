@@ -177,21 +177,31 @@ function App() {
     ? `
       radial-gradient(
         circle at top right,
-        rgba(25, 118, 210, 0.08),
-        transparent 35%
+        rgba(33, 150, 243, 0.18),
+        transparent 40%
       ),
-      linear-gradient(145deg, #151515 0%, #0d1117 100%)
+      linear-gradient(
+        135deg,
+        #1b1f26 0%,
+        #11151c 50%,
+        #0b0e13 100%
+      )
     `
     : `
       radial-gradient(
         circle at top right,
-        rgba(25, 118, 210, 0.06),
-        transparent 35%
+        rgba(33, 150, 243, 0.12),
+        transparent 40%
       ),
-      linear-gradient(145deg, #ffffff 0%, #eef4fb 100%)
+      linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f1f6fc 50%,
+        #e3ebf5 100%
+      )
     `,
                 
-                border: `1.5px solid ${color}55`,
+                border: `1.5px solid ${color}66`,
 
                 boxShadow:
                   theme.palette.mode === "light"
