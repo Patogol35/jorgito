@@ -173,9 +173,9 @@ function App() {
     borderRadius: "18px",
 
     background:
-      theme.palette.mode === "dark"
-        ? "#121212"
-        : "linear-gradient(135deg, #ffffff 0%, #eaf4ff 100%)",
+  theme.palette.mode === "dark"
+    ? "#121212"
+    : "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
 
     border: `1.5px solid ${color}55`,
 
