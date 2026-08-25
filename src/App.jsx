@@ -275,7 +275,8 @@ function App() {
       height: 52,
       boxShadow: "none",
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+    
+      transition: "transform 0.2s ease",
 
       "&:hover": {
         bgcolor:
@@ -320,7 +321,8 @@ function App() {
       boxShadow: "none",
 
       // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+      
+      transition: "transform 0.2s ease",
       willChange: "background-color",
 
       "&:hover": {
