@@ -27,7 +27,6 @@ export default function SocialLinks({
             rel="noopener noreferrer"
             sx={{
               backgroundColor: "transparent",
-              transition: "color 0.3s ease",
 
               "&:hover": {
                 backgroundColor: "transparent",
@@ -38,7 +37,6 @@ export default function SocialLinks({
               sx: {
                 color: s.color,
                 fontSize: size,
-                transition: "all 0.3s ease",
               },
             })}
           </IconButton>
@@ -51,11 +49,13 @@ export default function SocialLinks({
               opacity: 0,
               y: 15,
               scale: 0.8,
+              rotate: -8,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
               scale: 1,
+              rotate: 0,
             }}
             viewport={{
               once: true,
@@ -70,11 +70,10 @@ export default function SocialLinks({
             whileHover={{
               y: -4,
               scale: 1.12,
-              rotate: 6,
+              rotate: [0, -10, 10, -6, 0],
               transition: {
-                type: "spring",
-                stiffness: 300,
-                damping: 10,
+                duration: 0.45,
+                ease: "easeInOut",
               },
             }}
             whileTap={{
