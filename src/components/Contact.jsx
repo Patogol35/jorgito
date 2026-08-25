@@ -216,12 +216,11 @@ export default function Contact({ t }) {
 />
           </motion.div>
 
-          {/* Redes sociales */}
-          <motion.div variants={fadeCinematic}>
+      {/* Redes sociales */}
+<motion.div variants={fadeCinematic}>
   <SocialLinks
     socialLinks={socialLinks}
     size="48px"
-    animated={false}
     spacing={2}
   />
 </motion.div>
