@@ -322,31 +322,37 @@ export default function ChatBot({ t }) {
       <Fab
         onClick={() => setOpen(true)}
         sx={(theme) => ({
-  position: "fixed",
-  bottom: 16,
-  left: 16,
-  zIndex: 1200,
+          position: "fixed",
+          bottom: 16,
+          left: 16,
+          zIndex: 1200,
 
-  bgcolor: "#1976d2",
+          bgcolor:
+            theme.palette.mode === "dark"
+              ? theme.palette.grey[900]
+              : theme.palette.primary.main,
 
-  color: "#fff",
+          color: "#fff",
 
-  width: 52,
-  height: 52,
+          width: 52,
+          height: 52,
 
-  boxShadow: "none",
+          boxShadow: "none",
 
-  transition:
-    "background-color 0.25s ease, transform 0.2s ease",
+          transition:
+            "background-color 0.25s ease, transform 0.2s ease",
 
-  "&:hover": {
-    bgcolor: "#1565c0",
-  },
+          "&:hover": {
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? theme.palette.grey[800]
+                : theme.palette.primary.dark,
+          },
 
-  "&:active": {
-    transform: "scale(0.95)",
-  },
-})}
+          "&:active": {
+            transform: "scale(0.95)",
+          },
+        })}
       >
         <SmartToyIcon />
       </Fab>
@@ -629,4 +635,4 @@ export default function ChatBot({ t }) {
       )}
     </>
   );
-}
+    }
