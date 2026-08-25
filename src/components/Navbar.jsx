@@ -178,7 +178,7 @@ export default function Navbar({ mode, setMode, t }) {
       mode === "dark"
         ? "#121212"
         : theme.palette.primary.main,
-            transition: "all 0.3s ease",
+            transition: "box-shadow 0.3s ease",
             boxShadow: scrolled ? "0 4px 16px rgba(0,0,0,0.25)" : "none",
             zIndex: 1400,
           }}
@@ -312,20 +312,20 @@ export default function Navbar({ mode, setMode, t }) {
               ref={menuRef}
               tabIndex={-1}
               style={{
-                width: "280px",
-                background:
-                  mode === "dark"
-                    ? "rgba(30,30,30,0.95)"
-                    : theme.palette.primary.main,
-                borderRadius: "16px 0 0 16px",
-                padding: "2rem",
-                paddingTop: "5rem",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
-                display: "flex",
-                flexDirection: "column",
-                maxHeight: "100vh",
-                overflowY: "auto",
-              }}
+  width: "280px",
+  background:
+    mode === "dark"
+      ? "#1e1e1e"
+      : theme.palette.primary.main,
+  borderRadius: "16px 0 0 16px",
+  padding: "2rem",
+  paddingTop: "5rem",
+  boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  display: "flex",
+  flexDirection: "column",
+  maxHeight: "100vh",
+  overflowY: "auto",
+}}
               onClick={(e) => e.stopPropagation()}
             >
               <Stack
