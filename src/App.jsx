@@ -164,44 +164,47 @@ function App() {
         >
           {sections.map(({ id, color, Component }) => (
             <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={(theme) => ({
-                mb: 4,
-                p: { xs: 3, md: 5 },
-                borderRadius: "18px",
+  key={id}
+  id={id}
+  elevation={0}
+  sx={(theme) => ({
+    mb: 4,
+    p: { xs: 3, md: 5 },
+    borderRadius: "18px",
 
-                background:
-  theme.palette.mode === "dark"
-    ? "#121212"
-    : "linear-gradient(135deg, #ffffff 0%, #eaf4ff 100%)",
-                
-                border: `1.5px solid ${color}55`,
+    background:
+      theme.palette.mode === "dark"
+        ? "#121212"
+        : "linear-gradient(135deg, #ffffff 0%, #eaf4ff 100%)",
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+    border: `1.5px solid ${color}55`,
 
-                scrollMarginTop: scrollOffset,
+    boxShadow:
+      theme.palette.mode === "light"
+        ? "0 4px 12px rgba(0,0,0,0.05)"
+        : "0 4px 12px rgba(0,0,0,0.4)",
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
-                transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+    scrollMarginTop: scrollOffset,
 
-                willChange: "transform",
+    transition:
+      "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
-                "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
-                },
-              })}
-            >
+    willChange: "transform",
+
+    "& > *": {
+      backgroundColor: "transparent !important",
+    },
+
+    "&:hover": {
+      transform: "translateY(-4px) scale(1.01)",
+      border: `1.5px solid ${color}`,
+      boxShadow:
+        theme.palette.mode === "light"
+          ? "0 10px 24px rgba(0,0,0,0.08)"
+          : "0 10px 24px rgba(0,0,0,0.6)",
+    },
+  })}
+>
               <Component t={t} />
             </Paper>
           ))}
