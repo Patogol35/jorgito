@@ -197,8 +197,8 @@ function App() {
       linear-gradient(
   135deg,
   ${color}16 0%,
-  #e2e8f0 55%,
-  #cbd5e1 100%
+  #f8fafc 55%,
+  #e8eef5 100%
 )
     `,
                 
