@@ -41,24 +41,23 @@ const getMenuItems = (t) => [
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
 
-  {
-    label: t.menu.projects,
+  label: t.menu.projects,
     href: "#projects",
-    color: "linear-gradient(135deg, #0288d1, #03a9f4)",
+    color: "linear-gradient(135deg, #1976d2, #42a5f5)",
     icon: <WorkIcon sx={{ color: "#fff" }} />,
   },
   
   {
     label: t.menu.skills,
     href: "#skills",
-    color: "linear-gradient(135deg, #f57c00, #ffb74d)",
+    color: "linear-gradient(135deg, #00897b, #26a69a)",
     icon: <BuildIcon sx={{ color: "#fff" }} />,
   },
+  
     {
     label: t.menu.certifications,
     href: "#certifications",
-    color:
-      "linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), linear-gradient(135deg, #CBB26A, #B59A5A)",
+    color: "linear-gradient(135deg, #5548A8, #6D5BD0)",
     icon: <VerifiedIcon sx={{ color: "#fff" }} />,
   },
   
@@ -71,9 +70,10 @@ const getMenuItems = (t) => [
   {
     label: t.menu.email,
     href: "#form",
-    color: "linear-gradient(135deg, #00695c, #26a69a)",
+    color: "linear-gradient(135deg, #ef6c00, #fb8c00)",
     icon: <ContactMailIcon sx={{ color: "#fff" }} />,
   },
+
 ];
 
 // Variantes animaciones
