@@ -191,14 +191,14 @@ function App() {
     : `
       radial-gradient(
         circle at 0% 0%,
-        ${color}18,
+        ${color}25,
         transparent 45%
       ),
       linear-gradient(
         135deg,
-        ${color}10 0%,
-        rgba(248,250,252,0.95) 55%,
-        rgba(226,232,240,0.90) 100%
+        ${color}18 0%,
+        rgba(248,250,252,0.92) 55%,
+        rgba(226,232,240,0.95) 100%
       )
     `,
                 
