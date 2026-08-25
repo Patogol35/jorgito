@@ -119,7 +119,7 @@ function App() {
     { id: "about", color: "#2e7d32", Component: About },
     { id: "projects", color: "#1976d2", Component: Projects },
     { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#2e7d32", Component: Certifications },
+    { id: "certifications", color: "#C0A660", Component: Certifications },
     { id: "contact", color: "#d32f2f", Component: Contact },
     { id: "form", color: "#00897b", Component: Form },
   ],
@@ -172,16 +172,17 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: "18px",
 
-                background:
+                backgroundColor:
   theme.palette.mode === "dark"
     ? "#121212"
-    : `linear-gradient(
-        135deg,
-        #e8f1ff 0%,
-        ${color}25 100%
-      )`,
+    : "#ffffff",
+
+                backgroundImage:
+  theme.palette.mode === "dark"
+    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
+    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
                 
-                border: `0.5px solid ${color}55`,
+                border: `1.5px solid ${color}55`,
 
                 boxShadow:
                   theme.palette.mode === "light"
@@ -198,7 +199,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-                  border: `1px solid ${color}`,
+                  border: `1.5px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
