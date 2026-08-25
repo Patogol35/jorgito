@@ -175,7 +175,7 @@ function App() {
     background:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "linear-gradient(135deg, #dbeafe 0%, #f3e8ff 100%)",
+    : "linear-gradient(135deg, #dbeafe 0%, #cbd5e1 100%)",
 
     border: `1.5px solid ${color}55`,
 
