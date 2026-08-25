@@ -67,12 +67,13 @@ export default function SocialLinks({
               delay: i * 0.1,
               ease: "easeOut",
             }}
+            
             whileHover={{
-              y: -6,
-              scale: 1.2,
-              rotate: 8,
-              filter: `drop-shadow(0 0 8px ${s.color})`,
-            }}
+  y: -3,
+  scale: 1.08,
+  rotate: 3,
+  filter: `drop-shadow(0 0 3px ${s.color}55)`,
+}}
             whileTap={{
               scale: 0.85,
               rotate: -5,
