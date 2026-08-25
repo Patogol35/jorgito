@@ -190,15 +190,15 @@ function App() {
     `
     : `
       radial-gradient(
-        circle at 10% 0%,
-        ${color}30,
-        transparent 40%
+        circle at 0% 0%,
+        ${color}18,
+        transparent 45%
       ),
       linear-gradient(
         135deg,
-        ${color}22 0%,
-        ${color}10 50%,
-        #e8eef5 100%
+        ${color}10 0%,
+        rgba(248,250,252,0.95) 55%,
+        rgba(226,232,240,0.90) 100%
       )
     `,
                 
