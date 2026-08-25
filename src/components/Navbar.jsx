@@ -40,7 +40,8 @@ const getMenuItems = (t) => [
     color: "linear-gradient(135deg, #2e7d32, #66bb6a)",
     icon: <SchoolIcon sx={{ color: "#fff" }} />,
   },
-
+  
+  {
   label: t.menu.projects,
     href: "#projects",
     color: "linear-gradient(135deg, #1976d2, #42a5f5)",
