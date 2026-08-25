@@ -16,19 +16,55 @@ export default function SocialLinks({ socialLinks, size = "30px", animated = tru
       {socialLinks.map((s, i) => {
         const iconButton = (
           <IconButton
-            component={Link}
-            href={s.href}
-            target="_blank"
-            rel="noopener"
-            sx={{
-              "&:hover": {
-                backgroundColor: "transparent",
-                transform: animated ? "scale(1.2)" : "none",
-              },
-            }}
-          >
-            {React.cloneElement(s.icon, { sx: { color: s.color, fontSize: size } })}
-          </IconButton>
+  component={Link}
+  href={s.href}
+  target="_blank"
+  rel="noopener"
+  sx={{
+    position: "relative",
+    width: 52,
+    height: 52,
+    borderRadius: "50%",
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.12)",
+    transition: "all 0.3s ease",
+
+    "&:hover": {
+      background: "rgba(255,255,255,0.12)",
+      transform: animated ? "translateY(-5px) scale(1.08)" : "translateY(-5px)",
+      boxShadow: `0 8px 20px ${s.color}55`,
+      border: `1px solid ${s.color}88`,
+    },
+
+    "&:active": {
+      transform: "scale(0.94)",
+    },
+
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      inset: -3,
+      borderRadius: "50%",
+      border: `1px solid ${s.color}35`,
+      opacity: 0,
+      transform: "scale(0.8)",
+      transition: "all 0.3s ease",
+    },
+
+    "&:hover::after": {
+      opacity: 1,
+      transform: "scale(1)",
+    },
+  }}
+>
+  {React.cloneElement(s.icon, {
+    sx: {
+      color: s.color,
+      fontSize: size,
+      transition: "all 0.3s ease",
+    },
+  })}
+</IconButton>
         );
 
         return animated ? (
