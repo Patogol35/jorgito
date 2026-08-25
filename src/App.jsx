@@ -116,12 +116,12 @@ function App() {
   //  Memo de secciones 
   const sections = useMemo(
   () => [
-    { id: "about", color: "#2e7d32", Component: About },
-    { id: "projects", color: "#1976d2", Component: Projects },
-    { id: "skills", color: "#fb8c00", Component: Skills },
-    { id: "certifications", color: "#C0A660", Component: Certifications },
-    { id: "contact", color: "#d32f2f", Component: Contact },
-    { id: "form", color: "#00897b", Component: Form },
+    { id: "about", color: "#2DD4BF", Component: About },
+    { id: "projects", color: "#60A5FA", Component: Projects },
+    { id: "skills", color: "#A78BFA", Component: Skills },
+    { id: "certifications", color: "#D4AF37", Component: Certifications },
+    { id: "contact", color: "#FB7185", Component: Contact },
+    { id: "form", color: "#2DD4BF", Component: Form },
   ],
   []
 );
@@ -163,52 +163,95 @@ function App() {
           }}
         >
           {sections.map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={(theme) => ({
-                mb: 4,
-                p: { xs: 3, md: 5 },
-                borderRadius: "18px",
 
-                backgroundColor:
-  theme.palette.mode === "dark"
-    ? "#121212"
-    : "#ffffff",
+<Paper
+  key={id}
+  id={id}
+  elevation={0}
+  sx={(theme) => {
+    const backgrounds = {
+      about:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #102a2b 0%, #123c3d 45%, #172b38 100%)"
+          : "linear-gradient(135deg, #e8f5f2 0%, #d9f0ec 45%, #e6eef5 100%)",
 
-                backgroundImage:
-  theme.palette.mode === "dark"
-    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
-                
-                border: `1.5px solid ${color}55`,
+      projects:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #101d3b 0%, #172b55 45%, #241d45 100%)"
+          : "linear-gradient(135deg, #e9f0ff 0%, #dce8ff 50%, #eee9ff 100%)",
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+      skills:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #201b38 0%, #30264a 50%, #3a2d1d 100%)"
+          : "linear-gradient(135deg, #eeeaff 0%, #e7e1fa 50%, #fff2df 100%)",
 
-                scrollMarginTop: scrollOffset,
+      certifications:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #302719 0%, #45351b 50%, #241c2c 100%)"
+          : "linear-gradient(135deg, #fff6df 0%, #f8ecd0 50%, #eee7f4 100%)",
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
-                transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+      contact:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #291a27 0%, #3b202d 50%, #19283c 100%)"
+          : "linear-gradient(135deg, #fae9ef 0%, #f5dfe7 50%, #e6eef8 100%)",
 
-                willChange: "transform",
+      form:
+        theme.palette.mode === "dark"
+          ? "linear-gradient(135deg, #102c2c 0%, #164544 50%, #172d3c 100%)"
+          : "linear-gradient(135deg, #e3f6f2 0%, #d8f0eb 50%, #e3edf5 100%)",
+    };
 
-                "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
-                },
-              })}
-            >
-              <Component t={t} />
-            </Paper>
+    return {
+      mb: 4,
+      p: { xs: 3, md: 5 },
+      borderRadius: "18px",
+
+      background: backgrounds[id],
+
+      border: `1.5px solid ${color}70`,
+
+      boxShadow:
+        theme.palette.mode === "dark"
+          ? `
+            0 10px 30px rgba(0, 0, 0, 0.40),
+            inset 0 1px 0 rgba(255,255,255,0.04)
+          `
+          : `
+            0 10px 30px rgba(15, 23, 42, 0.08),
+            inset 0 1px 0 rgba(255,255,255,0.8)
+          `,
+
+      scrollMarginTop: scrollOffset,
+
+      transition:
+        "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
+
+      willChange: "transform",
+
+      "&:hover": {
+        transform: "translateY(-4px) scale(1.01)",
+
+        border: `1.5px solid ${color}`,
+
+        boxShadow:
+          theme.palette.mode === "dark"
+            ? `
+              0 16px 40px rgba(0,0,0,0.55),
+              0 0 25px ${color}20
+            `
+            : `
+              0 16px 40px rgba(15,23,42,0.12),
+              0 0 20px ${color}18
+            `,
+      },
+    };
+  }}
+>
+  <Component t={t} />
+</Paper>
+
+
+          
           ))}
         </Container>
 
