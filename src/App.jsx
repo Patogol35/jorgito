@@ -178,13 +178,13 @@ function App() {
     ? `
       radial-gradient(
         circle at 10% 0%,
-        ${color}45,
+        ${color}35,
         transparent 40%
       ),
       linear-gradient(
         135deg,
-        ${color}22 0%,
-        #121820 55%,
+        ${color}28 0%,
+        ${color}12 50%,
         #101216 100%
       )
     `
@@ -195,11 +195,11 @@ function App() {
         transparent 40%
       ),
       linear-gradient(
-  135deg,
-  ${color}16 0%,
-  #f8fafc 55%,
-  #e8eef5 100%
-)
+        135deg,
+        ${color}22 0%,
+        ${color}10 50%,
+        #e8eef5 100%
+      )
     `,
                 
                 border: `1.5px solid ${color}55`,
@@ -261,7 +261,7 @@ function App() {
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
       position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA QUE IDIOMA
+      top: 90,     // 👈 MISMA ALTURA 
       left: 16,    // 👈 lado izquierdo
       zIndex: 1200,
 
