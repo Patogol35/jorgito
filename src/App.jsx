@@ -178,12 +178,12 @@ function App() {
     ? `
       radial-gradient(
         circle at 10% 0%,
-        ${color}35,
+        ${color}45,
         transparent 40%
       ),
       linear-gradient(
         135deg,
-        ${color}18 0%,
+        ${color}22 0%,
         #121820 55%,
         #101216 100%
       )
@@ -191,12 +191,12 @@ function App() {
     : `
       radial-gradient(
         circle at 10% 0%,
-        ${color}25,
+        ${color}30,
         transparent 40%
       ),
       linear-gradient(
         135deg,
-        ${color}12 0%,
+        ${color}16 0%,
         #ffffff 55%,
         #f1f5f9 100%
       )
