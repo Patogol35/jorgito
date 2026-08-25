@@ -180,7 +180,7 @@ function App() {
                 backgroundImage:
   theme.palette.mode === "dark"
     ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
+    : "linear-gradient(135deg, #ffffff 0%, #eef6ff 100%)",
                 
                 border: `1.5px solid ${color}55`,
 
