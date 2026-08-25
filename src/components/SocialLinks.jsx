@@ -24,36 +24,13 @@ export default function SocialLinks({
             component={Link}
             href={s.href}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             sx={{
-              position: "relative",
-              transition: "all 0.3s ease",
-
-              // Glow
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                inset: 3,
-                borderRadius: "50%",
-                background: s.color,
-                opacity: 0,
-                filter: "blur(12px)",
-                transition: "opacity 0.3s ease",
-                zIndex: 0,
-              },
-
-              "&:hover::before": {
-                opacity: 0.4,
-              },
+              backgroundColor: "transparent",
+              transition: "color 0.3s ease",
 
               "&:hover": {
                 backgroundColor: "transparent",
-              },
-
-              "& svg": {
-                position: "relative",
-                zIndex: 1,
-                transition: "filter 0.3s ease",
               },
             }}
           >
@@ -61,6 +38,7 @@ export default function SocialLinks({
               sx: {
                 color: s.color,
                 fontSize: size,
+                transition: "all 0.3s ease",
               },
             })}
           </IconButton>
@@ -86,22 +64,21 @@ export default function SocialLinks({
             transition={{
               type: "spring",
               stiffness: 180,
-              damping: 12,
+              damping: 14,
               delay: i * 0.12,
             }}
             whileHover={{
-              y: -6,
-              scale: 1.15,
-              rotate: [0, -5, 5, 0],
+              y: -4,
+              scale: 1.12,
+              rotate: 6,
               transition: {
-                duration: 0.35,
+                type: "spring",
+                stiffness: 300,
+                damping: 10,
               },
             }}
             whileTap={{
-              scale: 0.9,
-            }}
-            style={{
-              borderRadius: "50%",
+              scale: 0.92,
             }}
           >
             {iconButton}
@@ -112,4 +89,4 @@ export default function SocialLinks({
       })}
     </Box>
   );
-      }
+}
