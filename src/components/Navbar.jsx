@@ -55,12 +55,11 @@ const getMenuItems = (t) => [
     icon: <BuildIcon sx={{ color: "#fff" }} />,
   },
   {
-    label: t.menu.certifications,
-    href: "#certifications",
-    color:
-      "linear-gradient(135deg, rgba(0,0,0,0.25), rgba(0,0,0,0.25)), linear-gradient(135deg, #CBB26A, #B59A5A)",
-    icon: <VerifiedIcon sx={{ color: "#fff" }} />,
-  },
+  label: t.menu.certifications,
+  href: "#certifications",
+  color: "linear-gradient(135deg, #455a64, #78909c)",
+  icon: <VerifiedIcon sx={{ color: "#fff" }} />,
+},
   
   {
     label: t.menu.contact,
