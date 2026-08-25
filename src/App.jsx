@@ -172,15 +172,24 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: "18px",
 
-                backgroundColor:
+                background:
   theme.palette.mode === "dark"
-    ? "#121212"
-    : "#ffffff",
-
-                backgroundImage:
-  theme.palette.mode === "dark"
-    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
+    ? `
+      radial-gradient(
+        circle at top right,
+        rgba(25, 118, 210, 0.08),
+        transparent 35%
+      ),
+      linear-gradient(145deg, #151515 0%, #0d1117 100%)
+    `
+    : `
+      radial-gradient(
+        circle at top right,
+        rgba(25, 118, 210, 0.06),
+        transparent 35%
+      ),
+      linear-gradient(145deg, #ffffff 0%, #eef4fb 100%)
+    `,
                 
                 border: `1.5px solid ${color}55`,
 
