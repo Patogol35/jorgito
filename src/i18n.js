@@ -251,7 +251,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
     },
     {
       titulo:
-        "AZ-900 Certification Preparation Course: Microsoft",
+        "AZ-900 Certification Preparation Course",
       institucion: "International University of La Rioja",
       año: 2023,
       link: "https://verifirma.unir.net/csv/da488225-89b2-4f4d-96ba-06b7372a7388",
