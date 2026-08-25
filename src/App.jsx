@@ -260,34 +260,28 @@ function App() {
     aria-label="tema"
     onClick={() => setMode(mode === "light" ? "dark" : "light")}
     sx={(theme) => ({
-      position: "fixed",
-      top: 90,     // 👈 MISMA ALTURA 
-      left: 16,    // 👈 lado izquierdo
-      zIndex: 1200,
+  position: "fixed",
+  top: 90,
+  left: 16,
+  zIndex: 1200,
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+  bgcolor: "#1976d2",
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      boxShadow: "none",
+  color: "#fff",
+  width: 52,
+  height: 52,
+  boxShadow: "none",
 
-      transition: "background-color 0.25s ease, transform 0.2s ease",
+  transition: "background-color 0.25s ease, transform 0.2s ease",
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+  "&:hover": {
+    bgcolor: "#1565c0",
+  },
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
+  "&:active": {
+    transform: "scale(0.95)",
+  },
+})}
   >
     {mode === "light" ? <Brightness4 /> : <Brightness7 />}
   </Fab>
@@ -301,39 +295,32 @@ function App() {
     disableTouchRipple
     onClick={() => setLang(lang === "es" ? "en" : "es")}
     sx={(theme) => ({
-      position: "fixed",
-      top: 90,
-      right: 16,
-      zIndex: 1200,
+  position: "fixed",
+  top: 90,
+  right: 16,
+  zIndex: 1200,
 
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
+  bgcolor: "#1976d2",
 
-      color: "#fff",
-      width: 52,
-      height: 52,
-      fontWeight: 800,
-      fontSize: "1rem",
-      letterSpacing: "1px",
-      boxShadow: "none",
+  color: "#fff",
+  width: 52,
+  height: 52,
+  fontWeight: 800,
+  fontSize: "1rem",
+  letterSpacing: "1px",
+  boxShadow: "none",
 
-      // 🔥 MISMO FIX
-      transition: "background-color 0.25s ease, transform 0.2s ease",
-      willChange: "background-color",
+  transition: "background-color 0.25s ease, transform 0.2s ease",
+  willChange: "background-color",
 
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
+  "&:hover": {
+    bgcolor: "#1565c0",
+  },
 
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
+  "&:active": {
+    transform: "scale(0.95)",
+  },
+})}
   >
     {lang === "es" ? "EN" : "ES"}
   </Fab>
