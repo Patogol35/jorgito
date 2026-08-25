@@ -172,15 +172,10 @@ function App() {
                 p: { xs: 3, md: 5 },
                 borderRadius: "18px",
 
-                backgroundColor:
+                background:
   theme.palette.mode === "dark"
     ? "#121212"
-    : "#ffffff",
-
-                backgroundImage:
-  theme.palette.mode === "dark"
-    ? "linear-gradient(rgba(255,255,255,0.03), rgba(255,255,255,0.03))"
-    : "linear-gradient(rgba(255,255,255,0.35), rgba(0,0,0,0.015))",
+    : "linear-gradient(135deg, #dbeafe 0%, #ccfbf1 100%)",
                 
                 border: `1.5px solid ${color}55`,
 
