@@ -195,11 +195,11 @@ function App() {
         transparent 40%
       ),
       linear-gradient(
-        135deg,
-        ${color}16 0%,
-        #ffffff 55%,
-        #f1f5f9 100%
-      )
+  135deg,
+  ${color}16 0%,
+  #e2e8f0 55%,
+  #cbd5e1 100%
+)
     `,
                 
                 border: `1.5px solid ${color}55`,
