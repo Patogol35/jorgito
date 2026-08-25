@@ -181,7 +181,7 @@ function App() {
         ${color}25 100%
       )`,
                 
-                border: `1.5px solid ${color}55`,
+                border: `0.5px solid ${color}55`,
 
                 boxShadow:
                   theme.palette.mode === "light"
