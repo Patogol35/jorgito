@@ -47,11 +47,13 @@ function App() {
 
   useEffect(() => {
   const handleBefore = () => {
-    const sections = document.querySelectorAll("section, [id]");
-    for (let sec of sections) {
-      const rect = sec.getBoundingClientRect();
+    const sections = document.querySelectorAll("[id]");
+
+    for (const section of sections) {
+      const rect = section.getBoundingClientRect();
+
       if (rect.top >= 0 && rect.top < window.innerHeight / 2) {
-        localStorage.setItem("currentSection", sec.id);
+        localStorage.setItem("currentSection", section.id);
         break;
       }
     }
@@ -68,21 +70,20 @@ function App() {
           block: "start",
         });
 
-        // 🧹 limpiar para evitar basura en memoria
         localStorage.removeItem("currentSection");
-      }, 80);
+      }, 100);
     });
   };
 
   window.addEventListener("orientationchange", handleBefore);
-  window.addEventListener("resize", handleAfter);
+  window.addEventListener("orientationchange", handleAfter);
 
   return () => {
     window.removeEventListener("orientationchange", handleBefore);
-    window.removeEventListener("resize", handleAfter);
+    window.removeEventListener("orientationchange", handleAfter);
   };
 }, []);
-
+  
   const t = translations[lang] || translations["es"];
 
   // 🎨 Theme optimizado
@@ -215,8 +216,6 @@ function App() {
                 transition:
                   "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
-                willChange: "transform",
-
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
                   border: `1.5px solid ${color}`,
@@ -258,7 +257,7 @@ function App() {
 <Tooltip title="Cambiar tema" placement="right">
   <Fab
     aria-label="tema"
-    onClick={() => setMode(mode === "light" ? "dark" : "light")}
+    onClick={() => setMode((prev) => (prev === "light" ? "dark" : "light"))}
     sx={(theme) => ({
       position: "fixed",
       top: 90,     // 👈 MISMA ALTURA 
@@ -300,7 +299,8 @@ function App() {
     disableRipple
     disableFocusRipple
     disableTouchRipple
-    onClick={() => setLang(lang === "es" ? "en" : "es")}
+    
+    onClick={() => setLang((prev) => (prev === "es" ? "en" : "es"))}
     sx={(theme) => ({
       position: "fixed",
       top: 90,
