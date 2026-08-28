@@ -106,7 +106,7 @@ export default function Hero({ mode, setMode, t }) {
             >
               <Avatar
                 alt="Jorge Patricio"
-                src="https://i.imgur.com/TkwdYwP.jpeg"
+                src="https://i.imgur.com/BgNNivP.jpeg"
                 imgProps={{
                   loading: "lazy",
                   decoding: "async",
