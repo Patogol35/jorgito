@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 import { useTheme } from "@mui/material/styles";
-
+import { Tooltip } from "@mui/material";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
@@ -317,44 +317,49 @@ export default function ChatBot({ t }) {
 
   return (
     <>
-      {/* BOTÓN FLOTANTE */}
+      
+      {/* BOTÓN FLOTANTE DE SASHA */}
+<Tooltip title="Abrir Sasha" placement="right">
+  <Fab
+    aria-label="Abrir Sasha"
+    disableRipple
+    disableFocusRipple
+    disableTouchRipple
+    onClick={() => setOpen(true)}
+    sx={(theme) => ({
+      position: "fixed",
+      bottom: 16,
+      left: 16,
+      zIndex: 1200,
 
-      <Fab
-        onClick={() => setOpen(true)}
-        sx={(theme) => ({
-          position: "fixed",
-          bottom: 16,
-          left: 16,
-          zIndex: 1200,
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
 
-          bgcolor:
-            theme.palette.mode === "dark"
-              ? theme.palette.grey[900]
-              : theme.palette.primary.main,
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
 
-          color: "#fff",
+      transition: "transform 0.2s ease",
+      willChange: "background-color",
 
-          width: 52,
-          height: 52,
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
 
-          boxShadow: "none",
-
-          transition: "transform 0.2s ease",
-
-"&:hover": {
-  bgcolor:
-    theme.palette.mode === "dark"
-      ? theme.palette.grey[800]
-      : theme.palette.primary.dark,
-},
-
-          "&:active": {
-            transform: "scale(0.95)",
-          },
-        })}
-      >
-        <SmartToyIcon />
-      </Fab>
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    <SmartToyIcon />
+  </Fab>
+</Tooltip>
 
       {/* OVERLAY */}
 
