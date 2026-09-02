@@ -210,7 +210,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
   audio.volume = 0.4;
   audio.play().catch(() => {});
   window.openSashaChat?.();
-},
+}, },
               ].map((btn, i) => (
                 <motion.div key={i} variants={fadeCinematic}>
                   <Button
