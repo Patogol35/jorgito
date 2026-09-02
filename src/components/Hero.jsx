@@ -187,48 +187,65 @@ const [openTerminal, setOpenTerminal] = useState(false);
               }}
             >
               {[
-                {
-                  label: t.hero.buttons.cv,
-                  icon: <DescriptionIcon />,
-                  href: "/Jorge.CV.pdf",
-                },
-                {
-                  label: t.hero.buttons.title,
-                  icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
-                },
-              {
-  label: "Terminal",
-  icon: <TerminalIcon />,
-  onClick: openTerminalWithSound,
-},
-                {
-                  label: t.hero.buttons.ai,
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                },
-              ].map((btn, i) => (
-                <motion.div key={i} variants={fadeCinematic}>
-                  <Button
-                    variant="contained"
-                    startIcon={btn.icon}
-                    href={btn.href}
-                    onClick={btn.onClick}
-                    target={btn.href ? "_blank" : undefined}
-                    sx={{
-                      borderRadius: "25px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
-                    }}
-                  >
-                    {btn.label}
-                  </Button>
-                </motion.div>
-                          ))}
+  {
+    label: t.hero.buttons.cv,
+    icon: <DescriptionIcon />,
+    href: "/Jorge.CV.pdf",
+    text: true,
+  },
+  {
+    label: t.hero.buttons.title,
+    icon: <WorkspacePremiumIcon />,
+    onClick: () => setOpen(true),
+    text: true,
+  },
+  {
+    label: "Terminal",
+    icon: <TerminalIcon />,
+    onClick: openTerminalWithSound,
+    text: false,
+  },
+  {
+    label: "Sasha",
+    icon: <SmartToyIcon />,
+    onClick: () => window.openSashaChat?.(),
+    text: false,
+  },
+].map((btn, i) => (
+  <motion.div key={i} variants={fadeCinematic}>
+    <Button
+      variant="contained"
+      startIcon={btn.text ? btn.icon : undefined}
+      href={btn.href}
+      onClick={btn.onClick}
+      target={btn.href ? "_blank" : undefined}
+      aria-label={btn.label}
+      sx={{
+        minWidth: btn.text ? "auto" : 50,
+        width: btn.text ? "auto" : 50,
+        height: btn.text ? "auto" : 50,
+        borderRadius: btn.text ? "25px" : "50%",
+        textTransform: "none",
+        fontWeight: "bold",
+        px: btn.text ? 4 : 0,
+        py: btn.text ? 1.4 : 0,
+        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+        boxShadow: "none",
+
+        ...(btn.text
+          ? {}
+          : {
+              "& .MuiButton-startIcon": {
+                margin: 0,
+              },
+            }),
+      }}
+    >
+      {!btn.text && btn.icon}
+      {btn.text && btn.label}
+    </Button>
+  </motion.div>
+))}
             </Box>
           </motion.div>
         </Box>
