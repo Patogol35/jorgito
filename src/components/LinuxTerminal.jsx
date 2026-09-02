@@ -235,15 +235,15 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         break;
 
       case "neofetch":
-        output = (
-          <Box
-            sx={{
-              whiteSpace: "pre-wrap",
-              fontFamily: mono,
-              lineHeight: 1.5,
-            }}
-          >
-            {`       .--.
+  output = (
+    <Box
+      sx={{
+        whiteSpace: "pre-wrap",
+        fontFamily: mono,
+        lineHeight: 1.5,
+      }}
+    >
+      {`       .--.
       |o_o |
       |:_/ |
      //   \\ \\
@@ -251,16 +251,16 @@ export default function LinuxTerminal({ t, lang, onClose }) {
    /'\\_   _/\\
    \\___)=(___/
 
-${text("neofetch")?.os || "OS: Portfolio Linux"}
-${text("neofetch")?.host || "Host: Jorge's Portfolio"}
-${text("neofetch")?.shell || "Shell: portfolio-shell"}
-${text("neofetch")?.user || "User: jorge"}
-${text("neofetch")?.language || "Language:"} ${
-              lang === "es" ? "Español" : "English"
-            }`}
-          </Box>
-        );
-        break;
+${terminal?.messages?.neofetch?.os || "OS: Portfolio Linux"}
+${terminal?.messages?.neofetch?.host || "Host: Jorge's Portfolio"}
+${terminal?.messages?.neofetch?.shell || "Shell: portfolio-shell"}
+${terminal?.messages?.neofetch?.user || "User: jorge"}
+${terminal?.messages?.neofetch?.language || "Language:"} ${
+        lang === "es" ? "Español" : "English"
+      }`}
+    </Box>
+  );
+  break;
 
       default:
         output = `${text("unknownCommand", "Command not found:")} ${cmd}`;
