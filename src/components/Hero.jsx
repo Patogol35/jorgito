@@ -292,22 +292,6 @@ const [openTerminal, setOpenTerminal] = useState(false);
       </Modal>
     </>
 
-            <Modal
-  open={openTerminal}
-  onClose={() => setOpenTerminal(false)}
-  sx={{
-    zIndex: 2000,
-    backgroundColor: "rgba(0,0,0,0.95)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <LinuxTerminal
-    t={t}
-    lang="es"
-    onClose={() => setOpenTerminal(false)}
-  />
-</Modal>
+            
   );
                   }
