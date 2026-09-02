@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -29,24 +29,6 @@ function App() {
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
-    const audioRef = useRef(null);
-  const [musicOn, setMusicOn] = useState(false);
-
-  const toggleMusic = () => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio("/sounds/porta.mp3");
-      audioRef.current.loop = true;
-      audioRef.current.volume = 0.08;
-    }
-
-    if (musicOn) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(() => {});
-    }
-
-    setMusicOn((prev) => !prev);
-  };
 
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
@@ -358,27 +340,6 @@ function App() {
     {lang === "es" ? "EN" : "ES"}
   </Fab>
 </Tooltip>
-
-                <Fab
-          aria-label="música"
-          onClick={toggleMusic}
-          sx={{
-            position: "fixed",
-            bottom: 80,
-            right: 16,
-            zIndex: 1200,
-            width: 52,
-            height: 52,
-            bgcolor: "background.paper",
-            color: "text.primary",
-            boxShadow: "none",
-            "&:hover": {
-              bgcolor: "action.hover",
-            },
-          }}
-        >
-          {musicOn ? "🔊" : "🔇"}
-        </Fab>
         <ChatBot t={t} lang={lang} />
       </Box>
     </ThemeProvider>
