@@ -22,16 +22,13 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-import LinuxTerminal from "./components/LinuxTerminal";
-import TerminalIcon from "@mui/icons-material/Terminal";
+
 import { translations } from "./i18n";
 
 function App() {
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
-
-  const [terminalOpen, setTerminalOpen] = useState(false);
 
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
@@ -236,34 +233,6 @@ function App() {
 
         <Footer t={t} />
 
-        <Tooltip title="Abrir terminal" placement="left">
-  <Fab
-    aria-label="terminal"
-    onClick={() => setTerminalOpen(true)}
-    sx={(theme) => ({
-      position: "fixed",
-      bottom: 310,
-      right: 16,
-      zIndex: 1200,
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
-      color: "#fff",
-      width: 52,
-      height: 52,
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
-    })}
-  >
-    <TerminalIcon />
-  </Fab>
-</Tooltip>
-
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
           <Fab
@@ -372,28 +341,6 @@ function App() {
   </Fab>
 </Tooltip>
         <ChatBot t={t} lang={lang} />
-
-        {terminalOpen && (
-  <Box
-    sx={{
-      position: "fixed",
-      inset: 0,
-      zIndex: 2000,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      p: { xs: 0, sm: 2 },
-      background: "rgba(0,0,0,0.75)",
-      backdropFilter: "blur(5px)",
-    }}
-  >
-    <LinuxTerminal
-      t={t}
-      lang={lang}
-      onClose={() => setTerminalOpen(false)}
-    />
-  </Box>
-)}
       </Box>
     </ThemeProvider>
   );
