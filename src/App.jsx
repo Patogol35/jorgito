@@ -8,7 +8,6 @@ import {
   Container,
   Fab,
   Tooltip,
-  Dialog,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -23,7 +22,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-import LinuxTerminal from "./components/LinuxTerminal.jsx";
+import LinuxTerminal from "./components/LinuxTerminal";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import { translations } from "./i18n";
 
@@ -237,8 +236,7 @@ function App() {
 
         <Footer t={t} />
 
-{/* Terminal */}
-<Tooltip title="Abrir terminal" placement="left">
+        <Tooltip title="Abrir terminal" placement="left">
   <Fab
     aria-label="terminal"
     onClick={() => setTerminalOpen(true)}
@@ -247,63 +245,24 @@ function App() {
       bottom: 84,
       right: 16,
       zIndex: 1200,
-
       bgcolor:
         theme.palette.mode === "dark"
           ? theme.palette.grey[900]
           : theme.palette.primary.main,
-
       color: "#fff",
       width: 52,
       height: 52,
-      boxShadow: "none",
-
-      transition: "transform 0.2s ease",
-
       "&:hover": {
         bgcolor:
           theme.palette.mode === "dark"
             ? theme.palette.grey[800]
             : theme.palette.primary.dark,
       },
-
-      "&:active": {
-        transform: "scale(0.95)",
-      },
     })}
   >
     <TerminalIcon />
   </Fab>
 </Tooltip>
-
-        <Dialog
-  open={terminalOpen}
-  onClose={() => setTerminalOpen(false)}
-  fullWidth
-  maxWidth="lg"
-  fullScreen
-  PaperProps={{
-    sx: {
-      background: "transparent",
-      boxShadow: "none",
-      overflow: "hidden",
-
-      // En escritorio deja márgenes
-      m: { xs: 0, md: 2 },
-
-      // En escritorio no ocupa absolutamente toda la pantalla
-      maxWidth: { md: "1100px" },
-      width: { md: "calc(100% - 32px)" },
-      height: { md: "auto" },
-      maxHeight: { md: "90vh" },
-
-      // En móvil ocupa toda la pantalla
-      borderRadius: { xs: 0, md: 3 },
-    },
-  }}
->
-  <LinuxTerminal t={t} lang={lang} />
-</Dialog>
 
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
@@ -413,6 +372,28 @@ function App() {
   </Fab>
 </Tooltip>
         <ChatBot t={t} lang={lang} />
+
+        {terminalOpen && (
+  <Box
+    sx={{
+      position: "fixed",
+      inset: 0,
+      zIndex: 2000,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      p: { xs: 0, sm: 2 },
+      background: "rgba(0,0,0,0.75)",
+      backdropFilter: "blur(5px)",
+    }}
+  >
+    <LinuxTerminal
+      t={t}
+      lang={lang}
+      onClose={() => setTerminalOpen(false)}
+    />
+  </Box>
+)}
       </Box>
     </ThemeProvider>
   );
