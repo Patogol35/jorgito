@@ -7,26 +7,29 @@ import {
   IconButton,
   Modal,
 } from "@mui/material";
+
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import TerminalIcon from "@mui/icons-material/Terminal";
 import { Brightness4, Brightness7, Close } from "@mui/icons-material";
-import { motion } from "framer-motion";
+
+import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 
+import LinuxTerminal from "../components/LinuxTerminal";
+
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
+
+  const [openTitle, setOpenTitle] = useState(false);
+  const [openTerminal, setOpenTerminal] = useState(false);
 
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
-    hidden: {
-      opacity: 0,
-      y: 16,
-      clipPath: "inset(0 0 100% 0)",
-    },
+    hidden: { opacity: 0, y: 16, clipPath: "inset(0 0 100% 0)" },
     visible: {
       opacity: 1,
       y: 0,
@@ -38,21 +41,23 @@ export default function Hero({ mode, setMode, t }) {
   const textContainer = {
     hidden: {},
     visible: {
-      transition: {
-        staggerChildren: 0.18,
-        delayChildren: 0.5,
-      },
+      transition: { staggerChildren: 0.18, delayChildren: 0.5 },
     },
   };
 
   const buttonsContainer = {
     hidden: {},
     visible: {
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 1.1,
-      },
+      transition: { staggerChildren: 0.12, delayChildren: 1.1 },
     },
+  };
+
+  // 🔊 sonido terminal
+  const openTerminalWithSound = () => {
+    const audio = new Audio("/sounds/terminal.mp3");
+    audio.volume = 0.4;
+    audio.play().catch(() => {});
+    setOpenTerminal(true);
   };
 
   return (
@@ -79,19 +84,10 @@ export default function Hero({ mode, setMode, t }) {
           initial={{ opacity: 0, rotateY: -45, scale: 0.92 }}
           animate={{ opacity: 1, rotateY: 0, scale: 1 }}
           transition={{ duration: 1.8, ease: easeOutExpo }}
-          style={{
-            borderRadius: "50%",
-            transformStyle: "preserve-3d",
-            perspective: 1200,
-            willChange: "transform",
-            transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
-          }}
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: "transform" }}
+            transition={{ duration: 5, repeat: Infinity }}
           >
             <motion.div
               animate={{
@@ -102,20 +98,14 @@ export default function Hero({ mode, setMode, t }) {
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity }}
-              style={{ borderRadius: "50%" }}
             >
               <Avatar
                 alt="Jorge Patricio"
                 src="https://i.imgur.com/BgNNivP.jpeg"
-                imgProps={{
-                  loading: "lazy",
-                  decoding: "async",
-                }}
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
                   border: `3px solid ${theme.palette.primary.main}`,
-                  backgroundColor: theme.palette.background.paper,
                 }}
               />
             </motion.div>
@@ -123,23 +113,10 @@ export default function Hero({ mode, setMode, t }) {
         </motion.div>
 
         {/* TEXTO */}
-        <Box
-          textAlign={{ xs: "center", sm: "left" }}
-          maxWidth="600px"
-          mx="auto"
-          zIndex={1}
-        >
+        <Box textAlign={{ xs: "center", sm: "left" }} maxWidth="600px">
           <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
-              <Typography
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
-                sx={{
-                  color: theme.palette.primary.main,
-                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
-                }}
-              >
+              <Typography variant="h3" fontWeight="bold" gutterBottom color="primary">
                 {t.hero.title}
               </Typography>
             </motion.div>
@@ -151,18 +128,7 @@ export default function Hero({ mode, setMode, t }) {
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
-                  letterSpacing: "0.3px",
-                  color: theme.palette.text.primary,
-                  maxWidth: "520px",
-                  mt: 3,
-                  mb: 5,
-                  whiteSpace: "pre-line",
-                }}
-              >
+              <Typography sx={{ mt: 3, mb: 5, whiteSpace: "pre-line" }}>
                 {t.hero.description}
               </Typography>
             </motion.div>
@@ -170,15 +136,7 @@ export default function Hero({ mode, setMode, t }) {
 
           {/* BOTONES */}
           <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
-            <Box
-              sx={{
-                display: "flex",
-                gap: 2,
-                justifyContent: { xs: "center", sm: "flex-start" },
-                flexWrap: "wrap",
-                alignItems: "center",
-              }}
-            >
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
               {[
                 {
                   label: t.hero.buttons.cv,
@@ -188,7 +146,12 @@ export default function Hero({ mode, setMode, t }) {
                 {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
+                  onClick: () => setOpenTitle(true),
+                },
+                {
+                  label: "Terminal",
+                  icon: <TerminalIcon />,
+                  onClick: openTerminalWithSound,
                 },
                 {
                   label: t.hero.buttons.ai,
@@ -203,103 +166,79 @@ export default function Hero({ mode, setMode, t }) {
                     href={btn.href}
                     onClick={btn.onClick}
                     target={btn.href ? "_blank" : undefined}
-                    sx={{
-                      borderRadius: "25px",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: 4,
-                      py: 1.4,
-                      background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                      boxShadow: "none",
-                    }}
+                    sx={{ borderRadius: "25px", textTransform: "none" }}
                   >
                     {btn.label}
                   </Button>
                 </motion.div>
               ))}
 
-              {/* 🌙 MODO */}
-              <motion.div variants={fadeCinematic}>
-                <IconButton
-                  onClick={() => setMode(mode === "light" ? "dark" : "light")}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    "&:hover": {
-                      background: "transparent",
-                      transform: "scale(1.15)",
-                    },
-                  }}
-                >
-                  {mode === "light" ? (
-                    <Brightness4 sx={{ fontSize: 28 }} />
-                  ) : (
-                    <Brightness7 sx={{ fontSize: 28 }} />
-                  )}
-                </IconButton>
-              </motion.div>
+              {/* 🌙 modo */}
+              <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
+                {mode === "light" ? <Brightness4 /> : <Brightness7 />}
+              </IconButton>
             </Box>
           </motion.div>
         </Box>
       </Box>
 
-      {/* MODAL */}
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.85)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      {/* MODAL TITULO */}
+      <Modal open={openTitle} onClose={() => setOpenTitle(false)}>
         <>
-          <IconButton
-            onClick={() => setOpen(false)}
-            sx={{
-              position: "fixed",
-              top: 20,
-              left: 20,
-              zIndex: 3000,
-              background: "rgba(0,0,0,0.6)",
-              color: "#fff",
-              backdropFilter: "blur(6px)",
-              "&:hover": {
-                background: "rgba(0,0,0,0.8)",
-              },
-            }}
-          >
+          <IconButton onClick={() => setOpenTitle(false)}>
             <Close />
           </IconButton>
-
           <Box
+            component="img"
+            src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
+            sx={{ width: "100%" }}
+          />
+        </>
+      </Modal>
+
+      {/* 🚀 TERMINAL FULLSCREEN */}
+      <AnimatePresence>
+        {openTerminal && (
+          <Modal
+            open={openTerminal}
+            onClose={() => setOpenTerminal(false)}
             sx={{
-              position: "relative",
-              width: { xs: "95%", md: "70%" },
-              maxHeight: "90vh",
+              zIndex: 3000,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              backgroundColor: "rgba(0,0,0,0.95)",
             }}
           >
-            <Box
-              component="img"
-              src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              alt="certificado"
-              loading="lazy"
-              decoding="async"
-              sx={{
-                width: "100%",
-                maxHeight: "90vh",
-                objectFit: "contain",
-                borderRadius: 2,
-                display: "block",
-              }}
-            />
-          </Box>
-        </>
-      </Modal>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              style={{ width: "100%", height: "100%" }}
+            >
+              {/* glow hacker */}
+              <Box
+                sx={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "100%",
+                  background:
+                    "radial-gradient(circle, rgba(0,255,120,0.08), transparent 70%)",
+                }}
+              />
+
+              <Box sx={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <LinuxTerminal
+                  t={t}
+                  lang="es"
+                  onClose={() => setOpenTerminal(false)}
+                />
+              </Box>
+            </motion.div>
+          </Modal>
+        )}
+      </AnimatePresence>
     </>
   );
-}
+        }
