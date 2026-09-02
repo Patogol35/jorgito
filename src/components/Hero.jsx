@@ -7,26 +7,25 @@ import {
   IconButton,
   Modal,
 } from "@mui/material";
-
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import TerminalIcon from "@mui/icons-material/Terminal";
-import { Close } from "@mui/icons-material";
-
+import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
-
+import TerminalIcon from "@mui/icons-material/Terminal";
 import LinuxTerminal from "../components/LinuxTerminal";
-
-export default function Hero({ t }) {
+export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
-
-  // 👇 estados separados (no rompe nada)
-  const [openTitle, setOpenTitle] = useState(false);
-  const [openTerminal, setOpenTerminal] = useState(false);
-
+  const [open, setOpen] = useState(false);
+const [openTerminal, setOpenTerminal] = useState(false);
+  const openTerminalWithSound = () => {
+  const audio = new Audio("/sounds/terminal.mp3");
+  audio.volume = 0.4;
+  audio.play().catch(() => {});
+  setOpenTerminal(true);
+};
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -91,11 +90,15 @@ export default function Hero({ t }) {
             borderRadius: "50%",
             transformStyle: "preserve-3d",
             perspective: 1200,
+            willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
           }}
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 5, repeat: Infinity }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            style={{ willChange: "transform" }}
           >
             <motion.div
               animate={{
@@ -106,10 +109,15 @@ export default function Hero({ t }) {
                 ],
               }}
               transition={{ duration: 4, repeat: Infinity }}
+              style={{ borderRadius: "50%" }}
             >
               <Avatar
                 alt="Jorge Patricio"
                 src="https://i.imgur.com/BgNNivP.jpeg"
+                imgProps={{
+                  loading: "lazy",
+                  decoding: "async",
+                }}
                 sx={{
                   width: { xs: 130, sm: 170, md: 200 },
                   height: { xs: 130, sm: 170, md: 200 },
@@ -187,13 +195,13 @@ export default function Hero({ t }) {
                 {
                   label: t.hero.buttons.title,
                   icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpenTitle(true),
+                  onClick: () => setOpen(true),
                 },
-                {
-                  label: "Terminal",
-                  icon: <TerminalIcon />,
-                  onClick: () => setOpenTerminal(true),
-                },
+              {
+    label: "Terminal",
+    icon: <TerminalIcon />,
+    onClick: openTerminalWithSound,
+  },
                 {
                   label: t.hero.buttons.ai,
                   icon: <SmartToyIcon />,
@@ -221,15 +229,13 @@ export default function Hero({ t }) {
                   </Button>
                 </motion.div>
               ))}
-            </Box>
-          </motion.div>
-        </Box>
-      </Box>
 
-      {/* MODAL TITULO */}
+              
+
+      {/* MODAL */}
       <Modal
-        open={openTitle}
-        onClose={() => setOpenTitle(false)}
+        open={open}
+        onClose={() => setOpen(false)}
         sx={{
           zIndex: 2000,
           backgroundColor: "rgba(0,0,0,0.85)",
@@ -240,7 +246,7 @@ export default function Hero({ t }) {
       >
         <>
           <IconButton
-            onClick={() => setOpenTitle(false)}
+            onClick={() => setOpen(false)}
             sx={{
               position: "fixed",
               top: 20,
@@ -248,39 +254,60 @@ export default function Hero({ t }) {
               zIndex: 3000,
               background: "rgba(0,0,0,0.6)",
               color: "#fff",
+              backdropFilter: "blur(6px)",
+              "&:hover": {
+                background: "rgba(0,0,0,0.8)",
+              },
             }}
           >
             <Close />
           </IconButton>
 
-          <Box sx={{ width: { xs: "95%", md: "70%" } }}>
+          <Box
+            sx={{
+              position: "relative",
+              width: { xs: "95%", md: "70%" },
+              maxHeight: "90vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Box
               component="img"
               src="https://raw.githubusercontent.com/Patogol35/TrabajosUnir/main/T%C3%ADtulo-Jorge.jpg"
-              sx={{ width: "100%", borderRadius: 2 }}
+              alt="certificado"
+              loading="lazy"
+              decoding="async"
+              sx={{
+                width: "100%",
+                maxHeight: "90vh",
+                objectFit: "contain",
+                borderRadius: 2,
+                display: "block",
+              }}
             />
           </Box>
         </>
       </Modal>
-
-      {/* MODAL TERMINAL */}
-      <Modal
-        open={openTerminal}
-        onClose={() => setOpenTerminal(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.95)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <LinuxTerminal
-          t={t}
-          lang="es"
-          onClose={() => setOpenTerminal(false)}
-        />
-      </Modal>
     </>
+
+            <Modal
+  open={openTerminal}
+  onClose={() => setOpenTerminal(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.95)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <LinuxTerminal
+    t={t}
+    lang="es"
+    onClose={() => setOpenTerminal(false)}
+  />
+</Modal>
   );
-            }
+                  }
