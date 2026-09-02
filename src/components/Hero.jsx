@@ -317,22 +317,24 @@ const [openTerminal, setOpenTerminal] = useState(false);
   sx={{
     zIndex: 2000,
     backgroundColor: "rgba(0,0,0,0.95)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    overflowY: "auto",
-    p: { xs: 0, sm: 2 },
+    overflow: "auto",
   }}
 >
   <Box
     sx={{
       width: "100%",
-      maxWidth: 1100,
-      maxHeight: "100dvh",
+      minHeight: "100dvh",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      outline: "none",
+      p: { xs: 0, sm: 2 },
+      boxSizing: "border-box",
+
+      "@media (orientation: landscape) and (max-height: 600px)": {
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        p: 0,
+      },
     }}
   >
     <LinuxTerminal
