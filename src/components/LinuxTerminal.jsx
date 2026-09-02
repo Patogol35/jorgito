@@ -21,7 +21,7 @@ export default function LinuxTerminal({ t, lang, onClose }) {
   const commands = useMemo(() => [
     "help", "clear", "ls", "cd", "pwd", "cat", "whoami",
     "about", "skills", "projects", "contact", "neofetch",
-    "echo", "history", "date",
+    "echo", "history", "date", "exit",
   ], []);
 
   const text = (key, fallback = "") =>
@@ -190,6 +190,10 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${lang === "es" ? "Espa
           </Box>
         );
         break;
+
+        case "exit":
+  onClose();
+  break;
 
       default:
         output = `${text("unknownCommand", "Command not found:")} ${cmd}`;
