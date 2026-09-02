@@ -198,10 +198,10 @@ const [openTerminal, setOpenTerminal] = useState(false);
                   onClick: () => setOpen(true),
                 },
               {
-    label: "Terminal",
-    icon: <TerminalIcon />,
-    onClick: openTerminalWithSound,
-  },
+  label: "Terminal",
+  icon: <TerminalIcon />,
+  onClick: openTerminalWithSound,
+},
                 {
                   label: t.hero.buttons.ai,
                   icon: <SmartToyIcon />,
@@ -229,8 +229,6 @@ const [openTerminal, setOpenTerminal] = useState(false);
                   </Button>
                 </motion.div>
               ))}
-
-              
 
       {/* MODAL */}
       <Modal
@@ -290,8 +288,24 @@ const [openTerminal, setOpenTerminal] = useState(false);
           </Box>
         </>
       </Modal>
-    </>
 
-            
+              <Modal
+  open={openTerminal}
+  onClose={() => setOpenTerminal(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.95)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }}
+>
+  <LinuxTerminal
+    t={t}
+    lang="es"
+    onClose={() => setOpenTerminal(false)}
+  />
+</Modal>
+    </>
   );
-                  }
+}
