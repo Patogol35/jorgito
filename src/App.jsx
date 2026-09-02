@@ -281,12 +281,24 @@ function App() {
   onClose={() => setTerminalOpen(false)}
   fullWidth
   maxWidth="lg"
+  fullScreen
   PaperProps={{
     sx: {
       background: "transparent",
       boxShadow: "none",
-      overflow: "visible",
-      m: { xs: 1, sm: 2 },
+      overflow: "hidden",
+
+      // En escritorio deja márgenes
+      m: { xs: 0, md: 2 },
+
+      // En escritorio no ocupa absolutamente toda la pantalla
+      maxWidth: { md: "1100px" },
+      width: { md: "calc(100% - 32px)" },
+      height: { md: "auto" },
+      maxHeight: { md: "90vh" },
+
+      // En móvil ocupa toda la pantalla
+      borderRadius: { xs: 0, md: 3 },
     },
   }}
 >
