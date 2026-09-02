@@ -356,7 +356,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       "Jorge Patricio Santamaría Cherrez\nSystems Engineer\nMaster's Degree in Software Engineering and Information Systems",
 
     skillsContent:
-      "Frontend: React, JavaScript\nBackend: Python, Java\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools:Virtualbox, Microsoft Office, Postman, Linux",
+      "Frontend: React, JavaScript\nBackend: Python, Java\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Virtualbox, Microsoft Office, Postman, Linux",
 
     contactContent:
       "You can contact me through my professional networks or by email.",
