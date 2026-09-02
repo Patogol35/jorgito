@@ -242,7 +242,7 @@ function App() {
     onClick={() => setTerminalOpen(true)}
     sx={(theme) => ({
       position: "fixed",
-      bottom: 380,
+      bottom: 350,
       right: 16,
       zIndex: 1200,
       bgcolor:
