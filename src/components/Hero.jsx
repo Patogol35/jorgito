@@ -21,7 +21,7 @@ export default function Hero({ mode, setMode, t }) {
   const [open, setOpen] = useState(false);
 const [openTerminal, setOpenTerminal] = useState(false);
   const openTerminalWithSound = () => {
-  const audio = new Audio("/sounds/terminal.mp3");
+  const audio = new Audio("/sounds/terminal.wav");
   audio.volume = 0.4;
   audio.play().catch(() => {});
   setOpenTerminal(true);
