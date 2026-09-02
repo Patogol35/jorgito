@@ -115,12 +115,11 @@ function App() {
   );
 
   //  Memo de secciones 
-  const sections = useMemo(
+ const sections = useMemo(
   () => [
     { id: "about", color: "#2e7d32", Component: About },
     { id: "projects", color: "#1976d2", Component: Projects },
     { id: "skills", color: "#00897b", Component: Skills },
-    { id: "terminal", color: "#4caf50", Component: LinuxTerminal },
     { id: "certifications", color: "#6D5BD0", Component: Certifications },
     { id: "contact", color: "#d32f2f", Component: Contact },
     { id: "form", color: "#fb8c00", Component: Form },
@@ -231,7 +230,19 @@ function App() {
           ))}
         </Container>
 
-        <Footer t={t} />
+<Box
+  id="terminal"
+  sx={{
+    width: "100%",
+    px: { xs: 2, sm: 3, md: 4 },
+    py: { xs: 5, md: 8 },
+    scrollMarginTop: scrollOffset,
+  }}
+>
+  <LinuxTerminal />
+</Box>
+
+<Footer t={t} />
 
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
