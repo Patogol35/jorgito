@@ -97,12 +97,12 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
 
     projectFiles: [
-      "weather-app.txt",
-      "ecommerce.txt",
-      "ai-chess.txt",
-      "quiz.txt",
-      "calculator.txt",
-      "chatbot.txt",
+      "aplicacion-clima.txt",
+"tienda-electronica.txt",
+"ajedrez-ia.txt",
+"cuestionario.txt",
+"calculadora.txt",
+"chatbot.txt",
     ],
 
     projectContent: {
