@@ -5,41 +5,9 @@ import {
   Divider,
   Stack,
   Typography,
-  useTheme,
 } from "@mui/material";
 
-const FILE_SYSTEM = {
-  "/home/jorge": ["about.txt", "skills.txt", "projects", "contact.txt"],
-  "/home/jorge/projects": [
-    "weather-app.txt",
-    "ecommerce.txt",
-    "ai-chess.txt",
-    "quiz.txt",
-    "calculator.txt",
-    "chatbot.txt",
-  ],
-};
-
-const FILE_CONTENT = {
-  "about.txt":
-    "Jorge Patricio Santamaría Cherrez\nIngeniero en Sistemas\nMáster en Ingeniería de Software y Sistemas Informáticos",
-
-  "skills.txt":
-    "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Node.js, Express, Python, Flask, Django\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
-
-  "contact.txt":
-    "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
-
-  "weather-app.txt": "Aplicación del Clima — React + API",
-  "ecommerce.txt": "E-commerce Full Stack — React + Django + JWT Auth",
-  "ai-chess.txt": "Ajedrez con IA — React + IA",
-  "quiz.txt": "Quiz Educativo de Ambato y Ecuador",
-  "calculator.txt": "Calculadora Científica — JavaScript + lógica matemática",
-  "chatbot.txt": "Chatbot con IA — Asistente Virtual + Groq",
-};
-
-export default function LinuxTerminal({ t }) {
-  const theme = useTheme();
+export default function LinuxTerminal({ t, lang }) {
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
 
@@ -72,12 +40,12 @@ export default function LinuxTerminal({ t }) {
     []
   );
 
-  const addOutput = (command, output) => {
+  const addOutput = (command, output, path = currentPath) => {
     setHistory((prev) => [
       ...prev,
       {
         type: "command",
-        path: currentPath,
+        path,
         command,
       },
       {
@@ -102,6 +70,8 @@ export default function LinuxTerminal({ t }) {
 
     if (command === "clear") {
       setHistory([]);
+      setCommandHistory((prev) => [...prev, fullCommand]);
+      setHistoryIndex(-1);
       return;
     }
 
@@ -114,8 +84,15 @@ export default function LinuxTerminal({ t }) {
       case "help":
         output = (
           <Box>
-            <Typography sx={{ mb: 1 }}>
-              {terminal?.messages?.available || "Available commands:"}
+            <Typography
+              sx={{
+                mb: 1,
+                color: "rgba(255,255,255,0.9)",
+                fontFamily: "inherit",
+              }}
+            >
+              {terminal?.messages?.available ||
+                "Available commands:"}
             </Typography>
 
             <Box
@@ -134,7 +111,7 @@ export default function LinuxTerminal({ t }) {
                     component="span"
                     sx={{
                       color: "#7ee787",
-                      fontFamily: "monospace",
+                      fontFamily: "inherit",
                     }}
                   >
                     {cmd}
@@ -144,7 +121,7 @@ export default function LinuxTerminal({ t }) {
                     component="span"
                     sx={{
                       color: "rgba(255,255,255,0.7)",
-                      fontFamily: "monospace",
+                      fontFamily: "inherit",
                     }}
                   >
                     {getCommandDescription(cmd)}
@@ -156,9 +133,22 @@ export default function LinuxTerminal({ t }) {
         );
         break;
 
-      case "ls":
-        output = FILE_SYSTEM[currentPath]?.join("    ") || "";
+      case "ls": {
+        const files =
+          currentPath === "/home/jorge"
+            ? ["about.txt", "skills.txt", "projects", "contact.txt"]
+            : [
+                "weather-app.txt",
+                "ecommerce.txt",
+                "ai-chess.txt",
+                "quiz.txt",
+                "calculator.txt",
+                "chatbot.txt",
+              ];
+
+        output = files.join("    ");
         break;
+      }
 
       case "pwd":
         output = currentPath;
@@ -169,11 +159,15 @@ export default function LinuxTerminal({ t }) {
 
         if (!target || target === "~") {
           setCurrentPath("/home/jorge");
+          output = "";
         } else if (target === "..") {
-          if (currentPath !== "/home/jorge") {
+          if (currentPath === "/home/jorge/projects") {
             setCurrentPath("/home/jorge");
           }
-        } else if (target === "projects" && currentPath === "/home/jorge") {
+        } else if (
+          target === "projects" &&
+          currentPath === "/home/jorge"
+        ) {
           setCurrentPath("/home/jorge/projects");
         } else if (
           target === "home" ||
@@ -182,50 +176,64 @@ export default function LinuxTerminal({ t }) {
         ) {
           setCurrentPath("/home/jorge");
         } else {
-          output = `${terminal?.messages?.unknownCommand || "Command not found:"} ${target}`;
+          output = `${
+            terminal?.messages?.unknownDirectory ||
+            "Directory not found:"
+          } ${target}`;
         }
+
         break;
       }
 
       case "cat": {
         const fileName = args[0];
 
-        if (FILE_CONTENT[fileName]) {
-          output = FILE_CONTENT[fileName];
-        } else {
-          output = `${terminal?.messages?.unknownFile || "File not found:"} ${fileName}`;
+        if (!fileName) {
+          output =
+            terminal?.messages?.missingFile ||
+            "Please specify a file.";
+          break;
         }
+
+        if (fileName === "about.txt") {
+          output = terminal?.messages?.aboutContent || "";
+        } else if (fileName === "skills.txt") {
+          output = terminal?.messages?.skillsContent || "";
+        } else if (fileName === "contact.txt") {
+          output = terminal?.messages?.contactContent || "";
+        } else {
+          output =
+            terminal?.messages?.projectContent?.[fileName] ||
+            `${
+              terminal?.messages?.unknownFile ||
+              "File not found:"
+            } ${fileName}`;
+        }
+
         break;
       }
 
       case "whoami":
-        output = "jorge";
+        output = terminal?.messages?.whoami || "jorge";
         break;
 
       case "about":
-        output = FILE_CONTENT["about.txt"];
+        output = terminal?.messages?.aboutContent || "";
         break;
 
       case "skills":
-        output = FILE_CONTENT["skills.txt"];
+        output = terminal?.messages?.skillsContent || "";
         break;
 
       case "projects":
         output = (
           <Box>
-            {[
-              "weather-app.txt",
-              "ecommerce.txt",
-              "ai-chess.txt",
-              "quiz.txt",
-              "calculator.txt",
-              "chatbot.txt",
-            ].map((file) => (
+            {terminal?.messages?.projectFiles?.map((file) => (
               <Typography
                 key={file}
                 sx={{
                   color: "#7ee787",
-                  fontFamily: "monospace",
+                  fontFamily: "inherit",
                   lineHeight: 1.8,
                 }}
               >
@@ -237,7 +245,7 @@ export default function LinuxTerminal({ t }) {
         break;
 
       case "contact":
-        output = FILE_CONTENT["contact.txt"];
+        output = terminal?.messages?.contactContent || "";
         break;
 
       case "echo":
@@ -251,8 +259,9 @@ export default function LinuxTerminal({ t }) {
                 <Typography
                   key={`${cmd}-${index}`}
                   sx={{
-                    fontFamily: "monospace",
+                    fontFamily: "inherit",
                     lineHeight: 1.7,
+                    color: "rgba(255,255,255,0.8)",
                   }}
                 >
                   {index + 1} {cmd}
@@ -262,14 +271,16 @@ export default function LinuxTerminal({ t }) {
         break;
 
       case "date":
-        output = new Date().toLocaleString();
+        output = new Date().toLocaleString(
+          lang === "es" ? "es-ES" : "en-US"
+        );
         break;
 
       case "neofetch":
         output = (
           <Box
             sx={{
-              fontFamily: "monospace",
+              fontFamily: "inherit",
               whiteSpace: "pre-wrap",
               lineHeight: 1.6,
             }}
@@ -282,17 +293,22 @@ export default function LinuxTerminal({ t }) {
    /'\\_   _/\\
    \\___)=(___/
 
-OS: Portfolio Linux
-Host: Jorge's Portfolio
-Shell: portfolio-shell
-User: jorge
-Language: ${document.documentElement.lang || "es"}`}
+${terminal?.messages?.neofetch?.os || "OS: Portfolio Linux"}
+${terminal?.messages?.neofetch?.host || "Host: Jorge's Portfolio"}
+${terminal?.messages?.neofetch?.shell || "Shell: portfolio-shell"}
+${terminal?.messages?.neofetch?.user || "User: jorge"}
+${terminal?.messages?.neofetch?.language || "Language:"} ${
+              lang === "es" ? "Español" : "English"
+            }`}
           </Box>
         );
         break;
 
       default:
-        output = `${terminal?.messages?.unknownCommand || "Command not found:"} ${command}`;
+        output = `${
+          terminal?.messages?.unknownCommand ||
+          "Command not found:"
+        } ${command}`;
     }
 
     addOutput(fullCommand, output);
@@ -341,7 +357,9 @@ Language: ${document.documentElement.lang || "es"}`}
 
       const value = input.toLowerCase();
 
-      const matches = commands.filter((cmd) => cmd.startsWith(value));
+      const matches = commands.filter((cmd) =>
+        cmd.startsWith(value)
+      );
 
       if (matches.length === 1) {
         setInput(matches[0]);
@@ -358,19 +376,23 @@ Language: ${document.documentElement.lang || "es"}`}
 
   const quickCommands = [
     {
-      label: terminal?.quickCommands?.about || "About me",
+      label:
+        terminal?.quickCommands?.about || "About me",
       command: "about",
     },
     {
-      label: terminal?.quickCommands?.skills || "Technologies",
+      label:
+        terminal?.quickCommands?.skills || "Technologies",
       command: "skills",
     },
     {
-      label: terminal?.quickCommands?.projects || "Projects",
+      label:
+        terminal?.quickCommands?.projects || "Projects",
       command: "projects",
     },
     {
-      label: terminal?.quickCommands?.contact || "Contact",
+      label:
+        terminal?.quickCommands?.contact || "Contact",
       command: "contact",
     },
   ];
@@ -402,8 +424,10 @@ Language: ${document.documentElement.lang || "es"}`}
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            position: "relative",
             background: "#161b22",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            borderBottom:
+              "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <Stack direction="row" spacing={1}>
@@ -415,6 +439,7 @@ Language: ${document.documentElement.lang || "es"}`}
                 background: "#ff5f57",
               }}
             />
+
             <Box
               sx={{
                 width: 12,
@@ -423,6 +448,7 @@ Language: ${document.documentElement.lang || "es"}`}
                 background: "#febc2e",
               }}
             />
+
             <Box
               sx={{
                 width: 12,
@@ -444,30 +470,43 @@ Language: ${document.documentElement.lang || "es"}`}
               whiteSpace: "nowrap",
             }}
           >
-            jorge@portfolio — terminal
+            jorge@portfolio — {terminal?.title || "terminal"}
           </Typography>
 
           <Box sx={{ width: 65 }} />
         </Box>
 
-        {/* Terminal content */}
+        {/* Terminal */}
         <Box
           ref={terminalRef}
           onClick={() => inputRef.current?.focus()}
           sx={{
-            height: { xs: 430, sm: 480, md: 520 },
+            height: {
+              xs: 430,
+              sm: 480,
+              md: 520,
+            },
             overflowY: "auto",
-            p: { xs: 2, sm: 3 },
+            p: {
+              xs: 2,
+              sm: 3,
+            },
             color: "#e6edf3",
             fontFamily:
               '"JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, monospace',
-            fontSize: { xs: 13, sm: 14 },
+            fontSize: {
+              xs: 13,
+              sm: 14,
+            },
             lineHeight: 1.6,
+
             "&::-webkit-scrollbar": {
               width: 8,
             },
+
             "&::-webkit-scrollbar-thumb": {
-              background: "rgba(255,255,255,0.15)",
+              background:
+                "rgba(255,255,255,0.15)",
               borderRadius: 10,
             },
           }}
@@ -491,7 +530,8 @@ Language: ${document.documentElement.lang || "es"}`}
                 fontFamily: "inherit",
               }}
             >
-              {terminal?.welcome || "Welcome to my interactive terminal."}
+              {terminal?.welcome ||
+                "Welcome to my interactive terminal."}
             </Typography>
 
             <Typography
@@ -517,7 +557,8 @@ Language: ${document.documentElement.lang || "es"}`}
 
           <Divider
             sx={{
-              borderColor: "rgba(255,255,255,0.08)",
+              borderColor:
+                "rgba(255,255,255,0.08)",
               mb: 2,
             }}
           />
@@ -534,26 +575,35 @@ Language: ${document.documentElement.lang || "es"}`}
               <Chip
                 key={item.command}
                 label={item.label}
-                onClick={() => executeCommand(item.command)}
+                onClick={() =>
+                  executeCommand(item.command)
+                }
                 size="small"
+                variant="outlined"
                 sx={{
                   color: "#7ee787",
-                  borderColor: "rgba(126,231,135,0.3)",
-                  background: "rgba(126,231,135,0.06)",
+                  borderColor:
+                    "rgba(126,231,135,0.3)",
+                  background:
+                    "rgba(126,231,135,0.06)",
                   fontFamily: "inherit",
+
                   "&:hover": {
-                    background: "rgba(126,231,135,0.12)",
+                    background:
+                      "rgba(126,231,135,0.12)",
                   },
                 }}
-                variant="outlined"
               />
             ))}
           </Stack>
 
-          {/* History */}
+          {/* Command history */}
           {history.map((item, index) =>
             item.type === "command" ? (
-              <Box key={index} sx={{ mt: 1 }}>
+              <Box
+                key={index}
+                sx={{ mt: 1 }}
+              >
                 <Typography
                   component="span"
                   sx={{
@@ -571,7 +621,7 @@ Language: ${document.documentElement.lang || "es"}`}
                     fontFamily: "inherit",
                   }}
                 >
-                  {currentPath}
+                  {item.path}
                 </Typography>
 
                 <Typography
@@ -579,6 +629,7 @@ Language: ${document.documentElement.lang || "es"}`}
                   sx={{
                     color: "#fff",
                     fontFamily: "inherit",
+                    ml: 0.5,
                   }}
                 >
                   $ {item.command}
@@ -591,15 +642,12 @@ Language: ${document.documentElement.lang || "es"}`}
                   mt: 0.5,
                   mb: 1,
                   whiteSpace: "pre-wrap",
-                  color: "rgba(255,255,255,0.8)",
+                  color:
+                    "rgba(255,255,255,0.8)",
                   fontFamily: "inherit",
                 }}
               >
-                {typeof item.content === "string" ? (
-                  item.content
-                ) : (
-                  item.content
-                )}
+                {item.content}
               </Box>
             )
           )}
@@ -653,11 +701,16 @@ Language: ${document.documentElement.lang || "es"}`}
               component="input"
               ref={inputRef}
               value={input}
-              onChange={(event) => setInput(event.target.value)}
+              onChange={(event) =>
+                setInput(event.target.value)
+              }
               onKeyDown={handleKeyDown}
               autoComplete="off"
               spellCheck="false"
-              aria-label={terminal?.prompt || "Type a command"}
+              aria-label={
+                terminal?.prompt ||
+                "Type a command"
+              }
               sx={{
                 flex: 1,
                 minWidth: 0,
@@ -673,12 +726,16 @@ Language: ${document.documentElement.lang || "es"}`}
           </Box>
         </Box>
 
-        {/* Footer */}
+        {/* Bottom bar */}
         <Box
           sx={{
-            px: { xs: 2, sm: 3 },
+            px: {
+              xs: 2,
+              sm: 3,
+            },
             py: 1,
-            borderTop: "1px solid rgba(255,255,255,0.08)",
+            borderTop:
+              "1px solid rgba(255,255,255,0.08)",
             background: "#161b22",
             display: "flex",
             alignItems: "center",
@@ -689,7 +746,8 @@ Language: ${document.documentElement.lang || "es"}`}
         >
           <Typography
             sx={{
-              color: "rgba(255,255,255,0.4)",
+              color:
+                "rgba(255,255,255,0.4)",
               fontSize: 11,
               fontFamily: "monospace",
             }}
@@ -699,19 +757,26 @@ Language: ${document.documentElement.lang || "es"}`}
           </Typography>
 
           <Chip
-            label={terminal?.helpButton || "What can I type?"}
+            label={
+              terminal?.helpButton ||
+              "What can I type?"
+            }
             size="small"
-            onClick={() => executeCommand("help")}
+            onClick={() =>
+              executeCommand("help")
+            }
             sx={{
               color: "#7ee787",
               fontFamily: "monospace",
               fontSize: 11,
-              background: "rgba(126,231,135,0.08)",
-              border: "1px solid rgba(126,231,135,0.2)",
+              background:
+                "rgba(126,231,135,0.08)",
+              border:
+                "1px solid rgba(126,231,135,0.2)",
             }}
           />
         </Box>
       </Box>
     </Box>
   );
-                }
+      }
