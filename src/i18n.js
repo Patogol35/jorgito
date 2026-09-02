@@ -76,6 +76,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     echo: "Mostrar un mensaje",
     history: "Mostrar historial de comandos",
     date: "Mostrar fecha actual",
+    exit: "Salir de la terminal",
   },
 
   messages: {
@@ -339,6 +340,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
     echo: "Display a message",
     history: "Show command history",
     date: "Show current date",
+    exit: "Exit the terminal",
   },
 
   messages: {
