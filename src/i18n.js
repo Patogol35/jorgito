@@ -53,6 +53,40 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
         Tools: "Herramientas",
       },
     },
+    terminal: {
+  title: "Terminal",
+  welcome: "Bienvenido a mi terminal interactiva.",
+  description: "Explora mi portafolio usando comandos.",
+  help: "Escribe 'help' para ver los comandos disponibles.",
+  prompt: "Escribe un comando...",
+  commands: {
+    help: "Mostrar comandos disponibles",
+    clear: "Limpiar terminal",
+    about: "Información sobre mí",
+    skills: "Ver mis tecnologías",
+    projects: "Ver mis proyectos",
+    contact: "Ver información de contacto",
+    whoami: "¿Quién soy?",
+    pwd: "Mostrar directorio actual",
+    ls: "Listar archivos y directorios",
+    date: "Mostrar fecha actual",
+    history: "Mostrar historial de comandos",
+    neofetch: "Mostrar información del sistema",
+  },
+  messages: {
+    unknownCommand: "Comando no encontrado:",
+    empty: "No se ha introducido ningún comando.",
+    available: "Comandos disponibles:",
+  },
+  quickCommands: {
+    about: "Sobre mí",
+    skills: "Tecnologías",
+    projects: "Proyectos",
+    contact: "Contacto",
+  },
+  hints: "↑ ↓ historial · Tab autocompletar · Enter ejecutar",
+  helpButton: "¿Qué puedo escribir?",
+},
 
     chatbot: {
   greeting:
@@ -224,6 +258,41 @@ I am also skilled in development tools, API testing, virtualization, network sec
         Tools: "Tools",
       },
     },
+
+    terminal: {
+  title: "Terminal",
+  welcome: "Welcome to my interactive terminal.",
+  description: "Explore my portfolio using commands.",
+  help: "Type 'help' to see the available commands.",
+  prompt: "Type a command...",
+  commands: {
+    help: "Show available commands",
+    clear: "Clear terminal",
+    about: "About me",
+    skills: "View my technologies",
+    projects: "View my projects",
+    contact: "View contact information",
+    whoami: "Who am I?",
+    pwd: "Show current directory",
+    ls: "List files and directories",
+    date: "Show current date",
+    history: "Show command history",
+    neofetch: "Show system information",
+  },
+  messages: {
+    unknownCommand: "Command not found:",
+    empty: "No command entered.",
+    available: "Available commands:",
+  },
+  quickCommands: {
+    about: "About me",
+    skills: "Technologies",
+    projects: "Projects",
+    contact: "Contact",
+  },
+  hints: "↑ ↓ history · Tab autocomplete · Enter execute",
+  helpButton: "What can I type?",
+},
 
     chatbot: {
   greeting:
