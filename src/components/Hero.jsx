@@ -320,13 +320,27 @@ const [openTerminal, setOpenTerminal] = useState(false);
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    overflowY: "auto",
+    p: { xs: 0, sm: 2 },
   }}
 >
-  <LinuxTerminal
-    t={t}
-    lang="es"
-    onClose={() => setOpenTerminal(false)}
-  />
+  <Box
+    sx={{
+      width: "100%",
+      maxWidth: 1100,
+      maxHeight: "100dvh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      outline: "none",
+    }}
+  >
+    <LinuxTerminal
+      t={t}
+      lang="es"
+      onClose={() => setOpenTerminal(false)}
+    />
+  </Box>
 </Modal>
     </>
   );
