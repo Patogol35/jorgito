@@ -205,8 +205,12 @@ const [openTerminal, setOpenTerminal] = useState(false);
                 {
                   label: t.hero.buttons.ai,
                   icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                },
+                  onClick: () => {
+  const audio = new Audio("/sounds/sasha.wav");
+  audio.volume = 0.4;
+  audio.play().catch(() => {});
+  window.openSashaChat?.();
+},
               ].map((btn, i) => (
                 <motion.div key={i} variants={fadeCinematic}>
                   <Button
