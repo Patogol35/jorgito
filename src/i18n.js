@@ -59,31 +59,88 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
   description: "Explora mi portafolio usando comandos.",
   help: "Escribe 'help' para ver los comandos disponibles.",
   prompt: "Escribe un comando...",
+
   commands: {
     help: "Mostrar comandos disponibles",
     clear: "Limpiar terminal",
+    ls: "Listar archivos y directorios",
+    cd: "Cambiar de directorio",
+    pwd: "Mostrar directorio actual",
+    cat: "Mostrar contenido de un archivo",
+    whoami: "¿Quién soy?",
     about: "Información sobre mí",
     skills: "Ver mis tecnologías",
     projects: "Ver mis proyectos",
     contact: "Ver información de contacto",
-    whoami: "¿Quién soy?",
-    pwd: "Mostrar directorio actual",
-    ls: "Listar archivos y directorios",
-    date: "Mostrar fecha actual",
-    history: "Mostrar historial de comandos",
     neofetch: "Mostrar información del sistema",
+    echo: "Mostrar un mensaje",
+    history: "Mostrar historial de comandos",
+    date: "Mostrar fecha actual",
   },
+
   messages: {
-    unknownCommand: "Comando no encontrado:",
-    empty: "No se ha introducido ningún comando.",
     available: "Comandos disponibles:",
+    unknownCommand: "Comando no encontrado:",
+    unknownDirectory: "Directorio no encontrado:",
+    unknownFile: "Archivo no encontrado:",
+    missingFile: "Especifica un archivo.",
+
+    whoami: "jorge",
+
+    aboutContent:
+      "Jorge Patricio Santamaría Cherrez\nIngeniero en Sistemas\nMáster en Ingeniería de Software y Sistemas Informáticos",
+
+    skillsContent:
+      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Node.js, Express, Python, Flask, Django\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
+
+    contactContent:
+      "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
+
+    projectFiles: [
+      "weather-app.txt",
+      "ecommerce.txt",
+      "ai-chess.txt",
+      "quiz.txt",
+      "calculator.txt",
+      "chatbot.txt",
+    ],
+
+    projectContent: {
+      "weather-app.txt":
+        "Aplicación del Clima — React + API",
+
+      "ecommerce.txt":
+        "E-commerce Full Stack — React + Django + JWT Auth",
+
+      "ai-chess.txt":
+        "Ajedrez con IA — React + IA",
+
+      "quiz.txt":
+        "Quiz Educativo de Ambato y Ecuador",
+
+      "calculator.txt":
+        "Calculadora Científica — JavaScript + lógica matemática",
+
+      "chatbot.txt":
+        "Chatbot con IA — Asistente Virtual + Groq",
+    },
+
+    neofetch: {
+      os: "SO: Portfolio Linux",
+      host: "Host: Portafolio de Jorge",
+      shell: "Shell: portfolio-shell",
+      user: "Usuario: jorge",
+      language: "Idioma:",
+    },
   },
+
   quickCommands: {
     about: "Sobre mí",
     skills: "Tecnologías",
     projects: "Proyectos",
     contact: "Contacto",
   },
+
   hints: "↑ ↓ historial · Tab autocompletar · Enter ejecutar",
   helpButton: "¿Qué puedo escribir?",
 },
@@ -265,35 +322,91 @@ I am also skilled in development tools, API testing, virtualization, network sec
   description: "Explore my portfolio using commands.",
   help: "Type 'help' to see the available commands.",
   prompt: "Type a command...",
+
   commands: {
     help: "Show available commands",
     clear: "Clear terminal",
+    ls: "List files and directories",
+    cd: "Change directory",
+    pwd: "Show current directory",
+    cat: "Show file contents",
+    whoami: "Who am I?",
     about: "About me",
     skills: "View my technologies",
     projects: "View my projects",
     contact: "View contact information",
-    whoami: "Who am I?",
-    pwd: "Show current directory",
-    ls: "List files and directories",
-    date: "Show current date",
-    history: "Show command history",
     neofetch: "Show system information",
+    echo: "Display a message",
+    history: "Show command history",
+    date: "Show current date",
   },
+
   messages: {
-    unknownCommand: "Command not found:",
-    empty: "No command entered.",
     available: "Available commands:",
+    unknownCommand: "Command not found:",
+    unknownDirectory: "Directory not found:",
+    unknownFile: "File not found:",
+    missingFile: "Please specify a file.",
+
+    whoami: "jorge",
+
+    aboutContent:
+      "Jorge Patricio Santamaría Cherrez\nSystems Engineer\nMaster's Degree in Software Engineering and Information Systems",
+
+    skillsContent:
+      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Node.js, Express, Python, Flask, Django\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
+
+    contactContent:
+      "You can contact me through my professional networks or by email.",
+
+    projectFiles: [
+      "weather-app.txt",
+      "ecommerce.txt",
+      "ai-chess.txt",
+      "quiz.txt",
+      "calculator.txt",
+      "chatbot.txt",
+    ],
+
+    projectContent: {
+      "weather-app.txt":
+        "Weather App — React + API",
+
+      "ecommerce.txt":
+        "Full Stack E-commerce — React + Django + JWT Auth",
+
+      "ai-chess.txt":
+        "AI Chess — React + AI",
+
+      "quiz.txt":
+        "Educational Quiz about Ambato and Ecuador",
+
+      "calculator.txt":
+        "Scientific Calculator — JavaScript + mathematical logic",
+
+      "chatbot.txt":
+        "AI Chatbot — Virtual Assistant + Groq",
+    },
+
+    neofetch: {
+      os: "OS: Portfolio Linux",
+      host: "Host: Jorge's Portfolio",
+      shell: "Shell: portfolio-shell",
+      user: "User: jorge",
+      language: "Language:",
+    },
   },
+
   quickCommands: {
     about: "About me",
     skills: "Technologies",
     projects: "Projects",
     contact: "Contact",
   },
+
   hints: "↑ ↓ history · Tab autocomplete · Enter execute",
   helpButton: "What can I type?",
 },
-
     chatbot: {
   greeting:
     "Hello 👋 I'm Sasha, Jorge's virtual assistant. You can ask me about his profile, experience, or projects.",
