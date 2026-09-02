@@ -1,7 +1,22 @@
 import { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Stack,
+  Typography,
+  useTheme,
+} from "@mui/material";
 
 const FILE_SYSTEM = {
-  "/home/jorge": ["about.txt", "skills.txt", "contact.txt", "projects"],
+  "/home/jorge": [
+    "about.txt",
+    "skills.txt",
+    "contact.txt",
+    "projects",
+  ],
+
   "/home/jorge/projects": [
     "ecommerce",
     "product-manager",
@@ -39,15 +54,33 @@ const COMMANDS = [
   "clear",
 ];
 
+const QUICK_COMMANDS = [
+  {
+    command: "about",
+    label: "Sobre mí",
+  },
+  {
+    command: "skills",
+    label: "Skills",
+  },
+  {
+    command: "projects",
+    label: "Proyectos",
+  },
+  {
+    command: "contact",
+    label: "Contacto",
+  },
+];
+
 export default function LinuxTerminal() {
+  const theme = useTheme();
+
+  const isDark = theme.palette.mode === "dark";
+
   const [lines, setLines] = useState([
     {
-      type: "output",
-      text: "╭─────────────────────────────────────────────╮\n│       Bienvenido a mi terminal 🚀          │\n╰─────────────────────────────────────────────╯",
-    },
-    {
-      type: "output",
-      text: "Explora mi portafolio desde la terminal.\n\nEscribe 'help' para comenzar.\n\nPrueba estos comandos:",
+      type: "welcome",
     },
   ]);
 
@@ -56,8 +89,8 @@ export default function LinuxTerminal() {
   const [history, setHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
 
-  const inputRef = useRef(null);
   const terminalRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -103,23 +136,24 @@ export default function LinuxTerminal() {
     switch (cmd.toLowerCase()) {
       case "help":
         addOutput(
-          `Comandos disponibles:
+          `COMANDOS DISPONIBLES
 
-help        Mostrar esta ayuda
-about       Sobre mí
-skills      Mis habilidades
-projects    Ver mis proyectos
-contact     Información de contacto
-neofetch    Información del sistema
-ls          Listar archivos
-cd          Cambiar de directorio
-pwd         Mostrar ubicación actual
-cat         Leer archivos
-clear       Limpiar terminal
+  help        Mostrar esta ayuda
+  about       Sobre mí
+  skills      Mis habilidades
+  projects    Ver mis proyectos
+  contact     Información de contacto
+  neofetch    Información del sistema
+  ls          Listar archivos
+  cd          Cambiar de directorio
+  pwd         Mostrar ubicación actual
+  cat         Leer archivos
+  clear       Limpiar terminal
 
-Atajos:
-↑ ↓         Historial de comandos
-Tab         Autocompletar comandos`
+ATAJOS
+
+  ↑ ↓         Historial de comandos
+  Tab         Autocompletar`
         );
         break;
 
@@ -133,16 +167,16 @@ Tab         Autocompletar comandos`
 
       case "projects":
         addOutput(
-          `Mis proyectos:
+          `MIS PROYECTOS
 
-📦 E-commerce
-   Spring Boot • MySQL • React
+  📦 E-commerce
+     Spring Boot • MySQL • React
 
-📊 Product Manager
-   React • Material UI • Flask
+  📊 Product Manager
+     React • Material UI • Flask
 
-🤖 Sasha AI
-   React • Node.js • Groq API`
+  🤖 Sasha AI
+     React • Node.js • Groq API`
         );
         break;
 
@@ -155,7 +189,9 @@ Tab         Autocompletar comandos`
         break;
 
       case "ls":
-        addOutput(FILE_SYSTEM[currentPath]?.join("    ") || "");
+        addOutput(
+          FILE_SYSTEM[currentPath]?.join("    ") || ""
+        );
         break;
 
       case "cd": {
@@ -168,6 +204,7 @@ Tab         Autocompletar comandos`
           if (currentPath !== "/home/jorge") {
             setCurrentPath("/home/jorge");
           }
+
           break;
         }
 
@@ -223,7 +260,7 @@ ossysssssyNMMMyssssssssssssssssso  Status: Online
 
       default:
         addOutput(
-          `${cmd}: command not found.\nEscribe 'help' para ver los comandos disponibles.`
+          `${cmd}: command not found.\nEscribe "help" para ver los comandos disponibles.`
         );
     }
   };
@@ -279,163 +316,448 @@ ossysssssyNMMMyssssssssssssssssso  Status: Online
     }
   };
 
-  const quickCommands = [
-    "help",
-    "about",
-    "skills",
-    "projects",
-    "contact",
-  ];
-
   return (
-    <div
-      onClick={() => inputRef.current?.focus()}
-      style={{
+    <Box
+      sx={{
         width: "100%",
-        maxWidth: "900px",
-        margin: "40px auto",
-        borderRadius: "12px",
-        overflow: "hidden",
-        background: "#0d1117",
-        color: "#e6edf3",
-        fontFamily: "monospace",
-        boxShadow: "0 20px 60px rgba(0,0,0,.35)",
+        maxWidth: 1000,
+        mx: "auto",
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          height: "40px",
-          display: "flex",
-          alignItems: "center",
-          gap: "8px",
-          padding: "0 14px",
-          background: "#161b22",
-        }}
-      >
-        <span style={{ color: "#ff5f56" }}>●</span>
-        <span style={{ color: "#ffbd2e" }}>●</span>
-        <span style={{ color: "#27c93f" }}>●</span>
+      {/* Título */}
+      <Box sx={{ mb: 3 }}>
+        <Typography
+          variant="h4"
+          fontWeight={700}
+          sx={{
+            letterSpacing: "-0.5px",
+          }}
+        >
+          Developer Terminal
+        </Typography>
 
-        <span
-          style={{
-            marginLeft: "10px",
-            fontSize: "13px",
+        <Typography
+          variant="body1"
+          sx={{
+            mt: 0.5,
             opacity: 0.7,
           }}
         >
-          jorge@portfolio: {currentPath}
-        </span>
-      </div>
+          Explora mi portafolio desde la terminal.
+        </Typography>
+      </Box>
 
       {/* Terminal */}
-      <div
-        ref={terminalRef}
-        style={{
-          minHeight: "420px",
-          maxHeight: "600px",
-          overflowY: "auto",
-          padding: "20px",
-          fontSize: "14px",
-          lineHeight: "1.6",
+      <Box
+        sx={{
+          borderRadius: "16px",
+          overflow: "hidden",
+
+          border: `1px solid ${
+            isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.12)"
+          }`,
+
+          background: isDark
+            ? "linear-gradient(145deg, #0d1117, #090c10)"
+            : "#101418",
+
+          boxShadow: isDark
+            ? "0 25px 70px rgba(0,0,0,.45)"
+            : "0 20px 50px rgba(0,0,0,.25)",
+
+          position: "relative",
+
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+
+            background:
+              "radial-gradient(circle at 50% -20%, rgba(46,125,255,.14), transparent 45%)",
+          },
         }}
       >
-        {lines.map((line, index) => (
-          <div key={index}>
-            {line.type === "command" ? (
-              <div>
-                <span style={{ color: "#4ade80" }}>
-                  jorge@portfolio
-                </span>
-                <span style={{ color: "#60a5fa" }}>
-                  :{line.path}
-                </span>
-                <span>$ </span>
-                <span>{line.text}</span>
-              </div>
-            ) : (
-              <pre
-                style={{
-                  margin: "5px 0 14px",
+        {/* Barra superior */}
+        <Box
+          sx={{
+            position: "relative",
+            height: 52,
+            display: "flex",
+            alignItems: "center",
+            px: 2,
+
+            background: isDark
+              ? "rgba(255,255,255,.025)"
+              : "#171c21",
+
+            borderBottom: "1px solid rgba(255,255,255,.08)",
+          }}
+        >
+          <Stack direction="row" spacing={1}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                bgcolor: "#ff5f57",
+              }}
+            />
+
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                bgcolor: "#febc2e",
+              }}
+            />
+
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                borderRadius: "50%",
+                bgcolor: "#28c840",
+              }}
+            />
+          </Stack>
+
+          <Typography
+            sx={{
+              position: "absolute",
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "rgba(255,255,255,.55)",
+              fontFamily: "monospace",
+              fontSize: 12,
+            }}
+          >
+            jorge@portfolio — terminal
+          </Typography>
+        </Box>
+
+        {/* Contenido */}
+        <Box
+          ref={terminalRef}
+          onClick={() => inputRef.current?.focus()}
+          sx={{
+            position: "relative",
+
+            height: {
+              xs: 450,
+              sm: 500,
+            },
+
+            overflowY: "auto",
+
+            p: {
+              xs: 2,
+              sm: 3,
+            },
+
+            fontFamily:
+              '"JetBrains Mono", "Fira Code", monospace',
+
+            fontSize: {
+              xs: 12,
+              sm: 14,
+            },
+
+            color: "#e6edf3",
+
+            "&::-webkit-scrollbar": {
+              width: 7,
+            },
+
+            "&::-webkit-scrollbar-thumb": {
+              background: "rgba(255,255,255,.15)",
+              borderRadius: 10,
+            },
+          }}
+        >
+          {lines.map((line, index) => {
+            if (line.type === "welcome") {
+              return (
+                <Box key={index} sx={{ mb: 3 }}>
+                  <Typography
+                    sx={{
+                      color: "#4ade80",
+                      fontFamily: "inherit",
+                      fontWeight: 700,
+                      fontSize: {
+                        xs: 16,
+                        sm: 20,
+                      },
+                    }}
+                  >
+                    $ ./welcome.sh
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      mt: 1,
+                      color: "#fff",
+                      fontFamily: "inherit",
+                      fontSize: {
+                        xs: 13,
+                        sm: 15,
+                      },
+                    }}
+                  >
+                    Bienvenido a mi terminal 🚀
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      mt: 0.5,
+                      color: "rgba(255,255,255,.55)",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Escribe{" "}
+                    <Box
+                      component="span"
+                      sx={{ color: "#58a6ff" }}
+                    >
+                      help
+                    </Box>{" "}
+                    para comenzar.
+                  </Typography>
+
+                  <Divider
+                    sx={{
+                      my: 2,
+                      borderColor: "rgba(255,255,255,.08)",
+                    }}
+                  />
+
+                  <Typography
+                    sx={{
+                      color: "rgba(255,255,255,.45)",
+                      fontFamily: "inherit",
+                      fontSize: 12,
+                      mb: 1,
+                    }}
+                  >
+                    COMANDOS RÁPIDOS
+                  </Typography>
+
+                  <Stack
+                    direction="row"
+                    flexWrap="wrap"
+                    gap={1}
+                  >
+                    {QUICK_COMMANDS.map((item) => (
+                      <Chip
+                        key={item.command}
+                        label={item.label}
+                        clickable
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          executeCommand(item.command);
+                        }}
+                        sx={{
+                          fontFamily: "inherit",
+                          fontSize: 12,
+
+                          color: "#58a6ff",
+
+                          background:
+                            "rgba(88,166,255,.08)",
+
+                          border:
+                            "1px solid rgba(88,166,255,.20)",
+
+                          "&:hover": {
+                            background:
+                              "rgba(88,166,255,.16)",
+                            borderColor:
+                              "rgba(88,166,255,.4)",
+                          },
+                        }}
+                      />
+                    ))}
+                  </Stack>
+                </Box>
+              );
+            }
+
+            if (line.type === "command") {
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    mb: 1,
+                    wordBreak: "break-word",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{ color: "#4ade80" }}
+                  >
+                    jorge@portfolio
+                  </Box>
+
+                  <Box
+                    component="span"
+                    sx={{ color: "#58a6ff" }}
+                  >
+                    :{line.path}
+                  </Box>
+
+                  <Box component="span" sx={{ color: "#fff" }}>
+                    {" $ "}
+                    {line.text}
+                  </Box>
+                </Box>
+              );
+            }
+
+            return (
+              <Box
+                key={index}
+                component="pre"
+                sx={{
+                  m: 0,
+                  mb: 2,
                   whiteSpace: "pre-wrap",
+                  wordBreak: "break-word",
+
                   fontFamily: "inherit",
+                  color: "rgba(255,255,255,.75)",
+                  lineHeight: 1.7,
                 }}
               >
                 {line.text}
-              </pre>
-            )}
-          </div>
-        ))}
+              </Box>
+            );
+          })}
 
-        {/* Quick commands */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "8px",
-            margin: "15px 0",
-          }}
-        >
-          {quickCommands.map((command) => (
-            <button
-              key={command}
-              onClick={(event) => {
-                event.stopPropagation();
-                executeCommand(command);
-              }}
-              style={{
-                border: "1px solid #30363d",
-                background: "#161b22",
-                color: "#58a6ff",
-                borderRadius: "6px",
-                padding: "6px 10px",
-                fontFamily: "monospace",
-                cursor: "pointer",
+          {/* Prompt */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              flexWrap: "nowrap",
+            }}
+          >
+            <Box
+              component="span"
+              sx={{
+                color: "#4ade80",
+                flexShrink: 0,
               }}
             >
-              {command}
-            </button>
-          ))}
-        </div>
+              jorge@portfolio
+            </Box>
 
-        {/* Prompt */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
+            <Box
+              component="span"
+              sx={{
+                color: "#58a6ff",
+                flexShrink: 0,
+              }}
+            >
+              :{currentPath}
+            </Box>
+
+            <Box
+              component="span"
+              sx={{
+                color: "#fff",
+                ml: 0.5,
+              }}
+            >
+              $
+            </Box>
+
+            <Box
+              component="input"
+              ref={inputRef}
+              value={input}
+              onChange={(event) =>
+                setInput(event.target.value)
+              }
+              onKeyDown={handleKeyDown}
+              spellCheck={false}
+              autoComplete="off"
+              placeholder=" escribe un comando..."
+              sx={{
+                minWidth: 0,
+                flex: 1,
+
+                ml: 0.5,
+
+                border: "none",
+                outline: "none",
+
+                background: "transparent",
+
+                color: "#fff",
+
+                fontFamily: "inherit",
+                fontSize: "inherit",
+
+                "&::placeholder": {
+                  color: "rgba(255,255,255,.25)",
+                },
+              }}
+            />
+
+            <Box
+              component="span"
+              sx={{
+                width: 7,
+                height: 18,
+                ml: 0.5,
+
+                background: "#4ade80",
+
+                animation:
+                  "blink 1s step-end infinite",
+
+                "@keyframes blink": {
+                  "50%": {
+                    opacity: 0,
+                  },
+                },
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
+
+      {/* Ayuda inferior */}
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        justifyContent="space-between"
+        alignItems={{ xs: "flex-start", sm: "center" }}
+        spacing={1}
+        sx={{
+          mt: 1.5,
+          px: 0.5,
+        }}
+      >
+        <Typography
+          variant="caption"
+          sx={{ opacity: 0.55 }}
+        >
+          ↑ ↓ historial · Tab autocompletar · Enter ejecutar
+        </Typography>
+
+        <Button
+          size="small"
+          onClick={() => executeCommand("help")}
+          sx={{
+            textTransform: "none",
+            fontFamily: "monospace",
+            minWidth: "auto",
           }}
         >
-          <span style={{ color: "#4ade80" }}>
-            jorge@portfolio
-          </span>
-
-          <span style={{ color: "#60a5fa" }}>
-            :{currentPath}
-          </span>
-
-          <span>$ </span>
-
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={(event) => setInput(event.target.value)}
-            onKeyDown={handleKeyDown}
-            spellCheck="false"
-            autoComplete="off"
-            placeholder="escribe un comando..."
-            style={{
-              flex: 1,
-              border: "none",
-              outline: "none",
-              background: "transparent",
-              color: "#fff",
-              fontFamily: "inherit",
-              fontSize: "14px",
-              marginLeft: "6px",
-            }}
-          />
-        </div>
-      </div>
-    </div>
+          ¿Qué puedo escribir?
+        </Button>
+      </Stack>
+    </Box>
   );
     }
