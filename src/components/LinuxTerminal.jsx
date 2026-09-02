@@ -418,7 +418,8 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               whiteSpace: "nowrap",
               textAlign: "center",
               color: "rgba(255,255,255,0.65)",
-              fontSize: { xs: 11, sm: 13 },
+              
+              fontSize: { xs: 13, sm: 15 },
               fontFamily: mono,
             }}
           >
