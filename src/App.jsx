@@ -8,6 +8,7 @@ import {
   Container,
   Fab,
   Tooltip,
+  Dialog,
 } from "@mui/material";
 
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -22,13 +23,16 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-
+import LinuxTerminal from "./components/LinuxTerminal.jsx";
+import TerminalIcon from "@mui/icons-material/Terminal";
 import { translations } from "./i18n";
 
 function App() {
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
+
+  const [terminalOpen, setTerminalOpen] = useState(false);
 
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
@@ -232,6 +236,62 @@ function App() {
         </Container>
 
         <Footer t={t} />
+
+{/* Terminal */}
+<Tooltip title="Abrir terminal" placement="left">
+  <Fab
+    aria-label="terminal"
+    onClick={() => setTerminalOpen(true)}
+    sx={(theme) => ({
+      position: "fixed",
+      bottom: 84,
+      right: 16,
+      zIndex: 1200,
+
+      bgcolor:
+        theme.palette.mode === "dark"
+          ? theme.palette.grey[900]
+          : theme.palette.primary.main,
+
+      color: "#fff",
+      width: 52,
+      height: 52,
+      boxShadow: "none",
+
+      transition: "transform 0.2s ease",
+
+      "&:hover": {
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? theme.palette.grey[800]
+            : theme.palette.primary.dark,
+      },
+
+      "&:active": {
+        transform: "scale(0.95)",
+      },
+    })}
+  >
+    <TerminalIcon />
+  </Fab>
+</Tooltip>
+
+        <Dialog
+  open={terminalOpen}
+  onClose={() => setTerminalOpen(false)}
+  fullWidth
+  maxWidth="lg"
+  PaperProps={{
+    sx: {
+      background: "transparent",
+      boxShadow: "none",
+      overflow: "visible",
+      m: { xs: 1, sm: 2 },
+    },
+  }}
+>
+  <LinuxTerminal t={t} lang={lang} />
+</Dialog>
 
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
