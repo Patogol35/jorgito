@@ -22,7 +22,7 @@ import Contact from "./components/Contact.jsx";
 import Footer from "./components/Footer.jsx";
 import ChatBot from "./components/ChatBot.jsx";
 import Form from "./components/Form.jsx";
-import LinuxTerminal from "./components/LinuxTerminal.jsx";
+
 import { translations } from "./i18n";
 
 function App() {
@@ -115,12 +115,13 @@ function App() {
   );
 
   //  Memo de secciones 
- const sections = useMemo(
+  const sections = useMemo(
   () => [
     { id: "about", color: "#2e7d32", Component: About },
     { id: "projects", color: "#1976d2", Component: Projects },
     { id: "skills", color: "#00897b", Component: Skills },
     { id: "certifications", color: "#6D5BD0", Component: Certifications },
+    
     { id: "contact", color: "#d32f2f", Component: Contact },
     { id: "form", color: "#fb8c00", Component: Form },
   ],
@@ -230,19 +231,7 @@ function App() {
           ))}
         </Container>
 
-<Box
-  id="terminal"
-  sx={{
-    width: "100%",
-    px: { xs: 2, sm: 3, md: 4 },
-    py: { xs: 5, md: 8 },
-    scrollMarginTop: scrollOffset,
-  }}
->
-  <LinuxTerminal t={t} lang={lang} />
-</Box>
-
-<Footer t={t} />
+        <Footer t={t} />
 
         {/* WhatsApp */}
         <Tooltip title="Chatea por WhatsApp" placement="left">
