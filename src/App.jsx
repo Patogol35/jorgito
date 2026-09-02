@@ -9,8 +9,7 @@ import {
   Fab,
   Tooltip,
 } from "@mui/material";
-import TerminalIcon from "@mui/icons-material/Terminal";
-import LinuxTerminal from "./components/LinuxTerminal.jsx";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 import Navbar from "./components/Navbar.jsx";
@@ -30,7 +29,6 @@ function App() {
   const [mode, setMode] = useState(() =>
     localStorage.getItem("themeMode") || "dark"
   );
-  const [terminalOpen, setTerminalOpen] = useState(false);
 
   const [lang, setLang] = useState(() =>
     localStorage.getItem("lang") || "es"
@@ -340,67 +338,6 @@ function App() {
     })}
   >
     {lang === "es" ? "EN" : "ES"}
-  </Fab>
-</Tooltip>
-
-        {/* Terminal flotante */}
-{terminalOpen && (
-  <Box
-    sx={{
-      position: "fixed",
-      bottom: { xs: 145, sm: 155 },
-      right: { xs: 8, sm: 20 },
-      left: { xs: 8, sm: "auto" },
-      width: { xs: "auto", sm: 650, md: 800 },
-      maxWidth: "calc(100vw - 16px)",
-      zIndex: 1100,
-    }}
-  >
-    <LinuxTerminal t={t} lang={lang} />
-  </Box>
-)}
-
-{/* Botón Terminal */}
-<Tooltip
-  title={terminalOpen ? "Cerrar terminal" : "Abrir terminal"}
-  placement="left"
->
-  <Fab
-    aria-label="terminal"
-    onClick={() => setTerminalOpen((prev) => !prev)}
-    sx={(theme) => ({
-      position: "fixed",
-      bottom: { xs: 80, sm: 90 },
-      right: 16,
-      zIndex: 1200,
-
-      bgcolor:
-        theme.palette.mode === "dark"
-          ? theme.palette.grey[900]
-          : theme.palette.primary.main,
-
-      color: "#7ee787",
-
-      width: 52,
-      height: 52,
-
-      boxShadow: "none",
-
-      transition: "transform 0.2s ease",
-
-      "&:hover": {
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? theme.palette.grey[800]
-            : theme.palette.primary.dark,
-      },
-
-      "&:active": {
-        transform: "scale(0.95)",
-      },
-    })}
-  >
-    <TerminalIcon />
   </Fab>
 </Tooltip>
         <ChatBot t={t} lang={lang} />
