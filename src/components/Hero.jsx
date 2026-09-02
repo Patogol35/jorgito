@@ -10,7 +10,6 @@ import {
 import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
-import { Brightness4, Brightness7, Close } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
@@ -228,9 +227,14 @@ const [openTerminal, setOpenTerminal] = useState(false);
                     {btn.label}
                   </Button>
                 </motion.div>
-              ))}
+                          ))}
+            </Box>
+          </motion.div>
+        </Box>
+      </Box>
 
       {/* MODAL */}
+      
       <Modal
         open={open}
         onClose={() => setOpen(false)}
