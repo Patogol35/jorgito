@@ -481,11 +481,16 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           ref={terminalRef}
           onClick={() => inputRef.current?.focus()}
           sx={{
+          
             height: {
-              xs: 430,
-              sm: 480,
-              md: 520,
-            },
+  xs: "calc(100vh - 110px)",
+  sm: "calc(100vh - 120px)",
+  md: 520,
+},
+minHeight: {
+  xs: 0,
+  md: 520,
+},
             overflowY: "auto",
             p: {
               xs: 2,
