@@ -311,7 +311,14 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${lang === "es" ? "Espa
           onClick={() => inputRef.current?.focus()}
           sx={{
             width: "100%",
-            height: { xs: "calc(100vh - 170px)", sm: 560 },
+            height: {
+  xs: "calc(100dvh - 116px)",
+  sm: 560,
+},
+maxHeight: {
+  xs: "calc(100dvh - 116px)",
+  sm: 560,
+},
             minHeight: 300,
             overflowY: "auto",
             overflowX: "hidden",
