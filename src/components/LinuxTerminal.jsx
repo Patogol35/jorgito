@@ -324,28 +324,7 @@ ossysssssyNMMMyssssssssssssssssso  Status: Online
         mx: "auto",
       }}
     >
-      {/* Título */}
-      <Box sx={{ mb: 3 }}>
-        <Typography
-          variant="h4"
-          fontWeight={700}
-          sx={{
-            letterSpacing: "-0.5px",
-          }}
-        >
-          Developer Terminal
-        </Typography>
-
-        <Typography
-          variant="body1"
-          sx={{
-            mt: 0.5,
-            opacity: 0.7,
-          }}
-        >
-          Explora mi portafolio desde la terminal.
-        </Typography>
-      </Box>
+      
 
       {/* Terminal */}
       <Box
