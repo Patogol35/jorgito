@@ -239,7 +239,7 @@ function App() {
     scrollMarginTop: scrollOffset,
   }}
 >
-  <LinuxTerminal t={t} />
+  <LinuxTerminal t={t} lang={lang} />
 </Box>
 
 <Footer t={t} />
