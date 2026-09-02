@@ -11,6 +11,7 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import { motion } from "framer-motion";
+import { Close } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import TerminalIcon from "@mui/icons-material/Terminal";
