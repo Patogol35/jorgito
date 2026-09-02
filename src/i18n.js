@@ -106,24 +106,24 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
     ],
 
     projectContent: {
-      "weather-app.txt":
-        "Aplicación del Clima — React + API",
+  "aplicacion-clima.txt":
+    "Aplicación del Clima — React + API",
 
-      "ecommerce.txt":
-        "E-commerce Full Stack — React + Django + JWT Auth",
+  "tienda-electronica.txt":
+    "Tienda Electrónica Full Stack — React + Django + JWT Auth",
 
-      "ai-chess.txt":
-        "Ajedrez con IA — React + IA",
+  "ajedrez-ia.txt":
+    "Ajedrez con IA — React + IA",
 
-      "quiz.txt":
-        "Quiz Educativo de Ambato y Ecuador",
+  "cuestionario.txt":
+    "Quiz Educativo de Ambato y Ecuador",
 
-      "calculator.txt":
-        "Calculadora Científica — JavaScript + lógica matemática",
+  "calculadora.txt":
+    "Calculadora Científica — JavaScript + lógica matemática",
 
-      "chatbot.txt":
-        "Chatbot con IA — Asistente Virtual + Groq",
-    },
+  "chatbot.txt":
+    "Chatbot con IA — Asistente Virtual + Groq",
+},
 
     neofetch: {
       os: "SO: Portfolio Linux",
