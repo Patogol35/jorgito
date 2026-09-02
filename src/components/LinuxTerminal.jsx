@@ -84,7 +84,13 @@ export default function LinuxTerminal({ t, lang, onClose }) {
       case "help":
         output = (
           <Box>
-            <Typography sx={{ mb: 1, color: "#fff", fontFamily: mono }}>
+            <Typography
+              sx={{
+                mb: 1,
+                color: "#fff",
+                fontFamily: mono,
+              }}
+            >
               {terminal?.messages?.available || "Available commands:"}
             </Typography>
 
@@ -100,10 +106,21 @@ export default function LinuxTerminal({ t, lang, onClose }) {
             >
               {commands.map((item) => (
                 <Box key={item} sx={{ display: "contents" }}>
-                  <Typography sx={{ color: green, fontFamily: mono }}>
+                  <Typography
+                    sx={{
+                      color: green,
+                      fontFamily: mono,
+                    }}
+                  >
                     {item}
                   </Typography>
-                  <Typography sx={{ color: muted, fontFamily: mono }}>
+
+                  <Typography
+                    sx={{
+                      color: muted,
+                      fontFamily: mono,
+                    }}
+                  >
                     {terminal?.commands?.[item] || ""}
                   </Typography>
                 </Box>
@@ -151,8 +168,12 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         ) {
           setCurrentPath("/home/jorge");
         } else {
-          output = `${text("unknownDirectory", "Directory not found:")} ${target}`;
+          output = `${text(
+            "unknownDirectory",
+            "Directory not found:"
+          )} ${target}`;
         }
+
         break;
       }
 
@@ -160,7 +181,10 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         const file = args[0];
 
         if (!file) {
-          output = text("missingFile", "Please specify a file.");
+          output = text(
+            "missingFile",
+            "Please specify a file."
+          );
         } else if (
           ["about.txt", "skills.txt", "contact.txt"].includes(file)
         ) {
@@ -169,8 +193,12 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         } else {
           output =
             terminal?.messages?.projectContent?.[file] ||
-            `${text("unknownFile", "File not found:")} ${file}`;
+            `${text(
+              "unknownFile",
+              "File not found:"
+            )} ${file}`;
         }
+
         break;
       }
 
@@ -263,7 +291,10 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
         break;
 
       default:
-        output = `${text("unknownCommand", "Command not found:")} ${cmd}`;
+        output = `${text(
+          "unknownCommand",
+          "Command not found:"
+        )} ${cmd}`;
     }
 
     addOutput(fullCommand, output);
@@ -278,6 +309,7 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
   const handleKeyDown = (e) => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
+
       if (!commandHistory.length) return;
 
       const index =
@@ -291,6 +323,7 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
 
     if (e.key === "ArrowDown") {
       e.preventDefault();
+
       if (historyIndex === -1) return;
 
       const index = historyIndex + 1;
@@ -311,7 +344,9 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
         cmd.startsWith(input.toLowerCase())
       );
 
-      if (matches.length === 1) setInput(matches[0]);
+      if (matches.length === 1) {
+        setInput(matches[0]);
+      }
     }
   };
 
@@ -334,28 +369,55 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
   }, []);
 
   const quickCommands = [
-    ["about", terminal?.quickCommands?.about || "About me"],
-    ["skills", terminal?.quickCommands?.skills || "Technologies"],
-    ["projects", terminal?.quickCommands?.projects || "Projects"],
-    ["contact", terminal?.quickCommands?.contact || "Contact"],
+    [
+      "about",
+      terminal?.quickCommands?.about || "About me",
+    ],
+    [
+      "skills",
+      terminal?.quickCommands?.skills || "Technologies",
+    ],
+    [
+      "projects",
+      terminal?.quickCommands?.projects || "Projects",
+    ],
+    [
+      "contact",
+      terminal?.quickCommands?.contact || "Contact",
+    ],
   ];
 
   const prompt = (
     <>
-      <Typography component="span" sx={{ color: green, fontFamily: mono }}>
+      <Typography
+        component="span"
+        sx={{
+          color: green,
+          fontFamily: mono,
+        }}
+      >
         jorge@portfolio:
       </Typography>
 
       <Typography
         component="span"
-        sx={{ color: blue, fontFamily: mono, ml: 0.5 }}
+        sx={{
+          color: blue,
+          fontFamily: mono,
+          ml: 0.5,
+        }}
       >
         {currentPath}
       </Typography>
 
       <Typography
         component="span"
-        sx={{ color: "#fff", fontFamily: mono, ml: 0.5, mr: 0.8 }}
+        sx={{
+          color: "#fff",
+          fontFamily: mono,
+          ml: 0.5,
+          mr: 0.8,
+        }}
       >
         $
       </Typography>
@@ -392,21 +454,24 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             display: "flex",
             alignItems: "center",
             bgcolor: "#161b22",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            borderBottom:
+              "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <Stack direction="row" spacing={1}>
-            {["#ff5f57", "#febc2e", "#28c840"].map((color) => (
-              <Box
-                key={color}
-                sx={{
-                  width: 11,
-                  height: 11,
-                  borderRadius: "50%",
-                  bgcolor: color,
-                }}
-              />
-            ))}
+            {["#ff5f57", "#febc2e", "#28c840"].map(
+              (color) => (
+                <Box
+                  key={color}
+                  sx={{
+                    width: 11,
+                    height: 11,
+                    borderRadius: "50%",
+                    bgcolor: color,
+                  }}
+                />
+              )
+            )}
           </Stack>
 
           <Typography
@@ -422,7 +487,8 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               fontFamily: mono,
             }}
           >
-            jorge@portfolio — {terminal?.title || "terminal"}
+            jorge@portfolio —{" "}
+            {terminal?.title || "terminal"}
           </Typography>
 
           <IconButton
@@ -431,7 +497,9 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             aria-label="Cerrar terminal"
             sx={{
               color: "rgba(255,255,255,0.6)",
-              "&:hover": { color: "#fff" },
+              "&:hover": {
+                color: "#fff",
+              },
             }}
           >
             <CloseIcon fontSize="small" />
@@ -446,6 +514,11 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             width: "100%",
             minWidth: 0,
             maxWidth: "100%",
+
+            "& .MuiTypography-root": {
+              fontSize: "inherit",
+            },
+
             height: {
               xs: "calc(100vh - 170px)",
               sm: 560,
@@ -476,14 +549,28 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
         >
           {/* Welcome */}
           <Box sx={{ mb: 2 }}>
-            <Typography sx={{ color: green, fontFamily: mono }}>
+            <Typography
+              sx={{
+                color: green,
+                fontFamily: mono,
+              }}
+            >
               $ ./welcome.sh
             </Typography>
 
             {[
-              ["welcome", "Welcome to my interactive terminal."],
-              ["description", "Explore my portfolio using commands."],
-              ["help", "Type 'help' to see the available commands."],
+              [
+                "welcome",
+                "Welcome to my interactive terminal.",
+              ],
+              [
+                "description",
+                "Explore my portfolio using commands.",
+              ],
+              [
+                "help",
+                "Type 'help' to see the available commands.",
+              ],
             ].map(([key, fallback]) => (
               <Typography
                 key={key}
@@ -502,7 +589,8 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
 
           <Divider
             sx={{
-              borderColor: "rgba(255,255,255,0.08)",
+              borderColor:
+                "rgba(255,255,255,0.08)",
               mb: 2,
             }}
           />
@@ -519,16 +607,21 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               <Chip
                 key={command}
                 label={label}
-                onClick={() => executeCommand(command)}
+                onClick={() =>
+                  executeCommand(command)
+                }
                 size="small"
                 variant="outlined"
                 sx={{
                   color: green,
-                  borderColor: "rgba(126,231,135,0.3)",
-                  bgcolor: "rgba(126,231,135,0.06)",
+                  borderColor:
+                    "rgba(126,231,135,0.3)",
+                  bgcolor:
+                    "rgba(126,231,135,0.06)",
                   fontFamily: mono,
                   "&:hover": {
-                    bgcolor: "rgba(126,231,135,0.12)",
+                    bgcolor:
+                      "rgba(126,231,135,0.12)",
                   },
                 }}
               />
@@ -548,21 +641,31 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               >
                 <Typography
                   component="span"
-                  sx={{ color: green, fontFamily: mono }}
+                  sx={{
+                    color: green,
+                    fontFamily: mono,
+                  }}
                 >
                   jorge@portfolio:
                 </Typography>
 
                 <Typography
                   component="span"
-                  sx={{ color: blue, fontFamily: mono }}
+                  sx={{
+                    color: blue,
+                    fontFamily: mono,
+                  }}
                 >
                   {item.path}
                 </Typography>
 
                 <Typography
                   component="span"
-                  sx={{ color: "#fff", fontFamily: mono, ml: 0.5 }}
+                  sx={{
+                    color: "#fff",
+                    fontFamily: mono,
+                    ml: 0.5,
+                  }}
                 >
                   $ {item.command}
                 </Typography>
@@ -604,11 +707,16 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               component="input"
               ref={inputRef}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) =>
+                setInput(e.target.value)
+              }
               onKeyDown={handleKeyDown}
               autoComplete="off"
               spellCheck="false"
-              aria-label={terminal?.prompt || "Type a command"}
+              aria-label={
+                terminal?.prompt ||
+                "Type a command"
+              }
               sx={{
                 flex: 1,
                 minWidth: 0,
@@ -619,6 +727,9 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
                 color: "#fff",
                 fontFamily: mono,
                 fontSize: { xs: 12, sm: 14 },
+                lineHeight: 1.55,
+                padding: 0,
+                margin: 0,
                 caretColor: green,
               }}
             />
@@ -635,7 +746,8 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             justifyContent: "space-between",
             gap: 1,
             bgcolor: "#161b22",
-            borderTop: "1px solid rgba(255,255,255,0.08)",
+            borderTop:
+              "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <Typography
@@ -654,13 +766,18 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           </Typography>
 
           <Chip
-            label={terminal?.helpButton || "Help"}
+            label={
+              terminal?.helpButton || "Help"
+            }
             size="small"
-            onClick={() => executeCommand("help")}
+            onClick={() =>
+              executeCommand("help")
+            }
             sx={{
               flexShrink: 0,
               color: green,
-              bgcolor: "rgba(126,231,135,0.08)",
+              bgcolor:
+                "rgba(126,231,135,0.08)",
               fontFamily: mono,
               fontSize: 10,
             }}
@@ -669,4 +786,4 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
       </Box>
     </Box>
   );
-}
+              }
