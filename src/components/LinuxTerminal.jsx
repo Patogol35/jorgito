@@ -235,15 +235,15 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         break;
 
       case "neofetch":
-  output = (
-    <Box
-      sx={{
-        whiteSpace: "pre-wrap",
-        fontFamily: mono,
-        lineHeight: 1.5,
-      }}
-    >
-      {`       .--.
+        output = (
+          <Box
+            sx={{
+              whiteSpace: "pre-wrap",
+              fontFamily: mono,
+              lineHeight: 1.5,
+            }}
+          >
+            {`       .--.
       |o_o |
       |:_/ |
      //   \\ \\
@@ -256,11 +256,11 @@ ${terminal?.messages?.neofetch?.host || "Host: Jorge's Portfolio"}
 ${terminal?.messages?.neofetch?.shell || "Shell: portfolio-shell"}
 ${terminal?.messages?.neofetch?.user || "User: jorge"}
 ${terminal?.messages?.neofetch?.language || "Language:"} ${
-        lang === "es" ? "Español" : "English"
-      }`}
-    </Box>
-  );
-  break;
+              lang === "es" ? "Español" : "English"
+            }`}
+          </Box>
+        );
+        break;
 
       default:
         output = `${text("unknownCommand", "Command not found:")} ${cmd}`;
@@ -418,7 +418,6 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               whiteSpace: "nowrap",
               textAlign: "center",
               color: "rgba(255,255,255,0.65)",
-              
               fontSize: { xs: 13, sm: 15 },
               fontFamily: mono,
             }}
@@ -547,11 +546,17 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
                   wordBreak: "break-word",
                 }}
               >
-                <Typography component="span" sx={{ color: green, fontFamily: mono }}>
+                <Typography
+                  component="span"
+                  sx={{ color: green, fontFamily: mono }}
+                >
                   jorge@portfolio:
                 </Typography>
 
-                <Typography component="span" sx={{ color: blue, fontFamily: mono }}>
+                <Typography
+                  component="span"
+                  sx={{ color: blue, fontFamily: mono }}
+                >
                   {item.path}
                 </Typography>
 
@@ -613,7 +618,7 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
                 bgcolor: "transparent",
                 color: "#fff",
                 fontFamily: mono,
-                fontSize: "inherit",
+                fontSize: { xs: 12, sm: 14 },
                 caretColor: green,
               }}
             />
@@ -664,4 +669,4 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
       </Box>
     </Box>
   );
-          }
+}
