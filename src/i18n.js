@@ -91,7 +91,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
       "Jorge Patricio Santamaría Cherrez\nIngeniero en Sistemas\nMáster en Ingeniería de Software y Sistemas Informáticos",
 
     skillsContent:
-      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Node.js, Express, Python, Flask, Django\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
+      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Python, Java\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
 
     contactContent:
       "Puedes contactarme a través de mis redes profesionales o por correo electrónico.",
@@ -354,7 +354,7 @@ I am also skilled in development tools, API testing, virtualization, network sec
       "Jorge Patricio Santamaría Cherrez\nSystems Engineer\nMaster's Degree in Software Engineering and Information Systems",
 
     skillsContent:
-      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Node.js, Express, Python, Flask, Django\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
+      "Frontend: React, JavaScript, HTML, CSS, Material UI\nBackend: Python, Java\nDatabase: MySQL, PostgreSQL\nCloud: Vercel, Render\nTools: Git, GitHub, Linux",
 
     contactContent:
       "You can contact me through my professional networks or by email.",
