@@ -45,50 +45,46 @@ export default function LinuxTerminal({ t, lang, onClose }) {
   const green = "#7ee787";
   const blue = "#79c0ff";
   const muted = "rgba(255,255,255,0.7)";
+  const mono = "monospace";
 
-  const addOutput = (command, output, path = currentPath) => {
+  const text = (key, fallback = "") =>
+    terminal?.messages?.[key] || fallback;
+
+  const addOutput = (command, output) => {
     setHistory((prev) => [
       ...prev,
-      { type: "command", path, command },
+      { type: "command", path: currentPath, command },
       { type: "output", content: output },
     ]);
   };
 
-  const getCommandDescription = (command) =>
-    terminal?.commands?.[command] || "";
+  const saveCommand = (command) => {
+    setCommandHistory((prev) => [...prev, command]);
+    setHistoryIndex(-1);
+  };
 
-  const executeCommand = (rawCommand) => {
-    const fullCommand = rawCommand.trim();
-
+  const executeCommand = (raw) => {
+    const fullCommand = raw.trim();
     if (!fullCommand) return;
 
-    const parts = fullCommand.split(/\s+/);
-    const command = parts[0].toLowerCase();
-    const args = parts.slice(1);
+    const [command, ...args] = fullCommand.split(/\s+/);
+    const cmd = command.toLowerCase();
 
-    if (command === "clear") {
+    if (cmd === "clear") {
       setHistory([]);
-      setCommandHistory((prev) => [...prev, fullCommand]);
-      setHistoryIndex(-1);
+      saveCommand(fullCommand);
       return;
     }
 
-    setCommandHistory((prev) => [...prev, fullCommand]);
-    setHistoryIndex(-1);
+    saveCommand(fullCommand);
 
     let output = "";
 
-    switch (command) {
+    switch (cmd) {
       case "help":
         output = (
-          <Box sx={{ minWidth: 0 }}>
-            <Typography
-              sx={{
-                mb: 1,
-                color: "#fff",
-                fontFamily: "inherit",
-              }}
-            >
+          <Box>
+            <Typography sx={{ mb: 1, color: "#fff", fontFamily: mono }}>
               {terminal?.messages?.available || "Available commands:"}
             </Typography>
 
@@ -96,32 +92,19 @@ export default function LinuxTerminal({ t, lang, onClose }) {
               sx={{
                 display: "grid",
                 gridTemplateColumns: {
-                  xs: "90px minmax(0, 1fr)",
-                  sm: "180px minmax(0, 1fr)",
+                  xs: "100px 1fr",
+                  sm: "180px 1fr",
                 },
                 gap: "5px 15px",
-                minWidth: 0,
               }}
             >
-              {commands.map((cmd) => (
-                <Box key={cmd} sx={{ display: "contents" }}>
-                  <Typography
-                    sx={{
-                      color: green,
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    {cmd}
+              {commands.map((item) => (
+                <Box key={item} sx={{ display: "contents" }}>
+                  <Typography sx={{ color: green, fontFamily: mono }}>
+                    {item}
                   </Typography>
-
-                  <Typography
-                    sx={{
-                      color: muted,
-                      fontFamily: "inherit",
-                      overflowWrap: "anywhere",
-                    }}
-                  >
-                    {getCommandDescription(cmd)}
+                  <Typography sx={{ color: muted, fontFamily: mono }}>
+                    {terminal?.commands?.[item] || ""}
                   </Typography>
                 </Box>
               ))}
@@ -130,15 +113,10 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         );
         break;
 
-      case "ls": {
-        const files =
+      case "ls":
+        output =
           currentPath === "/home/jorge"
-            ? [
-                "about.txt",
-                "skills.txt",
-                "projects",
-                "contact.txt",
-              ]
+            ? "about.txt    skills.txt    projects    contact.txt"
             : [
                 "weather-app.txt",
                 "ecommerce.txt",
@@ -146,11 +124,8 @@ export default function LinuxTerminal({ t, lang, onClose }) {
                 "quiz.txt",
                 "calculator.txt",
                 "chatbot.txt",
-              ];
-
-        output = files.join("    ");
+              ].join("    ");
         break;
-      }
 
       case "pwd":
         output = currentPath;
@@ -172,69 +147,55 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         ) {
           setCurrentPath("/home/jorge/projects");
         } else if (
-          target === "home" ||
-          target === "jorge" ||
-          target === "/home/jorge"
+          ["home", "jorge", "/home/jorge"].includes(target)
         ) {
           setCurrentPath("/home/jorge");
         } else {
-          output = `${
-            terminal?.messages?.unknownDirectory ||
-            "Directory not found:"
-          } ${target}`;
+          output = `${text("unknownDirectory", "Directory not found:")} ${target}`;
         }
-
         break;
       }
 
       case "cat": {
-        const fileName = args[0];
+        const file = args[0];
 
-        if (!fileName) {
-          output =
-            terminal?.messages?.missingFile ||
-            "Please specify a file.";
-        } else if (fileName === "about.txt") {
-          output = terminal?.messages?.aboutContent || "";
-        } else if (fileName === "skills.txt") {
-          output = terminal?.messages?.skillsContent || "";
-        } else if (fileName === "contact.txt") {
-          output = terminal?.messages?.contactContent || "";
+        if (!file) {
+          output = text("missingFile", "Please specify a file.");
+        } else if (
+          ["about.txt", "skills.txt", "contact.txt"].includes(file)
+        ) {
+          const key = file.replace(".txt", "");
+          output = text(`${key}Content`);
         } else {
           output =
-            terminal?.messages?.projectContent?.[fileName] ||
-            `${
-              terminal?.messages?.unknownFile ||
-              "File not found:"
-            } ${fileName}`;
+            terminal?.messages?.projectContent?.[file] ||
+            `${text("unknownFile", "File not found:")} ${file}`;
         }
-
         break;
       }
 
       case "whoami":
-        output = terminal?.messages?.whoami || "jorge";
+        output = text("whoami", "jorge");
         break;
 
       case "about":
-        output = terminal?.messages?.aboutContent || "";
+        output = text("aboutContent");
         break;
 
       case "skills":
-        output = terminal?.messages?.skillsContent || "";
+        output = text("skillsContent");
         break;
 
       case "projects":
         output = (
-          <Box sx={{ minWidth: 0 }}>
+          <Box>
             {terminal?.messages?.projectFiles?.map((file) => (
               <Typography
                 key={file}
                 sx={{
                   color: green,
-                  fontFamily: "inherit",
+                  fontFamily: mono,
                   lineHeight: 1.8,
-                  overflowWrap: "anywhere",
                 }}
               >
                 {file}
@@ -245,7 +206,7 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         break;
 
       case "contact":
-        output = terminal?.messages?.contactContent || "";
+        output = text("contactContent");
         break;
 
       case "echo":
@@ -253,21 +214,18 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         break;
 
       case "history":
-        output =
-          commandHistory.length > 0
-            ? commandHistory.map((cmd, index) => (
-                <Typography
-                  key={`${cmd}-${index}`}
-                  sx={{
-                    fontFamily: "inherit",
-                    lineHeight: 1.7,
-                    color: muted,
-                  }}
-                >
-                  {index + 1} {cmd}
-                </Typography>
-              ))
-            : "";
+        output = commandHistory.map((item, i) => (
+          <Typography
+            key={`${item}-${i}`}
+            sx={{
+              color: muted,
+              fontFamily: mono,
+              lineHeight: 1.7,
+            }}
+          >
+            {i + 1} {item}
+          </Typography>
+        ));
         break;
 
       case "date":
@@ -280,10 +238,9 @@ export default function LinuxTerminal({ t, lang, onClose }) {
         output = (
           <Box
             sx={{
-              fontFamily: "inherit",
               whiteSpace: "pre-wrap",
+              fontFamily: mono,
               lineHeight: 1.5,
-              overflowWrap: "anywhere",
             }}
           >
             {`       .--.
@@ -294,11 +251,11 @@ export default function LinuxTerminal({ t, lang, onClose }) {
    /'\\_   _/\\
    \\___)=(___/
 
-${terminal?.messages?.neofetch?.os || "OS: Portfolio Linux"}
-${terminal?.messages?.neofetch?.host || "Host: Jorge's Portfolio"}
-${terminal?.messages?.neofetch?.shell || "Shell: portfolio-shell"}
-${terminal?.messages?.neofetch?.user || "User: jorge"}
-${terminal?.messages?.neofetch?.language || "Language:"} ${
+${text("neofetch")?.os || "OS: Portfolio Linux"}
+${text("neofetch")?.host || "Host: Jorge's Portfolio"}
+${text("neofetch")?.shell || "Shell: portfolio-shell"}
+${text("neofetch")?.user || "User: jorge"}
+${text("neofetch")?.language || "Language:"} ${
               lang === "es" ? "Español" : "English"
             }`}
           </Box>
@@ -306,114 +263,104 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
         break;
 
       default:
-        output = `${
-          terminal?.messages?.unknownCommand ||
-          "Command not found:"
-        } ${command}`;
+        output = `${text("unknownCommand", "Command not found:")} ${cmd}`;
     }
 
     addOutput(fullCommand, output);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
     executeCommand(input);
     setInput("");
   };
 
-  const handleKeyDown = (event) => {
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
       if (!commandHistory.length) return;
 
-      const newIndex =
+      const index =
         historyIndex === -1
           ? commandHistory.length - 1
           : Math.max(0, historyIndex - 1);
 
-      setHistoryIndex(newIndex);
-      setInput(commandHistory[newIndex]);
+      setHistoryIndex(index);
+      setInput(commandHistory[index]);
     }
 
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
       if (historyIndex === -1) return;
 
-      const newIndex = historyIndex + 1;
+      const index = historyIndex + 1;
 
-      if (newIndex >= commandHistory.length) {
+      if (index >= commandHistory.length) {
         setHistoryIndex(-1);
         setInput("");
       } else {
-        setHistoryIndex(newIndex);
-        setInput(commandHistory[newIndex]);
+        setHistoryIndex(index);
+        setInput(commandHistory[index]);
       }
     }
 
-    if (event.key === "Tab") {
-      event.preventDefault();
+    if (e.key === "Tab") {
+      e.preventDefault();
 
       const matches = commands.filter((cmd) =>
         cmd.startsWith(input.toLowerCase())
       );
 
-      if (matches.length === 1) {
-        setInput(matches[0]);
-      }
+      if (matches.length === 1) setInput(matches[0]);
     }
   };
 
-  // Al abrir, empezar siempre desde arriba y desde la izquierda
   useEffect(() => {
-    const terminalElement = terminalRef.current;
-
-    if (!terminalElement) return;
-
-    terminalElement.scrollLeft = 0;
-    terminalElement.scrollTop = 0;
-
-    setTimeout(() => {
-      terminalElement.scrollLeft = 0;
-      inputRef.current?.focus();
-    }, 50);
-  }, []);
-
-  // Bajar automáticamente cuando aparece nuevo contenido
-  useEffect(() => {
-    if (!history.length) return;
-
-    const terminalElement = terminalRef.current;
-
-    if (!terminalElement) return;
-
-    terminalElement.scrollTo({
-      top: terminalElement.scrollHeight,
+    terminalRef.current?.scrollTo({
+      top: terminalRef.current.scrollHeight,
       left: 0,
       behavior: "smooth",
     });
+
+    inputRef.current?.focus();
   }, [history]);
 
+  useEffect(() => {
+    if (!terminalRef.current) return;
+
+    terminalRef.current.scrollLeft = 0;
+    terminalRef.current.scrollTop = 0;
+    inputRef.current?.focus();
+  }, []);
+
   const quickCommands = [
-    {
-      label: terminal?.quickCommands?.about || "About me",
-      command: "about",
-    },
-    {
-      label: terminal?.quickCommands?.skills || "Technologies",
-      command: "skills",
-    },
-    {
-      label: terminal?.quickCommands?.projects || "Projects",
-      command: "projects",
-    },
-    {
-      label: terminal?.quickCommands?.contact || "Contact",
-      command: "contact",
-    },
+    ["about", terminal?.quickCommands?.about || "About me"],
+    ["skills", terminal?.quickCommands?.skills || "Technologies"],
+    ["projects", terminal?.quickCommands?.projects || "Projects"],
+    ["contact", terminal?.quickCommands?.contact || "Contact"],
   ];
+
+  const prompt = (
+    <>
+      <Typography component="span" sx={{ color: green, fontFamily: mono }}>
+        jorge@portfolio:
+      </Typography>
+
+      <Typography
+        component="span"
+        sx={{ color: blue, fontFamily: mono, ml: 0.5 }}
+      >
+        {currentPath}
+      </Typography>
+
+      <Typography
+        component="span"
+        sx={{ color: "#fff", fontFamily: mono, ml: 0.5, mr: 0.8 }}
+      >
+        $
+      </Typography>
+    </>
+  );
 
   return (
     <Box
@@ -433,7 +380,7 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           overflow: "hidden",
           borderRadius: { xs: 0, sm: 2 },
           border: "1px solid rgba(255,255,255,0.12)",
-          background: "#0d1117",
+          bgcolor: "#0d1117",
           boxShadow: "0 25px 70px rgba(0,0,0,0.5)",
         }}
       >
@@ -444,44 +391,38 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             px: 1.5,
             display: "flex",
             alignItems: "center",
-            background: "#161b22",
-            borderBottom:
-              "1px solid rgba(255,255,255,0.08)",
+            bgcolor: "#161b22",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <Stack direction="row" spacing={1}>
-            {["#ff5f57", "#febc2e", "#28c840"].map(
-              (color) => (
-                <Box
-                  key={color}
-                  sx={{
-                    width: 11,
-                    height: 11,
-                    borderRadius: "50%",
-                    background: color,
-                    flexShrink: 0,
-                  }}
-                />
-              )
-            )}
+            {["#ff5f57", "#febc2e", "#28c840"].map((color) => (
+              <Box
+                key={color}
+                sx={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: "50%",
+                  bgcolor: color,
+                }}
+              />
+            ))}
           </Stack>
 
           <Typography
             sx={{
               flex: 1,
-              minWidth: 0,
-              textAlign: "center",
-              color: "rgba(255,255,255,0.65)",
-              fontSize: { xs: 11, sm: 13 },
-              fontFamily: "monospace",
+              mx: 1,
               overflow: "hidden",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
-              mx: 1,
+              textAlign: "center",
+              color: "rgba(255,255,255,0.65)",
+              fontSize: { xs: 11, sm: 13 },
+              fontFamily: mono,
             }}
           >
-            jorge@portfolio —{" "}
-            {terminal?.title || "terminal"}
+            jorge@portfolio — {terminal?.title || "terminal"}
           </Typography>
 
           <IconButton
@@ -490,11 +431,7 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             aria-label="Cerrar terminal"
             sx={{
               color: "rgba(255,255,255,0.6)",
-              flexShrink: 0,
-              "&:hover": {
-                color: "#fff",
-                background: "rgba(255,255,255,0.08)",
-              },
+              "&:hover": { color: "#fff" },
             }}
           >
             <CloseIcon fontSize="small" />
@@ -506,28 +443,21 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           ref={terminalRef}
           onClick={() => inputRef.current?.focus()}
           sx={{
+            width: "100%",
+            minWidth: 0,
+            maxWidth: "100%",
             height: {
               xs: "calc(100vh - 170px)",
               sm: 560,
             },
             minHeight: 300,
-            width: "100%",
-            minWidth: 0,
-            maxWidth: "100%",
             overflowY: "auto",
             overflowX: "hidden",
             boxSizing: "border-box",
-            p: {
-              xs: 1.5,
-              sm: 2.5,
-            },
+            p: { xs: 1.5, sm: 2.5 },
             color: "#e6edf3",
-            fontFamily:
-              '"JetBrains Mono", "Fira Code", monospace',
-            fontSize: {
-              xs: 12,
-              sm: 14,
-            },
+            fontFamily: mono,
+            fontSize: { xs: 12, sm: 14 },
             lineHeight: 1.55,
             WebkitOverflowScrolling: "touch",
             touchAction: "pan-y",
@@ -535,70 +465,44 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
 
             "&::-webkit-scrollbar": {
               width: 7,
+              height: 7,
             },
 
             "&::-webkit-scrollbar-thumb": {
-              background:
-                "rgba(255,255,255,0.18)",
+              bgcolor: "rgba(255,255,255,0.18)",
               borderRadius: 10,
             },
           }}
         >
           {/* Welcome */}
-          <Box
-            sx={{
-              mb: 2,
-              minWidth: 0,
-              maxWidth: "100%",
-            }}
-          >
-            <Typography
-              sx={{
-                color: green,
-                fontFamily: "inherit",
-              }}
-            >
+          <Box sx={{ mb: 2 }}>
+            <Typography sx={{ color: green, fontFamily: mono }}>
               $ ./welcome.sh
             </Typography>
 
-            <Typography
-              sx={{
-                color: "rgba(255,255,255,0.85)",
-                fontFamily: "inherit",
-                overflowWrap: "anywhere",
-              }}
-            >
-              {terminal?.welcome ||
-                "Welcome to my interactive terminal."}
-            </Typography>
-
-            <Typography
-              sx={{
-                color: "rgba(255,255,255,0.6)",
-                fontFamily: "inherit",
-                overflowWrap: "anywhere",
-              }}
-            >
-              {terminal?.description ||
-                "Explore my portfolio using commands."}
-            </Typography>
-
-            <Typography
-              sx={{
-                color: "rgba(255,255,255,0.55)",
-                fontFamily: "inherit",
-                overflowWrap: "anywhere",
-              }}
-            >
-              {terminal?.help ||
-                "Type 'help' to see the available commands."}
-            </Typography>
+            {[
+              ["welcome", "Welcome to my interactive terminal."],
+              ["description", "Explore my portfolio using commands."],
+              ["help", "Type 'help' to see the available commands."],
+            ].map(([key, fallback]) => (
+              <Typography
+                key={key}
+                sx={{
+                  color:
+                    key === "welcome"
+                      ? "rgba(255,255,255,0.85)"
+                      : "rgba(255,255,255,0.6)",
+                  fontFamily: mono,
+                }}
+              >
+                {terminal?.[key] || fallback}
+              </Typography>
+            ))}
           </Box>
 
           <Divider
             sx={{
-              borderColor:
-                "rgba(255,255,255,0.08)",
+              borderColor: "rgba(255,255,255,0.08)",
               mb: 2,
             }}
           />
@@ -611,26 +515,20 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
             flexWrap="wrap"
             sx={{ mb: 2 }}
           >
-            {quickCommands.map((item) => (
+            {quickCommands.map(([command, label]) => (
               <Chip
-                key={item.command}
-                label={item.label}
-                onClick={() =>
-                  executeCommand(item.command)
-                }
+                key={command}
+                label={label}
+                onClick={() => executeCommand(command)}
                 size="small"
                 variant="outlined"
                 sx={{
                   color: green,
-                  borderColor:
-                    "rgba(126,231,135,0.3)",
-                  background:
-                    "rgba(126,231,135,0.06)",
-                  fontFamily: "inherit",
-
+                  borderColor: "rgba(126,231,135,0.3)",
+                  bgcolor: "rgba(126,231,135,0.06)",
+                  fontFamily: mono,
                   "&:hover": {
-                    background:
-                      "rgba(126,231,135,0.12)",
+                    bgcolor: "rgba(126,231,135,0.12)",
                   },
                 }}
               />
@@ -644,39 +542,21 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
                 key={index}
                 sx={{
                   mt: 1,
-                  minWidth: 0,
-                  maxWidth: "100%",
                   overflowWrap: "anywhere",
+                  wordBreak: "break-word",
                 }}
               >
-                <Typography
-                  component="span"
-                  sx={{
-                    color: green,
-                    fontFamily: "inherit",
-                  }}
-                >
+                <Typography component="span" sx={{ color: green, fontFamily: mono }}>
                   jorge@portfolio:
                 </Typography>
 
-                <Typography
-                  component="span"
-                  sx={{
-                    color: blue,
-                    fontFamily: "inherit",
-                    overflowWrap: "anywhere",
-                  }}
-                >
+                <Typography component="span" sx={{ color: blue, fontFamily: mono }}>
                   {item.path}
                 </Typography>
 
                 <Typography
                   component="span"
-                  sx={{
-                    color: "#fff",
-                    fontFamily: "inherit",
-                    ml: 0.5,
-                  }}
+                  sx={{ color: "#fff", fontFamily: mono, ml: 0.5 }}
                 >
                   $ {item.command}
                 </Typography>
@@ -687,13 +567,11 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
                 sx={{
                   mt: 0.5,
                   mb: 1,
-                  minWidth: 0,
-                  maxWidth: "100%",
                   whiteSpace: "pre-wrap",
-                  color: muted,
-                  fontFamily: "inherit",
                   overflowWrap: "anywhere",
                   wordBreak: "break-word",
+                  color: muted,
+                  fontFamily: mono,
                 }}
               >
                 {item.content}
@@ -714,68 +592,26 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
               maxWidth: "100%",
             }}
           >
-            <Typography
-              component="span"
-              sx={{
-                color: green,
-                fontFamily: "inherit",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
-            >
-              jorge@portfolio:
-            </Typography>
-
-            <Typography
-              component="span"
-              sx={{
-                color: blue,
-                fontFamily: "inherit",
-                ml: 0.5,
-                minWidth: 0,
-                overflowWrap: "anywhere",
-                wordBreak: "break-word",
-              }}
-            >
-              {currentPath}
-            </Typography>
-
-            <Typography
-              component="span"
-              sx={{
-                color: "#fff",
-                fontFamily: "inherit",
-                ml: 0.5,
-                mr: 0.8,
-                flexShrink: 0,
-              }}
-            >
-              $
-            </Typography>
+            {prompt}
 
             <Box
               component="input"
               ref={inputRef}
               value={input}
-              onChange={(event) =>
-                setInput(event.target.value)
-              }
+              onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               autoComplete="off"
               spellCheck="false"
-              aria-label={
-                terminal?.prompt ||
-                "Type a command"
-              }
+              aria-label={terminal?.prompt || "Type a command"}
               sx={{
                 flex: 1,
                 minWidth: 0,
                 width: 0,
                 border: 0,
                 outline: 0,
-                background: "transparent",
+                bgcolor: "transparent",
                 color: "#fff",
-                fontFamily: "inherit",
+                fontFamily: mono,
                 fontSize: "inherit",
                 caretColor: green,
               }}
@@ -783,34 +619,28 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           </Box>
         </Box>
 
-        {/* Bottom */}
+        {/* Footer */}
         <Box
           sx={{
-            px: {
-              xs: 1.5,
-              sm: 2.5,
-            },
+            px: { xs: 1.5, sm: 2.5 },
             py: 1,
-            minHeight: 40,
-            borderTop:
-              "1px solid rgba(255,255,255,0.08)",
-            background: "#161b22",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: 1,
+            bgcolor: "#161b22",
+            borderTop: "1px solid rgba(255,255,255,0.08)",
           }}
         >
           <Typography
             sx={{
-              color:
-                "rgba(255,255,255,0.4)",
-              fontSize: 10,
-              fontFamily: "monospace",
+              minWidth: 0,
               overflow: "hidden",
               whiteSpace: "nowrap",
               textOverflow: "ellipsis",
-              minWidth: 0,
+              color: "rgba(255,255,255,0.4)",
+              fontSize: 10,
+              fontFamily: mono,
             }}
           >
             {terminal?.hints ||
@@ -818,27 +648,19 @@ ${terminal?.messages?.neofetch?.language || "Language:"} ${
           </Typography>
 
           <Chip
-            label={
-              terminal?.helpButton || "Help"
-            }
+            label={terminal?.helpButton || "Help"}
             size="small"
-            onClick={() =>
-              executeCommand("help")
-            }
+            onClick={() => executeCommand("help")}
             sx={{
               flexShrink: 0,
               color: green,
-              fontFamily: "monospace",
+              bgcolor: "rgba(126,231,135,0.08)",
+              fontFamily: mono,
               fontSize: 10,
-              background:
-                "rgba(126,231,135,0.08)",
-              border:
-                "1px solid rgba(126,231,135,0.2)",
             }}
           />
         </Box>
       </Box>
     </Box>
   );
-}
-         
+          }
