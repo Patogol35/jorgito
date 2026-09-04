@@ -155,82 +155,100 @@ function App() {
           lang={lang}
           setLang={setLang}
         />
+        <Box
+  sx={(theme) => ({
+    width: "100%",
 
-        <Container
-          maxWidth="lg"
-          disableGutters
-          sx={{
-            py: 6,
-            px: { xs: 1, sm: 2, md: 3, lg: 4 },
-          }}
-        >
-          {sections.map(({ id, color, Component }) => (
-            <Paper
-              key={id}
-              id={id}
-              elevation={0}
-              sx={(theme) => ({
-                mb: 4,
-                p: { xs: 3, md: 5 },
-                borderRadius: "18px",
+    background:
+      theme.palette.mode === "dark"
+        ? "#0a0a0a"
+        : `
+          linear-gradient(
+            180deg,
+            #eadbc9 0%,
+            #e7d5c1 50%,
+            #f0ddd0 100%
+          )
+        `,
+  })}
+>
+  <Container
+    maxWidth="lg"
+    disableGutters
+    sx={{
+      py: 6,
+      px: { xs: 1, sm: 2, md: 3, lg: 4 },
+    }}
+  >
+    {sections.map(({ id, color, Component }) => (
+      <Paper
+        key={id}
+        id={id}
+        elevation={0}
+        sx={(theme) => ({
+          mb: 4,
+          p: { xs: 3, md: 5 },
+          borderRadius: "18px",
 
-                background:
-  theme.palette.mode === "dark"
-    ? `
-      radial-gradient(
-        circle at 10% 0%,
-        ${color}35,
-        transparent 40%
-      ),
-      linear-gradient(
-        135deg,
-        ${color}28 0%,
-        ${color}12 50%,
-        #101216 100%
-      )
-    `
-    : `
-      radial-gradient(
-        circle at 0% 0%,
-        ${color}25,
-        transparent 45%
-      ),
-      linear-gradient(
-        135deg,
-        ${color}18 0%,
-        rgba(248,250,252,0.92) 55%,
-        rgba(226,232,240,0.95) 100%
-      )
-    `,
-                
-                border: `1px solid ${color}55`,
+          // AQUÍ DEJAS TU BACKGROUND ACTUAL DEL PAPER
+          background:
+            theme.palette.mode === "dark"
+              ? `
+                radial-gradient(
+                  circle at 10% 0%,
+                  ${color}35,
+                  transparent 40%
+                ),
+                linear-gradient(
+                  135deg,
+                  ${color}28 0%,
+                  ${color}12 50%,
+                  #101216 100%
+                )
+              `
+              : `
+                radial-gradient(
+                  circle at 0% 0%,
+                  ${color}25,
+                  transparent 45%
+                ),
+                linear-gradient(
+                  135deg,
+                  ${color}18 0%,
+                  rgba(248,250,252,0.92) 55%,
+                  rgba(226,232,240,0.95) 100%
+                )
+              `,
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+          border: `1px solid ${color}55`,
 
-                scrollMarginTop: scrollOffset,
+          boxShadow:
+            theme.palette.mode === "light"
+              ? "0 4px 12px rgba(0,0,0,0.05)"
+              : "0 4px 12px rgba(0,0,0,0.4)",
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
-                transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+          scrollMarginTop: scrollOffset,
 
-                "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
-                },
-              })}
-            >
-              <Component t={t} />
-            </Paper>
-          ))}
-        </Container>
+          transition:
+            "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
 
+          "&:hover": {
+            transform: "translateY(-4px) scale(1.01)",
+            border: `1.5px solid ${color}`,
+            boxShadow:
+              theme.palette.mode === "light"
+                ? "0 10px 24px rgba(0,0,0,0.08)"
+                : "0 10px 24px rgba(0,0,0,0.6)",
+          },
+        })}
+      >
+        <Component t={t} />
+      </Paper>
+    ))}
+  </Container>
+</Box>
+
+        
         <Footer t={t} />
 
         {/* WhatsApp */}
