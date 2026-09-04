@@ -218,7 +218,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
+                  border: `1px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
