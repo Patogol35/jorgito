@@ -139,41 +139,10 @@ function App() {
 
     background:
   theme.palette.mode === "dark"
-    ? `
-      radial-gradient(
-        ellipse at 15% 0%,
-        ${color}30 0%,
-        transparent 42%
-      ),
-      radial-gradient(
-        ellipse at 85% 100%,
-        ${color}20 0%,
-        transparent 42%
-      ),
-      linear-gradient(
-        180deg,
-        #15171b 0%,
-        #101216 50%,
-        #0d0f12 100%
-      )
-    `
+    ? "#0a0a0a"
     : `
-      radial-gradient(
-        ellipse at 15% 0%,
-        ${color}22 0%,
-        transparent 42%
-      ),
-      radial-gradient(
-        ellipse at 85% 100%,
-        ${color}18 0%,
-        transparent 42%
-      ),
-      linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #fdfefe 50%,
-        #f5f7fa 100%
-      )
+      radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 30%),
+      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)
     `,
   })}
 >
