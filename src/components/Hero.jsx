@@ -80,9 +80,9 @@ const [openTerminal, setOpenTerminal] = useState(false);
     pb: { xs: 2, sm: 3 },
     px: { xs: 2, sm: 4, md: 8 },
     background:
-      theme.palette.mode === "dark"
-        ? "linear-gradient(120deg, #1C1A17 0%, #1C1A17 45%, #252A2E 55%, #252A2E 100%)"
-        : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 45%, #C9D8E2 55%, #C9D8E2 100%)",
+  theme.palette.mode === "dark"
+    ? "#25221D"
+    : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 45%, #C9D8E2 55%, #C9D8E2 100%)",
 
     borderBottom: "1px solid rgba(0,0,0,0.06)",
 
