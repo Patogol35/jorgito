@@ -178,42 +178,52 @@ function App() {
   theme.palette.mode === "dark"
     ? `
       radial-gradient(
-        ellipse 70% 55% at 0% 0%,
-        ${color}48 0%,
-        ${color}28 35%,
-        transparent 70%
+        ellipse 80% 65% at 0% 0%,
+        ${color}55 0%,
+        ${color}32 35%,
+        transparent 75%
       ),
       radial-gradient(
-        ellipse 70% 55% at 100% 100%,
-        ${color}42 0%,
-        ${color}22 35%,
-        transparent 70%
+        ellipse 80% 65% at 100% 100%,
+        ${color}48 0%,
+        ${color}28 35%,
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 50% 50%,
+        ${color}10 0%,
+        transparent 75%
       ),
       linear-gradient(
         135deg,
         #15171b 0%,
-        #101216 50%,
+        #111419 45%,
         #0d0f12 100%
       )
     `
     : `
       radial-gradient(
-        ellipse 70% 55% at 0% 0%,
-        ${color}35 0%,
-        ${color}20 35%,
-        transparent 70%
+        ellipse 80% 65% at 0% 0%,
+        ${color}45 0%,
+        ${color}28 35%,
+        transparent 75%
       ),
       radial-gradient(
-        ellipse 70% 55% at 100% 100%,
-        ${color}30 0%,
-        ${color}18 35%,
-        transparent 70%
+        ellipse 80% 65% at 100% 100%,
+        ${color}38 0%,
+        ${color}22 35%,
+        transparent 75%
+      ),
+      radial-gradient(
+        ellipse 60% 45% at 50% 50%,
+        ${color}08 0%,
+        transparent 75%
       ),
       linear-gradient(
         135deg,
         #ffffff 0%,
-        #fdfefe 50%,
-        #f5f7fa 100%
+        #f8fafc 45%,
+        #eef2f6 100%
       )
     `,
                 
