@@ -167,7 +167,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
               <Typography
   variant="h6"
   sx={{
-    fontStyle: "italic",
+    
     fontSize: "1.15rem",
   }}
 >
