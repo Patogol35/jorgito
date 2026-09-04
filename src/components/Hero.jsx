@@ -177,19 +177,20 @@ const [openTerminal, setOpenTerminal] = useState(false);
 
             <motion.div variants={fadeCinematic}>
               <Typography
-                sx={{
-                  fontSize: { xs: "1rem", sm: "1.08rem" },
-                  lineHeight: 1.9,
-                  letterSpacing: "0.3px",
-                  color: theme.palette.text.primary,
-                  maxWidth: "520px",
-                  mt: 3,
-                  mb: 5,
-                  whiteSpace: "pre-line",
-                }}
-              >
-                {t.hero.description}
-              </Typography>
+  sx={{
+    fontSize: { xs: "1rem", sm: "1.08rem" },
+    lineHeight: 1.9,
+    letterSpacing: "0.3px",
+    color: theme.palette.text.primary,
+    maxWidth: "520px",
+    mt: 3,
+    mb: 5,
+    whiteSpace: "pre-line",
+    fontWeight: 500,
+  }}
+>
+  {t.hero.description}
+</Typography>
             </motion.div>
           </motion.div>
 
