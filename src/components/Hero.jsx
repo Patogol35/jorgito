@@ -79,12 +79,10 @@ const [openTerminal, setOpenTerminal] = useState(false);
     pt: { xs: 6, sm: 8, md: 10 },
     pb: { xs: 2, sm: 3 },
     px: { xs: 2, sm: 4, md: 8 },
-
-    // 🤎 Beige elegante
     background:
       theme.palette.mode === "dark"
-        ? "#1C1A17"
-        : "#E8E0D2",
+        ? "linear-gradient(135deg, #1C1A17 0%, #25221D 50%, #181614 100%)"
+        : "linear-gradient(135deg, #F5F0E8 0%, #E8E0D2 50%, #D8CDBB 100%)",
 
     // Línea divisoria
     borderBottom:
