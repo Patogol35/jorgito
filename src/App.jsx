@@ -103,45 +103,10 @@ function App() {
           },
         },
         typography: {
-  fontFamily: "Poppins, sans-serif",
-
-  h1: {
-    fontWeight: 700,
-  },
-
-  h2: {
-    fontWeight: 700,
-  },
-
-  h3: {
-    fontWeight: 700,
-  },
-
-  h4: {
-    fontWeight: 600,
-  },
-
-  h5: {
-    fontWeight: 600,
-  },
-
-  h6: {
-    fontWeight: 500,
-  },
-
-  body1: {
-    fontWeight: 400,
-  },
-
-  body2: {
-    fontWeight: 400,
-  },
-
-  button: {
-    fontWeight: 500,
-    textTransform: "none",
-  },
-},
+          fontFamily: "Poppins, Roboto, sans-serif",
+          h2: { fontWeight: 700 },
+          h4: { fontWeight: 600 },
+        },
         shape: {
           borderRadius: 12,
         },
@@ -213,29 +178,29 @@ function App() {
   theme.palette.mode === "dark"
     ? `
       radial-gradient(
-        ellipse at 20% 0%,
-        ${color}55 0%,
-        transparent 50%
+        circle at 10% 0%,
+        ${color}35,
+        transparent 40%
       ),
-      radial-gradient(
-        ellipse at 100% 100%,
-        ${color}30 0%,
-        transparent 45%
-      ),
-      #101216
+      linear-gradient(
+        135deg,
+        ${color}28 0%,
+        ${color}12 50%,
+        #101216 100%
+      )
     `
     : `
       radial-gradient(
-        ellipse at 20% 0%,
-        ${color}40 0%,
-        transparent 50%
-      ),
-      radial-gradient(
-        ellipse at 100% 100%,
-        ${color}20 0%,
+        circle at 0% 0%,
+        ${color}25,
         transparent 45%
       ),
-      #f8fafc
+      linear-gradient(
+        135deg,
+        ${color}18 0%,
+        rgba(248,250,252,0.92) 55%,
+        rgba(226,232,240,0.95) 100%
+      )
     `,
                 
                 border: `1px solid ${color}55`,
@@ -253,7 +218,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-                  border: `0.8px solid ${color}`,
+                  border: `1.5px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
