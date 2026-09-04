@@ -178,37 +178,53 @@ function App() {
   theme.palette.mode === "dark"
     ? `
       radial-gradient(
-        ellipse at 20% 0%,
+        ellipse 80% 60% at 8% 0%,
         ${color}55 0%,
-        transparent 50%
+        ${color}28 25%,
+        transparent 65%
       ),
       radial-gradient(
-        ellipse at 100% 100%,
+        ellipse 60% 70% at 100% 100%,
         ${color}30 0%,
-        transparent 45%
+        ${color}12 30%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 55% 45%,
+        ${color}0d 0%,
+        transparent 70%
       ),
       #101216
     `
     : `
       radial-gradient(
-        ellipse at 20% 0%,
+        ellipse 80% 60% at 8% 0%,
         ${color}40 0%,
-        transparent 50%
+        ${color}20 25%,
+        transparent 65%
       ),
       radial-gradient(
-        ellipse at 100% 100%,
+        ellipse 60% 70% at 100% 100%,
         ${color}20 0%,
-        transparent 45%
+        ${color}0c 30%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 40% at 55% 45%,
+        ${color}08 0%,
+        transparent 70%
       ),
       #f8fafc
     `,
                 
-                border: `1px solid ${color}55`,
+                border: `1px solid ${color}35`,
 
                 boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+  theme.palette.mode === "light"
+    ? `0 8px 30px rgba(15,23,42,0.06),
+       0 0 20px ${color}08`
+    : `0 8px 30px rgba(0,0,0,0.45),
+       0 0 25px ${color}08`,
 
                 scrollMarginTop: scrollOffset,
 
@@ -218,7 +234,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-                  border: `1.5px solid ${color}`,
+                  border: `1px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
