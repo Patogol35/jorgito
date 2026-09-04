@@ -167,8 +167,8 @@ const [openTerminal, setOpenTerminal] = useState(false);
               <Typography
   variant="h6"
   sx={{
-    
     fontSize: "1.15rem",
+    fontWeight: 700,
   }}
 >
   {t.hero.subtitle}
