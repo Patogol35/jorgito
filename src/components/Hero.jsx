@@ -164,9 +164,15 @@ const [openTerminal, setOpenTerminal] = useState(false);
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
-                {t.hero.subtitle}
-              </Typography>
+              <Typography
+  variant="h6"
+  sx={{
+    fontStyle: "italic",
+    fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+  }}
+>
+  {t.hero.subtitle}
+</Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
