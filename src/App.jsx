@@ -27,12 +27,12 @@ import Form from "./components/Form.jsx";
 import { translations } from "./i18n";
 
 function App() {
-  const [mode, setMode] = useState(() =>
-    localStorage.getItem("themeMode") || "dark"
+  const [mode, setMode] = useState(
+    () => localStorage.getItem("themeMode") || "dark"
   );
 
-  const [lang, setLang] = useState(() =>
-    localStorage.getItem("lang") || "es"
+  const [lang, setLang] = useState(
+    () => localStorage.getItem("lang") || "es"
   );
 
   const scrollOffset = "80px";
@@ -114,8 +114,7 @@ function App() {
   }, []);
 
   const t =
-    translations[lang] ||
-    translations["es"];
+    translations[lang] || translations["es"];
 
   // ------------------------------------------------------------
   // THEME
@@ -265,15 +264,15 @@ function App() {
         />
 
         {/* ==================================================
-            SECCIONES
+            CARDS / SECCIONES
         ================================================== */}
 
         <Container
           maxWidth={false}
           disableGutters
           sx={{
-            py: 6,
             width: "100%",
+            py: 0,
           }}
         >
           {sections.map(
@@ -283,13 +282,6 @@ function App() {
                 id={id}
                 elevation={0}
                 sx={(theme) => ({
-                  position: "relative",
-
-                  mb:
-                    index === sections.length - 1
-                      ? 0
-                      : 4,
-
                   width: "100%",
                   boxSizing: "border-box",
 
@@ -298,8 +290,10 @@ function App() {
                     md: 5,
                   },
 
-                  borderRadius: "18px",
+                  // Todas las cards pegadas
+                  borderRadius: 0,
 
+                  // Fondo de cada sección
                   background:
                     theme.palette.mode === "dark"
                       ? `
@@ -329,66 +323,25 @@ function App() {
                         )
                       `,
 
-                  border: `1px solid ${color}55`,
+                  border: "none",
 
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 4px 12px rgba(0,0,0,0.05)"
-                      : "0 4px 12px rgba(0,0,0,0.4)",
+                  // División elegante
+                  borderBottom:
+                    index !== sections.length - 1
+                      ? `1px solid ${color}99`
+                      : "none",
 
                   scrollMarginTop: scrollOffset,
 
                   transition:
-                    "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
+                    "box-shadow 0.25s ease",
 
-                  // ==================================================
-                  // DIVISIÓN ELEGANTE ENTRE CARDS
-                  // ==================================================
-
-                  "&:not(:last-child)::after": {
-                    content: '""',
-
-                    position: "absolute",
-
-                    bottom: "-18px",
-
-                    left: "50%",
-
-                    transform: "translateX(-50%)",
-
-                    width: {
-                      xs: "55%",
-                      sm: "60%",
-                      md: "70%",
-                    },
-
-                    height: "1px",
-
-                    background: `linear-gradient(
-                      90deg,
-                      transparent,
-                      ${color}99,
-                      transparent
-                    )`,
-
-                    pointerEvents: "none",
-                  },
-
-                  // ==================================================
-                  // HOVER
-                  // ==================================================
-
+                  // Efecto sutil al pasar el mouse
                   "&:hover": {
-                    transform:
-                      "translateY(-4px) scale(1.01)",
-
-                    border:
-                      `1.5px solid ${color}`,
-
                     boxShadow:
                       theme.palette.mode === "light"
-                        ? "0 10px 24px rgba(0,0,0,0.08)"
-                        : "0 10px 24px rgba(0,0,0,0.6)",
+                        ? "inset 0 0 30px rgba(0,0,0,0.05)"
+                        : "inset 0 0 30px rgba(0,0,0,0.35)",
                   },
                 })}
               >
