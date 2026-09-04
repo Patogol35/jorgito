@@ -79,19 +79,17 @@ const [openTerminal, setOpenTerminal] = useState(false);
     pt: { xs: 6, sm: 8, md: 10 },
     pb: { xs: 2, sm: 3 },
     px: { xs: 2, sm: 4, md: 8 },
-
-    // 🤎🩵 Beige + azul grisáceo elegante
     background:
       theme.palette.mode === "dark"
-        ? "linear-gradient(135deg, #1C1A17 0%, #252A2E 50%, #181614 100%)"
-        : "linear-gradient(135deg, #F3EDE3 0%, #E8E0D2 50%, #D9E2E8 100%)",
+        ? "linear-gradient(120deg, #1C1A17 0%, #1C1A17 45%, #252A2E 55%, #252A2E 100%)"
+        : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 45%, #C9D8E2 55%, #C9D8E2 100%)",
 
-    // Línea divisoria
     borderBottom:
       theme.palette.mode === "dark"
         ? "1px solid rgba(25, 118, 210, 0.65)"
         : "1px solid rgba(25, 118, 210, 0.45)",
 
+    // Sombra sutil
     boxShadow:
       theme.palette.mode === "dark"
         ? "0 4px 20px rgba(0,0,0,0.25)"
