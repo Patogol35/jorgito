@@ -203,7 +203,7 @@ function App() {
       #f8fafc
     `,
                 
-                border: `1px solid ${color}55`,
+                border: `0.85px solid ${color}55`,
 
                 boxShadow:
                   theme.palette.mode === "light"
