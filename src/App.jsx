@@ -179,13 +179,13 @@ function App() {
     ? `
       radial-gradient(
         ellipse at 15% 0%,
-        ${color}30 0%,
-        transparent 42%
+        ${color}45 0%,
+        transparent 45%
       ),
       radial-gradient(
         ellipse at 85% 100%,
-        ${color}20 0%,
-        transparent 42%
+        ${color}35 0%,
+        transparent 45%
       ),
       linear-gradient(
         180deg,
@@ -197,13 +197,13 @@ function App() {
     : `
       radial-gradient(
         ellipse at 15% 0%,
-        ${color}22 0%,
-        transparent 42%
+        ${color}32 0%,
+        transparent 45%
       ),
       radial-gradient(
         ellipse at 85% 100%,
-        ${color}18 0%,
-        transparent 42%
+        ${color}28 0%,
+        transparent 45%
       ),
       linear-gradient(
         180deg,
