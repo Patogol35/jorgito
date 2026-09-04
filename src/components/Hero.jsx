@@ -156,7 +156,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
                 gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
+                  fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
                 }}
               >
                 {t.hero.title}
