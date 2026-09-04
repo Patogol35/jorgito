@@ -80,11 +80,13 @@ const [openTerminal, setOpenTerminal] = useState(false);
     pb: { xs: 2, sm: 3 },
     px: { xs: 2, sm: 4, md: 8 },
 
+    // 🤎 Beige elegante
     background:
       theme.palette.mode === "dark"
-        ? "#111827"
-        : "#eaf2ff",
+        ? "#1C1A17"
+        : "#E8E0D2",
 
+    // Línea divisoria
     borderBottom:
       theme.palette.mode === "dark"
         ? "1px solid rgba(25, 118, 210, 0.65)"
@@ -93,7 +95,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
     boxShadow:
       theme.palette.mode === "dark"
         ? "0 4px 20px rgba(0,0,0,0.25)"
-        : "0 4px 20px rgba(25,118,210,0.08)",
+        : "0 4px 20px rgba(0,0,0,0.08)",
   })}
 >
         {/* AVATAR */}
