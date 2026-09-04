@@ -178,53 +178,37 @@ function App() {
   theme.palette.mode === "dark"
     ? `
       radial-gradient(
-        ellipse 80% 60% at 8% 0%,
-        ${color}55 0%,
-        ${color}28 25%,
-        transparent 65%
+        circle at 10% 0%,
+        ${color}35,
+        transparent 40%
       ),
-      radial-gradient(
-        ellipse 60% 70% at 100% 100%,
-        ${color}30 0%,
-        ${color}12 30%,
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 50% 40% at 55% 45%,
-        ${color}0d 0%,
-        transparent 70%
-      ),
-      #101216
+      linear-gradient(
+        135deg,
+        ${color}28 0%,
+        ${color}12 50%,
+        #101216 100%
+      )
     `
     : `
       radial-gradient(
-        ellipse 80% 60% at 8% 0%,
-        ${color}40 0%,
-        ${color}20 25%,
-        transparent 65%
+        circle at 0% 0%,
+        ${color}25,
+        transparent 45%
       ),
-      radial-gradient(
-        ellipse 60% 70% at 100% 100%,
-        ${color}20 0%,
-        ${color}0c 30%,
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 50% 40% at 55% 45%,
-        ${color}08 0%,
-        transparent 70%
-      ),
-      #f8fafc
+      linear-gradient(
+        135deg,
+        ${color}18 0%,
+        rgba(248,250,252,0.92) 55%,
+        rgba(226,232,240,0.95) 100%
+      )
     `,
                 
-                border: `1px solid ${color}35`,
+                border: `1px solid ${color}55`,
 
                 boxShadow:
-  theme.palette.mode === "light"
-    ? `0 8px 30px rgba(15,23,42,0.06),
-       0 0 20px ${color}08`
-    : `0 8px 30px rgba(0,0,0,0.45),
-       0 0 25px ${color}08`,
+                  theme.palette.mode === "light"
+                    ? "0 4px 12px rgba(0,0,0,0.05)"
+                    : "0 4px 12px rgba(0,0,0,0.4)",
 
                 scrollMarginTop: scrollOffset,
 
@@ -234,7 +218,7 @@ function App() {
 
                 "&:hover": {
                   transform: "translateY(-4px) scale(1.01)",
-                  border: `1px solid ${color}`,
+                  border: `0.8px solid ${color}`,
                   boxShadow:
                     theme.palette.mode === "light"
                       ? "0 10px 24px rgba(0,0,0,0.08)"
