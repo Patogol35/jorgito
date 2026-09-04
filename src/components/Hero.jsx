@@ -176,7 +176,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
                   lineHeight: 1.9,
                   letterSpacing: "0.3px",
                   color: theme.palette.text.primary,
-                  maxWidth: "320px",
+                  maxWidth: "520px",
                   mt: 3,
                   mb: 5,
                   whiteSpace: "pre-line",
