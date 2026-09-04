@@ -84,10 +84,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
         ? "linear-gradient(120deg, #1C1A17 0%, #1C1A17 45%, #252A2E 55%, #252A2E 100%)"
         : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 45%, #C9D8E2 55%, #C9D8E2 100%)",
 
-    borderBottom:
-      theme.palette.mode === "dark"
-        ? "1px solid rgba(25, 118, 210, 0.65)"
-        : "1px solid rgba(25, 118, 210, 0.45)",
+    borderBottom: "1px solid rgba(0,0,0,0.06)",
 
     // Sombra sutil
     boxShadow:
