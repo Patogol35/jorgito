@@ -82,7 +82,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
     background:
   theme.palette.mode === "dark"
     ? "#25221D"
-    : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 45%, #C9D8E2 55%, #C9D8E2 100%)",
+    : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 25%, #E1DDD5 45%, #D5DCE0 65%, #C9D8E2 100%)",
 
     borderBottom: "1px solid rgba(0,0,0,0.06)",
 
