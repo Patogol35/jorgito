@@ -203,27 +203,24 @@ function App() {
       )
     `,
                 
-                border: `1px solid ${color}55`,
+                border: `1px solid ${color}40`,
 
-                boxShadow:
-                  theme.palette.mode === "light"
-                    ? "0 4px 12px rgba(0,0,0,0.05)"
-                    : "0 4px 12px rgba(0,0,0,0.4)",
+boxShadow:
+  theme.palette.mode === "light"
+    ? "0 4px 12px rgba(0,0,0,0.05)"
+    : "0 4px 12px rgba(0,0,0,0.4)",
 
-                scrollMarginTop: scrollOffset,
+transition:
+  "transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease",
 
-                // 🔥 OPTIMIZACIÓN IMPORTANTE
-                transition:
-                  "transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease",
-
-                "&:hover": {
-                  transform: "translateY(-4px) scale(1.01)",
-                  border: `1px solid ${color}`,
-                  boxShadow:
-                    theme.palette.mode === "light"
-                      ? "0 10px 24px rgba(0,0,0,0.08)"
-                      : "0 10px 24px rgba(0,0,0,0.6)",
-                },
+"&:hover": {
+  transform: "translateY(-3px)",
+  border: `1px solid ${color}90`,
+  boxShadow:
+    theme.palette.mode === "light"
+      ? `0 8px 24px ${color}18`
+      : `0 8px 28px ${color}25`,
+},
               })}
             >
               <Component t={t} />
