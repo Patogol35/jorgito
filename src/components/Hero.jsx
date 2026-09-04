@@ -168,7 +168,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
   variant="h6"
   sx={{
     fontStyle: "italic",
-    fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+    fontSize: "1.15rem",
   }}
 >
   {t.hero.subtitle}
