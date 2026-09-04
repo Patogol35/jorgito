@@ -67,20 +67,35 @@ const [openTerminal, setOpenTerminal] = useState(false);
       <Toolbar />
 
       <Box
-        id="hero"
-        sx={{
-          position: "relative",
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: "center",
-          justifyContent: "center",
-          gap: { xs: 4, md: 8 },
-          pt: { xs: 6, sm: 8, md: 10 },
-          pb: { xs: 2, sm: 3 },
-          px: { xs: 2, sm: 4, md: 8 },
-        }}
-      >
+  id="hero"
+  sx={(theme) => ({
+    position: "relative",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: { xs: "column", sm: "row" },
+    alignItems: "center",
+    justifyContent: "center",
+    gap: { xs: 4, md: 8 },
+    pt: { xs: 6, sm: 8, md: 10 },
+    pb: { xs: 2, sm: 3 },
+    px: { xs: 2, sm: 4, md: 8 },
+
+    background:
+      theme.palette.mode === "dark"
+        ? "#111827"
+        : "#eaf2ff",
+
+    borderBottom:
+      theme.palette.mode === "dark"
+        ? "1px solid rgba(25, 118, 210, 0.65)"
+        : "1px solid rgba(25, 118, 210, 0.45)",
+
+    boxShadow:
+      theme.palette.mode === "dark"
+        ? "0 4px 20px rgba(0,0,0,0.25)"
+        : "0 4px 20px rgba(25,118,210,0.08)",
+  })}
+>
         {/* AVATAR */}
         <motion.div
           initial={{ opacity: 0, rotateY: -45, scale: 0.92 }}
