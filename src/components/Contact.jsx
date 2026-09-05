@@ -172,13 +172,21 @@ export default function Contact({ t }) {
                 alignItems: "center",
                 gap: 1,
                 mb: 3,
-                color: palette.text.secondary,
+              
               }}
             >
               <AccessTime sx={{ fontSize: 18 }} />
-              <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                {t.contact.availability}
-              </Typography>
+              
+              <Typography
+  variant="body2"
+  sx={{
+    color: "secondary",
+    mt: 0.5,
+    fontSize: "0.85rem",
+  }}
+>
+  {t.contact.availability}
+</Typography>
             </Box>
           </motion.div>
 
