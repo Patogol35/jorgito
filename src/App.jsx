@@ -103,7 +103,7 @@ function App() {
           },
         },
         typography: {
-          fontFamily: "Poppins, Roboto, sans-serif",
+          fontFamily: "Manrope, Poppins, Roboto, sans-serif",
           h2: { fontWeight: 700 },
           h4: { fontWeight: 600 },
         },
