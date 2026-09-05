@@ -141,10 +141,11 @@ function App() {
   theme.palette.mode === "dark"
     ? "#0a0a0a"
     : `
-      radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 30%),
-      linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)
+      radial-gradient(circle at 15% 10%, rgba(25, 118, 210, 0.12), transparent 35%),
+      radial-gradient(circle at 85% 90%, rgba(109, 91, 208, 0.10), transparent 35%),
+      linear-gradient(135deg, #DCE3EC 0%, #C8D2DF 50%, #B8C4D2 100%)
     `,
-  })}
+})}
 >
         <Navbar mode={mode} setMode={setMode} t={t} lang={lang} />
 
