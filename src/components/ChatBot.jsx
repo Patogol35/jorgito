@@ -507,60 +507,52 @@ export default function ChatBot({ t }) {
                   }}
                 >
                   <Box
-                    sx={{
-                      maxWidth: "80%",
+  sx={{
+    maxWidth: "80%",
+    minWidth: 0,
 
-                      minWidth: 0,
+    px: 1.6,
+    py: 1.15,
 
-                      px: 1.5,
+    borderRadius: 2.5,
 
-                      py: 1,
+    bgcolor: isUser
+      ? theme.palette.primary.main
+      : isDark
+      ? "rgba(255,255,255,0.10)"
+      : "rgba(0,0,0,0.06)",
 
-                      borderRadius: 2,
+    color: isUser
+      ? "#fff"
+      : "inherit",
 
-                      bgcolor: isUser
-                        ? theme.palette
-                            .primary.main
-                        : isDark
-                        ? "rgba(255,255,255,0.10)"
-                        : "rgba(0,0,0,0.06)",
+    whiteSpace: "pre-wrap",
 
-                      color: isUser
-                        ? "#fff"
-                        : "inherit",
+    overflowWrap: "anywhere",
 
-                      whiteSpace:
-                        "pre-wrap",
-
-                      overflowWrap:
-                        "anywhere",
-
-                      wordBreak:
-                        "break-word",
-                    }}
-                  >
+    wordBreak: "break-word",
+  }}
+>
                     <Typography
-                      sx={{
-                        fontSize:
-                          isLandscape
-                            ? "0.85rem"
-                            : "0.95rem",
+  sx={{
+    fontSize: {
+      xs: "0.92rem",
+      sm: "0.96rem",
+    },
 
-                        lineHeight:
-                          isLandscape
-                            ? 1.4
-                            : 1.5,
+    lineHeight: 1.55,
 
-                        whiteSpace:
-                          "pre-wrap",
+    fontWeight: 400,
 
-                        overflowWrap:
-                          "anywhere",
+    letterSpacing: "0.01em",
 
-                        wordBreak:
-                          "break-word",
-                      }}
-                    >
+    whiteSpace: "pre-wrap",
+
+    overflowWrap: "anywhere",
+
+    wordBreak: "break-word",
+  }}
+>
                       {m.text}
                     </Typography>
                   </Box>
