@@ -67,32 +67,20 @@ const [openTerminal, setOpenTerminal] = useState(false);
       <Toolbar />
 
       <Box
-  id="hero"
-  sx={(theme) => ({
-    position: "relative",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: { xs: "column", sm: "row" },
-    alignItems: "center",
-    justifyContent: "center",
-    gap: { xs: 4, md: 8 },
-    pt: { xs: 6, sm: 8, md: 10 },
-    pb: { xs: 2, sm: 3 },
-    px: { xs: 2, sm: 4, md: 8 },
-    background:
-  theme.palette.mode === "dark"
-    ? "#25221D"
-    : "linear-gradient(120deg, #E8E0D2 0%, #E8E0D2 25%, #E1DDD5 45%, #D5DCE0 65%, #C9D8E2 100%)",
-
-    borderBottom: "1px solid rgba(0,0,0,0.06)",
-
-    // Sombra sutil
-    boxShadow:
-      theme.palette.mode === "dark"
-        ? "0 4px 20px rgba(0,0,0,0.25)"
-        : "0 4px 20px rgba(0,0,0,0.08)",
-  })}
->
+        id="hero"
+        sx={{
+          position: "relative",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          justifyContent: "center",
+          gap: { xs: 4, md: 8 },
+          pt: { xs: 6, sm: 8, md: 10 },
+          pb: { xs: 2, sm: 3 },
+          px: { xs: 2, sm: 4, md: 8 },
+        }}
+      >
         {/* AVATAR */}
         <motion.div
           initial={{ opacity: 0, rotateY: -45, scale: 0.92 }}
@@ -156,7 +144,7 @@ const [openTerminal, setOpenTerminal] = useState(false);
                 gutterBottom
                 sx={{
                   color: theme.palette.primary.main,
-                  fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
+                  fontSize: { xs: "1.9rem", sm: "2.3rem", md: "2.6rem" },
                 }}
               >
                 {t.hero.title}
@@ -164,33 +152,26 @@ const [openTerminal, setOpenTerminal] = useState(false);
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
-              <Typography
-  variant="h6"
-  sx={{
-    fontSize: "1.15rem",
-    fontWeight: 700,
-  }}
->
-  {t.hero.subtitle}
-</Typography>
+              <Typography variant="h6" sx={{ fontStyle: "italic" }}>
+                {t.hero.subtitle}
+              </Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
               <Typography
-  sx={{
-    fontSize: { xs: "1rem", sm: "1.08rem" },
-    lineHeight: 1.9,
-    letterSpacing: "0.3px",
-    color: theme.palette.text.primary,
-    maxWidth: "520px",
-    mt: 3,
-    mb: 5,
-    whiteSpace: "pre-line",
-    fontWeight: 500,
-  }}
->
-  {t.hero.description}
-</Typography>
+                sx={{
+                  fontSize: { xs: "1rem", sm: "1.08rem" },
+                  lineHeight: 1.9,
+                  letterSpacing: "0.3px",
+                  color: theme.palette.text.primary,
+                  maxWidth: "520px",
+                  mt: 3,
+                  mb: 5,
+                  whiteSpace: "pre-line",
+                }}
+              >
+                {t.hero.description}
+              </Typography>
             </motion.div>
           </motion.div>
 
@@ -365,4 +346,4 @@ const [openTerminal, setOpenTerminal] = useState(false);
 </Modal>
     </>
   );
-}
+              }
