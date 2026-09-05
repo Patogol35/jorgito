@@ -61,7 +61,7 @@ const container = {
 // =====================
 // Tarjeta
 // =====================
-function ProjectCard({ p, palette, variants, secondary }) {
+function ProjectCard({ p, palette, variants }) {
   const Icon = p.icon;
 
   return (
@@ -170,7 +170,7 @@ export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-  const secondary = isDark ? "#b0bec5" : "#4f5b66";
+
 
   const proyectosText = t.projects.items;
 
@@ -266,7 +266,7 @@ export default function Projects({ t }) {
   p={p}
   palette={palette}
   variants={fadeCinematic}
-  secondary={secondary}
+
 />
           ))}
         </Grid>
