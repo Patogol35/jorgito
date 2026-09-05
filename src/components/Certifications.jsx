@@ -38,7 +38,7 @@ export default function Certifications({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-const secondary = isDark ? "#b0bec5" : "#4f5b66";
+
 
   const certificaciones = t.certifications.items;
 
@@ -158,7 +158,14 @@ const secondary = isDark ? "#b0bec5" : "#4f5b66";
                       {cert.titulo}
                     </Typography>
 
-                  <Typography variant="body2" sx={{ color: secondary }}>
+                  <Typography
+  variant="body2"
+  sx={{
+    color: "secondary",
+    mt: 0.5,
+    fontSize: "0.85rem",
+  }}
+>
   {cert.institucion} | {cert.año}
 </Typography>
 
