@@ -61,7 +61,7 @@ const container = {
 // =====================
 // Tarjeta
 // =====================
-function ProjectCard({ p, palette, variants }) {
+function ProjectCard({ p, palette, variants, secondary }) {
   const Icon = p.icon;
 
   return (
@@ -87,7 +87,7 @@ function ProjectCard({ p, palette, variants }) {
           <Typography
             variant="body2"
             sx={{
-              color: "text.secondary",
+              color: "secondary",
               mt: 0.5,
               fontSize: "0.85rem",
             }}
@@ -170,6 +170,7 @@ export default function Projects({ t }) {
   const { palette } = useTheme();
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
+  const secondary = isDark ? "#b0bec5" : "#4f5b66";
 
   const proyectosText = t.projects.items;
 
@@ -261,11 +262,12 @@ export default function Projects({ t }) {
         <Grid container spacing={3} justifyContent="center">
           {proyectos.map((p, i) => (
             <ProjectCard
-              key={i}
-              p={p}
-              palette={palette}
-              variants={fadeCinematic}
-            />
+  key={i}
+  p={p}
+  palette={palette}
+  variants={fadeCinematic}
+  secondary={secondary}
+/>
           ))}
         </Grid>
       </motion.div>
