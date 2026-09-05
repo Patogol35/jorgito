@@ -507,52 +507,60 @@ export default function ChatBot({ t }) {
                   }}
                 >
                   <Box
-  sx={{
-    maxWidth: "80%",
-    minWidth: 0,
+                    sx={{
+                      maxWidth: "80%",
 
-    px: 1.6,
-    py: 1.15,
+                      minWidth: 0,
 
-    borderRadius: 2.5,
+                      px: 1.5,
 
-    bgcolor: isUser
-      ? theme.palette.primary.main
-      : isDark
-      ? "rgba(255,255,255,0.10)"
-      : "rgba(0,0,0,0.06)",
+                      py: 1,
 
-    color: isUser
-      ? "#fff"
-      : "inherit",
+                      borderRadius: 2,
 
-    whiteSpace: "pre-wrap",
+                      bgcolor: isUser
+                        ? theme.palette
+                            .primary.main
+                        : isDark
+                        ? "rgba(255,255,255,0.10)"
+                        : "rgba(0,0,0,0.06)",
 
-    overflowWrap: "anywhere",
+                      color: isUser
+                        ? "#fff"
+                        : "inherit",
 
-    wordBreak: "break-word",
-  }}
->
+                      whiteSpace:
+                        "pre-wrap",
+
+                      overflowWrap:
+                        "anywhere",
+
+                      wordBreak:
+                        "break-word",
+                    }}
+                  >
                     <Typography
-  sx={{
-    fontSize: {
-      xs: "0.92rem",
-      sm: "0.96rem",
-    },
+                      sx={{
+                        fontSize:
+                          isLandscape
+                            ? "0.85rem"
+                            : "0.95rem",
 
-    lineHeight: 1.55,
+                        lineHeight:
+                          isLandscape
+                            ? 1.4
+                            : 1.5,
 
-    fontWeight: 400,
+                        whiteSpace:
+                          "pre-wrap",
 
-    letterSpacing: "0.01em",
+                        overflowWrap:
+                          "anywhere",
 
-    whiteSpace: "pre-wrap",
-
-    overflowWrap: "anywhere",
-
-    wordBreak: "break-word",
-  }}
->
+                        wordBreak:
+                          "break-word",
+                      }}
+                    >
                       {m.text}
                     </Typography>
                   </Box>
@@ -631,4 +639,4 @@ export default function ChatBot({ t }) {
       )}
     </>
   );
-    }
+          }
