@@ -141,9 +141,11 @@ function App() {
   theme.palette.mode === "dark"
     ? "#0a0a0a"
     : `
-      radial-gradient(circle at 15% 15%, rgba(25, 118, 210, 0.12), transparent 35%),
-      radial-gradient(circle at 85% 85%, rgba(70, 110, 150, 0.10), transparent 35%),
-      linear-gradient(135deg, #E5EEF7 0%, #D8E3EE 50%, #CFDCE8 100%)
+      linear-gradient(
+        135deg,
+        #E8F1F8 0%,
+        #D4E1EC 100%
+      )
     `,
 })}
 >
