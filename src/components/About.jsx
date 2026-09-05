@@ -39,8 +39,6 @@ export default function About({ t }) {
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
-
-  const secondary = theme.palette.text.secondary;
   const subtitleStyle = { fontWeight: "bold", mt: 1 };
 
   const estudios = t.about.studies;
@@ -124,13 +122,27 @@ export default function About({ t }) {
                     {est.titulo}
                   </Typography>
 
-                  <Typography variant="body2" color={secondary}>
-                    {est.institucion}
-                  </Typography>
+                  <Typography
+  variant="body2"
+  sx={{
+    color: "secondary",
+    mt: 0.5,
+    fontSize: "0.85rem",
+  }}
+>
+  {est.institucion}
+</Typography>
 
-                  <Typography variant="body2" color={secondary}>
-                    {est.detalle}
-                  </Typography>
+<Typography
+  variant="body2"
+  sx={{
+    color: "secondary",
+    mt: 0.5,
+    fontSize: "0.85rem",
+  }}
+>
+  {est.detalle}
+</Typography>
                 </Box>
               </motion.div>
             </Grid>
