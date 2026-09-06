@@ -8,35 +8,53 @@ import {
   Alert,
   InputAdornment,
 } from "@mui/material";
+
 import { motion } from "framer-motion";
+
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import SendIcon from "@mui/icons-material/Send";
 import PersonIcon from "@mui/icons-material/Person";
 import EmailIcon from "@mui/icons-material/Email";
 import MessageIcon from "@mui/icons-material/Message";
+
 import { useTheme } from "@mui/material/styles";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 
+import {
+  fadeCinematic,
+  fadeSoft,
+  containerMotion,
+  formStyles,
+} from "../Styles/formStyles";
+
 export default function Form({ t }) {
   const theme = useTheme();
+
   const isDark = theme.palette.mode === "dark";
-  const primaryColor = isDark ? "#bbdefb" : theme.palette.primary.main;
+  const primaryColor = isDark
+    ? "#bbdefb"
+    : theme.palette.primary.main;
 
   const formRef = useRef(null);
   const [success, setSuccess] = useState(false);
 
   const formText = t?.form || {
     title: "Contacto por Email",
-    subtitle: "Ponte en contacto conmigo a través de este formulario",
+    subtitle:
+      "Ponte en contacto conmigo a través de este formulario",
+
     fields: {
       name: "Nombre",
       email: "Correo electrónico",
       message: "Mensaje",
     },
+
     button: "Enviar mensaje",
     success: "¡Mensaje enviado con éxito!",
-    successMsg: "Me pondré en contacto contigo lo antes posible",
+    successMsg:
+      "Me pondré en contacto contigo lo antes posible",
+
     error: "Error al enviar el mensaje",
   };
 
@@ -57,50 +75,43 @@ export default function Form({ t }) {
       .catch(() => alert(formText.error));
   };
 
-  const easeOutExpo = [0.16, 1, 0.3, 1];
+  const fields = [
+    {
+      name: "from_name",
+      label: formText.fields.name,
+      icon: (
+        <PersonIcon
+          sx={{ color: primaryColor }}
+        />
+      ),
+    },
 
-  // 🎬 Animación cinematográfica (solo para títulos)
-  const fadeCinematic = {
-    hidden: {
-      opacity: 0,
-      y: 20,
-      clipPath: "inset(0 0 100% 0)",
-      filter: "blur(6px)",
+    {
+      name: "from_email",
+      label: formText.fields.email,
+      type: "email",
+      icon: (
+        <EmailIcon
+          sx={{ color: primaryColor }}
+        />
+      ),
     },
-    visible: {
-      opacity: 1,
-      y: 0,
-      clipPath: "inset(0 0 0% 0)",
-      filter: "blur(0px)",
-      transition: { duration: 0.7, ease: easeOutExpo },
-    },
-  };
 
-  // 🔥 Animación segura para inputs
-  const fadeSoft = {
-    hidden: {
-      opacity: 0,
-      y: 16,
+    {
+      name: "message",
+      label: formText.fields.message,
+      multiline: true,
+      rows: 4,
+      icon: (
+        <MessageIcon
+          sx={{ color: primaryColor }}
+        />
+      ),
     },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  };
-
-  const containerMotion = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2,
-      },
-    },
-  };
+  ];
 
   return (
-    <Box id="form" sx={{ py: { xs: 4, md: 6 } }}>
+    <Box id="form" sx={formStyles.section}>
       <Container maxWidth="sm">
         <motion.div
           variants={containerMotion}
@@ -108,37 +119,22 @@ export default function Form({ t }) {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {/* ================= TÍTULO ================= */}
+          {/* Título */}
           <motion.div variants={fadeCinematic}>
-            <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+            <Box sx={formStyles.titleContainer}>
               <Box
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 1,
-                  px: 3,
-                  py: 0.9,
-                  borderRadius: "999px",
-                  background: isDark
-                    ? "rgba(144,202,249,0.06)"
-                    : "rgba(25,118,210,0.06)",
-                  border: `1px solid ${
-                    isDark
-                      ? "rgba(144,202,249,0.25)"
-                      : "rgba(25,118,210,0.25)"
-                  }`,
-                  backdropFilter: "blur(6px)",
-                }}
+                sx={formStyles.titleBadge(isDark)}
               >
-                <ContactMailIcon sx={{ fontSize: 22, color: primaryColor }} />
+                <ContactMailIcon
+                  sx={{
+                    fontSize: 22,
+                    color: primaryColor,
+                  }}
+                />
+
                 <Typography
                   variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: primaryColor,
-                    lineHeight: 1,
-                  }}
+                  sx={formStyles.title(primaryColor)}
                 >
                   {formText.title}
                 </Typography>
@@ -146,48 +142,28 @@ export default function Form({ t }) {
             </Box>
           </motion.div>
 
-          {/* ================= SUBTÍTULO ================= */}
+          {/* Subtítulo */}
           <motion.div variants={fadeCinematic}>
             <Typography
               variant="subtitle1"
-              sx={{
-                textAlign: "center",
-                fontWeight: "bold",
-                mb: 4,
-              }}
+              sx={formStyles.subtitle}
             >
               {formText.subtitle}
             </Typography>
           </motion.div>
 
-          {/* ================= FORM ================= */}
+          {/* Formulario */}
           <Box
             component="form"
             ref={formRef}
             onSubmit={handleSubmit}
-            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+            sx={formStyles.form}
           >
-            {[
-              {
-                name: "from_name",
-                label: formText.fields.name,
-                icon: <PersonIcon sx={{ color: primaryColor }} />,
-              },
-              {
-                name: "from_email",
-                label: formText.fields.email,
-                type: "email",
-                icon: <EmailIcon sx={{ color: primaryColor }} />,
-              },
-              {
-                name: "message",
-                label: formText.fields.message,
-                multiline: true,
-                rows: 4,
-                icon: <MessageIcon sx={{ color: primaryColor }} />,
-              },
-            ].map((field) => (
-              <motion.div key={field.name} variants={fadeSoft}>
+            {fields.map((field) => (
+              <motion.div
+                key={field.name}
+                variants={fadeSoft}
+              >
                 <TextField
                   {...field}
                   fullWidth
@@ -198,7 +174,10 @@ export default function Form({ t }) {
                         position="start"
                         sx={
                           field.multiline
-                            ? { alignSelf: "flex-start", mt: 1 }
+                            ? {
+                                alignSelf: "flex-start",
+                                mt: 1,
+                              }
                             : {}
                         }
                       >
@@ -206,34 +185,20 @@ export default function Form({ t }) {
                       </InputAdornment>
                     ),
                   }}
-                  sx={inputStyle(theme)}
+                  sx={formStyles.input(theme)}
                 />
               </motion.div>
             ))}
 
-            {/* ================= BOTÓN ================= */}
+            {/* Botón */}
             <motion.div
               variants={fadeCinematic}
-              style={{ display: "flex", justifyContent: "center" }}
+              style={formStyles.buttonContainer}
             >
               <Button
                 type="submit"
                 startIcon={<SendIcon />}
-                sx={{
-                  borderRadius: "25px",
-                  textTransform: "none",
-                  fontWeight: "bold",
-                  px: 5,
-                  py: 1.4,
-                  color: "#ffffff",
-                  background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                  boxShadow: "none",
-                  "&:hover": {
-                    background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
-                    transform: "scale(1.04)",
-                  },
-                  transition: "transform 0.2s ease",
-                }}
+                sx={formStyles.button(theme)}
               >
                 {formText.button}
               </Button>
@@ -241,37 +206,21 @@ export default function Form({ t }) {
           </Box>
         </motion.div>
 
-        {/* ================= ALERT ================= */}
+        {/* Alerta */}
         <Snackbar
           open={success}
           autoHideDuration={3500}
           onClose={() => setSuccess(false)}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          sx={{
-            top: "50% !important",
-            transform: "translateY(-50%)",
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
           }}
+          sx={formStyles.snackbar}
         >
           <Alert
             severity="success"
             icon={false}
-            sx={{
-              px: 4,
-              py: 2,
-              borderRadius: 3,
-              fontWeight: 600,
-              textAlign: "center",
-              fontSize: "0.95rem",
-              color: theme.palette.mode === "dark" ? "#dcfce7" : "#14532d",
-              background:
-                theme.palette.mode === "dark"
-                  ? "linear-gradient(135deg, #064e3b, #022c22)"
-                  : "linear-gradient(135deg, #dcfce7, #bbf7d0)",
-              boxShadow:
-                theme.palette.mode === "dark"
-                  ? "0 20px 40px rgba(0,0,0,0.6)"
-                  : "0 20px 40px rgba(22,163,74,0.35)",
-            }}
+            sx={formStyles.alert(theme)}
           >
             <strong>{formText.success}</strong>
             <br />
@@ -282,92 +231,3 @@ export default function Form({ t }) {
     </Box>
   );
 }
-
-const inputStyle = (theme) => ({
-  "& .MuiOutlinedInput-root": {
-    borderRadius: "20px",
-    overflow: "hidden",
-    transition: "all 0.25s ease",
-
-    background:
-      theme.palette.mode === "dark"
-        ? "linear-gradient(145deg, rgba(15,23,42,0.92), rgba(30,41,59,0.82))"
-        : "linear-gradient(145deg, rgba(255,255,255,0.97), rgba(248,250,252,0.95))",
-
-    backdropFilter: "blur(12px)",
-
-    // ❌ sombra eliminada
-    boxShadow: "none",
-
-    "& fieldset": {
-      borderWidth: "1.6px",
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(148,163,184,0.35)"
-          : "rgba(100,116,139,0.45)",
-
-      transition: "all 0.25s ease",
-    },
-
-    "&:hover fieldset": {
-      borderColor:
-        theme.palette.mode === "dark"
-          ? "rgba(96,165,250,0.65)"
-          : "rgba(37,99,235,0.75)",
-    },
-
-    "&.Mui-focused fieldset": {
-      borderColor: theme.palette.primary.main,
-      borderWidth: "2px",
-    },
-
-    "& input, & textarea": {
-      color: theme.palette.mode === "dark" ? "#f8fafc" : "#0f172a",
-      fontWeight: 500,
-      fontSize: "0.96rem",
-      paddingTop: "15px",
-      paddingBottom: "15px",
-    },
-
-    "& textarea": {
-      lineHeight: 1.7,
-    },
-
-    "& input::placeholder, & textarea::placeholder": {
-      color:
-        theme.palette.mode === "dark"
-          ? "rgba(255,255,255,0.38)"
-          : "rgba(15,23,42,0.38)",
-      opacity: 1,
-    },
-  },
-
-  "& .MuiInputAdornment-root": {
-    marginRight: 1,
-
-    "& svg": {
-      fontSize: 21,
-      opacity: 0.9,
-      transition: "all 0.25s ease",
-    },
-  },
-
-  "& .MuiOutlinedInput-root.Mui-focused .MuiInputAdornment-root svg": {
-    transform: "scale(1.08)",
-    color: theme.palette.primary.main,
-  },
-
-  "& .MuiInputLabel-root": {
-    fontWeight: 600,
-    letterSpacing: "0.2px",
-
-    color:
-      theme.palette.mode === "dark"
-        ? "rgba(255,255,255,0.78)"
-        : "rgba(15,23,42,0.78)",
-
-    "&.Mui-focused": {
-      color: theme.palette.primary.main,
-    },
-  },
-});
