@@ -1,30 +1,52 @@
 import { Typography, Grid, Box, Button } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { motion } from "framer-motion";
-import {
-  GraduationCap,
-  Brain,
-  Bot,
-} from "lucide-react";
+import { GraduationCap, BookOpen, Brain, Bot } from "lucide-react";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+// =====================
+// 🎬 Animaciones estilo Hero
+// =====================
+const easeOutExpo = [0.16, 1, 0.3, 1];
 
-import {
-  fadeCinematic,
-  container,
-  certificationsStyles,
-} from "../Styles/certificationsStyles";
+const fadeCinematic = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+    clipPath: "inset(0 0 100% 0)",
+    filter: "blur(6px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    clipPath: "inset(0 0 0% 0)",
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: easeOutExpo },
+  },
+};
+
+const container = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
+    },
+  },
+};
 
 export default function Certifications({ t }) {
   const { palette } = useTheme();
-
   const isDark = palette.mode === "dark";
   const primaryColor = isDark ? "#bbdefb" : "#1976d2";
 
+
   const certificaciones = t.certifications.items;
 
+  // 🔥 Iconos mixtos (MUI + Lucide)
   const iconTypes = [
-    { type: "lucide", icon: GraduationCap },
-    { type: "mui", icon: WorkspacePremiumIcon },
+    { type: "lucide", icon: GraduationCap  },
+  
+    { type: "mui", icon: WorkspacePremiumIcon},
     { type: "mui", icon: WorkspacePremiumIcon },
     { type: "lucide", icon: Brain },
     { type: "mui", icon: WorkspacePremiumIcon },
@@ -44,28 +66,60 @@ export default function Certifications({ t }) {
   return (
     <Box
       id="certifications"
-      sx={certificationsStyles.section(palette)}
+      sx={{
+        py: 4,
+        scrollMarginTop: "80px",
+        color: palette.text.primary,
+      }}
     >
+      {/* 🎬 CONTENEDOR ANIMADO */}
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
-        {/* Título */}
+        {/* =========================
+            TÍTULO estilo Hero
+        ========================= */}
         <motion.div variants={fadeCinematic}>
-          <Box sx={certificationsStyles.titleContainer}>
-            <Box sx={certificationsStyles.titleBadge(isDark)}>
+          <Box
+            sx={{
+              textAlign: "center",
+              marginBottom: "2rem",
+            }}
+          >
+            <Box
+              sx={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 1,
+                px: 3,
+                py: 0.9,
+                borderRadius: "999px",
+                background: isDark
+                  ? "rgba(144,202,249,0.06)"
+                  : "rgba(25,118,210,0.06)",
+                border: `1px solid ${
+                  isDark
+                    ? "rgba(144,202,249,0.25)"
+                    : "rgba(25,118,210,0.25)"
+                }`,
+                backdropFilter: "blur(6px)",
+              }}
+            >
               <WorkspacePremiumIcon
-                sx={{
-                  fontSize: 22,
-                  color: primaryColor,
-                }}
+                sx={{ fontSize: 22, color: primaryColor }}
               />
 
               <Typography
                 variant="h6"
-                sx={certificationsStyles.title(primaryColor)}
+                sx={{
+                  fontWeight: "bold",
+                  color: primaryColor,
+                  lineHeight: 1,
+                }}
               >
                 {t.certifications.title}
               </Typography>
@@ -73,87 +127,112 @@ export default function Certifications({ t }) {
           </Box>
         </motion.div>
 
-        {/* Certificaciones */}
+        {/* GRID con animación coordinada */}
         <Grid container spacing={3} justifyContent="center">
           {certificaciones.map((cert, i) => {
+            // 🔥 FIX: desestructuración correcta + protección índice
             const { type, icon: Icon } =
               iconTypes[i % iconTypes.length];
 
-            const color =
-              iconColors[i % iconColors.length];
+            const color = iconColors[i % iconColors.length];
 
             return (
               <Grid item xs={12} sm={6} md={4} key={i}>
                 <motion.div
                   variants={fadeCinematic}
-                  whileHover={{
-                    y: -5,
-                    scale: 1.05,
-                  }}
-                  style={certificationsStyles.certificationMotion}
+                  whileHover={{ y: -5, scale: 1.05 }}
+                  style={{ willChange: "transform, opacity" }}
                 >
-                  <Box
-                    sx={certificationsStyles.certification}
-                  >
-                    {/* Icono */}
+                  <Box sx={{ textAlign: "center", px: 1 }}>
+                    {/* 🔥 Render correcto según tipo */}
                     {type === "mui" ? (
-                      <Icon
-                        sx={{
-                          fontSize: 28,
-                          color,
-                        }}
-                      />
+                      <Icon sx={{ fontSize: 28, color }} />
                     ) : (
-                      <Icon
-                        size={28}
-                        color={color}
-                      />
+                      <Icon size={28} color={color} />
                     )}
 
-                    {/* Título */}
                     <Typography
                       variant="subtitle1"
-                      sx={
-                        certificationsStyles.certificationTitle
-                      }
+                      sx={{ fontWeight: "bold", mt: 1 }}
                     >
                       {cert.titulo}
                     </Typography>
 
-                    {/* Institución y año */}
-                    <Typography
-                      variant="body2"
-                      sx={
-                        certificationsStyles.certificationInfo
-                      }
-                    >
-                      {cert.institucion} | {cert.año}
-                    </Typography>
+                  <Typography
+  variant="body2"
+  sx={{
+    color: "secondary",
+    mt: 0.5,
+    fontSize: "0.85rem",
+  }}
+>
+  {cert.institucion} | {cert.año}
+</Typography>
 
-                    {/* Botón */}
-                    {cert.link && (
-                      <Button
-                        href={cert.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        size="small"
-                        variant="outlined"
-                        sx={certificationsStyles.button(
-                          color,
-                          isDark
-                        )}
-                      >
-                        {t.certifications.view}
-                      </Button>
-                    )}
+                
 
-                    {/* Línea divisora */}
-                    <Box
-                      sx={certificationsStyles.divider(
-                        color,
-                        isDark
-                      )}
-                    />
+{/* 🔥 BOTÓN NUEVO */}
+{cert.link && (
+  <Button
+    href={cert.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    size="small"
+    variant="outlined"
+    sx={{
+  mt: 1,
+  textTransform: "none",
+  fontSize: "0.75rem",
+  borderRadius: "999px",
+  color,
+  borderColor: color,
+  "&:hover": {
+    borderColor: color,
+    background:
+      isDark
+        ? "rgba(255,255,255,0.08)"
+        : "rgba(0,0,0,0.05)",
+  },
+}}
+  >
+    {t.certifications.view}
+  </Button>
+)}
+
+
+                    {/* ✨ Línea divisora elegante */}
+<Box
+  sx={{
+    width: "160px",
+    height: "1px",
+    mx: "auto",
+    mt: 2,
+    borderRadius: "999px",
+
+    background: isDark
+      ? `linear-gradient(
+          90deg,
+          transparent,
+          ${color},
+          rgba(255,255,255,0.45),
+          ${color},
+          transparent
+        )`
+      : `linear-gradient(
+          90deg,
+          transparent,
+          rgba(25,118,210,0.25),
+          ${color},
+          rgba(25,118,210,0.25),
+          transparent
+        )`,
+
+    boxShadow: isDark
+      ? `0 0 10px ${color}55`
+      : `0 0 6px ${color}22`,
+  }}
+/>
+                    
                   </Box>
                 </motion.div>
               </Grid>
@@ -163,4 +242,4 @@ export default function Certifications({ t }) {
       </motion.div>
     </Box>
   );
-                    }
+}
