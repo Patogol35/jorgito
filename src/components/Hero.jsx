@@ -148,38 +148,51 @@ export default function Hero({ mode, setMode, t }) {
             initial="hidden"
             animate="visible"
           >
-            {/* NOMBRE */}
+            {/* NOMBRE / LOGO */}
             <motion.div variants={fadeCinematic}>
               <Typography
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
+                component="h1"
                 sx={{
+                  display: "inline-block",
+                  position: "relative",
+                  margin: 0,
+                  mb: 2,
+
                   fontSize: {
-                    xs: "2.2rem",
-                    sm: "2.8rem",
-                    md: "3.4rem",
+                    xs: "2.4rem",
+                    sm: "3.1rem",
+                    md: "3.7rem",
                   },
+
                   fontWeight: 900,
-                  letterSpacing: "-1px",
-                  background: `linear-gradient(
-                    90deg,
-                    ${theme.palette.primary.main},
-                    #60a5fa,
-                    ${theme.palette.primary.main}
-                  )`,
-                  backgroundSize: "200% auto",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  animation: "shineName 5s linear infinite",
-                  filter: `drop-shadow(0 0 12px ${theme.palette.primary.main}35)`,
-                  "@keyframes shineName": {
-                    "0%": {
-                      backgroundPosition: "0% center",
-                    },
-                    "100%": {
-                      backgroundPosition: "200% center",
-                    },
+                  lineHeight: 1,
+                  letterSpacing: "-2px",
+                  fontFamily: '"Poppins", sans-serif',
+
+                  color: theme.palette.text.primary,
+
+                  textShadow: `0 4px 20px ${theme.palette.primary.main}20`,
+
+                  "&::first-letter": {
+                    color: theme.palette.primary.main,
+                  },
+
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    left: 0,
+                    bottom: -10,
+                    width: "45%",
+                    height: "4px",
+                    borderRadius: "10px",
+
+                    background: `linear-gradient(
+                      90deg,
+                      ${theme.palette.primary.main},
+                      #60a5fa
+                    )`,
+
+                    boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
                   },
                 }}
               >
@@ -280,11 +293,13 @@ export default function Hero({ mode, setMode, t }) {
                       fontWeight: "bold",
                       px: btn.text ? 4 : 0,
                       py: btn.text ? 1.4 : 0,
+
                       background: `linear-gradient(
                         90deg,
                         ${theme.palette.primary.main},
                         #3b82f6
                       )`,
+
                       boxShadow: "none",
 
                       ...(btn.text
@@ -401,4 +416,4 @@ export default function Hero({ mode, setMode, t }) {
       </Modal>
     </>
   );
-}
+                  }
