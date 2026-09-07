@@ -139,16 +139,18 @@ const [openTerminal, setOpenTerminal] = useState(false);
           <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
               <Typography
-                variant="h3"
-                fontWeight="bold"
-                gutterBottom
-                sx={{
-                  color: theme.palette.primary.main,
-                  fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
-                }}
-              >
-                {t.hero.title}
-              </Typography>
+  variant="h3"
+  fontWeight="bold"
+  sx={{
+    color: theme.palette.primary.main,
+    fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
+    lineHeight: 1.25,
+    pb: 0.5,
+    mb: 1.5,
+  }}
+>
+  {t.hero.title}
+</Typography>
             </motion.div>
 
             <motion.div variants={fadeCinematic}>
