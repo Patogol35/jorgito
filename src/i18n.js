@@ -1,7 +1,7 @@
 export const translations = {
   es: {
     hero: {
-      title: "Hola, soy Jorge Patricio Santamaría Cherrez",
+      title: "Hola, soy Jorge Patricio",
       subtitle:
         "Ingeniero en Sistemas · Máster en Ingeniería de Software y Sistemas Informáticos",
       description: `Me apasiona crear tecnología que transforma ideas en realidades digitales.
@@ -274,7 +274,7 @@ Además, domino herramientas de desarrollo, pruebas de APIs, virtualización, se
 
   en: {
     hero: {
-      title: "Hi, I'm Jorge Patricio Santamaría Cherrez",
+      title: "Hi, I'm Jorge Patricio",
       subtitle:
         "Systems Engineer · Master's in Software Engineering and Information Systems",
       description: `I am passionate about creating technology that transforms ideas into digital realities.
