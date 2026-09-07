@@ -347,4 +347,4 @@ const [openTerminal, setOpenTerminal] = useState(false);
 </Modal>
     </>
   );
-          }
+                  }
