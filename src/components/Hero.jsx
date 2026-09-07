@@ -144,9 +144,8 @@ const [openTerminal, setOpenTerminal] = useState(false);
   sx={{
     color:
       theme.palette.mode === "dark"
-        ? "#fff"
+        ? "#60A5FA"
         : theme.palette.primary.main,
-
     fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
     lineHeight: 1.25,
     pb: 0.5,
