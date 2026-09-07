@@ -16,19 +16,16 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import LinuxTerminal from "../components/LinuxTerminal";
-
 export default function Hero({ mode, setMode, t }) {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [openTerminal, setOpenTerminal] = useState(false);
-
+const [openTerminal, setOpenTerminal] = useState(false);
   const openTerminalWithSound = () => {
-    const audio = new Audio("/sounds/terminal.wav");
-    audio.volume = 0.4;
-    audio.play().catch(() => {});
-    setOpenTerminal(true);
-  };
-
+  const audio = new Audio("/sounds/terminal.wav");
+  audio.volume = 0.4;
+  audio.play().catch(() => {});
+  setOpenTerminal(true);
+};
   const easeOutExpo = [0.16, 1, 0.3, 1];
 
   const fadeCinematic = {
@@ -100,11 +97,7 @@ export default function Hero({ mode, setMode, t }) {
         >
           <motion.div
             animate={{ y: [0, -10, 0] }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             style={{ willChange: "transform" }}
           >
             <motion.div
@@ -143,76 +136,68 @@ export default function Hero({ mode, setMode, t }) {
           mx="auto"
           zIndex={1}
         >
-          <motion.div
-            variants={textContainer}
-            initial="hidden"
-            animate="visible"
-          >
-            {/* NOMBRE / LOGO */}
+          <motion.div variants={textContainer} initial="hidden" animate="visible">
             <motion.div variants={fadeCinematic}>
-              <Typography
-                component="h1"
-                sx={{
-                  display: "inline-block",
-                  position: "relative",
-                  margin: 0,
-                  mb: 2,
+  <Typography
+    variant="h3"
+    gutterBottom
+    sx={{
+      fontSize: {
+        xs: "2.3rem",
+        sm: "3rem",
+        md: "3.6rem",
+      },
+      fontWeight: 900,
+      letterSpacing: "-2px",
+      lineHeight: 1,
+      color: theme.palette.text.primary,
+      position: "relative",
+      display: "inline-block",
+      textShadow: `0 0 24px ${theme.palette.primary.main}22`,
 
-                  fontSize: {
-                    xs: "2.4rem",
-                    sm: "3.1rem",
-                    md: "3.7rem",
-                  },
+      "&::first-letter": {
+        color: theme.palette.primary.main,
+      },
 
-                  fontWeight: 900,
-                  lineHeight: 1,
-                  letterSpacing: "-2px",
-                  fontFamily: '"Poppins", sans-serif',
+      "&::after": {
+        content: '""',
+        position: "absolute",
+        left: 0,
+        bottom: -10,
+        width: "100%",
+        height: "2px",
+        borderRadius: "4px",
+        background: `linear-gradient(
+          90deg,
+          ${theme.palette.primary.main} 0%,
+          ${theme.palette.primary.main} 35%,
+          transparent 100%
+        )`,
+      },
 
-                  color: theme.palette.text.primary,
+      "&::before": {
+        content: '"JP"',
+        position: "absolute",
+        right: -30,
+        top: -18,
+        fontSize: "0.55rem",
+        fontWeight: 800,
+        letterSpacing: "2px",
+        color: theme.palette.primary.main,
+        opacity: 0.75,
+      },
+    }}
+  >
+    Jorge Patricio
+  </Typography>
+</motion.div>
 
-                  textShadow: `0 4px 20px ${theme.palette.primary.main}20`,
-
-                  "&::first-letter": {
-                    color: theme.palette.primary.main,
-                  },
-
-                  "&::after": {
-                    content: '""',
-                    position: "absolute",
-                    left: 0,
-                    bottom: -10,
-                    width: "45%",
-                    height: "4px",
-                    borderRadius: "10px",
-
-                    background: `linear-gradient(
-                      90deg,
-                      ${theme.palette.primary.main},
-                      #60a5fa
-                    )`,
-
-                    boxShadow: `0 0 12px ${theme.palette.primary.main}55`,
-                  },
-                }}
-              >
-                Jorge Patricio
-              </Typography>
-            </motion.div>
-
-            {/* SUBTÍTULO */}
             <motion.div variants={fadeCinematic}>
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: 700,
-                }}
-              >
+              <Typography variant="h6" sx={{  fontWeight: 700, }}>
                 {t.hero.subtitle}
               </Typography>
             </motion.div>
 
-            {/* DESCRIPCIÓN */}
             <motion.div variants={fadeCinematic}>
               <Typography
                 sx={{
@@ -233,95 +218,83 @@ export default function Hero({ mode, setMode, t }) {
           </motion.div>
 
           {/* BOTONES */}
-          <motion.div
-            variants={buttonsContainer}
-            initial="hidden"
-            animate="visible"
-          >
+          <motion.div variants={buttonsContainer} initial="hidden" animate="visible">
             <Box
               sx={{
                 display: "flex",
                 gap: 2,
-                justifyContent: {
-                  xs: "center",
-                  sm: "flex-start",
-                },
+                justifyContent: { xs: "center", sm: "flex-start" },
                 flexWrap: "wrap",
                 alignItems: "center",
               }}
             >
               {[
-                {
-                  label: t.hero.buttons.cv,
-                  icon: <DescriptionIcon />,
-                  href: "/Jorge.CV.pdf",
-                  text: true,
-                },
-                {
-                  label: t.hero.buttons.title,
-                  icon: <WorkspacePremiumIcon />,
-                  onClick: () => setOpen(true),
-                  text: true,
-                },
-                {
-                  label: "Terminal",
-                  icon: <TerminalIcon />,
-                  onClick: openTerminalWithSound,
-                  text: false,
-                },
-                {
-                  label: "Sasha",
-                  icon: <SmartToyIcon />,
-                  onClick: () => window.openSashaChat?.(),
-                  text: false,
-                },
-              ].map((btn, i) => (
-                <motion.div key={i} variants={fadeCinematic}>
-                  <Button
-                    variant="contained"
-                    startIcon={btn.text ? btn.icon : undefined}
-                    href={btn.href}
-                    onClick={btn.onClick}
-                    target={btn.href ? "_blank" : undefined}
-                    aria-label={btn.label}
-                    sx={{
-                      minWidth: btn.text ? "auto" : 50,
-                      width: btn.text ? "auto" : 50,
-                      height: btn.text ? "auto" : 50,
-                      borderRadius: btn.text ? "25px" : "50%",
-                      textTransform: "none",
-                      fontWeight: "bold",
-                      px: btn.text ? 4 : 0,
-                      py: btn.text ? 1.4 : 0,
+  {
+    label: t.hero.buttons.cv,
+    icon: <DescriptionIcon />,
+    href: "/Jorge.CV.pdf",
+    text: true,
+  },
+  {
+    label: t.hero.buttons.title,
+    icon: <WorkspacePremiumIcon />,
+    onClick: () => setOpen(true),
+    text: true,
+  },
+  {
+    label: "Terminal",
+    icon: <TerminalIcon />,
+    onClick: openTerminalWithSound,
+    text: false,
+  },
+  {
+    label: "Sasha",
+    icon: <SmartToyIcon />,
+    onClick: () => window.openSashaChat?.(),
+    text: false,
+  },
+].map((btn, i) => (
+  <motion.div key={i} variants={fadeCinematic}>
+    <Button
+      variant="contained"
+      startIcon={btn.text ? btn.icon : undefined}
+      href={btn.href}
+      onClick={btn.onClick}
+      target={btn.href ? "_blank" : undefined}
+      aria-label={btn.label}
+      sx={{
+        minWidth: btn.text ? "auto" : 50,
+        width: btn.text ? "auto" : 50,
+        height: btn.text ? "auto" : 50,
+        borderRadius: btn.text ? "25px" : "50%",
+        textTransform: "none",
+        fontWeight: "bold",
+        px: btn.text ? 4 : 0,
+        py: btn.text ? 1.4 : 0,
+        background: `linear-gradient(90deg, ${theme.palette.primary.main}, #3b82f6)`,
+        boxShadow: "none",
 
-                      background: `linear-gradient(
-                        90deg,
-                        ${theme.palette.primary.main},
-                        #3b82f6
-                      )`,
-
-                      boxShadow: "none",
-
-                      ...(btn.text
-                        ? {}
-                        : {
-                            "& .MuiButton-startIcon": {
-                              margin: 0,
-                            },
-                          }),
-                    }}
-                  >
-                    {!btn.text && btn.icon}
-                    {btn.text && btn.label}
-                  </Button>
-                </motion.div>
-              ))}
+        ...(btn.text
+          ? {}
+          : {
+              "& .MuiButton-startIcon": {
+                margin: 0,
+              },
+            }),
+      }}
+    >
+      {!btn.text && btn.icon}
+      {btn.text && btn.label}
+    </Button>
+  </motion.div>
+))}
             </Box>
           </motion.div>
         </Box>
       </Box>
 
-      {/* MODAL TÍTULO */}
+      {/* MODAL */}
+      
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -380,40 +353,39 @@ export default function Hero({ mode, setMode, t }) {
         </>
       </Modal>
 
-      {/* MODAL TERMINAL */}
-      <Modal
-        open={openTerminal}
-        onClose={() => setOpenTerminal(false)}
-        sx={{
-          zIndex: 2000,
-          backgroundColor: "rgba(0,0,0,0.95)",
-          overflow: "auto",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%",
-            minHeight: "100dvh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            p: { xs: 0, sm: 2 },
-            boxSizing: "border-box",
+              <Modal
+  open={openTerminal}
+  onClose={() => setOpenTerminal(false)}
+  sx={{
+    zIndex: 2000,
+    backgroundColor: "rgba(0,0,0,0.95)",
+    overflow: "auto",
+  }}
+>
+  <Box
+    sx={{
+      width: "100%",
+      minHeight: "100dvh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      p: { xs: 0, sm: 2 },
+      boxSizing: "border-box",
 
-            "@media (orientation: landscape) and (max-height: 600px)": {
-              alignItems: "flex-start",
-              justifyContent: "flex-start",
-              p: 0,
-            },
-          }}
-        >
-          <LinuxTerminal
-            t={t}
-            lang="es"
-            onClose={() => setOpenTerminal(false)}
-          />
-        </Box>
-      </Modal>
+      "@media (orientation: landscape) and (max-height: 600px)": {
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        p: 0,
+      },
+    }}
+  >
+    <LinuxTerminal
+      t={t}
+      lang="es"
+      onClose={() => setOpenTerminal(false)}
+    />
+  </Box>
+</Modal>
     </>
   );
-                  }
+      }
