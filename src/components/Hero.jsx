@@ -144,7 +144,9 @@ const [openTerminal, setOpenTerminal] = useState(false);
   sx={{
     color: theme.palette.primary.main,
     fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
-    mb: 2,
+
+    lineHeight: 1.3,
+mb: 1.5,
   }}
 >
   {t.hero.title}
