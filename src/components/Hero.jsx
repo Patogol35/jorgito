@@ -142,7 +142,11 @@ const [openTerminal, setOpenTerminal] = useState(false);
   variant="h3"
   fontWeight="bold"
   sx={{
-    color: theme.palette.primary.main,
+    color:
+      theme.palette.mode === "dark"
+        ? "#fff"
+        : theme.palette.primary.main,
+
     fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
     lineHeight: 1.25,
     pb: 0.5,
