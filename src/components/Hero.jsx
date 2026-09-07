@@ -137,54 +137,63 @@ const [openTerminal, setOpenTerminal] = useState(false);
           zIndex={1}
         >
           <motion.div variants={textContainer} initial="hidden" animate="visible">
-            <motion.div variants={fadeCinematic}>
+            <motion.div
+  initial={{ opacity: 0, y: 25, scale: 0.97 }}
+  animate={{ opacity: 1, y: 0, scale: 1 }}
+  transition={{
+    duration: 1.2,
+    ease: [0.22, 1, 0.36, 1],
+  }}
+>
   <Typography
     variant="h3"
-    gutterBottom
     sx={{
       fontSize: {
-        xs: "2.3rem",
+        xs: "2.4rem",
         sm: "3rem",
-        md: "3.6rem",
+        md: "3.7rem",
       },
       fontWeight: 900,
-      letterSpacing: "-2px",
-      lineHeight: 1,
-      color: theme.palette.text.primary,
+      letterSpacing: "-2.5px",
+      lineHeight: 1.05,
+      mb: 1,
       position: "relative",
       display: "inline-block",
-      textShadow: `0 0 24px ${theme.palette.primary.main}22`,
 
-      "&::first-letter": {
-        color: theme.palette.primary.main,
-      },
+      background: `linear-gradient(
+        110deg,
+        ${theme.palette.text.primary} 0%,
+        ${theme.palette.text.primary} 55%,
+        ${theme.palette.primary.main} 100%
+      )`,
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
 
       "&::after": {
         content: '""',
         position: "absolute",
         left: 0,
-        bottom: -10,
+        bottom: -8,
         width: "100%",
-        height: "2px",
-        borderRadius: "4px",
+        height: "1px",
         background: `linear-gradient(
           90deg,
-          ${theme.palette.primary.main} 0%,
-          ${theme.palette.primary.main} 35%,
-          transparent 100%
+          ${theme.palette.primary.main},
+          transparent
         )`,
+        transformOrigin: "left",
+        animation: "logoLine 1.2s ease-out 0.5s both",
       },
 
-      "&::before": {
-        content: '"JP"',
-        position: "absolute",
-        right: -30,
-        top: -18,
-        fontSize: "0.55rem",
-        fontWeight: 800,
-        letterSpacing: "2px",
-        color: theme.palette.primary.main,
-        opacity: 0.75,
+      "@keyframes logoLine": {
+        from: {
+          transform: "scaleX(0)",
+          opacity: 0,
+        },
+        to: {
+          transform: "scaleX(1)",
+          opacity: 1,
+        },
       },
     }}
   >
