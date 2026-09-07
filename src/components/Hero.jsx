@@ -137,69 +137,19 @@ const [openTerminal, setOpenTerminal] = useState(false);
           zIndex={1}
         >
           <motion.div variants={textContainer} initial="hidden" animate="visible">
-            <motion.div
-  initial={{ opacity: 0, y: 25, scale: 0.97 }}
-  animate={{ opacity: 1, y: 0, scale: 1 }}
-  transition={{
-    duration: 1.2,
-    ease: [0.22, 1, 0.36, 1],
-  }}
->
-  <Typography
-    variant="h3"
-    sx={{
-      fontSize: {
-        xs: "2.4rem",
-        sm: "3rem",
-        md: "3.7rem",
-      },
-      fontWeight: 900,
-      letterSpacing: "-2.5px",
-      lineHeight: 1.05,
-      mb: 1,
-      position: "relative",
-      display: "inline-block",
-
-      background: `linear-gradient(
-        110deg,
-        ${theme.palette.text.primary} 0%,
-        ${theme.palette.text.primary} 55%,
-        ${theme.palette.primary.main} 100%
-      )`,
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-
-      "&::after": {
-        content: '""',
-        position: "absolute",
-        left: 0,
-        bottom: -8,
-        width: "100%",
-        height: "1px",
-        background: `linear-gradient(
-          90deg,
-          ${theme.palette.primary.main},
-          transparent
-        )`,
-        transformOrigin: "left",
-        animation: "logoLine 1.2s ease-out 0.5s both",
-      },
-
-      "@keyframes logoLine": {
-        from: {
-          transform: "scaleX(0)",
-          opacity: 0,
-        },
-        to: {
-          transform: "scaleX(1)",
-          opacity: 1,
-        },
-      },
-    }}
-  >
-    Jorge Patricio
-  </Typography>
-</motion.div>
+            <motion.div variants={fadeCinematic}>
+              <Typography
+                variant="h3"
+                fontWeight="bold"
+                gutterBottom
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontSize: { xs: "1.7rem", sm: "2.1rem", md: "2.4rem" },
+                }}
+              >
+                {t.hero.title}
+              </Typography>
+            </motion.div>
 
             <motion.div variants={fadeCinematic}>
               <Typography variant="h6" sx={{  fontWeight: 700, }}>
@@ -397,4 +347,4 @@ const [openTerminal, setOpenTerminal] = useState(false);
 </Modal>
     </>
   );
-      }
+          }
