@@ -72,7 +72,7 @@ export default function SocialLinks({
   y: -3,
   scale: 1.08,
   rotate: 3,
-  filter: `drop-shadow(0 0 3px ${s.color}35)`,
+  filter: `drop-shadow(0 0 3px ${s.color}15)`,
 }}
             whileTap={{
               scale: 0.85,
