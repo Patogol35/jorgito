@@ -218,6 +218,7 @@ export default function Skills({ t }) {
                     fontWeight: 600,
                     fontSize: "0.9rem",
                     textTransform: "none",
+                    color: isDark ? "#e3f2fd" : "#333333",
                     display: "flex",
                     alignItems: "center",
                     gap: 1,
