@@ -112,9 +112,10 @@ export default function About({ t }) {
           {estudios.map((est, i) => (
             <Grid item xs={12} sm={6} md={4} key={i}>
               <motion.div
-                variants={fadeCinematic}
-                style={{ willChange: "transform, opacity" }}
-              >
+  variants={fadeCinematic}
+  whileHover={{ y: -5, scale: 1.05 }}
+  style={{ willChange: "transform, opacity" }}
+>
                 <Box sx={{ textAlign: "center", px: 1 }}>
                   <GraduationCap size={28} color={iconColors[i]} />
 
