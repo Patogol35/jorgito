@@ -78,8 +78,8 @@ const skills = [
   { name: "Postman", category: "Tools", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg" },
   
   { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
+  { name: "RustDesk", category: "Tools", img: "https://cdn.simpleicons.org/rustdesk" },
   
-  { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
   { name: "LibreOffice", category: "Tools", img: "https://cdn.simpleicons.org/libreoffice" },
   { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
   
