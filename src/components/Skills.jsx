@@ -226,10 +226,10 @@ export default function Skills({ t }) {
                       ? "rgba(255,255,255,0.04)"
                       : "rgba(255,255,255,0.9)",
                     border: `1px solid ${
-                      isDark
-                        ? "rgba(255,255,255,0.12)"
-                        : "rgba(0,0,0,0.12)"
-                    }`,
+  isDark
+    ? "rgba(255,255,255,0.18)"
+    : "rgba(25,118,210,0.25)"
+}`,
                     "&.Mui-selected": {
                       background: `linear-gradient(135deg, ${primary}, ${theme.palette.primary.dark})`,
                       color: "#fff",
