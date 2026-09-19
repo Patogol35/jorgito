@@ -80,7 +80,7 @@ const skills = [
   { name: "VirtualBox", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/virtualbox.svg" },
   
   { name: "AnyDesk", category: "Tools", img: "https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/anydesk.svg" },
-  { name: "MS Office", category: "Tools", img: "https://i.imgur.com/8EBPyBH.png" },
+  { name: "LibreOffice", category: "Tools", img: "https://cdn.simpleicons.org/libreoffice" },
   { name: "Ubuntu", category: "Tools", img: "https://i.imgur.com/VgVlsE6.png" },
   
   { name: "Elasticsearch", category: "Database", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" },
